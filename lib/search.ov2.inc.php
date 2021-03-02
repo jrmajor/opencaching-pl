@@ -5,7 +5,6 @@
 
 use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
-use src\Models\ApplicationContainer;
 
 ob_start();
 
@@ -13,7 +12,7 @@ global $content, $bUseZip, $hide_coords, $dbcSearch;
 
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 

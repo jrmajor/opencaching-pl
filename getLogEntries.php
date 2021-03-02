@@ -11,7 +11,6 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
 use src\Models\Coordinates\Coordinates;
 use src\Utils\DateTime\Year;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 require(__DIR__.'/src/Views/lib/icons.inc.php');
@@ -29,7 +28,7 @@ if ($cache == null) {
 }
 $owner_id = $cache->getOwnerId();
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (
     !($loggedUser && ($loggedUser->hasOcTeamRole() || $owner_id == $loggedUser->getUserId()))
     && !in_array(

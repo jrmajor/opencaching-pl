@@ -8,7 +8,6 @@ use okapi\Facade;
 use okapi\core\Exception\BadRequest;
 use src\Models\GeoCache\CacheNote;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 require_once (__DIR__.'/lib/export.inc.php');
@@ -25,7 +24,7 @@ $database = OcDb::instance();
 set_time_limit(1800);
 
 //user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

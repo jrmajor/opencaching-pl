@@ -8,7 +8,6 @@ ob_start();
 use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 
 global $absolute_server_URI, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
 require_once (__DIR__.'/format.kml.inc.php');
@@ -16,7 +15,7 @@ require_once (__DIR__.'/calculation.inc.php');
 
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 if ($loggedUser || ! $hide_coords) {
     // prepare the output

@@ -9,7 +9,6 @@ use src\Models\GeoCache\PrintList;
 use src\Models\Coordinates\Coordinates;
 use src\Utils\I18n\I18n;
 use src\Utils\Debug\Debug;
-use src\Models\ApplicationContainer;
 use src\Models\User\User;
 
 require_once (__DIR__.'/lib/common.inc.php');
@@ -41,7 +40,7 @@ $TestStartTime = new DateTime('now');
 $dbcSearch = OcDb::instance();
 $dbc = OcDb::instance();
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target='.$target);

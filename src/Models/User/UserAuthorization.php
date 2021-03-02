@@ -5,7 +5,6 @@ use src\Utils\Debug\Debug;
 use src\Utils\Email\Email;
 use src\Utils\Email\EmailFormatter;
 use src\Utils\Uri\CookieBase;
-use src\Models\ApplicationContainer;
 use src\Models\BaseObject;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Generators\TextGen;
@@ -48,8 +47,10 @@ class UserAuthorization extends BaseObject
         // if $cookieSession is the same as sessionId stored in PHP session
         // and ApplicationContainer contains logged user:
         // user has been already verified
-        if($cookieSession === self::getLoggedUserSessionId() &&
-            $user = ApplicationContainer::GetAuthorizedUser() ){
+        if(
+            $cookieSession === self::getLoggedUserSessionId()
+            && $user = app()->getUser()
+        ){
             // generally it shouldn't happen unless this method is calls again
             // in the same request
             return $user;
@@ -179,7 +180,7 @@ class UserAuthorization extends BaseObject
     private static function initContextVars(User $user){
 
         //init $user in ApplicationContainer
-        ApplicationContainer::SetAuthorizedUser($user);
+        app()->setAuthorizedUser($user);
 
         // set obsolete user_is in session
         $_SESSION['user_id'] = $user->getUserId();
@@ -189,7 +190,7 @@ class UserAuthorization extends BaseObject
     private static function clearContextVars(){
 
         // clear AppContainer
-        ApplicationContainer::SetAuthorizedUser(null);
+        app()->setAuthorizedUser(null);
 
         // set obsolete user_is in session
         unset($_SESSION['user_id']);
@@ -401,7 +402,7 @@ class UserAuthorization extends BaseObject
         $email->setReplyToAddr(OcConfig::getEmailAddrNoReply());
         $email->setFromAddr(OcConfig::getEmailAddrNoReply());
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefix());
-        $subject = tr('newpw_mail_subject') . ' ' . ApplicationContainer::Instance()->getOcConfig()->getSiteName();
+        $subject = tr('newpw_mail_subject') . ' ' . app()->getOcConfig()->getSiteName();
         $email->setSubject($subject);
         $email->setHtmlBody($userMessage->getEmailContent());
         $result = $email->send();

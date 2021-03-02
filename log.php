@@ -1,7 +1,6 @@
 <?php
 
 use src\Controllers\MeritBadgeController;
-use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLog;
@@ -23,7 +22,7 @@ use src\Utils\Text\InputFilter;
  */
 require_once(__DIR__ . '/lib/common.inc.php');
 
-$user = ApplicationContainer::Instance()->getLoggedUser();
+$user = app()->getUser();
 if (!$user) {
     // user not authorized
     $target = urlencode(tpl_get_current_page());

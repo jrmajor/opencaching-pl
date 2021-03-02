@@ -28,12 +28,11 @@ use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\Waypoint;
 use src\Utils\View\View;
-use src\Models\ApplicationContainer;
 
 //prepare the templates and include all neccessary
 require_once (__DIR__.'/lib/common.inc.php');
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     // not logged in, go to login page
     $target = urlencode(tpl_get_current_page());

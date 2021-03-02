@@ -37,7 +37,7 @@ abstract class BaseObject
     }
 
     protected static function getCurrentUser(){
-        return ApplicationContainer::Instance()->getLoggedUser();
+        return app()->getUser();
     }
 
     protected static function callOkapi($service, $params){

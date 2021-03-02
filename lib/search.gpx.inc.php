@@ -11,14 +11,13 @@ use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\CacheNote;
 use src\Utils\I18n\I18n;
 use src\Models\OcConfig\OcConfig;
-use src\Models\ApplicationContainer;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
 require_once (__DIR__.'/common.inc.php');
 require_once (__DIR__.'/calculation.inc.php');
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 function getPictures($cacheid, $picturescount)
 {

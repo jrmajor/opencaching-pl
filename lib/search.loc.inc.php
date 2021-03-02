@@ -7,14 +7,13 @@ ob_start();
 
 use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
-use src\Models\ApplicationContainer;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 set_time_limit(1800);
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $locHead = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <loc version="1.0" src="' . $absolute_server_URI . '">' . "\n";

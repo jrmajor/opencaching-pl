@@ -1,7 +1,8 @@
 <?php
+
+use src\Utils\Database\OcDb;
 use src\Utils\Uri\Uri;
 use src\Controllers\PictureController;
-use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\Pictures\Thumbnail;
 use src\Utils\Uri\SimpleRouter;
@@ -11,7 +12,7 @@ require_once (__DIR__.'/lib/common.inc.php');
 global $hide_coords;
 
 $view = tpl_getView();
-$app = ApplicationContainer::Instance();
+$app = app();
 
 if (!isset($_REQUEST['cacheid']) || ($cache = GeoCache::fromCacheIdFactory($_REQUEST['cacheid'])) === null) {
     $view->redirect('/');
@@ -22,9 +23,9 @@ if (!isset($_REQUEST['cacheid']) || ($cache = GeoCache::fromCacheIdFactory($_REQ
 if (($cache->getStatus() == GeoCache::STATUS_WAITAPPROVERS
         || $cache->getStatus() == GeoCache::STATUS_NOTYETAVAILABLE
         || $cache->getStatus() == GeoCache::STATUS_BLOCKED)
-    && ($app->getLoggedUser() === null
-        || ($app->getLoggedUser()->getUserId() != $cache->getOwnerId()
-            && ! $app->getLoggedUser()->hasOcTeamRole()))) {
+    && ($app->getUser() === null
+        || ($app->getUser()->getUserId() != $cache->getOwnerId()
+            && ! $app->getUser()->hasOcTeamRole()))) {
     $view->redirect('/');
     exit();
 }
@@ -39,9 +40,9 @@ $query = 'SELECT `pictures`.`url`, `pictures`.`title`, `pictures`.`uuid`, `pictu
                   ORDER BY `pictures`.`date_created` DESC';
 $params['cacheid']['value'] = $cache->getCacheId();
 $params['cacheid']['data_type'] = 'integer';
-$stmt = $app->db->paramQuery($query, $params);
+$stmt = OcDb::instance()->paramQuery($query, $params);
 $logpictures = [];
-while ($row = $app->db->dbResultFetch($stmt)) {
+while ($row = OcDb::instance()->dbResultFetch($stmt)) {
     $row['url'] = str_replace("images/uploads", "upload", $row['url']);
     if ($row['spoiler'] == '1') {
         $row['thumbUrl'] = Thumbnail::placeholderUri(Thumbnail::PHD_SPOILER);
@@ -53,9 +54,9 @@ while ($row = $app->db->dbResultFetch($stmt)) {
 $view->setVar('logpictures', $logpictures);
 
 $view->setVar('cachepictures', $cache->getPicturesList(false));
-$view->setVar('hidespoilers', ($app->getLoggedUser() === null && $hide_coords));
+$view->setVar('hidespoilers', ($app->getUser() === null && $hide_coords));
 $view->setVar('cache', $cache);
-$view->setVar('cacheicon', $cache->getCacheIcon($app->getLoggedUser()));
+$view->setVar('cacheicon', $cache->getCacheIcon($app->getUser()));
 $view->addLocalCss(Uri::getLinkWithModificationTime('/views/viewcache/viewcache.css'));
 $view->loadFancyBox();
 $view->setTemplate('gallery_cache');

@@ -4,14 +4,13 @@ use src\Utils\Text\Formatter;
 use src\Controllers\MeritBadgeController;
 use src\Controllers\ViewBadgeHeadController;
 use src\Models\GeoCache\GeoCacheCommons;
-use src\Models\ApplicationContainer;
 
 require_once(__DIR__.'/lib/common.inc.php');
 
 
 global $content_table, $config;
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());

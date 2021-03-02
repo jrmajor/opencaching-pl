@@ -3,13 +3,12 @@
 use src\Utils\Database\XDb;
 use src\Utils\Text\Validator;
 use src\Models\OcConfig\OcConfig;
-use src\Models\ApplicationContainer;
 
 global $absolute_server_URI;
 
 require_once (__DIR__.'/lib/common.inc.php');
 
-$user = ApplicationContainer::GetAuthorizedUser();
+$user = app()->getUser();
 if (!$user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

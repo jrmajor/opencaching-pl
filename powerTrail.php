@@ -1,7 +1,6 @@
 <?php
 
 use src\Controllers\MainMapController;
-use src\Models\ApplicationContainer;
 use src\Models\CacheSet\CacheSetCommon;
 use src\Models\CacheSet\GeopathLogoUploadModel;
 use src\Models\ChunkModels\DynamicMap\CacheMarkerModel;
@@ -32,7 +31,7 @@ if ($ocConfig->isPowerTrailModuleSwitchOn() === false) {
     header("location: $absolute_server_URI");
 }
 
-$loggedUser = ApplicationContainer::Instance()->getLoggedUser();
+$loggedUser = app()->getUser();
 $view = tpl_getView();
 
 $_SESSION['powerTrail']['userFounds'] = (!$loggedUser) ? 0 : $loggedUser->getFoundGeocachesCount();

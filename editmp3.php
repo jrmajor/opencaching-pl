@@ -1,6 +1,5 @@
 <?php
 
-use src\Models\ApplicationContainer;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 
@@ -9,7 +8,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 $message = false;
 $view = tpl_getView();
-$user = ApplicationContainer::Instance()->getLoggedUser();
+$user = app()->getUser();
 
 //user logged in?
 if (empty($user)) {

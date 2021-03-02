@@ -1,6 +1,5 @@
 <?php
 
-use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 
 /**
@@ -15,7 +14,7 @@ return function (GeoCache $cache) {
     $statusTitle .= ', ' . tr($cache->getStatusTranslationKey());
 
     ?>
-    <img src="<?= $cache->getCacheIcon(ApplicationContainer::Instance()->getLoggedUser()) ?>" class="icon16"
+    <img src="<?= $cache->getCacheIcon(app()->getUser()) ?>" class="icon16"
          alt="<?= $statusTitle ?>" title="<?= $statusTitle ?>">
     <?php
 };

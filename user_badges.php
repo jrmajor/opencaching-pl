@@ -2,14 +2,13 @@
 
 use src\Models\MeritBadge\MeritBadge;
 use src\Controllers\MeritBadgeController;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 require_once (__DIR__.'/src/Views/user_badges.inc.php');
 
 global $content_table;
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

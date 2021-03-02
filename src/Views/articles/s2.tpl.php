@@ -1,7 +1,6 @@
 <?php
 use src\Utils\Database\XDb;
 use src\Utils\Cache\OcMemCache;
-use src\Models\ApplicationContainer;
 ?>
 <div class="content2-container">
   <div class="content2-pagetitle">
@@ -113,7 +112,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
     foreach ($lines as $line) {
         $color = "black";
         $banned = "";
-        $loggedUser = ApplicationContainer::GetAuthorizedUser();
+        $loggedUser = app()->getUser();
         if (($loggedUser && $loggedUser->hasOcTeamRole()) || $line['stat_ban'] == 0) {
             if ($line['stat_ban']) {
                 $color = "gray";

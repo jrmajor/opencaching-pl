@@ -2,14 +2,13 @@
 
 use src\Models\Coordinates\Coordinates;
 use src\Models\Coordinates\NutsLocation;
-use src\Models\ApplicationContainer;
 use src\Models\Coordinates\GeoCode;
 
 $tplname = 'region';
 
 require_once (__DIR__.'/lib/common.inc.php');
 
-if(!ApplicationContainer::GetAuthorizedUser()){
+if(! app()->getUser()) {
     print "Not authorized!";
     exit;
 }

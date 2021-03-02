@@ -4,7 +4,6 @@ use src\Utils\Database\OcDb;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 /**
  * This script is used (can be loaded) by /search.php
  */
@@ -13,7 +12,7 @@ global $content, $bUseZip, $dbcSearch;
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $encoding = 'UTF-8';
 $distance_unit = 'km';

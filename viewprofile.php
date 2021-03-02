@@ -19,7 +19,6 @@ use src\Utils\Text\Formatter;
 use src\Models\Admin\AdminNoteSet;
 use src\Models\User\UserStats;
 use src\Utils\Debug\StopWatch;
-use src\Models\ApplicationContainer;
 
 const ADMINNOTES_PER_PAGE = 10;
 
@@ -28,7 +27,7 @@ require_once (__DIR__.'/lib/common.inc.php');
 StopWatch::click('start');
 
 //user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

@@ -3,7 +3,6 @@
 namespace src\Utils\View;
 
 use src\Controllers\PageLayout\MainLayoutController;
-use src\Models\ApplicationContainer;
 use src\Utils\DateTime\Year;
 use src\Utils\Debug\Debug;
 use src\Utils\I18n\CrowdinInContextMode;
@@ -301,7 +300,7 @@ class View
         if (self::mobile()) {
             return false;
         }
-        if (is_null(ApplicationContainer::Instance()->getLoggedUser())) {
+        if (is_null(app()->getUser())) {
             return true;
         }
         return $this->_showVideoBannerState;

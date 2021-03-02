@@ -6,12 +6,11 @@
 ob_start();
 
 use src\Utils\Database\XDb;
-use src\Models\ApplicationContainer;
 
 global $content, $hide_coords, $dbcSearch;
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 

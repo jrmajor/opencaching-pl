@@ -1,7 +1,6 @@
 <?php
 
 use src\Utils\Database\XDb;
-use src\Models\ApplicationContainer;
 
 $view->callChunk('tinyMCE', false);
 ?>
@@ -31,7 +30,7 @@ $view->callChunk('tinyMCE', false);
     function _chkFound() {
 <?php
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 $founds = XDb::xMultiVariableQueryValue(
     "SELECT count(cache_id) FROM cache_logs
     WHERE deleted=0

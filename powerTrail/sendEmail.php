@@ -2,7 +2,6 @@
 
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
-use src\Models\ApplicationContainer;
 
 class sendEmail
 {
@@ -62,7 +61,7 @@ class sendEmail
                 break;
         }
 
-        $user = ApplicationContainer::GetAuthorizedUser();
+        $user = app()->getUser();
         if ($user) {
             $userId = $user->getUserId();
             $username = $user->getUserName();

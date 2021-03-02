@@ -8,7 +8,6 @@ use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\I18n\I18n;
 use src\Utils\Text\Validator;
 use src\Models\OcConfig\OcConfig;
-use src\Models\ApplicationContainer;
 use src\Utils\Gis\Gis;
 
 global $hide_coords, $dbcSearch, $queryFilter;
@@ -18,7 +17,7 @@ require_once(__DIR__.'/calculation.inc.php');
 
 set_time_limit(1800);
 
-$user = ApplicationContainer::GetAuthorizedUser();
+$user = app()->getUser();
 
 if (!$user && $hide_coords) {
   // user not logged + coords hidden for not logged

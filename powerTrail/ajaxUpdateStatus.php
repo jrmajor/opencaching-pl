@@ -3,11 +3,10 @@
 use src\Utils\Database\OcDb;
 use src\Models\PowerTrail\PowerTrail;
 use src\Utils\Generators\Uuid;
-use src\Models\ApplicationContainer;
 
 require_once __DIR__.'/../lib/common.inc.php';
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if(!$loggedUser){
     echo "User not authorized!";
     exit;

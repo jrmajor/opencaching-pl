@@ -11,7 +11,6 @@ use src\Utils\Text\TextConverter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
-use src\Models\ApplicationContainer;
 
 require_once(__DIR__ . '/lib/common.inc.php');
 
@@ -25,7 +24,7 @@ require(__DIR__ . '/src/Views/lib/icons.inc.php');
 require(__DIR__ . '/src/Views/viewcache.inc.php');
 require(__DIR__ . '/src/Views/viewlogs.inc.php');
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $view->setVar('isUserAuthorized', is_object($loggedUser));
 

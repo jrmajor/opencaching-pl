@@ -8,7 +8,6 @@ use src\Utils\Uri\OcCookie;
 use src\Models\Coordinates\Coordinates;
 use src\Utils\I18n\I18n;
 use src\Models\GeoCache\GeoCacheCommons;
-use src\Models\ApplicationContainer;
 
 /**
  * This script is used (can be loaded) by /search.php
@@ -76,7 +75,7 @@ require_once (__DIR__.'/calculation.inc.php');
 
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $dbc = OcDb::instance();
 

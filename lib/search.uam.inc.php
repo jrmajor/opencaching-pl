@@ -7,7 +7,6 @@
 ob_start();
 
 use src\Utils\Database\XDb;
-use src\Models\ApplicationContainer;
 
 set_time_limit(1800);
 
@@ -15,7 +14,7 @@ require_once (__DIR__.'/../lib/calculation.inc.php');
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $uamSize[1] = 'u'; // 'Not specified'
 $uamSize[2] = 'm'; // 'Micro'

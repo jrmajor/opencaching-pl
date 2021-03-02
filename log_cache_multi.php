@@ -1,7 +1,7 @@
 <?php
 
 use src\Utils\Database\XDb;
-use src\Models\ApplicationContainer;
+
 if (isset($_POST['submitDownloadGpx'])) {
     $fd = "";
     $fd .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
@@ -95,7 +95,7 @@ if (isset($_POST['submitDownloadGpx'])) {
 require_once (__DIR__.'/lib/common.inc.php');
 
 $no_tpl_build = false;
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_multi_data']))) {
     tpl_redirect('log_cache_multi_send.php');

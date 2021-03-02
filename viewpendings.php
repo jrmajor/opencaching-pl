@@ -1,7 +1,6 @@
 <?php
 
 use src\Models\Admin\AdminNote;
-use src\Models\ApplicationContainer;
 use src\Models\OcConfig\OcConfig;
 use src\Models\User\User;
 use src\Utils\Database\XDb;
@@ -118,7 +117,7 @@ function notifyOwner($cacheid, $msgType)
     // msgType - 0 = cache accepted, 1 = cache declined (=archived)
     global $absolute_server_URI;
 
-    $user = ApplicationContainer::GetAuthorizedUser();
+    $user = app()->getUser();
     if(!$user) {
         return;
     }
@@ -193,7 +192,7 @@ function notifyOwner($cacheid, $msgType)
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $view = tpl_getView();
-$user = ApplicationContainer::Instance()->getLoggedUser();
+$user = app()->getUser();
 
 if (empty($user) || !$user->hasOcTeamRole()) {
     $view->setTemplate('viewpendings_error');

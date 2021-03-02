@@ -3,14 +3,13 @@
 use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 use src\Models\OcConfig\OcConfig;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 
 global $googlemap_key;
 
 //user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

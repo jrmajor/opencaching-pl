@@ -4,14 +4,13 @@ use src\Utils\Text\Formatter;
 use src\Utils\Text\Validator;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\Uri;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 
 $db = XDb::instance();
 $description = "";
 
-$user = ApplicationContainer::GetAuthorizedUser();
+$user = app()->getUser();
 if (!$user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

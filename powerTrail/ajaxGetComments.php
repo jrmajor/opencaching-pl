@@ -1,18 +1,17 @@
 <?php
 use src\Utils\Database\OcDb;
-use src\Models\ApplicationContainer;
 use src\Controllers\PowerTrailController;
 
 
 require_once __DIR__.'/../lib/common.inc.php';
 
-$appContainer = ApplicationContainer::Instance();
-if( $appContainer->getLoggedUser() === null){
+$appContainer = app();
+if($appContainer->getUser() === null){
     $loggedUserId = null;
     $ocTeamUser = false;
 } else {
-    $loggedUserId = $appContainer->getLoggedUser()->getUserId();
-    $ocTeamUser = $appContainer->getLoggedUser()->hasOcTeamRole();
+    $loggedUserId = $appContainer->getUser()->getUserId();
+    $ocTeamUser = $appContainer->getUser()->hasOcTeamRole();
 }
 
 

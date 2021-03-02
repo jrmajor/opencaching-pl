@@ -1,6 +1,5 @@
 <?php
 
-use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\PowerTrail\PowerTrail;
 use src\Utils\I18n\I18n;
@@ -12,7 +11,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 /** @var View $view */
 $view = tpl_getView();
 
-$loggedUser = ApplicationContainer::Instance()->getLoggedUser();
+$loggedUser = app()->getUser();
 if (empty($loggedUser) || ! $loggedUser->hasOcTeamRole()) {
     $view->redirect('/');
 }

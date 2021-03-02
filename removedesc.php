@@ -5,7 +5,6 @@ use src\Models\GeoCache\GeoCache;
 use src\Utils\I18n\Languages;
 use src\Utils\I18n\I18n;
 use src\Models\OcConfig\OcConfig;
-use src\Models\ApplicationContainer;
 
 require_once (__DIR__.'/lib/common.inc.php');
 
@@ -25,7 +24,7 @@ if (isset($_REQUEST['commit'])) {
 }
 
 //user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

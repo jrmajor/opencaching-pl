@@ -3,13 +3,12 @@
 use src\Utils\Database\XDb;
 use src\Utils\Database\OcDb;
 use src\Utils\Generators\Uuid;
-use src\Models\ApplicationContainer;
 use src\Models\User\User;
 
 require(__DIR__.'/lib/common.inc.php');
 
 //user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);

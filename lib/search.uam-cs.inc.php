@@ -21,7 +21,6 @@
  */
 
 use src\Utils\Text\TextConverter;
-use src\Models\ApplicationContainer;
 
 ob_start();
 
@@ -30,7 +29,7 @@ require_once (__DIR__.'/../lib/calculation.inc.php');
 set_time_limit(1800);
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 $uamSize[1] = 'u'; // 'Not specified'
 $uamSize[2] = 'm'; // 'Micro'

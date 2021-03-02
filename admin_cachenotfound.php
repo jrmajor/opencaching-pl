@@ -1,13 +1,12 @@
 <?php
 
-use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 
 //prepare the templates and include all necessary
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $view = tpl_getView();
-$user = ApplicationContainer::Instance()->getLoggedUser();
+$user = app()->getUser();
 
 if (empty($user) || !$user->hasOcTeamRole()) {
     $view->redirect('/');

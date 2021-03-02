@@ -4,7 +4,6 @@ use src\Utils\Database\XDb;
 use src\Utils\Email\EmailSender;
 use src\Utils\Generators\Uuid;
 use src\Utils\Text\UserInputFilter;
-use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\OcConfig\OcConfig;
@@ -23,7 +22,7 @@ $no_tpl_build = false;
 $view = tpl_getView();
 
 // user logged in?
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     $view->redirect('/login.php?target=' . $target);
@@ -753,7 +752,7 @@ if (isset($_POST['submitform'])) {
         }
 
         if ($needs_approvement) { // notify OC-Team that new cache has to be verified
-            EmailSender::sendNotifyAboutNewCacheToOcTeam(__DIR__ . '/resources/email/oc_team_notify_new_cache.email.html', ApplicationContainer::Instance()->getLoggedUser(), $name, $cache_id, $adm3, $adm1);
+            EmailSender::sendNotifyAboutNewCacheToOcTeam(__DIR__ . '/resources/email/oc_team_notify_new_cache.email.html', app()->getUser(), $name, $cache_id, $adm3, $adm1);
         }
 
         // redirection

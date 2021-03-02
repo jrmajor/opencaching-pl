@@ -128,19 +128,10 @@ final class OcConfig extends ConfigReader
      */
     public static function instance(): self
     {
-        static $inst = null;
-
-        if ($inst === null) {
-            $inst = new self();
-        }
-
-        return $inst;
+        return app(self::class);
     }
 
-    /**
-     * Private constructor so nobody else can instantiate it.
-     */
-    protected function __construct()
+    public function __construct()
     {
         $this->loadConfig();
     }

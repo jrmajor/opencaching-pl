@@ -2,7 +2,7 @@
 
 namespace src\Controllers;
 
-use src\Models\ApplicationContainer;
+use src\Application;
 use src\Models\User\User;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\View\View;
@@ -40,7 +40,7 @@ abstract class BaseController
     /** @var View $view */
     protected $view = null;
 
-    /** @var ApplicationContainer $applicationContainer */
+    /** @var Application $applicationContainer */
     protected $applicationContainer = null;
 
     /** @var User */
@@ -53,8 +53,8 @@ abstract class BaseController
     {
         $this->view = tpl_getView();
 
-        $this->applicationContainer = ApplicationContainer::Instance();
-        $this->loggedUser = $this->applicationContainer->getLoggedUser();
+        $this->applicationContainer = app();
+        $this->loggedUser = $this->applicationContainer->getUser();
         $this->ocConfig = $this->applicationContainer->getOcConfig();
 
         // there is no DB access init - DB operations should be performed in models/objects

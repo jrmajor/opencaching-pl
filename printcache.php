@@ -6,7 +6,6 @@ use src\Utils\Database\XDb;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 
 require_once(__DIR__.'/lib/common.inc.php');
 
@@ -16,7 +15,7 @@ if (isset($_POST['flush_print_list'])) {
 
 $cache_id = isset($_GET['cacheid']) ? $_GET['cacheid'] + 0 : 0;
 if (!$cache_id) {
-    $loggedUser = ApplicationContainer::GetAuthorizedUser();
+    $loggedUser = app()->getUser();
     if (!$loggedUser ||
         (empty(PrintList::GetContent()) && (isset($_GET['source']) && $_GET['source'] != 'mywatches'))) {
         header("Location:index.php");

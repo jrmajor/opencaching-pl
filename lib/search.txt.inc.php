@@ -11,13 +11,12 @@ use src\Utils\Text\Rot13;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\CacheNote;
 use src\Models\Coordinates\Coordinates;
-use src\Models\ApplicationContainer;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
 set_time_limit(1800);
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 

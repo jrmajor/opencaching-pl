@@ -3,7 +3,6 @@ use src\Utils\Database\XDb;
 use okapi\core\Exception\BadRequest;
 use okapi\Facade;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 /**
  * This script is used (can be loaded) by /search.php
  */
@@ -14,7 +13,7 @@ set_time_limit(1800);
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 
-$loggedUser = ApplicationContainer::GetAuthorizedUser();
+$loggedUser = app()->getUser();
 
 if ($loggedUser || !$hide_coords) {
     //prepare the output

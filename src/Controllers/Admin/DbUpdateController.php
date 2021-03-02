@@ -263,7 +263,7 @@ class DbUpdateController extends BaseController
     {
         $this->securityCheck();
         DbUpdates::create(
-            $this->applicationContainer->getLoggedUser()->getUserName()
+            $this->applicationContainer->getUser()->getUserName()
         );
         $this->reload();
     }
