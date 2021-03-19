@@ -9,7 +9,6 @@ use src\Utils\Database\OcDb;
 
 class LogEntryController
 {
-
     /**
      * Returns array of GeoCacheLogs objects - newest logs meeting criteria given as parameters
      *
@@ -135,5 +134,4 @@ class LogEntryController
             ORDER BY `cache_logs`.`date` DESC, `cache_logs`.`id` DESC
             LIMIT :v2 OFFSET :v3";
     }
-
 }

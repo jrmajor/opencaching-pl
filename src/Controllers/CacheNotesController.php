@@ -253,7 +253,4 @@ class CacheNotesController extends BaseController
 
         return $result;
     }
-
-
-
 }

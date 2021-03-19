@@ -234,7 +234,6 @@ class View
         Debug::errorLog($message);
     }
 
-
     public function errorLog($message)
     {
         Debug::errorLog("Template Error: $message", false);
@@ -289,7 +288,6 @@ class View
             $this->_loadFancyBox = false;
         }
     }
-
 
     /**
      * Returns if should show video banner + slider on page

@@ -240,7 +240,6 @@ class OcDb extends OcPdo
         $this->error('Call PDOstatement issue!');
     }
 
-
     /**
      * This method returns the value from first column of first row in statement
      *
@@ -265,7 +264,6 @@ class OcDb extends OcPdo
             return $default;
         }
     }
-
 
     /**
      * @param PDOStatement|null $stmt
@@ -492,7 +490,6 @@ class OcDb extends OcPdo
 
         return $stmt;
     }
-
 
     /**
      * Executes given query, as described in method multiVariableQuery().

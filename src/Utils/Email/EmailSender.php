@@ -208,5 +208,4 @@ class EmailSender
         $email->setHtmlBody($formattedMessage->getEmailContent());
         $email->send();
     }
-
 }

@@ -22,7 +22,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  *
  */
 class Column_EllipsedText extends AbstractColumn {
-
     /**
      * Returns the name of the chunk template
      * {@inheritDoc}

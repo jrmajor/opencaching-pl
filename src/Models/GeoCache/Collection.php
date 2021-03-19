@@ -46,5 +46,4 @@ class Collection extends ArrayObject
         $this->isReady = $isReady;
         return $this;
     }
-
 }

@@ -120,5 +120,4 @@ class CacheNote extends BaseObject
 
         return $db->dbResultFetchAll($rs);
     }
-
 }

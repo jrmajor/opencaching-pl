@@ -74,5 +74,4 @@ class Vote extends BaseObject
     {
         return $this->date;
     }
-
 }

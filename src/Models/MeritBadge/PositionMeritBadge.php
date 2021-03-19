@@ -27,7 +27,6 @@ class PositionMeritBadge{
         return $this->type;
     }
 
-
     public function getGainDate(){
         return $this->gain_date;
     }
@@ -39,7 +38,6 @@ class PositionMeritBadge{
     public function getOwnerName(){
         return $this->owner_name;
     }
-
 
     //////////////////////////////////////////////////////////////////////
     // public functions
@@ -66,5 +64,4 @@ class PositionMeritBadge{
             $this->owner_name = $rec['badge_position_owner_name'];
 
     }
-
 }

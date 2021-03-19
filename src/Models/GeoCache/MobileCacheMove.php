@@ -83,7 +83,6 @@ class MobileCacheMove extends BaseObject
         Facade::schedule_user_entries_check($this->cacheId, $this->userId);
     }
 
-
     public static function updateDateOnLogEdit(GeoCacheLog $log, $newDate)
     {
 
@@ -152,5 +151,4 @@ class MobileCacheMove extends BaseObject
             }
         }
     }
-
 }

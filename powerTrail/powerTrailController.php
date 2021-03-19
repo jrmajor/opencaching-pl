@@ -244,7 +244,6 @@ class powerTrailController
         $this->userPTs = $userPTs;
     }
 
-
     public function debug($var, $name = null, $line = null)
     {
         //if($this->debug === false) return;

@@ -81,5 +81,4 @@ class ViewBadgeHeadController extends BaseController{
         $this->sCode = file_get_contents(__DIR__.'/../../src/Views/badge_head.tpl.php');
         $this->sCode = tpl_do_translate($this->sCode);
     }
-
 }

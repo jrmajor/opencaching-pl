@@ -234,5 +234,4 @@ class Gis
 
        return [$left, $top];
     }
-
 }

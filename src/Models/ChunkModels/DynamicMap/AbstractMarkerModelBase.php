@@ -30,5 +30,4 @@ abstract class AbstractMarkerModelBase
     {
         return isset($this->lat, $this->lon, $this->icon);
     }
-
 }

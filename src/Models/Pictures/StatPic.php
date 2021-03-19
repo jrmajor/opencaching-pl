@@ -195,7 +195,6 @@ class StatPic extends BaseObject
         $this->maxtextwidth = $row['maxtextwidth'];
     }
 
-
     public function getId ()
     {
         return $this->id;
@@ -210,5 +209,4 @@ class StatPic extends BaseObject
     {
         return $this->previewPath;
     }
-
 }

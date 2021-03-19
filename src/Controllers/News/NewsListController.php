@@ -80,5 +80,4 @@ class NewsListController extends BaseController
         $this->view->setTemplate('news/newsItem');
         $this->view->buildView();
     }
-
 }

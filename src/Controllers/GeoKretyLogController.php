@@ -186,7 +186,6 @@ class GeoKretyLogController extends BaseController
      * @param GeoKretLog $geoKretyLog
      * @return string
      */
-
     private function sendLog(GeoKretLog $geoKretyLog)
     {
         $tries = 0;

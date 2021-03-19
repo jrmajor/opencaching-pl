@@ -170,5 +170,4 @@ class DynamicMapModel
     {
         return $this->infoMessage;
     }
-
 }

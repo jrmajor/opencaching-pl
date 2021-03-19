@@ -101,5 +101,4 @@ class cookie
         print_r($this->values);
         exit;
     }
-
 }

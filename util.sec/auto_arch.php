@@ -69,7 +69,6 @@ class AutoArch
         }
     }
 
-
     private function sendEmail($step, $cacheid)
     {
         $octeamEmailAddress = OcConfig::getEmailAddrOcTeam();

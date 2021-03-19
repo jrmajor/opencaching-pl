@@ -14,7 +14,6 @@ use src\Utils\Database\QueryBuilder;
  */
 class MultiUserQueries extends BaseObject
 {
-
     /**
      * Number of users which create at least one cache
      * or at least one found/not-found log
@@ -158,7 +157,6 @@ class MultiUserQueries extends BaseObject
 
     }
 
-
     public static function getOcTeamMembersArray()
     {
         $query = '
@@ -190,5 +188,4 @@ class MultiUserQueries extends BaseObject
             return User::fromUserIdFactory($row['user_id']);
         });
     }
-
 }

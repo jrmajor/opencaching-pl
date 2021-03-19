@@ -39,8 +39,6 @@ class UserMeritBadge{
         $this->oCategory = new \src\Models\MeritBadge\CategoryMeritBadge();
     }
 
-
-
     //////////////////////////////////////////////////////////////////////
     // getField functions
     //////////////////////////////////////////////////////////////////////
@@ -93,9 +91,6 @@ class UserMeritBadge{
         return $this->getOBadge()->getPicture();
     }
 
-
-
-
     //////////////////////////////////////////////////////////////////////
     // getObject functions
     //////////////////////////////////////////////////////////////////////
@@ -110,8 +105,6 @@ class UserMeritBadge{
     public function getOCategory(){
         return $this->oCategory;
     }
-
-
 
     //////////////////////////////////////////////////////////////////////
     // public functions
@@ -149,5 +142,4 @@ class UserMeritBadge{
         if (isset($rec['badge_user_description']))
             $this->description = $rec['badge_user_description'];
     }
-
 }

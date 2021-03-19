@@ -9,7 +9,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 class Column_CacheFullRegionObject extends AbstractColumn
 {
-
     /**
      * @return string
      */

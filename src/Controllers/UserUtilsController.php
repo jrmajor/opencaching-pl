@@ -9,7 +9,6 @@ use src\Utils\Uri\Uri;
 
 class UserUtilsController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -103,5 +102,4 @@ class UserUtilsController extends BaseController
 
         $this->view->buildView();
     }
-
 }

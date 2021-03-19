@@ -48,5 +48,4 @@ class Rot13
 
         return $retval;
     }
-
 }

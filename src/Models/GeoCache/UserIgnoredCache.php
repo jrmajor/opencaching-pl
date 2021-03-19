@@ -94,5 +94,4 @@ class UserIgnoredCache extends BaseObject
 
         return $db->dbResultFetchAll($stmt);
     }
-
 }

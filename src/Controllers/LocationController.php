@@ -53,5 +53,4 @@ class LocationController extends BaseController
             ['locationTable' => $nutsLocation->getDataTable()]);
 
     }
-
 }

@@ -110,7 +110,6 @@ class Log
         return $this;
     }
 
-
     public function storeInDb()
     {
         $db = OcDb::instance();
@@ -162,5 +161,4 @@ class Log
                 return false;
         }
     }
-
 }

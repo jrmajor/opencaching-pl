@@ -130,5 +130,4 @@ class OcPdo extends PDO
      * @return void
      */
     private function __clone() {}
-
 }

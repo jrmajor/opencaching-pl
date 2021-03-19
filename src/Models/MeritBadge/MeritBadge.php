@@ -112,8 +112,6 @@ class MeritBadge
         return $text;
     }
 
-
-
     public function setFromRow( $rec ){
 
         if ( isset($rec['badges_id']) )
@@ -173,7 +171,6 @@ class MeritBadge
         return $size;
     }
 
-
     public static function getColor( $level, $amountOfLevels){
         if (!$amountOfLevels) $amountOfLevels=1;
 
@@ -183,7 +180,6 @@ class MeritBadge
 
         return self::$_colors[ $idx-1 ];
     }
-
 
     public static function getProgressBarValueMax($prevValue, $nextValue){
         if ( $nextValue== self::THE_HIGHEST_LEVEL)
@@ -228,7 +224,6 @@ class MeritBadge
         return '...';
     }
 
-
     //# select () as value from ...  # - one value
     //@ select () as cache_id, () as cache_name from ...  @ - a list of caches
     public static function sqlTextTransform($text){
@@ -265,5 +260,4 @@ class MeritBadge
 
         return $text;
     }
-
 }

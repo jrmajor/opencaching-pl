@@ -95,5 +95,4 @@ class UserWatchedCache extends BaseObject
 
         return $db->dbResultFetchAll($stmt);
     }
-
 }

@@ -5,7 +5,6 @@ use src\Models\BaseObject;
 
 class GeoCacheScore extends BaseObject
 {
-
     public static function getVotesScoreForCache($cacheId)
     {
 
@@ -31,6 +30,4 @@ class GeoCacheScore extends BaseObject
 
         $log->getGeoCache()->recalculateCacheScore();
     }
-
-
 }

@@ -12,7 +12,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 
 class Column_OnClickActionIcon extends AbstractColumn {
-
     protected function getChunkName()
     {
         return 'listOfCaches/onClickActionIconColumn';

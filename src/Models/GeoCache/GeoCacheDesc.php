@@ -29,7 +29,6 @@ class GeoCacheDesc extends BaseObject
     private $node;
     private $rr_comment='';
 
-
     public function __construct(){
 
         parent::__construct();

@@ -6,7 +6,6 @@ require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 
 class RepairUserScores
 {
-
     function run()
     {
         $db = OcDb::instance();
@@ -92,7 +91,6 @@ class RepairUserScores
         unset($db);
         echo "-----------------------------------<br>total_touched=$total_touched<br>";
     }
-
 }
 
 $rus = new RepairUserScores();

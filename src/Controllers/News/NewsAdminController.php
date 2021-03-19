@@ -10,7 +10,6 @@ use src\Utils\Uri\Uri;
 
 class NewsAdminController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();

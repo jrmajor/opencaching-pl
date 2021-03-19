@@ -4,7 +4,6 @@ namespace src\Utils\Text;
 
 class TextConverter
 {
-
     public static function addHyperlinkToURL($text){
 
         $texti = mb_strtolower($text);
@@ -115,7 +114,6 @@ class TextConverter
         $string = str_ireplace('grudzień', 'grudnia', $string);
         return $string;
     }
-
 
     /**
      * Retruns number of bytes from string like: 15M, 12k etc.

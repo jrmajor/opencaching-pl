@@ -6,7 +6,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class CronAdminController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();

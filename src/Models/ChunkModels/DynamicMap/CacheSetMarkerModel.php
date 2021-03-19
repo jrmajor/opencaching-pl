@@ -41,5 +41,4 @@ class CacheSetMarkerModel extends AbstractMarkerModelBase
         return parent::checkMarkerData() &&
                isset($this->name, $this->link);
     }
-
 }

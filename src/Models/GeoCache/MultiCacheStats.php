@@ -13,7 +13,6 @@ use src\Utils\Cache\OcMemCache;
  */
 class MultiCacheStats extends BaseObject
 {
-
     /**
      * EVENTS NOT INCLUDED!
      * @param int $limit
@@ -572,5 +571,4 @@ class MultiCacheStats extends BaseObject
 
         return $result;
     }
-
 }

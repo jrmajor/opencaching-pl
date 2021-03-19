@@ -14,7 +14,6 @@ use src\Utils\Uri\Uri;
 
 class CacheSetsListController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -104,5 +103,4 @@ class CacheSetsListController extends BaseController
 
         tpl_BuildTemplate();
     }
-
 }

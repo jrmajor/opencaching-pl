@@ -230,5 +230,4 @@ class NutsLocation extends BaseObject
              WHERE code LIKE :1
              ORDER BY name ASC', $countryCode));
     }
-
 }

@@ -16,11 +16,9 @@ class CategoryMeritBadge{
         return $this->id;
     }
 
-
     public function getName(){
         return $this->name;
     }
-
 
     //////////////////////////////////////////////////////////////////////
     // public functions
@@ -34,5 +32,4 @@ class CategoryMeritBadge{
         if (isset($rec['badge_categories_name']))
             $this->name = $rec['badge_categories_name'];
     }
-
 }

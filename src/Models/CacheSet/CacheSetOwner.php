@@ -20,7 +20,6 @@ class CacheSetOwner extends BaseObject
         parent::__construct();
     }
 
-
     public function getUserId()
     {
         return $this->userId;
@@ -115,5 +114,4 @@ class CacheSetOwner extends BaseObject
 
         return $cacheSets;
     }
-
 }

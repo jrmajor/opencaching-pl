@@ -110,5 +110,4 @@ class StaticMapModel
     {
         return $this->mapZoom;
     }
-
 }

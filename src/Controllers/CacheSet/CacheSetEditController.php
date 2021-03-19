@@ -7,7 +7,6 @@ use src\Controllers\BaseController;
 
 class CacheSetEditController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -23,5 +22,4 @@ class CacheSetEditController extends BaseController
     {
 
     }
-
 }

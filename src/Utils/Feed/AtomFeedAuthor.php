@@ -123,5 +123,4 @@ class AtomFeedAuthor
         }
         return true;
     }
-
 }

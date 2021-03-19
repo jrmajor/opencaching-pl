@@ -18,7 +18,6 @@ class CacheWithLogMarkerModel extends CacheMarkerModel
     public $log_username;
     public $log_date;
 
-
     public static function fromGeoCacheLogFactory(GeoCacheLog $log, User $user = null)
     {
         $marker = new self();

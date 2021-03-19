@@ -5,7 +5,6 @@ namespace src\Models\User;
 use src\Models\BaseObject;
 
 class UserAdmin extends BaseObject {
-
     /**
      * (Un)bans $user
      * Sets is_active_flag to $state for $user in the user table
@@ -77,5 +76,4 @@ class UserAdmin extends BaseObject {
             ON DUPLICATE KEY UPDATE `newcaches_no_limit` = :1
         ', boolval($state), $user->getUserId()));
     }
-
 }

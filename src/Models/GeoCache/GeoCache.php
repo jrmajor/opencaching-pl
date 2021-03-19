@@ -781,7 +781,6 @@ class GeoCache extends GeoCacheCommons
         return $this;
     }
 
-
     /**
      * @param PowerTrail $powerTrail
      * @return GeoCache
@@ -942,7 +941,6 @@ class GeoCache extends GeoCacheCommons
         return $hours . ':' . $min . ' h';
     }
 
-
     public function getOtherWaypointIds()
     {
         return $this->otherWaypointIds;
@@ -1042,6 +1040,7 @@ class GeoCache extends GeoCacheCommons
     {
         return $this->descLanguagesList;
     }
+
     public function getMp3count()
     {
         return $this->mp3count;
@@ -1084,7 +1083,6 @@ class GeoCache extends GeoCacheCommons
 
         return $result;
     }
-
 
     /**
      * get mobile cache distance.
@@ -1196,7 +1194,6 @@ class GeoCache extends GeoCacheCommons
         return $result;
     }
 
-
     /**
      * update last_modified=NOW() for every object depending on that cacheid
      *
@@ -1235,7 +1232,6 @@ class GeoCache extends GeoCacheCommons
             AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
     }
 
-
     public static function updateLastModified ($cacheId) {
         self::db()->multiVariableQuery(
             'UPDATE caches SET last_modified=NOW() WHERE cache_id= :1 ', $cacheId);
@@ -1256,7 +1252,6 @@ class GeoCache extends GeoCacheCommons
 
         return $result;
     }
-
 
     /**
      * Returns last modification date
@@ -1753,6 +1748,7 @@ class GeoCache extends GeoCacheCommons
             'UPDATE caches SET picturescount=picturescount + :1, last_modified = NOW()
              WHERE cache_id = :2 LIMIT 1', $value, $this->getCacheId());
     }
+
     /**
      * Returns last active (not deleted) GeoCacheLog for GeoCache or null if there is no logs for cache
      *
@@ -1778,6 +1774,4 @@ class GeoCache extends GeoCacheCommons
 
         return $this->lastLog;
     }
-
-
 }

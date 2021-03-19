@@ -5,7 +5,6 @@ use src\Models\BaseObject;
 
 class ReportWatches extends BaseObject
 {
-
     public function __construct()
     {
         parent::__construct();

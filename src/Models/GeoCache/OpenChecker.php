@@ -11,8 +11,6 @@ class OpenChecker
     private $hits;
     private $tries;
 
-
-
     public function __construct($cacheId)
     {
         $s = XDb::xSql(
@@ -31,7 +29,6 @@ class OpenChecker
         }
 
     }
-
 
     public static function ForCacheIdFactory($cacheId){
 
@@ -69,6 +66,4 @@ class OpenChecker
         if($config['module']['openchecker']['enabled']) return true;
         else return false;
     }
-
-
 }

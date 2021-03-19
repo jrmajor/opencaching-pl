@@ -73,7 +73,6 @@ class Coordinates
         return $coords;
     }
 
-
     /**
      * Load this class data based on data from DB
      *
@@ -201,7 +200,6 @@ class Coordinates
         return $this->getFormattedPartsArray($format, $prefix, $deg, $min, $sec);
     }
 
-
     /**
      * returns parts of the coordinate according to given format
      * @param int $format
@@ -232,7 +230,6 @@ class Coordinates
                 return '';
         }
     }
-
 
     /**
      * return true if cords in object are set to reasonable values
@@ -408,5 +405,4 @@ class Coordinates
         $retval = $retval . sprintf('%06.3f', round($lat * 60, 3)) . '\'';
         return $retval;
     }
-
 }

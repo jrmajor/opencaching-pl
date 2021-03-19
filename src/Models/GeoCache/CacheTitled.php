@@ -72,7 +72,6 @@ class CacheTitled extends BaseObject
             0, $cacheId));
     }
 
-
     /**
      * Returns rich info about last titled cache
      * @return CacheTitled object of last titledCache
@@ -105,5 +104,4 @@ class CacheTitled extends BaseObject
             throw new Exception('CacheTitled row not found');
         }
     }
-
 }

@@ -9,7 +9,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  * - ptName - name of the powertrails
  */
 class Column_GeoPathIcon extends AbstractColumn {
-
     protected function getChunkName()
     {
         return 'listOfCaches/geoPathIconColumn';

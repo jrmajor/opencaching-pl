@@ -303,7 +303,6 @@ class ViewCacheController extends BaseController
         return null;
     }
 
-
     private function processGeoPaths()
     {
         global $powerTrailModuleSwitchOn;
@@ -588,7 +587,6 @@ class ViewCacheController extends BaseController
             $this->view->setVar('userNoteText', $userNoteText);
         }
     }
-
 
     private function processUserCoordsModification()
     {

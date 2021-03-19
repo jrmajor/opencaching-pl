@@ -139,5 +139,4 @@ class login
         $this->pClear();
         $this->pStoreCookie();
     }
-
 }

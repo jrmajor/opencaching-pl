@@ -224,7 +224,6 @@ class RssFeed {
  * Interface for reading items from feed.
  */
 interface FeedReader {
-
     /**
      * Create reader from SimpleXMLElement.
      *
@@ -253,14 +252,12 @@ interface FeedReader {
      * @return bool
      */
     public static function canRead(SimpleXMLElement $root);
-
 }
 
 /**
  * Concrete implementation of FeedReader that will never return an item.
  */
 class NullReader implements FeedReader {
-
     public function __construct(SimpleXMLElement $root) {
         //Nothing
     }

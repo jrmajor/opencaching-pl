@@ -73,5 +73,4 @@ final class ApplicationContainer
     {
         return $this->ocConfig;
     }
-
 }

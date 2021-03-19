@@ -34,7 +34,6 @@ class UserPreferences extends BaseObject
     /** @var UserPreferencesBaseData[] */
     private $dataObjects = []; //UserPreferencesBaseData objects loaded from DB
 
-
     /**
      * Returns UserPreferencesBaseData by given key. DB data are merged with defaults.
      *
@@ -105,7 +104,6 @@ class UserPreferences extends BaseObject
             $userId, $key, $prefsObj->getJsonValues());
 
     }
-
 
     /**
      * Returns true if this key is allowed (defined in ALLOWED_KEYS)

@@ -156,7 +156,6 @@ class TestController extends BaseController
         $this->view->buildView();
     }
 
-
     /**
      * This method allow testing of HTML strings cleaning used by OC code
      */
@@ -191,7 +190,6 @@ class TestController extends BaseController
         $this->view->buildView();
 
     }
-
 
     public function userPreferences()
     {
@@ -328,7 +326,6 @@ class TestController extends BaseController
 
         $this->view->buildView();
     }
-
 
     /**
      * This is test of file upload with UploadChunk

@@ -116,7 +116,6 @@ class CacheSetCommon extends BaseObject
         return !in_array($cache->getStatus(), $forbiddenStatuses);
     }
 
-
     public function getCachePoints(GeoCache $cache)
     {
         // cache type to points
@@ -157,5 +156,4 @@ class CacheSetCommon extends BaseObject
 
         return ($altPoints + $typePoints + $sizePoints + $difficPoint + $terrainPoints);
     }
-
 }

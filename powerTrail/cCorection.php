@@ -127,7 +127,6 @@ class powerTrail_cCorection
                 $this->longitude = $this->longitude + $degDiffLong;
         }
     }
-
 }
 
 final class UserCollection
@@ -143,7 +142,6 @@ final class UserCollection
         }
         return $inst;
     }
-
 
     private function __construct()
     {

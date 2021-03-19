@@ -3,7 +3,6 @@ namespace src\Utils\DateTime;
 
 class Converter
 {
-
     /*
      * Matches each symbol of PHP date format standard
      * with jQuery equivalent codeword

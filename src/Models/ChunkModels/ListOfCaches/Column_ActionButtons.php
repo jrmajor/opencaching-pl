@@ -18,7 +18,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 
 class Column_ActionButtons extends AbstractColumn {
-
     protected function getChunkName()
     {
         return 'listOfCaches/actionButtonsColumn';

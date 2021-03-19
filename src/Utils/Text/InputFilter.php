@@ -20,7 +20,6 @@ namespace src\Utils\Text;
  */
 class InputFilter
 {
-
     public static function cleanupUserInput($dirtyText)
     {
         $allowedtags = mb_split(',', 'a,b,i,p,q,s,u,br,dd,dl,dt,em,h1,h2,h3,h4,h5,h6,hr,'.
@@ -41,7 +40,6 @@ class InputFilter
         return $myFilter->process($dirtyText);
     }
 
-
     var $tagsArray;         // default = empty array
     var $attrArray;         // default = empty array
     var $tagsMethod;        // default = 0
@@ -59,7 +57,6 @@ class InputFilter
      * @param int $attrMethod - 0= allow just user-defined, 1= allow all but user-defined
      * @param int $xssAuto - 0= only auto clean essentials, 1= allow clean blacklisted tags/attr
      */
-
     private function __construct($tagsArray = [], $attrArray = [], $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
     {
         // make sure user defined arrays are in lowercase
@@ -369,8 +366,6 @@ class InputFilter
         return $source;
     }
 
-
-
     /**
      * @author Oliver Dietz
      * @access protected
@@ -483,5 +478,4 @@ class InputFilter
 
         return $str;
     }
-
 }

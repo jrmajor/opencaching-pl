@@ -9,7 +9,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 class Column_CacheLastLogObject extends AbstractColumn
 {
-
     /**
      * @return string
      */
@@ -25,5 +24,4 @@ class Column_CacheLastLogObject extends AbstractColumn
     {
         return 'left';
     }
-
 }

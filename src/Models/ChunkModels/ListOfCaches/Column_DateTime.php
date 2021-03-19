@@ -13,7 +13,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 class Column_DateTime extends AbstractColumn
 {
-
     protected function getChunkName()
     {
         return 'listOfCaches/dateTimeColumn';
@@ -23,5 +22,4 @@ class Column_DateTime extends AbstractColumn
     {
         return 'left';
     }
-
 }

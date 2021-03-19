@@ -60,7 +60,6 @@ abstract class BaseController
         // there is no DB access init - DB operations should be performed in models/objects
     }
 
-
     protected function redirectToLoginPage()
     {
         $this->view->redirect(
@@ -83,6 +82,7 @@ abstract class BaseController
         echo (json_encode($response));
         exit;
     }
+
     protected function ajaxSuccessResponse($message=null, array $additionalResponseData=null){
         $response = [
             'status' => 'OK',
@@ -98,6 +98,7 @@ abstract class BaseController
 
         $this->ajaxJsonResponse($response);
     }
+
     protected function ajaxErrorResponse($message=null, $statusCode=null, array $additionalResponseData=null){
         $response = [
             'status' => 'ERROR',
@@ -162,5 +163,4 @@ abstract class BaseController
             exit();
         }
     }
-
 }

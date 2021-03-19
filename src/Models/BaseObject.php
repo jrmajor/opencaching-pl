@@ -12,7 +12,6 @@ abstract class BaseObject
 
     protected $dataLoaded = false; //are data loaded to this object
 
-
     public function __construct(){
         $this->db = self::db();
     }
@@ -65,5 +64,4 @@ abstract class BaseObject
     {
         $this->db = self::db();
     }
-
 }

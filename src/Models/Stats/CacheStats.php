@@ -8,7 +8,6 @@ use src\Utils\Cache\OcMemCache;
 
 class CacheStats extends BaseObject
 {
-
     public function __construct()
     {
         parent::__construct();

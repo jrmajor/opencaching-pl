@@ -9,7 +9,6 @@ abstract class UserPreferencesBaseData {
     private $key;
     private $values;
 
-
     /**
      * This function should be implemented in child-class
      * @return array of default values
@@ -66,5 +65,4 @@ abstract class UserPreferencesBaseData {
     public function loadDefaults(){
         $this->values = $this->getDefaults();
     }
-
 }

@@ -217,5 +217,4 @@ class UserWatchedCachesController extends BaseController
         }
 
     }
-
 }

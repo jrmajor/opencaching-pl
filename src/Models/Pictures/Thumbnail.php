@@ -35,7 +35,6 @@ class Thumbnail extends BaseObject
     const SIZE_SMALL        = '/sizeSmall';
     const SIZE_MEDIUM       = '/sizeMedium';
 
-
     /**
      * Returns the uri to the thumbnail placeholder (like spoiler or error) in the current lang.
      *
@@ -187,7 +186,6 @@ class Thumbnail extends BaseObject
         return null;
     }
 
-
     private static function buildPath($uuid, $spoiler, $size )
     {
         $path = self::THUMBS_DIR;
@@ -196,5 +194,4 @@ class Thumbnail extends BaseObject
         $path .= "/{$uuid[0]}/{$uuid[1]}/{$uuid[2]}";
         return $path;
     }
-
 }

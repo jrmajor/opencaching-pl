@@ -123,7 +123,6 @@ class StaticMap
         echo $map->showMap();
     }
 
-
     private function __construct()
     {
         $this->zoom = 0;
@@ -263,7 +262,6 @@ class StaticMap
         }
     }
 
-
     private function placeMarkers()
     {
         // loop thru marker array
@@ -331,7 +329,6 @@ class StaticMap
                 0, 0, imagesx($markerImg), imagesy($markerImg));
         }
     }
-
 
     private function tileUrlToFilename($url)
     {

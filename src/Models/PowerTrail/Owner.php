@@ -25,6 +25,4 @@ class Owner extends User
         $this->privileages = $privileages;
         return $this;
     }
-
-
 }

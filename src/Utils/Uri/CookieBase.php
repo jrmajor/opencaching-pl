@@ -62,7 +62,6 @@ class CookieBase
                 $secureOnly, $httpOnly, $sameSiteRestriction));
     }
 
-
     private static function buildCookieHeader(
         $name, $value = null, $expiryTime = 0, $path = null, $domain = null,
         $secureOnly = false, $httpOnly = false, $sameSiteRestriction = null

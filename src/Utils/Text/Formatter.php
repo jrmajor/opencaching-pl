@@ -16,7 +16,6 @@ use src\Models\OcConfig\OcConfig;
  */
 class Formatter
 {
-
     /**
      * Format deciml fractions or bigger numbers (with thousand point)
      * according to values set in config
@@ -111,5 +110,4 @@ class Formatter
         }
         return $result;
     }
-
 }

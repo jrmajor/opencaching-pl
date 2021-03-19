@@ -139,12 +139,10 @@ class UserInputFilter
             return $dirtyHtml;
         }
     }
-
 }
 
 class OC_HTMLSafeEmbed extends HTMLPurifier_HTMLModule_SafeEmbed
 {
-
     public function setup($config)
     {
         $newEmbed = HTMLPurifier_ElementDef::create(null, null, [
@@ -160,12 +158,10 @@ class OC_HTMLSafeEmbed extends HTMLPurifier_HTMLModule_SafeEmbed
         $embed->mergeIn($newEmbed);
         unset($embed->attr_transform_post[count($embed->attr_transform_post) - 1]);
     }
-
 }
 
 class OC_HTMLSafeObject extends HTMLPurifier_HTMLModule_SafeObject
 {
-
     public function setup($config)
     {
         $newObject = HTMLPurifier_ElementDef::create(null, null, [
@@ -184,7 +180,6 @@ class OC_HTMLSafeObject extends HTMLPurifier_HTMLModule_SafeObject
         unset($this->info_injector[count($this->info_injector) - 1]);
         $this->info_injector[] = new OC_HTMLPurifier_Injector_SafeObject();
     }
-
 }
 
 class OC_HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform_SafeParam
@@ -213,12 +208,10 @@ class OC_HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
         $attr = parent::transform($attr, $config, $context);
         return $attr;
     }
-
 }
 
 class OC_HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector_SafeObject
 {
-
     public function __construct()
     {
         unset($this->addParam['allowScriptAccess'], $this->addParam['allowNetworking']);
@@ -236,5 +229,4 @@ class OC_HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector_SafeObje
     {
         parent::handleEnd($token);
     }
-
 }

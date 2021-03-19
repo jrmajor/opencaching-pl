@@ -37,9 +37,6 @@ class QueryBuilder
     private $limit = null;
     private $offset = null;
 
-
-
-
     public function __construct()
     {
 
@@ -49,7 +46,6 @@ class QueryBuilder
     {
         return new self();
     }
-
 
     public function select($columns=null){
         $this->method = 'SELECT';
@@ -156,7 +152,6 @@ class QueryBuilder
         $result .= $this->getLimitString();
         return $result;
     }
-
 
     private static function getNonNegativeIntValOrNull($var)
     {

@@ -193,7 +193,6 @@ class GoogleOAuth extends OAuthSimpleUserBase
         $this->isUserDataLoaded = true;
     }
 
-
     private static function getClientId()
     {
         global $config;
@@ -205,6 +204,4 @@ class GoogleOAuth extends OAuthSimpleUserBase
         global $config;
         return $config['oAuth']['google']['clientSecret'];
     }
-
-
 }

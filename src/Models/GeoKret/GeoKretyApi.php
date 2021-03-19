@@ -173,5 +173,4 @@ class GeoKretyApi extends BaseObject
         $this->db->multiVariableQuery($query, $operationType, addslashes(serialize($dataSent)),
             addslashes(serialize($response)));
     }
-
 }

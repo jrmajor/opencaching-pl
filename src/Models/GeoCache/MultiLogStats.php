@@ -11,7 +11,6 @@ use src\Models\User\User;
  */
 class MultiLogStats extends BaseObject
 {
-
     public static function getTotalSearchesNumber()
     {
         $countedTypes = implode(',', [

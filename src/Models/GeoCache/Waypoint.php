@@ -37,7 +37,6 @@ class Waypoint extends WaypointCommons
         self::TYPE_TRAILHEAD => 'images/waypoints/wp_trailhead.png',
     ];
 
-
     private static function FromDbRow($row)
     {
         $waypoint = new Waypoint();
@@ -143,7 +142,6 @@ class Waypoint extends WaypointCommons
         return $this->iconNames[$this->type];
     }
 
-
     public function isHidden(){
         return $this->status == self::STATUS_HIDDEN;
     }
@@ -187,5 +185,4 @@ class Waypoint extends WaypointCommons
 
         return $results;
     }
-
 }

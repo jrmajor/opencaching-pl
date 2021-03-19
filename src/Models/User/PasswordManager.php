@@ -231,7 +231,6 @@ class PasswordManager
         return $input;
     }
 
-
     /**
      * Utility function. Return a random string of specified length.
      * Exclude similar characters like 0-O,1-l
@@ -249,5 +248,4 @@ class PasswordManager
         }
         return $randomString;
     }
-
 }

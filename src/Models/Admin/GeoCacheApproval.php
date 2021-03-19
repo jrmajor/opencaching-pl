@@ -27,5 +27,4 @@ class GeoCacheApproval extends BaseObject
              WHERE caches.status = :1',
              0, GeoCacheCommons::STATUS_WAITAPPROVERS);
     }
-
 }

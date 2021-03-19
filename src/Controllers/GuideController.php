@@ -82,5 +82,4 @@ class GuideController extends BaseController
         $this->view->buildView();
 
     }
-
 }

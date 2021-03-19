@@ -50,7 +50,6 @@ class convertLongLat {
 }
 
 class OpenCheckerCore {
-
     public function BruteForceCheck($OpenCheckerSetup) {
         tpl_set_var('section_3_start', '');
         tpl_set_var('section_3_stop', '');
@@ -463,7 +462,6 @@ class OpenCheckerCore {
         tpl_BuildTemplate();
         exit;
     }
-
 }
 
 class Pagination
@@ -495,6 +493,5 @@ class Pagination
     {
         return $this->data;
     }
-
 }
 

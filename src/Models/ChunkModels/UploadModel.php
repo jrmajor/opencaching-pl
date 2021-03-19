@@ -81,6 +81,7 @@ class UploadModel {
       $uploadModel->setDirs(OcConfig::getPicUploadFolderInDynBaseDir());            // where to store files on server
       return $uploadModel;
   }
+
   // add more upload configurations like TestTxtUploadFactory here...
 
   public function addUrlBaseToNewFilesArray(array &$newFiles){

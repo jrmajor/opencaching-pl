@@ -9,7 +9,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 class Column_GeoPathIconObject extends AbstractColumn
 {
-
     /**
      * @return string
      */

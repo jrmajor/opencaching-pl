@@ -30,8 +30,6 @@ abstract class OAuthSimpleUserBase
     const ERROR_CANT_RETRIVE_USER_DATA = 6;
     const ERROR_INVALID_USER_DATA_JSON = 7;
 
-
-
     /**
      * Method returns url at which user start authorization process by external service
      *
@@ -158,5 +156,4 @@ abstract class OAuthSimpleUserBase
             session_start();
         }
     }
-
 }

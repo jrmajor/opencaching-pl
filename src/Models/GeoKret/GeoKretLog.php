@@ -258,5 +258,4 @@ class GeoKretLog extends BaseObject
         return self::db()->simpleQueryValue(
             'SELECT COUNT(*) FROM geokret_log', 0);
     }
-
 }

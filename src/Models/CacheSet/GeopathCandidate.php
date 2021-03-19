@@ -243,5 +243,4 @@ class GeopathCandidate extends BaseObject
         $geoPath->addCache($this->getGeoCache());
         $this->cancelOffer();
     }
-
 }

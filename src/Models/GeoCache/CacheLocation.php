@@ -134,7 +134,6 @@ class CacheLocation extends BaseObject
 
     }
 
-
     /**
      * Review all caches and add cacheLocation record when there is no any
      */
@@ -220,5 +219,4 @@ class CacheLocation extends BaseObject
 
         echo __METHOD__ . ": done: FOUND/FIX/NOFIX: $found/$fixed/$notFixed";
     }
-
 }

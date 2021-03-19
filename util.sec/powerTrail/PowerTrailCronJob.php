@@ -7,7 +7,6 @@ PowerTrailCronJobController::run();
 
 class PowerTrailCronJobController
 {
-
     public static function run()
     {
         self::cleanPowerTrails();
@@ -18,5 +17,4 @@ class PowerTrailCronJobController
         $powerTrailController = new PowerTrailController();
         $powerTrailController->cleanPowerTrailsCronjob();
     }
-
 }

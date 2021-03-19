@@ -8,7 +8,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  */
 class Column_UserNameObject extends AbstractColumn
 {
-
     /**
      * @return string
      */

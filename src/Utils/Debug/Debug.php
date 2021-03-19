@@ -5,7 +5,6 @@ use Throwable;
 
 
 class Debug {
-
     /**
      * Returns backtrace in simple form:
      * file:line | file:line | ...

@@ -4,7 +4,6 @@ namespace src\Utils\FileSystem;
 
 class FileManager
 {
-
     /**
      * Remove all files which matches $filePattern located in $dir older than $timeout
      *
@@ -66,5 +65,4 @@ class FileManager
     {
         return pathinfo($path, PATHINFO_BASENAME);
     }
-
 }

@@ -40,6 +40,4 @@ class MainMapSettings extends UserPreferencesBaseData
             'map' => 'OSM',                 /* last used map */
         ];
     }
-
-
 }

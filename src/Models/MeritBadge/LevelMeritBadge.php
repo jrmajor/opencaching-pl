@@ -61,7 +61,6 @@ class LevelMeritBadge
         return $this->getLevel();
     }
 
-
     //////////////////////////////////////////////////////////////////////
     // public functions
     //////////////////////////////////////////////////////////////////////
@@ -91,5 +90,4 @@ class LevelMeritBadge
         if (isset($rec['badge_levels_gain_last_date']))
             $this->gain_last_date = $rec['badge_levels_gain_last_date'];
     }
-
 }

@@ -645,9 +645,10 @@ class Report extends BaseObject
         }
     }
 
-    // TODO: This method should use GeoCacheLog, but for now this object has no code to save obj.
     /**
      * Adds $content as OC Team log to reported cache
+     *
+     * @todo This method should use GeoCacheLog, but for now this object has no code to save obj.
      *
      * @param string $content
      * @return boolean
@@ -925,5 +926,4 @@ class Report extends BaseObject
             return null;
         }
     }
-
 }

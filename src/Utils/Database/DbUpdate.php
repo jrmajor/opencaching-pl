@@ -65,10 +65,15 @@ class DbUpdate
     // Getters
 
     public function getUuid()     { return $this->uuid; }
+
     public function getName()     { return $this->name; }
+
     public function getFileName() { return $this->name . '.php'; }
+
     public function getFilePath() { return DbUpdates::getUpdatesDir() . '/' . $this->getFileName(); }
+
     public function getRuntype()  { return $this->runtype; }
+
     public function hasRollback() { return method_exists($this->script, 'rollback'); }
 
     public function isInGitMasterBranch()

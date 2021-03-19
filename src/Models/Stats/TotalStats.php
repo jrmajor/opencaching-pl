@@ -15,7 +15,6 @@ use src\Utils\Text\Formatter;
  */
 class TotalStats extends BaseObject
 {
-
     public function __construct()
     {
         parent::__construct();

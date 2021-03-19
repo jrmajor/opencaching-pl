@@ -83,7 +83,6 @@ class PowerTrailController
         return $result;
     }
 
-
     /**
      * used to set geoPath status to inactive, when has too small amount of caches,
      * etc.
@@ -150,5 +149,4 @@ class PowerTrailController
             ],
         ];
     }
-
 }

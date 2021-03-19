@@ -22,7 +22,6 @@ use src\Utils\Uri\Uri;
 
 class CacheLogController extends BaseController
 {
-
     public function isCallableFromRouter($actionName)
     {
         // all public method can be called by router

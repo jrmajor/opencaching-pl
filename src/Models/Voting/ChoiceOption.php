@@ -29,7 +29,6 @@ class ChoiceOption extends BaseObject
     private $orderIdx;
     private $link;
 
-
     public function __construct()
     {
         parent::__construct();
@@ -141,5 +140,4 @@ class ChoiceOption extends BaseObject
     {
         return $this->link;
     }
-
 }

@@ -11,7 +11,6 @@ namespace src\Models\ChunkModels\ListOfCaches;
  * - user_sts - status for current user - for example found or not found etc.
  */
 class Column_CacheTypeIconObject extends AbstractColumn {
-
     /**
      * @return string
      */

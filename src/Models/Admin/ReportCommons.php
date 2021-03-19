@@ -569,6 +569,7 @@ class ReportCommons extends BaseObject
         }
         return $result;
     }
+
     /**
      * Generates <option></option> list of OC Team users
      *
@@ -607,5 +608,4 @@ class ReportCommons extends BaseObject
         }
         return $result;
     }
-
 }

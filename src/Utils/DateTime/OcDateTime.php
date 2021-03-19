@@ -5,7 +5,6 @@ use DateTime;
 
 class OcDateTime
 {
-
     public static function now(): DateTime
     {
         return new DateTime();
@@ -58,5 +57,4 @@ class OcDateTime
     {
         return self::isBefore($checkedDate);
     }
-
 }

@@ -17,7 +17,6 @@ class CacheMarkerModel extends AbstractMarkerModelBase
     public $name;
     public $username;
 
-
     /**
      * Creates marker model from Geocache model
      * @param GeoCache $c
@@ -53,5 +52,4 @@ class CacheMarkerModel extends AbstractMarkerModelBase
         return parent::checkMarkerData() &&
         isset($this->wp, $this->link, $this->name, $this->username);
     }
-
 }

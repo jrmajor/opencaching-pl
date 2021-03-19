@@ -72,7 +72,6 @@ class PrintListController extends BaseController
         $this->view->buildView();
     }
 
-
     public function removeFromListAjax($cacheId)
     {
         $geocache = GeoCache::fromCacheIdFactory($cacheId);

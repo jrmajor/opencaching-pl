@@ -429,5 +429,4 @@ class RSSController extends BaseController
         }
         return $user;
     }
-
 }

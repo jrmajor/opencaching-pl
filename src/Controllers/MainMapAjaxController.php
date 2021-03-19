@@ -353,5 +353,4 @@ class MainMapAjaxController extends BaseController
             $this->searchParams['type'] = '-' . implode('|', $typesToExclude);
         }
     }
-
 }

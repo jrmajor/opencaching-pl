@@ -63,5 +63,4 @@ class CacheRecommendation extends BaseObject
             'SELECT COUNT(cache_id) FROM cache_rating
                     WHERE user_id = :1', 0, $userId);
     }
-
 }

@@ -5,7 +5,6 @@ use Exception;
 use src\Models\OcConfig\OcConfig;
 
 class Uri {
-
     /**
      * Returns url with set given param to given value
      * + remove old value of given param if neccessary
@@ -106,7 +105,6 @@ class Uri {
 
         return $rootPath.'?' . filemtime($realPath);
     }
-
 
     /**
      * Return current protocol (http vs https)

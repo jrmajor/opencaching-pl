@@ -173,7 +173,6 @@ class User extends UserCommons
         return null;
     }
 
-
     /**
      * Factory
      * @param int $userId
@@ -286,7 +285,6 @@ class User extends UserCommons
         }
         return false;
     }
-
 
     private function setUserFieldsByUsedDbRow(array $dbRow)
     {
@@ -978,7 +976,6 @@ class User extends UserCommons
             return 'text-color-success';
         }
     }
-
 
     /**
      * Returns array with statPicText and statPicLogo

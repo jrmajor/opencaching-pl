@@ -30,7 +30,6 @@ class PaginationModel {
     private $errorOccured = false;          // if error occured
     private $errorMsg;                      // error message to display
 
-
     public function __construct($recordsPerPage=null){
 
         $this->loadPaginationUrlParams();
@@ -81,7 +80,6 @@ class PaginationModel {
         return $this->recordsPerPage;
     }
 
-
     /**
      * Set the number of pages which should be seen as numbers at the list
      * @param integer $size
@@ -107,7 +105,6 @@ class PaginationModel {
     public function setGetParamName($pageParam){
         $this->pageParamName = $pageParam;
     }
-
 
     /**
      * Return true if pagination is broken (by misconfguration or improper values of arguments)

@@ -24,7 +24,6 @@ use src\Utils\Text\UserInputFilter;
 
 class GeoPathController extends BaseController
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -241,7 +240,6 @@ class GeoPathController extends BaseController
             'Candidate saved. Email to cache owner is sent.',
             ['localizedMessage' => tr('gp_candidateProposalSaved')]);
     }
-
 
     /**
      * Allow geopath owner to update geopath: center point, points, caches count

@@ -5,7 +5,6 @@ require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 
 class RepairCacheScores
 {
-
     function run()
     {
         $db = OcDb::instance();

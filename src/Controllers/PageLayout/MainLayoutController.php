@@ -57,7 +57,6 @@ class MainLayoutController extends BaseController
     public function index()
     {}
 
-
     /**
      * Prepare everything what is neede for display almost every page at OC
      */
@@ -341,5 +340,4 @@ class MainLayoutController extends BaseController
             return $obj;
         });
     }
-
 }

@@ -210,7 +210,6 @@ class Election extends BaseObject
         return $this->electionRules->disallowLessVotes ?? false;
     }
 
-
     /**
      * @return mixed
      */
@@ -266,7 +265,6 @@ class Election extends BaseObject
     {
         return $this->description;
     }
-
 }
 
 /**

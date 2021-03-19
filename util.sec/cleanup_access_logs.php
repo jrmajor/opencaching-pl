@@ -6,7 +6,6 @@ require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 
 class CleanupAccessLogs
 {
-
     function run()
     {
 
@@ -20,7 +19,6 @@ class CleanupAccessLogs
         unset($db);
         echo "total_deleted=$total_deleted\n";
     }
-
 }
 
 $cal = new CleanupAccessLogs();

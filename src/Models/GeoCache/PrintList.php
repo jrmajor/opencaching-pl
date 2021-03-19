@@ -12,8 +12,6 @@ use src\Utils\Uri\Uri;
  *
  */
 class PrintList {
-
-
     public static function HandleRequest($cacheId)
     {
 
@@ -91,5 +89,4 @@ class PrintList {
             unset($_SESSION['print_list'][$cacheId]);
         }
     }
-
 }

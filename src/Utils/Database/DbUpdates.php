@@ -188,7 +188,6 @@ class DbUpdates
         return __DIR__ . '/Updates';
     }
 
-
     /**
      * Update DB triggers, procedures and functions
      */

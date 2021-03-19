@@ -41,5 +41,4 @@ class CacheAccessLog
     public static function logBrowserCacheAccess($cacheId, $userId, $event){
         return self::logCacheAccess($cacheId, $userId, $event, self::SOURCE_BROWSER);
     }
-
 }

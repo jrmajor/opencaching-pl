@@ -19,7 +19,6 @@ class CacheVisits
     // time in sek between unique visits
     const UNIQUE_VISIT_PERIOD = 604800; //[sek] -one week
 
-
     /**
      * Returns number of unique visits for cache
      * Unique means that between the same user visits was at least UNIQUE_VISIT_PERIOD seconds...

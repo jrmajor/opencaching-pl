@@ -305,7 +305,6 @@ class C001Test extends UpdateScript
         self::finishTest();
     }
 
-
     private function assertTrue($methodName, $testNo, $ok, $comment = '')
     {
         if (!$ok) {
@@ -321,7 +320,6 @@ class C001Test extends UpdateScript
             ': expected '.$regex.', got '.$str
         );
     }
-
 }
 
 return new C001Test;

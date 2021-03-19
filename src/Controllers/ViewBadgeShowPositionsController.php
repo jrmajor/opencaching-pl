@@ -54,5 +54,4 @@ class ViewBadgeShowPositionsController extends BaseController{
     private function setVar($name, $value){
         $this->sCode= mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
     }
-
 }

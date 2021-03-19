@@ -95,7 +95,6 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         return $instance;
     }
 
-
     /**
      * STAGE III: check if code is present and state is the same as before
      *
@@ -168,7 +167,6 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         return true;
     }
 
-
     /**
      * STAGE V: retrive user info
      */
@@ -212,5 +210,4 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         global $config;
         return $config['oAuth']['facebook']['appSecret'];
     }
-
 }

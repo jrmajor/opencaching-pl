@@ -116,10 +116,10 @@ class powerTrailBase{
         }
         return null;
     }
+
      /**
      * here power Trail icons
      */
-
     public static function getPowerTrailIconsByType() {
         $ret =  [
             1 => 'footprintRed.png',

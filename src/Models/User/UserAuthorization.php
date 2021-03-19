@@ -143,7 +143,6 @@ class UserAuthorization extends BaseObject
         self::clearContextVars();
     }
 
-
     private static function initOcSession(User $user){
 
         // generate uniq, random sessionId
@@ -175,7 +174,6 @@ class UserAuthorization extends BaseObject
 
     }
 
-
     private static function initContextVars(User $user){
 
         //init $user in ApplicationContainer
@@ -199,7 +197,6 @@ class UserAuthorization extends BaseObject
             session_destroy();
         }
     }
-
 
     private static function getAuthCookieName(){
         global $config;
@@ -240,7 +237,6 @@ class UserAuthorization extends BaseObject
         return isset($_COOKIE[self::getAuthCookieName()]);
     }
 
-
     private static function getLoggedUserSessionId(){
         if(isset($_SESSION[self::SESSION_ID_KEY])){
             return $_SESSION[self::SESSION_ID_KEY];
@@ -257,7 +253,6 @@ class UserAuthorization extends BaseObject
         }
     }
 
-
     private static function areTooManyLoginAttempts(){
         $db = self::db();
 
@@ -272,7 +267,6 @@ class UserAuthorization extends BaseObject
 
         return $lastHourLoginFails > self::MAX_LOGIN_TRIES_PER_HOUR;
     }
-
 
     private static function insertOcSessionToDb($sessionId, $userId, $permanentSession){
         self::db()->multiVariableQuery(
@@ -358,7 +352,6 @@ class UserAuthorization extends BaseObject
 
         return $result;
     }
-
 
     private static function saveLoginFail(){
 

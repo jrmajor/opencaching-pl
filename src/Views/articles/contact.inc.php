@@ -4,7 +4,6 @@ use src\Utils\I18n\I18n;
 
 class contactDataProcessor
 {
-
     public static function processContacts($contactData, $headerLevel)
     {
         $result = '';
@@ -61,7 +60,6 @@ class contactDataProcessor
         }
         return $str;
     }
-
 }
 
 tpl_set_var('contact_text', contactDataProcessor::processContacts($contactData, 1));

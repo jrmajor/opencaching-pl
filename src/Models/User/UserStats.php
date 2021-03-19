@@ -8,7 +8,6 @@ use src\Models\PowerTrail\PowerTrail;
 
 class UserStats extends BaseObject
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -85,5 +84,4 @@ class UserStats extends BaseObject
                 AND deleted=0',
             0, (int) $userId, GeoCacheLog::LOGTYPE_ATTENDED);
     }
-
 }

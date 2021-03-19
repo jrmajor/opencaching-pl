@@ -6,7 +6,6 @@ use src\Models\Coordinates\Coordinates;
 
 class UserCacheCoords extends BaseObject
 {
-
     public static function getCoords($userId, $cacheId)
     {
 
@@ -60,5 +59,4 @@ class UserCacheCoords extends BaseObject
 
         return $db->dbResultFetchAll($rs);
     }
-
 }

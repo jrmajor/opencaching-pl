@@ -12,7 +12,6 @@ class CacheAdditions extends BaseObject
     private $cacheId;
     private $altitude = null;
 
-
     public function __construct($cacheId)
     {
         parent::__construct();
@@ -79,5 +78,4 @@ class CacheAdditions extends BaseObject
             ON DUPLICATE KEY UPDATE cache_id = VALUES(cache_id), altitude = VALUES(altitude)',
             $this->cacheId, $this->altitude);
     }
-
 }

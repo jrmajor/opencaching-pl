@@ -273,5 +273,4 @@ class AtomFeedEntry
         }
         return true;
     }
-
 }

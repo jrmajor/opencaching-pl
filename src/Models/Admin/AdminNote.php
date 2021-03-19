@@ -240,7 +240,6 @@ class AdminNote extends BaseObject
         $this->noteId = $noteId;
     }
 
-
     /**
      * @param int $userId
      */
@@ -366,7 +365,6 @@ class AdminNote extends BaseObject
         $this->setContent($row['content']);
     }
 
-
     /**
      * @param int $adminId
      * @param int $userId
@@ -389,5 +387,4 @@ class AdminNote extends BaseObject
         $query = 'INSERT INTO `admin_user_notes`(`user_id`, `admin_id`, `cache_id`, `automatic`, `content`) VALUES (:1, :2, :3, :4, :5)';
         $this->db->multiVariableQuery($query, $this->getUserId(), $this->getAdminId(), $this->getCacheId(), $this->isAutomatic(), $this->getContent());
     }
-
 }

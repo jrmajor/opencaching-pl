@@ -6,7 +6,6 @@ use src\Models\BaseObject;
 
 class EventAttenders extends BaseObject
 {
-
     public function __construct()
     {
         parent::__construct();

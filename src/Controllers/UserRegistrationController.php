@@ -177,5 +177,4 @@ class UserRegistrationController extends BaseController
         $this->view->buildView();
         exit();
     }
-
 }
