@@ -1,6 +1,5 @@
 <?php
 use src\Utils\Database\XDb;
-use src\Controllers\LogEntryController;
 use okapi\Facade;
 use src\Models\GeoCache\MobileCacheMove;
 

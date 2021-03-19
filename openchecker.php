@@ -25,7 +25,6 @@
 use OpenChecker\OpenCheckerCore;
 use OpenChecker\OpenCheckerSetup;
 use src\Utils\Database\XDb;
-use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\Waypoint;
 use src\Utils\View\View;
 use src\Models\ApplicationContainer;

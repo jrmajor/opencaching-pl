@@ -9,7 +9,6 @@
  */
 namespace src\Utils\Email;
 
-use Exception;
 use src\Utils\Text\Validator;
 use src\Models\OcConfig\OcConfig;
 use RuntimeException;

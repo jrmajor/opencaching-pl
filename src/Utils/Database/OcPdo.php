@@ -3,10 +3,8 @@
 namespace src\Utils\Database;
 
 use src\Models\OcConfig\OcConfig;
-use src\Utils\Email\EmailSender;
 use PDO;
 use PDOException;
-use src\Utils\Email\OcSpamDomain;
 
 class OcPdo extends PDO
 {

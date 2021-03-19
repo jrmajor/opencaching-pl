@@ -6,8 +6,6 @@ use src\Models\Pictures\Thumbnail;
 use src\Utils\Debug\Debug;
 use src\Utils\Generators\Uuid;
 use src\Models\ChunkModels\UploadModel;
-use src\Models\GeoCache\GeoCache;
-use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\FileSystem\FileUploadMgr;
 use src\Utils\FileSystem\FileManager;
 use RuntimeException;

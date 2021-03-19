@@ -6,7 +6,6 @@
 ob_start();
 
 use src\Utils\Database\XDb;
-use src\Utils\I18n\I18n;
 use src\Models\ApplicationContainer;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;

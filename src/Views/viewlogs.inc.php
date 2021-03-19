@@ -1,7 +1,5 @@
 <?php
 
-use src\Utils\Uri\SimpleRouter;
-use src\Controllers\PictureController;
 
 $functions_start = '<br>&nbsp;';
 $functions_middle = '&nbsp;';

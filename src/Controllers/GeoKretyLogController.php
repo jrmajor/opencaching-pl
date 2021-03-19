@@ -3,7 +3,6 @@
 namespace src\Controllers;
 
 use src\Models\GeoKret\GeoKretLog;
-use src\Controllers\BaseController;
 use src\Models\GeoKret\GeoKretyApi;
 use src\Utils\Debug\Debug;
 

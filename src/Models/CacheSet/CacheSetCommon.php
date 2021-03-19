@@ -5,8 +5,6 @@ namespace src\Models\CacheSet;
 
 use src\Models\BaseObject;
 use src\Utils\Debug\Debug;
-use src\Models\Coordinates\Altitude;
-use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCache;
 
 class CacheSetCommon extends BaseObject

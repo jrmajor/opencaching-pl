@@ -2,7 +2,6 @@
 
 namespace src\Utils\Database\Updates;
 
-use PDOException;
 
 /**
  * This is a unit test for all the table-structure methods in OcDb.

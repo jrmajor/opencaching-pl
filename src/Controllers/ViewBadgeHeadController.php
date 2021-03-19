@@ -3,7 +3,6 @@
 namespace src\Controllers;
 
 use src\Models\MeritBadge\MeritBadge; //for static functions
-use src\Controllers\MeritBadgeController;
 
 
 class ViewBadgeHeadController extends BaseController{

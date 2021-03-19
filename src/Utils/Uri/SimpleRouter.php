@@ -2,7 +2,6 @@
 namespace src\Utils\Uri;
 
 use ReflectionException;
-use src\Utils\Debug\Debug;
 use ReflectionClass;
 
 /**

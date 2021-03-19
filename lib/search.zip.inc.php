@@ -1,7 +1,6 @@
 <?php
 
 use okapi\Facade;
-use src\Utils\I18n\I18n;
 use src\Models\User\User;
 
 function call_okapi(User $loggedUser, $waypoints, $lang, $file_base_name, $zip_part)

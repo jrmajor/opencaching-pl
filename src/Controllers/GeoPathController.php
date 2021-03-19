@@ -10,7 +10,6 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Generators\Uuid;
 use src\Models\GeoCache\GeoCache;
 use src\Models\ChunkModels\ListOfCaches\ListOfCachesModel;
-use src\Models\ChunkModels\ListOfCaches\Column_GeoPathIcon;
 use src\Models\CacheSet\GeopathCandidate;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheName;
 use src\Models\ChunkModels\ListOfCaches\Column_SimpleText;

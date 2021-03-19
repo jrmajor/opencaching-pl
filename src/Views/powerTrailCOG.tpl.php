@@ -1,6 +1,5 @@
 <?php
 
-use src\Utils\Uri\Uri;
 
 $view->callChunk('tinyMCE', false);
 ?>

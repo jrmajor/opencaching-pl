@@ -2,7 +2,6 @@
 use src\Utils\Gis\Gis;
 use src\Utils\Text\Formatter;
 use src\Models\Neighbourhood\Neighbourhood;
-use src\Utils\Uri\SimpleRouter;
 
 ?>
 <div class="nbh-block-header">

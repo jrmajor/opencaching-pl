@@ -9,7 +9,6 @@ use src\Models\GeoCache\GeoCacheLog;
 use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
 use src\Models\MeritBadge\MeritBadge;
-use src\Utils\Text\TextConverter;
 use src\Utils\DateTime\Year;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\OcCookie;

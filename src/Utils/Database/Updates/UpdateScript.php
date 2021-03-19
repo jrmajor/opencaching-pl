@@ -2,7 +2,6 @@
 
 namespace src\Utils\Database\Updates;
 
-use Exception;
 use src\Utils\Database\OcDb;
 use src\Utils\I18n\I18n;
 

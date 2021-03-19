@@ -13,8 +13,6 @@ use src\Utils\I18n\I18n;
 use src\Utils\Text\Validator;
 use src\Utils\Debug\Debug;
 use src\Utils\Gis\Countries;
-use src\Utils\Uri\SimpleRouter;
-use src\Controllers\PictureController;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\Pictures\OcPicture;
 use src\Models\ApplicationContainer;

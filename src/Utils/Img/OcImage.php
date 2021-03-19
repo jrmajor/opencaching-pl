@@ -2,7 +2,6 @@
 namespace src\Utils\Img;
 
 use src\Utils\System\PhpInfo;
-use src\Utils\Debug\Debug;
 use Exception;
 
 /**

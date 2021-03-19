@@ -4,7 +4,6 @@ use src\Utils\Database\XDb;
 use src\Utils\Text\UserInputFilter;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLog;
-use src\Controllers\LogEntryController;
 use src\Controllers\MeritBadgeController;
 use okapi\Facade;
 use src\Utils\EventHandler\EventHandler;

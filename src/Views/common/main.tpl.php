@@ -1,6 +1,5 @@
 <?php
 
-use src\Utils\Debug\Debug;
 use src\Utils\Uri\SimpleRouter as SRouter;
 use src\Models\OcConfig\OcConfig;
 

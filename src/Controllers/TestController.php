@@ -25,7 +25,6 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\SimpleRouter;
 use src\Models\Coordinates\Coordinates;
 use src\Models\Coordinates\Altitude;
-use src\Controllers\Cron\Jobs\AltitudeUpdateJob;
 use src\Utils\Database\OcDb;
 use src\Utils\DateTime\OcDateTime;
 use src\Models\Voting\ChoiceOption;

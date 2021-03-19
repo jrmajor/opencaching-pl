@@ -1,6 +1,5 @@
 <?php
 
-use src\Models\User\User;
 use src\Models\PowerTrail\PowerTrail;
 use src\Controllers\PowerTrailController;
 use src\Models\ApplicationContainer;

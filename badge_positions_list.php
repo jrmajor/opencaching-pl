@@ -1,7 +1,6 @@
 <?php
 
 use src\Utils\Text\Formatter;
-use src\Controllers\MeritBadgeController;
 use src\Controllers\ViewBadgeHeadController;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\ApplicationContainer;

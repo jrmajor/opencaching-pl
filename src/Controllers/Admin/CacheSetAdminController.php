@@ -13,7 +13,6 @@ use src\Models\GeoCache\MultiCacheStats;
 use src\Models\CacheSet\MultiGeopathsStats;
 use src\Models\GeoCache\GeoCache;
 use src\Models\PowerTrail\PowerTrail;
-use src\Controllers\GeoPathController;
 use src\Utils\Debug\Debug;
 
 class CacheSetAdminController extends BaseController

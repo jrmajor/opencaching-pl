@@ -1,7 +1,6 @@
 <?php
 namespace src\Utils\Debug;
 
-use Error;
 use Throwable;
 
 

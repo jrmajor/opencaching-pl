@@ -3,7 +3,6 @@ namespace src\Utils\Database;
 
 use Exception;
 use src\Models\OcConfig\OcConfig;
-use src\Utils\Database\OcDb;
 use src\Utils\Generators\Uuid;
 
 /**
