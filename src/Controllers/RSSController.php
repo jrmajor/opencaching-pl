@@ -302,8 +302,8 @@ class RSSController extends BaseController
             $entry->getAuthor()->setUri(Uri::getAbsUri($log->getUser()->getProfileUrl()));
 
             $rss->addEntry($entry);
-            unset($entry);
-            unset($content);
+            unset($entry, $content);
+            
         }
 
         $rss->publish();
@@ -348,8 +348,8 @@ class RSSController extends BaseController
                 $entry->getAuthor()->setUri(Uri::getAbsUri($log->getUser()->getProfileUrl()));
 
                 $rss->addEntry($entry);
-                unset($entry);
-                unset($content);
+                unset($entry, $content);
+                
         }
 
         $rss->publish();

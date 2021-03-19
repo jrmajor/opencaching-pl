@@ -141,7 +141,7 @@ class UserProfileController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if (isset($_POST['nbh']) && isset($_POST['state'])) {
+        if (isset($_POST['nbh'], $_POST['state'])  ) {
             if (Neighbourhood::setNeighbourhoodNotify($this->loggedUser, (int) $_POST['nbh'], $_POST['state'])) {
                 $this->ajaxSuccessResponse();
             }

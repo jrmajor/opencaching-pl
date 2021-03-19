@@ -103,7 +103,7 @@ class Altitude
           }
         ]
          */
-        if(!empty($data) && isset($data[0]->statistics) && isset($data[0]->statistics->elevation)){
+        if(!empty($data) && isset($data[0]->statistics, $data[0]->statistics->elevation)  ){
             $stats = $data[0]->statistics->elevation;
             if($stats->units == 'meters'){
                 if (!is_numeric($stats->value)) {

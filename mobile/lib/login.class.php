@@ -131,8 +131,8 @@ class login
         $query = "update user set uuid_mobile ='NULL', last_login_mobile='0000-00-00 00:00:00' where user_id='" . $_SESSION['user_id'] . "';";
         XDb::xSql($query);
 
-        unset($_SESSION['user_id']);
-        unset($_SESSION['username']);
+        unset($_SESSION['user_id'], $_SESSION['username']);
+        
 
         session_destroy();
 

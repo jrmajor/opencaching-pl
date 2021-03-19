@@ -50,11 +50,6 @@ class LogMarkerModel extends CacheMarkerModel
     public function checkMarkerData()
     {
         return parent::checkMarkerData() &&
-        isset($this->log_link) &&
-        isset($this->log_text) &&
-        isset($this->log_icon) &&
-        isset($this->log_typeName) &&
-        isset($this->log_username) &&
-        isset($this->log_date);
+        isset($this->log_link, $this->log_text, $this->log_icon, $this->log_typeName, $this->log_username, $this->log_date);
     }
 }

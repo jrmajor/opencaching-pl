@@ -221,8 +221,8 @@ class OC_HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector_SafeObje
 
     public function __construct()
     {
-        unset($this->addParam['allowScriptAccess']);
-        unset($this->addParam['allowNetworking']);
+        unset($this->addParam['allowScriptAccess'], $this->addParam['allowNetworking']);
+        
         $this->allowedParam['allowScriptAccess'] = true;
         $this->allowedParam['allowNetworking'] = true;
     }

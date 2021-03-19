@@ -95,7 +95,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                         <input type="hidden" name="logmin" value="<?php echo $v['min']; ?>" />
                         <table border="0" style="table-layout: fixed; border: 1px dotted black; line-height: 1.6em; font-size: 10px; "><?php
                             // jesli zgodne daty i typ to inny kolor:
-                            if ((isset($v['data']) && isset($v['last_date']) && $v['data'] == $v['last_date']) && (isset($v['status']) && isset($v['last_status']) && $v['status'] == $v['last_status'])) {
+                            if ((isset($v['data'], $v['last_date'])   && $v['data'] == $v['last_date']) && (isset($v['status'], $v['last_status'])   && $v['status'] == $v['last_status'])) {
                                 $zgodne = true;
                                 $styl = 'bgcolorM1';
                             } else {

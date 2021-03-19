@@ -35,8 +35,8 @@ class TitledCacheAddJob extends Job
                 'Titled cache security period underrun ('.
                 $daysSinceLastTitle.' vs '.$securityPeriod.' days)';
         }
-        unset($daysSinceLastTitle);
-        unset($securityPeriod);
+        unset($daysSinceLastTitle, $securityPeriod);
+        
 
         $date_alg = date('Y-m-d');
 

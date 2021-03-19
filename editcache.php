@@ -164,7 +164,7 @@ if (!$loggedUser) {
                             $this_seq = $_POST['pic_seq_select' . $i]; //get new seqence
                             $this_pic_id = $_POST['pic_seq_id' . $i]; //get picutre ID the new seq is applicable to
                             $this_pic_changed = $_POST['pic_seq_changed' . $i]; //get changed status ("yes" or "no")
-                            if (isset($this_seq) && isset($this_pic_id) && $this_pic_changed == 'yes') {
+                            if (isset($this_seq, $this_pic_id)   && $this_pic_changed == 'yes') {
                                 $thatquery = 'UPDATE `pictures` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
@@ -185,7 +185,7 @@ if (!$loggedUser) {
                             $this_seq = $_POST['mp3_seq_select' . $i]; //get new seqence
                             $this_mp3_id = $_POST['mp3_seq_id' . $i]; //get mp3 ID the new seq is applicable to
                             $this_mp3_changed = $_POST['mp3_seq_changed' . $i]; //get changed status ("yes" or "no")
-                            if (isset($this_seq) && isset($this_mp3_id) && $this_mp3_changed == 'yes') {
+                            if (isset($this_seq, $this_mp3_id)   && $this_mp3_changed == 'yes') {
                                 $thatquery = 'UPDATE `mp3` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
@@ -466,9 +466,9 @@ if (!$loggedUser) {
                         $all_wp_ok = false;
                     }
                 }
-                unset($wpVar);
-                unset($wpMessageVar);
-                unset($wpOk);
+                unset($wpVar, $wpMessageVar, $wpOk);
+
+
 
                 // cache-attributes
                 if (isset($_POST['cache_attribs'])) {
@@ -763,10 +763,11 @@ if (!$loggedUser) {
                         !$loggedUser->hasOcTeamRole()) {
                         continue;
                     }
-                    if (isset($cacheLimitByTypePerUser[$type]) &&
-                        isset($config['cacheLimitByTypePerUser'][$type]) &&
-                        $cacheLimitByTypePerUser[$type] >= $config['cacheLimitByTypePerUser'][$type] &&
-                        !$loggedUser->hasOcTeamRole()) {
+                    if (
+                        isset($cacheLimitByTypePerUser[$type], $config['cacheLimitByTypePerUser'][$type])
+                        && $cacheLimitByTypePerUser[$type] >= $config['cacheLimitByTypePerUser'][$type]
+                        && !$loggedUser->hasOcTeamRole()
+                    ) {
                         continue;
                     }
 

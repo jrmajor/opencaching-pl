@@ -4,7 +4,7 @@ use okapi\Facade;
 
 require_once('./lib/common.inc.php');
 
-if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
+if (isset($_SESSION['user_id'], $_GET['wp'])   && !empty($_GET['wp'])) {
 
     $wp = XDb::xEscape($_GET['wp']);
 

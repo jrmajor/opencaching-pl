@@ -413,7 +413,7 @@ class ViewCacheController extends BaseController
 
         $picturesToDisplay = null;
         if ($this->geocache->getPicturesCount() != 0 &&
-            !(isset($_REQUEST['print']) && isset($_REQUEST['pictures']) && $_REQUEST['pictures'] == 'no')) {
+            !(isset($_REQUEST['print'], $_REQUEST['pictures'])   && $_REQUEST['pictures'] == 'no')) {
 
             //there are any pictures to display
 
@@ -602,9 +602,11 @@ class ViewCacheController extends BaseController
             $this->view->setVar('cacheCoordsModificationAllowed', true);
 
             // insert/edit modified coordinates
-            if (isset($_POST['userModifiedCoordsSubmited']) &&
-                isset($_POST['userCoordsFinalLatitude']) &&
-                isset($_POST['userCoordsFinalLongitude'])) {
+            if (isset(
+                $_POST['userModifiedCoordsSubmited'],
+                $_POST['userCoordsFinalLatitude'],
+                $_POST['userCoordsFinalLongitude']
+            )) {
 
                 $this->userModifiedCacheCoords = Coordinates::FromCoordsFactory($_POST['userCoordsFinalLatitude'], $_POST['userCoordsFinalLongitude']);
                 if ($this->userModifiedCacheCoords) {

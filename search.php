@@ -225,15 +225,18 @@ if (!$loggedUser) {
             // hack
             if(isset($_REQUEST['searchto']) && ($_REQUEST['searchto'] != ''))
             {
-                unset($_REQUEST['searchbyname']);
-                unset($_REQUEST['searchbydistance']);
-                unset($_REQUEST['searchbyowner']);
-                unset($_REQUEST['searchbyfinder']);
-                unset($_REQUEST['searchbyplz']);
-                unset($_REQUEST['searchbyort']);
-                unset($_REQUEST['searchbyfulltext']);
-                unset($_REQUEST['searchbywaypoint']);
-                unset($_REQUEST['searchbywaypointname']);
+                unset(
+                    $_REQUEST['searchbyname'],
+                    $_REQUEST['searchbydistance'],
+                    $_REQUEST['searchbyowner'],
+                    $_REQUEST['searchbyfinder'],
+                    $_REQUEST['searchbyplz'],
+                    $_REQUEST['searchbyort'],
+                    $_REQUEST['searchbyfulltext'],
+                    $_REQUEST['searchbywaypoint'],
+                    $_REQUEST['searchbywaypointname']
+                );
+
                 $_REQUEST[$_REQUEST['searchto']] = 'hoho';
             }
 
@@ -622,8 +625,8 @@ if (!$loggedUser) {
                         {
                             $options['error_locidnocoords'] = true;
                             outputSearchForm($options, $loggedUser);
-                            unset($dbc);
-                            unset($dbcSearch);
+                            unset($dbc, $dbcSearch);
+
                             exit;
                         }
                     }
@@ -843,8 +846,8 @@ if (!$loggedUser) {
                     if ((!isset($lon)) || (!isset($lat)) || (!is_numeric($distance)))
                     {
                         outputSearchForm($options, $loggedUser);
-                        unset($dbc);
-                        unset($dbcSearch);
+                        unset($dbc, $dbcSearch);
+
                         exit;
                     }
 
@@ -1211,8 +1214,8 @@ if (!$loggedUser) {
             }
         }
 
-    unset($dbc);
-    unset($dbcSearch);
+    unset($dbc, $dbcSearch);
+
 
     /*
     //user logged in?
@@ -1325,7 +1328,7 @@ function outputSearchForm($options, User $loggedUser)
         }
     }
 
-    if (isset($options['cachevote_1']) && isset($options['cachevote_2']))
+    if (isset($options['cachevote_1'], $options['cachevote_2'])  )
     {
         tpl_set_var('cachevote_1', htmlspecialchars($options['cachevote_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachevote_2', htmlspecialchars($options['cachevote_2'], ENT_COMPAT, 'UTF-8'));
@@ -1345,7 +1348,7 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('cachenovote', '');
     }
 
-    if (isset($options['cachedifficulty_1']) && isset($options['cachedifficulty_2']))
+    if (isset($options['cachedifficulty_1'], $options['cachedifficulty_2'])  )
     {
         tpl_set_var('cachedifficulty_1', htmlspecialchars($options['cachedifficulty_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachedifficulty_2', htmlspecialchars($options['cachedifficulty_2'], ENT_COMPAT, 'UTF-8'));
@@ -1356,7 +1359,7 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('cachedifficulty_2', '');
     }
 
-    if (isset($options['cacheterrain_1']) && isset($options['cacheterrain_2']))
+    if (isset($options['cacheterrain_1'], $options['cacheterrain_2'])  )
     {
         tpl_set_var('cacheterrain_1', htmlspecialchars($options['cacheterrain_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cacheterrain_2', htmlspecialchars($options['cacheterrain_2'], ENT_COMPAT, 'UTF-8'));
@@ -1734,8 +1737,8 @@ function outputUniidSelectionForm($uniSql, $urlparams)
 
     require_once(__DIR__.'/src/Views/selectlocid.inc.php');
 
-    unset($urlparams['queryid']);
-    unset($urlparams['locid']);
+    unset($urlparams['queryid'], $urlparams['locid']);
+
     $urlparams['searchto'] = 'search' . $urlparams['searchtype'];
     unset($urlparams['searchtype']);
 
@@ -1903,8 +1906,8 @@ function outputLocidSelectionForm($locSql, $urlparams)
 
     require_once(__DIR__.'/src/Views/selectlocid.inc.php');
 
-    unset($urlparams['queryid']);
-    unset($urlparams['locid']);
+    unset($urlparams['queryid'], $urlparams['locid']);
+
     $urlparams['searchto'] = 'search' . $urlparams['searchtype'];
     unset($urlparams['searchtype']);
 

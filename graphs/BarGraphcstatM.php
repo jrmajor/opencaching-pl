@@ -14,7 +14,7 @@ JpGraphLoader::module('date');
 
 
 $year = '';
-if (isset($_REQUEST['cacheid']) && isset($_REQUEST['t'])) {
+if (isset($_REQUEST['cacheid'], $_REQUEST['t'])  ) {
     $cache_id = $_REQUEST['cacheid'];
     $titles = $_REQUEST['t'];
     if (strlen($titles) > 3) {

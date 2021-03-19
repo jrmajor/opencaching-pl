@@ -248,7 +248,7 @@ class UserAuthorizationController extends BaseController
 
     private function getCredentialsData()
     {
-        if (isset($_POST['email']) && isset($_POST['password'])) {
+        if (isset($_POST['email'], $_POST['password'])  ) {
             return [
                 $_POST['email'],
                 $_POST['password'],

@@ -199,7 +199,7 @@ class EmailSender
         $email->setFromAddr(OcConfig::getEmailAddrNoReply());
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefixForOcTeam());
 
-        if (isset($region) && isset($country)) {
+        if (isset($region, $country)  ) {
             $email->setSubject(tr('ocTeamNewCache_sub').': '.$country.' -> '.$region);
         } else {
             $email->setSubject(tr('ocTeamNewCache_sub').': '.tr('dummy_outside'));

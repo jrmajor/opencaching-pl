@@ -214,7 +214,7 @@ if (isset($_GET['cacheid'])) {
     } else {
         if (actionRequired($_GET['cacheid'])) {
             // requires activation
-            if (isset($_GET['confirm']) && isset($_GET['user_id']) && $_GET['confirm'] == 1) {
+            if (isset($_GET['confirm'], $_GET['user_id'])   && $_GET['confirm'] == 1) {
                 // confirmed - change the status and notify the owner now
                 if (activateCache($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
@@ -224,7 +224,7 @@ if (isset($_GET['cacheid'])) {
                 } else {
                     $confirm = '<p> ' . tr('viewPending_10') . '.</p>';
                 }
-            } else if (isset($_GET['confirm']) && isset($_GET['user_id']) && $_GET['confirm'] == 2) {
+            } else if (isset($_GET['confirm'], $_GET['user_id'])   && $_GET['confirm'] == 2) {
                 // declined - change status to archived and notify the owner now
                 if (declineCache($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);

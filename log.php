@@ -69,7 +69,7 @@ $view->setSubtitle(htmlspecialchars($geoCache->getCacheName(), ENT_COMPAT, 'UTF-
 $all_ok = false;
 
 //set default date for log form
-if (isset($_SESSION['lastLogSendTime']) && isset($_SESSION['lastLogDateTime'])) {
+if (isset($_SESSION['lastLogSendTime'], $_SESSION['lastLogDateTime'])  ) {
 
     if (!compareTime($_SESSION['lastLogSendTime'], 'PT1H')) { //if last logging time is greater than one hour from now
         $proposedDateTime = new DateTime('now'); // lastLogDateTime is overdue
@@ -437,8 +437,8 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
         $_SESSION['lastLogDateTime'] = $logDateTime; //we store the time
         $_SESSION['lastLogSendTime'] = new DateTime('now');
     } else {
-        unset($_SESSION['lastLogSendTime']); //next time we log with "now" datetime
-        unset($_SESSION['lastLogDateTime']);
+        unset($_SESSION['lastLogSendTime'], $_SESSION['lastLogDateTime']); //next time we log with "now" datetime
+        
     }
 
     // save log to DB

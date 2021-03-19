@@ -275,7 +275,7 @@ $distance_unit = 'km';
 
 $query = 'SELECT ';
 
-if (isset($lat_rad) && isset($lon_rad)) {
+if (isset($lat_rad, $lon_rad)  ) {
     if ($CalcDistance)
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
@@ -335,7 +335,7 @@ $sortby = $options['sort'];
 
 if (! $SearchWithSort) // without interactive sort
 {
-    if (isset($lat_rad) && isset($lon_rad) && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {

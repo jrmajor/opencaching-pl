@@ -71,7 +71,7 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
     $tpl->display('tpl/find2.tpl');
 }
 
-if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset($_GET['Nstopien']) && isset($_GET['Nminuty']) && isset($_GET['Estopien']) && isset($_GET['Eminuty'])) {
+if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['Nminuty'], $_GET['Estopien'], $_GET['Eminuty'])            ) {
     if (!empty($_GET['ns']) && !empty($_GET['ew']) && !empty($_GET['radius']) && !empty($_GET['Nstopien']) && !empty($_GET['Nminuty']) && !empty($_GET['Estopien']) && !empty($_GET['Eminuty']) && ($_GET['ns'] == 'N' || $_GET['ns'] == 'S') && ($_GET['ew'] == 'E' || $_GET['ew'] == 'W') && preg_match("/^\d+$/", $_GET['radius']) && $_GET['radius'] >= 1 && $_GET['radius'] <= 25 && preg_match("/^\d+$/", $_GET['Nstopien']) && $_GET['Nstopien'] >= 0 && $_GET['Nstopien'] <= 90 && preg_match("/^\d+$/", $_GET['Estopien']) && $_GET['Estopien'] >= 0 && $_GET['Estopien'] <= 180 && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Eminuty']) && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Nminuty']) && $_GET['Nminuty'] >= 0 && $_GET['Nminuty'] < 60 && $_GET['Eminuty'] >= 0 && $_GET['Eminuty'] < 60) {
 
 
@@ -183,17 +183,17 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
                 $if_found = 0;
             }
 
-            if (isset($_GET['skip_mine']) && isset($_SESSION['user_id'])) {
+            if (isset($_GET['skip_mine'], $_SESSION['user_id'])  ) {
                 if ($wiersz['user_id'] == $_SESSION['user_id'])
                     continue;
             }
 
-            if (isset($_GET['skip_found']) && isset($_SESSION['user_id'])) {
+            if (isset($_GET['skip_found'], $_SESSION['user_id'])  ) {
                 if ($if_found == 1)
                     continue;
             }
 
-            if (isset($_GET['skip_ignored']) && isset($_SESSION['user_id'])) {
+            if (isset($_GET['skip_ignored'], $_SESSION['user_id'])  ) {
                 $query9 = "select 1 from cache_ignore where user_id='" . $_SESSION['user_id'] . "' and cache_id='" . $wiersz['cache_id'] . "'";
                 $wynik9 = XDb::xSql($query9);
                 $if_ignored = XDb::xFetchArray($wynik9);
@@ -238,7 +238,7 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
         exit;
     } else
         $tpl->assign('error', 1);
-}elseif (isset($_POST['city']) && isset($_POST['radius'])) {
+}elseif (isset($_POST['city'], $_POST['radius'])  ) {
     if (!empty($_POST['city']) && !empty($_POST['radius']) && preg_match("/^\d+$/", $_POST['radius']) && $_POST['radius'] >= 1 && $_POST['radius'] <= 25) {
         $city = makeUrl($_POST['city']);
 

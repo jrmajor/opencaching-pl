@@ -15,7 +15,7 @@ JpGraphLoader::module('pie3d');
 
 $year = '';
 // check for old-style parameters
-if (isset($_REQUEST['userid']) && isset($_REQUEST['t'])) {
+if (isset($_REQUEST['userid'], $_REQUEST['t'])  ) {
     $user_id = $_REQUEST['userid'];
     $tit = $_REQUEST['t'];
 }

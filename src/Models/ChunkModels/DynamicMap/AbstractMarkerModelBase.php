@@ -28,7 +28,7 @@ abstract class AbstractMarkerModelBase
      */
     public function checkMarkerData()
     {
-        return isset($this->lat) && isset($this->lon) && isset($this->icon);
+        return isset($this->lat, $this->lon, $this->icon);
     }
 
 }

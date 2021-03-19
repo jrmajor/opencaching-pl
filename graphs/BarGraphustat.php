@@ -14,7 +14,7 @@ JpGraphLoader::module('date');
 
 $year = '';
 // check for old-style parameters
-if (isset($_REQUEST['userid']) && isset($_REQUEST['t'])) {
+if (isset($_REQUEST['userid'], $_REQUEST['t'])  ) {
     $user_id = $_REQUEST['userid'];
     $titles = $_REQUEST['t'];
     if (strlen($titles) > 3) {

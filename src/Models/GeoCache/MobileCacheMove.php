@@ -50,7 +50,7 @@ class MobileCacheMove extends BaseObject
             }
         }
 
-        if (isset($row['latitude']) && isset($row['longitude'])) {
+        if (isset($row['latitude'], $row['longitude'])  ) {
             $this->coordinates = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
         }
     }

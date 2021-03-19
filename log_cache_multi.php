@@ -113,10 +113,12 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
 
     if (isset($_FILES['userfile'])) {
         // usuwam zapamietane a nieaktualne juz dane...
-        unset($_SESSION['log_cache_multi_data']);
-        unset($_SESSION['log_cache_multi_filteredData']);
-        unset($_SESSION['filter_to']);
-        unset($_SESSION['filter_from']);
+        unset(
+            $_SESSION['log_cache_multi_data'],
+            $_SESSION['log_cache_multi_filteredData'],
+            $_SESSION['filter_to'],
+            $_SESSION['filter_from']
+        );
 
         // czy wyslalo sie ok?
         if ($_FILES['userfile']['error'] != 0) {
@@ -325,7 +327,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
 
             if ($doFiltra) {
                 // dodaje mass komentarze dla filtrowanych skrzynek:
-                if (isset($_POST['submitCommentsForm']) && isset($_POST['logtext'])) {
+                if (isset($_POST['submitCommentsForm'], $_POST['logtext'])  ) {
                     $v['koment'] .= ' ' . $_POST['logtext'];
                 }
             }

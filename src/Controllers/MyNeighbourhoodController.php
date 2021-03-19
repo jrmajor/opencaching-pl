@@ -389,7 +389,7 @@ class MyNeighbourhoodController extends BaseController
         $seq = null;
         $definedNbh = count(Neighbourhood::getAdditionalNeighbourhoodsList($this->loggedUser));
         // Store MyNeighbourhood data
-        if (isset($_POST['lon']) && isset($_POST['lat']) && isset($_POST['radius'])) {
+        if (isset($_POST['lon'], $_POST['lat'], $_POST['radius'])    ) {
             $coords = Coordinates::FromCoordsFactory($_POST['lat'], $_POST['lon']);
             $radius = (int) $_POST['radius'];
             if ($radius > self::NBH_RADIUS_MAX) {
@@ -424,7 +424,7 @@ class MyNeighbourhoodController extends BaseController
             $error = tr('myn_coords_error');
         }
         // Store user preferences
-        if ($nbhSeq == 0 && isset($_POST['caches-perpage']) && isset($_POST['style']) && ($_POST['style'] == 'full' || $_POST['style'] == 'min')) {
+        if ($nbhSeq == 0 && isset($_POST['caches-perpage'], $_POST['style'])   && ($_POST['style'] == 'full' || $_POST['style'] == 'min')) {
             $cachesPerpage = (int) $_POST['caches-perpage'];
             if ($cachesPerpage > self::CACHES_PER_PAGE_MAX) {
                 $cachesPerpage = self::CACHES_PER_PAGE_MAX;

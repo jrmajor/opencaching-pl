@@ -66,7 +66,7 @@ $query .= '`caches`.`cache_id` `cache_id`, `caches`.`wp_oc` `cache_wp`,
 
 $sortby = $options['sort'];
 
-if (isset($lat_rad) && isset($lon_rad) && ($sortby == 'bydistance')) {
+if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } else {
     if ($sortby == 'bycreated') {
@@ -256,7 +256,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
         $r['cacheid']);
 
     $attribentries = '';
-    if (isset($gpxNodemap[OcConfig::getSiteNodeId()]) && isset($gpxAI[$gpxNodemap[OcConfig::getSiteNodeId()]])) {
+    if (isset($gpxNodemap[OcConfig::getSiteNodeId()], $gpxAI[$gpxNodemap[OcConfig::getSiteNodeId()]])  ) {
         $nodeCode = $gpxNodemap[OcConfig::getSiteNodeId()];
     } else {
         $nodeCode = '';

@@ -21,10 +21,6 @@ class GuideMarkerModel extends AbstractMarkerModelBase
     public function checkMarkerData()
     {
         return parent::checkMarkerData() &&
-            isset($this->link) &&
-            isset($this->userId) &&
-            isset($this->username) &&
-            isset($this->userDesc) &&
-            isset($this->recCount);
+            isset($this->link, $this->userId, $this->username, $this->userDesc, $this->recCount);
     }
 }

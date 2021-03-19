@@ -46,7 +46,7 @@ $caches_per_page = 20;
 
 $query = 'SELECT ';
 
-if (isset($lat_rad) && isset($lon_rad)) {
+if (isset($lat_rad, $lon_rad)  ) {
     $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
     if (!$loggedUser) {
@@ -91,7 +91,7 @@ if(!empty($queryFilter)){
 }
 
 $sortby = $options['sort'];
-if (isset($lat_rad) && isset($lon_rad) && ($sortby == 'bydistance')) {
+if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } elseif ($sortby == 'bycreated') {
     $query .= ' ORDER BY date_created DESC';

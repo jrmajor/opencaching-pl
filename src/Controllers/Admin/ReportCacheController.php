@@ -118,8 +118,8 @@ class ReportCacheController extends BaseController
                 unset($report);
                 break;
         }
-        unset($cacheOwner);
-        unset($cache);
+        unset($cacheOwner, $cache);
+        
         $this->redirectToViewPage($_POST['cacheid']);
         exit();
     }
