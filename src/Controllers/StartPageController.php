@@ -398,7 +398,7 @@ class StartPageController extends BaseController
         } else {
             return OcMemCache::getOrCreate($feedsKey, 60 * 60 /*1h*/,
                 function () {
-                    global $config;//TODO
+                    global $config; //TODO
 
                     $result = new stdClass();
                     $result->feeds = [];

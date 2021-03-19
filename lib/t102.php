@@ -38,8 +38,7 @@ echo '<script>';
 echo 'function setOptions(){';
 echo "gct.addOption('pagingSymbols', { prev: '" . tr('Prev1') . "', next: '" . tr('Next1') . "' });";
 echo '}';
-echo '</script>'
-;
+echo '</script>';
 
 use src\Utils\Database\OcDb;
 require_once (__DIR__ . '/ClassPathDictionary.php');

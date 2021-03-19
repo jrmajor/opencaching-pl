@@ -5,7 +5,7 @@
     <a href="<?=$v->gp->getUrl()?>"><?=$v->gp->getName()?></a>
   </div>
 
-  <?php $v->callChunk('listOfCaches/listOfCaches', $v->listModel);?>
+  <?php $v->callChunk('listOfCaches/listOfCaches', $v->listModel); ?>
 
 </div>
 

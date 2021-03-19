@@ -63,7 +63,7 @@ use src\Models\GeoCache\GeoCacheLog;
     <?php } ?>
     </tbody>
   </table>
-  <?php $view->callChunkInline('pagination', $view->paginationModel);?>
+  <?php $view->callChunkInline('pagination', $view->paginationModel); ?>
   <div class="buffer"></div>
   <div class="notice"><?=tr('myn_distances')?></div>
 </div>

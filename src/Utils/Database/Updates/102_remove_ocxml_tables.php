@@ -42,6 +42,6 @@ class C15711731985956 extends UpdateScript
         // The rollback will be run inside a transaction. It will also run
         // with set_time_limit(0), so don't create any endless loops!
     }
-};
+}
 
 return new C15711731985956;

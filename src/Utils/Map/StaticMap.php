@@ -329,7 +329,7 @@ class StaticMap
             // copy marker on basemap above shadow
             imagecopy($this->image, $markerImg, $destX + intval($markerImageOffsetX), $destY + intval($markerImageOffsetY),
                 0, 0, imagesx($markerImg), imagesy($markerImg));
-        };
+        }
     }
 
 

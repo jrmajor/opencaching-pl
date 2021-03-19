@@ -56,7 +56,7 @@ if (!$loggedUser) {
 
                         $lines .= $tmp_line . "\n";
                         $i++;
-                    };
+                    }
 
                     tpl_set_var('lines', $lines);
                     tpl_set_var('username', '');

@@ -152,7 +152,7 @@ class AutoArch
         $db = OcDb::instance();
 
         $statusSqlQuery = 'REPLACE INTO cache_arch (cache_id, step) VALUES ( :1, :2 )';
-        $archSqlQuery = 'UPDATE caches SET status = 3 WHERE cache_id= :1 ' ;
+        $archSqlQuery = 'UPDATE caches SET status = 3 WHERE cache_id= :1 ';
         $logSqlQuery = "INSERT INTO cache_logs (cache_id, uuid, user_id, type, date, last_modified,
                                     date_created, text, owner_notified, node)
                         VALUES ( :1, :2, '-1', 9,NOW(),NOW(), NOW(), :3, 1, :4)";

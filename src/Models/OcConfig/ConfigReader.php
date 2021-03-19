@@ -98,7 +98,7 @@ abstract class ConfigReader
         $nodeConfigFile = self::CONFIG_DIR . "{$configFile}.{$ocNode}.php";
         $localConfigFile = self::CONFIG_DIR . "{$configFile}.local.php";
 
-        include self::CONFIG_DIR . "{$configFile}.default.php";;
+        include self::CONFIG_DIR . "{$configFile}.default.php";
 
         if (is_file($nodeConfigFile)) {
             include $nodeConfigFile;

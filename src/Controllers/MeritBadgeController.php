@@ -264,7 +264,7 @@ class MeritBadgeController{
 
     private function patternHtmlChangeLevelMeritBadges($firstEl){
         $header = "<p style='font-size:12px; font-weight:bold; color:green; text-decoration: underline;'>"
-            .tr('merit_badge_gain_next_level').'</p><br>' ;
+            .tr('merit_badge_gain_next_level').'</p><br>';
             $htmlNewElement = '<hr><br>';
 
             $pattern = "<div style ='width:500px;'><img src='{picture}' style= 'float: left;margin-right:20px;' />

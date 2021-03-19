@@ -323,6 +323,6 @@ class C001Test extends UpdateScript
         );
     }
 
-};
+}
 
 return new C001Test;

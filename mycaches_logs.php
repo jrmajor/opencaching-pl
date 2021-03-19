@@ -95,7 +95,7 @@ if (!$loggedUser) {
     $log_ids = [];
     while ($record = XDb::xFetchArray($rs)) {
         $log_ids[] = $record['id'];
-    };
+    }
     XDb::xFreeResults($rs);
 
     if (!empty($log_ids)) {

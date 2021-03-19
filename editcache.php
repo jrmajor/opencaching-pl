@@ -38,7 +38,7 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
             case 'mp3':
                 $drop_label_tit = tr('ec_Sequence_mp3');
                 break;
-        };
+        }
 
 
         $ret = '<label title="' . $drop_label_tit . '"><select class="form-control input40" onchange="document.getElementById(\'' . $drop_type . '_seq_changed' . $item_row . '\').value=\'yes\'; yes_change(); " id="' . $drop_type . '_seq_select' . $item_row . '" name="' . $drop_type . '_seq_select' . $item_row . '">
@@ -48,7 +48,7 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
                 $sel = ' selected="true" ';
             } else {
                 $sel = '';
-            };
+            }
 
             $ret.= '<option value="' . $i . '" label="' . $i . '"' . $sel . '>' . $i . '</option>
             ';
@@ -60,7 +60,7 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
         $ret.='<input type="hidden" id="' . $drop_type . '_seq_changed' . $item_row . '" name="' . $drop_type . '_seq_changed' . $item_row . '" value="no">
         '; // set hidden field - to be changed by javascript to yes - in such case it will trigger SQL update
         return $ret;
-    };
+    }
 }
 
 //cacheid
@@ -919,7 +919,7 @@ if (!$loggedUser) {
                         $max_seq_number = (isset($max_seq_record ['seq']) ? $max_seq_record ['seq'] : 0);
                         if ($max_seq_number < $mp3_count) {
                             $max_seq_number = $mp3_count;
-                        };
+                        }
                         tpl_set_var('def_seq_m', $max_seq_number + 1); // set default seq for mp3 to be added (if link is click) - this line updated link to newmp3.php)  )
                         for ($i = 0; $i < $mp3_count; $i++) {
                             $tmpline1 = $mp3line;

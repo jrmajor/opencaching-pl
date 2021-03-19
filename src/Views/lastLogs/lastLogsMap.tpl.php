@@ -9,5 +9,5 @@
 </div>
 
 <!-- map-chunk start -->
-  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas');?>
+  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas'); ?>
 <!-- map-chunk end -->

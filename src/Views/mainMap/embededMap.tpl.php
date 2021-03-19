@@ -51,7 +51,7 @@
 </div>
 
 <!-- map-chunk start -->
-  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mainMap');?>
+  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mainMap'); ?>
 <!-- map-chunk end -->
 
 <script id="mainMapPopupTpl" type="text/x-handlebars-template">

@@ -47,4 +47,4 @@
   <?=tr('guides_thanks')?>
 </p>
 
-<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas');?>
+<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas'); ?>

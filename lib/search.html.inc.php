@@ -411,18 +411,18 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             $tmpline = str_replace('{lat}', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($caches_record['latitude'])), $tmpline);
         }
     }
-    ;
+    
     $tmpline = str_replace('{cachetype}', tr(GeoCacheCommons::CacheTypeTranslationKey($caches_record['cache_type'])), $tmpline);
 
     // sp2ong short_desc ermitteln TODO: nicht die erste sondern die richtige wĂ¤hlen
     $tmpline = str_replace('{wp_oc}', htmlspecialchars($caches_record['wp_oc'], ENT_COMPAT, 'UTF-8'), $tmpline);
-    ;
+    
 
     if ($CalcCoordinates) {
         $tmpline = str_replace('{latitude}', htmlspecialchars($caches_record['latitude'], ENT_COMPAT, 'UTF-8'), $tmpline);
-        ;
+        
         $tmpline = str_replace('{longitude}', htmlspecialchars($caches_record['longitude'], ENT_COMPAT, 'UTF-8'), $tmpline);
-        ;
+        
     }
 
     $tmpline = str_replace('{short_desc}', htmlspecialchars(PrepareText($caches_record['short_desc']), ENT_COMPAT, 'UTF-8'), $tmpline);
@@ -521,7 +521,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             } else {
                 $mod_suffix_garmin = '';
             }
-            ;
+            
         }
         if ($CalcSendToGPS) {
             $tmpline = str_replace('{sendtogps}', ("<a href=\"#\" onclick=\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . '&amp;long=' . $caches_record['longitude'] . '&amp;wp=' . $caches_record['wp_oc'] . '&amp;name=' . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\"><img src='/images/garmin.jpg' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0' /></a>"), $tmpline);

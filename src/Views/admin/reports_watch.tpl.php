@@ -46,7 +46,7 @@ use src\Models\Admin\ReportCommons;
       </td>
       <td class="<?=$report->getStatusClass()?>">
         <a href="/admin_reports.php?action=showreport&amp;id=<?=$report->getId()?>" class="links"><?=tr($report->getReportStatusTranslationKey())?></a><br>
-        <?php if ($report->getDateLastChange() != null) { echo $report->getDateLastChange()->format($view->dateFormat);}?>
+        <?php if ($report->getDateLastChange() != null) { echo $report->getDateLastChange()->format($view->dateFormat); }?>
         <?php if ($report->getUserIdLastChange() != null) {?><br><a href="<?=$report->getUserLastChange()->getProfileUrl()?>" class="links" target="_blank"><?=$report->getUserLastChange()->getUserName()?></a><?php }?>
       </td>
       <td><?php if ($report->getUserIdLeader() != null) { ?><a href="<?=$report->getUserLeader()->getProfileUrl()?>" class="links" target="_blank"><?=$report->getUserLeader()->getUserName()?></a><?php }?></td>

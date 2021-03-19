@@ -74,7 +74,7 @@ class powerTrailBase{
      */
     public static function checkIfUserIsPowerTrailOwner($userId, $powerTrailId){
         $db = OcDb::instance();
-        $query = 'SELECT count(*) AS `checkResult` FROM `PowerTrail_owners` WHERE `PowerTrailId` = :1 AND `userId` = :2' ;
+        $query = 'SELECT count(*) AS `checkResult` FROM `PowerTrail_owners` WHERE `PowerTrailId` = :1 AND `userId` = :2';
         $s = $db->multiVariableQuery($query, $powerTrailId, $userId);
         $result = $db->dbResultFetchAll($s);
         return $result[0]['checkResult'];

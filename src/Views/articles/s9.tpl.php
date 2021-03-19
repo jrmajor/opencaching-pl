@@ -55,8 +55,8 @@ if (isset($_REQUEST['region'])) {
                     $licznik++;
                     $wartosc = $wynik['count'];
                     echo '</td></tr><tr class="bgcolor2"><td align="right">&nbsp;&nbsp;<b>' . $licznik . '</b>&nbsp;&nbsp;</td><td align="right">&nbsp;&nbsp;<b>' . $wynik['count'] . '</b>&nbsp;&nbsp;</td><td><a href="viewprofile.php?userid=' . $wynik['userid'] . '">' . htmlspecialchars($wynik['nick']) . '</a>';
-                };
-            };
+                }
+            }
             echo '</td></tr>';
             echo '</td></tr></table>' . "\n";
             ?>

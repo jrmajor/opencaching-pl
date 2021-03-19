@@ -136,6 +136,6 @@ class C100Init extends UpdateScript
         $this->db->dropTableIfExists('db_updates');
         $this->db->dropTableIfExists('db_updates__');
     }
-};
+}
 
 return new C100Init;

@@ -5,7 +5,7 @@
     <a href="<?=$v->user->getProfileUrl()?>"><?=$v->user->getUserName()?></a>
   </div>
 
-  <?php $view->callChunk('listOfCaches/listOfCaches', $v->listModel);?>
+  <?php $view->callChunk('listOfCaches/listOfCaches', $v->listModel); ?>
 
 </div>
 

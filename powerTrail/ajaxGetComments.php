@@ -47,9 +47,9 @@ $query = 'SELECT * FROM  `PowerTrail_comments`, `user`
 
 $params['variable1']['value'] = (int) $_REQUEST['projectId'];
 $params['variable1']['data_type'] = 'integer';
-$params['variable2']['value'] = (int) $_REQUEST['start'];;
+$params['variable2']['value'] = (int) $_REQUEST['start'];
 $params['variable2']['data_type'] = 'integer';
-$params['variable3']['value'] = (int) $_REQUEST['limit'];;
+$params['variable3']['value'] = (int) $_REQUEST['limit'];
 $params['variable3']['data_type'] = 'integer';
 $params['variable4']['value'] = $ocTeamUser;
 $params['variable4']['data_type'] = 'boolean';
@@ -112,8 +112,7 @@ foreach ($result as $key => $dbEntry) {
     </tr>
     <tr>
         <td class="commentContent" valign="top"><span id="commentId-'.$dbEntry['id'].'" '.$strikethrough.'>'.htmlspecialchars_decode(stripslashes($dbEntry['commentText'])).'</span></td>
-    </tr><tr><td>&nbsp;</td></tr>'
-    ;
+    </tr><tr><td>&nbsp;</td></tr>';
 }
 $toDisplay .= '</table>';
 $toDisplay .= '<div align="center">';

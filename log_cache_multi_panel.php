@@ -120,7 +120,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                                 <td style="text-align: center"><?php
                                     if (isset($v['cache_id']) && (!$zgodne)) {
                                         echo "<input type=\"submit\" value=\"Log\" style=\"width: 50px\" onclick=\"parent.cachePreview.location.href='viewcache.php?cacheid=" . $v['cache_id'] . "'; return true;\"/>";
-                                    };
+                                    }
                                     ?>
                                 </td>
                             </tr>

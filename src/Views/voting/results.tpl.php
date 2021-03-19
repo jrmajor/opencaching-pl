@@ -85,14 +85,14 @@ new Chart(document.getElementById('resultsBarChart'), {
             backgroundColor: [
                 // 'rgba(255, 99, 132, 0.2)',
                 <?php foreach($result->getOptionsList() as $opt) { ?>
-                  <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt));?>
+                  <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt)); ?>
                   'rgba(<?=implode(',', $rgb)?>,0.2)', /* <?=$result->getColorForOption($opt)?> */
                 <?php } //foreach ?>
             ],
             borderColor: [
               // 'rgba(255, 99, 132, 1)',
               <?php foreach($result->getOptionsList() as $opt) { ?>
-                <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt));?>
+                <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt)); ?>
                 'rgba(<?=implode(',', $rgb)?>,1)',
               <?php } //foreach ?>
             ],
@@ -133,7 +133,7 @@ new Chart(document.getElementById('votesInTimeChart'), {
               label: "<?=$opt->getName()?>",
               data: <?=$result->getListOfVotesInTimeJson($opt)?>,
               fill: false,
-                    <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt));?>
+                    <?php $rgb = ColorGenerator::rgb($result->getColorForOption($opt)); ?>
               borderColor: 'rgba(<?=implode(',', $rgb)?>,0.5)',
               steppedLine: 'before',
           },

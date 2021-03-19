@@ -18,13 +18,13 @@ use src\Controllers\UserWatchedCachesController;
   <?=tr('notify_settings_freq2')?>
   <select id="intervalSelect" name="watchmail_mode" onChange="intervalChanged()" class="form-control input200">
     <option value="<?=UserNotify::SEND_NOTIFICATION_HOURLY?>">
-      <?=tr('notify_settings_hourlyMode');?>
+      <?=tr('notify_settings_hourlyMode'); ?>
     </option>
     <option value="<?=UserNotify::SEND_NOTIFICATION_DAILY?>">
-      <?=tr('notify_settings_dailyMode');?>
+      <?=tr('notify_settings_dailyMode'); ?>
     </option>
     <option value="<?=UserNotify::SEND_NOTIFICATION_WEEKLY?>">
-      <?=tr('notify_settings_weeklyMode');?>
+      <?=tr('notify_settings_weeklyMode'); ?>
     </option>
   </select>
 

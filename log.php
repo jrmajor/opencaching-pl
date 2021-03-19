@@ -178,7 +178,7 @@ if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
             $break_line = '';
         } else {
             $break_line = '';
-        };
+        }
         if (isset($_POST['r']) && $score_radio == $_POST['r'])
             $checked = ' checked="true"';
         else

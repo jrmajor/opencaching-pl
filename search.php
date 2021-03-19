@@ -1074,7 +1074,7 @@ if (!$loggedUser) {
                 if($pos !== false)
                 {
                     $c_type = [];
-                    for ($i=0; $i<strlen($options['cachetype']);$i++){
+                    for ($i=0; $i<strlen($options['cachetype']); $i++){
                         if ($options['cachetype'][$i] == '1') {
                             $c_type[] = $i+1;
                         }

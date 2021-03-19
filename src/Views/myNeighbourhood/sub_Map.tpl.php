@@ -11,4 +11,4 @@ use src\Models\Neighbourhood\Neighbourhood;
 </div>
 
 <div id="nbhmap" class="nbh-block-content nbh-usermap<?=$view->preferences['items'][Neighbourhood::ITEM_MAP]['show'] == true ? '' : ' nbh-nodisplay'?>"></div>
-<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'nbhmap');?>
+<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'nbhmap'); ?>

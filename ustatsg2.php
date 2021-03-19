@@ -108,7 +108,7 @@ while ($wynik = XDb::xFetchArray($wyniki)) {
     $text = $wynik['ilosc'];
     if ($text != '0')
         imagettftext($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
-};
+}
 
 // write output
 imagejpeg($im, OcConfig::getDynFilesPath() . 'images/statpics/mapstat' . $user_id . '.jpg', $jpeg_qualitaet);

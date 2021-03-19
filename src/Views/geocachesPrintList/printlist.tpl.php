@@ -34,7 +34,7 @@ function removeFromList(icon, cacheId){
 
     <?php if($view->rowCount > 0) { ?>
         <div class="content2-container">
-          <?php $view->callChunk('listOfCaches/listOfCaches', $view->listCacheModel);?>
+          <?php $view->callChunk('listOfCaches/listOfCaches', $view->listCacheModel); ?>
         </div>
 
         <div class="align-right">

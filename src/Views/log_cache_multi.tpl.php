@@ -115,7 +115,7 @@ use src\Models\GeoCache\GeoCacheCommons;
     <input onclick=\"this.form.submit(); window.open('viewcache.php?cacheid=" . $v['cache_id'] . "'); return false;\" type=\"submit\" value=\"2\" style=\"width: 20px\"/>
 <!--    <input onclick=\"window.open('viewcache.php?cacheid=" . $v['cache_id'] . "'); this.form.submit(); return false;\" type=\"submit\" value=\"T 3\" style=\"width: 20px\"/> -->
     ";
-                                };
+                                }
                                 ?>
                                 <!--    <a href="http://www.example.org" onclick="window.open('http://www.google.com','newwin');">click me</a> -->
                             </td>

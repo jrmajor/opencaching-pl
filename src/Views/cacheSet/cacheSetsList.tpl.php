@@ -7,13 +7,13 @@
     <div id="mapCanvas"></div>
 
     <!-- map-chunk start -->
-    <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas');?>
+    <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas'); ?>
     <!-- map-chunk end -->
 
     <hr/>
 
     <!-- listOfCaches-chunk start -->
-    <?php $view->callChunk('listOfCaches/listOfCaches', $view->listCacheModel);?>
+    <?php $view->callChunk('listOfCaches/listOfCaches', $view->listCacheModel); ?>
     <!-- listOfCaches-chunk end -->
 
 </div>

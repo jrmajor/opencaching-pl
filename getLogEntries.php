@@ -121,7 +121,7 @@ foreach ($logEntries as $record) {
                 if (!isset($byCOG) || $delByCOG == false) {
                     $comm_replace.=' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                 }
-            };
+            }
             if (isset($record['last_deleted'])) {
                 $comm_replace.=' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                     $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
@@ -296,7 +296,7 @@ foreach ($logEntries as $record) {
             } else {
                 $thisline = mb_ereg_replace('{link}', $pic_record['url'], $thisline);
                 $thisline = mb_ereg_replace('{longdesc}', str_replace('images/uploads', 'upload', $pic_record['url']), $thisline);
-            };
+            }
 
             $thisline = mb_ereg_replace(
                 '{imgsrc}',

@@ -20,6 +20,6 @@ class C002Test extends UpdateScript
         sleep(600);
         echo "Ok\n";
     }
-};
+}
 
 return new C002Test;

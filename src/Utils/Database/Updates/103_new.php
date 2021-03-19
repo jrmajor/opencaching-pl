@@ -78,6 +78,6 @@ class C16126270995966 extends UpdateScript
 
         echo '...done';
     }
-};
+}
 
 return new C16126270995966;

@@ -90,7 +90,7 @@ if (!$loggedUser) {
     } else {
         $sort_txt = 'DESC';
         $sort_neg = 1;
-    };
+    }
     $my_cache_sort = "&start=$start&status=$stat_cache&sort=$sort_neg";
     tpl_set_var('my_cache_sort', $my_cache_sort);
     switch ($sort_col) {
@@ -122,7 +122,7 @@ if (!$loggedUser) {
         default:
             $sort_warunek = 'date_hidden';
             break;
-    };
+    }
     $startat = max(0, floor((($start / $LOGS_PER_PAGE) + 1) / $PAGES_LISTED) * $PAGES_LISTED);
     if (($start / $LOGS_PER_PAGE) + 1 >= $PAGES_LISTED) {
         $pages .= '<a href="mycaches.php?status='.$stat_cache.'&amp;start='.max(0,
@@ -299,9 +299,9 @@ if (!$loggedUser) {
                         if ($logs['log_type'] == 5) {
                             $warning = 1;
                         }       // zgloszono potrzebe serwisu
-                    };
-                };
-            };
+                    }
+                }
+            }
         }
         $pokaz_problem = '';
         if ($stat_cache == 1) {
@@ -318,7 +318,7 @@ if (!$loggedUser) {
             } elseif ($log_record['dni_od_zmiany'] > 124) {
                 $pokaz_problem = 'bgcolor=yellow';
             }
-        };
+        }
         $file_content .= '<tr '.$pokaz_problem.'>'.$table."</td></tr>\n";
     }
     unset($dbc);

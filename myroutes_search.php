@@ -1354,7 +1354,7 @@ function cleanup_text2($str)
     $from[] = "\n"; $to[] = '';
     $from[] = "\r"; $to[] = '';
     $from[] = '</p>'; $to[] = '';
-    $from[] = '<br>';  $to[] = '';
+    $from[] = '<br>'; $to[] = '';
     $from[] = '<br />'; $to[] = '';
     $from[] = '<br/>'; $to[] = '';
 

@@ -19,7 +19,7 @@
   </div>
 
   <!-- listOfLogs-chunk start -->
-  <?php $v->callChunk('listOfCaches/listOfCaches', $v->listOfLogsModel);?>
+  <?php $v->callChunk('listOfCaches/listOfCaches', $v->listOfLogsModel); ?>
   <!-- listOfLogs-chunk end -->
 
 
