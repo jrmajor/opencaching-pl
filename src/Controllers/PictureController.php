@@ -76,8 +76,8 @@ class PictureController extends BaseController
                 $this->ajaxErrorResponse('User is no allowed to add pic to this object');
             }
 
-            $pic->markAsHidden(FALSE);  // added pics are not hidden
-            $pic->markAsSpoiler(FALSE); // added pics are not spoilers (assumption)
+            $pic->markAsHidden(false);  // added pics are not hidden
+            $pic->markAsSpoiler(false); // added pics are not spoilers (assumption)
             $pic->setUuid(FileManager::getFileNameWithoutExtension($path));
             $pic->setFilenameForUrl(FileManager::getFileNameWithExtension($path));
 
@@ -195,7 +195,7 @@ class PictureController extends BaseController
      */
     public function addSpoilerAttrAjax($uuid)
     {
-        $this->changeSpoilerAttrAjax($uuid, TRUE);
+        $this->changeSpoilerAttrAjax($uuid, true);
     }
 
     /**
@@ -204,7 +204,7 @@ class PictureController extends BaseController
      */
     public function rmSpoilerAttrAjax($uuid)
     {
-        $this->changeSpoilerAttrAjax($uuid, FALSE);
+        $this->changeSpoilerAttrAjax($uuid, false);
     }
 
     /**
@@ -213,7 +213,7 @@ class PictureController extends BaseController
      */
     public function addHiddenAttrAjax($uuid)
     {
-        $this->changeHiddenAttrAjax($uuid, TRUE);
+        $this->changeHiddenAttrAjax($uuid, true);
     }
 
     /**
@@ -222,7 +222,7 @@ class PictureController extends BaseController
      */
     public function rmHiddenAttrAjax($uuid)
     {
-        $this->changeHiddenAttrAjax($uuid, FALSE);
+        $this->changeHiddenAttrAjax($uuid, false);
     }
 
     private function commonAttrChangeAjax($uuid)

@@ -287,7 +287,7 @@ if (isset($lat_rad) && isset($lon_rad)) {
         $s = $dbc->multiVariableQuery('SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`=:1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetch($s);
 
-        if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
+        if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
             $query .= '0 distance, ';
         } else {
             // TODO: load from the users-profile

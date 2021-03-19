@@ -360,7 +360,7 @@ if (!$loggedUser) {
                 $options['cacheid'] = isset($_REQUEST['cacheid']) ? $_REQUEST['cacheid'] : 0;
                 if (!is_numeric($options['cacheid'])) $options['cacheid'] = 0;
             }
-            elseif (isset($_REQUEST['searchbywaypoint']) OR isset($_REQUEST['searchbywaypointname']))
+            elseif (isset($_REQUEST['searchbywaypoint']) or isset($_REQUEST['searchbywaypointname']))
             {
                 if (isset($_REQUEST['searchbywaypointname']))
                 {
@@ -595,7 +595,7 @@ if (!$loggedUser) {
                             $sqlstr =
                                 'CREATE TEMPORARY TABLE result_caches ENGINE=MEMORY
                                 SELECT
-                                    (' . getCalcDistanceSqlFormula(TRUE, $lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
+                                    (' . getCalcDistanceSqlFormula(true, $lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
                                     `caches`.`cache_id` `cache_id`
                                 FROM `caches` FORCE INDEX (`latitude`)
                                 LEFT JOIN `cache_mod_cords` ON `caches`.`cache_id` = `cache_mod_cords`.`cache_id` AND `cache_mod_cords`.`user_id` = :1
@@ -640,7 +640,7 @@ if (!$loggedUser) {
 
                             $sqlhashes = '';
                             $wordscount = 0;
-                            foreach ($simpletextsarray AS $text)
+                            foreach ($simpletextsarray as $text)
                             {
                                 if ($text != '')
                                 {
@@ -752,7 +752,7 @@ if (!$loggedUser) {
 
                             $sqlstr = 'CREATE TEMPORARY TABLE result_caches ENGINE=MEMORY
                                 SELECT
-                                    (' . getCalcDistanceSqlFormula(TRUE, $lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
+                                    (' . getCalcDistanceSqlFormula(true, $lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
                                     `caches`.`cache_id` `cache_id`
                                 FROM `caches` FORCE INDEX (`latitude`)
                                 LEFT JOIN `cache_mod_cords` ON `caches`.`cache_id` = `cache_mod_cords`.`cache_id`
@@ -862,7 +862,7 @@ if (!$loggedUser) {
 
                     $sqlstr ='CREATE TEMPORARY TABLE result_caches ENGINE=MEMORY
                     SELECT
-                        (' . getCalcDistanceSqlFormula(TRUE,$lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
+                        (' . getCalcDistanceSqlFormula(true,$lon, $lat, $distance, $multiplier[$distance_unit]) . ') `distance`,
                         `caches`.`cache_id` `cache_id`
                     FROM `caches` FORCE INDEX (`latitude`)
                         LEFT JOIN `cache_mod_cords` ON `caches`.`cache_id` = `cache_mod_cords`.`cache_id`
@@ -984,7 +984,7 @@ if (!$loggedUser) {
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
 
                     $n = 1;
-                    foreach ($hashes AS $k => $h)
+                    foreach ($hashes as $k => $h)
                     {
                         $sql_from[] = '`search_index` `s' . $n . '`';
 
@@ -1235,19 +1235,19 @@ function outputSearchForm($options, User $loggedUser)
     if (isset($options['sort']))
         $bBynameChecked = ($options['sort'] == 'byname');
     else
-        $bBynameChecked = FALSE;
+        $bBynameChecked = false;
     tpl_set_var('byname_checked', ($bBynameChecked == true) ? ' checked="checked"' : '');
 
     if (isset($options['sort']))
         $bBydistanceChecked = ($options['sort'] == 'bydistance');
     else
-        $bBydistanceChecked = TRUE;
+        $bBydistanceChecked = true;
     tpl_set_var('bydistance_checked', ($bBydistanceChecked == true) ? ' checked="checked"' : '');
 
     if (isset($options['sort']))
         $bBycreatedChecked = ($options['sort'] == 'bycreated');
     else
-        $bBycreatedChecked = FALSE;
+        $bBycreatedChecked = false;
     tpl_set_var('bycreated_checked', ($bBycreatedChecked == true) ? ' checked="checked"' : '');
 
     tpl_set_var('hidopt_sort', $options['sort']);
@@ -1255,21 +1255,21 @@ function outputSearchForm($options, User $loggedUser)
     tpl_set_var('f_inactive_checked', ($options['f_inactive'] == 1) ? ' checked="checked"' : '');
     tpl_set_var('hidopt_inactive', ($options['f_inactive'] == 1) ? '1' : '0');
 
-    tpl_set_var('f_ignored_disabled', (FALSE) ? ' disabled="disabled"' : '');
+    tpl_set_var('f_ignored_disabled', (false) ? ' disabled="disabled"' : '');
 
     tpl_set_var('f_ignored_disabled', ($options['f_ignored'] == 1) ? ' checked="checked"' : '');
     tpl_set_var('hidopt_ignored', ($options['f_ignored'] == 1) ? '1' : '0');
 
-    tpl_set_var('f_userfound_disabled', (FALSE) ? ' disabled="disabled"' : '');
+    tpl_set_var('f_userfound_disabled', (false) ? ' disabled="disabled"' : '');
 
     tpl_set_var('f_userfound_disabled', ($options['f_userfound'] == 1) ? ' checked="checked"' : '');
     tpl_set_var('hidopt_userfound', ($options['f_userfound'] == 1) ? '1' : '0');
 
-    tpl_set_var('f_userowner_disabled', (FALSE) ? ' disabled="disabled"' : '');
+    tpl_set_var('f_userowner_disabled', (false) ? ' disabled="disabled"' : '');
     tpl_set_var('f_userowner_disabled', ($options['f_userowner'] == 1) ? ' checked="checked"' : '');
     tpl_set_var('hidopt_userowner', ($options['f_userowner'] == 1) ? '1' : '0');
 
-    tpl_set_var('f_watched_disabled', (FALSE) ? ' disabled="disabled"' : '');
+    tpl_set_var('f_watched_disabled', (false) ? ' disabled="disabled"' : '');
     tpl_set_var('f_watched_disabled', ($options['f_watched'] == 1) ? ' checked="checked"' : '');
     tpl_set_var('hidopt_watched', ($options['f_watched'] == 1) ? '1' : '0');
 
@@ -1743,13 +1743,13 @@ function outputUniidSelectionForm($uniSql, $urlparams)
 
     // build urlparams
     $urlparamString = '';
-    foreach ($urlparams AS $name => $param)
+    foreach ($urlparams as $name => $param)
     {
         // workaround for attribs
         if (is_array($param))
         {
             $pnew = '';
-            foreach ($param AS $p)
+            foreach ($param as $p)
                 if ($pnew != '')
                     $pnew .= ';' . $p;
                 else
@@ -1912,13 +1912,13 @@ function outputLocidSelectionForm($locSql, $urlparams)
 
     // build urlparams
     $urlparamString = '';
-    foreach ($urlparams AS $name => $param)
+    foreach ($urlparams as $name => $param)
     {
         // workaround for attribs
         if (is_array($param))
         {
             $pnew = '';
-            foreach ($param AS $p)
+            foreach ($param as $p)
                 if ($pnew != '')
                     $pnew .= ';' . $p;
                 else

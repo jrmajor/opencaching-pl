@@ -133,14 +133,14 @@ class InputFilter
     private function filterTags($source)
     {
         // filter pass setup
-        $preTag = NULL;
+        $preTag = null;
         $postTag = $source;
 
         // find initial tag's position
         $tagOpen_start = mb_strpos($source, '<');
 
         // interate through string until no tags left
-        while ($tagOpen_start !== FALSE) {
+        while ($tagOpen_start !== false) {
             // process tag interatively
             $preTag .= mb_substr($postTag, 0, $tagOpen_start);
             $postTag = mb_substr($postTag, $tagOpen_start);
@@ -178,13 +178,13 @@ class InputFilter
 
             // is end tag
             if (mb_substr($currentTag, 0, 1) == '/') {
-                $isCloseTag = TRUE;
+                $isCloseTag = true;
                 [$tagName] = mb_split(' ', $currentTag);
                 $tagName = mb_substr($tagName, 1);
 
                 // is start tag
             } else {
-                $isCloseTag = FALSE;
+                $isCloseTag = false;
                 [$tagName] = mb_split(' ', $currentTag);
             }
 
@@ -198,15 +198,15 @@ class InputFilter
             }
 
             // this while is needed to support attribute values with spaces in!
-            while ($currentSpace !== FALSE) {
+            while ($currentSpace !== false) {
                 $fromSpace = mb_substr($tagLeft, ($currentSpace + 1));
                 $nextSpace = mb_strpos($fromSpace, ' ');
                 $openQuotes = mb_strpos($fromSpace, '"');
                 $closeQuotes = mb_strpos(mb_substr($fromSpace, ($openQuotes + 1)), '"') + $openQuotes + 1;
 
                 // another equals exists
-                if (mb_strpos($fromSpace, '=') !== FALSE) {
-                    if (($openQuotes !== FALSE) && (mb_strpos(mb_substr($fromSpace, ($openQuotes + 1)), '"') !== FALSE) && ($openQuotes < $nextSpace)) {
+                if (mb_strpos($fromSpace, '=') !== false) {
+                    if (($openQuotes !== false) && (mb_strpos(mb_substr($fromSpace, ($openQuotes + 1)), '"') !== false) && ($openQuotes < $nextSpace)) {
                         // opening and closing quotes exists
                         $attr = mb_substr($fromSpace, 0, ($closeQuotes + 1));
                     } else {

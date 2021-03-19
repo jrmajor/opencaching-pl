@@ -75,7 +75,7 @@ if (!$loggedUser) {
                 $top_cache = isset($_POST['rating']) ? $_POST['rating'] + 0 : 0;
 
                 $log_pw = '';
-                $use_log_pw = (($log_record['logpw'] == NULL) || ($log_record['logpw'] == '')) ? false : true;
+                $use_log_pw = (($log_record['logpw'] == null) || ($log_record['logpw'] == '')) ? false : true;
                 if (($use_log_pw) && $log_record['logtype'] == 1)
                     $use_log_pw = false;
 

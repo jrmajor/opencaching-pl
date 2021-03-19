@@ -481,9 +481,9 @@ while ( $r = XDb::xFetchArray($stmt) ) {
         $thislog = str_replace('{id}', $rLog['id'], $thislog);
         $thislog = str_replace('{uuid}', $rLog['uuid'], $thislog);
         if ($rLog['type'] == GeoCacheLog::LOGTYPE_ADMINNOTE) {
-            $thislog = str_Replace('{oc_team_entry}', $gpxOcIsTeamEntry, $thislog);
+            $thislog = str_replace('{oc_team_entry}', $gpxOcIsTeamEntry, $thislog);
         } else {
-            $thislog = str_Replace('{oc_team_entry}', '', $thislog);
+            $thislog = str_replace('{oc_team_entry}', '', $thislog);
         }
         $oc_logentries .= $thislog . "\n";
     }

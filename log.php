@@ -653,7 +653,7 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
         tpl_set_var('display', 'none');
     }
 
-    foreach (GeoCacheLogCommons::logTypesArray() AS $type) {
+    foreach (GeoCacheLogCommons::logTypesArray() as $type) {
         // do not allow 'finding' or 'not finding' own or archived cache
         // (events can be logged) $geoCache->getStatus() == 2 || $geoCache->getStatus() == 3
 
@@ -964,7 +964,7 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
             $lat_min_not_ok = true;
         }
     } else {
-        $latitude = NULL;
+        $latitude = null;
         $lat_h_not_ok = true;
         $lat_min_not_ok = true;
         $error = true;
@@ -1009,7 +1009,7 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
             $lon_min_not_ok = true;
         }
     } else {
-        $longitude = NULL;
+        $longitude = null;
         $lon_h_not_ok = true;
         $lon_min_not_ok = true;
         $error = true;

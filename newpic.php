@@ -30,7 +30,7 @@ if (!$loggedUser) {
         tpl_set_var('maxpicsizeMB', OcConfig::getPicMaxSize());
         tpl_set_var('maxpicsize',   OcConfig::getPicMaxSize() * 1024 * 1024);
         tpl_set_var('maxpicresolution', $config['limits']['image']['pixels_text']);
-        tpl_set_var('picallowedformats', OcConfig::getPicAllowedExtensions(TRUE));
+        tpl_set_var('picallowedformats', OcConfig::getPicAllowedExtensions(true));
 
         $message_title_toobig = tr('image_err_too_big');
         $message_toobig = tr('image_max_size');

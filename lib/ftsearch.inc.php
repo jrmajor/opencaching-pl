@@ -48,7 +48,7 @@ function ftsearch_hash(&$str)
 {
     $astr = ftsearch_split($str, true);
 
-    foreach ($astr AS $k => $s) {
+    foreach ($astr as $k => $s) {
         if (strlen($s) > 2)
             $astr[$k] = sprintf('%u', crc32($s));
         else
@@ -129,7 +129,7 @@ function ftsearch_text2simple($str)
     $str = ftsearch_text2sort($str);
 
     // apply rules
-    foreach ($ftsearch_simplerules AS $rule) {
+    foreach ($ftsearch_simplerules as $rule) {
         $str = mb_ereg_replace($rule[0], $rule[1], $str);
     }
 
@@ -369,7 +369,7 @@ function ftsearch_set_entries($object_type, $object_id, $cache_id, &$text, $last
     ftsearch_delete_entries($object_type, $object_id, $cache_id);
 
     $ahash = ftsearch_hash($text);
-    foreach ($ahash AS $k => $h) {
+    foreach ($ahash as $k => $h) {
         XDb::xSql(
             'INSERT DELAYED INTO `search_index` (`object_type`, `cache_id`, `hash`, `count`)
             VALUES ( ?, ?, ?, ?)

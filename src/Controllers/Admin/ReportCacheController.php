@@ -25,7 +25,7 @@ class ReportCacheController extends BaseController
     public function isCallableFromRouter($actionName)
     {
         // all public methods can be called by router
-        return TRUE;
+        return true;
     }
 
     public function index()

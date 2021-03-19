@@ -148,7 +148,7 @@
             <?php $view->callChunk('staticMap/staticMapMarker', $view->newestCsLegendMarker); ?>
           </div>
           <ul class="latestCachesList">
-          <?php foreach($view->lastCacheSets AS $cs){ ?>
+          <?php foreach($view->lastCacheSets as $cs){ ?>
             <li>
                 <a href="<?=$cs->getUrl()?>" class="links highlite"
                     onmouseover="highliteStaticMapMarker('<?='cs_'.$cs->getId()?>')"

@@ -70,12 +70,12 @@ if ($user_record['founds_count'] == 0) {
 $jpeg_qualitaet = 80;
 $fontfile = './resources/fonts/arial.ttf';
 $tplpath = 'images/PLmapa.gif';
-$im = ImageCreateFromGIF($tplpath);
-$clrWhite = ImageColorAllocate($im, 255, 255, 255);
-$clrBorder = ImageColorAllocate($im, 70, 70, 70);
-$clrBlack = ImageColorAllocate($im, 0, 0, 0);
-$clrRed = ImageColorAllocate($im, 255, 0, 0);
-$clrBlue = ImageColorAllocate($im, 0, 0, 255);
+$im = imagecreatefromgif($tplpath);
+$clrWhite = imagecolorallocate($im, 255, 255, 255);
+$clrBorder = imagecolorallocate($im, 70, 70, 70);
+$clrBlack = imagecolorallocate($im, 0, 0, 0);
+$clrRed = imagecolorallocate($im, 255, 0, 0);
+$clrBlue = imagecolorallocate($im, 0, 0, 255);
 $fontsize = 18;
 
 $wojewodztwa = [
@@ -107,12 +107,12 @@ $wyniki = XDb::xSql(
 while ($wynik = XDb::xFetchArray($wyniki)) {
     $text = $wynik['ilosc'];
     if ($text != '0')
-        ImageTTFText($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
+        imagettftext($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
 };
 
 // write output
-Imagejpeg($im, OcConfig::getDynFilesPath() . 'images/statpics/mapstat' . $user_id . '.jpg', $jpeg_qualitaet);
-ImageDestroy($im);
+imagejpeg($im, OcConfig::getDynFilesPath() . 'images/statpics/mapstat' . $user_id . '.jpg', $jpeg_qualitaet);
+imagedestroy($im);
 // generate number for refresh image
 $rand = rand();
 $content .= '<p style="margin-left: 125px;"><img src="/images/statpics/mapstat' . $user_id . '.jpg?rand=' . $rand . '" border="0" alt="" width="250" height="235" /></p>';

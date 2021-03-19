@@ -45,7 +45,7 @@ while ($r = sql_fetch_array($rs)) {
     $simpletexts = search_text2sort($r['full_name_nd']);
     $simpletextsarray = mb_split(' |-|/|,', $simpletexts);
 
-    foreach ($simpletextsarray AS $text) {
+    foreach ($simpletextsarray as $text) {
         if ($text != '') {
             /*              if (nonalpha($text))
               die($r['uni'] . ' ' . $text . "\n");

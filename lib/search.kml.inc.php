@@ -40,7 +40,7 @@ if ($loggedUser || ! $hide_coords) {
 
             $record_coords = XDb::xFetchArray($rs_coords);
 
-            if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
+            if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
                 $query .= '0 distance, ';
             } else {
                 // TODO: load from the users-profile

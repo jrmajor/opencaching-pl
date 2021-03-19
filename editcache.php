@@ -804,7 +804,7 @@ if (!$loggedUser) {
                 // Display cache descriptions list
                 $descList = GeoCache::getDescriptions($cache_id);
                 $cache_descs = '';
-                foreach ($descList AS $descId => $descLang) {
+                foreach ($descList as $descId => $descLang) {
 
                     if (count($descList) > 1) {
                         $remove_url = 'removedesc.php?cacheid=' . urlencode($cache_id) . '&desclang=' . urlencode($descLang);
@@ -839,7 +839,7 @@ if (!$loggedUser) {
                 }
                 tpl_set_var('disablestatusoption', $disablestatusoption);
 
-                foreach (GeoCache::CacheStatusArray() AS $tmpstatus) {
+                foreach (GeoCache::CacheStatusArray() as $tmpstatus) {
                     //hide id 4 => hidden by approvers, hide id 5 if it is not the current status
                     if (( $tmpstatus != GeoCache::STATUS_WAITAPPROVERS || $status_old == GeoCache::STATUS_WAITAPPROVERS ) &&
                         ( $tmpstatus != GeoCache::STATUS_NOTYETAVAILABLE || $status_old == GeoCache::STATUS_NOTYETAVAILABLE ) &&

@@ -61,7 +61,7 @@ if (isset($lat_rad) && isset($lon_rad)) {
             WHERE `user_id`= :1 LIMIT 1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetchOneRowOnly($s);
 
-        if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
+        if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
             $query .= '0 distance, ';
         } else {
             $query .= getCalcDistanceSqlFormula(
@@ -268,7 +268,7 @@ function filterevilchars($str)
         2 => 2, 1 => 1, 0 => 0,
     ];
 
-    foreach ($evilchars AS $ascii) {
+    foreach ($evilchars as $ascii) {
             $str = str_replace(chr($ascii), '', $str);
     }
     $str = mb_ereg_replace('/&([a-zA-Z]{1})caron;/', '\\1', $str);

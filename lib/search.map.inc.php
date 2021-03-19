@@ -35,7 +35,7 @@ if (isset($lat_rad) && isset($lon_rad)) {
             'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= :1 LIMIT 1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetchOneRowOnly($stmt);
 
-        if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL))
+        if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null))
                 || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
             $query .= '0 distance, ';
         } else {

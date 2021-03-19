@@ -51,13 +51,13 @@ $view->setTemplate('openchecker');
 $view->loadJQuery();
 
 
-$OpenCheckerSetup = New OpenCheckerSetup();
+$OpenCheckerSetup = new OpenCheckerSetup();
 tpl_set_var('openchecker_script', $OpenCheckerSetup->scriptname);
 
 tpl_set_var('section_5_start', '<!--');
 tpl_set_var('section_5_stop', '-->');
 
-$OpenChecker = New OpenCheckerCore();
+$OpenChecker = new OpenCheckerCore();
 
 /*
  * if isset $_POST['guessedCoordsFinalLatitude'] means that user entered coords to check.

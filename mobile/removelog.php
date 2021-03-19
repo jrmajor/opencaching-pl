@@ -8,7 +8,7 @@ require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
-    if (isSet($_GET['id']) && !empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
+    if (isset($_GET['id']) && !empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
 
 
         $id = XDb::xEscape($_GET['id']);
@@ -25,7 +25,7 @@ if (isset($_SESSION['user_id'])) {
             $tpl->assign('error', '2');
         elseif ($wiersz['deleted'] == '1')
             $tpl->assign('error', '1');
-        elseif (isSet($_POST['confirm']) && $_POST['confirm'] == 'true') {
+        elseif (isset($_POST['confirm']) && $_POST['confirm'] == 'true') {
 
             $cache_id = $wiersz['cache_id'];
             $user_id = $wiersz['user_id'];

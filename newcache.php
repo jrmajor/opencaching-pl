@@ -473,7 +473,7 @@ if (isset($_POST['submitform'])) {
             $lat_min_not_ok = true;
         }
     } else {
-        $latitude = NULL;
+        $latitude = null;
         $lat_h_not_ok = false;
         $lat_min_not_ok = false;
     }
@@ -517,7 +517,7 @@ if (isset($_POST['submitform'])) {
             $lon_min_not_ok = true;
         }
     } else {
-        $longitude = NULL;
+        $longitude = null;
         $lon_h_not_ok = false;
         $lon_min_not_ok = false;
     }

@@ -75,7 +75,7 @@ if( $loggedUser || !$hide_coords ) {
         } else {
             //get the users home coords
             $homeCoords = $loggedUser->getHomeCoordinates();
-            if ($homeCoords->getLatitude() == NULL || $homeCoords->getLongitude() == NULL) {
+            if ($homeCoords->getLatitude() == null || $homeCoords->getLongitude() == null) {
                 $query .= '0 distance, ';
             } else {
                 $distance_unit = 'km';

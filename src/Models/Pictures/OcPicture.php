@@ -70,9 +70,9 @@ class OcPicture extends BaseObject
         $obj = new self();
         $obj->parentType = $parentType;
         $obj->parent = $parentObj;
-        $obj->isHidden = FALSE;
-        $obj->isSpoiler = FALSE;
-        $obj->isLocal = TRUE;
+        $obj->isHidden = false;
+        $obj->isSpoiler = false;
+        $obj->isLocal = true;
 
         switch ($parentType) {
             case self::TYPE_CACHE:
@@ -505,7 +505,7 @@ class OcPicture extends BaseObject
     {
         $obj = new \stdClass();
         $obj->fullPicUrl = $this->getFullImgUrl();
-        $obj->thumbUrl = $this->getThumbnail(Thumbnail::SIZE_SMALL, TRUE);
+        $obj->thumbUrl = $this->getThumbnail(Thumbnail::SIZE_SMALL, true);
         $obj->uuid = $this->getUuid();
         $obj->title = $this->getTitle();
         $obj->isHidden = $this->isHidden();

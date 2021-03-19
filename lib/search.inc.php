@@ -46,7 +46,7 @@ function search_text2simple($str)
     $str = search_text2sort($str);
 
     // apply rules
-    foreach ($search_simplerules AS $rule) {
+    foreach ($search_simplerules as $rule) {
         $str = mb_ereg_replace($rule[0], $rule[1], $str);
     }
 

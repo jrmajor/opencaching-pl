@@ -18,7 +18,7 @@ class SysController extends BaseController
     public function isCallableFromRouter($actionName)
     {
         // all public methods can be called by router
-        return TRUE;
+        return true;
     }
 
     public function index()
@@ -33,7 +33,7 @@ class SysController extends BaseController
      *
      * APC control panel needs to be called directly
      */
-    public function apc($redirectToApcScript=TRUE)
+    public function apc($redirectToApcScript=true)
     {
         if($redirectToApcScript){
             $this->view->redirect('/src/Libs/Apc/apc.php');

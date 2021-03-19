@@ -184,11 +184,11 @@ class NutsLocation extends BaseObject
     {
         foreach ($this->codes as $code) {
             if (!is_null($code)) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     /**

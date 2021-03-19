@@ -54,7 +54,7 @@ class Debug {
         } else {
             $result = 'var-dump: ';
         }
-        $result .= var_export($var, TRUE);
+        $result .= var_export($var, true);
         error_log($result);
     }
 }

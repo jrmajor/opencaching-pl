@@ -5,7 +5,7 @@ require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
-    if (isSet($_GET['wp']) && !empty($_GET['wp'])) {
+    if (isset($_GET['wp']) && !empty($_GET['wp'])) {
 
 
 

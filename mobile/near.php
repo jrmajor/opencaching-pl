@@ -102,10 +102,10 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
 
             //if($wiersz['wp_oc']=='OP210B') continue;
 
-            $ilat1 = Deg2Rad(0.50 + $kord1 * 360000.0);
-            $ilon1 = Deg2Rad(0.50 + $kord2 * 360000.0);
-            $ilat2 = Deg2Rad(0.50 + $wiersz['latitude'] * 360000.0);
-            $ilon2 = Deg2Rad(0.50 + $wiersz['longitude'] * 360000.0);
+            $ilat1 = deg2rad(0.50 + $kord1 * 360000.0);
+            $ilon1 = deg2rad(0.50 + $kord2 * 360000.0);
+            $ilat2 = deg2rad(0.50 + $wiersz['latitude'] * 360000.0);
+            $ilon2 = deg2rad(0.50 + $wiersz['longitude'] * 360000.0);
 
             $dist = round(acos((sin($kord1) * sin($wiersz['latitude'])) + (cos($kord1) * cos($wiersz['latitude']) * cos(abs($kord2 - $wiersz['longitude'])))) * 111.19, 1);
 
@@ -121,10 +121,10 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
             $ilon1 = (0.50 + $lon1 * 360000.0);
             $ilon2 = (0.50 + $lon2 * 360000.0);
 
-            $lat1 = Deg2Rad($lat1);
-            $lon1 = Deg2Rad($lon1);
-            $lat2 = Deg2Rad($lat2);
-            $lon2 = Deg2Rad($lon2);
+            $lat1 = deg2rad($lat1);
+            $lon1 = deg2rad($lon1);
+            $lat2 = deg2rad($lat2);
+            $lon2 = deg2rad($lon2);
 
             if (($ilat1 == $ilat2) && ($ilon1 == $ilon2)) {
 
@@ -134,7 +134,7 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
             }else {
                 $c = acos(sin($lat2) * sin($lat1) + cos($lat2) * cos($lat1) * cos(($lon2 - $lon1)));
                 $A = asin(cos($lat2) * sin(($lon2 - $lon1)) / sin($c));
-                $result = Rad2Deg($A);
+                $result = rad2deg($A);
 
                 if (($ilat2 > $ilat1) && ($ilon2 > $ilon1)) {
 

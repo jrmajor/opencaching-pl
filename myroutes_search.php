@@ -249,15 +249,15 @@ tpl_set_var('hidopt_attribs_not', implode(';', $options['cache_attribs_not']));
 tpl_set_var('f_inactive_checked', ($options['f_inactive'] == 1) ? ' checked="checked"' : '');
 tpl_set_var('hidopt_inactive', ($options['f_inactive'] == 1) ? '1' : '0');
 
-tpl_set_var('f_ignored_disabled', (FALSE) ? ' disabled="disabled"' : '');
+tpl_set_var('f_ignored_disabled', (false) ? ' disabled="disabled"' : '');
 tpl_set_var('f_ignored_disabled', ($options['f_ignored'] == 1) ? ' checked="checked"' : '');
 tpl_set_var('hidopt_ignored', ($options['f_ignored'] == 1) ? '1' : '0');
 
-tpl_set_var('f_userfound_disabled', (FALSE) ? ' disabled="disabled"' : '');
+tpl_set_var('f_userfound_disabled', (false) ? ' disabled="disabled"' : '');
 tpl_set_var('f_userfound_disabled', ($options['f_userfound'] == 1) ? ' checked="checked"' : '');
 tpl_set_var('hidopt_userfound', ($options['f_userfound'] == 1) ? '1' : '0');
 
-tpl_set_var('f_userowner_disabled', (FALSE) ? ' disabled="disabled"' : '');
+tpl_set_var('f_userowner_disabled', (false) ? ' disabled="disabled"' : '');
 tpl_set_var('f_userowner_disabled', ($options['f_userowner'] == 1) ? ' checked="checked"' : '');
 tpl_set_var('hidopt_userowner', ($options['f_userowner'] == 1) ? '1' : '0');
 
@@ -1387,7 +1387,7 @@ function cleanup_text2($str)
  */
 function cache_distances($lat1, $lon1, $lat2, $lon2)
 {
-    if (( $lon1 == $lon2 ) AND ( $lat1 == $lat2 )) {
+    if (( $lon1 == $lon2 ) and ( $lat1 == $lat2 )) {
         return(0);
     } else {
         $earth_radius = 6378;

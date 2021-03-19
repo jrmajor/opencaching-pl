@@ -38,7 +38,7 @@ class GeoKretyLogController extends BaseController
 
     public function isCallableFromRouter($actionName){
         // this controlled is planned to be called only from cron (not by router)
-        return FALSE;
+        return false;
     }
 
     public function index()
@@ -78,7 +78,7 @@ class GeoKretyLogController extends BaseController
 
                 $responseData = $this->sendLog($gkl);
 
-                if($responseData === FALSE){
+                if($responseData === false){
                     // connection error!
                     $this->debug("Can't connect to GK API - give up for now!");
                     $this->updateDbQueue($idsToRemove, $idsToUpdate);

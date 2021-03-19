@@ -140,7 +140,7 @@ class CacheSetAdminController extends BaseController
 
         $pts=[];
         foreach ($cacheIds as $cacheid) {
-            $ptArr = PowerTrail::CheckForPowerTrailByCache($cacheid, TRUE);
+            $ptArr = PowerTrail::CheckForPowerTrailByCache($cacheid, true);
             $pts[$cacheid] = [];
             foreach ($ptArr as $ptRow) {
                 $pts[$cacheid][] = new PowerTrail(['dbRow' => $ptRow]);

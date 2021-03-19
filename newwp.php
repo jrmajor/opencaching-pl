@@ -243,7 +243,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                     $lat_min_not_ok = true;
                 }
             } else {
-                $latitude = NULL;
+                $latitude = null;
                 $lat_h_not_ok = false;
                 $lat_min_not_ok = false;
             }
@@ -287,7 +287,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                     $lon_min_not_ok = true;
                 }
             } else {
-                $longitude = NULL;
+                $longitude = null;
                 $lon_h_not_ok = false;
                 $lon_min_not_ok = false;
             }

@@ -87,10 +87,10 @@ class StatPic extends BaseObject
             $statPicTpl = self::getDefaultTpl();
         }
 
-        $im = ImageCreateFromGIF (Uri::getAbsServerPath('/'.$statPicTpl->tplPath));
+        $im = imagecreatefromgif (Uri::getAbsServerPath('/'.$statPicTpl->tplPath));
         $maxTxtWidth = $statPicTpl->maxtextwidth;
 
-        $clrBlack = ImageColorAllocate($im, 0, 0, 0);
+        $clrBlack = imagecolorallocate($im, 0, 0, 0);
 
         $found = $user->getFoundGeocachesCount();
         $hidden = $user->getHiddenGeocachesCount();
@@ -103,7 +103,7 @@ class StatPic extends BaseObject
                 $fontSz = 10;
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText(
+                imagettftext(
                     $im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
@@ -111,7 +111,7 @@ class StatPic extends BaseObject
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     32, $clrBlack, $fontfile, $text);
 
@@ -120,20 +120,20 @@ class StatPic extends BaseObject
                 $fontSz = 10;
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 7;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     29, $clrBlack, $fontfile, $statPicText);
 
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     45, $clrBlack, $fontfile, $text);
 
@@ -143,13 +143,13 @@ class StatPic extends BaseObject
                 $fontSz = 10;
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 7.5;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     32, $clrBlack, $fontfile, $statPicText);
 
@@ -159,31 +159,31 @@ class StatPic extends BaseObject
                 $fontSz = 10;
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     29, $clrBlack, $fontfile, $text);
 
                 $fontSz = 8;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
-                ImageTTFText($im, $fontSz, 0,
+                imagettftext($im, $fontSz, 0,
                     max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     45, $clrBlack, $fontfile, $statPicText);
 
         } // switch (statPic-TPL)
 
         // draw border
-        ImageRectangle($im, 0, 0, imagesx($im) - 1, imagesy($im) - 1, ImageColorAllocate($im, 70, 70, 70));
+        imagerectangle($im, 0, 0, imagesx($im) - 1, imagesy($im) - 1, imagecolorallocate($im, 70, 70, 70));
 
         // write output
-        Imagejpeg($im, self::getStatPicPath ($user->getUserId()), 80);
-        ImageDestroy($im);
+        imagejpeg($im, self::getStatPicPath ($user->getUserId()), 80);
+        imagedestroy($im);
     }
 
     protected function loadFromDbRow($row)

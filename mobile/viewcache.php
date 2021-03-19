@@ -6,7 +6,7 @@ use src\Utils\I18n\I18n;
 
 require_once('./lib/common.inc.php');
 
-if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
+if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
 
 
 

@@ -126,7 +126,7 @@ class GeoPathController extends BaseController
             $this->ajaxErrorResponse('Cache not belong to logged user!', self::HTTP_STATUS_CONFLICT);
         }
 
-        if($cache->isPowerTrailPart(TRUE)){
+        if($cache->isPowerTrailPart(true)){
             $this->ajaxErrorResponse('Already part of GeoPath', self::HTTP_STATUS_CONFLICT);
         }
 

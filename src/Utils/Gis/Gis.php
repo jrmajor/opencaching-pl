@@ -94,7 +94,7 @@ class Gis
      * @param number $shortText
      * @return string - name of the bearing in long or short form
      */
-    public static function bearing2Text($bearing, $shortText = FALSE)
+    public static function bearing2Text($bearing, $shortText = false)
     {
         if ($shortText) {
             $form = 'bearingshort';

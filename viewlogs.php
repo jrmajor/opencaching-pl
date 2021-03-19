@@ -191,7 +191,7 @@ if ($cache_id != 0) {
 
     isset($showDel) && $showDel == 'y' ? $HideDeleted = false : $HideDeleted = true;
     $includeDeletedLogs = true;
-    If (($HideDeleted && !$logid && !($loggedUser && $loggedUser->hasOcTeamRole()))) {
+    if (($HideDeleted && !$logid && !($loggedUser && $loggedUser->hasOcTeamRole()))) {
         //hide deletions if (hide_deletions opotions is on and this is single_log call=not and user is not COG)
         $includeDeletedLogs = false;
     }

@@ -44,7 +44,7 @@ if ($loggedUser) {
 
     $record_coords = XDb::xFetchArray($rs_coords);
 
-    if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) ||
+    if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null)) ||
         (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
 
         // invalid or missing home coordinates

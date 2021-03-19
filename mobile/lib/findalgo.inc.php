@@ -8,10 +8,10 @@ require_once('../lib/ClassPathDictionary.php');
 
 global $action;
 
-if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
-        isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
-        isSet($_GET['owner']) && !empty($_GET['owner']) ||
-        isSet($_GET['finder']) && !empty($_GET['finder'])) {
+if (isset($_GET['nazwa']) && !empty($_GET['nazwa']) ||
+        isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
+        isset($_GET['owner']) && !empty($_GET['owner']) ||
+        isset($_GET['finder']) && !empty($_GET['finder'])) {
 
 
 
@@ -25,21 +25,21 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
 
         $language = I18n::getCurrentLang();
 
-        if (isSet($_GET['nazwa'])) {
+        if (isset($_GET['nazwa'])) {
             $nazwa = XDb::xEscape($_GET['nazwa']);
             $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where name like '%" . $nazwa . "%' and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
             $czykilka = 1;
             $url = './find.php?nazwa=' . $nazwa;
         }
 
-        if (isSet($_GET['wp'])) {
+        if (isset($_GET['wp'])) {
             $wp = XDb::xEscape($_GET['wp']);
             $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where wp_oc = '" . $wp . "' and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
             $czykilka = 0;
             $url = './find.php?wp=' . $wp;
         }
 
-        if (isSet($_GET['owner'])) {
+        if (isset($_GET['owner'])) {
             $owner = XDb::xEscape($_GET['owner']);
             $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where user_id = (select user_id from user where username ='";
             $query .= $owner . "') and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
@@ -47,7 +47,7 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
             $url = './find.php?owner=' . $owner;
         }
 
-        if (isSet($_GET['finder'])) {
+        if (isset($_GET['finder'])) {
             $finder = XDb::xEscape($_GET['finder']);
             $query = "select caches.votes,caches.cache_id,name, status, score, latitude, longitude, wp_oc, caches.user_id, caches.type from caches inner join cache_logs on caches.cache_id=cache_logs.cache_id where cache_logs.user_id = (select user.user_id from user where username ='";
             $query .= $finder . "') and cache_logs.type = '1' and cache_logs.deleted=0 and caches.status in ('1','2','3') order by cache_logs.id desc limit " . $start . ',' . $end;
@@ -115,7 +115,7 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
         }
     }
 
-    if (isSet($_GET['nazwa']) && strlen($_GET['nazwa']) < 3) {
+    if (isset($_GET['nazwa']) && strlen($_GET['nazwa']) < 3) {
         $tpl->assign('error', '2');
     } else {
 
@@ -123,21 +123,21 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
 
         $na_stronie = 10;
 
-        if (isSet($_GET['nazwa'])) {
+        if (isset($_GET['nazwa'])) {
             $nazwa = XDb::xEscape($_GET['nazwa']);
             $query2 = "select wp_oc from caches where name like '%" . $nazwa . "%' and caches.status in ('1','2','3')";
             $wynik = XDb::xSql($query2);
             $ile = XDb::xNumRows($wynik);
         }
 
-        if (isSet($_GET['wp'])) {
+        if (isset($_GET['wp'])) {
             $wp = XDb::xEscape($_GET['wp']);
             $query2 = "select wp_oc from caches where wp_oc = '" . $wp . "' and caches.status in ('1','2','3')";
             $wynik = XDb::xSql($query2);
             $ile = XDb::xNumRows($wynik);
         }
 
-        if (isSet($_GET['owner'])) {
+        if (isset($_GET['owner'])) {
             $owner = XDb::xEscape($_GET['owner']);
             $query2 = "select wp_oc from caches where user_id = (select user_id from user where username ='";
             $query2 .= $owner . "') and caches.status in ('1','2','3')";
@@ -145,7 +145,7 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
             $ile = XDb::xNumRows($wynik);
         }
 
-        if (isSet($_GET['finder'])) {
+        if (isset($_GET['finder'])) {
             $finder = XDb::xEscape($_GET['finder']);
             $query2 = "select DISTINCT wp_oc from caches inner join cache_logs on caches.cache_id = cache_logs.cache_id where cache_logs.user_id = (select user.user_id from user where username ='";
             $query2 .= $finder . "') and cache_logs.type = '1' and cache_logs.deleted='0' and caches.status in ('1','2','3')";
