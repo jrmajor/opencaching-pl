@@ -14,7 +14,7 @@ class CronJobsController extends BaseController
     {
         parent::__construct();
         if ($jobToRun !== null && !$this->ocConfig->getCronjobSchedule($jobToRun)) {
-            die("unknown job: ".$jobToRun."\n");
+            exit("unknown job: ".$jobToRun."\n");
         }
         $this->jobToRun = $jobToRun;
     }
@@ -41,7 +41,7 @@ class CronJobsController extends BaseController
             // are not spammed with error messages if something is slow.
 
             if ($minutesSinceLastRun > 19) {
-                die("Another instance of CronJobsController is running for ".$minutesSinceLastRun.
+                exit("Another instance of CronJobsController is running for ".$minutesSinceLastRun.
                     " minutes, or problem with lock file.\n"
                 );
             }

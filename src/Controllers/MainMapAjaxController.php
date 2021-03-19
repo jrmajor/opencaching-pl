@@ -108,7 +108,7 @@ class MainMapAjaxController extends BaseController
 
         if( $zoom > 21){ // OKAPI mapper max zoom
             //TODO
-            die(); // zoom is too large
+            exit(); // zoom is too large
         }
 
         $this->searchParams['x'] = $x;    // x-index of tile

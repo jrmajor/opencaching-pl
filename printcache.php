@@ -20,7 +20,7 @@ if (!$cache_id) {
     if (!$loggedUser ||
         (empty(PrintList::GetContent()) && (isset($_GET['source']) && $_GET['source'] != 'mywatches'))) {
         header("Location:index.php");
-        die();
+        exit();
     }
 }
 
@@ -203,7 +203,7 @@ if ($_POST['spoiler_only'] == "&spoiler_only=1") {
     <?php View::callChunkInline('jQuery') ?>
     <script src="<?= Uri::getLinkWithModificationTime('/js/printcache.js') ?>"></script>
 
-    <form action="/printcache.php?cacheid=<?php print $cache_id; ?>" method="post">
+    <form action="/printcache.php?cacheid=<?php echo $cache_id; ?>" method="post">
         <?php
         } else {
         if ((!isset($_GET['source'])) || ($_GET['source'] != 'mywatches')) {
@@ -220,33 +220,33 @@ if ($_POST['spoiler_only'] == "&spoiler_only=1") {
                 <div>
                     <input type="radio" name="showlogs" id="shownologbook"
                            value="&amp;logbook=no" <?php echo $checked_0; ?>><label
-                            for="shownologbook"><?php print tr('printcache_00'); ?></label>
+                            for="shownologbook"><?php echo tr('printcache_00'); ?></label>
                     <input type="radio" name="showlogs" id="shownologs" value="" <?php echo $checked_1; ?>><label
-                            for="shownologs"><?php print tr('printcache_01'); ?></label>
+                            for="shownologs"><?php echo tr('printcache_01'); ?></label>
                     <input type="radio" name="showlogs" id="showlogs4"
                            value="&amp;showlogs=4" <?php echo $checked_2; ?>><label
-                            for="showlogs4"><?php print tr('printcache_02'); ?></label>
+                            for="showlogs4"><?php echo tr('printcache_02'); ?></label>
                     <input type="radio" name="showlogs" id="showalllogs"
                            value="&amp;showlogsall=y" <?php echo $checked_3; ?>><label
-                            for="showalllogs"><?php print tr('printcache_03'); ?></label>
+                            for="showalllogs"><?php echo tr('printcache_03'); ?></label>
                 </div>
                 <input type="radio" name="showpictures" id="shownopictures"
                        value="&amp;pictures=no" <?php echo $checked_4; ?>><label
-                        for="shownopictures"><?php print tr('printcache_04'); ?></label>
+                        for="shownopictures"><?php echo tr('printcache_04'); ?></label>
                 <input type="radio" name="showpictures" id="showpictures"
                        value="&amp;pictures=small" <?php echo $checked_5; ?>><label
-                        for="showpictures"><?php print tr('printcache_05'); ?></label>
+                        for="showpictures"><?php echo tr('printcache_05'); ?></label>
                 <input type="radio" name="showpictures" id="showallpictures"
                        value="&amp;pictures=big" <?php echo $checked_6; ?>><label
-                        for="showallpictures"><?php print tr('printcache_06'); ?></label>
+                        for="showallpictures"><?php echo tr('printcache_06'); ?></label>
                 <div>
                     <input type="checkbox" name="nocrypt" id="nocrypt" value="&amp;nocrypt=1" <?php echo $checked_7; ?>><label
-                            for="nocrypt"><?php print tr('printcache_07'); ?></label>&nbsp;&nbsp;&nbsp;
+                            for="nocrypt"><?php echo tr('printcache_07'); ?></label>&nbsp;&nbsp;&nbsp;
                     <input type="checkbox" name="spoiler_only" id="spoiler_only"
                            value="&amp;spoiler_only=1" <?php echo $checked_8; ?>><label
-                            for="spoiler_only"><?php print tr('printcache_08'); ?></label>&nbsp;&nbsp;&nbsp;
+                            for="spoiler_only"><?php echo tr('printcache_08'); ?></label>&nbsp;&nbsp;&nbsp;
                 </div>
-                <input type="submit" name="submit" value="<?php print tr('printcache_09'); ?>">
+                <input type="submit" name="submit" value="<?php echo tr('printcache_09'); ?>">
 
                 <?php
                 if (!$cache_id) {

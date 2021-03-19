@@ -17,7 +17,7 @@ set_time_limit(1800);
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 if (!$loggedUser && $hide_coords)
-    die();
+    exit();
 
 $dbc = OcDb::instance();
 

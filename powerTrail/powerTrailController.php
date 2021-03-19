@@ -248,8 +248,8 @@ class powerTrailController
     public function debug($var, $name = null, $line = null)
     {
         //if($this->debug === false) return;
-        print '<font color=green><b>#'.$line."</b> $name, </font>(".__FILE__.") <pre>";
+        echo '<font color=green><b>#'.$line."</b> $name, </font>(".__FILE__.") <pre>";
         print_r($var);
-        print '</pre>';
+        echo '</pre>';
     }
 }

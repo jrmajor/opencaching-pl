@@ -80,7 +80,7 @@ abstract class BaseController
         }
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=UTF-8');
-        print (json_encode($response));
+        echo (json_encode($response));
         exit;
     }
     protected function ajaxSuccessResponse($message=null, array $additionalResponseData=null){

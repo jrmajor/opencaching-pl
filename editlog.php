@@ -564,7 +564,7 @@ if (!$loggedUser) {
         } else {
             // no such log or log marked as deleted
             echo "no_such_log...?!";
-            die();
+            exit();
         }
 
 

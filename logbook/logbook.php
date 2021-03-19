@@ -131,10 +131,10 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 <hr />
                 <?php
                 if($_GET['logbook_type'] == 0) {
-                print 'Proszę wybrać typ logbooku.';
+                echo 'Proszę wybrać typ logbooku.';
                 }
                 else if($_GET['logbook_type'] == 1) {
-                print
+                echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -163,7 +163,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 ';
                 }
                 else if($_GET['logbook_type'] == 2) {
-                print
+                echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -192,7 +192,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 ';
                 }
                 else {
-                print 'Wrong logbook type!';
+                echo 'Wrong logbook type!';
                 }
                 ?>
             </div>

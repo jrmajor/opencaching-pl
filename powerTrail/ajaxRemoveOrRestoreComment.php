@@ -5,13 +5,13 @@ use src\Models\ApplicationContainer;
 require_once __DIR__.'/../lib/common.inc.php';
 
 if (!isset($_SESSION['user_id'])) {
-    print 'no hacking please!';
+    echo 'no hacking please!';
     exit;
 }
 
 $callingUser = (int) $_REQUEST['callingUser'];
 if ($callingUser != $_SESSION['user_id']) {
-    print 'wrong user!';
+    echo 'wrong user!';
     exit;
 }
 
@@ -32,7 +32,7 @@ if (powerTrailBase::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $powerTra
     $db->multiVariableQuery($query, $commentId, $restore ? 0 : 1);
 
     if ($commentDbRow['commentType'] == 2) {
-        print '2';
+        echo '2';
         $q = '
             UPDATE `PowerTrail`
             SET `PowerTrail`.`conquestedCount`= (

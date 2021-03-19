@@ -38,8 +38,8 @@ $gkxml = @simplexml_load_string($xmlString);
 
 //    $gkxml=@simplexml_load_file($url);
 if (!$gkxml) {
-    print $xmlString;
-    die("Geokrety export error! Failed to load XML file [simplexml_load_file()]: " . $url);
+    echo $xmlString;
+    exit("Geokrety export error! Failed to load XML file [simplexml_load_file()]: " . $url);
 }
 
 /* read geokrety data */

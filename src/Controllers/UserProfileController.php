@@ -300,7 +300,7 @@ class UserProfileController extends BaseController
         // this is only for logged user
         $this->redirectNotLoggedUsers();
 
-        $statPicLogo = isset($_POST['statpic_logo']) ? (integer) $_POST['statpic_logo'] : 0;
+        $statPicLogo = isset($_POST['statpic_logo']) ? (int) $_POST['statpic_logo'] : 0;
         $statPicText = isset($_POST['statpic_text']) ? mb_substr($_POST['statpic_text'], 0, 30) : 'Opencaching';
         $statPicText = InputFilter::cleanupUserInput($statPicText);
 

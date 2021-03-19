@@ -102,10 +102,10 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             {
             $removed = [];
 
-            print "<br />Iterating over " .  $node->tagName ."\n";
+            echo "<br />Iterating over " .  $node->tagName ."\n";
 
             if($node->tagName == "span") {
-            print "deleting\n";
+            echo "deleting\n";
             array_push($removed, $node);
             }
             if(!$node)

@@ -103,7 +103,7 @@ abstract class Job
                 ['mon', 'tues', 'wednes', 'thurs', 'fri', 'satur', 'sun']
             );
             if ($dow === false) {
-                die("Invalid day of week (".$matches[1]."day) for ".$jobName."\n");
+                exit("Invalid day of week (".$matches[1]."day) for ".$jobName."\n");
             }
 
             return
@@ -115,7 +115,7 @@ abstract class Job
         } elseif (preg_match('/^monthly on day (\d+) at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[3]);
             if ($matches[1] > 28) {
-                die(
+                exit(
                     "Invalid day of month (".$matches[1].") for ".$jobName.
                     "; must range between 1 and 28.\n"
                 );
@@ -127,14 +127,14 @@ abstract class Job
                 date('H:i') >= sprintf('%02d:%02d', $matches[2], $matches[3]);
 
         } else {
-            die("Invalid schedule '".$schedule."' for ".$jobName);
+            exit("Invalid schedule '".$schedule."' for ".$jobName);
         }
     }
 
     private function validateMinutes($minutes)
     {
         if ($minutes % 5 != 0) {
-            die(
+            exit(
                 "Invalid minutes setting (".$minutes.") for ".get_class($this).
                 "; must be a multiple of 5.\n"
             );

@@ -13,7 +13,7 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 if (!$loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
-    die();
+    exit();
 }
 
 // former query.inc.php

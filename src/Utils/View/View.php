@@ -481,7 +481,7 @@ class View
         if (!headers_sent()) {
             header('Content-type: text/plain');
         }
-        die($text);
+        exit($text);
     }
 
     /**

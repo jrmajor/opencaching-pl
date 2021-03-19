@@ -103,7 +103,7 @@ class StaticMap
         $map->height = $size[1];
         $map->maptype = $mapType;
 
-        print $map->showMap();
+        echo $map->showMap();
 
     }
 
@@ -120,7 +120,7 @@ class StaticMap
 
         $map->addMarker($center, $markerImg);
 
-        print $map->showMap();
+        echo $map->showMap();
     }
 
 

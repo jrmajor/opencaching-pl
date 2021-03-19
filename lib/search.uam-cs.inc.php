@@ -205,7 +205,7 @@ function cs2cs_core2($lat, $lon, $to) {
     ];
 
     if (mb_eregi('^[a-z0-9_ ,.\+\-=]*$', $to) == 0) {
-        die("invalid arguments in command: " . $to ."\n");
+        exit("invalid arguments in command: " . $to ."\n");
     }
 
     $command = "cs2cs" . " +proj=latlong +ellps=WGS84 +to " . $to;
@@ -233,7 +233,7 @@ function cs2cs_core2($lat, $lon, $to) {
         // (Vinnie, 2006-02-09)
 
         if ($stderr) {
-            die("proc_open() failed:<br />command='$command'<br />stderr='" . $stderr . "'");
+            exit("proc_open() failed:<br />command='$command'<br />stderr='" . $stderr . "'");
         }
 
         proc_close($process);
@@ -241,7 +241,7 @@ function cs2cs_core2($lat, $lon, $to) {
         return mb_split("\t|\n| ", TextConverter::mb_trim($stdout));
 
     } else {
-        die("proc_open() failed, command=$command\n");
+        exit("proc_open() failed, command=$command\n");
     }
 }
 

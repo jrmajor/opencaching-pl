@@ -81,7 +81,7 @@ $updateStatusResult['currentStatus'] = $powerTrail->getStatus();
 $updateStatusResult['currentStatusTranslation'] = $powerTrail->getStatusTranslation();
 
 if ($updateStatusResult['updateStatusResult']) {
-    print $updateStatusResult['currentStatusTranslation'];
+    echo $updateStatusResult['currentStatusTranslation'];
 } else {
-    print $updateStatusResult['message'];
+    echo $updateStatusResult['message'];
 }

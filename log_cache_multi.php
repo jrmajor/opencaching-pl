@@ -86,9 +86,9 @@ if (isset($_POST['submitDownloadGpx'])) {
         header("Content-Disposition: attachment; filename=\"" . $filname . "\"");
         echo pack("ccc", 0xef, 0xbb, 0xbf);
         echo $fd;
-        die();
+        exit();
     } else {
-        die("No data");
+        exit("No data");
     }
 }
 
@@ -122,14 +122,14 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         if ($_FILES['userfile']['error'] != 0) {
             // jesli nie to jaki blad?
             if ($_FILES['userfile']['error'] == 2) {
-                die("Plik zbyt duzy");
+                exit("Plik zbyt duzy");
             }
             exit;
         }
 
         // czy ktos cos nie kombinuje?
         if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-            die("Cos nie tak z wysylaniem pliku, sprobuj ponownie...");
+            exit("Cos nie tak z wysylaniem pliku, sprobuj ponownie...");
         }
 
         // wczytuje plik

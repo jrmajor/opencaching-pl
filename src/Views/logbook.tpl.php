@@ -233,10 +233,10 @@ AIM = {
     <hr />
     <?php
     if($_GET['logbook_type'] == 0) {
-    print '{{logbook_06}}.';
+    echo '{{logbook_06}}.';
     }
     else if($_GET['logbook_type'] == 1) {
-    print
+    echo
     '<span class="note">{{logbook_07}}.</span>
     <form id="logbookopts" action="logbook/remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
     <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -265,7 +265,7 @@ AIM = {
     ';
     }
     else if($_GET['logbook_type'] == 2) {
-    print
+    echo
     '<span class="note">{{logbook_07}}.</span>
     <form id="logbookopts" action="logbook/remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
     <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -294,7 +294,7 @@ AIM = {
     ';
     }
     else {
-    print 'Wrong logbook type!';
+    echo 'Wrong logbook type!';
     }
     ?>
 </div>

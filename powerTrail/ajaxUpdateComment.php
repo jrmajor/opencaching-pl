@@ -4,7 +4,7 @@ use src\Utils\Database\OcDb;
 require_once __DIR__.'/../lib/common.inc.php';
 
 if(!isset($_SESSION['user_id'])){
-    print 'no hacking please!';
+    echo 'no hacking please!';
     exit;
 }
 

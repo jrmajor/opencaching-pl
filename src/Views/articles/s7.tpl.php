@@ -76,7 +76,7 @@ function ()
     return ob_get_clean();
 });
 
-print $result;
+echo $result;
 
         ?>
         </td></tr>

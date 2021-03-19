@@ -703,11 +703,11 @@ function PrepareText( $text )
 function icon_difficulty($what, $difficulty)
 {
     if ($what != "diff" && $what != "terr")
-        die("Wrong difficulty-identifier!");
+        exit("Wrong difficulty-identifier!");
 
         $difficulty = (int) $difficulty;
         if ($difficulty < 2 || $difficulty > 10)
-            die("Wrong difficulty-value $what: $difficulty");
+            exit("Wrong difficulty-value $what: $difficulty");
 
             $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
             $text = sprintf($what == "diff" ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);

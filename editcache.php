@@ -166,9 +166,9 @@ if (!$loggedUser) {
                             $this_pic_changed = $_POST['pic_seq_changed' . $i]; //get changed status ("yes" or "no")
                             if (isset($this_seq) && isset($this_pic_id) && $this_pic_changed == "yes") {
                                 $thatquery = 'UPDATE `pictures` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
-                                $params['v1']['value'] = (integer) $this_seq;
+                                $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
-                                $params['v2']['value'] = (integer) $this_pic_id;
+                                $params['v2']['value'] = (int) $this_pic_id;
                                 $params['v2']['data_type'] = 'integer';
                                 $dbc->paramQuery($thatquery, $params);
                             }
@@ -187,9 +187,9 @@ if (!$loggedUser) {
                             $this_mp3_changed = $_POST['mp3_seq_changed' . $i]; //get changed status ("yes" or "no")
                             if (isset($this_seq) && isset($this_mp3_id) && $this_mp3_changed == "yes") {
                                 $thatquery = 'UPDATE `mp3` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
-                                $params['v1']['value'] = (integer) $this_seq;
+                                $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
-                                $params['v2']['value'] = (integer) $this_mp3_id;
+                                $params['v2']['value'] = (int) $this_mp3_id;
                                 $params['v2']['data_type'] = 'integer';
                                 $dbc->paramQuery($thatquery, $params);
                             }
@@ -476,7 +476,7 @@ if (!$loggedUser) {
                 } else {
                     // get attribs for this cache from db
                     $thatquery = "SELECT `attrib_id` FROM `caches_attributes` WHERE `cache_id`=:v1";
-                    $params['v1']['value'] = (integer) $cache_id;
+                    $params['v1']['value'] = (int) $cache_id;
                     $params['v1']['data_type'] = 'integer';
 
                     $s = $dbc->paramQuery($thatquery, $params);
@@ -904,7 +904,7 @@ if (!$loggedUser) {
                     if ($cache_record['mp3count'] > 0) {
                         $mp3files = '';
                         $thatquery = "SELECT `id`, `url`, `title`, `uuid`, `seq` FROM `mp3` WHERE `object_id`=:v1 AND `object_type`=2 ORDER BY seq, date_created";
-                        $params['v1']['value'] = (integer) $cache_id;
+                        $params['v1']['value'] = (int) $cache_id;
                         $params['v1']['data_type'] = 'integer';
 
                         $s = $dbc->paramQuery($thatquery, $params);

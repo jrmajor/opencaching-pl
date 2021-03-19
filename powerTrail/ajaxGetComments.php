@@ -45,11 +45,11 @@ $query = 'SELECT * FROM  `PowerTrail_comments`, `user`
           ORDER BY  `logDateTime` DESC
           LIMIT :variable2 , :variable3   ';
 
-$params['variable1']['value'] = (integer) $_REQUEST['projectId'];
+$params['variable1']['value'] = (int) $_REQUEST['projectId'];
 $params['variable1']['data_type'] = 'integer';
-$params['variable2']['value'] = (integer) $_REQUEST['start'];;
+$params['variable2']['value'] = (int) $_REQUEST['start'];;
 $params['variable2']['data_type'] = 'integer';
-$params['variable3']['value'] = (integer) $_REQUEST['limit'];;
+$params['variable3']['value'] = (int) $_REQUEST['limit'];;
 $params['variable3']['data_type'] = 'integer';
 $params['variable4']['value'] = $ocTeamUser;
 $params['variable4']['data_type'] = 'boolean';

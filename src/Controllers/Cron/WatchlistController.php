@@ -96,7 +96,7 @@ class WatchlistController extends BaseController
 
             Lock::unlock($lockHandle);
         } else {
-            print "Another instance of " . get_class($this)
+            echo "Another instance of " . get_class($this)
                 . " is currently running.\nExiting.\n";
         }
     }

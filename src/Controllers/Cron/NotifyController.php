@@ -35,7 +35,7 @@ class NotifyController extends BaseController
     {
         $lockHandle = Lock::tryLock($this, Lock::EXCLUSIVE | Lock::NONBLOCKING);
         if (! $lockHandle) {
-            die("Another instance of NotifyController is running or problem with lock file");
+            exit("Another instance of NotifyController is running or problem with lock file");
         }
         $this->lastRun = $this->getFlagTime();
         $this->touchFlag();

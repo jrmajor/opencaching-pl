@@ -768,7 +768,7 @@ class ViewCacheController extends BaseController
         $cache = GeoCache::fromWayPointFactory($cacheWp);
         if (is_null($cache) || !$cache->isEvent()) {
             $this->view->redirect('/');
-            die();
+            exit();
         }
         $this->view->setVar('cache', $cache);
         $this->view->setVar('attenders', $cache->getAttenders());
