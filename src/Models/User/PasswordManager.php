@@ -46,17 +46,17 @@ class PasswordManager
 
         /* Fetch current password state */
 
-        $c = $db->prepare("
+        $c = $db->prepare('
             select password, password_salt, password_hashing_rounds
             from `user`
             where user_id = :user_id
-        ");
-        $c->bindParam(":user_id", $user_id);
+        ');
+        $c->bindParam(':user_id', $user_id);
         $c->execute();
         $row = $c->fetch();
 
         if ($row == null) {
-            throw new \Exception("Invalid user_id");
+            throw new \Exception('Invalid user_id');
         }
 
         $this->hash = $row['password'];
@@ -170,7 +170,7 @@ class PasswordManager
         }
 
         $db = OcDb::instance();
-        $c = $db->prepare("
+        $c = $db->prepare('
             update `user`
             set
                 password = :password,
@@ -178,11 +178,11 @@ class PasswordManager
                 password_hashing_rounds = :password_hashing_rounds
             where
                 user_id = :user_id
-        ");
-        $c->bindParam(":user_id", $this->user_id);
-        $c->bindParam(":password", $this->hash);
-        $c->bindParam(":password_salt", $this->salt);
-        $c->bindParam(":password_hashing_rounds", $this->rounds);
+        ');
+        $c->bindParam(':user_id', $this->user_id);
+        $c->bindParam(':password', $this->hash);
+        $c->bindParam(':password_salt', $this->salt);
+        $c->bindParam(':password_hashing_rounds', $this->rounds);
         $c->execute();
 
         return true;

@@ -29,7 +29,7 @@ if (!$loggedUser) {
     require(__DIR__.'/src/Views/newlogs.inc.php');
 
     $user_record['username'] = XDb::xMultiVariableQueryValue(
-        "SELECT  username FROM user WHERE user_id= :1 LIMIT 1", '-noname-', $loggedUser->getUserId());
+        'SELECT  username FROM user WHERE user_id= :1 LIMIT 1', '-noname-', $loggedUser->getUserId());
 
     tpl_set_var('username', htmlspecialchars($user_record['username']));
 
@@ -37,16 +37,16 @@ if (!$loggedUser) {
     $PAGES_LISTED = 10;
 
     $total_logs = XDb::xMultiVariableQueryValue(
-        "SELECT COUNT(id) FROM cache_logs, caches
+        'SELECT COUNT(id) FROM cache_logs, caches
             WHERE `cache_logs`.`cache_id`=`caches`.`cache_id`
                 AND `cache_logs`.`deleted`=0
                 AND `caches`.`status` != 4
                 AND `caches`.`status` != 5
                 AND `caches`.`status` != 6
-                AND `caches`.`user_id`= :1 ",
+                AND `caches`.`user_id`= :1 ',
         0, $user_id);
 
-    $pages = "";
+    $pages = '';
     $total_pages = ceil($total_logs / $LOGS_PER_PAGE);
 
     if (!isset($_GET['start']) || intval($_GET['start']) < 0 || intval($_GET['start']) > $total_logs) {
@@ -61,7 +61,7 @@ if (!$loggedUser) {
         $pages .= '<a href="mycaches_logs.php?userid='.$user_id.'&amp;start='.max(0,
                 ($startat - $PAGES_LISTED - 1) * $LOGS_PER_PAGE).'">{first_img}</a> ';
     } else {
-        $pages .= "{first_img_inactive}";
+        $pages .= '{first_img_inactive}';
     }
     for ($i = max(1, $startat); $i < $startat + $PAGES_LISTED; $i++) {
         $page_number = ($i - 1) * $LOGS_PER_PAGE;
@@ -80,7 +80,7 @@ if (!$loggedUser) {
     }
 
     $rs = XDb::xSql(
-        "SELECT `cache_logs`.`id`
+        'SELECT `cache_logs`.`id`
             FROM `cache_logs`, `caches`
             WHERE `cache_logs`.`cache_id`=`caches`.`cache_id`
                 AND `cache_logs`.`deleted`=0
@@ -89,7 +89,7 @@ if (!$loggedUser) {
                 AND `caches`.`status` != 6
                 AND `caches`.`user_id`= ?
             ORDER BY  `cache_logs`.`date_created` DESC
-            LIMIT ".intval($start).", ".intval($LOGS_PER_PAGE),
+            LIMIT '.intval($start).', '.intval($LOGS_PER_PAGE),
         $user_id);
 
     $log_ids = [];
@@ -100,7 +100,7 @@ if (!$loggedUser) {
 
     if (!empty($log_ids)) {
         $rs = XDb::xSql(
-            "SELECT cache_logs.id, cache_logs.cache_id AS cache_id, cache_logs.type AS log_type,
+            'SELECT cache_logs.id, cache_logs.cache_id AS cache_id, cache_logs.type AS log_type,
                         cache_logs.text AS log_text, cache_logs.date AS log_date, caches.name AS cache_name,
                         caches.user_id AS cache_owner, cache_logs.user_id AS luser_id,
                         user.username AS user_name, user.user_id AS user_id,
@@ -119,10 +119,10 @@ if (!$loggedUser) {
                         AND gk_item.stateid<>1 AND gk_item.stateid<>4
                         AND gk_item.typeid<>2 AND gk_item.stateid !=5
                 WHERE cache_logs.deleted=0
-                    AND cache_logs.id IN (".implode(',', $log_ids).")
+                    AND cache_logs.id IN ('.implode(',', $log_ids).')
                     AND `caches`.`user_id`= ?
                 GROUP BY cache_logs.id
-                ORDER BY cache_logs.date_created DESC",
+                ORDER BY cache_logs.date_created DESC',
             $user_id);
 
         $file_content = '';
@@ -163,7 +163,7 @@ if (!$loggedUser) {
             $file_content .= '<td><b><a class="links" href="viewprofile.php?userid='.htmlspecialchars($log_record['user_id'],
                     ENT_COMPAT, 'UTF-8').'">'.htmlspecialchars($log_record['user_name'], ENT_COMPAT,
                     'UTF-8').'</a></b></td>';
-            $file_content .= "</tr>";
+            $file_content .= '</tr>';
 
         }//while
     }

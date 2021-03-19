@@ -61,13 +61,13 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                 // dociagam info o ostatniej aktywnosci dla kazdej skrzynki
                 if ( count($cacheIdList) > 0) {
                     $rs = XDb::xSql(
-                        "SELECT c.* FROM
+                        'SELECT c.* FROM
                             (
                                 SELECT cache_id, MAX(date) date FROM `cache_logs`
-                                WHERE user_id= ? AND cache_id IN (" . XDb::xEscape( implode(',',$cacheIdList) ) . ")
+                                WHERE user_id= ? AND cache_id IN (' . XDb::xEscape( implode(',',$cacheIdList) ) . ')
                                 GROUP BY cache_id
                             ) as x INNER JOIN `cache_logs` as c ON c.cache_id = x.cache_id
-                                AND c.date = x.date", $loggedUser->getUserId()  );
+                                AND c.date = x.date', $loggedUser->getUserId()  );
 
                     while( $record = XDb::xFetchArray($rs) ){
                         foreach ($dane as $k => $v) {
@@ -97,26 +97,26 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                             // jesli zgodne daty i typ to inny kolor:
                             if ((isset($v['data']) && isset($v['last_date']) && $v['data'] == $v['last_date']) && (isset($v['status']) && isset($v['last_status']) && $v['status'] == $v['last_status'])) {
                                 $zgodne = true;
-                                $styl = "bgcolorM1";
+                                $styl = 'bgcolorM1';
                             } else {
                                 $zgodne = false;
-                                $styl = "bgcolor2";
+                                $styl = 'bgcolor2';
                             }
                             ?>
                             <tr class="<?php echo $styl; ?>">
                                 <td width=210><?php echo isset($v['cache_name']) ?
-                                "<img src=\"" . GeoCacheCommons::CacheIconByType($v['cache_type'], GeoCacheCommons::STATUS_READY) . "\" /> " .
-                                        $v['kod_str'] . " " . $v['cache_name'] : " "; ?></td>
+                                '<img src="' . GeoCacheCommons::CacheIconByType($v['cache_type'], GeoCacheCommons::STATUS_READY) . '" /> ' .
+                                        $v['kod_str'] . ' ' . $v['cache_name'] : ' '; ?></td>
                                 <td width=70 style="text-align: right"><?php
-                                    echo isset($v['data']) ? str_replace(" ", "<br />", $v['data']) : " ";
-                                    echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                    echo isset($v['status']) ? "<img src=\"" . GeoCacheLogCommons::GetIconForType($v['status']) . "\" />" : " ";
+                                    echo isset($v['data']) ? str_replace(' ', '<br />', $v['data']) : ' ';
+                                    echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                    echo isset($v['status']) ? '<img src="' . GeoCacheLogCommons::GetIconForType($v['status']) . '" />' : ' ';
                                     ?></td>
                                 <td width=70 style="text-align: right"><?php
-                                echo isset($v['got_last_activity']) ? str_replace(" ", "<br />", $v['last_date']) . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . (isset($v['last_status']) ? "<img src=\"" . GeoCacheLogCommons::GetIconForType($v['last_status']) . "\" />" : " ") : " ";
+                                echo isset($v['got_last_activity']) ? str_replace(' ', '<br />', $v['last_date']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . (isset($v['last_status']) ? '<img src="' . GeoCacheLogCommons::GetIconForType($v['last_status']) . '" />' : ' ') : ' ';
                                     ?></td>
                             </tr><tr class="<?php echo $styl; ?>">
-                                <td width="280" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : " "; ?>&nbsp;</td>
+                                <td width="280" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : ' '; ?>&nbsp;</td>
                                 <td style="text-align: center"><?php
                                     if (isset($v['cache_id']) && (!$zgodne)) {
                                         echo "<input type=\"submit\" value=\"Log\" style=\"width: 50px\" onclick=\"parent.cachePreview.location.href='viewcache.php?cacheid=" . $v['cache_id'] . "'; return true;\"/>";

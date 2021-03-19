@@ -10,7 +10,7 @@ use src\Models\Notify\NotifyEmailSender;
 class NotifyController extends BaseController
 {
 
-    const NOTIFY_FLAG = "notification-run_notify.date";
+    const NOTIFY_FLAG = 'notification-run_notify.date';
 
     /* @var \DateTime */
     private $lastRun;
@@ -35,7 +35,7 @@ class NotifyController extends BaseController
     {
         $lockHandle = Lock::tryLock($this, Lock::EXCLUSIVE | Lock::NONBLOCKING);
         if (! $lockHandle) {
-            exit("Another instance of NotifyController is running or problem with lock file");
+            exit('Another instance of NotifyController is running or problem with lock file');
         }
         $this->lastRun = $this->getFlagTime();
         $this->touchFlag();

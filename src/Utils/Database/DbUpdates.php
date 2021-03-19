@@ -41,7 +41,7 @@ class DbUpdates
      */
     public static function create($developerName)
     {
-        $developerName = str_replace(['"', "'", "\\"], '', $developerName);
+        $developerName = str_replace(['"', "'", '\\'], '', $developerName);
         $creationDate = date('Y-m-d');
         $uuid = Uuid::create();
         $className = 'C' . str_replace('.', '', microtime(true));

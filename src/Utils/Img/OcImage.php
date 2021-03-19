@@ -198,16 +198,16 @@ class OcImage
         // there are only three possiblem outputs
         switch ($this->gdImageType) {
             case IMAGETYPE_PNG:
-                $outputPath .= ".png";
+                $outputPath .= '.png';
                 $result = imagepng($this->gdImage, $outputPath);
                 break;
             case IMAGETYPE_GIF:
-                $outputPath .= ".gif";
+                $outputPath .= '.gif';
                 $result = imagegif($this->gdImage, $outputPath);
                 break;
             case IMAGETYPE_JPEG:
             default:
-                $outputPath .= ".jpg";
+                $outputPath .= '.jpg';
                 $result = imagejpeg($this->gdImage, $outputPath, self::DEFAULT_JPEG_COMPRESSION);
         }
 
@@ -239,13 +239,13 @@ class OcImage
      */
     private function loadBmp($inputImagePath)
     {
-        if (! $fileHandler = fopen($inputImagePath, "rb")) {
+        if (! $fileHandler = fopen($inputImagePath, 'rb')) {
             return false;
         }
 
         // 1 : read BMPFile header
-        $fileHeader = unpack("vfile_type/Vfile_size/Vreserved/Vbitmap_offset", fread($fileHandler, 14));
-        if ($fileHeader['file_type'] != "BM") {
+        $fileHeader = unpack('vfile_type/Vfile_size/Vreserved/Vbitmap_offset', fread($fileHandler, 14));
+        if ($fileHeader['file_type'] != 'BM') {
             return false;
         }
 
@@ -281,15 +281,15 @@ class OcImage
             $x = 0;
             while ($x < $bmp['width']) {
                 if ($bmp['bits_per_pixel'] == 24)
-                    $color = unpack("V", substr($img, $p, 3) . $vide);
+                    $color = unpack('V', substr($img, $p, 3) . $vide);
                 elseif ($bmp['bits_per_pixel'] == 16) {
-                    $color = unpack("n", substr($img, $p, 2));
+                    $color = unpack('n', substr($img, $p, 2));
                     $color[1] = $palette[$color[1] + 1];
                 } elseif ($bmp['bits_per_pixel'] == 8) {
-                    $color = unpack("n", $vide . substr($img, $p, 1));
+                    $color = unpack('n', $vide . substr($img, $p, 1));
                     $color[1] = $palette[$color[1] + 1];
                 } elseif ($bmp['bits_per_pixel'] == 4) {
-                    $color = unpack("n", $vide . substr($img, floor($p), 1));
+                    $color = unpack('n', $vide . substr($img, floor($p), 1));
                     if (($p * 2) % 2 == 0) {
                         $color[1] = ($color[1] >> 4);
                     } else {
@@ -297,7 +297,7 @@ class OcImage
                     }
                     $color[1] = $palette[$color[1] + 1];
                 } elseif ($bmp['bits_per_pixel'] == 1) {
-                    $color = unpack("n", $vide . substr($img, floor($p), 1));
+                    $color = unpack('n', $vide . substr($img, floor($p), 1));
                     if (($p * 8) % 8 == 0)
                         $color[1] = $color[1] >> 7;
                     elseif (($p * 8) % 8 == 1)

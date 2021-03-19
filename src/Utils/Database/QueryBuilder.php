@@ -32,7 +32,7 @@ class QueryBuilder
     private $joins = [];
     private $groupBy = [];
 
-    private $columns = "*";
+    private $columns = '*';
 
     private $limit = null;
     private $offset = null;
@@ -52,7 +52,7 @@ class QueryBuilder
 
 
     public function select($columns=null){
-        $this->method = "SELECT";
+        $this->method = 'SELECT';
         if(!is_null($columns)){
 
             if(is_array($columns)){
@@ -112,7 +112,7 @@ class QueryBuilder
 
     private function getFromString()
     {
-        $result = " FROM ".$this->fromTable;
+        $result = ' FROM '.$this->fromTable;
         foreach ($this->joins as $join){
             $result .= " JOIN $join";
         }
@@ -137,19 +137,19 @@ class QueryBuilder
 
     private function getLimitString()
     {
-        $result = "";
+        $result = '';
         if(!is_null($this->limit)){
-            $result .= " LIMIT ".$this->limit;
+            $result .= ' LIMIT '.$this->limit;
         }
         if(!is_null($this->offset)){
-            $result .= " OFFSET ".$this->offset;
+            $result .= ' OFFSET '.$this->offset;
         }
         return $result;
     }
 
     public function build(){
         $result = $this->method;
-        $result .= " ".$this->columns;
+        $result .= ' '.$this->columns;
         $result .= $this->getFromString();
         $result .= $this->getWhereString();
         $result .= $this->getGroupByString();

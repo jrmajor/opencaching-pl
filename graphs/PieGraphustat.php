@@ -25,7 +25,7 @@ $x = [];
 
 $lang_db = I18n::getLangForDbTranslations('cache_type');
 
-if ($tit == "cc") {
+if ($tit == 'cc') {
     // Ustawic sprawdzanie jezyka  w cache_type.pl !!!!
     $rsCreateCachesYear = XDb::xSql(
         "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`$lang_db` `type`
@@ -35,7 +35,7 @@ if ($tit == "cc") {
         ORDER BY `count` DESC", $user_id);
 
     if ($rsCreateCachesYear !== false) {
-        $xtitle = "";
+        $xtitle = '';
         while ($ry = XDb::xFetchArray($rsCreateCachesYear)) {
             $y[] = $ry['count'];
             $x[] = $ry['type'];
@@ -44,7 +44,7 @@ if ($tit == "cc") {
     XDb::xFreeResults($rsCreateCachesYear);
 }
 
-if ($tit == "cf") {
+if ($tit == 'cf') {
     $rsCachesFindYear = XDb::xSql(
         "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`$lang_db` AS `type`
         FROM `cache_logs`, caches INNER JOIN `cache_type` ON (`caches`.`type`=`cache_type`.`id`)
@@ -53,7 +53,7 @@ if ($tit == "cf") {
         ORDER BY `count` DESC", $user_id);
 
     if ($rsCachesFindYear !== false) {
-        $xtitle = "";
+        $xtitle = '';
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['type'];
@@ -63,9 +63,9 @@ if ($tit == "cf") {
 }
 
 // A new pie graph
-$graph = new PieGraph(500, 300, "auto");
+$graph = new PieGraph(500, 300, 'auto');
 $graph->SetScale('textint');
-$type = tr("by_cachetype");
+$type = tr('by_cachetype');
 
 // Title setup
 $graph->title->Set($type);
@@ -73,8 +73,8 @@ $graph->title->SetFont(FF_ARIAL, FS_NORMAL);
 
 // Setup the pie plot
 $p1 = new PiePlot($y);
-$p1->SetTheme("earth");
-$p1->value->SetFormat("%d");
+$p1->SetTheme('earth');
+$p1->value->SetFormat('%d');
 $p1->SetLabelType(PIE_VALUE_ABS);
 
 // Adjust size and position of plot
@@ -83,7 +83,7 @@ $p1->SetCenter(0.25, 0.52);
 
 // Setup slice labels and move them into the plot
 $p1->value->SetFont(FF_FONT1, FS_BOLD);
-$p1->value->SetColor("darkred");
+$p1->value->SetColor('darkred');
 $p1->SetLabelPos(0.65);
 $p1->SetLegends($x);
 

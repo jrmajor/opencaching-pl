@@ -19,7 +19,7 @@ if (!$cache_id) {
     $loggedUser = ApplicationContainer::GetAuthorizedUser();
     if (!$loggedUser ||
         (empty(PrintList::GetContent()) && (isset($_GET['source']) && $_GET['source'] != 'mywatches'))) {
-        header("Location:index.php");
+        header('Location:index.php');
         exit();
     }
 }
@@ -39,26 +39,26 @@ if (!isset($_POST['nocrypt'])) {
 
 if ($cache_id) {
     $showlogs = $_POST['showlogs'];
-    $pictures = $_POST['showpictures'] != "" ? $_POST['showpictures'] : "&amp;pictures=no";
+    $pictures = $_POST['showpictures'] != '' ? $_POST['showpictures'] : '&amp;pictures=no';
     $nocrypt = $_POST['nocrypt'];
     $spoiler_only = $_POST['spoiler_only'];
 } else {
-    if (isset($_POST['flush_print_list']) || (isset($_POST['submit']) && $_POST['submit'] != "")) {
+    if (isset($_POST['flush_print_list']) || (isset($_POST['submit']) && $_POST['submit'] != '')) {
         $showlogs = $_POST['showlogs'];
         $pictures = $_POST['showpictures'];
         $nocrypt = $_POST['nocrypt'];
         $spoiler_only = $_POST['spoiler_only'];
     } else {
-        $showlogs = "";
-        $pictures = "&amp;pictures=no";
-        $nocrypt = "";
-        $spoiler_only = "";
+        $showlogs = '';
+        $pictures = '&amp;pictures=no';
+        $nocrypt = '';
+        $spoiler_only = '';
     }
 }
 if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
 
-    $rs = XDb::xSql("SELECT `cache_watches`.`cache_id` AS `cache_id`
-                         FROM `cache_watches` WHERE `cache_watches`.`user_id`= ? ", $loggedUser->getUserId());
+    $rs = XDb::xSql('SELECT `cache_watches`.`cache_id` AS `cache_id`
+                         FROM `cache_watches` WHERE `cache_watches`.`user_id`= ? ', $loggedUser->getUserId());
     if (XDb::xNumRows($rs) > 0) {
         $caches_list = [];
         for ($i = 0; $i < XDb::xNumRows($rs); $i++) {
@@ -83,52 +83,52 @@ if (!isset($include_caches_list)) {
 }
 
 foreach ($caches_list as $id) {
-    $include_caches .= "clientSideInclude('include".$id."', 'viewcache.php?cacheid=".$id."&amp;print=y".$pictures.$showlogs.$nocrypt.$spoiler_only."');";
-    $include_caches_list .= "<div id=\"include".$id."\" class=\"content-cache\"></div>";
+    $include_caches .= "clientSideInclude('include".$id."', 'viewcache.php?cacheid=".$id.'&amp;print=y'.$pictures.$showlogs.$nocrypt.$spoiler_only."');";
+    $include_caches_list .= '<div id="include'.$id.'" class="content-cache"></div>';
 }
 
-$checked_0 = "";
-$checked_1 = "";
-$checked_2 = "";
-$checked_3 = "";
-$checked_4 = "";
-$checked_5 = "";
-$checked_6 = "";
-$checked_7 = "";
-$checked_8 = "";
+$checked_0 = '';
+$checked_1 = '';
+$checked_2 = '';
+$checked_3 = '';
+$checked_4 = '';
+$checked_5 = '';
+$checked_6 = '';
+$checked_7 = '';
+$checked_8 = '';
 
-if (isset($_POST['shownologbook']) && $_POST['shownologbook'] == "&logbook=no") {
-    $checked_0 = "checked";
+if (isset($_POST['shownologbook']) && $_POST['shownologbook'] == '&logbook=no') {
+    $checked_0 = 'checked';
 }
 if (!isset($_POST['showlogs'])) {
     $_POST['showlogs'] = '';
 }
-if ($_POST['showlogs'] == "") {
-    $checked_1 = "checked";
+if ($_POST['showlogs'] == '') {
+    $checked_1 = 'checked';
 }
-if ($_POST['showlogs'] == "&showlogs=4") {
-    $checked_2 = "checked";
+if ($_POST['showlogs'] == '&showlogs=4') {
+    $checked_2 = 'checked';
 }
-if ($_POST['showlogs'] == "&showlogsall=y") {
-    $checked_3 = "checked";
-}
-
-if ($_POST['showpictures'] == "&pictures=no" || !isset($_POST['showpictures'])) {
-    $checked_4 = "checked";
-}
-if ($_POST['showpictures'] == "&pictures=small") {
-    $checked_5 = "checked";
-}
-if ($_POST['showpictures'] == "&pictures=big") {
-    $checked_6 = "checked";
+if ($_POST['showlogs'] == '&showlogsall=y') {
+    $checked_3 = 'checked';
 }
 
-if ($_POST['nocrypt'] == "&nocrypt=1") {
-    $checked_7 = "checked";
+if ($_POST['showpictures'] == '&pictures=no' || !isset($_POST['showpictures'])) {
+    $checked_4 = 'checked';
+}
+if ($_POST['showpictures'] == '&pictures=small') {
+    $checked_5 = 'checked';
+}
+if ($_POST['showpictures'] == '&pictures=big') {
+    $checked_6 = 'checked';
 }
 
-if ($_POST['spoiler_only'] == "&spoiler_only=1") {
-    $checked_8 = "checked";
+if ($_POST['nocrypt'] == '&nocrypt=1') {
+    $checked_7 = 'checked';
+}
+
+if ($_POST['spoiler_only'] == '&spoiler_only=1') {
+    $checked_8 = 'checked';
 }
 ?>
 
@@ -254,7 +254,7 @@ if ($_POST['spoiler_only'] == "&spoiler_only=1") {
                         ?>
                         &nbsp;&nbsp;&nbsp;
                         <input type="submit" name="flush_print_list"
-                               value="<?php echo tr("clear_list")." (".count($_SESSION['print_list']); ?>)">
+                               value="<?php echo tr('clear_list').' ('.count($_SESSION['print_list']); ?>)">
                         <?php
                     }
                 }

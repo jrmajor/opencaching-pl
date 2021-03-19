@@ -53,10 +53,10 @@ class AdminNoteSet extends BaseObject
      */
     public static function getNotesForUserCount(User $user)
     {
-        $query = "
+        $query = '
             SELECT COUNT(*)
             FROM `admin_user_notes`
-            WHERE `user_id` = :1";
+            WHERE `user_id` = :1';
         return self::db()->multiVariableQueryValue($query, 0, $user->getUserId());
     }
 }

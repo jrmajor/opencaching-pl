@@ -1,6 +1,6 @@
 <?php
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 if (!isset($_GET['wp']) || empty($_GET['wp'])) {
     header('Location: ./index.php');

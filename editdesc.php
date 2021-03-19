@@ -12,7 +12,7 @@ require_once(__DIR__.'/lib/common.inc.php');
 
 //Preprocessing
 if ($error) {
-    tpl_errorMsg('editdesc', "Error?");
+    tpl_errorMsg('editdesc', 'Error?');
     exit;
 }
 
@@ -27,13 +27,13 @@ if (!$loggedUser) {
 }
 
 $desc_rs = XDb::xSql(
-    "SELECT `cache_desc`.`cache_id` `cache_id`, `cache_desc`.`language`
+    'SELECT `cache_desc`.`cache_id` `cache_id`, `cache_desc`.`language`
             `language`, `caches`.`name` `name`, `caches`.`user_id` `user_id`,
             `cache_desc`.`desc` `desc`, `cache_desc`.`hint` `hint`, `cache_desc`.`short_desc` `short_desc`,
             `cache_desc`.`desc_html` `desc_html`
     FROM `caches`, `cache_desc`
     WHERE (`caches`.`cache_id` = `cache_desc`.`cache_id`)
-        AND `cache_desc`.`id`= ? LIMIT 1", $descid);
+        AND `cache_desc`.`id`= ? LIMIT 1', $descid);
 
 if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
 
@@ -70,12 +70,12 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
 
             // consider whether language does not already exist
             $cacheLang = XDb::xMultiVariableQueryValue(
-                "SELECT COUNT(*) `count` FROM `cache_desc`
-                WHERE `cache_id`= :1 AND `id` != :2 AND `language`= :3 ",
+                'SELECT COUNT(*) `count` FROM `cache_desc`
+                WHERE `cache_id`= :1 AND `id` != :2 AND `language`= :3 ',
                 0, $desc_record['cache_id'], $descid, $desclang);
 
             if ( $cacheLang > 0){
-                tpl_errorMsg('editdesc', "There is such languages description for this cache...");
+                tpl_errorMsg('editdesc', 'There is such languages description for this cache...');
             }
 
             /* Prevent binary data in cache descriptions, e.g. <img src='data:...'> tags. */
@@ -128,7 +128,7 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
             SELECT `language` FROM `cache_desc`
             WHERE `cache_id`= ? AND `language` != ?
         ) " .
-        (($show_all_langs == false) ? " AND `list_default_$eLang`=1 " : "") .
+        (($show_all_langs == false) ? " AND `list_default_$eLang`=1 " : '') .
         "ORDER BY `$eLang` ASC",
         $desc_record['cache_id'], $desc_lang);
 

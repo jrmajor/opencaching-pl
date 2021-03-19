@@ -21,7 +21,7 @@ class Column_CacheLog extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/cacheLogColumn";
+        return 'listOfCaches/cacheLogColumn';
     }
 
     public function getCssClass(){

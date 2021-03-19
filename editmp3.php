@@ -46,9 +46,9 @@ if (empty($user)) {
         // read from database and check owner
 
         $stmt = XDb::xSql(
-            "SELECT `mp3`.`display`, `mp3`.`title`, `mp3`.`object_id`, `mp3`.`object_type`,
+            'SELECT `mp3`.`display`, `mp3`.`title`, `mp3`.`object_id`, `mp3`.`object_type`,
                         `caches`.`name`, `caches`.`cache_id` FROM `mp3`, `caches`
-                WHERE `caches`.`cache_id`=`mp3`.`object_id` AND `mp3`.`uuid`= ? AND `mp3`.`user_id`=? LIMIT 1",
+                WHERE `caches`.`cache_id`=`mp3`.`object_id` AND `mp3`.`uuid`= ? AND `mp3`.`user_id`=? LIMIT 1',
             $uuid, $user->getUserId());
 
         if (!$stmt) {
@@ -120,22 +120,22 @@ if (empty($user)) {
 
             if ($row['title']) {
                 XDb::xSql(
-                    "UPDATE `mp3` SET `title`= ?, `display`= ?, `last_modified`=NOW()
-                         WHERE `uuid`= ? ",
+                    'UPDATE `mp3` SET `title`= ?, `display`= ?, `last_modified`=NOW()
+                         WHERE `uuid`= ? ',
                     $row['title'], (($row['display'] == 1) ? '1' : '0'), $uuid);
 
                 switch ($row['object_type']) {
                     // log - currently not used, because log mp3 cannot be edited
                     case 1:
                         XDb::xSql(
-                            "UPDATE `cache_logs` SET `last_modified`=NOW() WHERE `id`= ?",
+                            'UPDATE `cache_logs` SET `last_modified`=NOW() WHERE `id`= ?',
                             $row['object_id']);
                         break;
 
                     // cache
                     case 2:
                         XDb::xSql(
-                            "UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ?",
+                            'UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ?',
                             $row['object_id']);
                         break;
                 }
@@ -152,21 +152,21 @@ if (empty($user)) {
         tpl_set_var('cacheid', htmlspecialchars($row['cache_id'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachename', htmlspecialchars($row['name'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('title', htmlspecialchars($row['title'], ENT_COMPAT, 'UTF-8'));
-        if ($row['title'] <= "")
+        if ($row['title'] <= '')
             tpl_set_var('errnotitledesc', $errnotitledesc);
         else
-            tpl_set_var('errnotitledesc', "");
+            tpl_set_var('errnotitledesc', '');
         tpl_set_var('uuid', htmlspecialchars($uuid, ENT_COMPAT, 'UTF-8'));
         tpl_set_var('notdisplaychecked', $row['display'] == '0' ? 'checked' : '');
 
-        if ($row['object_type'] == "2") {
+        if ($row['object_type'] == '2') {
             tpl_set_var('mp3typedesc', $mp3typedesc_cache);
-            tpl_set_var('begin_cacheonly', "");
-            tpl_set_var('end_cacheonly', "");
-        } else if ($row['object_type'] == "1") {
+            tpl_set_var('begin_cacheonly', '');
+            tpl_set_var('end_cacheonly', '');
+        } else if ($row['object_type'] == '1') {
             tpl_set_var('mp3typedesc', $mp3typedesc_log);
-            tpl_set_var('begin_cacheonly', "<!--");
-            tpl_set_var('end_cacheonly', "-->");
+            tpl_set_var('begin_cacheonly', '<!--');
+            tpl_set_var('end_cacheonly', '-->');
         }
     } else {
         $view->setTemplate('message');

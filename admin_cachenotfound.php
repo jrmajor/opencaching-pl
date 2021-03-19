@@ -76,26 +76,26 @@ if (isset($_REQUEST['regionSel'])) {
 
     if ($region === 'XXX') {
         //polish caches with no-region set
-        $regionCondition = "AND loc.code3 = NULL";
+        $regionCondition = 'AND loc.code3 = NULL';
         $countryCondition = "AND loc.code1 = 'PL'";
     } else if ($region === 'NON_PL') {
-        $regionCondition = "";
+        $regionCondition = '';
         $countryCondition = "AND loc.code1 <> 'PL'";
     } else {
         $regionCondition = "AND loc.code3 = '$region'";
-        $countryCondition = "";
+        $countryCondition = '';
     }
 
 } else {
 
     if ($short_sitename == 'OC PL') {
-        $regionCondition = "AND 1 = 0"; //block all results if region is not select
-        $countryCondition = "";
+        $regionCondition = 'AND 1 = 0'; //block all results if region is not select
+        $countryCondition = '';
         tpl_set_var('region_name', 'Wybierz region!'); //temporary solution
 
     } else {
-        $regionCondition = "";
-        $countryCondition = "";
+        $regionCondition = '';
+        $countryCondition = '';
         tpl_set_var('region_name', '');
     }
 }

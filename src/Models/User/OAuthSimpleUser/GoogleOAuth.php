@@ -57,13 +57,13 @@ class GoogleOAuth extends OAuthSimpleUserBase
 
         $redirectUrl = urldecode($redirectUrl);
 
-        $url="https://accounts.google.com/o/oauth2/v2/auth?".
-            "scope=" . urlencode(self::USERINFO_SCOPE) .
-            "&access_type=offline&include_granted_scopes=true" .
+        $url='https://accounts.google.com/o/oauth2/v2/auth?'.
+            'scope=' . urlencode(self::USERINFO_SCOPE) .
+            '&access_type=offline&include_granted_scopes=true' .
             "&state=$stateStr" .
             "&redirect_uri=$redirectUrl" .
-            "&response_type=code" .
-            "&client_id=" . self::getClientId();
+            '&response_type=code' .
+            '&client_id=' . self::getClientId();
 
         if($urlForHtml){
             return htmlspecialchars($url);
@@ -140,7 +140,7 @@ class GoogleOAuth extends OAuthSimpleUserBase
 
         $opts = ['http' => [
             'method'  => 'POST',
-            'header'  => "Content-Type: application/x-www-form-urlencoded",
+            'header'  => 'Content-Type: application/x-www-form-urlencoded',
             'content' => http_build_query($postData),
             'timeout' => 60,
         ]];

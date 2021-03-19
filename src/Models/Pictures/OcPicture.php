@@ -112,13 +112,13 @@ class OcPicture extends BaseObject
         $thumbUrl = $this->regenerateThumbnails();
 
         // this is new picture - add it
-        $this->db->multiVariableQuery("INSERT INTO pictures (
+        $this->db->multiVariableQuery('INSERT INTO pictures (
             uuid, local, url, thumb_last_generated, last_modified,
             thumb_url, spoiler, object_type, object_id, title,
             date_created, display, seq, node) VALUES (
             :1, :2, :3, NOW(), NOW(),
             :4, :5, :6, :7, :8,
-            NOW(), :9, :10, :11)",
+            NOW(), :9, :10, :11)',
             $this->uuid, $this->isLocal, $this->url,
             $thumbUrl, $this->isSpoiler, $this->parentType, $this->parentId, $this->title,
             !$this->isHidden, $this->order, OcConfig::getSiteNodeId());
@@ -130,7 +130,7 @@ class OcPicture extends BaseObject
     public function updateOrderInDb ()
     {
         $this->db->multiVariableQuery(
-            "UPDATE pictures SET seq = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1",
+            'UPDATE pictures SET seq = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
             $this->order, $this->uuid);
 
         $this->updateParentLastUpdateInDb();
@@ -139,7 +139,7 @@ class OcPicture extends BaseObject
     public function updateTitleInDb()
     {
         $this->db->multiVariableQuery(
-            "UPDATE pictures SET title = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1",
+            'UPDATE pictures SET title = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
             $this->title, $this->uuid);
 
         $this->updateParentLastUpdateInDb();
@@ -148,7 +148,7 @@ class OcPicture extends BaseObject
     public function updateSpoilerAttrInDb()
     {
         $this->db->multiVariableQuery(
-            "UPDATE pictures SET spoiler = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1",
+            'UPDATE pictures SET spoiler = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
             $this->isSpoiler, $this->uuid);
 
         $this->regenerateThumbnails();
@@ -158,7 +158,7 @@ class OcPicture extends BaseObject
     public function updateHiddenAttrInDb()
     {
         $this->db->multiVariableQuery(
-            "UPDATE pictures SET display = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1",
+            'UPDATE pictures SET display = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
             !$this->isHidden, $this->uuid);
         $this->updateParentLastUpdateInDb();
     }
@@ -173,7 +173,7 @@ class OcPicture extends BaseObject
                 GeoCacheLog::updateLastModified($this->getParentId());
                 break;
             default:
-                Debug::errorLog("Incorrect picture type!");
+                Debug::errorLog('Incorrect picture type!');
         }
     }
 
@@ -228,7 +228,7 @@ class OcPicture extends BaseObject
         if (is_array($row)) {
             $this->loadFromRow($row);
         } else {
-            throw new \Exception("Picture not found");
+            throw new \Exception('Picture not found');
         }
     }
 

@@ -8,19 +8,19 @@ $view = tpl_getView();
 $view->setSubtitle('Geocache Difficulty Rating System - ');
 $view->addLocalCss(Uri::getLinkWithModificationTime('/views/cacheEdit/difficultyForm.css'));
 
-if (isset($_POST["Rating"]) && $_POST["Rating"] == "TRUE") {
+if (isset($_POST['Rating']) && $_POST['Rating'] == 'TRUE') {
     // print results
 
     $view->setTemplate('cacheEdit/difficultyFormResult');
 
-    $Equipment = $_POST["Equipment"];
-    $Night = $_POST["Night"];
-    $Length = $_POST["Length"];
-    $Trail = $_POST["Trail"];
-    $Overgrowth = $_POST["Overgrowth"];
-    $Elevation = $_POST["Elevation"];
+    $Equipment = $_POST['Equipment'];
+    $Night = $_POST['Night'];
+    $Length = $_POST['Length'];
+    $Trail = $_POST['Trail'];
+    $Overgrowth = $_POST['Overgrowth'];
+    $Elevation = $_POST['Elevation'];
 
-    $Difficulty = $_POST["Difficulty"];
+    $Difficulty = $_POST['Difficulty'];
 
     $maximum = max($Equipment, $Night, $Length, $Trail, $Overgrowth, $Elevation);
 

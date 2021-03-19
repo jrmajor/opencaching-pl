@@ -15,7 +15,7 @@ class Column_CacheRegionObject extends AbstractColumn
      */
     protected function getChunkName()
     {
-        return "listOfCaches/cacheRegionObjectColumn";
+        return 'listOfCaches/cacheRegionObjectColumn';
     }
 
     /**

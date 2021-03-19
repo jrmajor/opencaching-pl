@@ -95,12 +95,12 @@ class CacheTitled extends BaseObject
 
     private function loadByCacheId($cacheId)
     {
-        $s = $this->db->multiVariableQuery("SELECT * FROM `cache_titled` WHERE cache_id = :1 LIMIT 1", $cacheId);
+        $s = $this->db->multiVariableQuery('SELECT * FROM `cache_titled` WHERE cache_id = :1 LIMIT 1', $cacheId);
         $cacheTitledDbRow = $this->db->dbResultFetch($s);
         if (is_array($cacheTitledDbRow)) {
             $this->loadFromRow($cacheTitledDbRow);
         } else {
-            throw new \Exception("CacheTitled row not found");
+            throw new \Exception('CacheTitled row not found');
         }
     }
 

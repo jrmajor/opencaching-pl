@@ -78,7 +78,7 @@ class MultiGeopathsStats extends BaseObject
     {
         $db = self::db();
 
-        $rs = $db->simpleQuery("SELECT COUNT(*) as c, cacheId FROM powerTrail_caches GROUP BY cacheId HAVING c > 1");
+        $rs = $db->simpleQuery('SELECT COUNT(*) as c, cacheId FROM powerTrail_caches GROUP BY cacheId HAVING c > 1');
         $caches = $db->dbFetchOneColumnArray($rs, 'cacheId');
 
         return $caches;

@@ -58,9 +58,9 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         $redirectUrl = urldecode($redirectUrl);
 
         $url = 'https://www.facebook.com/'.self::SDK_VER.'/dialog/oauth?' .
-            "client_id=" . self::getAppId() .
+            'client_id=' . self::getAppId() .
             "&redirect_uri=$redirectUrl" .
-            "&scope=email" .
+            '&scope=email' .
             "&state=$stateStr";
 
         if($urlForHtml){
@@ -144,10 +144,10 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         $redirect = urlencode(Uri::getCurrentRequestUri());
         $code = $_GET['code'];
 
-        $url = "https://graph.facebook.com/".self::SDK_VER."/oauth/access_token?".
-               "client_id=" . self::getAppId() .
+        $url = 'https://graph.facebook.com/'.self::SDK_VER.'/oauth/access_token?'.
+               'client_id=' . self::getAppId() .
                "&redirect_uri=$redirect" .
-               "&client_secret=" . self::getAppSecret() .
+               '&client_secret=' . self::getAppSecret() .
                "&code=$code";
 
         // send query
@@ -174,7 +174,7 @@ class FacebookOAuth  extends OAuthSimpleUserBase
      */
     private function isUserDataReady()
     {
-        $url = "https://graph.facebook.com/" . self::SDK_VER .
+        $url = 'https://graph.facebook.com/' . self::SDK_VER .
         "/me?fields=id,name,email&access_token={$this->accessToken}";
 
         $response = file_get_contents($url);

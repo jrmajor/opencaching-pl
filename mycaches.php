@@ -63,10 +63,10 @@ if (!$loggedUser) {
     $LOGS_PER_PAGE = 50;
     $PAGES_LISTED = 10;
     $total_logs = XDb::xMultiVariableQueryValue(
-        "SELECT count(cache_id) FROM caches WHERE `caches`.`status` = :1 AND `caches`.`user_id`= :2 ", 0, $stat_cache,
+        'SELECT count(cache_id) FROM caches WHERE `caches`.`status` = :1 AND `caches`.`user_id`= :2 ', 0, $stat_cache,
         $user_id);
 
-    $pages = "";
+    $pages = '';
     $total_pages = ceil($total_logs / $LOGS_PER_PAGE);
     if (!isset($_GET['start']) || intval($_GET['start']) < 0 || intval($_GET['start']) > $total_logs) {
         $start = 0;
@@ -128,7 +128,7 @@ if (!$loggedUser) {
         $pages .= '<a href="mycaches.php?status='.$stat_cache.'&amp;start='.max(0,
                 ($startat - $PAGES_LISTED - 1) * $LOGS_PER_PAGE).'&col='.$sort_col.'&sort='.$sort_sort.'">{first_img}</a> ';
     } else {
-        $pages .= "{first_img_inactive}";
+        $pages .= '{first_img_inactive}';
     }
     for ($i = max(1, $startat); $i < $startat + $PAGES_LISTED; $i++) {
         $page_number = ($i - 1) * $LOGS_PER_PAGE;
@@ -177,7 +177,7 @@ if (!$loggedUser) {
                 AND `caches`.`status` = :stat_cache
             GROUP BY `caches`.`cache_id`
             ORDER BY `$sort_warunek` $sort_txt
-            LIMIT ".intval($start).", ".intval($LOGS_PER_PAGE);
+            LIMIT ".intval($start).', '.intval($LOGS_PER_PAGE);
 
     $params['user_id']['value'] = (int) $user_id;
     $params['user_id']['data_type'] = 'integer';
@@ -319,7 +319,7 @@ if (!$loggedUser) {
                 $pokaz_problem = 'bgcolor=yellow';
             }
         };
-        $file_content .= "<tr ".$pokaz_problem.">".$table."</td></tr>\n";
+        $file_content .= '<tr '.$pokaz_problem.'>'.$table."</td></tr>\n";
     }
     unset($dbc);
     $pages = mb_ereg_replace('{last_img}', $last_img, $pages);

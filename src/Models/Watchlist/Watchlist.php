@@ -50,14 +50,14 @@ class Watchlist extends BaseObject
     public function getUnprocessedCacheLogs()
     {
         $stmt = $this->db->simpleQuery(
-            "SELECT cl.id, u.username, cl.type, cl.text, cl.date, c.cache_id,
+            'SELECT cl.id, u.username, cl.type, cl.text, cl.date, c.cache_id,
                  c.user_id, c.wp_oc, c.name,
              IF(ISNULL(cr.cache_id), 0, 1) AS recommended
              FROM caches c, user u, cache_logs cl
              LEFT OUTER JOIN cache_rating cr ON
                  cl.cache_id=cr.cache_id AND cl.user_id=cr.user_id
              WHERE cl.cache_id=c.cache_id AND u.user_id = cl.user_id
-                 AND cl.deleted=0 AND cl.owner_notified=0"
+                 AND cl.deleted=0 AND cl.owner_notified=0'
         );
         $result = $this->db->dbFetchAllAsObjects($stmt, function ($row) {
             return new WatchlistGeoCacheLog(
@@ -95,7 +95,7 @@ class Watchlist extends BaseObject
             $this->updateWatchesWaiting($log, $itemText);
             if ($this->updateCacheLogsStmt == null) {
                 $this->updateCacheLogsStmt = $this->db->prepare(
-                    "UPDATE cache_logs SET owner_notified=1 WHERE id=?"
+                    'UPDATE cache_logs SET owner_notified=1 WHERE id=?'
                 );
             }
             $this->updateCacheLogsStmt->execute([$log->getLogId()]);
@@ -126,10 +126,10 @@ class Watchlist extends BaseObject
         if (UserNotify::getUserLogsNotify($log->getCacheOwnerId())) {
             if ($this->insertOwnerWaitingsStmt == null) {
                 $this->insertOwnerWaitingsStmt = $this->db->prepare(
-                    "INSERT IGNORE INTO watches_waiting (
+                    'INSERT IGNORE INTO watches_waiting (
                      user_id, object_id, object_type, date_added,
                      watchtext, watchtype)
-                 VALUES(?, ?, 1, NOW(), ?, " . self::WATCHTYPE_OWNER . ")"
+                 VALUES(?, ?, 1, NOW(), ?, ' . self::WATCHTYPE_OWNER . ')'
                     );
             }
             $this->insertOwnerWaitingsStmt->execute([
@@ -140,16 +140,16 @@ class Watchlist extends BaseObject
         }
         if ($this->insertWatchersWaitingsStmt == null) {
             $this->insertWatchersWaitingsStmt = $this->db->prepare(
-                "INSERT IGNORE INTO watches_waiting (
+                'INSERT IGNORE INTO watches_waiting (
                      user_id, object_id, object_type, date_added,
                      watchtext, watchtype)
                  SELECT
-                    cw.user_id, cl.id, 1, NOW(), ?, " . self::WATCHTYPE_WATCH .
-                 " FROM cache_watches cw, cache_logs cl, user u
+                    cw.user_id, cl.id, 1, NOW(), ?, ' . self::WATCHTYPE_WATCH .
+                 ' FROM cache_watches cw, cache_logs cl, user u
                  WHERE cl.cache_id=cw.cache_id
                     AND cw.user_id = u.user_id
                     AND u.notify_logs = 1
-                    AND cl.id=?"
+                    AND cl.id=?'
             );
         }
         $this->insertWatchersWaitingsStmt->execute([
@@ -168,26 +168,26 @@ class Watchlist extends BaseObject
     public function getWatchersAndWaitings()
     {
         $stmt = $this->db->simpleQuery(
-            "SELECT
+            'SELECT
                  u.user_id, u.username, u.email, u.watchmail_mode,
                  u.watchmail_hour, u.watchmail_day, u.watchmail_nextmail,
                  ww.watchtext, ww.watchtype
              FROM user u LEFT OUTER JOIN watches_waiting ww ON
-                 ww.user_id = u.user_id AND ww.watchtype IN ("
-                 . self::WATCHTYPE_OWNER . ", " . self::WATCHTYPE_WATCH . ")
+                 ww.user_id = u.user_id AND ww.watchtype IN ('
+                 . self::WATCHTYPE_OWNER . ', ' . self::WATCHTYPE_WATCH . ')
              WHERE
                  (
-                   (u.watchmail_mode = ". UserNotify::SEND_NOTIFICATION_HOURLY." AND ww.id IS NOT NULL)
+                   (u.watchmail_mode = '. UserNotify::SEND_NOTIFICATION_HOURLY.' AND ww.id IS NOT NULL)
                    OR
                    (u.watchmail_mode IN (
-                            ".UserNotify::SEND_NOTIFICATION_DAILY.",
-                            ".UserNotify::SEND_NOTIFICATION_WEEKLY."
+                            '.UserNotify::SEND_NOTIFICATION_DAILY.',
+                            '.UserNotify::SEND_NOTIFICATION_WEEKLY.'
                             )
                      AND u.watchmail_nextmail < NOW()
                    )
                  )
                  AND u.is_active_flag = 1
-             ORDER BY u.user_id, ww.id DESC"
+             ORDER BY u.user_id, ww.id DESC'
         );
         $currentWatcher = null;
         $result = [];
@@ -248,10 +248,10 @@ class Watchlist extends BaseObject
                 if ($watcher instanceof WatchlistWatcher) {
                     if ($this->deleteWatchersWaitingStmt == null) {
                         $this->deleteWatchersWaitingStmt = $this->db->prepare(
-                            "DELETE FROM watches_waiting WHERE watchtype IN ("
+                            'DELETE FROM watches_waiting WHERE watchtype IN ('
                                  . self::WATCHTYPE_OWNER
-                                 . ", " . self::WATCHTYPE_WATCH . ")
-                             AND user_id = ?"
+                                 . ', ' . self::WATCHTYPE_WATCH . ')
+                             AND user_id = ?'
                         );
                     }
                     $this->deleteWatchersWaitingStmt->execute([
@@ -263,8 +263,8 @@ class Watchlist extends BaseObject
                         if ($this->updateNextWatchmailStmt == null) {
                             $this->updateNextWatchmailStmt =
                                 $this->db->prepare(
-                                    "UPDATE user SET watchmail_nextmail = ?
-                                     WHERE user_id = ?"
+                                    'UPDATE user SET watchmail_nextmail = ?
+                                     WHERE user_id = ?'
                                 );
                         }
                         $this->updateNextWatchmailStmt->execute([

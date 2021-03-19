@@ -171,10 +171,10 @@ class Waypoint extends WaypointCommons
         }
 
         $s = XDb::xSql(
-            "SELECT wp_id, type, longitude, latitude, `desc`, status, stage, opensprawdzacz, cache_id,
+            'SELECT wp_id, type, longitude, latitude, `desc`, status, stage, opensprawdzacz, cache_id,
                     waypoint_type.en wp_type, waypoint_type.icon wp_icon
             FROM waypoints INNER JOIN waypoint_type ON (waypoints.type = waypoint_type.id)
-            WHERE cache_id = ? ORDER BY stage, wp_id",
+            WHERE cache_id = ? ORDER BY stage, wp_id',
             $geoCache->getCacheId());
 
         $results = [];

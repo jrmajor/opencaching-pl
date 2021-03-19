@@ -10,7 +10,7 @@ use src\Utils\Uri\Uri;
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $db = XDb::instance();
-$description = "";
+$description = '';
 
 $user = ApplicationContainer::GetAuthorizedUser();
 if (!$user) {
@@ -22,9 +22,9 @@ $guidesConfig = OcConfig::instance()->getGuidesConfig();
 tpl_set_var('desc_updated', '');
 tpl_set_var('displayGeoPathSection', displayGeoPathSection('table'));
 if (isset($_POST['description'])) {
-    $q = "UPDATE user SET description = :1 WHERE user_id=:2";
+    $q = 'UPDATE user SET description = :1 WHERE user_id=:2';
     $db->multiVariableQuery($q, strip_tags($_POST['description']), (int) $user->getUserId());
-    tpl_set_var('desc_updated', "<font color='green'>" . tr('desc_updated') . "</font>");
+    tpl_set_var('desc_updated', "<font color='green'>" . tr('desc_updated') . '</font>');
 }
 
 tpl_set_tplname('myprofile');
@@ -32,7 +32,7 @@ $using_permantent_login_message = tr('no_auto_logout');
 
 // check user can set as Geocaching guide
 // Number of recommendations
-$nrecom = $db->multiVariableQueryValue("SELECT SUM(topratings) as nrecom FROM caches WHERE `caches`.`user_id`= :1",
+$nrecom = $db->multiVariableQueryValue('SELECT SUM(topratings) as nrecom FROM caches WHERE `caches`.`user_id`= :1',
     0, $user->getUserId());
 
 if ($nrecom >= $guidesConfig['guideGotRecommendations']) {
@@ -44,8 +44,8 @@ if ($nrecom >= $guidesConfig['guideGotRecommendations']) {
 }
 
 $s = $db->multiVariableQuery(
-    "SELECT `description`, `guru`,`username`, `email`, `date_created`, `permanent_login_flag`,
-                    `power_trail_email`, `ozi_filips` FROM `user` WHERE `user_id`=:1 ", $user->getUserId());
+    'SELECT `description`, `guru`,`username`, `email`, `date_created`, `permanent_login_flag`,
+                    `power_trail_email`, `ozi_filips` FROM `user` WHERE `user_id`=:1 ', $user->getUserId());
 
 $record = $db->dbResultFetchOneRowOnly($s);
 $description = $record['description'];
@@ -67,7 +67,7 @@ tpl_set_var('email', htmlspecialchars($record['email'], ENT_COMPAT, 'UTF-8'));
 tpl_set_var('registered_since', Formatter::date($record['date_created']));
 
 /* GeoKretyApi - display if secid from geokrety is set; (by Łza) */
-$GKAPIKeyQuery = "SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:1";
+$GKAPIKeyQuery = 'SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:1';
 $s = $db->multiVariableQuery($GKAPIKeyQuery, $user->getUserId());
 if ($db->rowCount($s) > 0) {
     tpl_set_var('GeoKretyApiIntegration', tr('yes'));
@@ -149,7 +149,7 @@ if (isset($_REQUEST['action'])) {
                 tpl_set_var('username_message', $error_username_not_ok);
             } else {
                 if ($username != $user->getUserName()) {
-                    $q = "SELECT `username` FROM `user` WHERE `username`=:1 LIMIT 1";
+                    $q = 'SELECT `username` FROM `user` WHERE `username`=:1 LIMIT 1';
                     $s = $db->multiVariableQuery($q, $username);
                     if ($db->rowCount($s) > 0) {
                         $username_exists = true;
@@ -166,40 +166,40 @@ if (isset($_REQUEST['action'])) {
                     /* GeoKretyApi - insert or update in DB user secid from Geokrety */
                     if (strlen($GeoKretyApiSecid) == 128) {
                         $db->multiVariableQuery(
-                            "insert into `GeoKretyAPI` (`userID`, `secid`)
-                                 values (:1, :2) on duplicate key update `secid`=:2",
+                            'insert into `GeoKretyAPI` (`userID`, `secid`)
+                                 values (:1, :2) on duplicate key update `secid`=:2',
                             $user->getUserId(), $GeoKretyApiSecid);
 
                         tpl_set_var('GeoKretyApiIntegration', tr('yes'));
                     } elseif ($GeoKretyApiSecid == '') {
-                        $db->multiVariableQuery("DELETE FROM `GeoKretyAPI` WHERE `userID` = :1", $user->getUserId());
+                        $db->multiVariableQuery('DELETE FROM `GeoKretyAPI` WHERE `userID` = :1', $user->getUserId());
                         tpl_set_var('GeoKretyApiIntegration', tr('no'));
                     }
 
-                    $db->multiVariableQuery("UPDATE `user`
+                    $db->multiVariableQuery('UPDATE `user`
                                   SET `last_modified` = NOW(),
                                       `permanent_login_flag`=:1,
                                       `power_trail_email`=:2 , `ozi_filips`=:3, `guru`=:4
-                                  WHERE `user_id`=:5", $using_permantent_login, $geoPathsEmail, $ozi_path, $guide, (int) $user->getUserId());
+                                  WHERE `user_id`=:5', $using_permantent_login, $geoPathsEmail, $ozi_path, $guide, (int) $user->getUserId());
 
                     // update user nick
                     if ($username != $user->getUserName()) {
                         $db->beginTransaction();
-                        $q = "select count(id) from user_nick_history where user_id = :1";
+                        $q = 'select count(id) from user_nick_history where user_id = :1';
                         $hist_count = $db->multiVariableQueryValue($q, 0, (int) $user->getUserId());
                         if ($hist_count == 0) {
                             // no history at all
-                            $q = "insert into user_nick_history (user_id, date_from, date_to, username) select user_id, date_created, now(), username from user where user_id = :1";
+                            $q = 'insert into user_nick_history (user_id, date_from, date_to, username) select user_id, date_created, now(), username from user where user_id = :1';
                             $db->multiVariableQuery($q, (int) $user->getUserId());
                         } else {
                             // close previous entry
-                            $q = "update user_nick_history set date_to = NOW() where date_to is null and user_id = :1";
+                            $q = 'update user_nick_history set date_to = NOW() where date_to is null and user_id = :1';
                             $db->multiVariableQuery($q, (int) $user->getUserId());
                         }
                         // update and save current nick
-                        $q = "update user set username = :1 where user_id = :2";
+                        $q = 'update user set username = :1 where user_id = :2';
                         $db->multiVariableQuery($q, $username, (int) $user->getUserId());
-                        $q = "insert into user_nick_history (user_id, date_from, username) select user_id, now(), username from user where user_id = :1";
+                        $q = 'insert into user_nick_history (user_id, date_from, username) select user_id, now(), username from user where user_id = :1';
                         $db->multiVariableQuery($q, (int) $user->getUserId());
                         $db->commit();
 

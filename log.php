@@ -39,7 +39,7 @@ $view->loadJquery();
 require(__DIR__ . '/src/Views/rating.inc.php');
 
 if (!isset($_REQUEST['cacheid'])) {
-    tpl_errorMsg('log_cache', "No cacheid param!");
+    tpl_errorMsg('log_cache', 'No cacheid param!');
     exit;
 }
 
@@ -60,7 +60,7 @@ if (
         $user->getUserId() != $geoCache->getOwnerId()
     )
 ) {
-    tpl_errorMsg('log_cache', "Improper cache id param!");
+    tpl_errorMsg('log_cache', 'Improper cache id param!');
     exit;
 }
 
@@ -69,16 +69,16 @@ $view->setSubtitle(htmlspecialchars($geoCache->getCacheName(), ENT_COMPAT, 'UTF-
 $all_ok = false;
 
 //set default date for log form
-if (isset($_SESSION["lastLogSendTime"]) && isset($_SESSION["lastLogDateTime"])) {
+if (isset($_SESSION['lastLogSendTime']) && isset($_SESSION['lastLogDateTime'])) {
 
-    if (!compareTime($_SESSION["lastLogSendTime"], "PT1H")) { //if last logging time is greater than one hour from now
-        $proposedDateTime = new DateTime("now"); // lastLogDateTime is overdue
+    if (!compareTime($_SESSION['lastLogSendTime'], 'PT1H')) { //if last logging time is greater than one hour from now
+        $proposedDateTime = new DateTime('now'); // lastLogDateTime is overdue
     } else {
-        $proposedDateTime = $_SESSION["lastLogDateTime"];
+        $proposedDateTime = $_SESSION['lastLogDateTime'];
     }
 
 } else {
-    $proposedDateTime = new DateTime("now");
+    $proposedDateTime = new DateTime('now');
 }
 
 
@@ -100,15 +100,15 @@ $wsp_WE_min = isset($_POST['wsp_WE_min']) ? $_POST['wsp_WE_min'] : null;
 
 
 $userRecoCountForThisCache = XDb::xMultiVariableQueryValue(
-    "SELECT COUNT(*) FROM cache_rating
-    WHERE user_id = :1 AND cache_id = :2 ", 0, $user->getUserId(), $geoCache->getCacheId());
+    'SELECT COUNT(*) FROM cache_rating
+    WHERE user_id = :1 AND cache_id = :2 ', 0, $user->getUserId(), $geoCache->getCacheId());
 
 // check if user has exceeded his top5% limit
 $user_founds = XDb::xMultiVariableQueryValue(
-    "SELECT `founds_count` FROM `user` WHERE `user_id`=:1 LIMIT 1", 0, $user->getUserId());
+    'SELECT `founds_count` FROM `user` WHERE `user_id`=:1 LIMIT 1', 0, $user->getUserId());
 
 $user_tops = XDb::xMultiVariableQueryValue(
-    "SELECT COUNT(`user_id`) FROM `cache_rating` WHERE `user_id`= :1 ", 0, $user->getUserId());
+    'SELECT COUNT(`user_id`) FROM `cache_rating` WHERE `user_id`= :1 ', 0, $user->getUserId());
 
 if ($userRecoCountForThisCache == 0) { //not-yet-recommended
 
@@ -157,16 +157,16 @@ if ($userRecoCountForThisCache == 0) { //not-yet-recommended
 if ($geoCache->getCacheType() != GeoCache::TYPE_EVENT) {
     tpl_set_var('rating_message', mb_ereg_replace('{rating_msg}', $rating_msg, $rating_tpl));
 } else {
-    tpl_set_var('rating_message', "");
+    tpl_set_var('rating_message', '');
 }
 
 $is_scored_query = XDb::xMultiVariableQueryValue(
-    "SELECT count(*) FROM scores WHERE user_id= :1 AND cache_id= :2",
+    'SELECT count(*) FROM scores WHERE user_id= :1 AND cache_id= :2',
     0, $user->getUserId(), $geoCache->getCacheId());
 
 if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
 
-    $color_table = ["#DD0000", "#F06464", "#5A5A5A", "#77CC00", "#00DD00"];
+    $color_table = ['#DD0000', '#F06464', '#5A5A5A', '#77CC00', '#00DD00'];
 
     $score = '';
     $line_cnt = 0;
@@ -174,15 +174,15 @@ if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
     for ($score_radio = 1 /*$MIN_SCORE*/; $score_radio <= 5 /*$MAX_SCORE*/; $score_radio++) {
 
         if (($line_cnt == 2)) {
-            $break_line = "<br>";
-            $break_line = "";
+            $break_line = '<br>';
+            $break_line = '';
         } else {
-            $break_line = "";
+            $break_line = '';
         };
         if (isset($_POST['r']) && $score_radio == $_POST['r'])
             $checked = ' checked="true"';
         else
-            $checked = "";
+            $checked = '';
 
         $score .= '
             <label><input type="radio" style="vertical-align: top" name="r" id="r' .
@@ -196,7 +196,7 @@ if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
     if (isset($_POST['r']) && $_POST['r'] == -10) {
         $checked = ' checked="true"';
     } else {
-        $checked = "";
+        $checked = '';
     }
 
     $score .= '<br><label><input type="radio" style="vertical-align: top" name="r" id="r' .
@@ -207,15 +207,15 @@ if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
 
     $score_header = tr('rate_cache');
     if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT) {
-        $display = "table-row";
+        $display = 'table-row';
     } else {
-        $display = "none";
+        $display = 'none';
     }
 
 } else {
-    $score = "";
-    $score_header = "";
-    $display = "none";
+    $score = '';
+    $score_header = '';
+    $display = 'none';
 }
 
 tpl_set_var('score', $score);
@@ -230,16 +230,16 @@ tpl_set_var('log_reset_button', tr('log_reset_button'));
 // check if geokret is in this cache
 if (isGeokretInCache($geoCache->getCacheId())) {
     tpl_set_var('log_geokret',
-        "<br /><img src=\"images/gk.png\" class=\"icon16\" alt=\"\" title=\"GeoKrety\" align=\"middle\" />&nbsp;<b>" .
+        '<br /><img src="images/gk.png" class="icon16" alt="" title="GeoKrety" align="middle" />&nbsp;<b>' .
         tr('geokret_log') . " <a href='" . GeoKretyApi::GEOKRETY_URL . "/ruchy.php'>geokrety.org</a></b>");
 } else {
-    tpl_set_var('log_geokret', "");
+    tpl_set_var('log_geokret', '');
 }
 
 /* GeoKretApi selector for logging Geokrets using GeoKretyApi */
 $dbConWpt = OcDb::instance();
 $s = $dbConWpt->paramQuery(
-    "SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:user_id LIMIT 1",
+    'SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:user_id LIMIT 1',
     ['user_id' => ['value' => $user->getUserId(), 'data_type' => 'integer']]);
 
 
@@ -251,7 +251,7 @@ if ($databaseResponse = $dbConWpt->dbResultFetchOneRowOnly($s)) {
     $secid = $databaseResponse['secid'];
 
     $rs = $dbConWpt->paramQuery(
-        "SELECT `wp_oc` FROM `caches` WHERE `cache_id` = :cache_id LIMIT 1",
+        'SELECT `wp_oc` FROM `caches` WHERE `cache_id` = :cache_id LIMIT 1',
         ['cache_id' => ['value' => $geoCache->getCacheId(), 'data_type' => 'integer']]);
 
     $cwpt = $dbConWpt->dbResultFetchOneRowOnly($rs);
@@ -275,7 +275,7 @@ if ($databaseResponse = $dbConWpt->dbResultFetchOneRowOnly($s)) {
 
 if (isset($_POST['submit']) && !isset($_POST['version2'])) {
     $_POST['submitform'] = $_POST['submit'];
-    $log_text = iconv("ISO-8859-1", "UTF-8", $log_text);
+    $log_text = iconv('ISO-8859-1', 'UTF-8', $log_text);
 }
 
 // cleanup input
@@ -411,17 +411,17 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
         // oceniono skrzynkę
 
         $is_scored_query = XDb::xMultiVariableQueryValue(
-            "SELECT count(*) FROM scores WHERE user_id= :1 AND cache_id= :2 ",
+            'SELECT count(*) FROM scores WHERE user_id= :1 AND cache_id= :2 ',
             -1, $user->getUserId(), $geoCache->getCacheId());
 
         if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
 
             XDb::xSql(
-                "UPDATE caches SET score=(score*votes+" . XDb::xEscape(floatval($_POST['r'])) . ")/(votes+1), votes=votes+1
-                WHERE cache_id= ?", $geoCache->getCacheId());
+                'UPDATE caches SET score=(score*votes+' . XDb::xEscape(floatval($_POST['r'])) . ')/(votes+1), votes=votes+1
+                WHERE cache_id= ?', $geoCache->getCacheId());
 
             XDb::xSql(
-                "INSERT INTO scores (user_id, cache_id, score) VALUES( ? , ? , ? )",
+                'INSERT INTO scores (user_id, cache_id, score) VALUES( ? , ? , ? )',
                 $user->getUserId(), $geoCache->getCacheId(), $_POST['r']);
         }
     } else {
@@ -433,12 +433,12 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
     $log_uuid = Uuid::create();
 
     $logDateTime = new DateTime($log_date);
-    if (!compareTime($logDateTime, "PT1H")) { //if logging time is older then now-one_hour
-        $_SESSION["lastLogDateTime"] = $logDateTime; //we store the time
-        $_SESSION["lastLogSendTime"] = new DateTime("now");
+    if (!compareTime($logDateTime, 'PT1H')) { //if logging time is older then now-one_hour
+        $_SESSION['lastLogDateTime'] = $logDateTime; //we store the time
+        $_SESSION['lastLogSendTime'] = new DateTime('now');
     } else {
-        unset($_SESSION["lastLogSendTime"]); //next time we log with "now" datetime
-        unset($_SESSION["lastLogDateTime"]);
+        unset($_SESSION['lastLogSendTime']); //next time we log with "now" datetime
+        unset($_SESSION['lastLogDateTime']);
     }
 
     // save log to DB
@@ -449,7 +449,7 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
     // if comment is empty, then do not insert data into db
     if ($log_type == GeoCacheLog::LOGTYPE_COMMENT && empty($log_text)) {
-        tpl_errorMsg('log_cache', "Empty comment log?!");
+        tpl_errorMsg('log_cache', 'Empty comment log?!');
         exit;
     }
 
@@ -488,11 +488,11 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
     } else {
         XDb::xSql(
-            "INSERT INTO `cache_logs` (
+            'INSERT INTO `cache_logs` (
                 `cache_id`, `user_id`, `type`, `date`, `text`,
                 `text_html`, `date_created`, `last_modified`, `uuid`, `node`)
             VALUES ( ?, ?, ?, ?, ?,
-                     ?, NOW(), NOW(), ?, ?)",
+                     ?, NOW(), NOW(), ?, ?)',
             $geoCache->getCacheId(), $user->getUserId(), $log_type, $log_date, $log_text,
             2, $log_uuid, OcConfig::getSiteNodeId());
     }
@@ -522,12 +522,12 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
         // "depart point" or something like this.
 
         $is_any_cache_movedlog = XDb::xMultiVariableQueryValue(
-            "SELECT COUNT(*) FROM `cache_moved` WHERE `cache_id` = :1 ", 0, $geoCache->getCacheId());
+            'SELECT COUNT(*) FROM `cache_moved` WHERE `cache_id` = :1 ', 0, $geoCache->getCacheId());
 
         if ($is_any_cache_movedlog == 0) {
             $tmp_move_query = XDb::xSql(
-                "SELECT `user_id`, `longitude`, `latitude`, `date_hidden`
-                 FROM `caches` WHERE `cache_id` = ? ", $geoCache->getCacheId());
+                'SELECT `user_id`, `longitude`, `latitude`, `date_hidden`
+                 FROM `caches` WHERE `cache_id` = ? ', $geoCache->getCacheId());
             $tmp_move_data = XDb::xFetchArray($tmp_move_query);
 
             // create initial log in cache_logs and copy coords to table caches
@@ -563,8 +563,8 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
         // insert into table cache_moved
         XDb::xSql(
-            "INSERT INTO `cache_moved`(`cache_id`, `user_id`, `log_id`, `date`, `longitude`, `latitude`,`km`)
-            VALUES (?, ?, ?, ?, ?, ?, 0)",
+            'INSERT INTO `cache_moved`(`cache_id`, `user_id`, `log_id`, `date`, `longitude`, `latitude`,`km`)
+            VALUES (?, ?, ?, ?, ?, ?, 0)',
             $geoCache->getCacheId(), $user->getUserId(), $last_id_4_mobile_moved,
             $log_date, $wspolrzedneWE, $wspolrzedneNS);
 
@@ -586,12 +586,12 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
     // update cache_status
     $cache_status = XDb::xMultiVariableQueryValue(
-        "SELECT `log_types`.`cache_status` FROM `log_types` WHERE `id`= :1 LIMIT 1", 0, $log_type);
+        'SELECT `log_types`.`cache_status` FROM `log_types` WHERE `id`= :1 LIMIT 1', 0, $log_type);
 
     if ($cache_status != 0) {
         $rs = XDb::xSql(
-            "UPDATE `caches` SET `last_modified` = NOW(), `status`= ?
-                WHERE `cache_id`= ? ", $cache_status, $geoCache->getCacheId());
+            'UPDATE `caches` SET `last_modified` = NOW(), `status`= ?
+                WHERE `cache_id`= ? ', $cache_status, $geoCache->getCacheId());
     }
 
     // update top-list
@@ -600,17 +600,17 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
     ) {
 
         if ($top_cache == 1)
-            XDb::xSql("INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`) VALUES(?, ?)",
+            XDb::xSql('INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`) VALUES(?, ?)',
                 $user->getUserId(), $geoCache->getCacheId());
         else
-            XDb::xSql("DELETE FROM `cache_rating` WHERE `user_id`=? AND `cache_id`=?",
+            XDb::xSql('DELETE FROM `cache_rating` WHERE `user_id`=? AND `cache_id`=?',
                 $user->getUserId(), $geoCache->getCacheId());
     }
 
     //call eventhandler
     EventHandler::logNewByUserId($user->getUserId());
 
-    $badgetParam = "";
+    $badgetParam = '';
 
     if ($config['meritBadges']) {
         if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT ||
@@ -621,13 +621,13 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($geoCache->getCacheId(), $user->getUserId());
             $titledIds = $ctrlMeritBadge->updateTriggerTitledCache($geoCache->getCacheId(), $user->getUserId());
 
-            if ($changedLevelBadgesIds != "" && $titledIds != "")
-                $changedLevelBadgesIds .= ",";
+            if ($changedLevelBadgesIds != '' && $titledIds != '')
+                $changedLevelBadgesIds .= ',';
 
             $changedLevelBadgesIds .= $titledIds;
 
-            if ($changedLevelBadgesIds != "")
-                $badgetParam = "&badgesPopupFor=" . $changedLevelBadgesIds;
+            if ($changedLevelBadgesIds != '')
+                $badgetParam = '&badgesPopupFor=' . $changedLevelBadgesIds;
 
             $ctrlMeritBadge->updateTriggerCacheAuthor($geoCache->getCacheId());
         }
@@ -650,7 +650,7 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
             $logtypeoptions .= '<option value="-2" selected="selected" disabled="disabled">' . tr('choose_log') . '</option>';
         }
 
-        tpl_set_var('display', "none");
+        tpl_set_var('display', 'none');
     }
 
     foreach (GeoCacheLogCommons::logTypesArray() AS $type) {
@@ -730,7 +730,7 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
         if ($geoCache->getCacheType() == GeoCache::TYPE_EVENT) {
             // $datePlaced = ($geoCache->getDatePlaced()->format("Y-m-d H:i:s"));
-            $now = new DateTime("now");
+            $now = new DateTime('now');
             $now->setTime(0, 0, 0); //there is no time in $geoCache->getDatePlaced(),
             //so zero time here to allow logging WILLATTENDED or ATTENDED in the day of event
 
@@ -1069,10 +1069,10 @@ function recalculateCacheStats($cacheId, $cacheType, $lastFoundQueryString)
 
 function compareTime($time_to_check, $interval)
 {
-    $time = new DateTime("now");
+    $time = new DateTime('now');
     $time->sub(new DateInterval($interval));
     $time_diff = $time_to_check->diff($time);
-    return $time_diff->format("%r");
+    return $time_diff->format('%r');
 }
 
 function buildGeoKretyLog(User $user, GeoCache $geoCache, $i, DateTime $logDateTime)
@@ -1119,8 +1119,8 @@ function isGeokretInCache($cacheid)
 {
 
     $res = XDb::xSql(
-        "SELECT wp_oc, wp_gc, wp_nc, wp_ge, wp_tc
-        FROM caches WHERE cache_id = ? LIMIT 1", $cacheid);
+        'SELECT wp_oc, wp_gc, wp_nc, wp_ge, wp_tc
+        FROM caches WHERE cache_id = ? LIMIT 1', $cacheid);
 
     $cache_record = XDb::xFetchArray($res);
 
@@ -1139,13 +1139,13 @@ function isGeokretInCache($cacheid)
     }
 
     $gkNum = XDb::xMultiVariableQueryValue(
-        "SELECT COUNT(*) FROM gk_item
+        'SELECT COUNT(*) FROM gk_item
         WHERE id IN (
             SELECT id FROM gk_item_waypoint
             WHERE wp = :1
             )
             AND stateid<>1 AND stateid<>4
-            AND stateid <>5 AND typeid<>2", 0, $cache_wp);
+            AND stateid <>5 AND typeid<>2', 0, $cache_wp);
 
     if ($gkNum == 0) {
         return 0;

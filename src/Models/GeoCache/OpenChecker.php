@@ -15,13 +15,13 @@ class OpenChecker
     public function __construct($cacheId)
     {
         $s = XDb::xSql(
-            "SELECT opensprawdzacz.proby AS tries, opensprawdzacz.sukcesy AS hits
+            'SELECT opensprawdzacz.proby AS tries, opensprawdzacz.sukcesy AS hits
              FROM waypoints, opensprawdzacz
              WHERE waypoints.cache_id = ?
                 AND waypoints.type = ?
                 AND waypoints.opensprawdzacz = ?
                 AND waypoints.cache_id = opensprawdzacz.cache_id
-             LIMIT 1", $cacheId, Waypoint::TYPE_FINAL, Waypoint::OPENCHECKER_ENABLED);
+             LIMIT 1', $cacheId, Waypoint::TYPE_FINAL, Waypoint::OPENCHECKER_ENABLED);
 
         if($row = XDb::xFetchArray($s)){
             $this->loadFromDbRow($row);

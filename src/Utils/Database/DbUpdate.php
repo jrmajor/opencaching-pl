@@ -77,7 +77,7 @@ class DbUpdate
 
         if ($scriptsInMaster === null) {
             exec(
-                "git ls-tree master --name-only -r ".DbUpdates::getUpdatesDir(),
+                'git ls-tree master --name-only -r '.DbUpdates::getUpdatesDir(),
                 $scriptsInMaster
             );
             foreach ($scriptsInMaster as &$script) {
@@ -147,7 +147,7 @@ class DbUpdate
         set_time_limit(0);   // allow long runtime for expensive updates
 
         ob_start();
-        echo $action . " " . $this->name . "\n";
+        echo $action . ' ' . $this->name . "\n";
 
         $this->db->beginTransaction();
         $this->script->$action();

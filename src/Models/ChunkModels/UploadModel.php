@@ -57,8 +57,8 @@ class UploadModel {
   public static function TestTxtUploadFactory()
   {
       $obj = new self();
-      $obj->dialog->title = "TestUploadHeader";
-      $obj->dialog->preWarning = "This is just test of the upload. Only small txt files are allowed";
+      $obj->dialog->title = 'TestUploadHeader';
+      $obj->dialog->preWarning = 'This is just test of the upload. Only small txt files are allowed';
       $obj->allowedTypesRegex = self::MIME_TEXT;
       $obj->setMaxFileSize(1);
       $obj->setMaxFileNumber(2);
@@ -102,7 +102,7 @@ class UploadModel {
   public function getBaseUrl()
   {
       if(!$this->urlBase){
-        throw new \Exception("Trying to use unset baseUrl for uploaded file!");
+        throw new \Exception('Trying to use unset baseUrl for uploaded file!');
       }
       return $this->urlBase;
   }

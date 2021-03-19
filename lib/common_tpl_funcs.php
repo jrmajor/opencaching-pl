@@ -44,7 +44,7 @@ function tpl_redirect($page)
     //page has to be the filename without domain i.e. 'viecache.php?cacheid=1'
     http_write_no_cache();
 
-    header("Location: " . $absolute_server_URI . $page);
+    header('Location: ' . $absolute_server_URI . $page);
     exit;
 }
 
@@ -52,7 +52,7 @@ function tpl_get_current_page()
 {
     #       $pos = strrchr($_SERVER['SCRIPT_NAME'], '/');
     #       return substr($_SERVER['REQUEST_URI'], $pos);
-    return substr($_SERVER["REQUEST_URI"], strrpos($_SERVER["SCRIPT_NAME"], "/") + 1);
+    return substr($_SERVER['REQUEST_URI'], strrpos($_SERVER['SCRIPT_NAME'], '/') + 1);
 }
 
 //redirect to another absolute url
@@ -61,7 +61,7 @@ function tpl_redirect_absolute($absolute_server_URI)
     //page has to be the filename with domain i.e. 'http://abc.de/viecache.php?cacheid=1'
     http_write_no_cache();
 
-    header("Location: " . $absolute_server_URI);
+    header('Location: ' . $absolute_server_URI);
     exit;
 }
 
@@ -208,11 +208,11 @@ function tpl_BuildTemplate($minitpl = false, $noCommonTemplate = false)
 function http_write_no_cache()
 {
     // HTTP/1.1
-    header("Cache-Control: no-cache");
+    header('Cache-Control: no-cache');
     // Date in the past
-    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
     // always modified
-    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
 }
 
 /* TODO: NOT USED ANYWHERE...

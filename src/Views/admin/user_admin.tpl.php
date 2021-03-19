@@ -27,20 +27,20 @@ use src\Utils\Uri\SimpleRouter;
 <?php if ($view->user->isUserActivated()) { ?>
 
   <?php if ($view->user->getNotifyCaches()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyCaches', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyCaches', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyCaches', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyCaches', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_notifycaches')?>
   <div class="buffer"></div>
 
   <?php if ($view->user->getNotifyLogs()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyLogs', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyLogs', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyLogs', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','notifyLogs', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_notifylogs')?>
@@ -49,40 +49,40 @@ use src\Utils\Uri\SimpleRouter;
     <div class="content-title-noshade-size1"><?=tr('admin_user_restrictions')?></div>
 
   <?php if ($view->user->getIsActive()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','userBan', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','userBan', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','userBan', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','userBan', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_userban')?>
   <div class="buffer"></div>
 
   <?php if ($view->user->getStatBan()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','statBan', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','statBan', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','statBan', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','statBan', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_statban')?>
   <div class="buffer"></div>
 
   <?php if ($view->user->getVerifyAll()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','verifyAll', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','verifyAll', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','verifyAll', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','verifyAll', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_verifyall')?>
   <div class="buffer"></div>
 
   <?php if ($view->user->getNewCachesNoLimit()) { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','createNoLimit', [$view->user->getUserId(), "0"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','createNoLimit', [$view->user->getUserId(), '0'])?>">
       <img src="/images/misc/on.svg" alt="<?=tr('yes')?>" title="<?=tr('yes')?>" class="admin-onoff-switch"></a>
   <?php } else { ?>
-    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','createNoLimit', [$view->user->getUserId(), "1"])?>">
+    <a href="<?=SimpleRouter::getLink('Admin.UserAdmin','createNoLimit', [$view->user->getUserId(), '1'])?>">
       <img src="/images/misc/off.svg" alt="<?=tr('no')?>" title="<?=tr('no')?>" class="admin-onoff-switch"></a>
   <?php } // if ?>
   <?=tr('admin_user_nolimit')?>
@@ -113,13 +113,13 @@ use src\Utils\Uri\SimpleRouter;
               </td>
               <td>
                 <?php if ($note->isAutomatic()) {?>
-                  <img title="<?=tr("admin_notes_auto")?>" alt="" class="icon16" src="<?=$note->getAutomaticPictureUrl()?>">
+                  <img title="<?=tr('admin_notes_auto')?>" alt="" class="icon16" src="<?=$note->getAutomaticPictureUrl()?>">
                   <?=tr($note->getContentTranslationKey())?>
                     <?php if (! empty($note->getCacheId())) {?>
                       <a class="links" href="<?=$note->getCache()->getCacheUrl()?>"><?=$note->getCache()->getCacheName()?> (<?=$note->getCache()->getGeocacheWaypointId()?>)</a>
                     <?php } // if (! empty($note->getCacheId())) ?>
                 <?php } else { //if ($note->isAutomatic()) ?>
-                  <img title="<?=tr("admin_notes_man")?>" alt="" class="icon16" src="<?=$note->getAutomaticPictureUrl()?>">
+                  <img title="<?=tr('admin_notes_man')?>" alt="" class="icon16" src="<?=$note->getAutomaticPictureUrl()?>">
                   <?=$note->getContent()?>
                 <?php }?>
               </td>

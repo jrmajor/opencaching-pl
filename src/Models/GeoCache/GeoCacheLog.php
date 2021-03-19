@@ -554,14 +554,14 @@ class GeoCacheLog extends GeoCacheLogCommons
 
         //find log by Id
         $s = $this->db->multiVariableQuery(
-            "SELECT * FROM cache_logs WHERE id = :1 LIMIT 1", $logId);
+            'SELECT * FROM cache_logs WHERE id = :1 LIMIT 1', $logId);
 
         $logDbRow = $this->db->dbResultFetchOneRowOnly($s);
 
         if (is_array($logDbRow)) {
             $this->loadFromDbRow($logDbRow);
         } else {
-            throw new Exception("No such cache_log");
+            throw new Exception('No such cache_log');
         }
     }
 
@@ -696,21 +696,21 @@ class GeoCacheLog extends GeoCacheLogCommons
     {
         $params = [$cacheId, $userId];
         if ($types != null) {
-            $typesInString = "";
+            $typesInString = '';
             foreach ($types as $type) {
                 if (strlen($typesInString) > 0) {
-                    $typesInString .= ",";
+                    $typesInString .= ',';
                 }
                 array_push($params, $type);
-                $typesInString .= ":" . count($params);
+                $typesInString .= ':' . count($params);
             }
         }
         $stmt = $this->db->multiVariableQuery(
-            "SELECT * FROM `cache_logs` WHERE
-             `cache_id` = :1 AND `user_id` = :2 AND deleted = 0"
-            . (is_array($types) ? " AND `type` IN (" . $typesInString . ")" : "")
-            . " ORDER BY `date` DESC"
-            . ($limit != null ? " LIMIT " . $this->db()->quoteLimit($limit) : ""),
+            'SELECT * FROM `cache_logs` WHERE
+             `cache_id` = :1 AND `user_id` = :2 AND deleted = 0'
+            . (is_array($types) ? ' AND `type` IN (' . $typesInString . ')' : '')
+            . ' ORDER BY `date` DESC'
+            . ($limit != null ? ' LIMIT ' . $this->db()->quoteLimit($limit) : ''),
             $params
         );
         return $this->db->dbFetchAllAsObjects($stmt, function ($row) {
@@ -730,7 +730,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             !$this->getCurrentUser()->hasOcTeamRole()) {
 
             // logged user is not an author of the log && not the owner of cache and not OCTeam
-            throw new Exception("User not authorized to remove this log");
+            throw new Exception('User not authorized to remove this log');
         }
 
         $this->setDeleted(true)
@@ -739,9 +739,9 @@ class GeoCacheLog extends GeoCacheLogCommons
             ->setLastModified(new DateTime());
 
         $this->db->multiVariableQuery(
-            "UPDATE cache_logs
+            'UPDATE cache_logs
             SET deleted=1, del_by_user_id=:1, last_modified=:2, last_deleted=:3
-            WHERE id=:4 LIMIT 1",
+            WHERE id=:4 LIMIT 1',
             $this->getDelByUserId(), Formatter::dateTimeForSql($this->getLastModified()),
             Formatter::dateTimeForSql($this->getLastDeleted()), $this->getId());
 
@@ -757,7 +757,7 @@ class GeoCacheLog extends GeoCacheLogCommons
 
             // remove cache from users top caches, because the found log was deleted for some reason
             $this->db->multiVariableQuery(
-                "DELETE FROM cache_rating WHERE user_id=:1 AND cache_id=:2",
+                'DELETE FROM cache_rating WHERE user_id=:1 AND cache_id=:2',
                 $this->getUserId(), $this->getGeoCacheId());
 
             // Notify OKAPI's replicate module of the change.

@@ -34,7 +34,7 @@ $viewquery_line = '<tr>
             <a href="search.php?queryid={queryid}&output=xml&count=max&zip=1" title="xml">XML</a>
             <a href="search.php?queryid={queryid}&output=zip&count=max&zip=1" title="Garmin ZIP file (GPX + zdjęcia)  .zip">GARMIN</a>
             </td>
-            <td width="10%" bgcolor="{bgcolor}" style="text-align: center"; vertical-align: middle; background-color: {bgcolor}"><a href="query.php?queryid={queryid}&action=delete" onclick="return confirm(\'' . tr("myviewqueries_1") . '\');" ><img style="vertical-align: middle;" src="images/log/16x16-trash.png" alt="" title=' . tr('delete') . ' /></a></td>
+            <td width="10%" bgcolor="{bgcolor}" style="text-align: center"; vertical-align: middle; background-color: {bgcolor}"><a href="query.php?queryid={queryid}&action=delete" onclick="return confirm(\'' . tr('myviewqueries_1') . '\');" ><img style="vertical-align: middle;" src="images/log/16x16-trash.png" alt="" title=' . tr('delete') . ' /></a></td>
             </tr>';
 $noqueries = '<tr><td colspan="2">' . tr('no_queries') . '</td></tr>';
 
@@ -73,12 +73,12 @@ function deletequery($queryid, User $loggedUser)
 
     $dbc = OcDb::instance();
 
-    $query = "SELECT `id` FROM `queries` WHERE `id`=:1 AND `user_id`=:2";
+    $query = 'SELECT `id` FROM `queries` WHERE `id`=:1 AND `user_id`=:2';
     $s = $dbc->multiVariableQuery($query, $queryid, $loggedUser->getUserId());
 
     if ($dbc->rowCount($s) == 1) {
 
-        $query = "DELETE FROM `queries` WHERE `id`=:1 LIMIT 1";
+        $query = 'DELETE FROM `queries` WHERE `id`=:1 LIMIT 1';
         $dbc->multiVariableQuery($query, $queryid);
     }
 
@@ -99,7 +99,7 @@ function viewqueries(User $loggedUser)
 
     $i = 0;
     $content = '';
-    $query = "SELECT id, name FROM `queries` WHERE `user_id`=:1 ORDER BY `name` ASC";
+    $query = 'SELECT id, name FROM `queries` WHERE `user_id`=:1 ORDER BY `name` ASC';
     $s = $dbc->multiVariableQuery($query, $loggedUser->getUserId());
 
     if ($dbc->rowCount($s) != 0) {
@@ -140,7 +140,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
 
     // ok ... verify that it our query and then save
     $rs = XDb::xSql(
-        "SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )",
+        'SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )',
         $queryid, $loggedUser->getUserId());
 
     if (false == XDb::xFetchArray($rs)) {
@@ -156,8 +156,8 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
         } else {
             // test ob the name already exists
             $r['c'] = XDb::xMultiVariableQueryValue(
-                "SELECT COUNT(*) `c` FROM `queries`
-                WHERE `user_id`= :1 AND `name`= :2 ",
+                'SELECT COUNT(*) `c` FROM `queries`
+                WHERE `user_id`= :1 AND `name`= :2 ',
                 0, $loggedUser->getUserId(), $queryname);
 
             if ($r['c'] > 0) {
@@ -171,7 +171,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
         } else {
             // test if saveas_queryid exists and is ours
             $rs = XDb::xSql(
-                "SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )",
+                'SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )',
                 $saveas_queryid, $loggedUser->getUserId());
             if (false === XDb::xFetchArray($rs)) {
                 echo 'fatal error: saveas_query not found or permission denied';
@@ -198,7 +198,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
         // read oldqueries
         $options = '';
         $rs = XDb::xSql(
-            "SELECT `id`, `name` FROM `queries` WHERE `user_id`= ? ORDER BY `name` ASC",
+            'SELECT `id`, `name` FROM `queries` WHERE `user_id`= ? ORDER BY `name` ASC',
             $loggedUser->getUserId());
 
         if (!$r = XDb::xFetchArray($rs)) {
@@ -221,17 +221,17 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
     }
 
     $r['options'] = XDb::xMultiVariableQueryValue(
-        "SELECT `options` FROM `queries` WHERE `id`= :1 LIMIT 1", 0, $queryid);
+        'SELECT `options` FROM `queries` WHERE `id`= :1 LIMIT 1', 0, $queryid);
 
     // ok, save
     if ($saveas == true) {
         XDb::xSql(
-            "UPDATE `queries` SET `options`= ?, `last_queried`=NOW() WHERE `id`= ? ",
+            'UPDATE `queries` SET `options`= ?, `last_queried`=NOW() WHERE `id`= ? ',
             $r['options'], $saveas_queryid);
     } else {
         XDb::xSql(
-            "INSERT INTO `queries` (`user_id`, `last_queried`, `name`, `uuid`, `options`)
-            VALUES ( ?, NOW(), ?, ?, ?)",
+            'INSERT INTO `queries` (`user_id`, `last_queried`, `name`, `uuid`, `options`)
+            VALUES ( ?, NOW(), ?, ?, ?)',
             $loggedUser->getUserId(), $queryname, Uuid::create(), $r['options']);
     }
 

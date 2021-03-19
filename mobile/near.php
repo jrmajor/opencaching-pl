@@ -2,7 +2,7 @@
 use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\I18n\I18n;
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 function makeUrl($url)
 {
@@ -57,9 +57,9 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
     $tpl->assign('url', $url);
     $tpl->assign('next_page', $next_page);
     $tpl->assign('prev_page', $prev_page);
-    $tpl->assign("address", $address);
-    $tpl->assign("znalezione", $znalezione);
-    $tpl->assign("ile", $ile);
+    $tpl->assign('address', $address);
+    $tpl->assign('znalezione', $znalezione);
+    $tpl->assign('ile', $ile);
 
     $max = ceil($ile / $na_stronie);
 
@@ -78,13 +78,13 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
 
         $kord1 = zamiana($_GET['Nstopien'], $_GET['Nminuty']);
         if ($_GET['ns'] == 'S')
-            $kord1 = "-" . $kord1;
+            $kord1 = '-' . $kord1;
 
         $kord2 = zamiana($_GET['Estopien'], $_GET['Eminuty']);
         if ($_GET['ew'] == 'W')
-            $kord2 = "-" . $kord2;
+            $kord2 = '-' . $kord2;
 
-        $jsonurl = "$absolute_server_URI/okapi/services/caches/search/nearest?&center=" . $kord1 . "|" . $kord2 . "&status=Available&radius=" . $_GET['radius'] . "&consumer_key=HpLvDvvjmG3HkeX8RsgU&limit=500 ";
+        $jsonurl = "$absolute_server_URI/okapi/services/caches/search/nearest?&center=" . $kord1 . '|' . $kord2 . '&status=Available&radius=' . $_GET['radius'] . '&consumer_key=HpLvDvvjmG3HkeX8RsgU&limit=500 ';
 
         $input = file_get_contents($jsonurl);
         $output = json_decode($input, true);
@@ -166,7 +166,7 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
             if ($kier >= 292.5 && $kier < 337.5)
                 $kier = 'NW';
 
-            $query = "select " . I18n::getCurrentLang() . " from cache_type where id = '" . $wiersz['type'] . "';";
+            $query = 'select ' . I18n::getCurrentLang() . " from cache_type where id = '" . $wiersz['type'] . "';";
             $wynik2 = XDb::xSql($query);
             $wiersz2 = XDb::xFetchArray($wynik2);
             $rekord['typetext'] = $wiersz2[0];
@@ -242,7 +242,7 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
     if (!empty($_POST['city']) && !empty($_POST['radius']) && preg_match("/^\d+$/", $_POST['radius']) && $_POST['radius'] >= 1 && $_POST['radius'] <= 25) {
         $city = makeUrl($_POST['city']);
 
-        $jsonurl = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=" . $city;
+        $jsonurl = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' . $city;
 
         $input = file_get_contents($jsonurl);
         $output = json_decode($input, true);
@@ -268,25 +268,25 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
             $lon_h = abs($lon_h);
         }
 
-        $link = "./near.php?ns=" . $ns . "&Nstopien=" . $lat_h . "&Nminuty=" . $lat_m . "&ew=" . $ew . "&Estopien=" . $lon_h . "&Eminuty=" . $lon_m . "&radius=" . $_POST['radius'];
+        $link = './near.php?ns=' . $ns . '&Nstopien=' . $lat_h . '&Nminuty=' . $lat_m . '&ew=' . $ew . '&Estopien=' . $lon_h . '&Eminuty=' . $lon_m . '&radius=' . $_POST['radius'];
 
         if (isset($_POST['skip_mine'])) {
-            $link.="&skip_mine=on";
+            $link.='&skip_mine=on';
         }
 
         if (isset($_POST['skip_found'])) {
-            $link.="&skip_found=on";
+            $link.='&skip_found=on';
         }
 
         if (isset($_POST['skip_ignored'])) {
-            $link.="&skip_ignored=on";
+            $link.='&skip_ignored=on';
         }
 
         if (isset($_POST['skip_inactive'])) {
-            $link.="&skip_inactive=on";
+            $link.='&skip_inactive=on';
         }
 
-        header("Location: " . $link);
+        header('Location: ' . $link);
         exit;
     } else
         $tpl->assign('error', 2);

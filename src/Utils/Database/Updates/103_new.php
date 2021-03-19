@@ -76,7 +76,7 @@ class C16126270995966 extends UpdateScript
             ) ENGINE=InnoDB COMMENT='User participation in votings';
             ");
 
-        echo "...done";
+        echo '...done';
     }
 };
 

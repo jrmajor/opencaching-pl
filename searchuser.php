@@ -23,11 +23,11 @@ if (!$loggedUser) {
         }
         if ($options['username'] != '') {
 
-            $query = "SELECT user_id, username, date_created FROM user WHERE username LIKE :username ORDER BY username ASC";
+            $query = 'SELECT user_id, username, date_created FROM user WHERE username LIKE :username ORDER BY username ASC';
             $params = [
-                "username" => [
-                    "value" => '%' . XDb::xEscape($options['username']) . '%',
-                    "data_type" => "string",
+                'username' => [
+                    'value' => '%' . XDb::xEscape($options['username']) . '%',
+                    'data_type' => 'string',
                 ],
             ];
 
@@ -37,13 +37,13 @@ if (!$loggedUser) {
             $bgcolor1 = '#eeeeee';
             $bgcolor2 = '#ffffff';
             $line = '<tr bgcolor={bgcolor}><td><a href=viewprofile.php?userid={user_id}>{username}</a></td><td>&nbsp;</td><td nowrap style="text-align:center;">{date_created}</td><td nowrap style="text-align:center;"></td></tr>';
-            $lines = "";
+            $lines = '';
 
             $ilosc = $dbc->rowCount($s);
             if ($ilosc != 0) {
                 if ($ilosc == 1) {
                     $record = $dbc->dbResultFetch($s);
-                    tpl_redirect("viewprofile.php?userid=" . $record['user_id']);
+                    tpl_redirect('viewprofile.php?userid=' . $record['user_id']);
                 } else {
                     $i = 0;
                     while ($record = $dbc->dbResultFetch($s)) {
@@ -64,7 +64,7 @@ if (!$loggedUser) {
                 }
             } else { // User not found
                 tpl_set_var('username', htmlspecialchars($options['username']));
-                tpl_set_var('not_found', '<b>' . tr("message_user_not_found") . ': ' . htmlspecialchars($options['username']) . '</b><br/><br/>');
+                tpl_set_var('not_found', '<b>' . tr('message_user_not_found') . ': ' . htmlspecialchars($options['username']) . '</b><br/><br/>');
                 tpl_set_var('lines', '');
             }
         } else {

@@ -11,16 +11,16 @@ class MeritBadge
     const THE_HIGHEST_LEVEL = 999999;
 
     static private $_colors = [
-        "#89af2b",
-        "#af992b",
-        "#af5e2b",
-        "#af2b2b",
-        "#af2b7e",
-        "#962baf",
-        "#2b5caf",
-        "#8E6343", /*"#2b90af"*/
-        "#A5A5A5",  /*"#2baf99"*/
-        "#FFCC00", /*"#3daf2c"*/
+        '#89af2b',
+        '#af992b',
+        '#af5e2b',
+        '#af2b2b',
+        '#af2b7e',
+        '#962baf',
+        '#2b5caf',
+        '#8E6343', /*"#2b90af"*/
+        '#A5A5A5',  /*"#2baf99"*/
+        '#FFCC00', /*"#3daf2c"*/
     ];
 
     private $id;
@@ -105,9 +105,9 @@ class MeritBadge
     public function whoPrepared(){
 
         $text =
-        tr('merit_badge_graphic_author')." <b>". $this->getGraphicAuthor() . "</b>, ".
-        tr('merit_badge_description_author'). " <b>". $this->getDescriptionAuthor() . "</b>, ".
-        tr('merit_badge_attendant'). " <b>". $this->getAttendant() . "</b>";
+        tr('merit_badge_graphic_author').' <b>'. $this->getGraphicAuthor() . '</b>, '.
+        tr('merit_badge_description_author'). ' <b>'. $this->getDescriptionAuthor() . '</b>, '.
+        tr('merit_badge_attendant'). ' <b>'. $this->getAttendant() . '</b>';
 
         return $text;
     }
@@ -201,9 +201,9 @@ class MeritBadge
 
     public static function prepareShortDescription($desc, $threshold, $currVal ){
         if ( $threshold == self::THE_HIGHEST_LEVEL)
-            return "<span style='font-weight:bold;color:". self::getColor( self::COLOR_NUMBER, self::COLOR_NUMBER) .";'>".tr('merit_badge_gain_max_level' )."</span>";
+            return "<span style='font-weight:bold;color:". self::getColor( self::COLOR_NUMBER, self::COLOR_NUMBER) .";'>".tr('merit_badge_gain_max_level' ).'</span>';
 
-            $desc = str_replace( "{userThreshold}", $threshold- $currVal, $desc);
+            $desc = str_replace( '{userThreshold}', $threshold- $currVal, $desc);
             return $desc;
     }
 
@@ -211,11 +211,11 @@ class MeritBadge
     public static function preparePeriodOrThreshold($first, $second, $PeriodOrThreshold){
         $out =  $first;
 
-        if ($PeriodOrThreshold == "P"){
+        if ($PeriodOrThreshold == 'P'){
             if ($second != self::THE_HIGHEST_LEVEL)
-                $out .= " - " . ($second-1);
+                $out .= ' - ' . ($second-1);
             else
-                $out .= "";
+                $out .= '';
         }
 
         return $out;
@@ -225,7 +225,7 @@ class MeritBadge
         if ( $threshold != self::THE_HIGHEST_LEVEL)
             return $threshold;
 
-        return "...";
+        return '...';
     }
 
 
@@ -237,28 +237,28 @@ class MeritBadge
 
         $db = OcDb::instance();
 
-        preg_match_all("/#(.*)#/", $text, $sqlOut); //one value
+        preg_match_all('/#(.*)#/', $text, $sqlOut); //one value
         foreach( $sqlOut[1] as $sql ){
             $stmt = $db->simpleQuery($sql);
             $rec = $db->dbResultFetch($stmt);
-            $text = str_replace('#'.$sql.'#', number_format( $rec["value"], 0, $config['numberFormatDecPoint'], $config['numberFormatThousandsSep']), $text);
+            $text = str_replace('#'.$sql.'#', number_format( $rec['value'], 0, $config['numberFormatDecPoint'], $config['numberFormatThousandsSep']), $text);
 
         }
 
-        preg_match_all("/@(.*)@/", $text, $sqlOut); //a list of caches
+        preg_match_all('/@(.*)@/', $text, $sqlOut); //a list of caches
         foreach( $sqlOut[1] as $sql ){
-            $cache_list = "<ul>";
+            $cache_list = '<ul>';
 
             $stmt = $db->simpleQuery($sql);
             for($i = 0; $i < $db->rowCount($stmt); $i++ ){
                 $pattern = "<li> <a href='viewcache.php?cacheid={cache_id}'>{cache_name}</a></li>";
                 $rec = $db->dbResultFetch($stmt);
-                $pattern = str_replace( "{cache_name}", $rec["cache_name"], $pattern);
-                $cache_list .= str_replace( "{cache_id}", $rec["cache_id"], $pattern);
+                $pattern = str_replace( '{cache_name}', $rec['cache_name'], $pattern);
+                $cache_list .= str_replace( '{cache_id}', $rec['cache_id'], $pattern);
 
             }
 
-            $cache_list .= "</ul>";
+            $cache_list .= '</ul>';
 
             $text = str_replace('@'.$sql.'@', $cache_list, $text);
         }

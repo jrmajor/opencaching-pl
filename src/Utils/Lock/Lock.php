@@ -62,7 +62,7 @@ abstract class Lock
      * Option to inform that the identifier is an existing file path or handle,
      * external to the locking settings
      */
-    const OPTION_USE_EXISTING_FILE = "lock_use_existing_file";
+    const OPTION_USE_EXISTING_FILE = 'lock_use_existing_file';
 
     /**
      * Tries to lock the resource given by identifier using given mode.
@@ -169,12 +169,12 @@ abstract class Lock
         $lockConfig = OcConfig::instance()->getLockConfig();
         $result = null;
         if (
-            !empty($lockConfig["type"]) &&
-            !empty($lockConfig[$lockConfig["type"]])
+            !empty($lockConfig['type']) &&
+            !empty($lockConfig[$lockConfig['type']])
         ) {
-            $settings = $lockConfig[$lockConfig["type"]];
-            if (!empty($settings["class"])) {
-                $result = new $settings["class"]($settings);
+            $settings = $lockConfig[$lockConfig['type']];
+            if (!empty($settings['class'])) {
+                $result = new $settings['class']($settings);
             }
         }
         return $result;

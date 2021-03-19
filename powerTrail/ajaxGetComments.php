@@ -20,7 +20,7 @@ $commentsArr = PowerTrailController::getEntryTypes();
 
 if (!isset($_REQUEST['projectId'])){
     http_response_code(403);
-    echo "Unknown PT";
+    echo 'Unknown PT';
     exit;
 }
 $ptOwners = powerTrailBase::getPtOwners($_REQUEST['projectId']);

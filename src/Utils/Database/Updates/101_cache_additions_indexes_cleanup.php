@@ -18,10 +18,10 @@ class C15585603230246 extends UpdateScript
     public function run()
     {
         // Insert your update code here, using $this->db for database access.
-        $this->db->simpleQuery("ALTER TABLE caches_additions ADD PRIMARY KEY(cache_id)");
-        $this->db->simpleQuery("ALTER TABLE caches_additions DROP INDEX cache_id");
+        $this->db->simpleQuery('ALTER TABLE caches_additions ADD PRIMARY KEY(cache_id)');
+        $this->db->simpleQuery('ALTER TABLE caches_additions DROP INDEX cache_id');
 
-        echo "update done :)";
+        echo 'update done :)';
     }
 };
 

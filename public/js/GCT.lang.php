@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../../lib/common.inc.php';
 
-header("Content-Type: text/javascript");
+header('Content-Type: text/javascript');
 
 ?>
 /* ************************************************************************

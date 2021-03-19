@@ -45,7 +45,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
     } else {
         //prüfen, ob email schon in der Datenbank vorhanden
         $rs = XDb::xSql(
-            "SELECT `username` FROM `user` WHERE `email`= ? ", $new_email);
+            'SELECT `username` FROM `user` WHERE `email`= ? ', $new_email);
         if (false !== XDb::xFetchArray($rs)) {
             $email_exists = true;
             tpl_set_var('email_message', $error_email_exists);
@@ -59,8 +59,8 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
 
             //code in DB eintragen
             XDb::xSql(
-                "UPDATE `user` SET `new_email_date`=?, `new_email_code`=?, `new_email`=?
-                        WHERE `user_id`=?", time(), $secure_code, $new_email, $user->getUserId());
+                'UPDATE `user` SET `new_email_date`=?, `new_email_code`=?, `new_email`=?
+                        WHERE `user_id`=?', time(), $secure_code, $new_email, $user->getUserId());
 
             $email_content = file_get_contents(__DIR__ . '/resources/email/newemail.email');
             $email_content = mb_ereg_replace('{server}', $absolute_server_URI, $email_content);
@@ -89,7 +89,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
             $secure_code = $_POST['code'];
 
             $rs = XDb::xSql(
-                "SELECT `new_email_code`, `new_email`, `new_email_date` FROM `user` WHERE `user_id`=? ",
+                'SELECT `new_email_code`, `new_email`, `new_email_date` FROM `user` WHERE `user_id`=? ',
                 $user->getUserName());
 
             $record = XDb::xFetchArray($rs);
@@ -114,15 +114,15 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
             } else {
                 //check if email exists
                 $rs = XDb::xSql(
-                    "SELECT `username` FROM `user` WHERE `email`= ? ", $new_email);
+                    'SELECT `username` FROM `user` WHERE `email`= ? ', $new_email);
                 if (false !== XDb::xFetchArray($rs)) {
                     tpl_set_var('message', $error_email_exists);
                 } else {
                     //neue EMail eintragen
                     XDb::xSql(
-                        "UPDATE `user` SET `new_email_date`=NULL, `new_email_code`=NULL,
+                        'UPDATE `user` SET `new_email_date`=NULL, `new_email_code`=NULL,
                                         `new_email`=NULL, `email`= ? , `last_modified`=NOW()
-                                WHERE `user_id`= ? ",
+                                WHERE `user_id`= ? ',
                         $new_email, $user->getUserId());
 
                     //try to change the email

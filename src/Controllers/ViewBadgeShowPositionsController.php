@@ -6,7 +6,7 @@ use src\Controllers\MeritBadgeController;
 
 class ViewBadgeShowPositionsController extends BaseController{
 
-    private $sCode = "";
+    private $sCode = '';
 
     public function __construct()
     {
@@ -36,8 +36,8 @@ class ViewBadgeShowPositionsController extends BaseController{
 
         $ctrlMeritBadge = new MeritBadgeController;
         $meritBadge = $ctrlMeritBadge->buildMeritBadge( $badge_id );
-        if ( $meritBadge->getCfgShowPositions() == "" )
-            return "";
+        if ( $meritBadge->getCfgShowPositions() == '' )
+            return '';
 
         $this->prepareCode();
 

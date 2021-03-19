@@ -27,7 +27,7 @@ $show = $_REQUEST['show'];
 
 
 $meritBadgeCtrl = new MeritBadgeController;
-$tmp_badge_map = "tmp_badge_map";
+$tmp_badge_map = 'tmp_badge_map';
 
 $gainedPositions = $meritBadgeCtrl->buildArrayGainedPositions($userid, $badge_id);
 $belongingPositions = $meritBadgeCtrl->buildArrayBelongingPositions($userid, $badge_id);
@@ -55,7 +55,7 @@ $maxlon = $r['maxlongitude'];
 $cacheQuery = "SELECT cache_id FROM $tmp_badge_map";
 $stmt = $db->simpleQuery($cacheQuery);
 $hash = uniqid();
-$f = fopen(OcConfig::getDynFilesPath() . "searchdata/" . $hash, "w");
+$f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
 while ($r = $db->dbResultFetch($stmt)) {
     fprintf($f, "%s\n", $r['cache_id']);
 }
@@ -93,7 +93,7 @@ function addCachesToTmpTable( $db, $tmp_badge_map, $show, $gainedList, $belongin
 
     if ( strpos($show, 'Y') === false ){ //only not gained
         if(!empty($gainedList)){
-            $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList. ")");
+            $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList. ')');
         }
 
     } else { //gained

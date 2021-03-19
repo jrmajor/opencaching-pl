@@ -30,7 +30,7 @@ class Election extends BaseObject
     {
         $db = self::db();
         $stmt = $db->multiVariableQuery(
-            "SELECT * FROM vote_elections WHERE electionId = :1 LIMIT 1", $electionId);
+            'SELECT * FROM vote_elections WHERE electionId = :1 LIMIT 1', $electionId);
 
         $elections =  $db->dbFetchAllAsObjects($stmt, function (array $row) {
             $obj = new self();
@@ -49,7 +49,7 @@ class Election extends BaseObject
     {
         $db = self::db();
         $stmt = $db->multiVariableQuery(
-            "SELECT electionId, name, startDate, endDate, description FROM vote_elections");
+            'SELECT electionId, name, startDate, endDate, description FROM vote_elections');
 
         return $db->dbFetchAllAsObjects($stmt, function (array $row) {
             $obj = new self();
@@ -99,14 +99,14 @@ class Election extends BaseObject
         // check if every vote is a valid option for this election
         foreach ($votes as $vote) {
             if (!ChoiceOption::checkOption($this, $vote)) {
-                $errorMsg = tr('vote_invalidVote').". [Incorrect option]";
+                $errorMsg = tr('vote_invalidVote').'. [Incorrect option]';
                 return false;
             }
         }
 
         // check rules in context of votes
         if (!$this->electionRules->validatesVotesArr($votes)) {
-            $errorMsg = tr('vote_invalidVote').". [Rules conflict]";
+            $errorMsg = tr('vote_invalidVote').'. [Rules conflict]';
             return false;
         }
 

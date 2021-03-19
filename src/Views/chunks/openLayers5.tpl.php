@@ -11,14 +11,14 @@ use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
 return function (){
     //start of chunk
 
-$url = "/js/libs/openlayers/5.2.0";
+$url = '/js/libs/openlayers/5.2.0';
 
 ?>
   <link rel="stylesheet"
-        href="<?=Uri::getLinkWithModificationTime($url."/ol.css")?>"
+        href="<?=Uri::getLinkWithModificationTime($url.'/ol.css')?>"
         type="text/css">
 
-  <script src="<?=Uri::getLinkWithModificationTime($url."/ol.js")?>"></script>
+  <script src="<?=Uri::getLinkWithModificationTime($url.'/ol.js')?>"></script>
 
   <script>
     // map layer from ocConfig

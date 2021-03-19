@@ -286,21 +286,21 @@ class GeoCacheCommons extends BaseObject {
         $type, $status, $logStatus = null, $fileNameOnly = false, $isOwner = false)
     {
 
-        $statusPart = ""; //part of icon name represents cache status
+        $statusPart = ''; //part of icon name represents cache status
         switch ($status) {
             case self::STATUS_UNAVAILABLE:
             case self::STATUS_NOTYETAVAILABLE:
             case self::STATUS_WAITAPPROVERS:
-                $statusPart = "-n";
+                $statusPart = '-n';
                 break;
             case self::STATUS_ARCHIVED:
-                $statusPart = "-a";
+                $statusPart = '-a';
                 break;
             case self::STATUS_BLOCKED:
-                $statusPart = "-d";
+                $statusPart = '-d';
                 break;
             default:
-                $statusPart = "-s";
+                $statusPart = '-s';
                 break;
         }
 
@@ -318,7 +318,7 @@ class GeoCacheCommons extends BaseObject {
                 }
         }
 
-        $typePart = ""; //part of icon name represents cache type
+        $typePart = ''; //part of icon name represents cache type
         switch ($type) {
             case self::TYPE_OTHERTYPE:
                 $typePart = 'unknown';

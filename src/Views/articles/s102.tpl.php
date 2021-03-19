@@ -18,18 +18,18 @@ use src\Utils\I18n\I18n;
 </script>
 
 <?php
-$sNameOfStat = "";
-$sTitleOfStat = "";
-if (isset($_REQUEST["stat"])) {
-    $sNameOfStat = $_REQUEST["stat"];
+$sNameOfStat = '';
+$sTitleOfStat = '';
+if (isset($_REQUEST['stat'])) {
+    $sNameOfStat = $_REQUEST['stat'];
 }
 
-if ($sNameOfStat == "NumberOfFinds")
-    $sTitleOfStat = " {{ranking_by_number_of_finds_new}} ";
-else if ($sNameOfStat == "MaintenanceOfCaches")
-    $sTitleOfStat = " {{ranking_by_maintenace}} ";
+if ($sNameOfStat == 'NumberOfFinds')
+    $sTitleOfStat = ' {{ranking_by_number_of_finds_new}} ';
+else if ($sNameOfStat == 'MaintenanceOfCaches')
+    $sTitleOfStat = ' {{ranking_by_maintenace}} ';
 else
-    $sTitleOfStat = " Ranking ";
+    $sTitleOfStat = ' Ranking ';
 ?>
 
 <div class="content2-container">
@@ -40,52 +40,52 @@ else
 
     <?php
 
-    $sRok = "";
-    $sMc = "";
-    $sDataOd = "";
-    $sDataDo = "";
-    $sRD = "R";
+    $sRok = '';
+    $sMc = '';
+    $sDataOd = '';
+    $sDataDo = '';
+    $sRD = 'R';
     $sNameOfStat = $_REQUEST['stat'];
-    $sNameOfStatCookieEmptyDate = $sNameOfStat . "EmptyDate";
-    $sIsEmptDate = "";
+    $sNameOfStatCookieEmptyDate = $sNameOfStat . 'EmptyDate';
+    $sIsEmptDate = '';
 
-    if (isset($_REQUEST["init"])) {
+    if (isset($_REQUEST['init'])) {
         $sIsEmptDate = OcCookie::get($sNameOfStatCookieEmptyDate);
     }
 
 
-    if (!isset($_REQUEST["init"])) {
-        $sRok = $_REQUEST["Rok"];
-        $sMc = $_REQUEST["Mc"];
+    if (!isset($_REQUEST['init'])) {
+        $sRok = $_REQUEST['Rok'];
+        $sMc = $_REQUEST['Mc'];
 
-        $sDataOd = $_REQUEST["DataOd"];
-        $sDataDo = $_REQUEST["DataDo"];
+        $sDataOd = $_REQUEST['DataOd'];
+        $sDataDo = $_REQUEST['DataDo'];
 
-        $sRD = $_REQUEST["rRD"];
+        $sRD = $_REQUEST['rRD'];
 
 
-        if ($sRD == "R" && $sRok == "" && $sMc == ""){
-            OcCookie::set($sNameOfStatCookieEmptyDate, "Yes", true);
+        if ($sRD == 'R' && $sRok == '' && $sMc == ''){
+            OcCookie::set($sNameOfStatCookieEmptyDate, 'Yes', true);
         }else{
-            OcCookie::set($sNameOfStatCookieEmptyDate, "No", true);
+            OcCookie::set($sNameOfStatCookieEmptyDate, 'No', true);
         }
 
     }
 
-    if (( isset($_REQUEST["init"]) or intval($sMc) > 12 or intval($sMc) < 0 or intval($sRok) < 0 )
+    if (( isset($_REQUEST['init']) or intval($sMc) > 12 or intval($sMc) < 0 or intval($sRok) < 0 )
             or ( intval($sMc) != 0 and intval($sRok) == 0 )) {
-        if ($sIsEmptDate != "Yes") {
-            $sRok = date("Y");
-            $sMc = date("m");
+        if ($sIsEmptDate != 'Yes') {
+            $sRok = date('Y');
+            $sMc = date('m');
         }
 
-        $_REQUEST["Rok"] = $sRok;
-        $_REQUEST["Mc"] = $sMc;
+        $_REQUEST['Rok'] = $sRok;
+        $_REQUEST['Mc'] = $sMc;
 
-        $_REQUEST["DataOd"] = $sDataOd;
-        $_REQUEST["DataDo"] = $sDataDo;
+        $_REQUEST['DataOd'] = $sDataOd;
+        $_REQUEST['DataDo'] = $sDataDo;
 
-        $_REQUEST["rRD"] = $sRD;
+        $_REQUEST['rRD'] = $sRD;
     }
     ?>
 
@@ -104,7 +104,7 @@ else
 
                         <table  class = "GCT-div-table" >
                             <tr>
-                                <td><input type="radio" name="rRD" id="rR" value="R" <?php if ($sRD == "R") echo "checked" ?> ></td>
+                                <td><input type="radio" name="rRD" id="rR" value="R" <?php if ($sRD == 'R') echo 'checked' ?> ></td>
                                 <td width="10px">{{FiltrYear}}:</td>
                                 <td width="64px"> <input type="text" name="Rok" value="<?php echo $sRok ?>" style="width:30px; text-align: center" maxlength="4" onclick="GCTStatsSetRadio('Rok')"></td>
                                 <td >{{FiltrMonth}}: <input type="text" value="<?php echo $sMc ?>"  name="Mc" style="width:20px; text-align: center" maxlength="2" onclick="GCTStatsSetRadio('Rok')"></td>
@@ -112,7 +112,7 @@ else
                             </tr>
 
                             <tr>
-                                <td><input type="radio" name="rRD" id="rD" value="D" <?php if ($sRD == "D") echo "checked" ?>></td>
+                                <td><input type="radio" name="rRD" id="rD" value="D" <?php if ($sRD == 'D') echo 'checked' ?>></td>
                                 <td>{{Dates}}:</td>
                                 <td colspan=2>
                                     <input type="text" id="datepicker" name="DataOd" onclick="GCTStatsSetRadio('Data')" value="<?php echo $sDataOd ?>" style="width:60px; text-align: left"  maxlength="10">&nbsp;&nbsp;-

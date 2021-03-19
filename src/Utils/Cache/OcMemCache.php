@@ -76,7 +76,7 @@ class OcMemCache
             try {
                 apcu_store(self::getPrefix() . $key, $var, $ttl);
             } catch (Exception $e) {
-                Debug::errorLog("Can't serialize object! error: ".$e->getMessage()." ");
+                Debug::errorLog("Can't serialize object! error: ".$e->getMessage().' ');
             }
         }
     }
@@ -100,7 +100,7 @@ class OcMemCache
         if (self::$debug) {
             echo "$key: ";
             var_dump($value);
-            echo "<br />";
+            echo '<br />';
         }
         return $value;
     }

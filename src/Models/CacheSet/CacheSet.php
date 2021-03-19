@@ -63,7 +63,7 @@ class CacheSet extends CacheSetCommon
     private function loadDataFromDb($fields = null)
     {
         if (is_null($fields)) {
-            $fields = "*"; // default select all fields
+            $fields = '*'; // default select all fields
         }
 
         $s = $this->db->multiVariableQuery(
@@ -157,10 +157,10 @@ class CacheSet extends CacheSetCommon
 
 
         $query = QueryBuilder::instance()
-            ->select("*")
-            ->from("PowerTrail")
+            ->select('*')
+            ->from('PowerTrail')
             ->where()
-                ->in("status", $statusIn)
+                ->in('status', $statusIn)
             ->limit($limit, $offset)
             ->build();
 
@@ -175,10 +175,10 @@ class CacheSet extends CacheSetCommon
     {
 
         $query = QueryBuilder::instance()
-            ->select("COUNT(*)")
-            ->from("PowerTrail")
+            ->select('COUNT(*)')
+            ->from('PowerTrail')
             ->where()
-                ->in("status", $statusIn)
+                ->in('status', $statusIn)
             ->build();
 
         return self::db()->simpleQueryValue($query,0);
@@ -195,10 +195,10 @@ class CacheSet extends CacheSetCommon
     public static function getCacheSetsByName($name = null)
     {
         if (is_null($name) || !is_string($name)) {
-            $query = "SELECT * FROM `PowerTrail` WHERE `status` = :1 ORDER BY `name`";
+            $query = 'SELECT * FROM `PowerTrail` WHERE `status` = :1 ORDER BY `name`';
             $stmt = self::db()->multiVariableQuery($query, CacheSet::STATUS_OPEN);
         } else {
-            $query = "SELECT * FROM `PowerTrail` WHERE `status` = :1 AND `name` LIKE :2 ORDER BY `name`";
+            $query = 'SELECT * FROM `PowerTrail` WHERE `status` = :1 AND `name` LIKE :2 ORDER BY `name`';
             $stmt = self::db()->multiVariableQuery($query, CacheSet::STATUS_OPEN, '%' . $name . '%');
         }
         return self::db()->dbFetchAllAsObjects($stmt, function ($row){
@@ -320,7 +320,7 @@ class CacheSet extends CacheSetCommon
     {
         $db = self::db();
         $rs = $db->simpleQuery(
-            "SELECT * FROM (
+            'SELECT * FROM (
                 SELECT pt.id, pt.type, pt.name, pt.cacheCount,
                     pt.centerLongitude, pt.centerLatitude,
                     COUNT(*) AS activeCaches,
@@ -329,10 +329,10 @@ class CacheSet extends CacheSetCommon
                 FROM PowerTrail AS pt
                 JOIN powerTrail_caches AS ptc ON ptc.PowerTrailId = pt.id
                 JOIN caches AS c ON ptc.cacheId = c.cache_id
-                WHERE pt.status = ".CacheSet::STATUS_OPEN."
-                    AND c.status = ".GeoCache::STATUS_READY."
+                WHERE pt.status = '.CacheSet::STATUS_OPEN.'
+                    AND c.status = '.GeoCache::STATUS_READY.'
                 GROUP BY pt.id
-            ) AS allPts WHERE currentRatio < ratioRequired");
+            ) AS allPts WHERE currentRatio < ratioRequired');
 
         return $db->dbResultFetchAll($rs, OcDb::FETCH_ASSOC);
     }
@@ -427,12 +427,12 @@ class CacheSet extends CacheSetCommon
     {
         // check cache stataus - only "active" caches can be added to geopath
         if(!self::isCacheStatusAllowedForGeoPathAdd($cache)){
-            throw new \RuntimeException("Cache in wrong status!");
+            throw new \RuntimeException('Cache in wrong status!');
         }
 
         // check cache type
         if(!self::isCacheTypeAllowedForGeoPath($cache)){
-            throw new \RuntimeException("Cache of wrong type!");
+            throw new \RuntimeException('Cache of wrong type!');
         }
 
         $this->db->multiVariableQuery(
@@ -471,7 +471,7 @@ class CacheSet extends CacheSetCommon
     public function updateCachesCount()
     {
         $this->cacheCount = $this->db->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM powerTrail_caches WHERE PowerTrailId = :1", 0, $this->id);
+            'SELECT COUNT(*) FROM powerTrail_caches WHERE PowerTrailId = :1', 0, $this->id);
 
         // update caches count
         $this->db->multiVariableQuery(
@@ -524,14 +524,14 @@ class CacheSet extends CacheSetCommon
     {
         if($toThisGeoPath) {
             $matchingRecords = self::db()->multiVariableQueryValue(
-                "SELECT COUNT(*) FROM PowerTrail_cacheCandidate
-                WHERE cacheId = :1 LIMIT 1",
+                'SELECT COUNT(*) FROM PowerTrail_cacheCandidate
+                WHERE cacheId = :1 LIMIT 1',
                 0, $cache->getCacheId());
         } else {
             $matchingRecords = self::db()->multiVariableQueryValue(
-                "SELECT COUNT(*) FROM PowerTrail_cacheCandidate
+                'SELECT COUNT(*) FROM PowerTrail_cacheCandidate
                 WHERE cacheId = :1 AND PowerTrailId = :2
-                LIMIT 1", 0, $cache->getCacheId(), $this->id);
+                LIMIT 1', 0, $cache->getCacheId(), $this->id);
         }
         return $matchingRecords != 0;
     }
@@ -539,9 +539,9 @@ class CacheSet extends CacheSetCommon
     public function isCandiddateCodeExists(Geocache $cache, $code)
     {
         $matchingRecords = self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM PowerTrail_cacheCandidate
+            'SELECT COUNT(*) FROM PowerTrail_cacheCandidate
             WHERE cacheId = :1 AND link = :2 AND PowerTrailId = :3
-            LIMIT 1", 0, $cache->getCacheId(), $code, $this->id);
+            LIMIT 1', 0, $cache->getCacheId(), $code, $this->id);
 
         return $matchingRecords != 0;
     }
@@ -550,14 +550,14 @@ class CacheSet extends CacheSetCommon
         if($code){
             // delete only one candidate record assign to this cache (by code)
             self::db()->multiVariableQuery(
-                "DELETE FROM PowerTrail_cacheCandidate
-                WHERE cacheId = :1 AND link = :2 LIMIT 1",
+                'DELETE FROM PowerTrail_cacheCandidate
+                WHERE cacheId = :1 AND link = :2 LIMIT 1',
                 $cache->getCacheId(), $code);
         } else {
             // delete all candidate records assign to this cache
             self::db()->multiVariableQuery(
-                "DELETE FROM PowerTrail_cacheCandidate
-                WHERE cacheId = :1", $cache->getCacheId());
+                'DELETE FROM PowerTrail_cacheCandidate
+                WHERE cacheId = :1', $cache->getCacheId());
         }
     }
 
@@ -599,8 +599,8 @@ class CacheSet extends CacheSetCommon
             $this->id, $this->id);
 
         $coords = $this->db->dbResultFetchOneRowOnly($this->db->multiVariableQuery(
-            "SELECT centerLatitude AS lat, centerLongitude AS lon
-             FROM PowerTrail WHERE id = :1 LIMIT 1", $this->id));
+            'SELECT centerLatitude AS lat, centerLongitude AS lon
+             FROM PowerTrail WHERE id = :1 LIMIT 1', $this->id));
 
         $this->centerCoordinates = Coordinates::FromCoordsFactory($coords['lat'], $coords['lon']);
     }

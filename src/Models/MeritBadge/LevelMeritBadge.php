@@ -55,7 +55,7 @@ class LevelMeritBadge
 
     public function getLevelName()
     {
-        if ($this->getName() != "")
+        if ($this->getName() != '')
             return $this->getName();
 
         return $this->getLevel();

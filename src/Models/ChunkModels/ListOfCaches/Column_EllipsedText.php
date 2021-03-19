@@ -30,7 +30,7 @@ class Column_EllipsedText extends AbstractColumn {
      */
     protected function getChunkName()
     {
-        return "listOfCaches/ellipsedTextColumn";
+        return 'listOfCaches/ellipsedTextColumn';
     }
 
     public function getCssClass(){

@@ -32,7 +32,7 @@ class Altitude
     {
         global $googlemap_key;
 
-        $url = "https://maps.googleapis.com/maps/api/elevation/json?".
+        $url = 'https://maps.googleapis.com/maps/api/elevation/json?'.
                 "locations={$coords->getLatitude()},{$coords->getLongitude()}".
                 "&key=$googlemap_key";
 
@@ -61,7 +61,7 @@ class Altitude
      */
     private static function getAltitudeFromOpenElevation(Coordinates $coords)
     {
-        $url = "https://api.open-elevation.com/api/v1/lookup?".
+        $url = 'https://api.open-elevation.com/api/v1/lookup?'.
                "locations={$coords->getLatitude()},{$coords->getLongitude()}";
 
         $resp = @file_get_contents($url);
@@ -80,7 +80,7 @@ class Altitude
 
     private static function getAltitudeFromDataScienceToolkit(Coordinates $coords)
     {
-        $url = "http://www.datasciencetoolkit.org/coordinates2statistics/" .
+        $url = 'http://www.datasciencetoolkit.org/coordinates2statistics/' .
                         "{$coords->getLatitude()},{$coords->getLongitude()}?statistics=elevation";
 
         $resp = @file_get_contents($url);
@@ -107,7 +107,7 @@ class Altitude
             $stats = $data[0]->statistics->elevation;
             if($stats->units == 'meters'){
                 if (!is_numeric($stats->value)) {
-                    Debug::errorLog("External service: datasciencetoolkit returns unexpected" .
+                    Debug::errorLog('External service: datasciencetoolkit returns unexpected' .
                                     " non numeric value for coords: $coords->getAsText()?!");
                 }
                 return $stats->value;

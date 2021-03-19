@@ -1,7 +1,7 @@
 <?php
 use src\Models\News\News;
 
-require_once ("./lib/common.inc.php");
+require_once ('./lib/common.inc.php');
 
 const NEWS_ON_PAGE = 5;
 

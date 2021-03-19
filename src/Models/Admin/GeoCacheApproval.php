@@ -14,17 +14,17 @@ class GeoCacheApproval extends BaseObject
     public static function getWaitingForApprovalCount()
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(status) FROM caches WHERE status = :1 ",
+            'SELECT COUNT(status) FROM caches WHERE status = :1 ',
             0, GeoCacheCommons::STATUS_WAITAPPROVERS);
     }
 
     public static function getInReviewCount()
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*)
+            'SELECT COUNT(*)
              FROM caches
                 JOIN approval_status USING(cache_id)
-             WHERE caches.status = :1",
+             WHERE caches.status = :1',
              0, GeoCacheCommons::STATUS_WAITAPPROVERS);
     }
 

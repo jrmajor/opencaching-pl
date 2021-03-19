@@ -31,13 +31,13 @@ $rsCSF = XDb::xSql(
     GROUP BY `cache_logs`.`type`
     ORDER BY `log_types`.`pl` ASC", $cache_id);
 
-$xtitle = "";
+$xtitle = '';
 $ry = XDb::xFetchArray($rsCSF);
 if ($ry !== false) {
     $y[] = $ry['count'];
     $x[] = $ry['type'];
 } else {
-    $x[] = tr("found");
+    $x[] = tr('found');
 }
 
 $rsCSNF = XDb::xSql(
@@ -46,14 +46,14 @@ $rsCSNF = XDb::xSql(
     WHERE type=2 AND cache_logs.deleted=0 AND cache_logs.cache_id= ?
     GROUP BY `cache_logs`.`type`
     ORDER BY `log_types`.`pl` ASC", $cache_id);
-$xtitle = "";
+$xtitle = '';
 $ry = XDb::xFetchArray($rsCSNF);
 
 if ($ry !== false) {
     $y[] = $ry['count'];
     $x[] = $ry['type'];
 } else {
-    $x[] = tr("not_found");
+    $x[] = tr('not_found');
     $y[] = '0';
 }
 
@@ -64,13 +64,13 @@ $rsCSC = XDb::xSql(
     GROUP BY `cache_logs`.`type`
     ORDER BY `log_types`.`pl` ASC", $cache_id);
 
-$xtitle = "";
+$xtitle = '';
 $ry = XDb::xFetchArray($rsCSC);
 if ($ry !== false) {
     $y[] = $ry['count'];
     $x[] = $ry['type'];
 } else {
-    $x[] = tr("log_note");
+    $x[] = tr('log_note');
 }
 
 XDb::xFreeResults($rsCSF);
@@ -79,31 +79,31 @@ XDb::xFreeResults($rsCSC);
 
 
 // A new pie graph
-$graph = new PieGraph(400, 200, "auto");
+$graph = new PieGraph(400, 200, 'auto');
 $graph->SetScale('textint');
-$logtype = tr("by_logtype");
+$logtype = tr('by_logtype');
 
 // Title setup
 $graph->title->Set($logtype);
 $graph->title->SetFont(FF_ARIAL, FS_NORMAL);
 // Setup the pie plot
 $p1 = new PiePlot($y);
-$p1->SetTheme("earth");
-$p1->value->SetFormat("%d");
+$p1->SetTheme('earth');
+$p1->value->SetFormat('%d');
 $p1->SetLabelType(PIE_VALUE_ABS);
 $p1->SetSliceColors(['chartreuse3', 'chocolate2', 'wheat1']);
 
 // Adjust size and position of plot
 $p1->SetSize(0.35);
 $p1->SetCenter(0.25, 0.52);
-$f = tr("found");
-$dnf = tr("not_found");
-$com = tr("log_note");
+$f = tr('found');
+$dnf = tr('not_found');
+$com = tr('log_note');
 
 // Setup slice labels and move them into the plot
 $xx = [$f, $dnf, $com];
 $p1->value->SetFont(FF_COURIER, FS_NORMAL);
-$p1->value->SetColor("black");
+$p1->value->SetColor('black');
 $p1->SetLabelPos(0.65);
 $p1->SetLegends($xx);
 $graph->legend->SetFont(FF_ARIAL, FS_NORMAL);

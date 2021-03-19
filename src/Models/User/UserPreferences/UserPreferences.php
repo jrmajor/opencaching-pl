@@ -99,9 +99,9 @@ class UserPreferences extends BaseObject
         $userId = $user->getUserId();
 
         return false !== self::db()->multiVariableQuery(
-            "INSERT INTO user_preferences (user_id, `key`, value)
+            'INSERT INTO user_preferences (user_id, `key`, value)
              VALUES (:1, :2, :3)
-                ON DUPLICATE KEY UPDATE value = VALUES(value)",
+                ON DUPLICATE KEY UPDATE value = VALUES(value)',
             $userId, $key, $prefsObj->getJsonValues());
 
     }

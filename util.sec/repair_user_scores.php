@@ -11,7 +11,7 @@ class RepairUserScores
     {
         $db = OcDb::instance();
 
-        $sql = "SELECT user_id FROM user where user_id >= 0 ";
+        $sql = 'SELECT user_id FROM user where user_id >= 0 ';
 
         $params = [];
         if (isset($_GET['user_id'])) {
@@ -31,17 +31,17 @@ class RepairUserScores
 
             // repair founds
             $founds_count = $db->multiVariableQueryValue(
-                    "SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=1", 0, $user_id);
+                    'SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=1', 0, $user_id);
             $notfounds_count = $db->multiVariableQueryValue(
-                    "SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=2", 0, $user_id);
+                    'SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=2', 0, $user_id);
             $log_notes_count = $db->multiVariableQueryValue(
-                    "SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=3", 0, $user_id);
+                    'SELECT count(id) FROM cache_logs WHERE deleted=0 AND user_id = :1 AND type=3', 0, $user_id);
             $cache_ignores = $db->multiVariableQueryValue(
-                    "SELECT count(id) FROM cache_ignore WHERE user_id = :1", 0, $user_id);
+                    'SELECT count(id) FROM cache_ignore WHERE user_id = :1', 0, $user_id);
             $hidden_count = $db->multiVariableQueryValue(
-                    "select count(cache_id) from caches where status in (1,2,3) and user_id = :1", 0, $user_id);
+                    'select count(cache_id) from caches where status in (1,2,3) and user_id = :1', 0, $user_id);
 
-            $sql = "
+            $sql = '
                 UPDATE user
                 SET
                     hidden_count=:new_hidden_count,
@@ -63,7 +63,7 @@ class RepairUserScores
                         OR founds_count!=:new_founds_count
                         OR notfounds_count!=:new_notfounds_count
                     )
-            ";
+            ';
 
             $params = [];
             $params['new_hidden_count']['value'] = intval($hidden_count);

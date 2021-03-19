@@ -37,7 +37,7 @@ class UpdateScript
 
             $existingLangs = $this->db->dbFetchOneColumnArray(
                 $this->db->simpleQuery(
-                    "SHOW COLUMNS FROM `".$table."` WHERE field LIKE '__'"
+                    'SHOW COLUMNS FROM `'.$table."` WHERE field LIKE '__'"
                 ),
                 'field',
                 false
@@ -56,7 +56,7 @@ class UpdateScript
 
             $ids = $this->db->dbFetchOneColumnArray(
                 $this->db->simpleQuery(
-                    "SELECT `".$idColumn."` FROM `".$table."`"
+                    'SELECT `'.$idColumn.'` FROM `'.$table.'`'
                 ),
                 $idColumn
             );
@@ -66,8 +66,8 @@ class UpdateScript
                 if ($translation = I18n::translatePhrase($key, $lang, false, true)) {
 
                     $oldText = $this->db->multiVariableQueryValue(
-                        "SELECT `".$lang."` FROM `".$table."`
-                        WHERE `".$idColumn."` = :1",
+                        'SELECT `'.$lang.'` FROM `'.$table.'`
+                        WHERE `'.$idColumn.'` = :1',
                         '',
                         $id
                     );
@@ -75,11 +75,11 @@ class UpdateScript
                         // TODO: log_types; see issue #1794
 
                         if ($this->simulate) {
-                            echo $table.".".$lang.".".$id.": ".$oldText . " => ".$translation."\n";
+                            echo $table.'.'.$lang.'.'.$id.': '.$oldText . ' => '.$translation."\n";
                         } else {
                             $this->db->multiVariableQuery(
-                                "UPDATE `".$table."` SET `".$lang."` = :1
-                                WHERE `".$idColumn."` = :2",
+                                'UPDATE `'.$table.'` SET `'.$lang.'` = :1
+                                WHERE `'.$idColumn.'` = :2',
                                 $translation,
                                 $id
                             );
@@ -97,15 +97,15 @@ class UpdateScript
             ) {
                 $this->db->addColumnIfNotExists($table, 'list_default_'.$lang, 'int(1) NOT NULL DEFAULT 0');
                 $this->db->simpleQuery(
-                    "UPDATE `".$table."` SET `list_default_".$lang."` = list_default_pl"
+                    'UPDATE `'.$table.'` SET `list_default_'.$lang.'` = list_default_pl'
                 );
             }
 
             if ($this->db->columnExists($table, 'sort_pl')) {
                 $this->db->addColumnIfNotExists($table, 'sort_'.$lang, 'varchar(128) NOT NULL NOT NULL');
                 $this->db->simpleQuery(
-                    "UPDATE `".$table."` SET `sort_".$lang."` = `".$lang."`
-                    WHERE `sort_".$lang."` = ''"
+                    'UPDATE `'.$table.'` SET `sort_'.$lang.'` = `'.$lang.'`
+                    WHERE `sort_'.$lang."` = ''"
                 );
             }
         }

@@ -74,7 +74,7 @@ $opt['db']['admin_password'] = 'AdminPassword';
 
 
 // Your own Google map API key
-$googlemap_key = "";
+$googlemap_key = '';
 
 //Links to blog page on oc site
 //NOT-USED: $blogsite_url = 'http://blog.opencaching.pl';

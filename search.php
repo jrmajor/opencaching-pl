@@ -70,9 +70,9 @@ if (!$loggedUser) {
 
             $bgcolor1 = 'bgcolor1';         // even lines
             $bgcolor2 = 'bgcolor2';         // odd lines
-            $bgcolor_found = "#66FFCC";     // if cache was found by user
-            $bgcolor_owner = "#ffffc5";     // if user is owner
-            $bgcolor_inactive = "#fafafa";  // if cache is inactive
+            $bgcolor_found = '#66FFCC';     // if cache was found by user
+            $bgcolor_owner = '#ffffc5';     // if user is owner
+            $bgcolor_inactive = '#fafafa';  // if cache is inactive
 
             $logdateformat = 'd.m.Y';
             $logdateformatYMD = 'Y.m.d';
@@ -113,7 +113,7 @@ if (!$loggedUser) {
             if ($queryid != 0)
             {
                 // check if query exists
-                $sqlstr="SELECT COUNT(*) `count` FROM `queries` WHERE id= :1";
+                $sqlstr='SELECT COUNT(*) `count` FROM `queries` WHERE id= :1';
                 $s = $dbc->multiVariableQuery($sqlstr, $queryid);
                 $rCount=$dbc->dbResultFetch($s);
 
@@ -149,7 +149,7 @@ if (!$loggedUser) {
         if ($queryid != 0)
         {
             //load options from db
-            $sqlstr = "SELECT `user_id`, `options` FROM `queries` WHERE id= :1 AND (`user_id`=0 OR `user_id`= :2)";
+            $sqlstr = 'SELECT `user_id`, `options` FROM `queries` WHERE id= :1 AND (`user_id`=0 OR `user_id`= :2)';
             $s = $dbc->multiVariableQuery($sqlstr, $queryid, $loggedUser->getUserId());
 
             if ($dbc->rowCount($s) == 0)
@@ -170,7 +170,7 @@ if (!$loggedUser) {
 
                 $options['queryid'] = $queryid;
 
-                $sqlstr = "UPDATE `queries` SET `last_queried`=NOW() WHERE `id`= :1";
+                $sqlstr = 'UPDATE `queries` SET `last_queried`=NOW() WHERE `id`= :1';
                 $s = $dbc->multiVariableQuery($sqlstr, $queryid );
 
                 // overwrite changeable values
@@ -193,7 +193,7 @@ if (!$loggedUser) {
                 $options['finderid'] = isset($options['finderid']) ? $options['finderid'] + 0 : 0;
                 if(isset($options['finder']) && $options['finderid'] > 0)
                 {
-                    $sqlstr = "SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1";
+                    $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
                     $s = $dbc->multiVariableQuery($sqlstr, $options['finderid'] );
 
                     if($dbc->rowCount($s) == 1)
@@ -208,7 +208,7 @@ if (!$loggedUser) {
                 $options['ownerid'] = isset($options['ownerid']) ? $options['ownerid'] + 0 : 0;
                 if(isset($options['owner']) && $options['ownerid'] > 0)
                 {
-                    $sqlstr="SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1";
+                    $sqlstr='SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
                     $s = $dbc->multiVariableQuery($sqlstr, $options['ownerid'] );
 
                     if($dbc->rowCount($s) == 1)
@@ -234,7 +234,7 @@ if (!$loggedUser) {
                 unset($_REQUEST['searchbyfulltext']);
                 unset($_REQUEST['searchbywaypoint']);
                 unset($_REQUEST['searchbywaypointname']);
-                $_REQUEST[$_REQUEST['searchto']] = "hoho";
+                $_REQUEST[$_REQUEST['searchto']] = 'hoho';
             }
 
             //get the taken search options and backup them in the queries table (to view "the next page")
@@ -409,7 +409,7 @@ if (!$loggedUser) {
             else
             {
                 if (isset($_REQUEST['showresult'])){
-                    tpl_errorMsg('search', tr("waypoint_error1"));
+                    tpl_errorMsg('search', tr('waypoint_error1'));
                 } else {
                     $options['searchtype'] = 'byname';
                     $options['cachename'] = '';
@@ -448,7 +448,7 @@ if (!$loggedUser) {
                 if (isset($options['queryid']) && (isset($options['userid'])))
                 {
                     if ($options['userid'] != 0){
-                        $sqlstr = "UPDATE `queries` SET `options`= :1, `last_queried`=NOW() WHERE `id`= :2 AND `user_id`= :3";
+                        $sqlstr = 'UPDATE `queries` SET `options`= :1, `last_queried`=NOW() WHERE `id`= :2 AND `user_id`= :3';
                         $dbc->multiVariableQuery($sqlstr, serialize($options), $options['queryid'], $options['userid'] );
                     }
                 }
@@ -471,7 +471,7 @@ if (!$loggedUser) {
 
         //remove old queries (after 1 hour without use)
         $removedate = date('Y-m-d H:i:s', time() - 3600);
-        $sqlstr = "DELETE FROM `queries` WHERE `last_queried` < :1 AND `user_id`=0";
+        $sqlstr = 'DELETE FROM `queries` WHERE `last_queried` < :1 AND `user_id`=0';
         $dbc->multiVariableQuery($sqlstr, $removedate );
 
         //prepare output
@@ -542,7 +542,7 @@ if (!$loggedUser) {
                         {
                             $plz = $options['plz'];
 
-                            $sqlstr = "SELECT `loc_id` FROM `geodb_textdata` WHERE `text_type`=500300000 AND `text_val`= :1 LIMIT 1";
+                            $sqlstr = 'SELECT `loc_id` FROM `geodb_textdata` WHERE `text_type`=500300000 AND `text_val`= :1 LIMIT 1';
                             $s = $dbc->multiVariableQuery($sqlstr, XDb::xEscape($plz) );
                             if ($dbc->rowCount($s) == 0)
                             {
@@ -566,7 +566,7 @@ if (!$loggedUser) {
                         // ok, we have a location ... determine the coordinates
                         $locid = $locid + 0;
 
-                        $sqlstr = "SELECT `lon`, `lat` FROM `geodb_coordinates` WHERE `loc_id`= :1 AND coord_type=200100000 LIMIT 1";
+                        $sqlstr = 'SELECT `lon`, `lat` FROM `geodb_coordinates` WHERE `loc_id`= :1 AND coord_type=200100000 LIMIT 1';
                         $s = $dbc->multiVariableQuery($sqlstr, $locid );
 
                         if ( $dbc->rowCount($s) ){
@@ -647,7 +647,7 @@ if (!$loggedUser) {
                                     $searchstring = search_text2simple($text);
 
                                     if ($sqlhashes != '') $sqlhashes .= ' OR ';
-                                    $sqlhashes .= '`gns_search`.`simplehash`=' . sprintf("%u", crc32($searchstring));
+                                    $sqlhashes .= '`gns_search`.`simplehash`=' . sprintf('%u', crc32($searchstring));
 
                                     $wordscount++;
                                 }
@@ -702,7 +702,7 @@ if (!$loggedUser) {
 
                                 // wenn keine 100%ige Ăźbereinstimmung nochmals anzeigen
                                 $locid = $r['uni_id'] + 0;
-                                $sqlstr = "SELECT `full_name` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1";
+                                $sqlstr = 'SELECT `full_name` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1';
                                 $s = $dbc->multiVariableQuery($sqlstr, $locid );
                                 $rCmp = $dbc->dbResultFetchOneRowOnly($s);
 
@@ -722,7 +722,7 @@ if (!$loggedUser) {
 
                         // ok, we have a location ... determin coordinates
                         $locid = $locid + 0;
-                        $sqlstr="SELECT `lon`, `lat` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1";
+                        $sqlstr='SELECT `lon`, `lat` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1';
                         $s = $dbc->multiVariableQuery($sqlstr, $locid );
 
                         if ( $r =  $dbc->dbResultFetchOneRowOnly($s) ){
@@ -791,7 +791,7 @@ if (!$loggedUser) {
                     else
                     {
                         //get the userid
-                        $sqlstr = "SELECT `user_id` FROM `user` WHERE `username`= :1 LIMIT 1";
+                        $sqlstr = 'SELECT `user_id` FROM `user` WHERE `username`= :1 LIMIT 1';
                         $s = $dbc->multiVariableQuery($sqlstr, $options['finder'] );
                         $finder_record = $dbc->dbResultFetchOneRowOnly($s);
                         $finder_id = $finder_record['user_id'];
@@ -802,7 +802,7 @@ if (!$loggedUser) {
                     $sql_where[] = '`caches`.`cache_id`=`cache_logs`.`cache_id`';
                     $sql_where[] = '`cache_logs`.`user_id`=\'' . XDb::xEscape($finder_id) . '\'';
                     $sql_where[] = '`cache_logs`.`deleted`=0';
-                    if( $options['logtype'] == "" )
+                    if( $options['logtype'] == '' )
                         $sql_where[] = '(`cache_logs`.`type`=1 OR `cache_logs`.`type`=7)'; // found und attended
                     else
                         $sql_where[] = '(`cache_logs`.`type`='.intval($options['logtype']).')'; // found und attended
@@ -912,7 +912,7 @@ if (!$loggedUser) {
                     if (empty(PrintList::GetContent())) {
                         $cache_bylist = -1;
                     } else {
-                        $cache_bylist = implode(",", PrintList::GetContent());
+                        $cache_bylist = implode(',', PrintList::GetContent());
                     }
 
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
@@ -924,11 +924,11 @@ if (!$loggedUser) {
                     //print '<pre>';
                     //print_r($_SESSION['geoPathCacheList']);
                     if (isset($_SESSION['geoPathCacheList']) && count($_SESSION['geoPathCacheList']) > 0){
-                        $cache_bylist = implode(",", $_SESSION['geoPathCacheList']);
+                        $cache_bylist = implode(',', $_SESSION['geoPathCacheList']);
                         $options['gpxPtFileName'] = $_SESSION['ptName'];
                     } else {
                         $options['ptId'] = (int) $_REQUEST['ptId'];
-                        $cache_bylist = implode(",",powerTrailBase::getPtCachesIds($options['ptId']));
+                        $cache_bylist = implode(',',powerTrailBase::getPtCachesIds($options['ptId']));
                         $ptDetails = powerTrailBase::getPtDbRow($options['ptId']);
                         $options['gpxPtFileName'] = powerTrailBase::clearPtNames($ptDetails['name']);
                     }
@@ -1017,7 +1017,7 @@ if (!$loggedUser) {
                 }
                 else
                 {
-                    tpl_errorMsg('search', tr("waypoint_error2"));
+                    tpl_errorMsg('search', tr('waypoint_error2'));
                 }
 
                 // additional options
@@ -1081,7 +1081,7 @@ if (!$loggedUser) {
                     }
 
                     if (count($c_type) >= 1) {
-                        $sql_where[] = '`caches`.`type` IN (' . XDb::xEscape(implode(",", $c_type)) . ')';
+                        $sql_where[] = '`caches`.`type` IN (' . XDb::xEscape(implode(',', $c_type)) . ')';
                     }
                 }
                 if(isset($options['cache_attribs']) && count($options['cache_attribs']) > 0)
@@ -1413,8 +1413,8 @@ function outputSearchForm($options, User $loggedUser)
 
             tpl_set_var('lat_h', $lat_h);
             tpl_set_var('lon_h', $lon_h);
-            tpl_set_var('lat_min', sprintf("%02.3f", $lat_min));
-            tpl_set_var('lon_min', sprintf("%02.3f", $lon_min));
+            tpl_set_var('lat_min', sprintf('%02.3f', $lat_min));
+            tpl_set_var('lon_min', sprintf('%02.3f', $lon_min));
 
     }
     else
@@ -1535,30 +1535,30 @@ function outputSearchForm($options, User $loggedUser)
 //          $cachetype_options .= '<input type="checkbox" name="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '" value="1" id="l_cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '" class="checkbox" onclick="javascript:sync_options(this)" /><label for="l_cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '">' . htmlspecialchars($record[$default_lang], ENT_COMPAT, 'UTF-8') . '</label>';
 //      }
 
-        $cachetype_icon = str_replace("mystery", "quiz", $cachetype_icon); // mystery is an outdated name, we use 'quiz' now :-)
+        $cachetype_icon = str_replace('mystery', 'quiz', $cachetype_icon); // mystery is an outdated name, we use 'quiz' now :-)
         $cachetype_icon_bw = $cachetype_icon;
-        $cachetype_icon    = str_replace(".png", "-i.png",    $cachetype_icon);
-        $cachetype_icon_bw = str_replace(".png", "-i-bw.png", $cachetype_icon_bw);
-        $cachetype_icon    = str_replace(".gif", "-i.png",    $cachetype_icon);
-        $cachetype_icon_bw = str_replace(".gif", "-i-bw.png", $cachetype_icon_bw);
+        $cachetype_icon    = str_replace('.png', '-i.png',    $cachetype_icon);
+        $cachetype_icon_bw = str_replace('.png', '-i-bw.png', $cachetype_icon_bw);
+        $cachetype_icon    = str_replace('.gif', '-i.png',    $cachetype_icon);
+        $cachetype_icon_bw = str_replace('.gif', '-i-bw.png', $cachetype_icon_bw);
 
 
-        $hidden_css = "position: absolute; visibility: hidden;"; // css required to hide an image
+        $hidden_css = 'position: absolute; visibility: hidden;'; // css required to hide an image
 
         // this marks saved user preference for searching, if 1, the cache is by default searched
         // and thus making the colour image visibile
         if (isset($options['cachetype'][$c_rec_id]) && $options['cachetype'][$c_rec_id] == '1') {
-            $icon_hidden = "";
+            $icon_hidden = '';
             $icon_bw_hidden = $hidden_css;
         } else {
             $icon_hidden = $hidden_css;
-            $icon_bw_hidden = "";
+            $icon_bw_hidden = '';
         }
 
 
-        $hidden_css = "position: absolute; visibility: hidden;";
-        $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '"    src="' . htmlspecialchars("/images/" . $cachetype_icon   , ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;'.$icon_hidden.'" />';
-        $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '_bw" src="' . htmlspecialchars("/images/" . $cachetype_icon_bw, ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;'.$icon_bw_hidden.'" />';
+        $hidden_css = 'position: absolute; visibility: hidden;';
+        $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '"    src="' . htmlspecialchars('/images/' . $cachetype_icon   , ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;'.$icon_hidden.'" />';
+        $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '_bw" src="' . htmlspecialchars('/images/' . $cachetype_icon_bw, ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;'.$icon_bw_hidden.'" />';
         if ($i == 2) { $cachetype_options .= '&nbsp;&nbsp;&nbsp;'; }
         $cachetype_options .= "\n";
     }
@@ -1638,7 +1638,7 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
 
     // select attributes depend on specified language.
     $database = OcDb::instance();
-    $query = "SELECT `id`, `text_long`, `icon_large`, `icon_no`, `icon_undef`, `category` FROM `cache_attrib` WHERE `language` LIKE :1 ORDER BY `id`";
+    $query = 'SELECT `id`, `text_long`, `icon_large`, `icon_no`, `icon_undef`, `category` FROM `cache_attrib` WHERE `language` LIKE :1 ORDER BY `id`';
     $s = $database->multiVariableQuery($query, strtoupper(I18n::getCurrentLang()));
     // if specified language is in database
     if($database->rowCount($s) <= 0) {
@@ -1663,10 +1663,10 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
         else
             $attributes_img .= $line;
     }
-    $line = attr_jsline($cache_attrib_jsarray_line, $options, "999", tr("with_password"), $config['search-attr-icons']['password'][0], $config['search-attr-icons']['password'][1], $config['search-attr-icons']['password'][2], 0);
+    $line = attr_jsline($cache_attrib_jsarray_line, $options, '999', tr('with_password'), $config['search-attr-icons']['password'][0], $config['search-attr-icons']['password'][1], $config['search-attr-icons']['password'][2], 0);
     $attributes_jsarray .= ",\n".$line;
 
-    $line = attr_image($cache_attrib_img_line, $options, "999", tr("with_password"), $config['search-attr-icons']['password'][0], $config['search-attr-icons']['password'][1], $config['search-attr-icons']['password'][2], 0);
+    $line = attr_image($cache_attrib_img_line, $options, '999', tr('with_password'), $config['search-attr-icons']['password'][0], $config['search-attr-icons']['password'][1], $config['search-attr-icons']['password'][2], 0);
     $attributes_img .= $line;
 
     tpl_set_var('cache_attrib_list', $attributes_img);

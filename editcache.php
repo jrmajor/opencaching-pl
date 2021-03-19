@@ -53,8 +53,8 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
             $ret.= '<option value="' . $i . '" label="' . $i . '"' . $sel . '>' . $i . '</option>
             ';
         }
-        $ret.="</select></label>&nbsp;
-        ";
+        $ret.='</select></label>&nbsp;
+        ';
         $ret.='<input type="hidden"  id="' . $drop_type . '_seq_id' . $item_row . '" name="' . $drop_type . '_seq_id' . $item_row . '" value="' . $thisid . '">
         '; //instert picture/mp3 id into hidden fields - item_row is current order based on current seq values
         $ret.='<input type="hidden" id="' . $drop_type . '_seq_changed' . $item_row . '" name="' . $drop_type . '_seq_changed' . $item_row . '" value="no">
@@ -126,7 +126,7 @@ if (!$loggedUser) {
                 $activation_form = '
         <tr><td colspan="2">
         <fieldset style="border: 1px solid black; width: 80%; height: 32%; background-color: #FFFFFF;">
-            <legend>&nbsp; <strong>' . tr("submit_new_cache") . '</strong> &nbsp;</legend>
+            <legend>&nbsp; <strong>' . tr('submit_new_cache') . '</strong> &nbsp;</legend>
                 <input type="radio" onChange="yes_change();" class="radio" name="publish" id="publish_now" value="now" {publish_now_checked}>&nbsp;<label for="publish_now">' . tr('publish_now') . '</label><br />
                 <input type="radio" onChange="yes_change();" class="radio" name="publish" id="publish_later" value="later" {publish_later_checked}>&nbsp;<label for="publish_later">' . tr('publish_date') . ':</label>
                 <input class="input40" type="text" name="activate_year" onChange="yes_change();" maxlength="4" value="{activate_year}"/> -
@@ -164,7 +164,7 @@ if (!$loggedUser) {
                             $this_seq = $_POST['pic_seq_select' . $i]; //get new seqence
                             $this_pic_id = $_POST['pic_seq_id' . $i]; //get picutre ID the new seq is applicable to
                             $this_pic_changed = $_POST['pic_seq_changed' . $i]; //get changed status ("yes" or "no")
-                            if (isset($this_seq) && isset($this_pic_id) && $this_pic_changed == "yes") {
+                            if (isset($this_seq) && isset($this_pic_id) && $this_pic_changed == 'yes') {
                                 $thatquery = 'UPDATE `pictures` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
@@ -185,7 +185,7 @@ if (!$loggedUser) {
                             $this_seq = $_POST['mp3_seq_select' . $i]; //get new seqence
                             $this_mp3_id = $_POST['mp3_seq_id' . $i]; //get mp3 ID the new seq is applicable to
                             $this_mp3_changed = $_POST['mp3_seq_changed' . $i]; //get changed status ("yes" or "no")
-                            if (isset($this_seq) && isset($this_mp3_id) && $this_mp3_changed == "yes") {
+                            if (isset($this_seq) && isset($this_mp3_id) && $this_mp3_changed == 'yes') {
                                 $thatquery = 'UPDATE `mp3` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
                                 $params['v1']['data_type'] = 'integer';
@@ -287,7 +287,7 @@ if (!$loggedUser) {
                         tpl_set_var('logpw_end', '-->');
                     }
                 } else {
-                    $log_pw = "";
+                    $log_pw = '';
                     tpl_set_var('logpw_start', '<!--');
                     tpl_set_var('logpw_end', '-->');
                 }
@@ -295,7 +295,7 @@ if (!$loggedUser) {
                 // name
                 $name_not_ok = false;
                 if (isset($_POST['name'])) {
-                    if ($_POST['name'] == "")
+                    if ($_POST['name'] == '')
                         $name_not_ok = true;
                 }
 
@@ -329,8 +329,8 @@ if (!$loggedUser) {
                     $coords_lat_h = floor($coords_lat);
                     $coords_lon_h = floor($coords_lon);
 
-                    $coords_lat_min = sprintf("%02.3f", round(($coords_lat - $coords_lat_h) * 60, 3));
-                    $coords_lon_min = sprintf("%02.3f", round(($coords_lon - $coords_lon_h) * 60, 3));
+                    $coords_lat_min = sprintf('%02.3f', round(($coords_lat - $coords_lat_h) * 60, 3));
+                    $coords_lon_min = sprintf('%02.3f', round(($coords_lon - $coords_lon_h) * 60, 3));
                 }
 
                 //here we validate the data
@@ -475,7 +475,7 @@ if (!$loggedUser) {
                     $cache_attribs = mb_split(';', $_POST['cache_attribs']);
                 } else {
                     // get attribs for this cache from db
-                    $thatquery = "SELECT `attrib_id` FROM `caches_attributes` WHERE `cache_id`=:v1";
+                    $thatquery = 'SELECT `attrib_id` FROM `caches_attributes` WHERE `cache_id`=:v1';
                     $params['v1']['value'] = (int) $cache_id;
                     $params['v1']['data_type'] = 'integer';
 
@@ -564,31 +564,31 @@ if (!$loggedUser) {
                         if ($cache_region == -1) {
                             $cache_region = '0';
                         }
-                        if ($cache_region != "0") {
+                        if ($cache_region != '0') {
                             $code3 = $cache_region;
                             $adm3 = XDb::xMultiVariableQueryValue(
-                                "SELECT `name` FROM `nuts_codes`
-                                 WHERE `code`= :1", 0, $cache_region);
+                                'SELECT `name` FROM `nuts_codes`
+                                 WHERE `code`= :1', 0, $cache_region);
                         } else {
                             $code3 = null;
                             $adm3 = null;
                         }
 
-                        XDb::xSql("INSERT INTO cache_location (cache_id,adm1,adm3,code1,code3)
+                        XDb::xSql('INSERT INTO cache_location (cache_id,adm1,adm3,code1,code3)
                                    VALUES (?,?,?,?,?)
-                                   ON DUPLICATE KEY UPDATE adm1=?,adm3=?,code1=?,code3=?",
+                                   ON DUPLICATE KEY UPDATE adm1=?,adm3=?,code1=?,code3=?',
                                    $cache_id, $adm1, $adm3, $code1, $code3,
                                               $adm1, $adm3, $code1, $code3);
 
                         // delete old cache-attributes
-                        XDb::xSql("DELETE FROM `caches_attributes` WHERE `cache_id`=?", $cache_id);
+                        XDb::xSql('DELETE FROM `caches_attributes` WHERE `cache_id`=?', $cache_id);
 
                         // insert new cache-attributes
                         for ($i = 0; $i < count($cache_attribs); $i++) {
                             if (($cache_attribs[$i]) > 0) {
                                 XDb::xSql(
-                                    "INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
-                                    VALUES(?, ?)", $cache_id, $cache_attribs[$i]);
+                                    'INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
+                                    VALUES(?, ?)', $cache_id, $cache_attribs[$i]);
                             }
                         }
 
@@ -685,8 +685,8 @@ if (!$loggedUser) {
                 $cache_attrib_array = '';
                 $cache_attribs_string = '';
 
-                $rs = XDb::xSql("SELECT `id`, `text_long`, `icon_undef`, `icon_large` FROM `cache_attrib`
-                                 WHERE `language`= ? ORDER BY `category`, `id`", I18n::getCurrentLang());
+                $rs = XDb::xSql('SELECT `id`, `text_long`, `icon_undef`, `icon_large` FROM `cache_attrib`
+                                 WHERE `language`= ? ORDER BY `category`, `id`', I18n::getCurrentLang());
                 while ($record = XDb::xFetchArray($rs)) {
                     $line = $cache_attrib_pic;
                     $line = mb_ereg_replace('{attrib_id}', $record['id'], $line);
@@ -903,7 +903,7 @@ if (!$loggedUser) {
                 ) {
                     if ($cache_record['mp3count'] > 0) {
                         $mp3files = '';
-                        $thatquery = "SELECT `id`, `url`, `title`, `uuid`, `seq` FROM `mp3` WHERE `object_id`=:v1 AND `object_type`=2 ORDER BY seq, date_created";
+                        $thatquery = 'SELECT `id`, `url`, `title`, `uuid`, `seq` FROM `mp3` WHERE `object_id`=:v1 AND `object_type`=2 ORDER BY seq, date_created';
                         $params['v1']['value'] = (int) $cache_id;
                         $params['v1']['data_type'] = 'integer';
 
@@ -911,7 +911,7 @@ if (!$loggedUser) {
                         $mp3_count = $dbc->rowCount($s);
                         $mp3_all = $dbc->dbResultFetchAll($s);
 
-                        $thatquery = "SELECT `seq` FROM `mp3` WHERE `object_id`=:v1 AND `object_type`=2 ORDER BY `seq` DESC"; //get highest seq number for this cache
+                        $thatquery = 'SELECT `seq` FROM `mp3` WHERE `object_id`=:v1 AND `object_type`=2 ORDER BY `seq` DESC'; //get highest seq number for this cache
                         $s = $dbc->paramQuery($thatquery, $params); //params are same as a few lines above
                         $max_seq_record = $dbc->dbResultFetch($s);
                         unset($params);  //clear to avoid overlaping on next paramQuery (if any))
@@ -975,8 +975,8 @@ if (!$loggedUser) {
                         while($wp_record = XDb::xFetchArray($wp_rs)){
                             $tmpline1 = $wpline;
 
-                            $coords_lat = mb_ereg_replace(" ", "&nbsp;", htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($wp_record['latitude']), ENT_COMPAT, 'UTF-8'));
-                            $coords_lon = mb_ereg_replace(" ", "&nbsp;", htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($wp_record['longitude']), ENT_COMPAT, 'UTF-8'));
+                            $coords_lat = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($wp_record['latitude']), ENT_COMPAT, 'UTF-8'));
+                            $coords_lon = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($wp_record['longitude']), ENT_COMPAT, 'UTF-8'));
 
                             $tmpline1 = mb_ereg_replace('{wp_icon}', htmlspecialchars($wp_record['wp_icon'], ENT_COMPAT, 'UTF-8'), $tmpline1);
                             $tmpline1 = mb_ereg_replace('{type}', htmlspecialchars($wp_record['wp_type'], ENT_COMPAT, 'UTF-8'), $tmpline1);
@@ -991,7 +991,7 @@ if (!$loggedUser) {
                                 $tmpline1 = mb_ereg_replace('{stagehide_start}', '', $tmpline1);
 
                                 if ($wp_record['stage'] == 0) {
-                                    $tmpline1 = mb_ereg_replace('{number}', "", $tmpline1);
+                                    $tmpline1 = mb_ereg_replace('{number}', '', $tmpline1);
                                 } else {
                                     $tmpline1 = mb_ereg_replace('{number}', $wp_record['stage'], $tmpline1);
                                 }
@@ -1001,13 +1001,13 @@ if (!$loggedUser) {
                             }
 
                             if ($wp_record['status'] == GeoCache::STATUS_READY) {
-                                $status_icon = "images/free_icons/accept.png";
+                                $status_icon = 'images/free_icons/accept.png';
                             }
                             if ($wp_record['status'] == GeoCache::STATUS_UNAVAILABLE) {
-                                $status_icon = "images/free_icons/error.png";
+                                $status_icon = 'images/free_icons/error.png';
                             }
                             if ($wp_record['status'] == GeoCache::STATUS_ARCHIVED) {
-                                $status_icon = "images/free_icons/stop.png";
+                                $status_icon = 'images/free_icons/stop.png';
                             }
                             $tmpline1 = mb_ereg_replace('{status}', $status_icon, $tmpline1);
                             $waypoints .= $tmpline1;
@@ -1051,7 +1051,7 @@ if (!$loggedUser) {
                 if ($errors_occured) {
                     tpl_set_var('general_message', $error_general);
                 } else {
-                    tpl_set_var('general_message', "");
+                    tpl_set_var('general_message', '');
                 }
                 tpl_set_var('cacheid_urlencode', htmlspecialchars(urlencode($cache_id), ENT_COMPAT, 'UTF-8'));
                 tpl_set_var('show_all_countries', $show_all_countries);

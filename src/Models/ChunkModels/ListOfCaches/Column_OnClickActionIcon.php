@@ -15,7 +15,7 @@ class Column_OnClickActionIcon extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/onClickActionIconColumn";
+        return 'listOfCaches/onClickActionIconColumn';
     }
 
     public function getCssClass(){

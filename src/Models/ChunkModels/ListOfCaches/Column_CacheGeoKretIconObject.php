@@ -17,7 +17,7 @@ class Column_CacheGeoKretIconObject extends AbstractColumn {
      */
     protected function getChunkName()
     {
-        return "listOfCaches/cacheGeoKretIconObjectColumn";
+        return 'listOfCaches/cacheGeoKretIconObjectColumn';
     }
 
     /**

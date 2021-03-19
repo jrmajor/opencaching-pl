@@ -81,13 +81,13 @@ class User extends UserCommons
     private $notifyLogs;
     private $activationCode;
 
-    const COMMON_COLUMNS = "user_id, username, founds_count, notfounds_count,
+    const COMMON_COLUMNS = 'user_id, username, founds_count, notfounds_count,
                        log_notes_count, hidden_count, latitude, longitude,
                        email, role, guru, verify_all, rules_confirmed,
                        notify_radius, watchmail_mode, watchmail_day,
                        watchmail_hour, notify_caches, notify_logs,
                        is_active_flag, stat_ban, description, activation_code,
-                       date_created, last_login, uuid";
+                       date_created, last_login, uuid';
 
     const AUTH_COLUMNS = self::COMMON_COLUMNS . ', permanent_login_flag';
 
@@ -200,12 +200,12 @@ class User extends UserCommons
      */
     private function loadExtendedSettings()
     {
-        $value = $this->db->multiVariableQueryValue("
+        $value = $this->db->multiVariableQueryValue('
             SELECT `newcaches_no_limit`
             FROM `user_settings`
             WHERE `user_id` = :1
             LIMIT 1
-            ", 0, $this->userId);
+            ', 0, $this->userId);
         $this->newCachesNoLimit = boolval($value);
     }
 
@@ -403,13 +403,13 @@ class User extends UserCommons
      */
     public function recalculateAndUpdateStats()
     {
-        $query = "
+        $query = '
             UPDATE `user`
             SET `founds_count`   = (SELECT count(*) FROM `cache_logs` WHERE `user_id` =:1 AND `type` =1 AND `deleted` =0 ),
                 `notfounds_count`= (SELECT count(*) FROM `cache_logs` WHERE `user_id` =:1 AND `type` =2 AND `deleted` =0 ),
                 `log_notes_count`= (SELECT count(*) FROM `cache_logs` WHERE `user_id` =:1 AND `type` =3 AND `deleted` =0 )
             WHERE `user_id` =:1
-        ";
+        ';
 
         $this->db->multiVariableQuery($query, $this->userId);
 
@@ -560,7 +560,7 @@ class User extends UserCommons
             $this->geocaches = new ArrayObject;
 
             $stmt = $this->db->multiVariableQuery(
-                "SELECT * FROM `caches` where `user_id` = :1 ", $this->userId);
+                'SELECT * FROM `caches` where `user_id` = :1 ', $this->userId);
 
             foreach ($this->db->dbResultFetchAll($stmt) as $geocacheRow) {
                 $geocache = new GeoCache();
@@ -656,8 +656,8 @@ class User extends UserCommons
 
         //get published geocaches count
         $activeCachesNum = $this->db->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM `caches`
-             WHERE `user_id` = :1 AND status = 1",
+            'SELECT COUNT(*) FROM `caches`
+             WHERE `user_id` = :1 AND status = 1',
              0, $this->getUserId());
 
         if ($activeCachesNum < OcConfig::getNeedApproveLimit()) {
@@ -685,7 +685,7 @@ class User extends UserCommons
     public function getFoundPhysicalGeocachesCount()
     {
         if (is_null($this->foundPhysicalGeocachesCount)) {
-            $this->foundPhysicalGeocachesCount = $this->db->multiVariableQueryValue("
+            $this->foundPhysicalGeocachesCount = $this->db->multiVariableQueryValue('
                 SELECT COUNT(`cache_logs`.`cache_id`)
                 FROM `cache_logs`, `caches`
                 WHERE `cache_logs`.`cache_id` = `caches`.`cache_id`
@@ -693,7 +693,7 @@ class User extends UserCommons
                 AND `cache_logs`.`type` = 1
                 AND `cache_logs`.`deleted` = 0
                 AND `cache_logs`.`user_id` = :1
-                ", 0, $this->getUserId());
+                ', 0, $this->getUserId());
         }
         return $this->foundPhysicalGeocachesCount;
     }
@@ -854,7 +854,7 @@ class User extends UserCommons
     public static function updateLastLogin($userId)
     {
         self::db()->multiVariableQuery(
-            "UPDATE `user` SET `last_login` = NOW() WHERE `user_id` = :1", $userId);
+            'UPDATE `user` SET `last_login` = NOW() WHERE `user_id` = :1', $userId);
     }
 
     /**
@@ -989,7 +989,7 @@ class User extends UserCommons
     {
         $row = $this->db->dbResultFetchOneRowOnly(
             $this->db->multiVariableQuery(
-                "SELECT statpic_text, statpic_logo FROM user WHERE user_id=:1 LIMIT 1",
+                'SELECT statpic_text, statpic_logo FROM user WHERE user_id=:1 LIMIT 1',
                 $this->getUserId()));
 
         return [$row['statpic_text'], $row['statpic_logo']];
@@ -1005,7 +1005,7 @@ class User extends UserCommons
     public function changeStatPic($statPicLogo, $statPicText)
     {
         $this->db->multiVariableQuery (
-            "UPDATE user SET statpic_text=:1, statpic_logo=:2 WHERE user_id=:3 ",
+            'UPDATE user SET statpic_text=:1, statpic_logo=:2 WHERE user_id=:3 ',
             $statPicText, $statPicLogo, $this->getUserId());
 
         // delete previous statPic for the user

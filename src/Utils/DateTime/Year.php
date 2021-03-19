@@ -6,7 +6,7 @@ class Year
 {
     public static function GetSeasonName()
     {
-        $dayOfYear = date("z");
+        $dayOfYear = date('z');
         if ($dayOfYear >= 79 && $dayOfYear <= 171 ) return 'spring';
         if ($dayOfYear >= 172 && $dayOfYear <= 264 ) return 'summer';
         if ($dayOfYear >= 265 && $dayOfYear <= 330 ) return 'autumn';
@@ -21,7 +21,7 @@ class Year
 
     public static function current()
     {
-        return date("Y");
+        return date('Y');
     }
 
     public static function isChristmassTime()

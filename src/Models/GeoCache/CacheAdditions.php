@@ -46,10 +46,10 @@ class CacheAdditions extends BaseObject
     public static function getRandomCacheIdWithoutAltitude()
     {
         return self::db()->simpleQueryValue(
-            "SELECT cache_id FROM caches_additions
+            'SELECT cache_id FROM caches_additions
              WHERE altitude IS NULL
              ORDER BY RAND()
-             LIMIT 1", null);
+             LIMIT 1', null);
     }
 
     /**
@@ -58,8 +58,8 @@ class CacheAdditions extends BaseObject
     private function loadFromDb()
     {
         $rs = $this->db->multiVariableQuery(
-                "SELECT * FROM caches_additions
-                WHERE cache_id = :1 LIMIT 1", $this->cacheId);
+                'SELECT * FROM caches_additions
+                WHERE cache_id = :1 LIMIT 1', $this->cacheId);
 
         $row = $this->db->dbResultFetchOneRowOnly($rs);
         if($row){
@@ -73,10 +73,10 @@ class CacheAdditions extends BaseObject
     private function storeToDb()
     {
         $this->db->multiVariableQuery(
-            "INSERT INTO caches_additions
+            'INSERT INTO caches_additions
             (cache_id, altitude)
             VALUES (:1, :2)
-            ON DUPLICATE KEY UPDATE cache_id = VALUES(cache_id), altitude = VALUES(altitude)",
+            ON DUPLICATE KEY UPDATE cache_id = VALUES(cache_id), altitude = VALUES(altitude)',
             $this->cacheId, $this->altitude);
     }
 

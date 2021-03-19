@@ -95,7 +95,7 @@ class StatPic extends BaseObject
         $found = $user->getFoundGeocachesCount();
         $hidden = $user->getHiddenGeocachesCount();
 
-        $fontfile = Uri::getAbsServerPath("/resources/fonts/arial.ttf");
+        $fontfile = Uri::getAbsServerPath('/resources/fonts/arial.ttf');
 
         switch ($statPicTpl->getId()) {
             case 4:

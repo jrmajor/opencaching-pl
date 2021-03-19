@@ -46,7 +46,7 @@ class NewsAdminController extends BaseController
         if (! is_array($formResult)) {
             return false;
         }
-        header("X-XSS-Protection: 0");
+        header('X-XSS-Protection: 0');
         if ($formResult['id'] != 0) {
             $news = News::fromNewsIdFactory($formResult['id']);
         } else {

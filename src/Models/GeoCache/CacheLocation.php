@@ -73,13 +73,13 @@ class CacheLocation extends BaseObject
         }
 
         $this->db->multiVariableQuery(
-            "INSERT INTO cache_location
+            'INSERT INTO cache_location
              (cache_id, last_modified, adm1, adm2, adm3, adm4, code1, code2, code3, code4)
              VALUES(:1, NOW(), :2, :3, :4, :5, :6, :7, :8, :9 )
              ON DUPLICATE KEY UPDATE last_modified = NOW(), adm1 = VALUES(adm1),
              adm2 = VALUES(adm2), adm3 = VALUES(adm3), adm4 = VALUES(adm4),
              code1 = VALUES(code1), code2 = VALUES(code2), code3 = VALUES(code3),
-             code4 = VALUES(code4)",
+             code4 = VALUES(code4)',
             $this->cacheId,
             $this->location->getName(NutsLocation::LEVEL_COUNTRY),
             $this->location->getName(NutsLocation::LEVEL_1),
@@ -144,13 +144,13 @@ class CacheLocation extends BaseObject
 
         // select 100 caches where is no cache location assigned
         $rs = $db->simpleQuery(
-            "SELECT c.cache_id, c.name, c.wp_oc, c.longitude, c.latitude
+            'SELECT c.cache_id, c.name, c.wp_oc, c.longitude, c.latitude
              FROM caches AS c
                 LEFT JOIN cache_location AS cl USING (cache_id)
              WHERE ISNULL(cl.cache_id)
-                AND c.status NOT IN (" . GeoCache::STATUS_NOTYETAVAILABLE . ")
+                AND c.status NOT IN (' . GeoCache::STATUS_NOTYETAVAILABLE . ')
              LIMIT 100
-            ");
+            ');
 
         while ($row = $db->dbResultFetch($rs)) {
             d($row);
@@ -167,7 +167,7 @@ class CacheLocation extends BaseObject
             d($location);
         }
 
-        echo __METHOD__ . ": done...";
+        echo __METHOD__ . ': done...';
     }
 
     /**
@@ -183,14 +183,14 @@ class CacheLocation extends BaseObject
 
         // select 100 caches where is no cache location assigned
         $rs = $db->simpleQuery(
-            "SELECT c.cache_id, c.name, c.wp_oc, c.longitude, c.latitude
+            'SELECT c.cache_id, c.name, c.wp_oc, c.longitude, c.latitude
              FROM caches AS c
                 LEFT JOIN cache_location AS cl USING (cache_id)
              WHERE ( ISNULL(cl.code1) OR ISNULL(cl.code3) )
                 AND cl.last_modified < (NOW() - INTERVAL 30 MINUTE)
-                AND c.status NOT IN (" . GeoCache::STATUS_NOTYETAVAILABLE . ")
+                AND c.status NOT IN (' . GeoCache::STATUS_NOTYETAVAILABLE . ')
              LIMIT 100
-            ");
+            ');
 
         while ($row = $db->dbResultFetch($rs)) {
             d($row);
@@ -203,7 +203,7 @@ class CacheLocation extends BaseObject
             $coords = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
             if (!$coords) {
                 // improper coords!
-                d("WRONG COORDS!");
+                d('WRONG COORDS!');
                 $notFixed++;
                 continue;
             }

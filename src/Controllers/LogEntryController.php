@@ -90,7 +90,7 @@ class LogEntryController
             $showDeletedLogsSql2 = ' AND `cache_logs`.`deleted` = 0 ';
         }
         if ($logId) {
-            $showOneLogSql = " AND `cache_logs`.`id` =:v4 ";
+            $showOneLogSql = ' AND `cache_logs`.`id` =:v4 ';
         } else {
             $showOneLogSql = '';
         }
@@ -109,14 +109,14 @@ class LogEntryController
             `cache_logs`.`date_created` AS `date_created`,
             `user`.`username` `username`,
             `user`.`user_id` `user_id`,
-            `user`.role&" . User::ROLE_OC_TEAM . ">0 AS `admin`,
+            `user`.role&" . User::ROLE_OC_TEAM . '>0 AS `admin`,
             `user`.`hidden_count` AS    `ukryte`,
             `user`.`founds_count` AS    `znalezione`,
             `user`.`notfounds_count` AS `nieznalezione`,
             `u2`.`username` AS `del_by_username`,
-            `u2`.role&" . User::ROLE_OC_TEAM . ">0 AS `del_by_admin`,
+            `u2`.role&' . User::ROLE_OC_TEAM . '>0 AS `del_by_admin`,
             `u3`.`username` AS `edit_by_username`,
-            `u3`.role&" . User::ROLE_OC_TEAM . ">0 AS `edit_by_admin`,
+            `u3`.role&' . User::ROLE_OC_TEAM . ">0 AS `edit_by_admin`,
             `log_types`.`icon_small` `icon_small`,
             `cache_moved`.`longitude` AS `mobile_longitude`,
             `cache_moved`.`latitude` AS `mobile_latitude`,

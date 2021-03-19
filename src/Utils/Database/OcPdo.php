@@ -56,7 +56,7 @@ class OcPdo extends PDO
             if ($v === null) {
                 continue;
             }
-            $dsnpairs[] = $k . "=" . $v;
+            $dsnpairs[] = $k . '=' . $v;
         }
 
         $dsn = 'mysql:' . implode(';', $dsnpairs);
@@ -65,7 +65,7 @@ class OcPdo extends PDO
                 $dsn, $conf->getDbUser($adminAccess), $conf->getDbPass($adminAccess), $options
             );
         } catch (PDOException $e) {
-            $this->error("OcPdo object creation failed!", $e);
+            $this->error('OcPdo object creation failed!', $e);
         }
     }
 

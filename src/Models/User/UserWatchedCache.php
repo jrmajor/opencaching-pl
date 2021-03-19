@@ -9,7 +9,7 @@ class UserWatchedCache extends BaseObject
     public static function isCacheWatchedByUser($cacheId, $userId)
     {
         return '1' == self::db()->multiVariableQueryValue(
-            "SELECT 1 FROM cache_watches WHERE cache_id=:1 AND user_id=:2 LIMIT 1",
+            'SELECT 1 FROM cache_watches WHERE cache_id=:1 AND user_id=:2 LIMIT 1',
             0, $cacheId, $userId);
     }
 
@@ -39,8 +39,8 @@ class UserWatchedCache extends BaseObject
 
     public static function getWatchedCachesCount($userId){
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM cache_watches
-            WHERE user_id = :1  ", 0, $userId);
+            'SELECT COUNT(*) FROM cache_watches
+            WHERE user_id = :1  ', 0, $userId);
     }
 
     public static function getWatchedCachesWithLastLogs(

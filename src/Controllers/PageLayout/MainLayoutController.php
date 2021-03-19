@@ -70,7 +70,7 @@ class MainLayoutController extends BaseController
             $this->view->setVar('_isUserLogged', true);
             $this->view->setVar('_username', $this->loggedUser->getUserName());
             // GDPR check and prepare template
-            if (new DateTime() > new DateTime("2018-05-25 00:00:00") && ! $this->loggedUser->areRulesConfirmed()) {
+            if (new DateTime() > new DateTime('2018-05-25 00:00:00') && ! $this->loggedUser->areRulesConfirmed()) {
                 $this->view->setShowGdprPage(true);
                 $this->view->setVar('_currentUri', urlencode(Uri::getCurrentUri(true)));
                 $this->view->setVar('_wikiLinkRules', $this->ocConfig->getWikiLink('rules'));
@@ -91,7 +91,7 @@ class MainLayoutController extends BaseController
         $this->view->setVar('_favicon', OcConfig::getSiteMainViewIcon('shortcutIcon'));
         $this->view->setVar('_appleLogo', OcConfig::getSiteMainViewIcon('appleTouch'));  //xxx
 
-        $this->view->setVar('_title', "TODO-title"); //TODO!
+        $this->view->setVar('_title', 'TODO-title'); //TODO!
         $this->view->setVar('_backgroundSeason', $this->view->getSeasonCssName());
 
         $this->view->setVar('_showVideoBanner', $this->view->showVideoBanner());

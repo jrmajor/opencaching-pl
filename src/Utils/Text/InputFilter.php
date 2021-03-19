@@ -177,7 +177,7 @@ class InputFilter
             $currentSpace = mb_strpos($tagLeft, ' ');
 
             // is end tag
-            if (mb_substr($currentTag, 0, 1) == "/") {
+            if (mb_substr($currentTag, 0, 1) == '/') {
                 $isCloseTag = TRUE;
                 [$tagName] = mb_split(' ', $currentTag);
                 $tagName = mb_substr($tagName, 1);
@@ -189,7 +189,7 @@ class InputFilter
             }
 
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((!mb_eregi("^[a-z][a-z0-9]*$", $tagName)) || (!$tagName) || ((in_array(mb_strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto))) {
+            if ((!mb_eregi('^[a-z][a-z0-9]*$', $tagName)) || (!$tagName) || ((in_array(mb_strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto))) {
                 $postTag = mb_substr($postTag, ($tagLength + 2));
                 $tagOpen_start = mb_strpos($postTag, '<');
 
@@ -253,7 +253,7 @@ class InputFilter
                         $preTag .= ' ' . $attrSet[$i];
 
                     // reformat single tags to XHTML
-                    if (mb_strpos($fromTagOpen, "</" . $tagName))
+                    if (mb_strpos($fromTagOpen, '</' . $tagName))
                         $preTag .= '>';
                     else
                         $preTag .= ' />';
@@ -301,7 +301,7 @@ class InputFilter
                 unset($attrSubSet[count($attrSubSet) - 1]);
 
             // removes all "non-regular" attr names AND also attr blacklisted
-            if ((!mb_eregi("^[a-z]*$", $attrSubSet[0])) || (($this->xssAuto) && ((in_array(mb_strtolower($attrSubSet[0]), $this->attrBlacklist)) || (mb_substr($attrSubSet[0], 0, 2) == 'on'))))
+            if ((!mb_eregi('^[a-z]*$', $attrSubSet[0])) || (($this->xssAuto) && ((in_array(mb_strtolower($attrSubSet[0]), $this->attrBlacklist)) || (mb_substr($attrSubSet[0], 0, 2) == 'on'))))
                 continue;
 
             // xss attr value filtering

@@ -1,5 +1,5 @@
 <?php
-$secret = "dupa231";
+$secret = 'dupa231';
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?'.">\n";
@@ -97,7 +97,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
         <div id="navibar">
     <!--<span><a href="">Strona Główna</a></span>-->
             <?php
-            include("menu.inc");
+            include('menu.inc');
             ?>
         </div>
         <p>
@@ -138,7 +138,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . " This is a secret message", $secret) . '" />
+                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
                 <p><label for="cache_name">Nazwa skrzynki:</label> <input type="text" maxlength="80" name="cache_name" id="cache_name" /></p>
                 <p><label for="coords">Współrzędne:</label> <input type="hidden" maxlength="80" name="coords" id="coords" /> N <input type="text" name="d1" maxlength="3" class="degrees" /> ° <input class="minutes" maxlength="6" name="m1" type="text" /> \' E <input class="degrees" maxlength="3" name="d2" type="text" /> ° <input class="minutes" maxlength="6" name="m2" type="text" /> \'</p>
                 <p><label for="image_file">Obrazek tytułowy:</label> <input type="file" name="image_file" id="image_file" class="file" /><br />
@@ -167,7 +167,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . " This is a secret message", $secret) . '" />
+                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
                 <p><label for="cache_name">Nazwa skrzynki:</label> <input type="text" maxlength="80" name="cache_name" id="cache_name" /></p>
                 <p><label for="coords">Współrzędne:</label> <input type="hidden" maxlength="80" name="coords" id="coords" /> N <input type="text" name="d1" maxlength="3" class="degrees" /> ° <input class="minutes" maxlength="6" name="m1" type="text" /> \' E <input class="degrees" maxlength="3" name="d2" type="text" /> ° <input class="minutes" maxlength="6" name="m2" type="text" /> \'</p>
                 <p><label for="image_file">Obrazek tytułowy:</label> <input type="file" name="image_file" id="image_file" class="file" /><br />

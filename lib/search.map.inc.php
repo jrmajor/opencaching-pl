@@ -32,7 +32,7 @@ if (isset($lat_rad) && isset($lon_rad)) {
     } else {
         // get the users home coords
         $stmt = $dbc->multiVariableQuery(
-            "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= :1 LIMIT 1", $loggedUser->getUserId());
+            'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= :1 LIMIT 1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetchOneRowOnly($stmt);
 
         if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL))
@@ -91,7 +91,7 @@ $maxlon = $r['maxlongitude'];
 $stmt = $dbcSearch->simpleQuery($query);
 $cnt = 0;
 $hash = uniqid();
-$f = fopen(OcConfig::getDynFilesPath() . "searchdata/" . $hash, "w");
+$f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
 while ($r = $dbcSearch->dbResultFetch($stmt)) {
 
     ++ $cnt;

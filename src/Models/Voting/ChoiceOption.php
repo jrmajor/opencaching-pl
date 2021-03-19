@@ -39,7 +39,7 @@ class ChoiceOption extends BaseObject
     {
         $db = self::db();
         $stmt = $db->multiVariableQuery(
-            "SELECT * FROM vote_choiceOptions WHERE electionId = :1 ORDER BY orderIdx ASC",
+            'SELECT * FROM vote_choiceOptions WHERE electionId = :1 ORDER BY orderIdx ASC',
             $election->getElectionId()
             );
 
@@ -59,7 +59,7 @@ class ChoiceOption extends BaseObject
     public static function checkOption(Election $election, int $optionId): bool
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM vote_choiceOptions WHERE optionId = :1 AND electionId = :2",
+            'SELECT COUNT(*) FROM vote_choiceOptions WHERE optionId = :1 AND electionId = :2',
             0,
             $optionId,
             $election->getElectionId()

@@ -7,8 +7,8 @@ session_start();
 require_once('../lib/settingsGlue.inc.php');
 require_once('./lib/OcSmarty.class.php');
 require_once('./lib/functions.inc.php');
-require_once("./lib/cookie.class.php");
-require_once("./lib/login.class.php");
+require_once('./lib/cookie.class.php');
+require_once('./lib/login.class.php');
 require_once('../lib/ClassPathDictionary.php');
 
 $tpl = new OcSmarty;

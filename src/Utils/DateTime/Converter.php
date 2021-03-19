@@ -46,7 +46,7 @@ class Converter
             's' => '',
             'u' => '',
         ];
-        $jqueryui_format = "";
+        $jqueryui_format = '';
         $escaping = false;
         for ($i = 0; $i < strlen($php_format); $i ++) {
             $char = $php_format[$i];

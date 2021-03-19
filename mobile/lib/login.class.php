@@ -101,7 +101,7 @@ class login
             $_SESSION['username'] = $wiersz['username'];
             $_SESSION['user_id'] = $user_id;
 
-            $query = "SELECT now() as now, uuid() as uuid";
+            $query = 'SELECT now() as now, uuid() as uuid';
             $wynik = XDb::xSql($query);
             $rekord = XDb::xFetchArray($wynik);
             $dzis = $rekord['now'];

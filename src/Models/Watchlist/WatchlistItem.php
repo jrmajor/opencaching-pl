@@ -72,7 +72,7 @@ class WatchlistItem
             $srcWatchlistItemText = $this->itemTemplate;
         }
 
-        $text = preg_replace("/<img[^>]+\>/i", "", $log->getLogText());
+        $text = preg_replace("/<img[^>]+\>/i", '', $log->getLogText());
 
         $logTypeParams = $this->getLogTypeParams($log->getLogType());
         if (isset($logTypeParams['username'])) {

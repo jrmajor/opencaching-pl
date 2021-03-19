@@ -25,7 +25,7 @@ require_once(__DIR__.'/../../lib/search.inc.php');
 $doubleindex['sankt'] = 'st';
 
 sql('TRUNCATE TABLE `gns_search`');
-sql("DROP TABLE IF EXISTS `gns_search`");
+sql('DROP TABLE IF EXISTS `gns_search`');
 sql("CREATE TABLE `gns_search` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `uni_id` int(11) NOT NULL DEFAULT '0',
@@ -52,10 +52,10 @@ while ($r = sql_fetch_array($rs)) {
              */
             $simpletext = search_text2simple($text);
 
-            sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $simpletext, sprintf("%u", crc32($simpletext)));
+            sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $simpletext, sprintf('%u', crc32($simpletext)));
             $out_count++;
             if (isset($doubleindex[$text])) {
-                sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $doubleindex[$text], sprintf("%u", crc32($doubleindex[$text])));
+                sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $doubleindex[$text], sprintf('%u', crc32($doubleindex[$text])));
                 $out_count++;
             }
         }

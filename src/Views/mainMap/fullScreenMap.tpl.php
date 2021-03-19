@@ -23,7 +23,7 @@
     </div>
 
     <div id="mapFilters" class="ol-control mapFiltersFullScreen">
-      <?=$view->callSubTpl("/mainMap/mainMapFilters")?>
+      <?=$view->callSubTpl('/mainMap/mainMapFilters')?>
     </div>
 
     <div id="mainMapSearch" class="ol-control">
@@ -35,15 +35,15 @@
 </div>
 
 <!-- map-chunk start -->
-  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, "mainMap");?>
+  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mainMap');?>
 <!-- map-chunk end -->
 
 <script id="mainMapPopupTpl" type="text/x-handlebars-template">
-  <?=$view->callSubTpl("/mainMap/mainMapPopup")?>
+  <?=$view->callSubTpl('/mainMap/mainMapPopup')?>
 </script>
 
 <script id="mainMapSearchResultTpl" type="text/x-handlebars-template">
-    <?=$view->callSubTpl("/mainMap/mainMapSearchResult")?>
+    <?=$view->callSubTpl('/mainMap/mainMapSearchResult')?>
 </script>
 
 <script>

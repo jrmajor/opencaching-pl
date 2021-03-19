@@ -26,8 +26,8 @@ if ($debug_page)
 </tr><tr><td height="2"></td></tr>';
 
             $rs = XDb::xSql(
-                "SELECT `code`, `name` FROM `nuts_codes`
-                WHERE (" . $config['provinceNutsCondition'] . ") ORDER BY `name` ASC");
+                'SELECT `code`, `name` FROM `nuts_codes`
+                WHERE (' . $config['provinceNutsCondition'] . ') ORDER BY `name` ASC');
 
             while( $record = XDb::xFetchArray($rs) ){
 

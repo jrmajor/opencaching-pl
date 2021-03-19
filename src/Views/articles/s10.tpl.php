@@ -21,7 +21,7 @@ if (isset($_REQUEST['region'])) {
         <td>
             <?php
             $woj = XDb::xMultiVariableQueryValue(
-                "SELECT nuts_codes.name FROM nuts_codes WHERE code= :1 ", 0, $region);
+                'SELECT nuts_codes.name FROM nuts_codes WHERE code= :1 ', 0, $region);
 
             echo '<center><table width="97%" border="0"><tr><td align="center"><center><b>' . tr('Stats_s10_01') . '  <b>';
             echo '<br /><br /><b><font color="blue">';
@@ -30,34 +30,34 @@ if (isset($_REQUEST['region'])) {
 
             echo '<table border="1" bgcolor="white" width="97%" style="font-size:11px; line-height:1.6em;">' . "\n";
 
-            echo "<br />";
+            echo '<br />';
 
             $r = XDb::xSql(
-                "SELECT COUNT(*) count, username, stat_ban, user.user_id FROM cache_location, caches, cache_logs, user
+                'SELECT COUNT(*) count, username, stat_ban, user.user_id FROM cache_location, caches, cache_logs, user
                 WHERE (`cache_location`.`code3`= ? AND `cache_location`.`cache_id`=`caches`.`cache_id`)
                     AND `cache_logs`.`deleted`=0 AND cache_logs.user_id=user.user_id
                     AND (cache_logs.type=1 OR cache_logs.type=2)
                     AND cache_logs.cache_id = caches.cache_id
                 GROUP BY user.user_id
-                ORDER BY 1 DESC, user.username ASC", $region);
+                ORDER BY 1 DESC, user.username ASC', $region);
 
             echo '<tr class="bgcolor2">' .
             '<td align="center">&nbsp;&nbsp;<b>' . tr('Stats_s10_02') . '</b>&nbsp;&nbsp;</td>' .
             '<td align="center"><b>' . tr('Stats_s10_03') . '</b></td>' .
             '<td align="center">&nbsp;&nbsp;<b>' . tr('Stats_s10_04') . '</b>&nbsp;&nbsp;</td></tr><tr><td>';
 
-            $l2 = ""; // number of users within the same rank
+            $l2 = ''; // number of users within the same rank
             $rank = 0; // rank number; increamented by one for each group of users having the same caches discovered
             $position = 1; // position ex aequo; incremented by number of users in each rank
 
             while( $line = XDb::xFetchArray($r) ) {
-                $color = "black";
-                $banned = "";
+                $color = 'black';
+                $banned = '';
                 $loggedUser = ApplicationContainer::GetAuthorizedUser();
                 if (($loggedUser && $loggedUser->hasOcTeamRole()) || $line['stat_ban'] == 0) {
                     if ($line['stat_ban']) {
-                        $color = "gray";
-                        $banned = " (BAN)";
+                        $color = 'gray';
+                        $banned = ' (BAN)';
                     }
                     $l1 = $line['count'];
                     if ($l2 != $l1) {

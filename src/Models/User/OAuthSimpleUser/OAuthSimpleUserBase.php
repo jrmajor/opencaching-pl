@@ -84,17 +84,17 @@ abstract class OAuthSimpleUserBase
             case self::ERROR_EXT_DESC:
                 return $this->errorDesc;
             case self::ERROR_NO_CODE:
-                return "No code returned";
+                return 'No code returned';
             case self::ERROR_NO_STATE:
-                return "No state returned";
+                return 'No state returned';
             case self::ERROR_STATE_INVALID:
-                return "Invalid state";
+                return 'Invalid state';
             case self::ERROR_CANT_GET_TOKEN:
                 return "Can't retrive access token";
             case self::ERROR_INVALID_TOKEN_JSON:
                 return "Can't decode JSON with token";
             default:
-                return "Unknown error!";
+                return 'Unknown error!';
         }
     }
 

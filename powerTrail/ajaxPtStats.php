@@ -51,17 +51,17 @@ if(count($statsArr) == 0){ // no result!
 
 foreach ($statsArr as $user) {
     $tmpDate = substr($user['date'], 0, -9);
-    if(!isset($sorted[$user["user_id"]])) {
-        $sorted[$user["user_id"]] = [
+    if(!isset($sorted[$user['user_id']])) {
+        $sorted[$user['user_id']] = [
             'user_id' => $user['user_id'],
             'username' => $user['username'],
             'FoundCount' => $user['FoundCount'],
         ];
-        $tmp[$user["user_id"]]['dates'][] = $tmpDate;
+        $tmp[$user['user_id']]['dates'][] = $tmpDate;
     } else {
-        $sorted[$user["user_id"]]['FoundCount'] += $user['FoundCount'];
-        if(!in_array($tmpDate, $tmp[$user["user_id"]]['dates'])){
-            $tmp[$user["user_id"]]['dates'][] = $tmpDate;
+        $sorted[$user['user_id']]['FoundCount'] += $user['FoundCount'];
+        if(!in_array($tmpDate, $tmp[$user['user_id']]['dates'])){
+            $tmp[$user['user_id']]['dates'][] = $tmpDate;
         }
     }
 }

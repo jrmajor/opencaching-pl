@@ -42,7 +42,7 @@ class EmailSender
             $email->setReplyToAddr($techAdmAddress);
             $email->setFromAddr( OcConfig::getEmailAddrNoReply());
 
-            $email->addSubjectPrefix("OC Admin Email");
+            $email->addSubjectPrefix('OC Admin Email');
             $email->setSubject('Error in domain: '.$spamDomain); //TODO
             $email->setPlainTextBody($message);
 
@@ -58,15 +58,15 @@ class EmailSender
         $emailTemplateFile = __DIR__.'/../../../resources/email/removed_log.email.html';
 
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("log_owner", $log->getUser()->getUserName());
-        $formattedMessage->setVariable("waypointId", $log->getGeoCache()->getWaypointId());
-        $formattedMessage->setVariable("serviceUrl", OcConfig::getAbsolute_server_URI());
-        $formattedMessage->setVariable("logRemover", $loggedUser->getUserName());
-        $formattedMessage->setVariable("logRemoverId", $loggedUser->getUserId());
-        $formattedMessage->setVariable("cache_name", $log->getGeoCache()->getCacheName());
-        $formattedMessage->setVariable("log_entry", $log->getText());
-        $formattedMessage->setVariable("removedLog_01", tr('removedLog_01'));
-        $formattedMessage->setVariable("removedLog_02", tr('removedLog_02'));
+        $formattedMessage->setVariable('log_owner', $log->getUser()->getUserName());
+        $formattedMessage->setVariable('waypointId', $log->getGeoCache()->getWaypointId());
+        $formattedMessage->setVariable('serviceUrl', OcConfig::getAbsolute_server_URI());
+        $formattedMessage->setVariable('logRemover', $loggedUser->getUserName());
+        $formattedMessage->setVariable('logRemoverId', $loggedUser->getUserId());
+        $formattedMessage->setVariable('cache_name', $log->getGeoCache()->getCacheName());
+        $formattedMessage->setVariable('log_entry', $log->getText());
+        $formattedMessage->setVariable('removedLog_01', tr('removedLog_01'));
+        $formattedMessage->setVariable('removedLog_02', tr('removedLog_02'));
 
         $formattedMessage->addFooterAndHeader($log->getUser()->getUserName());
 
@@ -85,17 +85,17 @@ class EmailSender
         $emailTemplateFile = __DIR__ . '/../../../resources/email/octeam_comment.email.html';
 
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("ocTeamComment_01", tr("ocTeamComment_01"));
-        $formattedMessage->setVariable("ocTeamComment_02", tr("ocTeamComment_02"));
-        $formattedMessage->setVariable("ocTeamComment_03", tr("ocTeamComment_03"));
-        $formattedMessage->setVariable("ocTeamComment_04", tr("ocTeamComment_04"));
-        $formattedMessage->setVariable("ocTeamComment_05", tr("ocTeamComment_05"));
-        $formattedMessage->setVariable("waypointId", $cache->getWaypointId());
-        $formattedMessage->setVariable("cachename", $cache->getCacheName());
-        $formattedMessage->setVariable("octeam_comment", $message);
-        $formattedMessage->setVariable("adminName", $admin->getUserName());
-        $formattedMessage->setVariable("adminId", $admin->getUserId());
-        $formattedMessage->setVariable("server", OcConfig::getAbsolute_server_URI());
+        $formattedMessage->setVariable('ocTeamComment_01', tr('ocTeamComment_01'));
+        $formattedMessage->setVariable('ocTeamComment_02', tr('ocTeamComment_02'));
+        $formattedMessage->setVariable('ocTeamComment_03', tr('ocTeamComment_03'));
+        $formattedMessage->setVariable('ocTeamComment_04', tr('ocTeamComment_04'));
+        $formattedMessage->setVariable('ocTeamComment_05', tr('ocTeamComment_05'));
+        $formattedMessage->setVariable('waypointId', $cache->getWaypointId());
+        $formattedMessage->setVariable('cachename', $cache->getCacheName());
+        $formattedMessage->setVariable('octeam_comment', $message);
+        $formattedMessage->setVariable('adminName', $admin->getUserName());
+        $formattedMessage->setVariable('adminId', $admin->getUserId());
+        $formattedMessage->setVariable('server', OcConfig::getAbsolute_server_URI());
 
         $formattedMessage->addFooterAndHeader($cache->getOwner()->getUserName(), false);
 
@@ -122,9 +122,9 @@ class EmailSender
     public static function sendAdoptionOffer($emailTemplateFile, $cacheName, $newOwnerUserName,
         $oldOwnerUserName, $userEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("adopt01", tr("adopt_26"));
-        $formattedMessage->setVariable("userName", '<b>'.$oldOwnerUserName.'</b>');
-        $formattedMessage->setVariable("cacheName", '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('adopt01', tr('adopt_26'));
+        $formattedMessage->setVariable('userName', '<b>'.$oldOwnerUserName.'</b>');
+        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
 
         $formattedMessage->addFooterAndHeader($newOwnerUserName);
 
@@ -141,9 +141,9 @@ class EmailSender
     public static function sendAdoptionSuccessMessage($emailTemplateFile, $cacheName, $newOwnerUserName,
         $oldOwnerUserName, $oldOwnerEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("adopt01", tr("adopt_31"));
-        $formattedMessage->setVariable("userName", '<b>'.$newOwnerUserName.'</b>');
-        $formattedMessage->setVariable("cacheName", '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('adopt01', tr('adopt_31'));
+        $formattedMessage->setVariable('userName', '<b>'.$newOwnerUserName.'</b>');
+        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
 
         $formattedMessage->addFooterAndHeader($oldOwnerUserName);
 
@@ -160,9 +160,9 @@ class EmailSender
     public static function sendAdoptionRefusedMessage($emailTemplateFile, $cacheName, $newOwnerUserName,
         $oldOwnerUserName, $oldOwnerEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("adopt01", tr("adopt_29"));
-        $formattedMessage->setVariable("userName", '<b>'.$newOwnerUserName.'</b>');
-        $formattedMessage->setVariable("cacheName", '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('adopt01', tr('adopt_29'));
+        $formattedMessage->setVariable('userName', '<b>'.$newOwnerUserName.'</b>');
+        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
 
         $formattedMessage->addFooterAndHeader($oldOwnerUserName);
 
@@ -179,17 +179,17 @@ class EmailSender
     public static function sendNotifyAboutNewCacheToOcTeam($emailTemplateFile, User $owner, $newCacheName, $newCacheId,
                                                            $region, $country) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
-        $formattedMessage->setVariable("ocTeamNewCache_01", tr("ocTeamNewCache_01"));
-        $formattedMessage->setVariable("ocTeamNewCache_02", tr("ocTeamNewCache_02"));
-        $formattedMessage->setVariable("ocTeamNewCache_03", tr("ocTeamNewCache_03"));
-        $formattedMessage->setVariable("ocTeamNewCache_04", tr("ocTeamNewCache_04"));
-        $formattedMessage->setVariable("ocTeamNewCache_05", tr("ocTeamNewCache_05"));
-        $formattedMessage->setVariable("ocTeamNewCache_06", tr("ocTeamNewCache_06"));
-        $formattedMessage->setVariable("server", OcConfig::getAbsolute_server_URI());
-        $formattedMessage->setVariable("userid", $owner->getUserId());
-        $formattedMessage->setVariable("username", $owner->getUserName());
-        $formattedMessage->setVariable("cacheid", $newCacheId);
-        $formattedMessage->setVariable("cachename", $newCacheName);
+        $formattedMessage->setVariable('ocTeamNewCache_01', tr('ocTeamNewCache_01'));
+        $formattedMessage->setVariable('ocTeamNewCache_02', tr('ocTeamNewCache_02'));
+        $formattedMessage->setVariable('ocTeamNewCache_03', tr('ocTeamNewCache_03'));
+        $formattedMessage->setVariable('ocTeamNewCache_04', tr('ocTeamNewCache_04'));
+        $formattedMessage->setVariable('ocTeamNewCache_05', tr('ocTeamNewCache_05'));
+        $formattedMessage->setVariable('ocTeamNewCache_06', tr('ocTeamNewCache_06'));
+        $formattedMessage->setVariable('server', OcConfig::getAbsolute_server_URI());
+        $formattedMessage->setVariable('userid', $owner->getUserId());
+        $formattedMessage->setVariable('username', $owner->getUserName());
+        $formattedMessage->setVariable('cacheid', $newCacheId);
+        $formattedMessage->setVariable('cachename', $newCacheName);
 
         $formattedMessage->addFooterAndHeader(OcConfig::getEmailSubjectPrefixForOcTeam());
 
@@ -200,9 +200,9 @@ class EmailSender
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefixForOcTeam());
 
         if (isset($region) && isset($country)) {
-            $email->setSubject(tr('ocTeamNewCache_sub').": ".$country." -> ".$region);
+            $email->setSubject(tr('ocTeamNewCache_sub').': '.$country.' -> '.$region);
         } else {
-            $email->setSubject(tr('ocTeamNewCache_sub').": ".tr('dummy_outside'));
+            $email->setSubject(tr('ocTeamNewCache_sub').': '.tr('dummy_outside'));
         }
 
         $email->setHtmlBody($formattedMessage->getEmailContent());

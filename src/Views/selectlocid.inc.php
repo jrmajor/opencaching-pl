@@ -31,14 +31,14 @@ function regierungsbezirkFromLocid($locid)
         return '';
 
     return XDb::xMultiVariableQueryValue(
-        "SELECT `rb`.`text_val` `regierungsbezirk`
+        'SELECT `rb`.`text_val` `regierungsbezirk`
         FROM `geodb_textdata` `ct`, `geodb_textdata` `rb`, `geodb_hierarchies` `hr`
         WHERE `ct`.`loc_id`=`hr`.`loc_id`
             AND `hr`.`id_lvl4`=`rb`.`loc_id`
             AND `ct`.`text_type`=500100000
             AND `rb`.`text_type`=500100000
             AND `ct`.`loc_id`= :1
-            AND `hr`.`id_lvl4`!=0",
+            AND `hr`.`id_lvl4`!=0',
         0, $locid);
 }
 
@@ -48,13 +48,13 @@ function landkreisFromLocid($locid)
         return '';
 
     return XDb::xMultiVariableQueryValue(
-        "SELECT `rb`.`text_val` `regierungsbezirk`
+        'SELECT `rb`.`text_val` `regierungsbezirk`
         FROM `geodb_textdata` `ct`, `geodb_textdata` `rb`, `geodb_hierarchies` `hr`
         WHERE `ct`.`loc_id`=`hr`.`loc_id`
             AND `hr`.`id_lvl5`=`rb`.`loc_id`
             AND `ct`.`text_type`=500100000
             AND `rb`.`text_type`=500100000
             AND `ct`.`loc_id`= :1
-            AND `hr`.`id_lvl5`!=0",
+            AND `hr`.`id_lvl5`!=0',
         0, $locid);
 }

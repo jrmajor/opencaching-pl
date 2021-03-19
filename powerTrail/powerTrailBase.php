@@ -168,8 +168,8 @@ class powerTrailBase{
     }
 
     public static function getPoweTrailCompletedCountByUser($userId) {
-        $queryPt = "SELECT count(`PowerTrailId`) AS `ptCount` FROM `PowerTrail_comments`
-            WHERE `commentType` =2 AND `deleted` =0 AND `userId` =:1";
+        $queryPt = 'SELECT count(`PowerTrailId`) AS `ptCount` FROM `PowerTrail_comments`
+            WHERE `commentType` =2 AND `deleted` =0 AND `userId` =:1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $userId);
         $ptCount = $db->dbResultFetchOneRowOnly($s);
@@ -177,7 +177,7 @@ class powerTrailBase{
     }
 
     public static function getUserPoints($userId) {
-        $queryPt = "SELECT sum( `points` ) AS sum
+        $queryPt = 'SELECT sum( `points` ) AS sum
                     FROM powerTrail_caches
                     WHERE `PowerTrailId` IN (
                         SELECT `PowerTrailId` AS `ptCount` FROM `PowerTrail_comments`
@@ -186,7 +186,7 @@ class powerTrailBase{
                     AND `cacheId` IN (
                         SELECT `cache_id` FROM `cache_logs`
                         WHERE `type` =1 AND `user_id` =:1
-                    )";
+                    )';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $userId);
         $points = $db->dbResultFetchOneRowOnly($s);
@@ -325,11 +325,11 @@ class powerTrailBase{
     }
 
     public static function getLeadingUser($ptId){
-        $q = "SELECT  `username`, `user_id` FROM  `user`
+        $q = 'SELECT  `username`, `user_id` FROM  `user`
             WHERE  `user_id` = (
                 SELECT  `userId` FROM  `PowerTrail_actionsLog`
                 WHERE  `actionType` =1 AND  `PowerTrailId` =:1 LIMIT 1
-            ) LIMIT 1";
+            ) LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $ptId);
         return $db->dbResultFetchOneRowOnly($s);

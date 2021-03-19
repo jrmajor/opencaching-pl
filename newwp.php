@@ -23,48 +23,48 @@ if (isset($_REQUEST['cacheid'])) {
 if (isset($_POST['cacheid'])) {
     $cache_id = $_POST['cacheid'];
 }
-tpl_set_var("cacheid", $cache_id);
+tpl_set_var('cacheid', $cache_id);
 
-$cache_rs = XDb::xSql("SELECT `user_id`, `name`, `type`,  `longitude`, `latitude`,  `status`, `logpw`
-                         FROM `caches` WHERE `cache_id`= ? ", $cache_id);
+$cache_rs = XDb::xSql('SELECT `user_id`, `name`, `type`,  `longitude`, `latitude`,  `status`, `logpw`
+                         FROM `caches` WHERE `cache_id`= ? ', $cache_id);
 
 if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
-    tpl_set_var("cache_name", htmlspecialchars($cache_record['name']));
-    tpl_set_var("cachetype", htmlspecialchars($cache_record['type']));
+    tpl_set_var('cache_name', htmlspecialchars($cache_record['name']));
+    tpl_set_var('cachetype', htmlspecialchars($cache_record['type']));
 
-    $wp_rs = XDb::xSql("SELECT `stage`,`type` FROM `waypoints`
-                            WHERE `cache_id`= ? AND (type<>4 OR type<>5) ORDER BY `stage` DESC", $cache_id);
+    $wp_rs = XDb::xSql('SELECT `stage`,`type` FROM `waypoints`
+                            WHERE `cache_id`= ? AND (type<>4 OR type<>5) ORDER BY `stage` DESC', $cache_id);
 
     if ($wp_record = XDb::xFetchArray($wp_rs)) {
         if ($cache_record['type'] == '2' || $cache_record['type'] == '4' || $cache_record['type'] == '5' || $cache_record['type'] == '6' || $cache_record['type'] == '8' || $cache_record['type'] == '9') {
             $next_stage = 0;
             $wp_stage = 0;
-            tpl_set_var("stage", "0");
-            tpl_set_var("nextstage", "0");
-            tpl_set_var("start_stage", '<!--');
-            tpl_set_var("end_stage", '-->');
+            tpl_set_var('stage', '0');
+            tpl_set_var('nextstage', '0');
+            tpl_set_var('start_stage', '<!--');
+            tpl_set_var('end_stage', '-->');
         } else {
             $next_stage = ($wp_record['stage'] + 1);
-            tpl_set_var("nextstage", $next_stage);
-            tpl_set_var("stage", $next_stage);
-            tpl_set_var("start_stage", '');
-            tpl_set_var("end_stage", '');
+            tpl_set_var('nextstage', $next_stage);
+            tpl_set_var('stage', $next_stage);
+            tpl_set_var('start_stage', '');
+            tpl_set_var('end_stage', '');
         }
     } else {
         if ($cache_record['type'] == '2' || $cache_record['type'] == '4' || $cache_record['type'] == '5' || $cache_record['type'] == '6' || $cache_record['type'] == '8' || $cache_record['type'] == '9') {
             $wp_stage = 0;
-            tpl_set_var("stage", "0");
-            tpl_set_var("nextstage", "0");
-            tpl_set_var("start_stage", '<!--');
-            tpl_set_var("end_stage", '-->');
+            tpl_set_var('stage', '0');
+            tpl_set_var('nextstage', '0');
+            tpl_set_var('start_stage', '<!--');
+            tpl_set_var('end_stage', '-->');
         } else {
-            tpl_set_var("start_stage", '');
-            tpl_set_var("end_stage", '');
+            tpl_set_var('start_stage', '');
+            tpl_set_var('end_stage', '');
         }
 
-        tpl_set_var("stage", "1");
-        tpl_set_var("nextstage", "1");
+        tpl_set_var('stage', '1');
+        tpl_set_var('nextstage', '1');
     }
 
     if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
@@ -88,8 +88,8 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 //                  if ($cache_record['type'] == '2' || $cache_record['type'] == '6' || $cache_record['type'] == '8' || $cache_record['type'] == '9')
         // check if final waypoint alreday exist for this cache
         $wp_check_final_exist = XDb::xMultiVariableQueryValue(
-            "SELECT COUNT(*) FROM `waypoints`
-                     WHERE `cache_id`= :1 AND type = 3", false, $cache_id);
+            'SELECT COUNT(*) FROM `waypoints`
+                     WHERE `cache_id`= :1 AND type = 3', false, $cache_id);
 
         if ($wp_check_final_exist == 1)
             $pomin = 1;
@@ -171,22 +171,22 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         $wp_stage = isset($_POST['stage']) ? $_POST['stage'] : '0';
 
         //status
-        $status1 = "";
-        $status2 = "";
-        $status3 = "";
+        $status1 = '';
+        $status2 = '';
+        $status3 = '';
         $wp_status = isset($_POST['status']) ? $_POST['status'] : '1';
         if ($wp_status == 1) {
-            $status1 = "checked";
+            $status1 = 'checked';
         }
         if ($wp_status == 2) {
-            $status2 = "checked";
+            $status2 = 'checked';
         }
         if ($wp_status == 3) {
-            $status3 = "checked";
+            $status3 = 'checked';
         }
-        tpl_set_var("checked1", $status1);
-        tpl_set_var("checked2", $status2);
-        tpl_set_var("checked3", $status3);
+        tpl_set_var('checked1', $status1);
+        tpl_set_var('checked2', $status2);
+        tpl_set_var('checked3', $status3);
         //desc
         $wp_desc = isset($_POST['desc']) ? $_POST['desc'] : '';
 //              $wp_desc = nl2br($wp_desc);
@@ -326,15 +326,15 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             if (!($descwp_not_ok || $lon_not_ok || $lat_not_ok || $type_not_ok)) {
                 //add record
 
-                XDb::xSql("INSERT INTO `waypoints` (
+                XDb::xSql('INSERT INTO `waypoints` (
                                     `cache_id`,`longitude`,`latitude`,`type` ,
                                     `status` ,`stage` ,`desc` ,`opensprawdzacz`)
-                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                                   VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
                     $cache_id, $longitude, $latitude, $sel_type,
                     $wp_status, $wp_stage, $wp_desc, $OpenChecker_present);
 
 
-                XDb::xSql("UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ? ", $cache_id);
+                XDb::xSql('UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
 
                 // ==== openchecker ===============================================
                 // add/update active status to/in opensprawdzacz table
@@ -342,7 +342,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                 if (($OpenChecker_present == 1) && ($sel_type == 3)) {
 
                     $proba = XDb::xMultiVariableQueryValue(
-                        "SELECT COUNT(*) FROM `opensprawdzacz` WHERE `cache_id` = :1 ", 0, $cache_id);
+                        'SELECT COUNT(*) FROM `opensprawdzacz` WHERE `cache_id` = :1 ', 0, $cache_id);
 
                     if ($proba == 0) {
                         XDb::xSql("INSERT INTO `opensprawdzacz`(`cache_id`, `proby`, `sukcesy`)

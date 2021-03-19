@@ -30,8 +30,8 @@ class CacheVisits
     public static function GetCacheVisits($cacheId)
     {
         return XDb::xMultiVariableQueryValue(
-            "SELECT `count` FROM `cache_visits2`
-            WHERE `cache_id`=:1 AND type = :2 LIMIT 1",
+            'SELECT `count` FROM `cache_visits2`
+            WHERE `cache_id`=:1 AND type = :2 LIMIT 1',
             0, $cacheId, self::TYPE_CACHE_VISITS);
     }
 
@@ -43,8 +43,8 @@ class CacheVisits
     public static function GetPrePublicationVisits($cacheId)
     {
         $s = XDb::xSql(
-            "SELECT user_id_ip FROM `cache_visits2`
-            WHERE `cache_id`= ? AND type = ?",
+            'SELECT user_id_ip FROM `cache_visits2`
+            WHERE `cache_id`= ? AND type = ?',
             $cacheId, self::TYPE_PREPUBLICATION_VISIT);
 
         $result = [];
@@ -64,8 +64,8 @@ class CacheVisits
     {
         // add user-visit record
         XDb::xSql(
-            "INSERT INTO cache_visits2 (cache_id, user_id_ip, type, visit_date)
-            VALUES (?, ?, ?, NOW() ) ON DUPLICATE KEY UPDATE count = count + 1",
+            'INSERT INTO cache_visits2 (cache_id, user_id_ip, type, visit_date)
+            VALUES (?, ?, ?, NOW() ) ON DUPLICATE KEY UPDATE count = count + 1',
             $cacheId, $userIdOrIp, self::TYPE_PREPUBLICATION_VISIT);
     }
 
@@ -85,21 +85,21 @@ class CacheVisits
 
         // check if this is unique visit
         if(0==XDb::xMultiVariableQueryValue(
-            "SELECT COUNT(*) FROM cache_visits2
-            WHERE cache_id = :1 AND user_id_ip = :2 AND type = :3 AND visit_date > NOW() - :4 LIMIT 1",
+            'SELECT COUNT(*) FROM cache_visits2
+            WHERE cache_id = :1 AND user_id_ip = :2 AND type = :3 AND visit_date > NOW() - :4 LIMIT 1',
             0, $cacheId, $userIdOrIp, self::TYPE_LAST_USER_UNIQUE_VISIT, self::UNIQUE_VISIT_PERIOD)){
 
             // this is unique visit
 
             // add user-visit record
             XDb::xSql(
-                "REPLACE INTO cache_visits2 (cache_id, user_id_ip, type, visit_date)
-                VALUES (?, ?, ?, NOW())", $cacheId, $userIdOrIp, self::TYPE_LAST_USER_UNIQUE_VISIT);
+                'REPLACE INTO cache_visits2 (cache_id, user_id_ip, type, visit_date)
+                VALUES (?, ?, ?, NOW())', $cacheId, $userIdOrIp, self::TYPE_LAST_USER_UNIQUE_VISIT);
 
             // inc cache stat
             XDb::xSql(
-                "INSERT INTO cache_visits2 (cache_id, type, count, visit_date)
-                VALUES (?, ?, 1, NOW()) ON DUPLICATE KEY UPDATE count = count + 1",
+                'INSERT INTO cache_visits2 (cache_id, type, count, visit_date)
+                VALUES (?, ?, 1, NOW()) ON DUPLICATE KEY UPDATE count = count + 1',
                 $cacheId, self::TYPE_CACHE_VISITS);
         }
     }
@@ -111,7 +111,7 @@ class CacheVisits
     private static function ClearOldUniqueVisits()
     {
         XDb::xSql(
-            "DELETE FROM `cache_visits2` WHERE type = ? AND visit_date < NOW() - ?",
+            'DELETE FROM `cache_visits2` WHERE type = ? AND visit_date < NOW() - ?',
             self::TYPE_LAST_USER_UNIQUE_VISIT, self::UNIQUE_VISIT_PERIOD);
     }
 }

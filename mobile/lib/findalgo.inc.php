@@ -9,7 +9,7 @@ require_once('../lib/ClassPathDictionary.php');
 global $action;
 
 if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
-        isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP" ||
+        isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
         isSet($_GET['owner']) && !empty($_GET['owner']) ||
         isSet($_GET['finder']) && !empty($_GET['finder'])) {
 
@@ -27,32 +27,32 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
 
         if (isSet($_GET['nazwa'])) {
             $nazwa = XDb::xEscape($_GET['nazwa']);
-            $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where name like '%" . $nazwa . "%' and caches.status in ('1','2','3') order by name limit " . $start . "," . $end;
+            $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where name like '%" . $nazwa . "%' and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
             $czykilka = 1;
-            $url = "./find.php?nazwa=" . $nazwa;
+            $url = './find.php?nazwa=' . $nazwa;
         }
 
         if (isSet($_GET['wp'])) {
             $wp = XDb::xEscape($_GET['wp']);
-            $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where wp_oc = '" . $wp . "' and caches.status in ('1','2','3') order by name limit " . $start . "," . $end;
+            $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where wp_oc = '" . $wp . "' and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
             $czykilka = 0;
-            $url = "./find.php?wp=" . $wp;
+            $url = './find.php?wp=' . $wp;
         }
 
         if (isSet($_GET['owner'])) {
             $owner = XDb::xEscape($_GET['owner']);
             $query = "select votes,cache_id,name, status, score, latitude, longitude, wp_oc, user_id, type from caches where user_id = (select user_id from user where username ='";
-            $query .= $owner . "') and caches.status in ('1','2','3') order by name limit " . $start . "," . $end;
+            $query .= $owner . "') and caches.status in ('1','2','3') order by name limit " . $start . ',' . $end;
             $czykilka = 1;
-            $url = "./find.php?owner=" . $owner;
+            $url = './find.php?owner=' . $owner;
         }
 
         if (isSet($_GET['finder'])) {
             $finder = XDb::xEscape($_GET['finder']);
             $query = "select caches.votes,caches.cache_id,name, status, score, latitude, longitude, wp_oc, caches.user_id, caches.type from caches inner join cache_logs on caches.cache_id=cache_logs.cache_id where cache_logs.user_id = (select user.user_id from user where username ='";
-            $query .= $finder . "') and cache_logs.type = '1' and cache_logs.deleted=0 and caches.status in ('1','2','3') order by cache_logs.id desc limit " . $start . "," . $end;
+            $query .= $finder . "') and cache_logs.type = '1' and cache_logs.deleted=0 and caches.status in ('1','2','3') order by cache_logs.id desc limit " . $start . ',' . $end;
             $czykilka = 1;
-            $url = "./find.php?finder=" . $finder;
+            $url = './find.php?finder=' . $finder;
         }
 
         $wynik = XDb::xSql($query);
@@ -63,11 +63,11 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
             if ($ilewyn > 0) {
                 global $address;
                 $wiersz = XDb::xFetchArray($wynik);
-                $adres = "./" . $address . ".php?wp=" . $wiersz['wp_oc'];
+                $adres = './' . $address . '.php?wp=' . $wiersz['wp_oc'];
                 header('Location: ' . $adres);
                 exit;
             } else {
-                $tpl->assign("error", "1");
+                $tpl->assign('error', '1');
             }
         }
 
@@ -89,11 +89,11 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
                     $if_found = 0;
                 }
 
-                $query = "select username from user where user_id = " . $rekord['user_id'] . ";";
+                $query = 'select username from user where user_id = ' . $rekord['user_id'] . ';';
                 $wynik2 = XDb::xSql($query);
                 $wiersz = XDb::xFetchArray($wynik2);
 
-                $query = "select " . $language . " from cache_type where id = " . $rekord['type'] . ";";
+                $query = 'select ' . $language . ' from cache_type where id = ' . $rekord['type'] . ';';
                 $wynik2 = XDb::xSql($query);
                 $wiersz2 = XDb::xFetchArray($wynik2);
 
@@ -116,7 +116,7 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
     }
 
     if (isSet($_GET['nazwa']) && strlen($_GET['nazwa']) < 3) {
-        $tpl->assign("error", "2");
+        $tpl->assign('error', '2');
     } else {
 
         global $tpl;
@@ -158,15 +158,15 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
 
         $tpl->assign('lista', $lista);
 
-        require_once("./lib/paging.inc.php");
+        require_once('./lib/paging.inc.php');
 
         $tpl->assign('action', $action);
         $tpl->assign('url', $url);
         $tpl->assign('next_page', $next_page);
         $tpl->assign('prev_page', $prev_page);
-        $tpl->assign("address", $address);
-        $tpl->assign("znalezione", $znalezione);
-        $tpl->assign("ile", $ile);
+        $tpl->assign('address', $address);
+        $tpl->assign('znalezione', $znalezione);
+        $tpl->assign('ile', $ile);
 
         $max = ceil($ile / $na_stronie);
 

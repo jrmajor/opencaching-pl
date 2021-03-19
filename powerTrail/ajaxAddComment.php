@@ -10,7 +10,7 @@ require_once __DIR__.'/../lib/common.inc.php';
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 if (!$loggedUser){
-    echo "User not authorized!";
+    echo 'User not authorized!';
     exit;
 }
 
@@ -19,7 +19,7 @@ try{
     $dateTime = new DateTime($_REQUEST['datetime']);
 } catch (Exception $e) {
     // improper request
-    echo "improper datetime format";
+    echo 'improper datetime format';
     exit;
 }
 

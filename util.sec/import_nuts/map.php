@@ -23,10 +23,10 @@ $cBlue = imagecolorallocate($img, 0, 0, 255);
 imagefilledrectangle($img, 0, 0, $nWidth, $nHeight, $cWhite);
 
 $nLabel = 1;
-echo "xxx";
+echo 'xxx';
 $rsBez = sql("SELECT GID, x1, y1, x2, y2, f_NUTS_ID AS f_name FROM nuts_rg_03m_2006 WHERE LENGTH(f_NUTS_ID)=4 AND f_CNTR_CODE='PL' ORDER BY y1 DESC, x1");
 while ($rBez = mysql_fetch_assoc($rsBez)) {
-    echo "test";
+    echo 'test';
     $x1 = $nWidth - $nWidth * ($nXMax - $rBez['x1']) / ($nXMax - $nXMin);
     $x2 = $nWidth - $nWidth * ($nXMax - $rBez['x2']) / ($nXMax - $nXMin);
     $y1 = $nHeight * ($nYMax - $rBez['y1']) / ($nYMax - $nYMin);

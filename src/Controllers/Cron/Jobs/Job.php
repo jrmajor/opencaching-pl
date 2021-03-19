@@ -103,7 +103,7 @@ abstract class Job
                 ['mon', 'tues', 'wednes', 'thurs', 'fri', 'satur', 'sun']
             );
             if ($dow === false) {
-                exit("Invalid day of week (".$matches[1]."day) for ".$jobName."\n");
+                exit('Invalid day of week ('.$matches[1].'day) for '.$jobName."\n");
             }
 
             return
@@ -116,7 +116,7 @@ abstract class Job
             $this->validateMinutes($matches[3]);
             if ($matches[1] > 28) {
                 exit(
-                    "Invalid day of month (".$matches[1].") for ".$jobName.
+                    'Invalid day of month ('.$matches[1].') for '.$jobName.
                     "; must range between 1 and 28.\n"
                 );
             }
@@ -135,7 +135,7 @@ abstract class Job
     {
         if ($minutes % 5 != 0) {
             exit(
-                "Invalid minutes setting (".$minutes.") for ".get_class($this).
+                'Invalid minutes setting ('.$minutes.') for '.get_class($this).
                 "; must be a multiple of 5.\n"
             );
         }

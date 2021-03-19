@@ -16,13 +16,13 @@ if ( !isset( $_REQUEST[ 'CRON' ] ) )
 
 $dbc = OcDb::instance();
 
-$queryMax = "SELECT max( date_alg ) dataMax FROM cache_titled";
+$queryMax = 'SELECT max( date_alg ) dataMax FROM cache_titled';
 $s = $dbc->simpleQuery($queryMax);
 $record = $dbc->dbResultFetchOneRowOnly($s);
-$dataMax = $record["dataMax"];
+$dataMax = $record['dataMax'];
 
 
-$start_date_alg = date("Y-m-d");
+$start_date_alg = date('Y-m-d');
 $date_alg = $start_date_alg;
 
 $dStart = new DateTime($dataMax);
@@ -31,16 +31,16 @@ $dEnd  = new DateTime($date_alg);
 $dDiff = $dStart->diff($dEnd);
 
 $securityPeriod = 0;
-if ( $titled_cache_period_prefix == "week" )
+if ( $titled_cache_period_prefix == 'week' )
     $securityPeriod = 7;
-if ( $titled_cache_period_prefix == "month" )
+if ( $titled_cache_period_prefix == 'month' )
     $securityPeriod = 28;
 
 if ( $dDiff->days < $securityPeriod )
     exit;
 
 
-    $queryS ="
+    $queryS ='
     select
     top.cacheId, top.cacheName, top.userName,
     top.cacheRegion, ifnull( nrT.nrTinR, 0) nrTinR,
@@ -107,13 +107,13 @@ if ( $dDiff->days < $securityPeriod )
     group by adm3
     ) as nrT on top.cacheRegion = nrT.cacheRegion
     order by nrTinR, cFounds DESC, cDateCrt, RATE DESC
-    ";
+    ';
 
     $s = $dbc->multiVariableQuery($queryS, $date_alg, $titled_cache_nr_found );
     $rec = $dbc->dbResultFetch($s);
 
 
-    $queryL = "
+    $queryL = '
     SELECT i.id logId
     FROM
     (select cache_logs.id, cache_logs.cache_id from
@@ -126,17 +126,17 @@ if ( $dDiff->days < $securityPeriod )
             AND `cache_rating`.`user_id` = cl.user_id
             where cl.cache_id = cache_logs.cache_id
             ORDER BY length(cl.text) DESC LIMIT 1 )
-    ) as i";
+    ) as i';
 
-    $s = $dbc->multiVariableQuery($queryL, $rec[ "cacheId" ] );
+    $s = $dbc->multiVariableQuery($queryL, $rec[ 'cacheId' ] );
     $recL = $dbc->dbResultFetchOneRowOnly($s);
 
-    $queryI = "INSERT INTO cache_titled
+    $queryI = 'INSERT INTO cache_titled
         (cache_id, rate, ratio, rating, found, days, date_alg, log_id)
-        VALUES (:1, :2, :3, :4, :5, :6, :7, :8)";
+        VALUES (:1, :2, :3, :4, :5, :6, :7, :8)';
 
-    $dbc->multiVariableQuery($queryI, $rec[ "cacheId" ], $rec[ "RATE" ], $rec[ "ratio" ],
-            $rec[ "cRating" ], $rec[ "cFounds" ], $rec[ "cNrDays" ], $date_alg, $recL["logId"] );
+    $dbc->multiVariableQuery($queryI, $rec[ 'cacheId' ], $rec[ 'RATE' ], $rec[ 'ratio' ],
+            $rec[ 'cRating' ], $rec[ 'cFounds' ], $rec[ 'cNrDays' ], $date_alg, $recL['logId'] );
 
     $SystemUser = -1;
     $LogType = 12; //OCTeam
@@ -151,11 +151,11 @@ if ( $dDiff->days < $securityPeriod )
             mp3count, date_created, owner_notified, node, deleted,
             del_by_user_id, last_deleted, edit_by_user_id, edit_count )
         VALUES ( :1, :2, :3, :4, :5, :6, :7, :8 , :9 , :10, :11, :12, :13, :14, '0', NULL , NULL , NULL , '0' )",
-            $rec[ "cacheId" ], $SystemUser, $LogType, $date_alg, $msgText,
+            $rec[ 'cacheId' ], $SystemUser, $LogType, $date_alg, $msgText,
             '2', $date_alg, $date_alg, $LogUuid, '0',
             '0', $date_alg, '0', OcConfig::getSiteNodeId() );
 
     $ctrlMeritBadge = new MeritBadgeController;
-    $titledIds= $ctrlMeritBadge->updateTriggerByNewTitledCache($rec[ "cacheId" ]);
+    $titledIds= $ctrlMeritBadge->updateTriggerByNewTitledCache($rec[ 'cacheId' ]);
 
 unset($dbc);

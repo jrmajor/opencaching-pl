@@ -25,7 +25,7 @@ class Column_SimpleText extends AbstractColumn {
      */
     protected function getChunkName()
     {
-        return "listOfCaches/simpleTextColumn";
+        return 'listOfCaches/simpleTextColumn';
     }
 
     public function getCssClass(){

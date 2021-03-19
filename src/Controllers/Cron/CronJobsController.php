@@ -14,7 +14,7 @@ class CronJobsController extends BaseController
     {
         parent::__construct();
         if ($jobToRun !== null && !$this->ocConfig->getCronjobSchedule($jobToRun)) {
-            exit("unknown job: ".$jobToRun."\n");
+            exit('unknown job: '.$jobToRun."\n");
         }
         $this->jobToRun = $jobToRun;
     }
@@ -41,7 +41,7 @@ class CronJobsController extends BaseController
             // are not spammed with error messages if something is slow.
 
             if ($minutesSinceLastRun > 19) {
-                exit("Another instance of CronJobsController is running for ".$minutesSinceLastRun.
+                exit('Another instance of CronJobsController is running for '.$minutesSinceLastRun.
                     " minutes, or problem with lock file.\n"
                 );
             }
@@ -65,7 +65,7 @@ class CronJobsController extends BaseController
     {
         foreach ($this->ocConfig->getCronjobSchedule() as $jobName => $schedule) {
             if (!$this->jobToRun || $jobName == $this->jobToRun) {
-                $jobPath = __DIR__."/Jobs/".$jobName.".php";
+                $jobPath = __DIR__.'/Jobs/'.$jobName.'.php';
                 if (!file_exists($jobPath)) {
                     echo "\nConfigured cronjob '".$jobName."' does not exist.\n";
                 } else {
@@ -93,7 +93,7 @@ class CronJobsController extends BaseController
     {
         $result = [];
         foreach ($this->ocConfig->getCronjobSchedule() as $jobName => $schedule) {
-            $jobPath = __DIR__."/Jobs/".$jobName.".php";
+            $jobPath = __DIR__.'/Jobs/'.$jobName.'.php';
             if (!file_exists($jobPath)) {
                 $lastRun = '?';
             } else {

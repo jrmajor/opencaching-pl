@@ -42,7 +42,7 @@ $params['cacheid']['data_type'] = 'integer';
 $stmt = $app->db->paramQuery($query, $params);
 $logpictures = [];
 while ($row = $app->db->dbResultFetch($stmt)) {
-    $row['url'] = str_replace("images/uploads", "upload", $row['url']);
+    $row['url'] = str_replace('images/uploads', 'upload', $row['url']);
     if ($row['spoiler'] == '1') {
         $row['thumbUrl'] = Thumbnail::placeholderUri(Thumbnail::PHD_SPOILER);
     } else {

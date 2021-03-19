@@ -54,8 +54,8 @@ require_once (__DIR__.'/src/Views/newcache.inc.php');
 
 $errors = false; // set if there was any errors
 
-$rsnc = XDb::xSql("SELECT COUNT(`caches`.`cache_id`) as num_caches FROM `caches`
-            WHERE `user_id` = ? AND status = 1", $loggedUser->getUserId());
+$rsnc = XDb::xSql('SELECT COUNT(`caches`.`cache_id`) as num_caches FROM `caches`
+            WHERE `user_id` = ? AND status = 1', $loggedUser->getUserId());
 $record = XDb::xFetchArray($rsnc);
 $num_caches = $record['num_caches'];
 
@@ -171,9 +171,9 @@ tpl_set_var('desc', htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'));
 if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
     $_POST['submitform'] = $_POST['submit'];
 
-    $short_desc = iconv("utf-8", "UTF-8", $short_desc);
-    $desc = iconv("utf-8", "UTF-8", $desc);
-    $name = iconv("utf-8", "UTF-8", $name);
+    $short_desc = iconv('utf-8', 'UTF-8', $short_desc);
+    $desc = iconv('utf-8', 'UTF-8', $desc);
+    $name = iconv('utf-8', 'UTF-8', $name);
 }
 
 // effort
@@ -206,7 +206,7 @@ tpl_set_var('hints', htmlspecialchars($hints, ENT_COMPAT, 'UTF-8'));
 
 // for old versions of OCProp
 if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
-    $hints = iconv("utf-8", "UTF-8", $hints);
+    $hints = iconv('utf-8', 'UTF-8', $hints);
 }
 
 // hidden_since
@@ -384,8 +384,8 @@ $cache_attrib_list = '';
 $cache_attrib_array = '';
 $cache_attribs_string = '';
 
-$rs = XDb::xSql("SELECT `id`, `text_long`, `icon_undef`, `icon_large` FROM `cache_attrib`
-            WHERE `language`= ? ORDER BY `category`, `id`", I18n::getCurrentLang());
+$rs = XDb::xSql('SELECT `id`, `text_long`, `icon_undef`, `icon_large` FROM `cache_attrib`
+            WHERE `language`= ? ORDER BY `category`, `id`', I18n::getCurrentLang());
 
 while ($record = XDb::xFetchArray($rs)) {
     $line = $cache_attrib_pic;
@@ -680,12 +680,12 @@ if (isset($_POST['submitform'])) {
         $cache_uuid = Uuid::create();
 
         // add record to caches table
-        XDb::xSql("INSERT INTO `caches` SET
+        XDb::xSql('INSERT INTO `caches` SET
                         `user_id` = ?, `name` = ?, `longitude` = ?, `latitude` = ?, `last_modified` = NOW(),
                         `date_created` = NOW(), `type` = ?, `status` = ?, `country` = ?, `date_hidden` = ?, `date_activate` = ?,
                         `founds` = 0, `notfounds` = 0, `watcher` = 0, `notes` = 0, `last_found` = NULL, `size` = ?, `difficulty` = ?,
                         `terrain` = ?, `uuid` = ?, `logpw` = ?, `search_time` = ?, `way_length` = ?, `wp_gc` = ?,
-                        `wp_nc` = ?, `wp_ge` = ?, `wp_tc` = ?, `node` = ? ",
+                        `wp_nc` = ?, `wp_ge` = ?, `wp_tc` = ?, `node` = ? ',
             $loggedUser->getUserId(), $name, $longitude, $latitude, $sel_type, $sel_status, $sel_country,
             date('Y-m-d', $hidden_date), $activation_date, $sel_size, $difficulty, $terrain, $cache_uuid,
             $log_pw, $search_time, $way_length, $wp_gc, $wp_nc, $wp_ge, $wp_tc, OcConfig::getSiteNodeId());
@@ -705,19 +705,19 @@ if (isset($_POST['submitform'])) {
         if ($sel_region == - 1) {
             $sel_region = $default_region;
         }
-        if ($sel_region != "0") {
+        if ($sel_region != '0') {
             $code3 = $sel_region;
-            $adm3 = XDb::xMultiVariableQueryValue("SELECT `name` FROM `nuts_codes`
-                        WHERE `code`= :1 ", 0, $sel_region);
+            $adm3 = XDb::xMultiVariableQueryValue('SELECT `name` FROM `nuts_codes`
+                        WHERE `code`= :1 ', 0, $sel_region);
         } else {
             $code3 = null;
             $adm3 = null;
         }
-        XDb::xSql("INSERT INTO `cache_location` (cache_id,adm1,adm3,code1,code3)
-                    VALUES ( ?, ?, ?, ?, ?)", $cache_id, $adm1, $adm3, $code1, $code3);
+        XDb::xSql('INSERT INTO `cache_location` (cache_id,adm1,adm3,code1,code3)
+                    VALUES ( ?, ?, ?, ?, ?)', $cache_id, $adm1, $adm3, $code1, $code3);
 
         // update cache last modified, it is for work of cache_locations update information
-        XDb::xSql("UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ? ", $cache_id);
+        XDb::xSql('UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
 
         // waypoint erstellen
         setCacheWaypoint($cache_id, $oc_waypoint);
@@ -727,10 +727,10 @@ if (isset($_POST['submitform'])) {
         $desc = UserInputFilter::purifyHtmlString($desc);
 
         $db->multiVariableQuery(
-            "INSERT INTO `cache_desc` (
+            'INSERT INTO `cache_desc` (
                          `cache_id`, `language`, `desc`, `hint`,
                         `short_desc`, `last_modified`, `uuid`, `node`, `rr_comment` )
-            VALUES (:1, :2, :3, :4, :5, NOW(), :6, :7, :8)",
+            VALUES (:1, :2, :3, :4, :5, NOW(), :6, :7, :8)',
             $cache_id, $sel_lang, $desc, nl2br(htmlspecialchars($hints, ENT_COMPAT, 'UTF-8')),
             $short_desc, $desc_uuid, OcConfig::getSiteNodeId(), '');
 
@@ -738,8 +738,8 @@ if (isset($_POST['submitform'])) {
 
         // insert cache-attributes
         foreach ($cache_attribs as $attr) {
-                XDb::xSql("INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
-                            VALUES ( ?, ?)", $cache_id, $attr);
+                XDb::xSql('INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
+                            VALUES ( ?, ?)', $cache_id, $attr);
         }
 
         /* add cache altitude */
@@ -827,10 +827,10 @@ function buildDescriptionLanguageSelector($show_all_langs, $langCode, $defaultLa
 
 function generateNextWaypoint($currentWP, $ocWP)
 {
-    $wpCharSequence = "0123456789ABCDEFGHJKLMNPQRSTUWXYZ";
+    $wpCharSequence = '0123456789ABCDEFGHJKLMNPQRSTUWXYZ';
 
     $wpCode = mb_substr($currentWP, 2, 4);
-    if (strcasecmp($wpCode, "8000") < 0) {
+    if (strcasecmp($wpCode, '8000') < 0) {
         // Old rule - use hexadecimal wp codes
         $nNext = dechex(hexdec($wpCode) + 1);
         while (mb_strlen($nNext) < 4)
@@ -858,10 +858,10 @@ function setCacheWaypoint($cacheid, $ocWP)
     $r['maxwp'] = XDb::xSimpleQueryValue('SELECT MAX(`wp_oc`) `maxwp` FROM `caches`', null);
 
     if ($r['maxwp'] == null)
-        $sWP = $ocWP . "0001";
+        $sWP = $ocWP . '0001';
     else
         $sWP = generateNextWaypoint($r['maxwp'], $ocWP);
 
-    XDb::xSql("UPDATE `caches` SET `wp_oc`= ?
-        WHERE `cache_id`= ? AND ISNULL(`wp_oc`)", $sWP, $cacheid);
+    XDb::xSql('UPDATE `caches` SET `wp_oc`= ?
+        WHERE `cache_id`= ? AND ISNULL(`wp_oc`)', $sWP, $cacheid);
 }

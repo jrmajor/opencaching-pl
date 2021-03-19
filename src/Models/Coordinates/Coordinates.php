@@ -98,7 +98,7 @@ class Coordinates
      */
     public function loadFromOkapi($okapiLocation)
     {
-        [$lat, $lon] = explode("|", $okapiLocation);
+        [$lat, $lon] = explode('|', $okapiLocation);
         $this->latitude = (float) $lat;
         $this->longitude = (float) $lon;
     }
@@ -221,13 +221,13 @@ class Coordinates
     {
         switch ($format) {
             case self::COORDINATES_FORMAT_DECIMAL:
-                return [$prefix, sprintf("%02d", $deg)];
+                return [$prefix, sprintf('%02d', $deg)];
 
             case self::COORDINATES_FORMAT_DEG_MIN:
-                return [$prefix, sprintf("%02d", floor($deg)), sprintf("%06.3f", $min)];
+                return [$prefix, sprintf('%02d', floor($deg)), sprintf('%06.3f', $min)];
 
             case self::COORDINATES_FORMAT_DEG_MIN_SEC:
-                return [$prefix, sprintf("%02d", floor($deg)), sprintf("%02d", floor($min)), sprintf("%03d", $sec)];
+                return [$prefix, sprintf('%02d', floor($deg)), sprintf('%02d', floor($min)), sprintf('%03d', $sec)];
             default:
                 return '';
         }
@@ -318,20 +318,20 @@ class Coordinates
 
     private function convertToDegMin($decimalCoordinate)
     {
-        $degMinCoordinate = sprintf("%02d", floor($decimalCoordinate)) . '°&nbsp;';
+        $degMinCoordinate = sprintf('%02d', floor($decimalCoordinate)) . '°&nbsp;';
         $coordinate = $decimalCoordinate - floor($decimalCoordinate);
-        $degMinCoordinate .= sprintf("%06.3f", round($coordinate * 60, 3)) . '\'';
+        $degMinCoordinate .= sprintf('%06.3f', round($coordinate * 60, 3)) . '\'';
         return $degMinCoordinate;
     }
 
     private function convertToDegMinSec($decimalCoordinate)
     {
-        $degMinSecCoordinate = sprintf("%02d", floor($decimalCoordinate)) . '°&nbsp;';
+        $degMinSecCoordinate = sprintf('%02d', floor($decimalCoordinate)) . '°&nbsp;';
         $coordinate = $decimalCoordinate - floor($decimalCoordinate);
         $coordinate *= 60;
-        $degMinSecCoordinate .= sprintf("%02d", floor($coordinate)) . '\'&nbsp;';
+        $degMinSecCoordinate .= sprintf('%02d', floor($coordinate)) . '\'&nbsp;';
         $latmin = $coordinate - floor($coordinate);
-        $degMinSecCoordinate .= sprintf("%02.02f", $latmin * 60) . '\'\'';
+        $degMinSecCoordinate .= sprintf('%02.02f', $latmin * 60) . '\'\'';
         return $degMinSecCoordinate;
     }
 
@@ -378,9 +378,9 @@ class Coordinates
             $retval = 'E ';
         }
 
-        $retval = $retval . sprintf("%02d", floor($lon)) . '° ';
+        $retval = $retval . sprintf('%02d', floor($lon)) . '° ';
         $lon = $lon - floor($lon);
-        $retval = $retval . sprintf("%06.3f", round($lon * 60, 3)) . '\'';
+        $retval = $retval . sprintf('%06.3f', round($lon * 60, 3)) . '\'';
 
         return $retval;
     }
@@ -403,9 +403,9 @@ class Coordinates
         } else {
             $retval = 'N ';
         }
-        $retval = $retval . sprintf("%02d", floor($lat)) . '° ';
+        $retval = $retval . sprintf('%02d', floor($lat)) . '° ';
         $lat = $lat - floor($lat);
-        $retval = $retval . sprintf("%06.3f", round($lat * 60, 3)) . '\'';
+        $retval = $retval . sprintf('%06.3f', round($lat * 60, 3)) . '\'';
         return $retval;
     }
 

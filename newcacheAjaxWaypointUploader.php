@@ -11,15 +11,15 @@ require_once __DIR__.'/lib/common.inc.php';
 $destination_path = OcConfig::getPicUploadFolder(true) . DIRECTORY_SEPARATOR;
 
 
-$result = "No Data";
+$result = 'No Data';
 
-$valid_formats = ["gpx"];
+$valid_formats = ['gpx'];
 
 $name = $_FILES['myfile']['name'];
 $size = $_FILES['myfile']['size'];
 
 if (strlen($name)) {
-    [$txt, $ext] = explode(".", $name);
+    [$txt, $ext] = explode('.', $name);
     $ext = strtolower($ext);
     if (in_array($ext, $valid_formats)) {
         if ($size < (1024 * 1024 * 2)) { // Image size max 2 MB
@@ -65,8 +65,8 @@ function loadWaypointFromGpx($wpts)
         $coords_lat_h = floor($coordsLat);
         $coords_lon_h = floor($coordsLon);
 
-        $coords_lat_min = sprintf("%02.3f", round(($coordsLat - $coords_lat_h) * 60, 3));
-        $coords_lon_min = sprintf("%02.3f", round(($coordsLon - $coords_lon_h) * 60, 3));
+        $coords_lat_min = sprintf('%02.3f', round(($coordsLat - $coords_lat_h) * 60, 3));
+        $coords_lon_min = sprintf('%02.3f', round(($coordsLon - $coords_lon_h) * 60, 3));
 
         $result[$key] = [
             'name' => (string) $waypoint->name,

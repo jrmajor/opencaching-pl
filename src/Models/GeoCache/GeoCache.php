@@ -237,7 +237,7 @@ class GeoCache extends GeoCacheCommons
         if (is_array($cacheDbRow)) {
             $this->loadFromRow($cacheDbRow);
         } else {
-            throw new Exception("Cache not found");
+            throw new Exception('Cache not found');
         }
 
     }
@@ -262,14 +262,14 @@ class GeoCache extends GeoCacheCommons
     {
         //find cache by Id
         $s = $this->db->multiVariableQuery(
-            "SELECT * FROM caches WHERE cache_id = :1 LIMIT 1", $cacheId);
+            'SELECT * FROM caches WHERE cache_id = :1 LIMIT 1', $cacheId);
 
         $cacheDbRow = $this->db->dbResultFetch($s);
 
         if (is_array($cacheDbRow)) {
             $this->loadFromRow($cacheDbRow);
         } else {
-            throw new Exception("Cache not found");
+            throw new Exception('Cache not found');
         }
     }
 
@@ -281,14 +281,14 @@ class GeoCache extends GeoCacheCommons
     {
         //find cache by UUID
         $s = $this->db->multiVariableQuery(
-            "SELECT * FROM caches WHERE uuid = :1 LIMIT 1", $uuid);
+            'SELECT * FROM caches WHERE uuid = :1 LIMIT 1', $uuid);
 
         $cacheDbRow = $this->db->dbResultFetch($s);
 
         if (is_array($cacheDbRow)) {
             $this->loadFromRow($cacheDbRow);
         } else {
-            throw new Exception("Cache not found");
+            throw new Exception('Cache not found');
         }
     }
 
@@ -897,9 +897,9 @@ class GeoCache extends GeoCacheCommons
     {
         if ($this->usersRecommended === false) {
             $s = $this->db->multiVariableQuery(
-                "SELECT user.username AS username
+                'SELECT user.username AS username
                  FROM `cache_rating` INNER JOIN user ON (cache_rating.user_id = user.user_id)
-                 WHERE cache_id=:1 ORDER BY username", $this->id);
+                 WHERE cache_id=:1 ORDER BY username', $this->id);
 
             $usersArr = [];
             foreach ($this->db->dbResultFetchAll($s) as $row) {
@@ -1161,8 +1161,8 @@ class GeoCache extends GeoCacheCommons
         global $config;
 
         $descLanguages = XDb::xMultiVariableQueryValue(
-            "SELECT `desc_languages` FROM `caches`
-            WHERE `cache_id`= :1 LIMIT 1", null, $cacheid
+            'SELECT `desc_languages` FROM `caches`
+            WHERE `cache_id`= :1 LIMIT 1', null, $cacheid
         );
         $desclang = mb_substr($descLanguages, 0, 2);
 
@@ -1174,9 +1174,9 @@ class GeoCache extends GeoCacheCommons
         }
 
         XDb::xSql(
-            "UPDATE `caches` SET
+            'UPDATE `caches` SET
                 `default_desclang`= ?, `last_modified`=NOW()
-            WHERE cache_id= ? LIMIT 1",
+            WHERE cache_id= ? LIMIT 1',
             $desclang, $cacheid);
     }
 
@@ -1188,7 +1188,7 @@ class GeoCache extends GeoCacheCommons
      */
     public static function getDescriptions($cacheId)
     {
-        $rs = XDb::xSql("SELECT `id` AS desc_id, language FROM cache_desc WHERE cache_id = ?", $cacheId);
+        $rs = XDb::xSql('SELECT `id` AS desc_id, language FROM cache_desc WHERE cache_id = ?', $cacheId);
         $result = [];
         while ($row = XDb::xFetchArray($rs)) {
             $result[$row['desc_id']] = $row['language'];
@@ -1206,39 +1206,39 @@ class GeoCache extends GeoCacheCommons
         self::updateLastModified ($cacheId);
 
         XDb::xSql(
-            "UPDATE `caches`, `cache_logs` SET `cache_logs`.`last_modified`=NOW()
+            'UPDATE `caches`, `cache_logs` SET `cache_logs`.`last_modified`=NOW()
             WHERE `caches`.`cache_id`=`cache_logs`.`cache_id`
-                AND `caches`.`cache_id`= ? AND `cache_logs`.`deleted`= ? ", $cacheId, 0);
+                AND `caches`.`cache_id`= ? AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
 
         XDb::xSql(
-            "UPDATE `caches`, `cache_desc` SET `cache_desc`.`last_modified`=NOW()
-            WHERE `caches`.`cache_id`=`cache_desc`.`cache_id` AND `caches`.`cache_id`= ?", $cacheId);
+            'UPDATE `caches`, `cache_desc` SET `cache_desc`.`last_modified`=NOW()
+            WHERE `caches`.`cache_id`=`cache_desc`.`cache_id` AND `caches`.`cache_id`= ?', $cacheId);
 
         XDb::xSql(
-            "UPDATE `caches`, `pictures` SET `pictures`.`last_modified`=NOW()
-            WHERE `caches`.`cache_id`=`pictures`.`object_id` AND `pictures`.`object_type`=2 AND `caches`.`cache_id`= ? ", $cacheId);
+            'UPDATE `caches`, `pictures` SET `pictures`.`last_modified`=NOW()
+            WHERE `caches`.`cache_id`=`pictures`.`object_id` AND `pictures`.`object_type`=2 AND `caches`.`cache_id`= ? ', $cacheId);
 
         XDb::xSql(
-            "UPDATE `caches`, `cache_logs`, `pictures` SET `pictures`.`last_modified`=NOW()
+            'UPDATE `caches`, `cache_logs`, `pictures` SET `pictures`.`last_modified`=NOW()
             WHERE `caches`.`cache_id`=`cache_logs`.`cache_id` AND `cache_logs`.`id`=`pictures`.`object_id`
             AND `pictures`.`object_type`=1 AND `caches`.`cache_id`= ?
-            AND `cache_logs`.`deleted`= ? ", $cacheId, 0);
+            AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
 
         XDb::xSql(
-            "UPDATE `caches`, `mp3` SET `mp3`.`last_modified`=NOW()
-            WHERE `caches`.`cache_id`=`mp3`.`object_id` AND `mp3`.`object_type`=2 AND `caches`.`cache_id`= ? ", $cacheId);
+            'UPDATE `caches`, `mp3` SET `mp3`.`last_modified`=NOW()
+            WHERE `caches`.`cache_id`=`mp3`.`object_id` AND `mp3`.`object_type`=2 AND `caches`.`cache_id`= ? ', $cacheId);
 
         XDb::xSql(
-            "UPDATE `caches`, `cache_logs`, `mp3` SET `mp3`.`last_modified`=NOW()
+            'UPDATE `caches`, `cache_logs`, `mp3` SET `mp3`.`last_modified`=NOW()
             WHERE `caches`.`cache_id`=`cache_logs`.`cache_id` AND `cache_logs`.`id`=`mp3`.`object_id`
             AND `mp3`.`object_type`=1 AND `caches`.`cache_id`= ?
-            AND `cache_logs`.`deleted`= ? ", $cacheId, 0);
+            AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
     }
 
 
     public static function updateLastModified ($cacheId) {
         self::db()->multiVariableQuery(
-            "UPDATE caches SET last_modified=NOW() WHERE cache_id= :1 ", $cacheId);
+            'UPDATE caches SET last_modified=NOW() WHERE cache_id= :1 ', $cacheId);
     }
 
     public static function getUserActiveCachesCountByType($userId)
@@ -1267,11 +1267,11 @@ class GeoCache extends GeoCacheCommons
     {
 
         $lm = XDb::xMultiVariableQueryValue(
-            "SELECT MAX(`last_modified`) `last_modified`
+            'SELECT MAX(`last_modified`) `last_modified`
              FROM
                  ( SELECT `last_modified` FROM `caches` WHERE `cache_id` = :1
                    UNION
-                   SELECT `last_modified` FROM `cache_desc` WHERE `cache_id` = :2 ) `tmp_result`",
+                   SELECT `last_modified` FROM `cache_desc` WHERE `cache_id` = :2 ) `tmp_result`',
             0, $this->id, $this->id );
 
         return new DateTime($lm);
@@ -1326,12 +1326,12 @@ class GeoCache extends GeoCacheCommons
         }
 
         $s = XDb::xSql(
-                "SELECT cache_attrib.text_long AS text, cache_attrib.icon_large AS icon
+                'SELECT cache_attrib.text_long AS text, cache_attrib.icon_large AS icon
                 FROM cache_attrib, caches_attributes
                 WHERE cache_attrib.id=caches_attributes.attrib_id
                     AND cache_attrib.language = ?
                     AND caches_attributes.cache_id = ?
-                ORDER BY cache_attrib.category, cache_attrib.id",
+                ORDER BY cache_attrib.category, cache_attrib.id',
             strtoupper(I18n::getCurrentLang()), $this->getCacheId());
 
         if (XDb::xNumRows($s) == 0) {
@@ -1416,11 +1416,11 @@ class GeoCache extends GeoCacheCommons
     public function getGeokretsHosted()
     {
         if ($this->hostedGeokrets === false) {
-            $s = XDb::xSql("SELECT gk_item.id, name, distancetravelled as distance
+            $s = XDb::xSql('SELECT gk_item.id, name, distancetravelled as distance
                         FROM gk_item INNER JOIN gk_item_waypoint ON (gk_item.id = gk_item_waypoint.id)
                         WHERE gk_item_waypoint.wp = ?
                             AND stateid<>1 AND stateid<>4
-                            AND stateid<>5 AND typeid<>2 AND missing=0", $this->geocacheWaypointId);
+                            AND stateid<>5 AND typeid<>2 AND missing=0', $this->geocacheWaypointId);
 
             $this->hostedGeokrets = [];
             while ($row = Xdb::xFetchArray($s)) {
@@ -1461,8 +1461,8 @@ class GeoCache extends GeoCacheCommons
         }
 
         $this->db->multiVariableQuery(
-            "UPDATE caches SET last_modified=NOW(), latitude=:1, longitude=:2
-             WHERE cache_id=:3",
+            'UPDATE caches SET last_modified=NOW(), latitude=:1, longitude=:2
+             WHERE cache_id=:3',
             $newCoords->getLatitude(), $newCoords->getLongitude(), $this->getCacheId());
 
         $this->coordinates = $newCoords;
@@ -1492,9 +1492,9 @@ class GeoCache extends GeoCacheCommons
             $this->picturesList = [];
 
             $rs = XDb::xSql(
-                "SELECT uuid, title, url, spoiler FROM pictures
+                'SELECT uuid, title, url, spoiler FROM pictures
                 WHERE object_id = ? AND object_type=2 AND display=1
-                ORDER BY seq, date_created", $this->id);
+                ORDER BY seq, date_created', $this->id);
 
             while ($row=XDb::xFetchArray($rs)) {
                 $pic = new stdClass();             //TODO: it should be refactored to picture-class
@@ -1506,7 +1506,7 @@ class GeoCache extends GeoCacheCommons
                 $pic->thumbUrl = SimpleRouter::getLink(PictureController::class, 'thumbSizeMedium', [$row['uuid']]);
 
                 // path to images was changes - why not to fix it in DB?
-                $pic->url = str_replace("images/uploads", "upload", $row['url']);
+                $pic->url = str_replace('images/uploads', 'upload', $row['url']);
 
 
                 $this->picturesList[] = $pic;
@@ -1551,10 +1551,10 @@ class GeoCache extends GeoCacheCommons
         if ( is_null( $this->picsInLogsCount ) ) {
 
             $this->picsInLogsCount = Xdb::xMultiVariableQueryValue(
-                    "SELECT COUNT(*) FROM pictures, cache_logs
+                    'SELECT COUNT(*) FROM pictures, cache_logs
                     WHERE pictures.object_id = cache_logs.id
                         AND pictures.object_type = 1
-                        AND cache_logs.cache_id = :1", 0, $this->id);
+                        AND cache_logs.cache_id = :1', 0, $this->id);
         }
         return $this->picsInLogsCount;
     }
@@ -1562,18 +1562,18 @@ class GeoCache extends GeoCacheCommons
     public function hasDeletedLog()
     {
         return '1' == Xdb::xMultiVariableQueryValue(
-            "SELECT 1 FROM cache_logs
-            WHERE deleted = 1 and cache_id= :1 LIMIT 1", 0, $this->id);
+            'SELECT 1 FROM cache_logs
+            WHERE deleted = 1 and cache_id= :1 LIMIT 1', 0, $this->id);
     }
 
     public function getLogEntriesCount($countDeleted = false)
     {
 
-        $excludeDeleted = (!$countDeleted)?"deleted= 0 AND":'';
+        $excludeDeleted = (!$countDeleted)?'deleted= 0 AND':'';
 
         return Xdb::xMultiVariableQueryValue(
-            "SELECT count(*) FROM cache_logs
-            WHERE " . $excludeDeleted . " `cache_id`= :1", 0, $this->id);
+            'SELECT count(*) FROM cache_logs
+            WHERE ' . $excludeDeleted . ' `cache_id`= :1', 0, $this->id);
     }
 
     /**
@@ -1616,7 +1616,7 @@ class GeoCache extends GeoCacheCommons
      */
     public function getDifficultyIcon()
     {
-        return sprintf("/images/difficulty/diff-%d.gif", $this->difficulty);
+        return sprintf('/images/difficulty/diff-%d.gif', $this->difficulty);
     }
 
     /**
@@ -1624,7 +1624,7 @@ class GeoCache extends GeoCacheCommons
      */
     public function getTerrainIcon()
     {
-        return sprintf("/images/difficulty/terr-%d.gif", $this->terrain);
+        return sprintf('/images/difficulty/terr-%d.gif', $this->terrain);
     }
 
     /**
@@ -1640,10 +1640,10 @@ class GeoCache extends GeoCacheCommons
         $logType = intval($logType);
 
         return $this->db->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM cache_logs
+            'SELECT COUNT(*) FROM cache_logs
              WHERE deleted = 0 AND user_id = :1 AND cache_id = :2
                 AND type = :3
-             LIMIT 1", 0, $user->getUserId(), $this->getCacheId(),
+             LIMIT 1', 0, $user->getUserId(), $this->getCacheId(),
             $logType) > 0;
     }
 
@@ -1693,7 +1693,7 @@ class GeoCache extends GeoCacheCommons
     {
         [$newVotes, $newScore] = GeoCacheScore::getVotesScoreForCache($this->getCacheId());
 
-        $this->db->multiVariableQuery("UPDATE caches SET votes=:1, score=:2 WHERE cache_id=:3",
+        $this->db->multiVariableQuery('UPDATE caches SET votes=:1, score=:2 WHERE cache_id=:3',
             $newVotes, $newScore, $this->getCacheId());
     }
 
@@ -1707,9 +1707,9 @@ class GeoCache extends GeoCacheCommons
         $this->dateActivate = null;
 
         $this->db->multiVariableQuery(
-            "UPDATE `caches`
+            'UPDATE `caches`
               SET `status` = :1, `date_activate` = :2, `last_modified` = NOW()
-              WHERE `cache_id` = :3",
+              WHERE `cache_id` = :3',
             $this->status,
             $this->dateActivate,
             $this->id
@@ -1727,7 +1727,7 @@ class GeoCache extends GeoCacheCommons
 
         if ($sizesInUse === null) {
             $sizesInUse = self::db()->dbFetchOneColumnArray(
-                self::db()->simpleQuery("SELECT DISTINCT size FROM caches"),
+                self::db()->simpleQuery('SELECT DISTINCT size FROM caches'),
                 'size'
             );
         }
@@ -1737,7 +1737,7 @@ class GeoCache extends GeoCacheCommons
     public static function nanoIsInUse()
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT 1 FROM caches WHERE size = :1",
+            'SELECT 1 FROM caches WHERE size = :1',
             0,
             self::SIZE_NANO
         ) != 0;

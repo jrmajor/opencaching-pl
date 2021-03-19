@@ -558,7 +558,7 @@ use src\Controllers\ViewCacheController;
         </a>
         <a class="btn btn-sm btn-default"
               href="<?=SimpleRouter::getLink(ViewCacheController::class, 'rmOcTeamComments', $view->geoCache->getCacheId())?>"
-              onclick="return confirm('<?=tr("confirm_remove_rr_comment")?>');">
+              onclick="return confirm('<?=tr('confirm_remove_rr_comment')?>');">
            <?=tr('remove_rr_comment')?>
         </a>
     <?php } //if-admin-authorized ?>
@@ -1045,7 +1045,7 @@ use src\Controllers\ViewCacheController;
             <a class="btn btn-sm btn-default" href="viewlogs.php?cacheid=<?=$view->geoCache->getCacheId()?>">
               <!-- img src="/images/action/16x16-showall.png" class="icon16" alt=""
                    title="<?=tr('show_all_log_entries')?>" / -->
-              <?=tr("show_all_log_entries_short")?>
+              <?=tr('show_all_log_entries_short')?>
             </a>
         <?php } //if-logEntriesCount ?>
 
@@ -1067,7 +1067,7 @@ use src\Controllers\ViewCacheController;
     </span>
 </div>
 
-<?=$view->enableLogsFiltering ? $view->callChunk('logFilter', $view->isUserAuthorized, $view->geoCache->getCacheType()) : ""?>
+<?=$view->enableLogsFiltering ? $view->callChunk('logFilter', $view->isUserAuthorized, $view->geoCache->getCacheType()) : ''?>
 
 <div class="content2-container" id="viewcache-logs">
     <!-- log entries - to be loaded dynamicly by ajax -->

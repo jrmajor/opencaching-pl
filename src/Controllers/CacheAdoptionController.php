@@ -93,23 +93,23 @@ class CacheAdoptionController extends BaseController
 
         // remove all adoption offers for this cache in DB
         $this->db->multiVariableQuery(
-            "DELETE FROM chowner WHERE cache_id = :1", $cacheObj->getCacheId());
+            'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId());
 
         // update owner and org_user_id fields for the cache
         $oldOwner = User::fromUserIdFactory($cacheObj->getOwnerId());
         if (is_null($oldOwner)) {
             //no such user?!
-            $this->errorMsg = "Old owner not found!";
+            $this->errorMsg = 'Old owner not found!';
             return;
         }
 
         $this->db->multiVariableQuery(
-            "UPDATE caches SET user_id = :2, org_user_id = IF(org_user_id IS NULL, :3, org_user_id) WHERE cache_id= :1",
+            'UPDATE caches SET user_id = :2, org_user_id = IF(org_user_id IS NULL, :3, org_user_id) WHERE cache_id= :1',
             $cacheObj->getCacheId(), $this->loggedUser->getUserId(), $oldOwner->getUserId());
 
         // update owner for pictures
         $this->db->multiVariableQuery(
-            "UPDATE pictures SET user_id = :2 WHERE object_id = :1",
+            'UPDATE pictures SET user_id = :2 WHERE object_id = :1',
             $cacheObj->getCacheId(), $this->loggedUser->getUserId());
 
         // this should be kept consistent by a trigger
@@ -125,7 +125,7 @@ class CacheAdoptionController extends BaseController
         $logMessage .= ' <a href="' . $this->loggedUser->getProfileUrl() . '">' . tr('user') . '</a>';
 
         $this->db->multiVariableQuery(
-            "INSERT INTO cache_logs SET
+            'INSERT INTO cache_logs SET
                             cache_id = :1,
                             user_id = -1,
                             type = 3,
@@ -135,13 +135,13 @@ class CacheAdoptionController extends BaseController
                             date_created = NOW(),
                             last_modified = NOW(),
                             uuid = :3,
-                            node = :4",
+                            node = :4',
 
             $cacheObj->getCacheId(), $logMessage, Uuid::create(), OcConfig::getSiteNodeId() );
 
         $this->db->multiVariableQuery(
-            "UPDATE `caches` SET
-                `notes`= `notes`+1 WHERE `cache_id` =:1",
+            'UPDATE `caches` SET
+                `notes`= `notes`+1 WHERE `cache_id` =:1',
             $cacheObj->getCacheId());
 
         $this->db->commit();
@@ -180,7 +180,7 @@ class CacheAdoptionController extends BaseController
 
         // user refused to adopt this cache
         $this->db->multiVariableQuery(
-            "DELETE FROM chowner WHERE cache_id = :1", $cacheObj->getCacheId());
+            'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId());
 
         $oldOwner = User::fromUserIdFactory($cacheObj->getOwnerId());
         if (!is_null($oldOwner)) {
@@ -209,7 +209,7 @@ class CacheAdoptionController extends BaseController
 
             // old owner of the cache cancel adoption offer
             $this->db->multiVariableQuery(
-                "DELETE FROM chowner WHERE cache_id = :1", $cacheObj->getCacheId() );
+                'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId() );
 
             $this->infoMsg = tr('adopt_16');
         } else {
@@ -264,13 +264,13 @@ class CacheAdoptionController extends BaseController
 
             //check if there is no such offer
             if ($this->checkOffer( $cacheObj )) {
-                $this->errorMsg = "There is such adoption offer already!";
+                $this->errorMsg = 'There is such adoption offer already!';
                 $this->index();
                 exit;
             }
 
             $stmt = $this->db->multiVariableQuery(
-                "INSERT INTO chowner (cache_id, user_id) VALUES ( :1, :2)",
+                'INSERT INTO chowner (cache_id, user_id) VALUES ( :1, :2)',
                 $cacheObj->getCacheId(), $newUserObj->getUserId());
 
             if ($this->db->rowCount($stmt) > 0) {
@@ -318,11 +318,11 @@ class CacheAdoptionController extends BaseController
     {
         if ($userObj == null) {
             $offers = $this->db->multiVariableQueryValue(
-                "SELECT COUNT(*) FROM chowner WHERE cache_id = :1 LIMIT 1",
+                'SELECT COUNT(*) FROM chowner WHERE cache_id = :1 LIMIT 1',
                 0, $cacheObj->getCacheId() );
         } else {
             $offers = $this->db->multiVariableQueryValue(
-                "SELECT COUNT(*) FROM chowner WHERE cache_id = :1 AND user_id = :2 LIMIT 1",
+                'SELECT COUNT(*) FROM chowner WHERE cache_id = :1 AND user_id = :2 LIMIT 1',
                 0, $cacheObj->getCacheId(), $userObj->getUserId() );
         }
         return ( $offers> 0 ) ? true : false;
@@ -333,13 +333,13 @@ class CacheAdoptionController extends BaseController
         // lists all approved caches belonging to user + id of adoption offer (if present)
         return $this->db->dbResultFetchAll(
             $this->db->multiVariableQuery(
-            "SELECT c.cache_id, name, chowner.id AS adoptionOfferId, username AS offeredToUserName
+            'SELECT c.cache_id, name, chowner.id AS adoptionOfferId, username AS offeredToUserName
              FROM caches AS c LEFT JOIN chowner
                 ON chowner.cache_id = c.cache_id
                 LEFT JOIN user ON chowner.user_id = user.user_id
              WHERE c.user_id= :1
                 AND status <> 4
-             ORDER BY name",
+             ORDER BY name',
             $this->loggedUser->getUserId() ));
     }
 
@@ -347,12 +347,12 @@ class CacheAdoptionController extends BaseController
     {
         return $this->db->dbResultFetchAll(
             $this->db->multiVariableQuery(
-            "SELECT cache_id, name, date_hidden, username AS offeredFromUserName
+            'SELECT cache_id, name, date_hidden, username AS offeredFromUserName
             FROM caches LEFT JOIN user
                 ON caches.user_id = user.user_id
             WHERE cache_id IN (
                 SELECT cache_id FROM chowner WHERE user_id = :1
-            )",
+            )',
             $this->loggedUser->getUserId()));
     }
 }

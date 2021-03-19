@@ -6,8 +6,8 @@
 
       <div class="row">
         <a href="/viewcache.php?wp={{cacheCode}}&print_list=y" target="_blank">
-          <img src="/images/actions/list-add-16.png" title="<?=tr("add_to_list")?>"
-               alt="<?=tr("add_to_list")?>">
+          <img src="/images/actions/list-add-16.png" title="<?=tr('add_to_list')?>"
+               alt="<?=tr('add_to_list')?>">
         </a>
 
         <img id="cacheIcon" src="{{cacheIcon}}" alt="cache-icon">
@@ -25,24 +25,24 @@
       <div class="col">
       {{#unless isEvent}}
         <div>
-          <b><?=tr("size")?>:</b> {{cacheSizeDesc}}
+          <b><?=tr('size')?>:</b> {{cacheSizeDesc}}
         </div>
       {{/unless}}
 
       {{#if ratingDesc}}
         <div>
-          <b><?=tr("score")?>:</b> {{ratingDesc}}
+          <b><?=tr('score')?>:</b> {{ratingDesc}}
         </div>
       {{/if}}
 
         <div>
-          <b><?=tr("owner")?>:</b>
+          <b><?=tr('owner')?>:</b>
           <a href="{{ownerProfileUrl}}" target="_blank">{{ownerName}}</a>
         </div>
 
       {{#if isEvent}}
         <div>
-          <b><?=tr("beginning")?>:</b> {{eventStartDate}}
+          <b><?=tr('beginning')?>:</b> {{eventStartDate}}
         </div>
       {{/if}}
       </div>
@@ -50,33 +50,33 @@
       <div class="col">
         <div>
         {{#if isEvent}}
-          <img src="/images/log/16x16-attend.png" alt="<?=tr("attendends")?>">
-          {{cacheFounds}} x <?=tr("attendends")?>
+          <img src="/images/log/16x16-attend.png" alt="<?=tr('attendends')?>">
+          {{cacheFounds}} x <?=tr('attendends')?>
         {{else}}
-          <img src="/images/log/16x16-found.png" alt="<?=tr("found")?>">
-          {{cacheFounds}} x <?=tr("found")?>
+          <img src="/images/log/16x16-found.png" alt="<?=tr('found')?>">
+          {{cacheFounds}} x <?=tr('found')?>
         {{/if}}
         </div>
 
         <div>
         {{#if isEvent}}
-          <img src="/images/log/16x16-will_attend.png" alt="<?=tr("will_attend")?>">
-          {{cacheNotFounds}} x <?=tr("will_attend")?>
+          <img src="/images/log/16x16-will_attend.png" alt="<?=tr('will_attend')?>">
+          {{cacheNotFounds}} x <?=tr('will_attend')?>
         {{else}}
-          <img src="/images/log/16x16-dnf.png" alt="<?=tr("not_found")?>">
-          {{cacheNotFounds}} x <?=tr("not_found")?>
+          <img src="/images/log/16x16-dnf.png" alt="<?=tr('not_found')?>">
+          {{cacheNotFounds}} x <?=tr('not_found')?>
         {{/if}}
         </div>
 
         <div>
-          <img src="/images/free_icons/thumb_up.png" alt="<?=tr("scored")?>">
-            {{cacheRatingVotes}} x <?=tr("scored")?>
+          <img src="/images/free_icons/thumb_up.png" alt="<?=tr('scored')?>">
+            {{cacheRatingVotes}} x <?=tr('scored')?>
           </div>
 
       {{#if cacheRecosNumber}}
         <div>
-          <img src="/images/rating-star.png" alt="<?=tr("recommended")?>">
-          {{cacheRecosNumber}} x <?=tr("recommended")?>
+          <img src="/images/rating-star.png" alt="<?=tr('recommended')?>">
+          {{cacheRecosNumber}} x <?=tr('recommended')?>
         </div>
       {{/if}}
 
@@ -92,9 +92,9 @@
     {{#if powerTrailName}}
     <div>
       <div>
-        <b><?=tr("pt000")?>:</b>
+        <b><?=tr('pt000')?>:</b>
         <a href="{{powerTrailUrl}}" title="{{powerTrailName}}" target="_blank">
-        <img src="{{powerTrailIcon}}" alt="<?=tr("pt000")?>" title="{{powerTrailName}}">
+        <img src="{{powerTrailIcon}}" alt="<?=tr('pt000')?>" title="{{powerTrailName}}">
         {{powerTrailName}}</a>
       </div>
     </div>

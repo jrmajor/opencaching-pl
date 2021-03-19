@@ -17,37 +17,37 @@ use src\Utils\I18n\I18n;
 # This page took >60 seconds to render! Added daily caching.
 
 $result = OcMemCache::getOrCreate(
-    "articles_s7-" . I18n::getCurrentLang(),
+    'articles_s7-' . I18n::getCurrentLang(),
     86400,
 function ()
 {
     ob_start();
 
-    $rsUs["count"] = XDb::xSimpleQueryValue(
+    $rsUs['count'] = XDb::xSimpleQueryValue(
         'SELECT COUNT(*) `count` FROM
             (
                 SELECT COUNT(caches.user_id) FROM `caches`
                 WHERE `status`=1 GROUP BY `user_id`
             ) `users_with_founds`', 0);
 
-    $fCt["count"] = XDb::xSimpleQueryValue(
+    $fCt['count'] = XDb::xSimpleQueryValue(
         'SELECT COUNT(*) `count` FROM `caches` WHERE `status`=1', 0);
 
     $countriesQuoted = array_map( '\src\Utils\Database\XDb::xQuote', OcConfig::getSitePrimaryCountriesList() );
     $rsfCR = XDb::xSql(
-        "SELECT COUNT(*) `count`, `cache_location`.`adm3` region, `cache_location`.`code3` code_region
+        'SELECT COUNT(*) `count`, `cache_location`.`adm3` region, `cache_location`.`code3` code_region
         FROM `cache_location`
             INNER JOIN caches ON cache_location.cache_id=caches.cache_id
-        WHERE `cache_location`.`code1` IN (".implode(",", $countriesQuoted) .")
+        WHERE `cache_location`.`code1` IN ('.implode(',', $countriesQuoted) .")
             AND `caches`.`status`=1 AND `caches`.`type`<>6
             AND `cache_location`.`adm3`!=''
         GROUP BY `cache_location`.`code3`
         ORDER BY count DESC");
 
     echo '<table width="97%"><tr><td align="center"><center><b> ' . tr('Stats_t6_01') . '</b> <br />' . tr('Stats_t6_02') . '<br /> ' . tr('Stats_t6_03') . ': ';
-    echo $rsUs["count"];
+    echo $rsUs['count'];
     echo ' .::. ' . tr('Stats_t6_04') . ': ';
-    echo $fCt["count"];
+    echo $fCt['count'];
     echo '<br /><br />(' . tr('Stats_t6_05') . ')</center></td></tr></table><br><table border="1" bgcolor="white" width="97%">' . "\n";
     echo '
     <tr class="bgcolor2">
@@ -62,7 +62,7 @@ function ()
     while ($line = XDb::xFetchArray($rsfCR)) {
         echo '<tr class="bgcolor2">
                 <td align="right">
-                    &nbsp;&nbsp;<b>' . $line["count"] . '</b>&nbsp;&nbsp;
+                    &nbsp;&nbsp;<b>' . $line['count'] . '</b>&nbsp;&nbsp;
                 </td>
                 <td align="right">
                     &nbsp;&nbsp;<b><a class=links href=articles.php?page=s9&region=' . $line['code_region'] . '>' . $line['region'] . '</a></b>&nbsp;&nbsp;

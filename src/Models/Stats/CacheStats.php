@@ -29,11 +29,11 @@ class CacheStats extends BaseObject
 
     private static function generateChartDataCacheTypes()
     {
-        $query =  "SELECT COUNT(`type`) `count`, `type`
+        $query =  'SELECT COUNT(`type`) `count`, `type`
             FROM `caches`
             WHERE `status` = :1
             GROUP BY `type`
-            ORDER BY `count` DESC";
+            ORDER BY `count` DESC';
         $stmt = self::db()->multiVariableQuery($query, GeoCache::STATUS_READY);
 
         $rows = [];
@@ -71,7 +71,7 @@ class CacheStats extends BaseObject
     private static function generateChartDataCachesFound()
     {
         // Get data
-        $query = "SELECT c.caches, l.founds, c.month, c.year FROM
+        $query = 'SELECT c.caches, l.founds, c.month, c.year FROM
             (SELECT COUNT(*) `caches`, MONTH(`date_created`) `month`, YEAR(`date_created`) `year` FROM `caches`
                 WHERE caches.status = :1
                 GROUP BY MONTH(`date_created`), YEAR(`date_created`)) c
@@ -80,7 +80,7 @@ class CacheStats extends BaseObject
                 WHERE (`type` = :2 OR `type` = :3) AND `deleted` = 0
                 GROUP BY MONTH(`date_created`), YEAR(`date_created`)) l
             USING(year, month)
-        ORDER BY year ASC, month ASC";
+        ORDER BY year ASC, month ASC';
         $stmt = self::db()->multiVariableQuery($query, GeoCache::STATUS_READY, GeoCacheLog::LOGTYPE_FOUNDIT, GeoCacheLog::LOGTYPE_ATTENDED);
 
         $caches = 0;

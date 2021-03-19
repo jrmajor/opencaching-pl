@@ -16,7 +16,7 @@ class Column_DateTime extends AbstractColumn
 
     protected function getChunkName()
     {
-        return "listOfCaches/dateTimeColumn";
+        return 'listOfCaches/dateTimeColumn';
     }
 
     public function getCssClass()

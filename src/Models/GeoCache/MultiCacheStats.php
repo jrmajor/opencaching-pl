@@ -162,7 +162,7 @@ class MultiCacheStats extends BaseObject
             GROUP BY adm3
             ORDER BY newCaches DESC", $year);
 
-        return $db->dbFetchAsKeyValArray($rs, "region", "newCaches");
+        return $db->dbFetchAsKeyValArray($rs, 'region', 'newCaches');
 
     }
 
@@ -261,17 +261,17 @@ class MultiCacheStats extends BaseObject
                 $countriesStr .= "'". self::db()->quoteString($item) ."', ";
             }
             $countriesStr = rtrim($countriesStr, ', ');
-            $stmt = self::db()->multiVariableQuery("
+            $stmt = self::db()->multiVariableQuery('
             SELECT `cache_id`
             FROM `caches`
             WHERE `status` = :1
                 AND `date_published` IS NOT NULL
                 AND `date_published` > NOW() - INTERVAL 365 DAY
                 AND `type` != :2
-                AND `country` IN (". $countriesStr.")
+                AND `country` IN ('. $countriesStr.')
             ORDER BY
                 `date_published` DESC,
-                `cache_id` DESC",
+                `cache_id` DESC',
                 GeoCache::STATUS_READY,
                 GeoCache::TYPE_EVENT);
             return self::db()->dbFetchOneColumnArray($stmt, 'cache_id');
@@ -374,17 +374,17 @@ class MultiCacheStats extends BaseObject
                 $countriesStr .= "'". self::db()->quoteString($item) ."', ";
             }
             $countriesStr = rtrim($countriesStr, ', ');
-            $stmt = self::db()->multiVariableQuery("
+            $stmt = self::db()->multiVariableQuery('
             SELECT `cache_id`, `country`
             FROM `caches`
             WHERE `status` = :1
                 AND `date_published` IS NOT NULL
                 AND `date_published` > NOW() - INTERVAL 365 DAY
-                AND `country` NOT IN (".$countriesStr.")
+                AND `country` NOT IN ('.$countriesStr.')
             ORDER BY
                 `date_published` DESC,
                 `cache_id` DESC
-            LIMIT 300",
+            LIMIT 300',
                 GeoCache::STATUS_READY);
             return self::db()->dbResultFetchAll($stmt);
         });
@@ -421,7 +421,7 @@ class MultiCacheStats extends BaseObject
     public static function getLatestEventsForUser($user = null)
     {
         $eventList = OcMemCache::getOrCreate(__CLASS__ . ':getLatestEvents', 60 * 60, function () {
-            $stmt = self::db()->multiVariableQuery("
+            $stmt = self::db()->multiVariableQuery('
             SELECT `cache_id`
             FROM `caches`
             WHERE `status` = :1
@@ -429,7 +429,7 @@ class MultiCacheStats extends BaseObject
                 AND `date_hidden` > NOW() - INTERVAL 2 DAY
             ORDER BY
                 `date_hidden` DESC
-            LIMIT 500",
+            LIMIT 500',
                 GeoCache::STATUS_READY,
                 GeoCache::TYPE_EVENT);
             return self::db()->dbResultFetchAll($stmt);
@@ -463,14 +463,14 @@ class MultiCacheStats extends BaseObject
     private static function getTitledCachesId()
     {
         return OcMemCache::getOrCreate(__CLASS__ . ':getTitledCachesId', 24 * 60 * 60, function () {
-            $stmt = self::db()->multiVariableQuery("
+            $stmt = self::db()->multiVariableQuery('
             SELECT `cache_titled`.`cache_id` AS `cache_id`, `cache_titled`.`date_alg` AS `date`
             FROM `cache_titled`
             JOIN `caches` ON `caches`.`cache_id` = `cache_titled`.`cache_id`
             WHERE `status` = :1
             ORDER BY
                 `cache_titled`.`date_alg` DESC
-            LIMIT 500",
+            LIMIT 500',
                 GeoCache::STATUS_READY);
             return self::db()->dbResultFetchAll($stmt);
         });
@@ -526,7 +526,7 @@ class MultiCacheStats extends BaseObject
     private static function getRecommendedCachesId()
     {
         return OcMemCache::getOrCreate(__CLASS__ . ':getRecommendedCachesId', 24 * 60 * 60, function () {
-            $stmt = self::db()->multiVariableQuery("
+            $stmt = self::db()->multiVariableQuery('
             SELECT `cache_id`
             FROM `caches`
             WHERE `status` = :1
@@ -534,7 +534,7 @@ class MultiCacheStats extends BaseObject
             ORDER BY
                 `topratings` DESC,
                 `date_published` DESC
-            LIMIT 500",
+            LIMIT 500',
                 GeoCache::STATUS_READY);
             return self::db()->dbFetchOneColumnArray($stmt, 'cache_id');
         });

@@ -61,7 +61,7 @@ class UserUtilsController extends BaseController
         }
 
         // remove images older then 1 hour
-        FileManager::removeFilesOlderThan($qrCodesDir, "*.png", 60*60);
+        FileManager::removeFilesOlderThan($qrCodesDir, '*.png', 60*60);
 
         $labelFileName = TextGen::randomText(12).'.png';
         $qrCodeFileName = 'qrCode_'.$labelFileName;

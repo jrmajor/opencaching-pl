@@ -105,7 +105,7 @@ class Formatter
     {
         if (mb_strlen($text) > $length) {
             $result = mb_substr($text, 0, $length - 5)
-            . "(...)";
+            . '(...)';
         } else {
             $result = mb_substr($text, 0, $length);
         }

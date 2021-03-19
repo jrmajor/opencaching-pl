@@ -29,15 +29,15 @@ $cachescount = XDb::xSimpleQueryValue(
 
 <?php
     $r = XDb::xSql(
-        "SELECT COUNT(*) `count`, `user`.`username` `username`, `user`.`user_id` `user_id`
+        'SELECT COUNT(*) `count`, `user`.`username` `username`, `user`.`user_id` `user_id`
     FROM `caches`
         INNER JOIN `user` ON `caches`.`user_id`=`user`.`user_id`
     WHERE (`caches`.`status`=1 OR `caches`.`status`=2 OR `caches`.`status`=3 )
         AND `caches`.`type`<>6 AND user.stat_ban = 0
     GROUP BY `user`.`user_id`
-    ORDER BY `count` DESC, `user`.`username` ASC");
+    ORDER BY `count` DESC, `user`.`username` ASC');
 
-    $l2 = "";
+    $l2 = '';
     $licznik = 0;
     while ( $line = XDb::xFetchArray($r) ) {
         $l1 = $line['count'];

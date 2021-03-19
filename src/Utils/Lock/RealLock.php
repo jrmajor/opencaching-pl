@@ -26,10 +26,10 @@ abstract class RealLock extends Lock
         if (
             empty($trace[1])
             || !isset($trace[1]['class'])
-            || $trace[1]['class'] !== __NAMESPACE__ . "\\Lock"
+            || $trace[1]['class'] !== __NAMESPACE__ . '\\Lock'
         ) {
             throw new RuntimeException(
-                "caller has to be the " . __NAMESPACE__ . "\\Lock itself class"
+                'caller has to be the ' . __NAMESPACE__ . '\\Lock itself class'
             );
         }
         $this->internalConstruct($settings);

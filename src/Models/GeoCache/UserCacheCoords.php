@@ -11,8 +11,8 @@ class UserCacheCoords extends BaseObject
     {
 
         $rs = self::db()->multiVariableQuery(
-            "SELECT longitude AS lon, latitude AS lat FROM cache_mod_cords
-            WHERE cache_id = :1 AND user_id = :2 LIMIT 1",
+            'SELECT longitude AS lon, latitude AS lat FROM cache_mod_cords
+            WHERE cache_id = :1 AND user_id = :2 LIMIT 1',
             $cacheId, $userId);
 
         if($row = self::db()->dbResultFetchOneRowOnly($rs)){
@@ -30,17 +30,17 @@ class UserCacheCoords extends BaseObject
         self::deleteCoords($cacheId, $userId);
 
         self::db()->multiVariableQuery(
-            "INSERT INTO cache_mod_cords
+            'INSERT INTO cache_mod_cords
                 (cache_id, user_id, longitude, latitude, date)
-            VALUES(:1, :2, :3, :4, NOW() );",
+            VALUES(:1, :2, :3, :4, NOW() );',
             $cacheId, $userId, $coords->getLongitude(), $coords->getLatitude());
     }
 
     public static function deleteCoords($cacheId, $userId)
     {
         self::db()->multiVariableQuery(
-            "DELETE FROM cache_mod_cords
-            WHERE cache_id = :1 AND user_id = :2 LIMIT 1",
+            'DELETE FROM cache_mod_cords
+            WHERE cache_id = :1 AND user_id = :2 LIMIT 1',
             $cacheId, $userId);
     }
 

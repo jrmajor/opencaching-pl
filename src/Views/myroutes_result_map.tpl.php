@@ -5,9 +5,9 @@ use src\Libs\PolylineEncoder\PolylineEncoder;
 
 $route_id = $_REQUEST['routeid'];
 
-$rscp = XDb::xSql("SELECT `lat` ,`lon`
+$rscp = XDb::xSql('SELECT `lat` ,`lon`
                     FROM `route_points`
-                    WHERE `route_id`= ? ", $route_id);
+                    WHERE `route_id`= ? ', $route_id);
 $p = [];
 $points = [];
 for ($i = 0; false != ($record = XDb::xFetchArray($rscp)); $i++) {

@@ -69,8 +69,8 @@ class UserAuthorization extends BaseObject
             //strange: session presents but there is no such user?!
             self::clearContextVars();
             self::destroyAuthCookie();
-            Debug::errorLog(__METHOD__."Session present in cookie and DB ".
-                "but there is nosuch user!");
+            Debug::errorLog(__METHOD__.'Session present in cookie and DB '.
+                'but there is nosuch user!');
 
             return null;
         }
@@ -262,13 +262,13 @@ class UserAuthorization extends BaseObject
         $db = self::db();
 
         // remove login tries older that 1 HOUR
-        $db->query("DELETE FROM sys_logins
-                    WHERE `timestamp` < DATE_SUB(NOW(), INTERVAL 1 HOUR)");
+        $db->query('DELETE FROM sys_logins
+                    WHERE `timestamp` < DATE_SUB(NOW(), INTERVAL 1 HOUR)');
 
         // find number of latest login fails
         $lastHourLoginFails = $db->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM sys_logins
-             WHERE remote_addr=:1", 0, $_SERVER['REMOTE_ADDR']);
+            'SELECT COUNT(*) FROM sys_logins
+             WHERE remote_addr=:1', 0, $_SERVER['REMOTE_ADDR']);
 
         return $lastHourLoginFails > self::MAX_LOGIN_TRIES_PER_HOUR;
     }
@@ -276,15 +276,15 @@ class UserAuthorization extends BaseObject
 
     private static function insertOcSessionToDb($sessionId, $userId, $permanentSession){
         self::db()->multiVariableQuery(
-            "INSERT INTO sys_sessions (uuid, user_id, permanent, last_login)
-             VALUES (:1, :2, :3, NOW())", $sessionId, $userId, ($permanentSession ? 1 : 0));
+            'INSERT INTO sys_sessions (uuid, user_id, permanent, last_login)
+             VALUES (:1, :2, :3, NOW())', $sessionId, $userId, ($permanentSession ? 1 : 0));
     }
 
     private static function getUserIdFromOcSession($sessionId){
         $db = self::db();
         $stmt = $db->multiVariableQuery(
-            "SELECT user_id, permanent, TIMESTAMPDIFF(SECOND, last_login, NOW()) AS lastTouch
-             FROM sys_sessions WHERE uuid = :1 LIMIT 1", $sessionId);
+            'SELECT user_id, permanent, TIMESTAMPDIFF(SECOND, last_login, NOW()) AS lastTouch
+             FROM sys_sessions WHERE uuid = :1 LIMIT 1', $sessionId);
 
         $row = $db->dbResultFetchOneRowOnly($stmt);
         if($row && is_array($row) && isset($row['user_id'])){
@@ -303,7 +303,7 @@ class UserAuthorization extends BaseObject
             // touch last_login from time-to-time
             if( $row['lastTouch'] > self::LOGIN_TIMEOUT/10){
                 $db->multiVariableQuery(
-                    "UPDATE sys_sessions SET last_login=NOW() WHERE uuid = :1", $sessionId);
+                    'UPDATE sys_sessions SET last_login=NOW() WHERE uuid = :1', $sessionId);
 
                 User::updateLastLogin($row['user_id']); //also update last_login in user table
             }
@@ -318,7 +318,7 @@ class UserAuthorization extends BaseObject
     private static function deleteOcSessionFromDb($sessionId){
         // delete oc-session from DB
         self::db()->multiVariableQuery(
-            "DELETE FROM sys_sessions WHERE uuid = :1 LIMIT 1", $sessionId);
+            'DELETE FROM sys_sessions WHERE uuid = :1 LIMIT 1', $sessionId);
     }
 
     private static function deleteObsoleteOcSessions(){
@@ -346,10 +346,10 @@ class UserAuthorization extends BaseObject
     public static function getOnlineUsersFromDb()
     {
         $stmt = self::db()->multiVariableQuery(
-            "SELECT DISTINCT s.user_id AS user_id, u.username
+            'SELECT DISTINCT s.user_id AS user_id, u.username
              FROM sys_sessions AS s
                 LEFT JOIN user AS u USING (user_id)
-             WHERE s.last_login > DATE_SUB( NOW(), INTERVAL 15 MINUTE) ");
+             WHERE s.last_login > DATE_SUB( NOW(), INTERVAL 15 MINUTE) ');
 
         $result = [];
         while($row = self::db()->dbResultFetch($stmt)){
@@ -363,8 +363,8 @@ class UserAuthorization extends BaseObject
     private static function saveLoginFail(){
 
         self::db()->multiVariableQuery(
-            "INSERT INTO sys_logins (remote_addr, `timestamp`)
-             VALUES (:1, NOW())", $_SERVER['REMOTE_ADDR']);
+            'INSERT INTO sys_logins (remote_addr, `timestamp`)
+             VALUES (:1, NOW())', $_SERVER['REMOTE_ADDR']);
     }
 
     private static function generateSessionId(){
@@ -456,6 +456,6 @@ class UserAuthorization extends BaseObject
     public static function removeUserSessions(User $user)
     {
         return (null !== self::db()->multiVariableQuery(
-            "DELETE FROM sys_sessions WHERE user_id = :1", $user->getUserId()));
+            'DELETE FROM sys_sessions WHERE user_id = :1', $user->getUserId()));
     }
 }

@@ -178,7 +178,7 @@ class UserWatchedCachesController extends BaseController
     public function removeFromWatchesAjax($cacheWp)
     {
         if(!$this->isUserLogged()){
-            $this->ajaxErrorResponse("User not logged", 401);
+            $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
@@ -189,7 +189,7 @@ class UserWatchedCachesController extends BaseController
             $cache = GeoCache::fromWayPointFactory($cacheWp);
             $this->ajaxSuccessResponse($cache->getWatchingUsersCount());
         }else{
-            $this->ajaxErrorResponse("Unknown OKAPI error", 500);
+            $this->ajaxErrorResponse('Unknown OKAPI error', 500);
         }
     }
 
@@ -202,7 +202,7 @@ class UserWatchedCachesController extends BaseController
     public function addToWatchesAjax($cacheWp)
     {
         if(!$this->isUserLogged()){
-            $this->ajaxErrorResponse("User not logged", 401);
+            $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
@@ -213,7 +213,7 @@ class UserWatchedCachesController extends BaseController
             $cache = GeoCache::fromWayPointFactory($cacheWp);
             $this->ajaxSuccessResponse($cache->getWatchingUsersCount());
         }else{
-            $this->ajaxErrorResponse("Unknown OKAPI error", 500);
+            $this->ajaxErrorResponse('Unknown OKAPI error', 500);
         }
 
     }

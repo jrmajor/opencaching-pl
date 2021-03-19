@@ -38,8 +38,8 @@ class CacheRecommendation extends BaseObject
     public static function deleteRecommendation($userId, $cacheId)
     {
         $stmt = self::db()->multiVariableQuery(
-            "DELETE FROM cache_rating
-             WHERE cache_id = :1 AND user_id = :2 LIMIT 1", $cacheId, $userId);
+            'DELETE FROM cache_rating
+             WHERE cache_id = :1 AND user_id = :2 LIMIT 1', $cacheId, $userId);
 
         if($stmt->rowCount() > 0) {
             if (self::OcConfig()->isMeritBadgesEnabled()) {
@@ -60,8 +60,8 @@ class CacheRecommendation extends BaseObject
      */
     public static function getCountOfUserRecommendations($userId) {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(cache_id) FROM cache_rating
-                    WHERE user_id = :1", 0, $userId);
+            'SELECT COUNT(cache_id) FROM cache_rating
+                    WHERE user_id = :1', 0, $userId);
     }
 
 }

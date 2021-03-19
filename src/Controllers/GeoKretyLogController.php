@@ -60,7 +60,7 @@ class GeoKretyLogController extends BaseController
         }
 
         $this->lockAqquired = true;
-        $this->debug("Lock has been aqquired.");
+        $this->debug('Lock has been aqquired.');
 
 
         $logsProcessed = 0;
@@ -151,7 +151,7 @@ class GeoKretyLogController extends BaseController
         }
 
         if( empty($responseXML->errors->error) ){
-            $this->debug($gkLogDesc."...OK");
+            $this->debug($gkLogDesc.'...OK');
             return true;
         }
 
@@ -165,7 +165,7 @@ class GeoKretyLogController extends BaseController
                     return true;
                 }
 
-                $this->debug($gkLogDesc."ERROR: ".$errorMsg);
+                $this->debug($gkLogDesc.'ERROR: '.$errorMsg);
             }
         }
 
@@ -223,7 +223,7 @@ class GeoKretyLogController extends BaseController
 
     private function unlock()
     {
-        $this->debug("Unlocking GK processing...");
+        $this->debug('Unlocking GK processing...');
         fclose($this->lockFile);
     }
 

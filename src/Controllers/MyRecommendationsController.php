@@ -142,13 +142,13 @@ class MyRecommendationsController extends BaseController
     public function removeRecommendation($cacheId)
     {
         if(!$this->isUserLogged()) {
-            $this->ajaxErrorResponse("User not logged", 401);
+            $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
         //check cacheId
         if(!is_numeric($cacheId)) {
-            $this->ajaxErrorResponse("Invalid param", 400);
+            $this->ajaxErrorResponse('Invalid param', 400);
             exit;
         }
 

@@ -48,7 +48,7 @@ class SimpleRouter
         $ctrl = self::checkControllerName($ctrl);
 
         // remove "src." from begining of class (if added)
-        $ctrl = preg_replace("/^src./i","",$ctrl);
+        $ctrl = preg_replace('/^src./i','',$ctrl);
 
         $link = "/$ctrl";
 
@@ -57,7 +57,7 @@ class SimpleRouter
         } else {
             if(!is_null($params)) {
                 // set default action only if $params are present
-                $link .= "/".self::DEFAULT_ACTION;
+                $link .= '/'.self::DEFAULT_ACTION;
             }
         }
 
@@ -165,7 +165,7 @@ class SimpleRouter
             if (substr($uri, 0, 1) !== '/') {
                 $uri = '/'.$uri;
             }
-            $uri = "//" . $_SERVER['HTTP_HOST'] . $uri;
+            $uri = '//' . $_SERVER['HTTP_HOST'] . $uri;
         }
 
         header("Location: $uri");

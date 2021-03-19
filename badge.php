@@ -43,7 +43,7 @@ $whoPrepared = $userMeritBadge->getOBadge()->whoPrepared();
 
 $levelsMeritBadge = $meritBadgeCtrl->buildArrayLevels($badge_id);
 
-$contentLvl = "";
+$contentLvl = '';
 $is_user_level = false;
 $prevThreshold = 1;
 
@@ -68,13 +68,13 @@ foreach( $levelsMeritBadge as $oneLevel ){
 
 
     $color = MeritBadge::getColor($pure_level, $noLevels );
-    $level = "<b style=\'color:$color\'> ".intval($pure_level+1)."</b>";
+    $level = "<b style=\'color:$color\'> ".intval($pure_level+1).'</b>';
 
     $name = $oneLevel->getLevelName();
     $name = "<b style=\'color:$color\'>$name</b>";
 
     $gain = $oneLevel->getGainCounter();
-    $max_date = $oneLevel->getGainLastDate() ? Formatter::date($oneLevel->getGainLastDate()) : "";
+    $max_date = $oneLevel->getGainLastDate() ? Formatter::date($oneLevel->getGainLastDate()) : '';
 
 
     if ($is_user_level){
@@ -99,16 +99,16 @@ foreach( $levelsMeritBadge as $oneLevel ){
 
 $usersMeritBadge = $meritBadgeCtrl->buildArrayUsers($badge_id);
 
-$contentUsr = "";
-$level_id = "";
+$contentUsr = '';
+$level_id = '';
 
 foreach( $usersMeritBadge as $oneUserBadge ){
 
 
     if ( $level_id != $oneUserBadge->getLevelId()){
 
-        if ($level_id!= "" ) $contentUsr .= "}
-                ";
+        if ($level_id!= '' ) $contentUsr .= '}
+                ';
 
         $level_id = $oneUserBadge->getLevelId();
         $contentUsr .= "if (level== $level_id){";
@@ -123,7 +123,7 @@ foreach( $usersMeritBadge as $oneUserBadge ){
     $curr_val = $pure_curr_val;
 
     $pure_ts = $oneUserBadge->getLevelDateTS();
-    $curr_level_date = $oneUserBadge->getLevelDateTS() ? Formatter::date($oneUserBadge->getLevelDate()) : "";
+    $curr_level_date = $oneUserBadge->getLevelDateTS() ? Formatter::date($oneUserBadge->getLevelDate()) : '';
 
 
     if ($user_id == $userid ){
@@ -142,7 +142,7 @@ foreach( $usersMeritBadge as $oneUserBadge ){
         gctU.addToLastRow( 2, \"$curr_level_date\" );";
 }
 
-$contentUsr .= "}";
+$contentUsr .= '}';
 
 tpl_set_var( 'desc_cont', MeritBadge::sqlTextTransform($description) );
 tpl_set_var( 'who_prepared', $whoPrepared);
@@ -164,12 +164,12 @@ tpl_BuildTemplate();
 
 
 function setAsSelectedBold( $value ){
-    $value = "<b>" . $value . "</b>";
+    $value = '<b>' . $value . '</b>';
     return $value;
 }
 
 function setAsSelectedColor( $value ){
-    $value = "<span class='GCT-color-darkred'>" . $value . "</span>";
+    $value = "<span class='GCT-color-darkred'>" . $value . '</span>';
     return $value;
 }
 

@@ -42,15 +42,15 @@ set_time_limit(0);
 
 /* defaults */
 $importfiles = [
-    "pl.txt", "pl_administrative_a.txt",
-    "nl.txt", "nl_administrative_a.txt",
-    "be.txt", "be_administrative_a.txt",
-    "lu.txt", "lu_administrative_a.txt",
-    "ro.txt", "ro_administrative_a.txt",
+    'pl.txt', 'pl_administrative_a.txt',
+    'nl.txt', 'nl_administrative_a.txt',
+    'be.txt', 'be_administrative_a.txt',
+    'lu.txt', 'lu_administrative_a.txt',
+    'ro.txt', 'ro_administrative_a.txt',
 ]; # first download the file from the URLs above
 
 
-sql("DROP TABLE IF EXISTS `gns_locations` ");
+sql('DROP TABLE IF EXISTS `gns_locations` ');
 
 // the columns reflect one-to-one file structure
 // there may be additional columns at the end of the table
@@ -110,12 +110,12 @@ function importGns($filename)
         $filename = $_GET['basepath'] . '/' . $filename;
     }
     echo "Importing '$filename'...\n";
-    $file = fopen($filename, "r");
+    $file = fopen($filename, 'r');
     if (!$file) {
         return;
     }
-    $columns = mb_split("[\t ,]", "RC,UFI,UNI,LAT,LON,DMS_LAT,DMS_LONG,MGRS,JOG,FC,DSG,PC,CC1,ADM1,POP,ELEV,CC2,NT,LC,SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE,MODIFY_DATE,DISPLAY,NAME_RANK,NAME_LINK,TRANSL_CD,NM_MODIFY_DATE");
-    $utf_columns = mb_split("[\t ,]", "SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE");
+    $columns = mb_split("[\t ,]", 'RC,UFI,UNI,LAT,LON,DMS_LAT,DMS_LONG,MGRS,JOG,FC,DSG,PC,CC1,ADM1,POP,ELEV,CC2,NT,LC,SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE,MODIFY_DATE,DISPLAY,NAME_RANK,NAME_LINK,TRANSL_CD,NM_MODIFY_DATE');
+    $utf_columns = mb_split("[\t ,]", 'SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE');
     $line_cnt = 0;
     $cnt = 0;
     while ($line = fgets($file, 4096)) {
@@ -123,7 +123,7 @@ function importGns($filename)
             continue;
 
         $gns = mb_split("\t", $line);
-        $sql = "INSERT IGNORE INTO gns_locations SET";
+        $sql = 'INSERT IGNORE INTO gns_locations SET';
         $is_first = true;
         for ($i = 0; $i < count($gns); $i++) {
             $item = $gns[$i];

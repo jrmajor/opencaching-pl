@@ -17,12 +17,12 @@ class sendEmail
         $ptDbRow = powerTrailBase::getPtDbRow($ptId);
 
         //remove images
-        $commentText = preg_replace("/<img[^>]+\>/i", "", $commentText);
+        $commentText = preg_replace("/<img[^>]+\>/i", '', $commentText);
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8 ' . "\r\n";
-        $headers .= "From: ".OcConfig::getSiteName()." <" . OcConfig::getEmailAddrNoReply() . ">\r\n";
-        $headers .= "Reply-To: " . OcConfig::getEmailAddrNoReply() . "\r\n";
+        $headers .= 'From: '.OcConfig::getSiteName().' <' . OcConfig::getEmailAddrNoReply() . ">\r\n";
+        $headers .= 'Reply-To: ' . OcConfig::getEmailAddrNoReply() . "\r\n";
 
         $mailbody = file_get_contents(dirname(__FILE__) . '/commentEmail.html');
 
@@ -97,7 +97,7 @@ class sendEmail
                     Debug::errorLog('Mail sending failure: to:'.$to);
                 }
             }
-            if ($commentOwnerId && $commentOwnerId == $owner["user_id"]) {
+            if ($commentOwnerId && $commentOwnerId == $owner['user_id']) {
                 $doNotSendEmailToCommentAuthor = true;
             }
         }

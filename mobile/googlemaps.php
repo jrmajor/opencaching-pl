@@ -1,7 +1,7 @@
 <?php
 use src\Utils\Database\XDb;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 $wp = XDb::xEscape($_GET['wp']);
 

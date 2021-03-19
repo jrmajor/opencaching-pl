@@ -36,7 +36,7 @@ class MainMapAjaxController extends BaseController
 
     public function index()
     {
-        $this->ajaxErrorResponse("No index!", 404);
+        $this->ajaxErrorResponse('No index!', 404);
     }
 
     public function getPopupData($bboxStr, $userUuid)
@@ -152,7 +152,7 @@ class MainMapAjaxController extends BaseController
         $json = $_POST['userMapSettings'];
 
         if (UserPreferences::savePreferencesJson(MainMapSettings::KEY, $json)) {
-            $this->ajaxSuccessResponse("Data saved");
+            $this->ajaxSuccessResponse('Data saved');
         } else {
             $this->ajaxErrorResponse("Can't save a data", 500);
         }
@@ -192,8 +192,8 @@ class MainMapAjaxController extends BaseController
             $params
         );
 
-        if (! is_a($okapiResp, "ArrayObject")) { // strange OKAPI return !?
-            Debug::errorLog("Strange OKAPI response - not an ArrayObject!");
+        if (! is_a($okapiResp, 'ArrayObject')) { // strange OKAPI return !?
+            Debug::errorLog('Strange OKAPI response - not an ArrayObject!');
             $this->ajaxErrorResponse('Internal error', 500);
             exit;
         }
@@ -210,12 +210,12 @@ class MainMapAjaxController extends BaseController
 
     private function loadSearchData($searchData)
     {
-        $filepath = OcConfig::getDynFilesPath() . "/searchdata/" . $searchData;
+        $filepath = OcConfig::getDynFilesPath() . '/searchdata/' . $searchData;
 
         $set_id = Facade::import_search_set_file($searchData, $filepath);
 
         $this->searchParams['set_and'] = $set_id;
-        $this->searchParams['status'] = "Available|Temporarily unavailable|Archived";
+        $this->searchParams['status'] = 'Available|Temporarily unavailable|Archived';
     }
 
     /**
@@ -253,7 +253,7 @@ class MainMapAjaxController extends BaseController
 
         // exMyOwn (hide user's own caches) - convert to OKAPI's "exclude_my_own" parameter.
         if (isset($_GET['exMyOwn'])) {
-            $this->searchParams['owner_uuid'] = "-".$userUuid;
+            $this->searchParams['owner_uuid'] = '-'.$userUuid;
         }
 
         // filter out found or not yet found caches
@@ -261,7 +261,7 @@ class MainMapAjaxController extends BaseController
 
             if ( isset($_GET['exNoYetFound'])) {
                 // exclude found && notAttendYet = empty set of caches
-                $this->ajaxErrorResponse("Search params are contradictory", 400);
+                $this->ajaxErrorResponse('Search params are contradictory', 400);
             } else {
                 $this->searchParams['not_found_by'] = $userUuid;
             }
@@ -272,27 +272,27 @@ class MainMapAjaxController extends BaseController
 
         // exNoGeokret - Convert to OKAPI's "with_trackables_only" parameter.
         if ( isset($_GET['exNoGeokret']) ) {
-            $this->searchParams['with_trackables_only'] = "true";
+            $this->searchParams['with_trackables_only'] = 'true';
         }
 
         // OKAPI's "status" filter.
         $status = ['Available']; // available is always present
         if ( !isset($_GET['exTempUnavail']) ) {
-            $status[] = "Temporarily unavailable";
+            $status[] = 'Temporarily unavailable';
         }
         if ( !isset($_GET['exArchived']) ) {
-            $status[] = "Archived";
+            $status[] = 'Archived';
         }
-        $this->searchParams['status'] = implode("|", $status);
+        $this->searchParams['status'] = implode('|', $status);
 
         // exNoGeokret - Convert to OKAPI's "with_trackables_only" parameter.
         if ( isset($_GET['exWithoutRecommendation']) ) {
-            $this->searchParams['min_rcmds'] = "1";
+            $this->searchParams['min_rcmds'] = '1';
         }
 
         // ftfHunter (hunt for FTFs) - convert to OKAPI's "ftf_hunter" parameter.
         if ( isset($_GET['ftfHunter']) ) {
-            $this->searchParams['ftf_hunter'] = "true";
+            $this->searchParams['ftf_hunter'] = 'true';
 
             // BTW, if we override "status" parameter, then we should also override
             // "rating" (all ftfs have "null" for rating). I don't do that though, to
@@ -301,7 +301,7 @@ class MainMapAjaxController extends BaseController
 
         // powertrailOnly (hunt for powerTrails) - convert to OKAPI's "powertrail_only" parameter.
         if ( isset($_GET['powertrailOnly']) ) {
-            $this->searchParams['powertrail_only'] = "true";
+            $this->searchParams['powertrail_only'] = 'true';
         }
 
         // min_score - convert to OKAPI's "rating" filter
@@ -314,16 +314,16 @@ class MainMapAjaxController extends BaseController
         if ( isset($_GET['size2']) ){
             //'none', 'nano', 'micro', 'small', 'regular', 'large', 'xlarge', 'other'.
             switch($_GET['size2']){
-                case "nano":
+                case 'nano':
                     $this->searchParams['size2'] = 'micro|small|regular|large|xlarge|other';
                     break;
-                case "micro":
+                case 'micro':
                     $this->searchParams['size2'] = 'small|regular|large|xlarge|other';
                     break;
-                case "small":
+                case 'small':
                     $this->searchParams['size2'] = 'regular|large|xlarge|other';
                     break;
-                case "regular":
+                case 'regular':
                     $this->searchParams['size2'] = 'large|xlarge|other';
                     break;
             }
@@ -339,7 +339,7 @@ class MainMapAjaxController extends BaseController
 
         // exclusion of types - convert to OKAPI's "type" filter
         $typesToExclude = [];
-        $types = ["Other", "Traditional", "Multi", "Virtual", "Webcam", "Event", "Quiz", "Moving", "Own"];
+        $types = ['Other', 'Traditional', 'Multi', 'Virtual', 'Webcam', 'Event', 'Quiz', 'Moving', 'Own'];
 
         foreach ($types as $type) {
             if( isset($_GET['exType'.$type]) ){
@@ -347,7 +347,7 @@ class MainMapAjaxController extends BaseController
             }
         }
         if ( !empty($typesToExclude) ) {
-            $this->searchParams['type'] = "-" . implode("|", $typesToExclude);
+            $this->searchParams['type'] = '-' . implode('|', $typesToExclude);
         }
     }
 

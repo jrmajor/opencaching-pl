@@ -13,7 +13,7 @@ class Column_UserName extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/userNameColumn";
+        return 'listOfCaches/userNameColumn';
     }
 
     public function getCssClass() {

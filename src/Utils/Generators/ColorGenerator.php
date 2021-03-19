@@ -348,7 +348,7 @@ class ColorGenerator
      */
     public static function trueRandomColor(): string
     {
-        return sprintf("#%06X", mt_rand(0, 0xFFFFFF));
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
     }
 
     public static function rgb(string $htmlColorName): array

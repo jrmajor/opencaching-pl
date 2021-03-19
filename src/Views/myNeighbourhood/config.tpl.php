@@ -35,7 +35,7 @@ use src\Utils\Uri\SimpleRouter;
 <?php } // end if coordsOK ?>
   <div class="notice"><?=tr('myn_map_info2')?></div>
   <div id="nbhmapmain" class="nbh-map"></div>
-  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, "nbhmapmain");?>
+  <?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'nbhmapmain');?>
 
   <div class="align-center">
     <div id="nbh-startdraw-btn" class="btn btn-md btn-success"><?=tr('myn_map_drawbtn')?></div>

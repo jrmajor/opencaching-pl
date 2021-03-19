@@ -31,12 +31,12 @@ class LocationController extends BaseController
         $this->checkUserLoggedAjax();
 
         if(!Countries::isKnownCountryCode($countryCode)){
-            $this->ajaxErrorResponse("Unknown country code.");
+            $this->ajaxErrorResponse('Unknown country code.');
         }
 
         $regions = NutsLocation::getRegionsListByCountryCode($countryCode);
 
-        $this->ajaxSuccessResponse("Countries", ['regions' => $regions]);
+        $this->ajaxSuccessResponse('Countries', ['regions' => $regions]);
     }
 
     public function getRegionsByLocation($lat, $lon)
@@ -44,12 +44,12 @@ class LocationController extends BaseController
         $this->checkUserLoggedAjax();
         $coords = Coordinates::FromCoordsFactory($lat, $lon);
         if (!$coords) {
-            $this->ajaxErrorResponse("Improper coords!");
+            $this->ajaxErrorResponse('Improper coords!');
         }
 
         $nutsLocation = NutsLocation::fromCoordsFactory($coords);
 
-        $this->ajaxSuccessResponse("Location based on coords.",
+        $this->ajaxSuccessResponse('Location based on coords.',
             ['locationTable' => $nutsLocation->getDataTable()]);
 
     }

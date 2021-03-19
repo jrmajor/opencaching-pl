@@ -37,10 +37,10 @@ class NutsLocation extends BaseObject
     {
 
         $rs = $this->db->multiVariableQuery(
-            "SELECT `level`, code, AsText(shape) AS geometry
+            'SELECT `level`, code, AsText(shape) AS geometry
             FROM nuts_layer
             WHERE ST_WITHIN( GeomFromText( :1 ), shape)
-            ORDER BY `level` DESC",
+            ORDER BY `level` DESC',
             "POINT({$coords->getLongitude()} {$coords->getLatitude()})");
 
         while ($row = $this->db->dbResultFetch($rs)) {
@@ -201,7 +201,7 @@ class NutsLocation extends BaseObject
     {
 
         return (0 < self::db()->multiVariableQueryValue(
-                "SELECT COUNT(*) FROM nuts_codes WHERE code= :1 LIMIT 1", 0, $code)
+                'SELECT COUNT(*) FROM nuts_codes WHERE code= :1 LIMIT 1', 0, $code)
         );
     }
 
@@ -226,9 +226,9 @@ class NutsLocation extends BaseObject
         $countryCode .= '__'; // add sql wildcard (two letters)
         $db = self::db();
         return $db->dbResultFetchAll($db->multiVariableQuery(
-            "SELECT code, name FROM nuts_codes
+            'SELECT code, name FROM nuts_codes
              WHERE code LIKE :1
-             ORDER BY name ASC", $countryCode));
+             ORDER BY name ASC', $countryCode));
     }
 
 }

@@ -29,9 +29,9 @@ function positionsCB(){
     gct.setDataTable();
 
     gct.addColumn('string', '' ); //
-    gct.addColumn('string',  '<?php echo tr("geocache") ?>', 'font-size: 12px; ' ); //1
-    gct.addColumn('string', '<?php echo tr("owner") ?>', 'font-size: 12px; ' ); //2
-    gct.addColumn('string', '<?php echo tr("merit_badge_gain_date") ?>', 'font-size: 12px; ' ); //3
+    gct.addColumn('string',  '<?php echo tr('geocache') ?>', 'font-size: 12px; ' ); //1
+    gct.addColumn('string', '<?php echo tr('owner') ?>', 'font-size: 12px; ' ); //2
+    gct.addColumn('string', '<?php echo tr('merit_badge_gain_date') ?>', 'font-size: 12px; ' ); //3
 
     gct.addOption('sortColumn', 3 ); //Date
     gct.addOption('sortAscending', false );

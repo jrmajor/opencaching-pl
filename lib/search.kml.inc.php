@@ -121,11 +121,11 @@ if ($loggedUser || ! $hide_coords) {
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim($rName['name']);
             } else {
-                $sFilebasename = "search" . $options['queryid'];
+                $sFilebasename = 'search' . $options['queryid'];
             }
         }
     }
-    $sFilebasename = str_replace(" ", "_", $sFilebasename);
+    $sFilebasename = str_replace(' ', '_', $sFilebasename);
 
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));

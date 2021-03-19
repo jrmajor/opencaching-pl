@@ -69,10 +69,10 @@ function levelCB(){
 
     gct.addColumn( 'string', ''); //0
     gct.addColumn( 'string',  '', 'font-size: 12px; ' ); //1
-    gct.addColumn( 'string',  '<?php echo tr("merit_badge_level") ?>', 'font-size: 12px; ' ); //2
-    gct.addColumn( 'string', '<?php echo tr("merit_badge_number_threshold"); ?>', 'width: 90px; font-size: 12px; text-align:left;' ); //3
-    gct.addColumn( 'string', '<?php echo tr("merit_badge_gain_count") ?>', 'width: 50px; font-size: 12px; text-align:right;' ); //4
-    gct.addColumn( 'string', '<?php echo tr("merit_badge_gain_last_date") ?>', 'width: 100px;font-size: 12px; ' ); //5
+    gct.addColumn( 'string',  '<?php echo tr('merit_badge_level') ?>', 'font-size: 12px; ' ); //2
+    gct.addColumn( 'string', '<?php echo tr('merit_badge_number_threshold'); ?>', 'width: 90px; font-size: 12px; text-align:left;' ); //3
+    gct.addColumn( 'string', '<?php echo tr('merit_badge_gain_count') ?>', 'width: 50px; font-size: 12px; text-align:right;' ); //4
+    gct.addColumn( 'string', '<?php echo tr('merit_badge_gain_last_date') ?>', 'width: 100px;font-size: 12px; ' ); //5
 
     gct.hideColumns( [0] );
 
@@ -101,7 +101,7 @@ function userCB(){
 
     gctU.addColumn('string', "<?php echo tr('user') ?>", 'font-size: 12px;'); //0
     gctU.addColumn('number', "<?php echo tr('merit_badge_number') ?>", 'font-size: 12px;text-align:right;'); //1
-    gctU.addColumn('string', '<?php echo tr("merit_badge_gain_date") ?>', 'font-size: 12px;' ); //2
+    gctU.addColumn('string', '<?php echo tr('merit_badge_gain_date') ?>', 'font-size: 12px;' ); //2
 
     gctU.addOption('width', 300);
     gctU.addOption('pageSize', 20 );

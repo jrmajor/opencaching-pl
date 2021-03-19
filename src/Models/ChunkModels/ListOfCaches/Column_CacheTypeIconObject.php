@@ -17,7 +17,7 @@ class Column_CacheTypeIconObject extends AbstractColumn {
      */
     protected function getChunkName()
     {
-        return "listOfCaches/cacheTypeIconObjectColumn";
+        return 'listOfCaches/cacheTypeIconObjectColumn';
     }
 
     /**

@@ -17,17 +17,17 @@ class GeoCacheDesc extends BaseObject
 
     private $id;
     private $cacheId;
-    private $language="";
-    private $desc="";
+    private $language='';
+    private $desc='';
     private $desc_html=0;
     private $desc_htmledit;
-    private $hint = "";
-    private $short_desc = "";
+    private $hint = '';
+    private $short_desc = '';
     private $date_created;
     private $last_modified;
     private $uuid;
     private $node;
-    private $rr_comment="";
+    private $rr_comment='';
 
 
     public function __construct(){
@@ -57,10 +57,10 @@ class GeoCacheDesc extends BaseObject
     private function loadByCacheId($cacheId, $descLang)
     {
         $rs = $this->db->multiVariableQuery(
-            "SELECT * FROM cache_desc
+            'SELECT * FROM cache_desc
             WHERE cache_id = :1
                 AND language = :2
-            LIMIT 1",
+            LIMIT 1',
             $cacheId, $descLang);
 
         $descDbRow = $this->db->dbResultFetchOneRowOnly($rs);
@@ -147,10 +147,10 @@ class GeoCacheDesc extends BaseObject
                             '<span class="ocTeamComment">'.$comment.'</span>';
 
         self::db()->multiVariableQuery(
-            "UPDATE cache_desc SET
+            'UPDATE cache_desc SET
                 rr_comment = CONCAT(:1, rr_comment),
                 last_modified = NOW()
-            WHERE cache_id= :2 ", $formattedComment, $geoCache->getCacheId());
+            WHERE cache_id= :2 ', $formattedComment, $geoCache->getCacheId());
 
 
         EmailSender::sendNotifyOfOcTeamCommentToCache($geoCache, $author, $comment);

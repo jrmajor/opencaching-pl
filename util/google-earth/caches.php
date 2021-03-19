@@ -44,10 +44,10 @@ if ((abs($lon_from - $lon_to) > 2) || (abs($lat_from - $lat_to) > 2)) {
 $language = I18n::getCurrentLang();
 
 $rs = XDb::xSql(
-    "SELECT `caches`.`cache_id` `cacheid`, `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`,
+    'SELECT `caches`.`cache_id` `cacheid`, `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`,
             `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`date_hidden` `date_hidden`,
             `caches`.`name` `name`, `caches`.`wp_oc` `cache_wp`,
-            `cache_type`.`" . $language . "` `typedesc`, `caches`.`size` ,
+            `cache_type`.`' . $language . '` `typedesc`, `caches`.`size` ,
             `caches`.`terrain` `terrain`, `caches`.`difficulty` `difficulty`,
             `user`.`username` `username`
     FROM `caches`, `cache_type`, `user`
@@ -57,7 +57,7 @@ $rs = XDb::xSql(
         AND `caches`.`longitude` >= ?
         AND `caches`.`longitude` <= ?
         AND `caches`.`latitude` >= ?
-        AND `caches`.`latitude` <= ? ",
+        AND `caches`.`latitude` <= ? ',
     $lon_from, $lon_to, $lat_from, $lat_to);
 
 echo $kmlHead;

@@ -52,14 +52,14 @@ class convertLongLat {
 class OpenCheckerCore {
 
     public function BruteForceCheck($OpenCheckerSetup) {
-        tpl_set_var("section_3_start", '');
-        tpl_set_var("section_3_stop", '');
-        tpl_set_var("section_2_start", '<!--');
-        tpl_set_var("section_2_stop", '-->');
-        tpl_set_var("section_1_start", '<!--');
-        tpl_set_var("section_1_stop", '-->');
-        tpl_set_var("count_limit", $OpenCheckerSetup->count_limit);
-        tpl_set_var("time_limit", $OpenCheckerSetup->time_limit);
+        tpl_set_var('section_3_start', '');
+        tpl_set_var('section_3_stop', '');
+        tpl_set_var('section_2_start', '<!--');
+        tpl_set_var('section_2_stop', '-->');
+        tpl_set_var('section_1_start', '<!--');
+        tpl_set_var('section_1_stop', '-->');
+        tpl_set_var('count_limit', $OpenCheckerSetup->count_limit);
+        tpl_set_var('time_limit', $OpenCheckerSetup->time_limit);
 
         /**
          *  check how many times user tried to guess answer
@@ -77,23 +77,23 @@ class OpenCheckerCore {
                     $_SESSION['openchecker_time'] = $now;
                 } else {
                     $elapsed_time = round($OpenCheckerSetup->time_limit - ($elapsed_time / 60));
-                    tpl_set_var("elapsed_time",$elapsed_time);
-                    tpl_set_var("attempts_counter", $_SESSION["openchecker_counter"]);
-                    tpl_set_var("result_title", tr('openchecker_attempts_too_many'));
-                    tpl_set_var("score", '');
-                    tpl_set_var("image_yesno", '<image src="/images/blue/openchecker_stop.png" />');
-                    tpl_set_var("result_text", tr('openchecker_attempts_info_01') . ' ' . $OpenCheckerSetup->count_limit .
+                    tpl_set_var('elapsed_time',$elapsed_time);
+                    tpl_set_var('attempts_counter', $_SESSION['openchecker_counter']);
+                    tpl_set_var('result_title', tr('openchecker_attempts_too_many'));
+                    tpl_set_var('score', '');
+                    tpl_set_var('image_yesno', '<image src="/images/blue/openchecker_stop.png" />');
+                    tpl_set_var('result_text', tr('openchecker_attempts_info_01') . ' ' . $OpenCheckerSetup->count_limit .
                         ' ' . tr('openchecker_attempts_info_02') . ' ' . $OpenCheckerSetup->time_limit . ' ' . tr('openchecker_attempts_info_03') .
                         '<br />' . tr('openchecker_attempts_info_04') . ' ' . $elapsed_time . ' ' . tr('openchecker_attempts_info_05'));
-                    tpl_set_var("section_4_start", '');
-                    tpl_set_var("section_4_stop", '');
-                    tpl_set_var("save_mod_coord", '');
-                    tpl_set_var("waypoint_desc", '');
+                    tpl_set_var('section_4_start', '');
+                    tpl_set_var('section_4_stop', '');
+                    tpl_set_var('save_mod_coord', '');
+                    tpl_set_var('waypoint_desc', '');
                     $this->Finalize();
                 }
             } else {
-                tpl_set_var("section_4_start", '<!--');
-                tpl_set_var("section_4_stop", '-->');
+                tpl_set_var('section_4_start', '<!--');
+                tpl_set_var('section_4_stop', '-->');
                 $last_attempt = isset($_SESSION['openchecker_time'])?$_SESSION['openchecker_time']:0;
                 $elapsed_time = $now - $last_attempt;
                 if ($elapsed_time > $OpenCheckerSetup->time_limit * 60) {
@@ -105,15 +105,15 @@ class OpenCheckerCore {
                     $_SESSION['openchecker_counter'] = $_SESSION['openchecker_counter'] + 1;
                     $_SESSION['openchecker_time'] = $now;
                 }
-                tpl_set_var("attempts_counter", $_SESSION["openchecker_counter"]);
+                tpl_set_var('attempts_counter', $_SESSION['openchecker_counter']);
             }
         } else {
             // initialize limits for this user's profile
             $_SESSION['openchecker_counter'] = 1;
             $_SESSION['openchecker_time'] = $now;
-            tpl_set_var("attempts_counter", $_SESSION["openchecker_counter"]);
-            tpl_set_var("section_4_start", '<!--');
-            tpl_set_var("section_4_stop", '-->');
+            tpl_set_var('attempts_counter', $_SESSION['openchecker_counter']);
+            tpl_set_var('section_4_start', '<!--');
+            tpl_set_var('section_4_stop', '-->');
         }
     }
 
@@ -125,23 +125,23 @@ class OpenCheckerCore {
 
         $guessCorrds = Coordinates::FromCoordsFactory($lat, $lon);
 
-        tpl_set_var("section_2_start", '');
-        tpl_set_var("section_2_stop", '');
+        tpl_set_var('section_2_start', '');
+        tpl_set_var('section_2_stop', '');
 
         $view = tpl_getView();
         $view->setVar('displayOpencheckerForm', false);
-        tpl_set_var("openchecker_not_enabled", '');
+        tpl_set_var('openchecker_not_enabled', '');
 
         $cache_id = XDb::xEscape($_POST['cacheid']);
         /** @var GeoCache */
         $geoCache = GeoCache::fromCacheIdFactory($cache_id);
 
         if (!$geoCache) { //there is no such geocache?
-            tpl_set_var("openchecker_wrong_cache", tr(openchecker_wrong_cache));
-            tpl_set_var("section_2_start", '<!--');
-            tpl_set_var("section_2_stop", '-->');
-            tpl_set_var("section_5_start", '');
-            tpl_set_var("section_5_stop", '');
+            tpl_set_var('openchecker_wrong_cache', tr(openchecker_wrong_cache));
+            tpl_set_var('section_2_start', '<!--');
+            tpl_set_var('section_2_stop', '-->');
+            tpl_set_var('section_5_start', '');
+            tpl_set_var('section_5_stop', '');
             $this->Finalize();
         }
 
@@ -149,11 +149,11 @@ class OpenCheckerCore {
 
         tpl_set_var('wp_oc', $geoCache->getWaypointId());
 
-        tpl_set_var("cache_icon", '<img src="'. $geoCache->getCacheIcon() . '" />');
-        tpl_set_var("cacheid", $cache_id);
-        tpl_set_var("user_name", htmlspecialchars($owner->getUserName()));
-        tpl_set_var("cachename", htmlspecialchars($geoCache->getCacheName()));
-        tpl_set_var("user_id", $owner->getUserId());
+        tpl_set_var('cache_icon', '<img src="'. $geoCache->getCacheIcon() . '" />');
+        tpl_set_var('cacheid', $cache_id);
+        tpl_set_var('user_name', htmlspecialchars($owner->getUserName()));
+        tpl_set_var('cachename', htmlspecialchars($geoCache->getCacheName()));
+        tpl_set_var('user_id', $owner->getUserId());
 
         // geting data from database
         $conn = XDb::instance();
@@ -171,10 +171,10 @@ class OpenCheckerCore {
         FROM   `waypoints`, `opensprawdzacz`, `caches`
         WHERE  `waypoints`.`cache_id`='$cache_id'
         AND `waypoints`.`opensprawdzacz` = 1
-        AND `waypoints`.`type` = " . Waypoint::TYPE_FINAL . "
+        AND `waypoints`.`type` = " . Waypoint::TYPE_FINAL . '
         AND `waypoints`.`cache_id`= `opensprawdzacz`.`cache_id`
         AND `waypoints`.`cache_id`= `caches`.`cache_id`
-        ";
+        ';
 
         $data = $conn->query($query);
         $data = $data->fetch(PDO::FETCH_ASSOC);
@@ -191,7 +191,7 @@ class OpenCheckerCore {
             try {
                 $pdo = XDb::instance();
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $updateCounters = $pdo->exec("UPDATE `opensprawdzacz` SET `proby`=" . $attempts_counter . ",`sukcesy`=" . $hits_counter . "  WHERE `cache_id` = " . $cache_id);
+                $updateCounters = $pdo->exec('UPDATE `opensprawdzacz` SET `proby`=' . $attempts_counter . ',`sukcesy`=' . $hits_counter . '  WHERE `cache_id` = ' . $cache_id);
             } catch (PDOException $e) {
                 echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
                 exit;
@@ -215,9 +215,9 @@ class OpenCheckerCore {
                 $post_viewcache_form = '';
             }
 
-            tpl_set_var("result_title", tr('openchecker_success'));
-            tpl_set_var("image_yesno", '<image src="/images/blue/openchecker_yes.png" />');
-            tpl_set_var("save_mod_coord", $post_viewcache_form);
+            tpl_set_var('result_title', tr('openchecker_success'));
+            tpl_set_var('image_yesno', '<image src="/images/blue/openchecker_yes.png" />');
+            tpl_set_var('save_mod_coord', $post_viewcache_form);
             if ($OpenCheckerSetup->show_wpt_desc) {
                 $desc = '
     <p>&nbsp;</p>
@@ -244,19 +244,19 @@ class OpenCheckerCore {
                 echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
                 exit;
             }
-            tpl_set_var("result_title", tr('openchecker_fail'));
-            tpl_set_var("image_yesno", '<image src="/images/blue/openchecker_no.png" />');
-            tpl_set_var("save_mod_coord", '');
-            tpl_set_var("waypoint_desc",'');
+            tpl_set_var('result_title', tr('openchecker_fail'));
+            tpl_set_var('image_yesno', '<image src="/images/blue/openchecker_no.png" />');
+            tpl_set_var('save_mod_coord', '');
+            tpl_set_var('waypoint_desc','');
         }
-        tpl_set_var("score", '');
+        tpl_set_var('score', '');
         if ($guessCorrds !== null) {
-            tpl_set_var("result_text", tr('openchecker_your_coordinates') .
+            tpl_set_var('result_text', tr('openchecker_your_coordinates') .
                 ': <b>'.$guessCorrds->getAsText(Coordinates::COORDINATES_FORMAT_DEG_MIN).'</b>');
         } else {
-            tpl_set_var("result_text", '');
+            tpl_set_var('result_text', '');
         }
-        tpl_set_var("cache_id", $cache_id);
+        tpl_set_var('cache_id', $cache_id);
 
         $this->Finalize();
         // goto Finalize;
@@ -288,8 +288,8 @@ class OpenCheckerCore {
             <button type="submit" name="submit" value="' . tr('openchecker_check') . '" class="btn btn-default btn-sm">' . tr('openchecker_check') . '</button>
     </form>
             ';
-            tpl_set_var("section_2_start", '<!--');
-            tpl_set_var("section_2_stop", '-->');
+            tpl_set_var('section_2_start', '<!--');
+            tpl_set_var('section_2_stop', '-->');
 
             if (isset($_GET['sort'])) {
                 $sort_tmp = XDb::xEscape($_GET['sort']);
@@ -318,7 +318,7 @@ class OpenCheckerCore {
                 $sort_column = '`caches`.`name`';
 
 
-            $openchecker_query = "
+            $openchecker_query = '
         SELECT `waypoints`.`cache_id`,
         `waypoints`.`type`,
         `waypoints`.`stage`,
@@ -341,8 +341,8 @@ class OpenCheckerCore {
             LEFT JOIN `cache_type` ON (`cache_type`.`id` = `caches`.`type`)
         WHERE
             `waypoints`.`opensprawdzacz` = 1
-            AND `waypoints`.`type` = " . Waypoint::TYPE_FINAL . "
-            and (`caches`.`status` = " . GeoCache::STATUS_READY . " || `caches`.`status` = " . GeoCache::STATUS_UNAVAILABLE . ")
+            AND `waypoints`.`type` = ' . Waypoint::TYPE_FINAL . '
+            and (`caches`.`status` = ' . GeoCache::STATUS_READY . ' || `caches`.`status` = ' . GeoCache::STATUS_UNAVAILABLE . ")
         ORDER BY   $sort_column
         LIMIT   0, 1000
         ";
@@ -372,13 +372,13 @@ class OpenCheckerCore {
             $result = $pag->fetchResult();
 
             $pagination = ' ';
-            if (isset($_GET["sort"]))
-                $sort = '&sort=' . $_GET["sort"];
+            if (isset($_GET['sort']))
+                $sort = '&sort=' . $_GET['sort'];
             else
                 $sort = '';
 
-            if (isset($_GET["page"]))
-                $tPage = XDb::xEscape($_GET["page"]);
+            if (isset($_GET['page']))
+                $tPage = XDb::xEscape($_GET['page']);
             else
                 $tPage = 1;
             if ($tPage > 1)
@@ -442,18 +442,18 @@ class OpenCheckerCore {
 
             $caches_table .= '<tr><td colspan="7"><br /><p align="center">' . $pagination . '</p></td></tr>';
 
-            tpl_set_var("section_1_start", '');
-            tpl_set_var("section_1_stop", '');
-            tpl_set_var("section_3_start", '<!--');
-            tpl_set_var("section_3_stop", '-->');
-            tpl_set_var("section_4_start", '<!--');
-            tpl_set_var("section_4_stop", '-->');
+            tpl_set_var('section_1_start', '');
+            tpl_set_var('section_1_stop', '');
+            tpl_set_var('section_3_start', '<!--');
+            tpl_set_var('section_3_stop', '-->');
+            tpl_set_var('section_4_start', '<!--');
+            tpl_set_var('section_4_stop', '-->');
 
             $view = tpl_getView();
             $view->setVar('displayOpencheckerForm', false);
 
-            tpl_set_var("openchecker_form", $openchecker_form);
-            tpl_set_var("caches_table", $caches_table);
+            tpl_set_var('openchecker_form', $openchecker_form);
+            tpl_set_var('caches_table', $caches_table);
 
             $this->Finalize();
         }

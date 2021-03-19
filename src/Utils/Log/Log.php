@@ -29,11 +29,11 @@ class Log
      */
     public static function logEmail(User $from, User $to, $subject, $attachSenderAddress)
     {
-        OcDb::instance()->multiVariableQuery("
+        OcDb::instance()->multiVariableQuery('
             INSERT INTO `email_user`
             SET `ipaddress`= :1 , `date_generated`=NOW(), `from_user_id`= :2 ,
                 `from_email`= :3, `to_user_id`= :4, `to_email`= :5,
-                `mail_subject`= :6, `send_emailaddress`= :7",
+                `mail_subject`= :6, `send_emailaddress`= :7',
             $_SERVER['REMOTE_ADDR'], $from->getUserId(), $from->getEmail(),
             $to->getUserId(), $to->getEmail(), $subject,
             ($attachSenderAddress) ? '1' : '0');
@@ -41,11 +41,11 @@ class Log
 
     public static function logentry($eventid, $userid, $objectid1, $objectid2, $logtext, $details)
     {
-        OcDb::instance()->multiVariableQuery("
+        OcDb::instance()->multiVariableQuery('
             INSERT INTO `logentries`
                 (`module`, `eventid`, `userid`, `objectid1`, `objectid2`, `logtext`, `details`, `logtime`)
             VALUES
-                ( :1, :2, :3, :4, :5, :6, :7, NOW())",
+                ( :1, :2, :3, :4, :5, :6, :7, NOW())',
             self::getEventModule($eventid), $eventid, $userid, $objectid1,
             $objectid2, $logtext, serialize($details));
     }

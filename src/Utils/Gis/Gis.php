@@ -36,18 +36,18 @@ class Gis
         // posted at http://dev.mysql.com/doc/refman/5.1/en/functions-that-test-spatial-relationships-between-geometries.html
         $counter = 0;
         // get rid of unnecessary stuff
-        $sGeometry = str_replace("LINESTRING", "", $sGeometry);
-        $sGeometry = str_replace("(", "", $sGeometry);
-        $sGeometry = str_replace(")", "", $sGeometry);
-        $sPoint = str_replace("POINT", "", $sPoint);
-        $sPoint = str_replace("(", "", $sPoint);
-        $sPoint = str_replace(")", "", $sPoint);
+        $sGeometry = str_replace('LINESTRING', '', $sGeometry);
+        $sGeometry = str_replace('(', '', $sGeometry);
+        $sGeometry = str_replace(')', '', $sGeometry);
+        $sPoint = str_replace('POINT', '', $sPoint);
+        $sPoint = str_replace('(', '', $sPoint);
+        $sPoint = str_replace(')', '', $sPoint);
 
         // make an array of points of the polygon
-        $polygon = explode(",", $sGeometry);
+        $polygon = explode(',', $sGeometry);
 
         // get the x and y coordinate of the point
-        $p = explode(" ", $sPoint);
+        $p = explode(' ', $sPoint);
         $px = $p[0];
         $py = $p[1];
 
@@ -55,11 +55,11 @@ class Gis
         $n = count($polygon);
         $poly1 = $polygon[0];
         for ($i = 1; $i <= $n; $i ++) {
-            $poly1XY = explode(" ", $poly1);
+            $poly1XY = explode(' ', $poly1);
             $poly1x = $poly1XY[0];
             $poly1y = $poly1XY[1];
             $poly2 = $polygon[$i % $n];
-            $poly2XY = explode(" ", $poly2);
+            $poly2XY = explode(' ', $poly2);
             $poly2x = $poly2XY[0];
             $poly2y = $poly2XY[1];
 

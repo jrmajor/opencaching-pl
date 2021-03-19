@@ -71,7 +71,7 @@ class GeoKretyNewJob extends Job
             Facade::schedule_geocache_check($cache_codes);
 
             /* waypoints update */
-            XDb::xSql("DELETE FROM gk_item_waypoint WHERE id= ?", $id);
+            XDb::xSql('DELETE FROM gk_item_waypoint WHERE id= ?', $id);
             foreach ($geokret->waypoints as $waypoint) {
                 $wp = XDb::xEscape($waypoint->waypoint);
                 if ($wp != '') {
@@ -87,7 +87,7 @@ class GeoKretyNewJob extends Job
         /* cleaning... */
 
         /* Notify OKAPI. https://github.com/opencaching/okapi/issues/179 */
-        $rs = XDb::xSql("SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)");
+        $rs = XDb::xSql('SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)');
         $cache_codes = [];
         while ($row = XDb::xFetchArray($rs)){
             $cache_codes[] = $row[0];
@@ -95,7 +95,7 @@ class GeoKretyNewJob extends Job
 
         Facade::schedule_geocache_check($cache_codes);
 
-        XDb::xSql("DELETE FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)");
+        XDb::xSql('DELETE FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)');
 
         /* last synchro update */
         XDb::xSql(

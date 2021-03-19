@@ -40,7 +40,7 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 if ($loggedUser) {
     // get the users home coords
     $rs_coords = XDb::xSql(
-        "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? ", $loggedUser->getUserId());
+        'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? ', $loggedUser->getUserId());
 
     $record_coords = XDb::xFetchArray($rs_coords);
 

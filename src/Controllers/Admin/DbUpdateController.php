@@ -178,7 +178,7 @@ class DbUpdateController extends BaseController
                 }
             }
         } catch (\Exception $e) {
-            $messages = get_class($e).": " . $e->getMessage() . "\n\n" . $e->getTraceAsString();
+            $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
         }
 
         $this->showAdminView($messages);
@@ -210,7 +210,7 @@ class DbUpdateController extends BaseController
             try {
                 $messages = $this->getUpdateFromUuid($uuid)->rollback();
             } catch (\Exception $e) {
-                $messages = get_class($e).": " . $e->getMessage() . "\n\n" . $e->getTraceAsString();
+                $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
             }
         }
 
@@ -273,10 +273,10 @@ class DbUpdateController extends BaseController
         // This action is public. Developers may want to check if an update
         // was deployed to the site.
 
-        $text = "";
+        $text = '';
         foreach (DbUpdates::getAll() as $update) {
             if ($r = $update->wasRunAt()) {
-                $text .= $update->getUuid() . " " . $r . "\n";
+                $text .= $update->getUuid() . ' ' . $r . "\n";
             }
         }
         $this->view->showPlainText($text);

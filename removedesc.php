@@ -33,14 +33,14 @@ if (!$loggedUser) {
 }
 
         $cache_rs = XDb::xSql(
-            "SELECT `user_id`, `name` FROM `caches` WHERE `cache_id`= ? LIMIT 1", $cache_id);
+            'SELECT `user_id`, `name` FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
 
         if ( $cache_record = XDb::xFetchArray($cache_rs)) {
 
             if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
 
                 $desc_rs = XDb::xSql(
-                    "SELECT `id`, `uuid` FROM `cache_desc` WHERE `cache_id`= ? AND `language`= ? LIMIT 1", $cache_id, $desclang);
+                    'SELECT `id`, `uuid` FROM `cache_desc` WHERE `cache_id`= ? AND `language`= ? LIMIT 1', $cache_id, $desclang);
                 if ($desc_record = XDb::xFetchArray($desc_rs)) {
 
                     XDb::xFreeResults($desc_rs);
@@ -54,7 +54,7 @@ if (!$loggedUser) {
 
                         //remove it from cache_desc
                         XDb::xSql(
-                            "DELETE FROM `cache_desc` WHERE `cache_id`= ? AND `language`= ? LIMIT 1", $cache_id, $desclang);
+                            'DELETE FROM `cache_desc` WHERE `cache_id`= ? AND `language`= ? LIMIT 1', $cache_id, $desclang);
 
                         // update cache-record, including last modification date
                         GeoCache::setCacheDefaultDescLang($cache_id);

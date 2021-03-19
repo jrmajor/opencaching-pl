@@ -14,7 +14,7 @@ use src\Models\OcConfig\OcConfig;
  *
  */
 
-if (php_sapi_name() != "cli") {
+if (php_sapi_name() != 'cli') {
     printf("This script should be run from command-line only.\n");
     exit(1);
 }
@@ -71,8 +71,8 @@ if ($pic_count > 0) {
 
 // Record user removal
 $db->multiVariableQuery(
-        "INSERT INTO removed_objects (localid, uuid, `type`, removed_date, node)" .
-        " SELECT user_id, uuid, 4, NOW(), :2 FROM user WHERE user_id = :1", $user_id, OcConfig::getSiteNodeId());
+        'INSERT INTO removed_objects (localid, uuid, `type`, removed_date, node)' .
+        ' SELECT user_id, uuid, 4, NOW(), :2 FROM user WHERE user_id = :1', $user_id, OcConfig::getSiteNodeId());
 
 // Delete saved queries
 $db->multiVariableQuery('DELETE FROM queries WHERE user_id = :1', $user_id);

@@ -42,9 +42,9 @@ if (!$loggedUser) {
         }
 
         $route_rs = XDb::xSql(
-            "SELECT `user_id`,`name`, `description`, `radius`
+            'SELECT `user_id`,`name`, `description`, `radius`
             FROM `routes`
-            WHERE `route_id`= ? AND `user_id`= ?",
+            WHERE `route_id`= ? AND `user_id`= ?',
             $route_id, $user_id);
 
         $record = XDb::xFetchArray($route_rs);
@@ -61,8 +61,8 @@ if (!$loggedUser) {
         if ($record['user_id'] == $loggedUser->getUserId()) {
             if ($remove == 1) {
                 //remove
-                XDb::xSql("DELETE FROM `routes` WHERE `route_id`= ? AND `user_id`= ? ", $route_id, $user_id);
-                XDb::xSql("DELETE FROM `route_points` WHERE `route_id`= ? ", $route_id);
+                XDb::xSql('DELETE FROM `routes` WHERE `route_id`= ? AND `user_id`= ? ', $route_id, $user_id);
+                XDb::xSql('DELETE FROM `route_points` WHERE `route_id`= ? ', $route_id);
                 tpl_redirect('myroutes.php');
                 exit;
             }
@@ -72,28 +72,28 @@ if (!$loggedUser) {
         if (isset($_POST['submit']) && $remove == 0) {
 
             XDb::xSql(
-                "UPDATE `routes` SET `name`= ? ,`description`= ?,`radius`= ?
-                WHERE `route_id`= ? ", $rname, $rdesc, $rradius, $route_id);
+                'UPDATE `routes` SET `name`= ? ,`description`= ?,`radius`= ?
+                WHERE `route_id`= ? ', $rname, $rdesc, $rradius, $route_id);
 
-            if ($_FILES['file']['tmp_name'] != "") {
+            if ($_FILES['file']['tmp_name'] != '') {
 
-                XDb::xSql("DELETE FROM `route_points` WHERE `route_id`= ? ", $route_id);
+                XDb::xSql('DELETE FROM `route_points` WHERE `route_id`= ? ', $route_id);
 
                 $upload_filename = $_FILES['file']['tmp_name'];
                 // Read file KML with route
                 if (!$error) {
-                    exec("/usr/bin/gpsbabel -i kml -f " . $upload_filename . " -x interpolate,distance=0.25k -o kml -F " . $upload_filename . "");
+                    exec('/usr/bin/gpsbabel -i kml -f ' . $upload_filename . ' -x interpolate,distance=0.25k -o kml -F ' . $upload_filename . '');
                     $xml = simplexml_load_file($upload_filename);
 
                     // get length route
                     foreach ($xml->Document->Folder as $f) {
                         foreach ($f->Folder as $folder) {
                             $dis = $folder->description;
-                            $dis1 = explode(" ", trim($dis));
+                            $dis1 = explode(' ', trim($dis));
                             $len = (float) $dis1[27];
                             XDb::xSql(
-                                "UPDATE `routes` SET `length`= ?
-                                WHERE `route_id`= ? ", $len, $route_id);
+                                'UPDATE `routes` SET `length`= ?
+                                WHERE `route_id`= ? ', $len, $route_id);
                         }
                     }
 
@@ -102,10 +102,10 @@ if (!$loggedUser) {
                         foreach ($xmlelement->Folder as $folder) {
                             foreach ($folder->Placemark->LineString->coordinates as $coordinates) {
                                 if ($coordinates) {
-                                    $coords_raw = explode(" ", trim($coordinates));
+                                    $coords_raw = explode(' ', trim($coordinates));
                                     foreach ($coords_raw as $coords_raw_part) {
                                         if ($coords_raw_part) {
-                                            $coords_raw_parts = explode(",", $coords_raw_part);
+                                            $coords_raw_parts = explode(',', $coords_raw_part);
                                             $coords[] = $coords_raw_parts[0];
                                             $coords[] = $coords_raw_parts[1];
                                         }
@@ -120,7 +120,7 @@ if (!$loggedUser) {
 
                 if (!$error) {
                     for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
-                        $points[] = ["lon" => $coords[$i], "lat" => $coords[$i + 1]];
+                        $points[] = ['lon' => $coords[$i], 'lat' => $coords[$i + 1]];
                         if (($coords[$i] + 0 == 0) OR ( $coords[$i + 1] + 0 == 0)) {
                             $error .= "Invalid Co-ords found in import file.<br>\n";
                             break;

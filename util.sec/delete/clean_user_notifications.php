@@ -13,7 +13,7 @@ use src\Utils\Database\OcDb;
  *
  */
 
-if (php_sapi_name() != "cli") {
+if (php_sapi_name() != 'cli') {
     printf("This script should be run from command-line only.\n");
     exit(1);
 }
@@ -23,10 +23,10 @@ require_once __DIR__ . '/../../lib/common.inc.php';
 $db = OcDb::instance();
 
 // inline options
-$shortopts = "u:";
-$shortopts .= "h";
+$shortopts = 'u:';
+$shortopts .= 'h';
 $longopts  = [
-    "userId:",           // No value
+    'userId:',           // No value
 ];
 $options = getopt($shortopts, $longopts);
 
@@ -66,12 +66,12 @@ if(is_null($userId)){
 
 
 // Clean notify radius - to avoid notification about new caches
-$notify_radius = $db->multiVariableQueryValue("SELECT notify_radius FROM user WHERE user_id = :1", -1, $userId);
+$notify_radius = $db->multiVariableQueryValue('SELECT notify_radius FROM user WHERE user_id = :1', -1, $userId);
 printf("Notify radius: %skm\n", $notify_radius);
 
 if ($notify_radius > 0) {
     printf("Resetting notify radius\n");
-    $db->multiVariableQuery("UPDATE user SET notify_radius = 0 WHERE user_id = :1", $userId);
+    $db->multiVariableQuery('UPDATE user SET notify_radius = 0 WHERE user_id = :1', $userId);
 }
 
 // Clean all cache_watches

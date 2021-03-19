@@ -54,11 +54,11 @@ class UserStats extends BaseObject
             $geoPathsOwned = new \ArrayObject();
 
             $stmt = self::db()->multiVariableQuery(
-                "SELECT `PowerTrail`.*
+                'SELECT `PowerTrail`.*
                 FROM `PowerTrail`, `PowerTrail_owners`
                 WHERE `PowerTrail_owners`.`userId` = :1
                     AND `PowerTrail_owners`.`PowerTrailId` = `PowerTrail`.`id`
-                ORDER BY `PowerTrail`.`id`",
+                ORDER BY `PowerTrail`.`id`',
                 $userId);
 
             $list = self::db()->dbResultFetchAll($stmt);
@@ -77,11 +77,11 @@ class UserStats extends BaseObject
     public static function getEventsAttendsCount($userId)
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*)
+            'SELECT COUNT(*)
             FROM `cache_logs`
             WHERE `user_id`= :1
                 AND type = :2
-                AND deleted=0",
+                AND deleted=0',
             0, (int) $userId, GeoCacheLog::LOGTYPE_ATTENDED);
     }
 

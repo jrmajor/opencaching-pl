@@ -1219,7 +1219,7 @@
     /* maps */
 </script>
     <?php if(isset($view->dynamicMapModel)) { ?>
-      <?php $view->callChunk('dynamicMap/dynamicMap', $view->dynamicMapModel, "map_canvas");?>
+      <?php $view->callChunk('dynamicMap/dynamicMap', $view->dynamicMapModel, 'map_canvas');?>
     <?php } //if-dynamicMap-present ?>
 
     <input type="hidden" id="xmd34nfywr54" value="{powerTrailId}">

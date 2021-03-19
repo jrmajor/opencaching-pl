@@ -126,10 +126,10 @@ abstract class BaseController
         if ($httpStatusCode) {
             switch ($httpStatusCode) {
                 case 404:
-                    header("HTTP/1.0 404 Not Found");
+                    header('HTTP/1.0 404 Not Found');
                     break;
                 case 403:
-                    header("HTTP/1.0 403 Forbidden");
+                    header('HTTP/1.0 403 Forbidden');
                     break;
                 default:
                     //TODO...

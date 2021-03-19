@@ -44,45 +44,45 @@ $tops = [];
 
 <?php
 XDb::xSql(
-    "CREATE TEMPORARY TABLE topFounds (`cache_id` INT(11) PRIMARY KEY, `founds` INT(11))
+    'CREATE TEMPORARY TABLE topFounds (`cache_id` INT(11) PRIMARY KEY, `founds` INT(11))
     SELECT `caches`.`cache_id`,
             COUNT(`cache_logs`.`cache_id`) `founds`
     FROM `caches`
         LEFT JOIN `cache_logs` ON `caches`.`cache_id`=`cache_logs`.`cache_id`
             AND `cache_logs`.`type`=1
             AND `cache_logs`.`deleted`=0
-    GROUP BY `caches`.`cache_id`");
+    GROUP BY `caches`.`cache_id`');
 
-XDb::xSql("UPDATE `topFounds` SET `founds`=0 WHERE ISNULL(`founds`)");
+XDb::xSql('UPDATE `topFounds` SET `founds`=0 WHERE ISNULL(`founds`)');
 
 XDb::xSql(
-    "CREATE TEMPORARY TABLE topRatings (`cache_id` INT(11) PRIMARY KEY, `ratings` INT(11))
+    'CREATE TEMPORARY TABLE topRatings (`cache_id` INT(11) PRIMARY KEY, `ratings` INT(11))
     SELECT `cache_rating`.`cache_id`, COUNT(`cache_rating`.`cache_id`) AS `ratings`
     FROM `cache_rating`
         INNER JOIN `caches` ON `cache_rating`.`cache_id`=`caches`.`cache_id`
     WHERE `cache_rating`.`user_id`!=`caches`.`user_id`
-    GROUP BY `cache_rating`.`cache_id`");
+    GROUP BY `cache_rating`.`cache_id`');
 
 XDb::xSql(
-    "CREATE TEMPORARY TABLE topResult (`idx` INT(11), `cache_id` INT(11) PRIMARY KEY, `ratings` INT(11), `founds` INT(11))
+    'CREATE TEMPORARY TABLE topResult (`idx` INT(11), `cache_id` INT(11) PRIMARY KEY, `ratings` INT(11), `founds` INT(11))
     SELECT (`topRatings`.`ratings`+1)*(topRatings.`ratings`+1)/(IFNULL(`topFounds`.`founds`,0)/10+1)*100 AS `idx`,
            `topFounds`.`cache_id`, `topRatings`.`ratings`, `topFounds`.`founds`
     FROM `topFounds`
         INNER JOIN `topRatings` ON `topFounds`.`cache_id`=`topRatings`.`cache_id`
         INNER JOIN `caches` ON `topFounds`.`cache_id`=`caches`.`cache_id`
-    ORDER BY `idx` DESC");
+    ORDER BY `idx` DESC');
 
-if ( 10 < XDb::xSimpleQueryValue("SELECT COUNT(*) FROM `topResult`", 0) ) {
+if ( 10 < XDb::xSimpleQueryValue('SELECT COUNT(*) FROM `topResult`', 0) ) {
 
     $min_idx = XDb::xSimpleQueryValue(
-        "SELECT `idx` FROM `topResult` ORDER BY `idx` DESC LIMIT 99999, 1", 0);
+        'SELECT `idx` FROM `topResult` ORDER BY `idx` DESC LIMIT 99999, 1', 0);
 
     XDb::xSql(
-        "DELETE FROM `topResult` WHERE `idx`< ? ", $min_idx);
+        'DELETE FROM `topResult` WHERE `idx`< ? ', $min_idx);
 }
 
 $rsCaches = XDb::xSql(
-    "SELECT `topResult`.`idx`, `topResult`.`ratings`, `caches`.`founds`,
+    'SELECT `topResult`.`idx`, `topResult`.`ratings`, `caches`.`founds`,
             `topResult`.`founds` AS `foundAfterRating`, `topResult`.`cache_id`,
             `caches`.`name`, `caches`.`wp_oc` AS `wpoc`, `user`.`username`,
             `user`.`user_id` AS `userid`
@@ -92,7 +92,7 @@ $rsCaches = XDb::xSql(
     WHERE `topResult`.`cache_id` = `caches`.`cache_id`
         AND `caches`.`type` <> 6
         AND `caches`.`status` = 1
-    ORDER BY `idx` DESC");
+    ORDER BY `idx` DESC');
 
 $items = [];
 while ( $rCaches = XDb::xFetchArray($rsCaches) ) {

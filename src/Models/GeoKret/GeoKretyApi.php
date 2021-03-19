@@ -167,8 +167,8 @@ class GeoKretyApi extends BaseObject
 
     private function storeErrorsInDb($operationType, $dataSent, $response = null)
     {
-        $query = "INSERT INTO `GeoKretyAPIerrors`(`dateTime`, `operationType`, `dataSent`, `response`)
-                  VALUES (NOW(),:1,:2,:3)";
+        $query = 'INSERT INTO `GeoKretyAPIerrors`(`dateTime`, `operationType`, `dataSent`, `response`)
+                  VALUES (NOW(),:1,:2,:3)';
         $this->db->multiVariableQuery($query, $operationType, addslashes(serialize($dataSent)),
             addslashes(serialize($response)));
     }

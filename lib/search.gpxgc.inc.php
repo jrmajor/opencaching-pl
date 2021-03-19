@@ -120,7 +120,7 @@ if ($countGPX == 1) {
             if(empty($queryName)) {
                 $sFilebasename = 'search' . $options['queryid'];
             } else {
-                $sFilebasename = str_replace(" ", "_", trim($queryName));
+                $sFilebasename = str_replace(' ', '_', trim($queryName));
             }
     } //switch
 }
@@ -148,8 +148,8 @@ $gpxHead = str_replace('{wpchildren}', $children, $gpxHead);
 
 
 // start display
-header("Content-type: application/gpx");
-header("Content-Disposition: attachment; filename=" . $sFilebasename . ".gpx");
+header('Content-type: application/gpx');
+header('Content-Disposition: attachment; filename=' . $sFilebasename . '.gpx');
 
 echo $gpxHead;
 
@@ -214,7 +214,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     $thisline = str_replace('{country}', tr($r['country']), $thisline);
 
     $region = XDb::xMultiVariableQueryValue(
-        "SELECT `adm3` FROM `cache_location` WHERE `cache_id`= :1 LIMIT 1", 0, $r['cacheid']);
+        'SELECT `adm3` FROM `cache_location` WHERE `cache_id`= :1 LIMIT 1', 0, $r['cacheid']);
 
     $thisline = str_replace('{region}', $region, $thisline);
 
@@ -231,7 +231,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
         $thisline = str_replace('{hints}', cleanup_text($r['hint']), $thisline);
     }
 
-    $logpw = ($r['logpw'] == "" ? "" : "" . cleanup_text(tr('search_gpxgc_01')) . " <br />");
+    $logpw = ($r['logpw'] == '' ? '' : '' . cleanup_text(tr('search_gpxgc_01')) . ' <br />');
 
     $thisline = str_replace('{shortdesc}', cleanup_text($r['short_desc']), $thisline);
     $thisline = str_replace('{desc}', xmlencode_text($logpw . $r['desc']), $thisline);
@@ -241,18 +241,18 @@ while ( $r = XDb::xFetchArray($stmt) ) {
 
         if (!empty($cacheNote)) {
             $thisline = str_replace('{personal_cache_note}',
-                cleanup_text("<br/><br/>-- " . cleanup_text(tr('search_gpxgc_02')) .
-                    ": -- <br/> " . $cacheNote . "<br/>"), $thisline);
+                cleanup_text('<br/><br/>-- ' . cleanup_text(tr('search_gpxgc_02')) .
+                    ': -- <br/> ' . $cacheNote . '<br/>'), $thisline);
         } else {
-            $thisline = str_replace('{personal_cache_note}', "", $thisline);
+            $thisline = str_replace('{personal_cache_note}', '', $thisline);
         }
     } else {
-        $thisline = str_replace('{personal_cache_note}', "", $thisline);
+        $thisline = str_replace('{personal_cache_note}', '', $thisline);
     }
 
     // attributes
     $rsAttributes = XDb::xSql(
-        "SELECT `caches_attributes`.`attrib_id` FROM `caches_attributes` WHERE `caches_attributes`.`cache_id`= ? ",
+        'SELECT `caches_attributes`.`attrib_id` FROM `caches_attributes` WHERE `caches_attributes`.`cache_id`= ? ',
         $r['cacheid']);
 
     $attribentries = '';
@@ -287,7 +287,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     $thisline = str_replace('{attributes}', $attribentries, $thisline);
 
     // start extra info
-    $thisextra = "";
+    $thisextra = '';
 
     $language = I18n::getCurrentLang();
     $rsAttributes = XDb::xSql(
@@ -303,7 +303,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
             $attributes = '' . cleanup_text(tr('search_gpxgc_04')) . ': ';
             while ($rAttribute = XDb::xFetchArray($rsAttributes)) {
                 $attributes .= cleanup_text(xmlentities($rAttribute['text_long']));
-                $attributes .= " | ";
+                $attributes .= ' | ';
             }
             $thisextra .= $attributes;
         }
@@ -311,10 +311,10 @@ while ( $r = XDb::xFetchArray($stmt) ) {
         if ($r['votes'] > 3) {
 
             $score = cleanup_text(GeoCacheCommons::ScoreNameTranslation($r['score']));
-            $thisextra .= "\n" . cleanup_text(tr('search_gpxgc_05')) . ": " . $score . "\n";
+            $thisextra .= "\n" . cleanup_text(tr('search_gpxgc_05')) . ': ' . $score . "\n";
         }
         if ($r['topratings'] > 0) {
-            $thisextra .= "" . cleanup_text(tr('search_gpxgc_06')) . ": " . $r['topratings'] . "\n";
+            $thisextra .= '' . cleanup_text(tr('search_gpxgc_06')) . ': ' . $r['topratings'] . "\n";
         }
     }
 
@@ -325,9 +325,9 @@ while ( $r = XDb::xFetchArray($stmt) ) {
             WHERE `cache_npa_areas`.`cache_id`= ? AND `cache_npa_areas`.`parki_id`!='0'", $r['cacheid']);
 
     if (XDb::xNumRows($rsArea) != 0) {
-        $thisextra .= "" .cleanup_text( tr('search_gpxgc_07')) . ": ";
+        $thisextra .= '' .cleanup_text( tr('search_gpxgc_07')) . ': ';
         while ($npa = XDb::xFetchArray($rsArea)) {
-            $thisextra .= $npa['npaname'] . "  ";
+            $thisextra .= $npa['npaname'] . '  ';
         }
     }
 
@@ -342,7 +342,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     if (XDb::xNumRows($rsArea) != 0) {
         $thisextra .= "\nNATURA 2000: ";
         while ($npa = XDb::xFetchArray($rsArea)) {
-            $thisextra .= " - " . $npa['npaSitename'] . "  " . $npa['npaSitecode'] . " - ";
+            $thisextra .= ' - ' . $npa['npaSitename'] . '  ' . $npa['npaSitecode'] . ' - ';
         }
     }
 
@@ -354,7 +354,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     if ($r['rr_comment'] == '') {
         $thisline = str_replace('{rr_comment}', '', $thisline);
     } else {
-        $thisline = str_replace('{rr_comment}', cleanup_text("<br /><br />--------<br />" . $r['rr_comment'] . "<br />"), $thisline);
+        $thisline = str_replace('{rr_comment}', cleanup_text('<br /><br />--------<br />' . $r['rr_comment'] . '<br />'), $thisline);
     }
 
     $thisline = str_replace('{images}', getPictures($r['cacheid'], false, $r['picturescount']), $thisline);
@@ -450,11 +450,11 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     $gs_logentries = '';
     $oc_logentries = '';
     $rsLogs = XDb::xSql(
-        "SELECT `cache_logs`.`id`, `cache_logs`.`uuid`, `cache_logs`.`type`, `cache_logs`.`date`, `cache_logs`.`text`, `user`.`username`, `cache_logs`.`user_id` `userid`
+        'SELECT `cache_logs`.`id`, `cache_logs`.`uuid`, `cache_logs`.`type`, `cache_logs`.`date`, `cache_logs`.`text`, `user`.`username`, `cache_logs`.`user_id` `userid`
         FROM `cache_logs`, `user`
         WHERE `cache_logs`.`deleted`=0 AND `cache_logs`.`user_id`=`user`.`user_id`
             AND `cache_logs`.`cache_id`= ?
-        ORDER BY `cache_logs`.`date` DESC, `cache_logs`.`id` DESC " . XDb::xEscape($gpxLogLimit),
+        ORDER BY `cache_logs`.`date` DESC, `cache_logs`.`id` DESC ' . XDb::xEscape($gpxLogLimit),
         $r['cacheid']);
 
     while ($rLog = XDb::xFetchArray($rsLogs)) {
@@ -495,12 +495,12 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     $geokrety = '';
 
     $geokret_query = XDb::xSql(
-        "SELECT gk_item.id AS id, gk_item.name AS name
+        'SELECT gk_item.id AS id, gk_item.name AS name
         FROM gk_item, gk_item_waypoint
         WHERE gk_item.id = gk_item_waypoint.id
             AND gk_item_waypoint.wp = ?
             AND gk_item.stateid<>1 AND gk_item.stateid<>4
-            AND gk_item.stateid <>5 AND gk_item.typeid<>2",
+            AND gk_item.stateid <>5 AND gk_item.typeid<>2',
         $waypoint);
 
     while ($geokret = XDb::xFetchArray($geokret_query)) {
@@ -522,11 +522,11 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     $waypoints = '';
 
     $rswp = XDb::xSql(
-        "SELECT  `longitude`, `cache_id`, `latitude`,`desc`,`stage`, `type`, `status`,`waypoint_type`." . $language . " `wp_type_name`
+        'SELECT  `longitude`, `cache_id`, `latitude`,`desc`,`stage`, `type`, `status`,`waypoint_type`.' . $language . ' `wp_type_name`
         FROM `waypoints`
             INNER JOIN waypoint_type ON (waypoints.type = waypoint_type.id)
         WHERE  `waypoints`.`cache_id`=?
-        ORDER BY `waypoints`.`stage`",
+        ORDER BY `waypoints`.`stage`',
         $r['cacheid']);
 
     while ($rwp = XDb::xFetchArray($rswp)) {
@@ -541,7 +541,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
             $thiswp = str_replace('{time}', $time, $thiswp);
             $thiswp = str_replace('{wp_type_name}', cleanup_text($rwp['wp_type_name']), $thiswp);
             if ($rwp['stage'] != 0) {
-                $thiswp = str_replace('{wp_stage}', " " . cleanup_text(tr('stage_wp')) . ": " . $rwp['stage'], $thiswp);
+                $thiswp = str_replace('{wp_stage}', ' ' . cleanup_text(tr('stage_wp')) . ': ' . $rwp['stage'], $thiswp);
             } else {
                 $thiswp = str_replace('{wp_stage}', $rwp['wp_type_name'], $thiswp);
             }

@@ -23,7 +23,7 @@ $query = 'SELECT user_id, username FROM user WHERE ' . $queryParam . ' :1 LIMIT 
 $s = $db->multiVariableQuery($query, $userId);
 $userResult = $db->dbResultFetchOneRowOnly($s);
 
-$addQuery = "INSERT INTO `PowerTrail_owners`(`PowerTrailId`, `userId`, `privileages`) VALUES (:1,:2,:3)";
+$addQuery = 'INSERT INTO `PowerTrail_owners`(`PowerTrailId`, `userId`, `privileages`) VALUES (:1,:2,:3)';
 $db->multiVariableQuery($addQuery, $projectId, $userResult['user_id'], 1);
 
 $logQuery = 'INSERT INTO `PowerTrail_actionsLog`(`PowerTrailId`, `userId`, `actionDateTime`, `actionType`, `description`, `cacheId`) VALUES (:1,:2,NOW(),4,:3,:4)';

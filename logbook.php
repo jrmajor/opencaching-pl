@@ -14,8 +14,8 @@ if (!ApplicationContainer::GetAuthorizedUser()) {
     $tplname = 'logbook';
 }
 
-$secret = "dupa231"; //kojoty: this is not my idea - I copied
-tpl_set_var('encrypted_message', encrypt($_GET['logbook_type'] . " This is a secret message", $secret));
+$secret = 'dupa231'; //kojoty: this is not my idea - I copied
+tpl_set_var('encrypted_message', encrypt($_GET['logbook_type'] . ' This is a secret message', $secret));
 
 tpl_BuildTemplate();
 

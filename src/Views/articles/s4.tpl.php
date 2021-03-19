@@ -16,10 +16,10 @@ use src\Utils\Database\XDb;
 
 <?php
 $results = XDb::xSql(
-    "SELECT `caches`.`founds` AS `count`, `caches`.`name`, `caches`.`cache_id`, `user`.`username`, `user`.`user_id`
+    'SELECT `caches`.`founds` AS `count`, `caches`.`name`, `caches`.`cache_id`, `user`.`username`, `user`.`user_id`
     FROM `caches`
         INNER JOIN `user` ON `caches`.`user_id`=`user`.`user_id`
-    WHERE `caches`.`type` NOT IN (4, 5, 6) AND `caches`.`status` = 1 AND `caches`.`founds` > 0 ORDER BY `count` DESC, `caches`.`name` ASC");
+    WHERE `caches`.`type` NOT IN (4, 5, 6) AND `caches`.`status` = 1 AND `caches`.`founds` > 0 ORDER BY `count` DESC, `caches`.`name` ASC');
 
 $position = 0;
 $prevCount = 0;
@@ -32,9 +32,9 @@ while ($result = XDb::xFetchArray($results)) {
         } else {
             echo '</td></tr><tr>';
         }
-        echo "<td class=\"align-center\">" . $position . "</td><td class=\"align-center\">" .  $result['count'] . "</td><td>";
+        echo '<td class="align-center">' . $position . '</td><td class="align-center">' .  $result['count'] . '</td><td>';
     } else {
-        echo " | ";
+        echo ' | ';
     }
     echo '<a href="/viewcache.php?cacheid=' . $result['cache_id'] . '" class="links">' . $result['name'] . '</a> (<a href="/viewprofile.php?userid='. $result['user_id'] .'" class="links">' . $result['username'] . '</a>)';
 }

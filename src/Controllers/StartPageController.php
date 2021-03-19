@@ -85,7 +85,7 @@ class StartPageController extends BaseController
 
         $center = OcConfig::getMapDefaultCenter();
         if (!$center) {
-            $this->displayCommonErrorPageAndExit("Wrong default coords?");
+            $this->displayCommonErrorPageAndExit('Wrong default coords?');
         }
 
         return StaticMap::displayPureMap(

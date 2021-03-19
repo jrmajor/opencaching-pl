@@ -25,36 +25,36 @@ function colorCacheStatus($text, $id)
 
 function nonEmptyCacheName($cacheName)
 {
-    if (str_replace(" ", "", $cacheName) == "")
-        return "[bez nazwy]";
+    if (str_replace(' ', '', $cacheName) == '')
+        return '[bez nazwy]';
     return $cacheName;
 }
 
 function getUsername($userid)
 {
     return XDb::xMultiVariableQueryValue(
-        "SELECT username FROM user WHERE user_id= :1 LIMIT 1",
+        'SELECT username FROM user WHERE user_id= :1 LIMIT 1',
         null, $userid);
 }
 
 function getCachename($cacheid)
 {
     return XDb::xMultiVariableQueryValue(
-        "SELECT name FROM caches WHERE cache_id= :1 LIMIT 1",
+        'SELECT name FROM caches WHERE cache_id= :1 LIMIT 1',
         null, $cacheid);
 }
 
 function getCacheOwnername($cacheid)
 {
     return XDb::xMultiVariableQueryValue(
-        "SELECT username FROM user WHERE user_id= :1 LIMIT 1",
+        'SELECT username FROM user WHERE user_id= :1 LIMIT 1',
         null, getCacheOwnerId($cacheid));
 }
 
 function getCacheOwnerId($cacheid)
 {
     return XDb::xMultiVariableQueryValue(
-        "SELECT user_id FROM caches WHERE cache_id= :1 LIMIT 1",
+        'SELECT user_id FROM caches WHERE cache_id= :1 LIMIT 1',
         null, $cacheid);
 }
 
@@ -62,7 +62,7 @@ function actionRequired($cacheid)
 {
     // check if cache requires activation
     return XDb::xMultiVariableQueryValue(
-        "SELECT status FROM caches WHERE cache_id= :1 AND status = 4",
+        'SELECT status FROM caches WHERE cache_id= :1 AND status = 4',
         null, $cacheid);
 }
 
@@ -70,7 +70,7 @@ function activateCache($cacheid)
 {
     // activate the cache by changing its status to yet unavailable
     if (actionRequired($cacheid)) {
-        if (XDb::xSql("UPDATE caches SET status = 5 WHERE cache_id= ? ", $cacheid)) {
+        if (XDb::xSql('UPDATE caches SET status = 5 WHERE cache_id= ? ', $cacheid)) {
             return true;
         } else
             return false;
@@ -82,7 +82,7 @@ function declineCache($cacheid)
 {
     // activate the cache by changing its status to yet unavailable
     if (actionRequired($cacheid)) {
-        if (XDb::xSql("UPDATE caches SET status = 6 WHERE cache_id= ? ", $cacheid)) {
+        if (XDb::xSql('UPDATE caches SET status = 6 WHERE cache_id= ? ', $cacheid)) {
             return true;
         } else
             return false;
@@ -94,7 +94,7 @@ function getAssignedUserId($cacheid)
 {
     // check if cache requires activation
     return XDb::xMultiVariableQueryValue(
-        "SELECT user_id FROM approval_status WHERE cache_id= :1 LIMIT 1",
+        'SELECT user_id FROM approval_status WHERE cache_id= :1 LIMIT 1',
         false, $cacheid);
 }
 
@@ -107,9 +107,9 @@ function assignUserToCase($userid, $cacheid)
     }
 
     XDb::xSql(
-        "INSERT INTO approval_status (cache_id, user_id, status, date_approval)
+        'INSERT INTO approval_status (cache_id, user_id, status, date_approval)
         VALUES ( ?, ?, 2, NOW())
-        ON DUPLICATE KEY UPDATE user_id = ?",
+        ON DUPLICATE KEY UPDATE user_id = ?',
         $cacheid, $userid, $userid);
 }
 
@@ -132,8 +132,8 @@ function notifyOwner($cacheid, $msgType)
         $email_content = file_get_contents(__DIR__ . '/resources/email/archived_cache.email');
     }
     $email_headers = "Content-Type: text/plain; charset=utf-8\r\n";
-    $email_headers .= "From: " . OcConfig::getSiteName() . " <" . OcConfig::getEmailAddrOcTeam() . ">\r\n";
-    $email_headers .= "Reply-To: " . OcConfig::getEmailAddrOcTeam() . "\r\n";
+    $email_headers .= 'From: ' . OcConfig::getSiteName() . ' <' . OcConfig::getEmailAddrOcTeam() . ">\r\n";
+    $email_headers .= 'Reply-To: ' . OcConfig::getEmailAddrOcTeam() . "\r\n";
     $email_content = mb_ereg_replace('{server}', $absolute_server_URI, $email_content);
     $email_content = mb_ereg_replace('{cachename}', $cachename, $email_content);
     $email_content = mb_ereg_replace('{cacheid}', $cacheid, $email_content);
@@ -151,15 +151,15 @@ function notifyOwner($cacheid, $msgType)
 
 
     $owner_email['email'] = XDb::xMultiVariableQueryValue(
-        "SELECT `email` FROM `user` WHERE `user_id`= :1 LIMIT 1", '', $user_id);
+        'SELECT `email` FROM `user` WHERE `user_id`= :1 LIMIT 1', '', $user_id);
 
     if ($msgType == 0) {
         //send email to owner
-        mb_send_mail($owner_email['email'], tr('viewPending_01') . ": " . $cachename, $email_content, $email_headers);
+        mb_send_mail($owner_email['email'], tr('viewPending_01') . ': ' . $cachename, $email_content, $email_headers);
         //send email to approver
-        mb_send_mail($user->getEmail(), tr('viewPending_01') . ": " . $cachename, tr('viewPending_02') . ":\n" . $email_content, $email_headers);
+        mb_send_mail($user->getEmail(), tr('viewPending_01') . ': ' . $cachename, tr('viewPending_02') . ":\n" . $email_content, $email_headers);
         // generate automatic log about status cache
-        $log_text = htmlspecialchars(tr("viewPending_03"));
+        $log_text = htmlspecialchars(tr('viewPending_03'));
         $log_uuid = Uuid::create();
         XDb::xSql(
             "INSERT INTO `cache_logs`
@@ -169,12 +169,12 @@ function notifyOwner($cacheid, $msgType)
 
     } else {
         //send email to owner
-        mb_send_mail($owner_email['email'], tr('viewPending_04') . ": " . $cachename, $email_content, $email_headers);
+        mb_send_mail($owner_email['email'], tr('viewPending_04') . ': ' . $cachename, $email_content, $email_headers);
         //send email to approver
-        mb_send_mail($user->getEmail(), tr('viewPending_04') . ": " . $cachename, tr('viewPending_05') . ":\n" . $email_content, $email_headers);
+        mb_send_mail($user->getEmail(), tr('viewPending_04') . ': ' . $cachename, tr('viewPending_05') . ":\n" . $email_content, $email_headers);
 
         // generate automatic log about status cache
-        $log_text = htmlspecialchars(tr("viewPending_06"));
+        $log_text = htmlspecialchars(tr('viewPending_06'));
         $log_uuid = Uuid::create();
         XDb::xSql(
             "INSERT INTO `cache_logs`
@@ -206,7 +206,7 @@ $content = '';
 if (isset($_GET['cacheid'])) {
     if (isset($_GET['assign'])) {
         if (assignUserToCase($_GET['assign'], $_GET['cacheid'])) {
-            $confirm = "<p>" . tr("viewPending_07") . " " . getUsername($_GET['assign']) . " " . tr("viewPending_08") . ".</p>";
+            $confirm = '<p>' . tr('viewPending_07') . ' ' . getUsername($_GET['assign']) . ' ' . tr('viewPending_08') . '.</p>';
             tpl_set_var('confirm', $confirm);
         } else {
             tpl_set_var('confirm', '');
@@ -220,9 +220,9 @@ if (isset($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
                     notifyOwner($_GET['cacheid'], 0);
                     AdminNote::addAdminNote($user->getUserId(), $_GET['user_id'], true, AdminNote::CACHE_PASS, $_GET['cacheid']);
-                    $confirm = "<p> " . tr("viewPending_09") . ".</p>";
+                    $confirm = '<p> ' . tr('viewPending_09') . '.</p>';
                 } else {
-                    $confirm = "<p> " . tr("viewPending_10") . ".</p>";
+                    $confirm = '<p> ' . tr('viewPending_10') . '.</p>';
                 }
             } else if (isset($_GET['confirm']) && isset($_GET['user_id']) && $_GET['confirm'] == 2) {
                 // declined - change status to archived and notify the owner now
@@ -230,20 +230,20 @@ if (isset($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
                     notifyOwner($_GET['cacheid'], 1);
                     AdminNote::addAdminNote($user->getUserId(), $_GET['user_id'], true, AdminNote::CACHE_BLOCKED, $_GET['cacheid']);
-                    $confirm = "<p> " . tr("viewPending_11") . ".</p>";
+                    $confirm = '<p> ' . tr('viewPending_11') . '.</p>';
                 } else {
-                    $confirm = "<p> " . tr("viewPending_12") . ".</p>";
+                    $confirm = '<p> ' . tr('viewPending_12') . '.</p>';
                 }
             } else if ($_GET['action'] == 1 && isset($_GET['user_id'])) {
                 // require confirmation
-                $confirm = "<p> " . tr("viewPending_13") . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . "</a>\" " . tr("viewPending_14") . " " . getCacheOwnername($_GET['cacheid']) . ". " . tr("viewPending_15") . ".</p>";
-                $confirm .= "<p><a class='btn btn-success' href='viewpendings.php?user_id=" . $_GET['user_id'] . "&amp;cacheid=" . $_GET['cacheid'] . "&amp;confirm=1'>" . tr("viewPending_16") . "</a>
-                        <a class='btn btn-default' href='viewpendings.php'>" . tr("viewPending_17") . "</a></p>";
+                $confirm = '<p> ' . tr('viewPending_13') . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . '</a>" ' . tr('viewPending_14') . ' ' . getCacheOwnername($_GET['cacheid']) . '. ' . tr('viewPending_15') . '.</p>';
+                $confirm .= "<p><a class='btn btn-success' href='viewpendings.php?user_id=" . $_GET['user_id'] . '&amp;cacheid=' . $_GET['cacheid'] . "&amp;confirm=1'>" . tr('viewPending_16') . "</a>
+                        <a class='btn btn-default' href='viewpendings.php'>" . tr('viewPending_17') . '</a></p>';
             } else if ($_GET['action'] == 2 && isset($_GET['user_id'])) {
                 // require confirmation
-                $confirm = "<p> " . tr("viewPending_18") . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . "</a>\" " . tr("viewPending_14") . " " . getCacheOwnername($_GET['cacheid']) . ". " . tr("viewPending_19") . ".</p>";
-                $confirm .= "<p><a class='btn btn-danger' href='viewpendings.php?user_id=" . $_GET['user_id'] . "&amp;cacheid=" . $_GET['cacheid'] . "&amp;confirm=2'>" . tr("viewPending_20") . "</a>
-                        <a class='btn btn-default' href='viewpendings.php'>" . tr("viewPending_17") . "</a></p>";
+                $confirm = '<p> ' . tr('viewPending_18') . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . '</a>" ' . tr('viewPending_14') . ' ' . getCacheOwnername($_GET['cacheid']) . '. ' . tr('viewPending_19') . '.</p>';
+                $confirm .= "<p><a class='btn btn-danger' href='viewpendings.php?user_id=" . $_GET['user_id'] . '&amp;cacheid=' . $_GET['cacheid'] . "&amp;confirm=2'>" . tr('viewPending_20') . "</a>
+                        <a class='btn btn-default' href='viewpendings.php'>" . tr('viewPending_17') . '</a></p>';
             }
             tpl_set_var('confirm', $confirm);
         } else {
@@ -284,24 +284,24 @@ while ($report = XDb::xFetchArray($stmt)) {
 
     if (!$assignedUserId && new DateTime($report['date_created']) < new DateTime('5 days ago')) {
         //set alert for forgotten cache
-        $trstyle = "alert";
+        $trstyle = 'alert';
     } else if ($user->getUserId() == $assignedUserId) {
         //highlight caches assigned to current user
-        $trstyle = "highlighted";
+        $trstyle = 'highlighted';
     } else {
-        $trstyle = "";
+        $trstyle = '';
     }
 
     if ($row_num % 2)
-        $bgcolor = "bgcolor1";
+        $bgcolor = 'bgcolor1';
     else
-        $bgcolor = "bgcolor2";
+        $bgcolor = 'bgcolor2';
 
     $content .= "<tr class='" . $trstyle . "'>\n";
     $content .= "<td class='" . $bgcolor . "'>
                         <a href='viewcache.php?cacheid=" . $report['cache_id'] . "'>" . nonEmptyCacheName($report['cachename']) . "</a><br/>
-                           <a class=\"links\" href='viewprofile.php?userid=" . $report['user_id'] . "'>" . $report['username'] . "</a><br/>
-                        <span style=\"font-weight:bold;font-size:10px;color:blue;\">" . $report['adm3'] . "</span>
+                           <a class=\"links\" href='viewprofile.php?userid=" . $report['user_id'] . "'>" . $report['username'] . '</a><br/>
+                        <span style="font-weight:bold;font-size:10px;color:blue;">' . $report['adm3'] . "</span>
                     </td>\n";
 
     $content .= "<td class='alertable " . $bgcolor . "'> " . $report['date_created'] . "</td>\n";
@@ -311,10 +311,10 @@ while ($report = XDb::xFetchArray($stmt)) {
                 <a class=\"truncated\" href='viewlogs.php?logid=" . $report['last_log_id'] . "' title='" . strip_tags($report['last_log_text']) . "'>" . strip_tags($report['last_log_text']) . "</a>
                 </td>\n";
 
-    $content .= "<td class='" . $bgcolor . "'><img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?user_id=" . $report['user_id'] . "&amp;cacheid=" . $report['cache_id'] . "&amp;action=1'>" . tr('accept') . "</a><br/>
-            <img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?user_id=" . $report['user_id'] . "&amp;cacheid=" . $report['cache_id'] . "&amp;action=2'>" . tr('block') . "</a><br/>
-            <img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?cacheid=" . $report['cache_id'] . "&amp;assign=" . $user->getUserId() . "'>" . tr('assign_yourself') . "</a></td>\n";
-    $content .= "<td class='" . $bgcolor . "'><a class=\"links\" href='viewprofile.php?userid=" . $assignedUserId . "'>" . getUsername($assignedUserId) . "</a><br/></td>";
+    $content .= "<td class='" . $bgcolor . "'><img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?user_id=" . $report['user_id'] . '&amp;cacheid=' . $report['cache_id'] . "&amp;action=1'>" . tr('accept') . "</a><br/>
+            <img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?user_id=" . $report['user_id'] . '&amp;cacheid=' . $report['cache_id'] . "&amp;action=2'>" . tr('block') . "</a><br/>
+            <img src=\"/images/blue/arrow.png\" alt=\"\" />&nbsp;<a class=\"links\" href='viewpendings.php?cacheid=" . $report['cache_id'] . '&amp;assign=' . $user->getUserId() . "'>" . tr('assign_yourself') . "</a></td>\n";
+    $content .= "<td class='" . $bgcolor . "'><a class=\"links\" href='viewprofile.php?userid=" . $assignedUserId . "'>" . getUsername($assignedUserId) . '</a><br/></td>';
     $content .= "</tr>\n";
     $row_num++;
 }

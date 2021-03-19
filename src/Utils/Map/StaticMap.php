@@ -285,11 +285,11 @@ class StaticMap
                     if (preg_match($markerPrototype['regex'], $markerType, $matches)) {
                         $markerFilename = $matches[0] . $markerPrototype['extension'];
                         if ($markerPrototype['offsetImage']) {
-                            [$markerImageOffsetX, $markerImageOffsetY] = explode(",", $markerPrototype['offsetImage']);
+                            [$markerImageOffsetX, $markerImageOffsetY] = explode(',', $markerPrototype['offsetImage']);
                         }
                         $markerShadow = $markerPrototype['shadow'];
                         if ($markerShadow) {
-                            [$markerShadowOffsetX, $markerShadowOffsetY] = explode(",", $markerPrototype['offsetShadow']);
+                            [$markerShadowOffsetX, $markerShadowOffsetY] = explode(',', $markerPrototype['offsetShadow']);
                         }
                     }
 
@@ -335,7 +335,7 @@ class StaticMap
 
     private function tileUrlToFilename($url)
     {
-        return $this->tileCacheBaseDir . "/" . str_replace(['http://'], '', $url);
+        return $this->tileCacheBaseDir . '/' . str_replace(['http://'], '', $url);
     }
 
     private function checkTileCache($url)
@@ -359,17 +359,17 @@ class StaticMap
 
     private function serializeParams()
     {
-        return join("&", [$this->zoom, $this->lat, $this->lon, $this->width, $this->height, serialize($this->markers), $this->maptype]);
+        return join('&', [$this->zoom, $this->lat, $this->lon, $this->width, $this->height, serialize($this->markers), $this->maptype]);
     }
 
     private function mapCacheIDToFilename()
     {
         if (!$this->mapCacheFile) {
-            $this->mapCacheFile = $this->mapCacheBaseDir . "/" . $this->maptype . "/" . $this->zoom .
-                "/cache_" . substr($this->mapCacheID, 0, 2) .
-                "/" . substr($this->mapCacheID, 2, 2) . "/" . substr($this->mapCacheID, 4);
+            $this->mapCacheFile = $this->mapCacheBaseDir . '/' . $this->maptype . '/' . $this->zoom .
+                '/cache_' . substr($this->mapCacheID, 0, 2) .
+                '/' . substr($this->mapCacheID, 2, 2) . '/' . substr($this->mapCacheID, 4);
         }
-        return $this->mapCacheFile . "." . $this->mapCacheExtension;
+        return $this->mapCacheFile . '.' . $this->mapCacheExtension;
     }
 
     private function mkdir_recursive($pathname, $mode)
@@ -393,9 +393,9 @@ class StaticMap
 
         $opts = [
             'http' => [
-                'method' => "GET",
+                'method' => 'GET',
                 'timeout' => 2.0,
-                'header' => "User-Agent: https://github.com/opencaching/opencaching-pl",
+                'header' => 'User-Agent: https://github.com/opencaching/opencaching-pl',
                 ],
 //            'ssl' => [
 //                    'verify_peer' => false,
@@ -448,7 +448,7 @@ class StaticMap
     {
         header('Content-Type: image/png');
         $expires = 60 * 60 * 24 * 14;
-        header("Cache-Control: private, maxage=" . $expires);
+        header('Cache-Control: private, maxage=' . $expires);
         header('Expires: ' . gmdate('D, d M Y H:i:s', time() + $expires) . ' GMT');
     }
 

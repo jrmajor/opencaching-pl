@@ -23,20 +23,20 @@ if (isset($_REQUEST['region'])) {
             echo '<table width="97%"><tr><td align="center"><center><b> ' . tr('ranking_by_number_of_created_caches') . ' </b><br />' . tr('ranking_by_number_of_created_caches_active') . '<br />';
 
             $woj = XDb::xMultiVariableQueryValue(
-                "SELECT nuts_codes.name FROM nuts_codes WHERE code= :1 ", 0, $region);
+                'SELECT nuts_codes.name FROM nuts_codes WHERE code= :1 ', 0, $region);
 
             echo '<br /><b><font color="blue">' . $woj . '</font></b></center></td></tr></table>';
             echo '<table border="1" bgcolor="white" width="97%">' . "\n";
 
             $wyniki = XDb::xSql(
-                "SELECT count(*) count, user.username nick,caches.user_id userid
+                'SELECT count(*) count, user.username nick,caches.user_id userid
                 FROM caches
                     JOIN user USING(user_id)
                     JOIN cache_location USING (cache_id)
                 WHERE caches.status=1 AND caches.type<>6
                     AND cache_location.code3= ?
                 GROUP BY caches.user_id
-                ORDER by count DESC, user.username ASC", $region);
+                ORDER by count DESC, user.username ASC', $region);
 
             $licznik = 0;
             $wartosc = 0;
@@ -47,7 +47,7 @@ if (isset($_REQUEST['region'])) {
                 if ($wartosc == 0) {
                     $wartosc = $wynik['count'];
                     $licznik = 1;
-                    echo "<tr class='bgcolor2'><td align='right'>&nbsp;&nbsp;<b>$licznik</b>&nbsp;&nbsp;</td><td align='right'>&nbsp;&nbsp;<b>".$wynik['count']."</b>&nbsp;&nbsp;</td><td><a href='viewprofile.php?userid=".$wynik['userid']."'>" . htmlspecialchars($wynik['nick']) . "</a>";
+                    echo "<tr class='bgcolor2'><td align='right'>&nbsp;&nbsp;<b>$licznik</b>&nbsp;&nbsp;</td><td align='right'>&nbsp;&nbsp;<b>".$wynik['count']."</b>&nbsp;&nbsp;</td><td><a href='viewprofile.php?userid=".$wynik['userid']."'>" . htmlspecialchars($wynik['nick']) . '</a>';
                 } else
                 if ($wartosc == $wynik['count']) {
                     echo ', <a href="viewprofile.php?userid=' . $wynik['userid'] . '">' . htmlspecialchars($wynik['nick']) . '</a>';

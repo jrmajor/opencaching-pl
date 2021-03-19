@@ -42,7 +42,7 @@ if ($loggedUser || ! $hide_coords) {
         } else {
             // get the users home coords
             $rs_coords = XDb::xSql(
-                "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1", $loggedUser->getUserId());
+                'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1', $loggedUser->getUserId());
 
 
             $record_coords = XDb::xFetchArray($rs_coords);
@@ -126,7 +126,7 @@ if ($loggedUser || ! $hide_coords) {
             XDb::xFreeResults($rsName);
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim(convert_string($rName['name']));
-                $sFilebasename = str_replace(" ", "_", $sFilebasename);
+                $sFilebasename = str_replace(' ', '_', $sFilebasename);
             } else {
                 $sFilebasename = 'search' . $options['queryid'];
             }
@@ -150,9 +150,9 @@ if ($loggedUser || ! $hide_coords) {
         $lon = sprintf('%07d', $r['longitude'] * 100000);
         // modified coords
         if ($r['cache_mod_cords_id'] > 0) { // check if we have user coords
-            $r['mod_suffix'] = "[F]";
+            $r['mod_suffix'] = '[F]';
         } else {
-            $r['mod_suffix'] = "";
+            $r['mod_suffix'] = '';
         }
 
         $comb_name = $r['mod_suffix'] . $r['name'];
@@ -165,7 +165,7 @@ if ($loggedUser || ! $hide_coords) {
         $cacheid = convert_string($r['wp_oc']);
 
         $line = "$cacheid - $name by $username, $type ($difficulty/$terrain)";
-        $record = pack("CLllA*x", 2, 1 + 4 + 4 + 4 + strlen($line) + 1, (int) $lon, (int) $lat, $line);
+        $record = pack('CLllA*x', 2, 1 + 4 + 4 + 4 + strlen($line) + 1, (int) $lon, (int) $lat, $line);
 
         echo $record;
         // DO NOT USE HERE:
@@ -178,13 +178,13 @@ if ($loggedUser || ! $hide_coords) {
         $phpzip->add_data($sFilebasename . '.ov2', $content);
         $out = $phpzip->save($sFilebasename . '.zip', 'b');
 
-        header("content-type: application/zip");
+        header('content-type: application/zip');
         header('Content-Disposition: attachment; filename=' . $sFilebasename . '.zip');
         echo $out;
         ob_end_flush();
     } else {
-        header("Content-type: application/ov2");
-        header("Content-Disposition: attachment; filename=" . $sFilebasename . ".ov2");
+        header('Content-type: application/ov2');
+        header('Content-Disposition: attachment; filename=' . $sFilebasename . '.ov2');
         ob_end_flush();
     }
 }

@@ -9,7 +9,7 @@ require_once __DIR__.'/../lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 if(!$loggedUser){
-    echo "User not authorized!";
+    echo 'User not authorized!';
     exit;
 }
 $ptAPI = new powerTrailBase;

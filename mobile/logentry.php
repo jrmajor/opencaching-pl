@@ -2,7 +2,7 @@
 use src\Utils\Database\XDb;
 use okapi\Facade;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
 
@@ -15,7 +15,7 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
     if (!empty($caches)) {
 
         // Prevent https://github.com/opencaching/opencaching-pl/issues/228
-        XDb::xSql("start transaction");
+        XDb::xSql('start transaction');
         XDb::xSql("
             select 1
             from cache_logs
@@ -34,11 +34,11 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
 
         $temp_found = ($if_found == 1 || $is_mine == 1) ? 1 : 0;
 
-        $query = "SELECT floor( founds_count /10 ) FROM user WHERE user_id =" . $_SESSION['user_id'] . ";";
+        $query = 'SELECT floor( founds_count /10 ) FROM user WHERE user_id =' . $_SESSION['user_id'] . ';';
         $wynik = XDb::xSql($query);
         $dostepne = XDb::xFetchArray($wynik);
 
-        $query = "select count(*) from cache_rating where user_id=" . $_SESSION['user_id'] . ";";
+        $query = 'select count(*) from cache_rating where user_id=' . $_SESSION['user_id'] . ';';
         $wynik = XDb::xSql($query);
         $przyznanych = XDb::xFetchArray($wynik);
 
@@ -64,7 +64,7 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
             $tpl->assign('rodz_select', $rodzaj);
 
             $datetime = @mktime($date_H, $date_i, 0, $date_m, $date_d, $date_Y);
-            $dzis = date("Y-m-d H:i:00", $datetime);
+            $dzis = date('Y-m-d H:i:00', $datetime);
 
             if ($datetime == '')
                 $tpl->assign('error', '2');
@@ -74,7 +74,7 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
                 $tpl->assign('error', '4');
             elseif ($rodzaj != '3' && $rodzaj != '7' && $rodzaj != '8' && $caches['type'] == 6)
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 0 && !preg_match("/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/", $ocena))
+            elseif ($temp_found == 0 && !preg_match('/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/', $ocena))
                 $tpl->assign('error', '4');
             elseif ($temp_found == 1 && ($rodzaj == 1 || $rodzaj == 2 || $rodzaj == 7))
                 $tpl->assign('error', '4');
@@ -87,43 +87,43 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
             } else {
 
                 $uuid = mb_strtoupper(md5(uniqid(rand(), true)));
-                $query = "insert into cache_logs (uuid, cache_id, user_id, type, date, text, last_modified, date_created, node) ";
+                $query = 'insert into cache_logs (uuid, cache_id, user_id, type, date, text, last_modified, date_created, node) ';
                 $query.="values ('" . $uuid . "','" . $caches['cache_id'] . "','" . $_SESSION['user_id'] . "','" . $rodzaj . "','" . $dzis . "','" . $tekst . "',now(),now(), '2');";
                 XDb::xSql($query);
 
                 switch ($rodzaj) {
 
                     case 1:
-                        $query = "update caches set founds=founds+1 where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set founds=founds+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
-                        $query = "update user set founds_count=founds_count+1 where user_id = " . $_SESSION['user_id'];
+                        $query = 'update user set founds_count=founds_count+1 where user_id = ' . $_SESSION['user_id'];
                         XDb::xSql($query);
                         break;
                     case 2:
-                        $query = "update caches set notfounds=notfounds+1 where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set notfounds=notfounds+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
-                        $query = "update user set notfounds_count=notfounds_count+1 where user_id = " . $_SESSION['user_id'];
+                        $query = 'update user set notfounds_count=notfounds_count+1 where user_id = ' . $_SESSION['user_id'];
                         XDb::xSql($query);
                         break;
                     case 3:
-                        $query = "update caches set notes=notes+1 where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set notes=notes+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
-                        $query = "update user set log_notes_count=log_notes_count+1 where user_id = " . $_SESSION['user_id'];
+                        $query = 'update user set log_notes_count=log_notes_count+1 where user_id = ' . $_SESSION['user_id'];
                         XDb::xSql($query);
                         break;
                     case 7:
-                        $query = "update caches set founds=founds+1 where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set founds=founds+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
                         break;
                     case 8:
-                        $query = "update caches set notfounds=notfounds+1 where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set notfounds=notfounds+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
                         break;
                 }
 
                 if ($rodzaj == 1) {
                     if ($topratingav == 1 && $rekomendacja == 'on') {
-                        $query = "insert ignore into cache_rating(cache_id, user_id) values (" . $caches['cache_id'] . "," . $_SESSION['user_id'] . ");";
+                        $query = 'insert ignore into cache_rating(cache_id, user_id) values (' . $caches['cache_id'] . ',' . $_SESSION['user_id'] . ');';
                         XDb::xSql($query);
 
                         // Notify OKAPI's replicate module of the change.
@@ -136,14 +136,14 @@ if (isset($_SESSION['user_id']) && isset($_GET['wp']) && !empty($_GET['wp'])) {
                         //XDb::xSql($query);
                     }
                     if ($ocena >= '-3' && $ocena <= '3') {
-                        $query = "insert into scores(cache_id,user_id,score) values (" . $caches['cache_id'] . "," . $_SESSION['user_id'] . "," . $ocena . ");";
+                        $query = 'insert into scores(cache_id,user_id,score) values (' . $caches['cache_id'] . ',' . $_SESSION['user_id'] . ',' . $ocena . ');';
                         XDb::xSql($query);
 
-                        $query = "update caches set votes=votes+1 ,score=(SELECT round( avg( score ) , 1 ) FROM scores WHERE cache_id = " . $caches['cache_id'] . ") where cache_id = " . $caches['cache_id'];
+                        $query = 'update caches set votes=votes+1 ,score=(SELECT round( avg( score ) , 1 ) FROM scores WHERE cache_id = ' . $caches['cache_id'] . ') where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
                     }
                 }
-                XDb::xSql("commit");
+                XDb::xSql('commit');
                 header('Location: ./viewcache.php?wp=' . $wp);
                 exit;
             }

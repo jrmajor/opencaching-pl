@@ -15,9 +15,9 @@ class CacheNote extends BaseObject
     public static function getNote($userId, $cacheId)
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT `desc` FROM cache_notes
+            'SELECT `desc` FROM cache_notes
             WHERE cache_id = :1 AND user_id = :2
-            LIMIT 1", '', $cacheId, $userId);
+            LIMIT 1', '', $cacheId, $userId);
     }
 
     /**
@@ -37,9 +37,9 @@ class CacheNote extends BaseObject
         $noteContent = htmlspecialchars($noteContent, ENT_COMPAT, 'UTF-8');
 
         self::db()->multiVariableQuery(
-            "INSERT INTO cache_notes
+            'INSERT INTO cache_notes
                 (cache_id, user_id, `desc`, date)
-            VALUES(:1, :2, :3, NOW() );",
+            VALUES(:1, :2, :3, NOW() );',
             $cacheId, $userId, $noteContent);
     }
 
@@ -54,8 +54,8 @@ class CacheNote extends BaseObject
         //TODO: add LIMIT 1 after note_id removig
 
         self::db()->multiVariableQuery(
-            "DELETE FROM cache_notes
-             WHERE cache_id = :1 AND user_id = :2", $cacheId, $userId);
+            'DELETE FROM cache_notes
+             WHERE cache_id = :1 AND user_id = :2', $cacheId, $userId);
     }
 
     /**
@@ -68,11 +68,11 @@ class CacheNote extends BaseObject
     public static function getCountOfUserNotesAndModCoords($userId)
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM (
+            'SELECT COUNT(*) FROM (
                 SELECT cache_id FROM cache_notes WHERE user_id = :1
                 UNION
                 SELECT cache_id FROM cache_mod_cords WHERE user_id = :1
-            ) x", 0, $userId);
+            ) x', 0, $userId);
     }
 
     /**

@@ -12,9 +12,9 @@ use src\Utils\Database\XDb;
 class CacheAccessLog
 {
 
-    const SOURCE_BROWSER = "B";
-    const SOURCE_MOBILE = "M";
-    const SOURCE_OKAPI = "O";
+    const SOURCE_BROWSER = 'B';
+    const SOURCE_MOBILE = 'M';
+    const SOURCE_OKAPI = 'O';
 
     public static function logCacheAccess($cacheId, $userId, $event, $source){
         $accessLog = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $userId];

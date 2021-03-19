@@ -38,31 +38,31 @@ $y4 = [];
 $x4 = [];
 
 $rsreports = XDb::xSql(
-    "SELECT count(*) count, responsible_id, username FROM reports, user
+    'SELECT count(*) count, responsible_id, username FROM reports, user
     WHERE submit_date > ? and responsible_id <>0 AND responsible_id != 1883 AND user.user_id=responsible_id
     GROUP BY responsible_id
-    ORDER BY username", $start_time);
+    ORDER BY username', $start_time);
 
 $rsreportsM = XDb::xSql(
-    "SELECT count(*) count, MONTH(`submit_date`) `month` FROM reports
+    'SELECT count(*) count, MONTH(`submit_date`) `month` FROM reports
     WHERE submit_date > ? and responsible_id <> 0 AND responsible_id != 1883
     GROUP BY MONTH(`submit_date`), YEAR(`submit_date`)
-    ORDER BY YEAR(`submit_date`) ASC, MONTH(`submit_date`) ASC", $start_time);
+    ORDER BY YEAR(`submit_date`) ASC, MONTH(`submit_date`) ASC', $start_time);
 
 $rscaches = XDb::xSql(
-    "SELECT count(*) count, username FROM approval_status, user
+    'SELECT count(*) count, username FROM approval_status, user
     WHERE user.user_id=approval_status.user_id AND date_approval > ?
     GROUP BY approval_status.user_id
-    ORDER BY username", $start_time);
+    ORDER BY username', $start_time);
 
 $rscachesM = XDb::xSql(
-    "SELECT count(*) count, MONTH(`date_approval`) `month` FROM approval_status
+    'SELECT count(*) count, MONTH(`date_approval`) `month` FROM approval_status
     WHERE date_approval > ?
     GROUP BY MONTH(`date_approval`) , YEAR(`date_approval`)
-    ORDER BY YEAR(`date_approval`) ASC, MONTH(`date_approval`) ASC", $start_time);
+    ORDER BY YEAR(`date_approval`) ASC, MONTH(`date_approval`) ASC', $start_time);
 
 
-$xtitle = "";
+$xtitle = '';
 while ($ry = XDb::xFetchArray($rsreports)) {
     $y[] = $ry['count'];
     $x[] = $ry['username'];
@@ -106,7 +106,7 @@ if (count($x) == 0) {
     $graph->Add($bplot);
 
     // Setup the titles
-    $descibe = iconv('UTF-8', 'ASCII//TRANSLIT', tr("octeam_stat_problems"));
+    $descibe = iconv('UTF-8', 'ASCII//TRANSLIT', tr('octeam_stat_problems'));
     $graph->title->Set($descibe);
     $graph->xaxis->title->Set($xtitle);
     $graph->xaxis->SetTickLabels($x);
@@ -148,7 +148,7 @@ if (count($x2) == 0) {
     $graph2->Add($bplot2);
 
     // Setup the titles
-    $descibe2 = iconv('UTF-8', 'ASCII//TRANSLIT', tr("octeam_stat_caches"));
+    $descibe2 = iconv('UTF-8', 'ASCII//TRANSLIT', tr('octeam_stat_caches'));
     $graph2->title->Set($descibe2);
     $graph2->xaxis->title->Set($xtitle);
     $graph2->xaxis->SetTickLabels($x2);
@@ -193,7 +193,7 @@ if (count($x3) == 0) {
     $graph3->Add($bplot3);
 
     // Setup the titles
-    $descibe3 = iconv('UTF-8', 'ASCII//TRANSLIT', tr("octeam_stat_m_problems"));
+    $descibe3 = iconv('UTF-8', 'ASCII//TRANSLIT', tr('octeam_stat_m_problems'));
     $graph3->title->Set($descibe3);
     $graph3->xaxis->title->Set(iconv('UTF-8', 'ASCII//TRANSLIT', tr('number_month')) . '2016/2017');
     $graph3->xaxis->SetTickLabels($x3);
@@ -232,7 +232,7 @@ if (count($x4) == 0) {
     $graph4->Add($bplot4);
 
     // Setup the titles
-    $descibe4 = iconv('UTF-8', 'ASCII//TRANSLIT', tr("octeam_stat_m_caches"));
+    $descibe4 = iconv('UTF-8', 'ASCII//TRANSLIT', tr('octeam_stat_m_caches'));
     $graph4->title->Set($descibe4);
     $graph4->xaxis->title->Set(iconv('UTF-8', 'ASCII//TRANSLIT', tr('number_month')) . '2016/2017');
     $graph4->xaxis->SetTickLabels($x4);

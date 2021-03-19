@@ -40,10 +40,10 @@ class AutoArchiveCachesJob extends Job
         $this->cleanAutoArchDB();
 
         $stmt = $this->db->multiVariableQuery(
-            "SELECT `cache_id`, `last_modified`
+            'SELECT `cache_id`, `last_modified`
               FROM `caches`
               WHERE `status` = :1
-                AND `last_modified` < NOW() - INTERVAL 4 MONTH",
+                AND `last_modified` < NOW() - INTERVAL 4 MONTH',
             GeoCache::STATUS_UNAVAILABLE);
 
         while ($row = $this->db->dbResultFetch($stmt)) {
@@ -51,7 +51,7 @@ class AutoArchiveCachesJob extends Job
             $lastModified = new DateTime($row['last_modified']);
             $cache = GeoCache::fromCacheIdFactory($row['cache_id']);
             $step = $this->db->multiVariableQueryValue(
-                "SELECT `step` FROM `cache_arch` WHERE `cache_id` = :1",
+                'SELECT `step` FROM `cache_arch` WHERE `cache_id` = :1',
                 self::STEP_0_STAGED,
                 $cache->getCacheId()
             );
@@ -221,7 +221,7 @@ class AutoArchiveCachesJob extends Job
     private function updateCacheStepInDb(GeoCache $cache, $step)
     {
         $this->db->multiVariableQuery(
-            "REPLACE INTO `cache_arch` (`cache_id`, `step`) VALUES (:1, :2 )",
+            'REPLACE INTO `cache_arch` (`cache_id`, `step`) VALUES (:1, :2 )',
             $cache->getCacheId(),
             $step
         );
@@ -235,11 +235,11 @@ class AutoArchiveCachesJob extends Job
     private function processEvents()
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT `cache_id`
+            'SELECT `cache_id`
             FROM `caches`
             WHERE `type` = :1
                   AND `status` <> :2
-                  AND `date_hidden` < NOW() - INTERVAL 2 MONTH",
+                  AND `date_hidden` < NOW() - INTERVAL 2 MONTH',
             GeoCache::TYPE_EVENT,
             GeoCache::STATUS_ARCHIVED
         );

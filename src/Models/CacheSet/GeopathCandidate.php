@@ -35,17 +35,17 @@ class GeopathCandidate extends BaseObject
     public static function createNewCandidate(CacheSet $geopath, GeoCache $cache)
     {
         self::db()->multiVariableQuery(
-            "INSERT INTO PowerTrail_cacheCandidate
+            'INSERT INTO PowerTrail_cacheCandidate
                 (PowerTrailId, cacheId, date)
-             VALUES (:1, :2, NOW())",
+             VALUES (:1, :2, NOW())',
              $geopath->getId(), $cache->getCacheId());
     }
 
     private function loadDataFromDb()
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT * FROM PowerTrail_cacheCandidate
-             WHERE id = :1 LIMIT 1", $this->id);
+            'SELECT * FROM PowerTrail_cacheCandidate
+             WHERE id = :1 LIMIT 1', $this->id);
 
         $data = $this->db->dbResultFetchOneRowOnly($stmt);
         if(!$data) {
@@ -131,8 +131,8 @@ class GeopathCandidate extends BaseObject
         $db = self::db();
 
         $rs = $db->multiVariableQuery(
-            "SELECT id, cacheId, date FROM PowerTrail_cacheCandidate
-             WHERE PowerTrailId = :1 ORDER BY date ASC", $geopath->getId());
+            'SELECT id, cacheId, date FROM PowerTrail_cacheCandidate
+             WHERE PowerTrailId = :1 ORDER BY date ASC', $geopath->getId());
 
         $result = [];
         $cacheIds = [];
@@ -159,11 +159,11 @@ class GeopathCandidate extends BaseObject
         // find user candidates
         $db = self::db();
         $rs = $db->multiVariableQuery(
-            "SELECT gpc.*
+            'SELECT gpc.*
              FROM PowerTrail_cacheCandidate AS gpc
                 JOIN caches AS c ON c.cache_id = gpc.cacheId
              WHERE c.user_id = :1
-             ORDER BY PowerTrailId ASC, date ASC", $user->getUserId());
+             ORDER BY PowerTrailId ASC, date ASC', $user->getUserId());
 
         $result = [];
         $cacheIds = [];
@@ -223,8 +223,8 @@ class GeopathCandidate extends BaseObject
      */
     public function cancelOffer() {
         $this->db->multiVariableQuery(
-            "DELETE FROM PowerTrail_cacheCandidate
-             WHERE id = :1 LIMIT 1", $this->id);
+            'DELETE FROM PowerTrail_cacheCandidate
+             WHERE id = :1 LIMIT 1', $this->id);
     }
 
     /**

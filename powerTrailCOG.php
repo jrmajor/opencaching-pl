@@ -22,8 +22,8 @@ $view->setTemplate('powerTrailCOG');
 $pt = new powerTrailController($loggedUser);
 $pt->run();
 
-tpl_set_var("selPtDiv", 'none');
-tpl_set_var("PtDetailsDiv", 'none');
+tpl_set_var('selPtDiv', 'none');
+tpl_set_var('PtDetailsDiv', 'none');
 tpl_set_var('language4js', I18n::getCurrentLang());
 
 $view->loadJQuery();
@@ -36,14 +36,14 @@ if (isset($_REQUEST['ptSelector'])) {
     $ptStatus = \src\Controllers\PowerTrailController::getPowerTrailStatus();
     $ptType = powerTrailBase::getPowerTrailTypes();
 
-    tpl_set_var("ptCaches", preparePtCaches($powerTrail));
-    tpl_set_var("ptStatSelect", generateStatusSelector($powerTrail->getStatus()));
-    tpl_set_var("ptId", $powerTrail->getId());
-    tpl_set_var("ptName", $powerTrail->getName());
-    tpl_set_var("ptType", tr($ptType[$ptData['type']]['translate']));
-    tpl_set_var("ptStatus", tr($ptStatus[$ptData['status']]['translate']));
+    tpl_set_var('ptCaches', preparePtCaches($powerTrail));
+    tpl_set_var('ptStatSelect', generateStatusSelector($powerTrail->getStatus()));
+    tpl_set_var('ptId', $powerTrail->getId());
+    tpl_set_var('ptName', $powerTrail->getName());
+    tpl_set_var('ptType', tr($ptType[$ptData['type']]['translate']));
+    tpl_set_var('ptStatus', tr($ptStatus[$ptData['status']]['translate']));
 
-    tpl_set_var("PtDetailsDiv", 'block');
+    tpl_set_var('PtDetailsDiv', 'block');
 
     $view->setVar('allPtsUrl', '');
     $view->setVar('allPtsText', '');
@@ -52,14 +52,14 @@ if (isset($_REQUEST['ptSelector'])) {
         // display all powertrails - even these not published
         $pts = powerTrailBase::getAllPt('');
         $view->setVar('allPtsUrl', Uri::removeParam('allPts', Uri::getCurrentUri(true)));
-        $view->setVar('allPtsText', "Display only published geopaths");
+        $view->setVar('allPtsText', 'Display only published geopaths');
     } else {
         $pts = powerTrailBase::getAllPt('AND status != 2');
         $view->setVar('allPtsUrl', Uri::addParamsToUri(Uri::getCurrentUri(true), ['allPts'=>null]));
-        $view->setVar('allPtsText', "Display all geopaths (also not published)");
+        $view->setVar('allPtsText', 'Display all geopaths (also not published)');
     }
-    tpl_set_var("ptSelector", makePtSelector($pts, 'ptSelector'));
-    tpl_set_var("selPtDiv", 'block');
+    tpl_set_var('ptSelector', makePtSelector($pts, 'ptSelector'));
+    tpl_set_var('selPtDiv', 'block');
 }
 
 $view->buildView();

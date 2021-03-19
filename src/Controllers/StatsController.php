@@ -74,7 +74,7 @@ class StatsController extends BaseController
     public function statPic($userId)
     {
         if (!is_numeric($userId)) {
-            $this->displayCommonErrorPageAndExit("improper userId");
+            $this->displayCommonErrorPageAndExit('improper userId');
         }
 
         if (1 || !StatPic::isStatPicPresent ($userId)) { //XXXY

@@ -64,7 +64,7 @@ abstract class AbstractColumn {
     }
 
     public function getCssClass(){
-        return "center";
+        return 'center';
     }
 
     public function getAdditionalClass()

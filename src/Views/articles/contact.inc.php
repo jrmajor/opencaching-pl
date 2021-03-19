@@ -22,16 +22,16 @@ class contactDataProcessor
             $result .= "<h$headerLevel>" . self::translate($contact['groupName'], $contact) . "</h$headerLevel>\n";
         }
         if (isset($contact['emailAddress'])) {
-            $result .= "<p><b>E-mail: " . $contact['emailAddress'] . "</b></p>\n";
+            $result .= '<p><b>E-mail: ' . $contact['emailAddress'] . "</b></p>\n";
         }
         if (isset($contact['groupDescription'])) {
             $groupDescription = $contact['groupDescription'];
             if (is_array($groupDescription)) {
                 foreach ($groupDescription as $groupItem) {
-                    $result .= "<p>" . self::translate($groupItem, $contact) . "</p>\n";
+                    $result .= '<p>' . self::translate($groupItem, $contact) . "</p>\n";
                 }
             } else {
-                $result .= "<p>" . self::translate($groupDescription, $contact) . "</p>\n";
+                $result .= '<p>' . self::translate($groupDescription, $contact) . "</p>\n";
             }
         }
         if (isset($contact['subgroup'])) {

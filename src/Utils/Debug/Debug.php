@@ -32,7 +32,7 @@ class Debug {
 
     public static function logException(Throwable $e)
     {
-        $message = sprintf("%s: [%s:%d] %s ", get_class($e), $e->getFile(), $e->getLine(), $e->getMessage());
+        $message = sprintf('%s: [%s:%d] %s ', get_class($e), $e->getFile(), $e->getLine(), $e->getMessage());
         if (! empty($e->getTrace())) {
             $message .= self::formTraceStr($e->getTrace());
         }

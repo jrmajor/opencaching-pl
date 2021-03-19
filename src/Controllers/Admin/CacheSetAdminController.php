@@ -157,7 +157,7 @@ class CacheSetAdminController extends BaseController
         $this->checkUserLoggedAjax();
 
         if (!is_numeric($gpId) || !is_numeric($cacheId)) {
-            $this->ajaxErrorResponse("Incorrect params");
+            $this->ajaxErrorResponse('Incorrect params');
         }
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
@@ -167,7 +167,7 @@ class CacheSetAdminController extends BaseController
 
         if (!$this->loggedUser->hasOcTeamRole() &&
             !$cache->getOwnerId() != $this->loggedUser->getUserId()) {
-            $this->ajaxErrorResponse("User is not allowed to remove this geocache from goepath");
+            $this->ajaxErrorResponse('User is not allowed to remove this geocache from goepath');
         }
 
         // check if this cache is on the list of duplicates
@@ -176,15 +176,15 @@ class CacheSetAdminController extends BaseController
         Debug::dumpToLog($cacheId);
 
         if (!in_array($cacheId, $cacheIds)) {
-            $this->ajaxErrorResponse("This cache is not a duplicate");
+            $this->ajaxErrorResponse('This cache is not a duplicate');
         }
 
         $gp = CacheSet::fromCacheSetIdFactory($gpId);
         if (!$gp) {
-            $this->ajaxErrorResponse("No such GP");
+            $this->ajaxErrorResponse('No such GP');
         }
 
         $gp->removeCache($cache);
-        $this->ajaxSuccessResponse("Cache removed");
+        $this->ajaxSuccessResponse('Cache removed');
     }
 }

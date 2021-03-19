@@ -1,6 +1,6 @@
 <?php
 use src\Utils\Database\XDb;
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 
 
@@ -31,7 +31,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
             $tpl->assign('caches_rat', $znalezione);
             break;
         case '3':
-            $query = "select username,user_id,founds_count from user order by founds_count desc limit 50";
+            $query = 'select username,user_id,founds_count from user order by founds_count desc limit 50';
             $wynik = XDb::xSql($query);
             $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
@@ -43,7 +43,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
             $tpl->assign('user_found', $znalezione);
             break;
         case '4':
-            $query = "select username,user_id,hidden_count from user order by hidden_count desc limit 50";
+            $query = 'select username,user_id,hidden_count from user order by hidden_count desc limit 50';
             $wynik = XDb::xSql($query);
             $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
@@ -58,22 +58,22 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
 
     $tpl->display('tpl/stats2.tpl');
 } else {
-    $query = "select count(*) from caches where (status=1 OR status=2 OR status=3)";
+    $query = 'select count(*) from caches where (status=1 OR status=2 OR status=3)';
     $wynik = XDb::xSql($query);
     $odp = XDb::xFetchArray($wynik);
     $tpl->assign('ile', $odp[0]);
 
-    $query = "select count(*) from caches where status = 1";
+    $query = 'select count(*) from caches where status = 1';
     $wynik = XDb::xSql($query);
     $odp = XDb::xFetchArray($wynik);
     $tpl->assign('ile_akt', $odp[0]);
 
-    $query = "select count(*) from cache_logs where (`type`=1 OR `type`=2) AND `deleted`=0";
+    $query = 'select count(*) from cache_logs where (`type`=1 OR `type`=2) AND `deleted`=0';
     $wynik = XDb::xSql($query);
     $odp = XDb::xFetchArray($wynik);
     $tpl->assign('founds', $odp[0]);
 
-    $query = "SELECT COUNT(*) AS `users` FROM (SELECT DISTINCT `user_id` FROM `cache_logs` WHERE (`type`=1 OR `type`=2) AND `deleted`=0 UNION DISTINCT SELECT DISTINCT `user_id` FROM `caches`) AS `t`";
+    $query = 'SELECT COUNT(*) AS `users` FROM (SELECT DISTINCT `user_id` FROM `cache_logs` WHERE (`type`=1 OR `type`=2) AND `deleted`=0 UNION DISTINCT SELECT DISTINCT `user_id` FROM `caches`) AS `t`';
     $wynik = XDb::xSql($query);
     $odp = XDb::xFetchArray($wynik);
     $tpl->assign('user', $odp[0]);
@@ -94,7 +94,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
       from caches inner join (select cache_id as yy,
       ile from(select cache_id,count(*) as ile from cache_rating group by cache_id)tab order by ile desc limit 5)a on yy=caches.cache_id where type!='4' and type!='5'";
      */
-    $query = "SELECT `caches`.`wp_oc` `wp_oc`,
+    $query = 'SELECT `caches`.`wp_oc` `wp_oc`,
                 `caches`.`name` `name`,
                 count(`cache_rating`.`cache_id`) as `ile`
             FROM `caches`, `cache_rating`
@@ -102,7 +102,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
               AND `status`=1  AND `type` <> 6
             GROUP BY `caches`.`name`, `caches`.`cache_id`
             ORDER BY `ile` DESC, `caches`.`name` ASC
-            LIMIT 5";
+            LIMIT 5';
     $wynik = XDb::xSql($query);
     $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
@@ -113,7 +113,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
     }
     $tpl->assign('caches_rat', $znalezione);
 
-    $query = "select username,user_id,founds_count from user order by founds_count desc limit 5";
+    $query = 'select username,user_id,founds_count from user order by founds_count desc limit 5';
     $wynik = XDb::xSql($query);
     $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
@@ -124,7 +124,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
     }
     $tpl->assign('user_found', $znalezione);
 
-    $query = "select username,user_id,hidden_count from user order by hidden_count desc limit 5";
+    $query = 'select username,user_id,hidden_count from user order by hidden_count desc limit 5';
     $wynik = XDb::xSql($query);
     $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {

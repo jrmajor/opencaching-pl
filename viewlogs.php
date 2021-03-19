@@ -20,7 +20,7 @@ $view = tpl_getView();
 $view->loadFancyBox();
 $view->setTemplate('viewlogs');
 
-tpl_set_var('viewcache_js', Uri::getLinkWithModificationTime("/views/viewcache/viewcache.js"));
+tpl_set_var('viewcache_js', Uri::getLinkWithModificationTime('/views/viewcache/viewcache.js'));
 require(__DIR__ . '/src/Views/lib/icons.inc.php');
 require(__DIR__ . '/src/Views/viewcache.inc.php');
 require(__DIR__ . '/src/Views/viewlogs.inc.php');
@@ -65,8 +65,8 @@ if ($cache_id != 0) {
     //get cache record
 
     $s = $dbc->multiVariableQuery(
-        "SELECT `user_id`, `name`, `founds`, `notfounds`, `notes`, `status`, `type` FROM `caches`
-            WHERE `caches`.`cache_id`=:1 LIMIT 1", $cache_id);
+        'SELECT `user_id`, `name`, `founds`, `notfounds`, `notes`, `status`, `type` FROM `caches`
+            WHERE `caches`.`cache_id`=:1 LIMIT 1', $cache_id);
 
     if ($dbc->rowCount($s) == 0) {
         $cache_id = 0;
@@ -83,12 +83,12 @@ if ($cache_id != 0) {
     //get cache record
 
     $s = $dbc->multiVariableQuery(
-        "SELECT `cache_logs`.`cache_id`,`caches`.`user_id`, `caches`.`name`, `caches`.`founds`,
+        'SELECT `cache_logs`.`cache_id`,`caches`.`user_id`, `caches`.`name`, `caches`.`founds`,
                     `caches`.`notfounds`, `caches`.`notes`, `caches`.`status`, `caches`.`type`
             FROM `caches`,`cache_logs`
             WHERE `cache_logs`.`id`=:1
                 AND `caches`.`cache_id`=`cache_logs`.`cache_id`
-            LIMIT 1", $logid);
+            LIMIT 1', $logid);
 
     if ($dbc->rowCount($s) == 0) {
         $cache_id = 0;
@@ -157,7 +157,7 @@ if ($cache_id != 0) {
     tpl_set_var('total_number_of_logs', htmlspecialchars($cache_record['notes'] + $cache_record['notfounds'] + $cache_record['founds'], ENT_COMPAT, 'UTF-8'));
 
     //check number of pictures in logs
-    $rspiclogs = $dbc->multiVariableQueryValue("SELECT COUNT(*) FROM `pictures`,`cache_logs` WHERE `pictures`.`object_id`=`cache_logs`.`id` AND `pictures`.`object_type`=1 AND `cache_logs`.`cache_id`= :1", 0, $cache_id);
+    $rspiclogs = $dbc->multiVariableQueryValue('SELECT COUNT(*) FROM `pictures`,`cache_logs` WHERE `pictures`.`object_id`=`cache_logs`.`id` AND `pictures`.`object_type`=1 AND `cache_logs`.`cache_id`= :1', 0, $cache_id);
 
     if ($rspiclogs != 0) {
         tpl_set_var('gallery', $gallery_icon . '&nbsp;' . $rspiclogs . 'x&nbsp;' . mb_ereg_replace('{cacheid}', htmlspecialchars(urlencode($cache_id), ENT_COMPAT, 'UTF-8'), $gallery_link));
@@ -166,16 +166,16 @@ if ($cache_id != 0) {
     }
 
     if (isset($_REQUEST['showdel'])) {
-        $showDel = $_REQUEST["showdel"];
-    } else if (isset($_SESSION["showdel"])) {
-        $showDel = $_SESSION["showdel"];
+        $showDel = $_REQUEST['showdel'];
+    } else if (isset($_SESSION['showdel'])) {
+        $showDel = $_SESSION['showdel'];
     }
     if (($loggedUser && $loggedUser->hasOcTeamRole()) || $logid) {
-        $showhidedel_link = ""; //no need to hide/show deletion icon for COG (they always see deletions) or this is single log call
+        $showhidedel_link = ''; //no need to hide/show deletion icon for COG (they always see deletions) or this is single log call
     } else {
-        $del_count = $dbc->multiVariableQueryValue("SELECT count(*) number FROM `cache_logs` WHERE `deleted`=1 and `cache_id`=:1", 0, $cache_id);
+        $del_count = $dbc->multiVariableQueryValue('SELECT count(*) number FROM `cache_logs` WHERE `deleted`=1 and `cache_id`=:1', 0, $cache_id);
         if ($del_count == 0) {
-            $showhidedel_link = ""; //don't show link if no deletion '
+            $showhidedel_link = ''; //don't show link if no deletion '
         } else {
             if (isset($showDel) && $showDel == 'y') {
                 $showhidedel_link = $hide_del_link;
@@ -215,21 +215,21 @@ if ($cache_id != 0) {
     foreach ($logEneries as $record) {
         $record['text_listing'] = ucfirst(tr('logType' . $record['type'])); //add new attrib 'text_listing based on translation (instead of query as before)'
 
-        $show_deleted = "";
-        $processed_text = "";
+        $show_deleted = '';
+        $processed_text = '';
         if (isset($record['deleted']) && $record['deleted']) {
             if ($loggedUser && $loggedUser->hasOcTeamRole()) {
-                $show_deleted = "show_deleted";
+                $show_deleted = 'show_deleted';
                 $processed_text = $record['text'];
-                $processed_text .= "[" . tr('vl_Record_deleted');
+                $processed_text .= '[' . tr('vl_Record_deleted');
                 if (isset($record['del_by_username']) && $record['del_by_username']) {
-                    $processed_text .= " " . tr('vl_by_user') . " " . $record['del_by_username'];
+                    $processed_text .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                 }
                 if (isset($record['last_deleted'])) {
-                    $processed_text .= " " . tr('vl_on_date') . " " . TextConverter::fixPlMonth(htmlspecialchars(strftime(
+                    $processed_text .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                             $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
                 }
-                $processed_text .= "]";
+                $processed_text .= ']';
             } else {
                 // Boguś z Polska, 2014-11-15
                 // for 'Needs maintenance', 'Ready to search' and 'Temporarly unavailable' log types
@@ -244,27 +244,27 @@ if ($cache_id != 0) {
                     }
                 }
 
-                $record['icon_small'] = "log/16x16-trash.png"; //replace record icon with trash icon
-                $comm_replace = tr('vl_Record_of_type') . " [" . $record['text_listing'] . "] " . tr('vl_deleted');
+                $record['icon_small'] = 'log/16x16-trash.png'; //replace record icon with trash icon
+                $comm_replace = tr('vl_Record_of_type') . ' [' . $record['text_listing'] . '] ' . tr('vl_deleted');
                 $record['text_listing'] = tr('vl_Record_deleted'); ////replace type of record
                 if (isset($record['del_by_username']) && $record['del_by_username']) {
                     if ($record['del_by_admin'] == 1) { //if deleted by Admin
                         if (($record['del_by_username'] == $record['username']) && ($record['type'] != 12)) { // show username in case maker and deleter are same and comment is not Commnent by COG
                             $delByCOG = false;
                         } else {
-                            $comm_replace .= " " . tr('vl_by_COG');
+                            $comm_replace .= ' ' . tr('vl_by_COG');
                             $delByCOG = true;
                         }
                     }
                     if (!isset($delByCOG) || $delByCOG == false) {
-                        $comm_replace .= " " . tr('vl_by_user') . " " . $record['del_by_username'];
+                        $comm_replace .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                     }
                 }
                 if (isset($record['last_deleted'])) {
-                    $comm_replace .= " " . tr('vl_on_date') . " " . TextConverter::fixPlMonth(htmlspecialchars(strftime(
+                    $comm_replace .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                             $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
                 }
-                $comm_replace .= ".";
+                $comm_replace .= '.';
                 $processed_text = $comm_replace;
             }
         } else {
@@ -276,18 +276,18 @@ if ($cache_id != 0) {
 
         if ($record['edit_count'] > 0) {
             //check if editted at all
-            $edit_footer = "<div><small>" . tr('vl_Recently_modified_on') . " " . TextConverter::fixPlMonth(htmlspecialchars(
+            $edit_footer = '<div><small>' . tr('vl_Recently_modified_on') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(
                     strftime($GLOBALS['config']['datetimeformat'], strtotime($record['last_modified'])), ENT_COMPAT, 'UTF-8'));
             if (!($loggedUser && $loggedUser->hasOcTeamRole()) &&
                 $record['edit_by_admin'] == true && $record['type'] == 12) {
 
-                $edit_footer .= " " . tr('vl_by_COG');
+                $edit_footer .= ' ' . tr('vl_by_COG');
             } else {
-                $edit_footer .= " " . tr('vl_by_user') . " " . $record['edit_by_username'];
+                $edit_footer .= ' ' . tr('vl_by_user') . ' ' . $record['edit_by_username'];
             }
 
             if ($record_date_create > date_create('2005-01-01 00:00')) { //check if record created after implementation date (to avoid false readings for record changed before) - actually nor in use
-                $edit_footer .= " - " . tr('vl_totally_modified') . " " . $record['edit_count'] . " ";
+                $edit_footer .= ' - ' . tr('vl_totally_modified') . ' ' . $record['edit_count'] . ' ';
                 if ($record['edit_count'] > 1) {
                     $edit_footer .= tr('vl_count_plural');
                 } else {
@@ -295,9 +295,9 @@ if ($cache_id != 0) {
                 }
             }
 
-            $edit_footer .= ".</small></div>";
+            $edit_footer .= '.</small></div>';
         } else {
-            $edit_footer = "";
+            $edit_footer = '';
         }
 
         $tmplog = $tmpSrcLog;
@@ -326,7 +326,7 @@ if ($cache_id != 0) {
 
         // mobile caches
         if (($record['type'] == 4) && ($record['mobile_latitude'] != 0) && !$disable_spoiler_view) {
-            $tmplog_kordy_mobilnej = mb_ereg_replace(" ", "&nbsp;", htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($record['mobile_latitude']), ENT_COMPAT, 'UTF-8')) . '&nbsp;' . mb_ereg_replace(" ", "&nbsp;", htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($record['mobile_longitude']), ENT_COMPAT, 'UTF-8'));
+            $tmplog_kordy_mobilnej = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($record['mobile_latitude']), ENT_COMPAT, 'UTF-8')) . '&nbsp;' . mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($record['mobile_longitude']), ENT_COMPAT, 'UTF-8'));
             $tmplog = mb_ereg_replace('{kordy_mobilniaka}', $record['km'] . ' km [<img src="/images/blue/arrow_mobile.png" title="' . tr('viewlog_kordy') . '" />' . $tmplog_kordy_mobilnej . ']', $tmplog);
         } else
             $tmplog = mb_ereg_replace('{kordy_mobilniaka}', ' ', $tmplog);
@@ -342,11 +342,11 @@ if ($cache_id != 0) {
         $tmplog_text = $processed_text . $edit_footer;
 
         $logClasses = (!empty($logfilterConfig['mark_currentuser_logs']) && $loggedUser &&
-            $record['userid'] == $loggedUser->getUserId()) ? " currentuser-log" : "";
+            $record['userid'] == $loggedUser->getUserId()) ? ' currentuser-log' : '';
 
         $tmplog = mb_ereg_replace('{log_classes}', $logClasses, $tmplog);
 
-        $filterable = "";
+        $filterable = '';
         if (!empty($logfilterConfig['enable_logs_filtering'])) {
             $filterable = ':' . $record['type'] . ':';
             if ($record['userid'] == 0) {
@@ -412,7 +412,7 @@ if ($cache_id != 0) {
             if (!isset($dbc)) {
                 $dbc = OcDb::instance();
             }
-            $thatquery = "SELECT `url`, `title`, `uuid`, `user_id`, `spoiler` FROM `pictures` WHERE `object_id`=:1 AND `object_type`=1";
+            $thatquery = 'SELECT `url`, `title`, `uuid`, `user_id`, `spoiler` FROM `pictures` WHERE `object_id`=:1 AND `object_type`=1';
             $s = $dbc->multiVariableQuery($thatquery, $record['logid']);
             $pic_count = $dbc->rowCount($s);
             if (!isset($showspoiler)) {
@@ -433,7 +433,7 @@ if ($cache_id != 0) {
                     $thisline = mb_ereg_replace('{longdesc}', 'index.php', $thisline);
                 } else {
                     $thisline = mb_ereg_replace('{link}', $pic_record['url'], $thisline);
-                    $thisline = mb_ereg_replace('{longdesc}', str_replace("images/uploads", "upload", $pic_record['url']), $thisline);
+                    $thisline = mb_ereg_replace('{longdesc}', str_replace('images/uploads', 'upload', $pic_record['url']), $thisline);
                 }
 
                 $thisline = mb_ereg_replace(
@@ -450,7 +450,7 @@ if ($cache_id != 0) {
                                 <img src="/images/log/16x16-trash.png" class="icon16" alt="Trash icon">
                                 &nbsp;
                                 <a class="links" href="' . SimpleRouter::getLink(PictureController::class, 'remove', [$pic_record['uuid']]) . '">'
-                        . tr("delete") .
+                        . tr('delete') .
                         '</a>
                               </span>';
 

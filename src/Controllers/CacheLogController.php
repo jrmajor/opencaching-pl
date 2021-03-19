@@ -191,7 +191,7 @@ class CacheLogController extends BaseController
 
         $listModel->addColumn(new Column_SimpleText(tr('lastLogList_logCreationDate'), function ($row) {
             return Formatter::date($row['date_created']);
-        }, "width10"));
+        }, 'width10'));
 
         $listModel->addColumn(new Column_GeoPathIcon('', function ($row) use ($geopathDict) {
 
@@ -203,22 +203,22 @@ class CacheLogController extends BaseController
                 'ptType' => $geopathDict[$row['cache_id']]['type'],
                 'ptName' => $geopathDict[$row['cache_id']]['name'],
             ];
-        }, "width5"));
+        }, 'width5'));
 
-        $listModel->addColumn(new Column_CacheTypeIcon("", function ($row) use ($userStsDict) {
+        $listModel->addColumn(new Column_CacheTypeIcon('', function ($row) use ($userStsDict) {
             return [
                 'type' => $row['cacheType'],
                 'status' => $row['status'],
                 'user_sts' => $userStsDict[$row['cache_id']],
             ];
-        }, "width5"));
+        }, 'width5'));
 
         $listModel->addColumn(new Column_CacheName(tr('lastLogList_geocacheName'), function ($row) {
             return [
                 'cacheWp' => $row['wp_oc'],
                 'cacheName' => $row['name'],
             ];
-        }, "width30"));
+        }, 'width30'));
 
         $logColumn = new Column_CacheLog(tr('lastLogList_logEntry'), function ($row) use ($usernameDict) {
             return [

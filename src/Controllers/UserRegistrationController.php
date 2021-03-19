@@ -83,7 +83,7 @@ class UserRegistrationController extends BaseController
         }
 
         // GDPR Law check
-        if (new \DateTime() > new \DateTime("2018-05-25 00:00:00")) {
+        if (new \DateTime() > new \DateTime('2018-05-25 00:00:00')) {
             $rulesConf = true;
         } else {
             $rulesConf = false;

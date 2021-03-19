@@ -69,7 +69,7 @@ if ($loggedUser || ! $hide_coords) {
         } else {
             // get the users home coords
             $rs_coords = XDb::xSql(
-                "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1", $loggedUser->getUserId());
+                'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1', $loggedUser->getUserId());
             $record_coords = XDb::xFetchArray($rs_coords);
 
             if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
@@ -148,7 +148,7 @@ if ($loggedUser || ! $hide_coords) {
         WHERE `wptcontent`.`cache_id`=`caches`.`cache_id` AND `wptcontent`.`type`=`cache_type`.`id`
             AND `wptcontent`.`user_id`=`user`.`user_id`');
 
-    echo pack("ccccl", 0xBB, 0x22, 0xD5, 0x3F, $rCount['count']);
+    echo pack('ccccl', 0xBB, 0x22, 0xD5, 0x3F, $rCount['count']);
 
     while ($r = $dbcSearch->dbResultFetch($s)) {
         $lat = $r['latitude'];
@@ -167,7 +167,7 @@ if ($loggedUser || ! $hide_coords) {
         $descr = "$name by $username [$difficulty/$terrain]";
         $poiname = "$cacheid $type$size";
 
-        $record = pack("llca64a255cca32", $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
+        $record = pack('llca64a255cca32', $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
 
         echo $record;
         // DO NOT USE HERE:
@@ -199,22 +199,22 @@ exit();
 function cs2cs_core2($lat, $lon, $to) {
 
     $descriptorspec = [
-        0 => ["pipe", "r"],     // stdin is a pipe that the child will read from
-        1 => ["pipe", "w"],     // stdout is a pipe that the child will write to
-        2 => ["pipe", "w"],      // stderr is a pipe that the child will write to
+        0 => ['pipe', 'r'],     // stdin is a pipe that the child will read from
+        1 => ['pipe', 'w'],     // stdout is a pipe that the child will write to
+        2 => ['pipe', 'w'],      // stderr is a pipe that the child will write to
     ];
 
     if (mb_eregi('^[a-z0-9_ ,.\+\-=]*$', $to) == 0) {
-        exit("invalid arguments in command: " . $to ."\n");
+        exit('invalid arguments in command: ' . $to ."\n");
     }
 
-    $command = "cs2cs" . " +proj=latlong +ellps=WGS84 +to " . $to;
+    $command = 'cs2cs' . ' +proj=latlong +ellps=WGS84 +to ' . $to;
 
     $process = proc_open($command, $descriptorspec, $pipes);
 
     if (is_resource($process)) {
 
-        fwrite($pipes[0], $lon . " " . $lat);
+        fwrite($pipes[0], $lon . ' ' . $lat);
         fclose($pipes[0]);
 
         $stdout = stream_get_contents($pipes[1]);
@@ -246,5 +246,5 @@ function cs2cs_core2($lat, $lon, $to) {
 }
 
 function cs2cs_1992($lat, $lon) {
-    return cs2cs_core2($lat, $lon, "+proj=tmerc +k=0.9993 +ellps=GRS80 +lat_0=0 +lon_0=19 +x_0=500000 +y_0=-5300000 +units=m");
+    return cs2cs_core2($lat, $lon, '+proj=tmerc +k=0.9993 +ellps=GRS80 +lat_0=0 +lon_0=19 +x_0=500000 +y_0=-5300000 +units=m');
 }

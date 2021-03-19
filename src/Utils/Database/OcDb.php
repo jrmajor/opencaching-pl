@@ -37,7 +37,7 @@ class OcDb extends OcPdo
      */
     function beginTransaction() {
         if ($this->hasActiveTransaction) {
-            Debug::errorLog("DB transation already started - check the code!");
+            Debug::errorLog('DB transation already started - check the code!');
             return false;
         } else {
             $this->hasActiveTransaction = parent::beginTransaction ();
@@ -580,7 +580,7 @@ class OcDb extends OcPdo
     public function getSqlMode()
     {
         return $this->dbResultFetchOneRowOnly(
-            $this->simpleQuery("SELECT @@sql_mode AS sql_mode"))['sql_mode'];
+            $this->simpleQuery('SELECT @@sql_mode AS sql_mode'))['sql_mode'];
     }
 
     /**
@@ -674,7 +674,7 @@ class OcDb extends OcPdo
         self::validateEntityName($this->dbName);
 
         return $this->multiVariableQueryValue(
-            "SHOW TABLES FROM `".$this->dbName."` LIKE :1",
+            'SHOW TABLES FROM `'.$this->dbName.'` LIKE :1',
             null,
             $table
         ) !== null;
@@ -686,7 +686,7 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         return $this->multiVariableQueryValue(
-            "SHOW COLUMNS FROM `".$table."` LIKE :1",
+            'SHOW COLUMNS FROM `'.$table.'` LIKE :1',
             null,
             $column
         ) !== null;
@@ -702,18 +702,18 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         $row = $this->dbResultFetchOneRowOnly($this->multiVariableQuery(
-            "SHOW COLUMNS FROM `".$table."` LIKE :1",
+            'SHOW COLUMNS FROM `'.$table.'` LIKE :1',
             $column
         ));
         if (!$row) {
-            $this->error("Column not found: '".$table.".".$column."'");
+            $this->error("Column not found: '".$table.'.'.$column."'");
         }
         $row = array_change_key_case($row, CASE_LOWER);
 
         $type = strtolower($row['type']);
         $isNullable = (strtoupper($row['null']) == 'YES');
         if (!$isNullable) {
-            $type .= " NOT NULL";
+            $type .= ' NOT NULL';
         }
         if ($row['default'] !== null) {
             // Some MySQL/MariaDB versions quote numeric default values, other don't.
@@ -722,7 +722,7 @@ class OcDb extends OcPdo
             $type .= " DEFAULT '" . $row['default'] . "'";
 
         } elseif ($isNullable) {
-            $type .= " DEFAULT NULL";
+            $type .= ' DEFAULT NULL';
         }
 
         return $type;
@@ -734,7 +734,7 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         $row = $this->dbResultFetchOneRowOnly($this->multiVariableQuery(
-            "SHOW FULL COLUMNS FROM `".$table."` LIKE :1",
+            'SHOW FULL COLUMNS FROM `'.$table.'` LIKE :1',
             $column
         ));
         if (!$row) {
@@ -751,7 +751,7 @@ class OcDb extends OcPdo
         self::validateEntityName($index);
 
         return $this->multiVariableQueryValue(
-            "SHOW INDEX FROM `".$table."` WHERE key_name = :1",
+            'SHOW INDEX FROM `'.$table.'` WHERE key_name = :1',
             null,
             $index
         ) !== null;
@@ -767,10 +767,10 @@ class OcDb extends OcPdo
         self::validateEntityName($refTable);
 
         return $this->multiVariableQueryValue(
-            "SELECT 1
+            'SELECT 1
              FROM information_schema.key_column_usage
              WHERE table_schema = :1 AND table_name = :2
-                AND column_name = :3 AND referenced_table_name = :4",
+                AND column_name = :3 AND referenced_table_name = :4',
             0,
             $this->dbName,
             $table,
@@ -781,17 +781,17 @@ class OcDb extends OcPdo
 
     public function triggerExists($name)
     {
-        return $this->funcExists($name, "SHOW TRIGGERS WHERE `trigger` = :1");
+        return $this->funcExists($name, 'SHOW TRIGGERS WHERE `trigger` = :1');
     }
 
     public function procedureExists($name)
     {
-        return $this->funcExists($name, "SHOW PROCEDURE STATUS WHERE `name` = :1");
+        return $this->funcExists($name, 'SHOW PROCEDURE STATUS WHERE `name` = :1');
     }
 
     public function functionExists($name)
     {
-        return $this->funcExists($name, "SHOW FUNCTION STATUS WHERE `name` = :1");
+        return $this->funcExists($name, 'SHOW FUNCTION STATUS WHERE `name` = :1');
     }
 
     private function funcExists($name, $sql)
@@ -809,11 +809,11 @@ class OcDb extends OcPdo
 
           $p = '';
           foreach ($params as $key => $value) {
-              $p .= " " . $key . "=" . $value;
+              $p .= ' ' . $key . '=' . $value;
           }
           $this->multiVariableQuery(
-              "CREATE TABLE IF NOT EXISTS`".$table."` (" .
-              implode(", ", $fieldDefs) . ")" . $p
+              'CREATE TABLE IF NOT EXISTS`'.$table.'` (' .
+              implode(', ', $fieldDefs) . ')' . $p
           );
     }
 
@@ -824,10 +824,10 @@ class OcDb extends OcPdo
         if (!$this->columnExists($table, $column)) {
             if ($after) {
                 self::validateEntityName($after);
-                $after = "AFTER `".$after."`";
+                $after = 'AFTER `'.$after.'`';
             }
             $this->multiVariableQuery(
-                "ALTER TABLE `".$table."` ADD COLUMN `".$column."` ".$type." COMMENT :1 ".$after,
+                'ALTER TABLE `'.$table.'` ADD COLUMN `'.$column.'` '.$type.' COMMENT :1 '.$after,
                 $comment
             );
         }
@@ -843,7 +843,7 @@ class OcDb extends OcPdo
             // use slightly differrent syntaxes. But it's just an optimization.
 
             $this->multiVariableQuery(
-                "ALTER TABLE `".$table."` MODIFY COLUMN `".$column."` ".$newType." COMMENT :1",
+                'ALTER TABLE `'.$table.'` MODIFY COLUMN `'.$column.'` '.$newType.' COMMENT :1',
                 $this->getColumnComment($table, $column)
             );
         }
@@ -854,7 +854,7 @@ class OcDb extends OcPdo
         if ($this->getColumnComment($table, $column) !== $newComment) {
             $type = $this->getFullColumnType($table, $column);
             $this->multiVariableQuery(
-                "ALTER TABLE `".$table."` MODIFY COLUMN `".$column."` ".$type." COMMENT :1",
+                'ALTER TABLE `'.$table.'` MODIFY COLUMN `'.$column.'` '.$type.' COMMENT :1',
                 $newComment
             );
         }
@@ -864,7 +864,7 @@ class OcDb extends OcPdo
     {
         if ($this->columnExists($table, $column)) {
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` DROP COLUMN `".$column."`"
+                'ALTER TABLE `'.$table.'` DROP COLUMN `'.$column.'`'
             );
         }
     }
@@ -873,7 +873,7 @@ class OcDb extends OcPdo
     {
         if (!$this->indexExists($table, 'PRIMARY')) {
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` ADD PRIMARY KEY (`".$column."`)"
+                'ALTER TABLE `'.$table.'` ADD PRIMARY KEY (`'.$column.'`)'
             );
         }
     }
@@ -907,7 +907,7 @@ class OcDb extends OcPdo
                 $columns = [$index];
             }
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` ADD ".$type." `".$index."` (`".implode("`,`", $columns)."`)"
+                'ALTER TABLE `'.$table.'` ADD '.$type.' `'.$index.'` (`'.implode('`,`', $columns).'`)'
             );
         }
     }
@@ -916,7 +916,7 @@ class OcDb extends OcPdo
     {
         if ($this->indexExists($table, $index)) {
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` DROP INDEX `".$index."`"
+                'ALTER TABLE `'.$table.'` DROP INDEX `'.$index.'`'
             );
         }
     }
@@ -930,8 +930,8 @@ class OcDb extends OcPdo
             self::validateSqlKeywords($refOptions);
 
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` ADD FOREIGN KEY (`".$column."`) " .
-                "REFERENCES `".$refTable."` (`".$refColumn."`) ".$refOptions
+                'ALTER TABLE `'.$table.'` ADD FOREIGN KEY (`'.$column.'`) ' .
+                'REFERENCES `'.$refTable.'` (`'.$refColumn.'`) '.$refOptions
             );
         }
     }
@@ -941,15 +941,15 @@ class OcDb extends OcPdo
         if ($this->foreignKeyExists($table, $column, $refTable)) {
 
             $constraint = $this->multiVariableQueryValue(
-                "SELECT constraint_name FROM information_schema.key_column_usage
-                WHERE table_name = :1 AND column_name = :2 AND referenced_table_name = :3",
+                'SELECT constraint_name FROM information_schema.key_column_usage
+                WHERE table_name = :1 AND column_name = :2 AND referenced_table_name = :3',
                 '[internal error]',
                 $table,
                 $column,
                 $refTable
             );
             $this->simpleQuery(
-                "ALTER TABLE `".$table."` DROP FOREIGN KEY `".$constraint."`"
+                'ALTER TABLE `'.$table.'` DROP FOREIGN KEY `'.$constraint.'`'
             );
         }
     }
@@ -957,7 +957,7 @@ class OcDb extends OcPdo
     public function dropTableIfExists($table)
     {
         self::validateEntityName($table);
-        $this->simpleQuery("DROP TABLE IF EXISTS `".$table."`");
+        $this->simpleQuery('DROP TABLE IF EXISTS `'.$table.'`');
     }
 
     public function createOrReplaceTrigger($trigger, $definition)
@@ -967,7 +967,7 @@ class OcDb extends OcPdo
 
         $this->dropTriggerIfExists($trigger);
         $this->simpleQuery(
-            "CREATE TRIGGER `".$trigger."` ".$definition
+            'CREATE TRIGGER `'.$trigger.'` '.$definition
         );
     }
 
@@ -978,7 +978,7 @@ class OcDb extends OcPdo
 
         $this->dropProcedureIfExists($proc);
         $this->simpleQuery(
-            "CREATE PROCEDURE `".$proc."` (" . implode(", ", $params) . ")\n" .$body
+            'CREATE PROCEDURE `'.$proc.'` (' . implode(', ', $params) . ")\n" .$body
         );
     }
 
@@ -998,8 +998,8 @@ class OcDb extends OcPdo
 
         $this->dropFunctionIfExists($func);
         $this->simpleQuery(
-            "CREATE FUNCTION `".$func."` (" . implode(", ", $params) . ")\n" .
-            "RETURNS " . $returns . "\n" .
+            'CREATE FUNCTION `'.$func.'` (' . implode(', ', $params) . ")\n" .
+            'RETURNS ' . $returns . "\n" .
             $type . "\n" .
             $body
         );
@@ -1008,19 +1008,19 @@ class OcDb extends OcPdo
     public function dropTriggerIfExists($trigger)
     {
         self::validateEntityName($trigger);
-        $this->simpleQuery("DROP TRIGGER IF EXISTS `".$trigger."`");
+        $this->simpleQuery('DROP TRIGGER IF EXISTS `'.$trigger.'`');
     }
 
     public function dropProcedureIfExists($proc)
     {
         self::validateEntityName($proc);
-        $this->simpleQuery("DROP PROCEDURE IF EXISTS `".$proc."`");
+        $this->simpleQuery('DROP PROCEDURE IF EXISTS `'.$proc.'`');
     }
 
     public function dropFunctionIfExists($func)
     {
         self::validateEntityName($func);
-        $this->simpleQuery("DROP FUNCTION IF EXISTS `".$func."`");
+        $this->simpleQuery('DROP FUNCTION IF EXISTS `'.$func.'`');
     }
 
     /**

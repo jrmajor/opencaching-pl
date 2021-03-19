@@ -23,7 +23,7 @@ return function (DynamicMapModel $mapModel, $canvasId){
 ?>
 
 <script src="<?=Uri::getLinkWithModificationTime(
-    "/views/chunks/dynamicMap/dynamicMapCommons.js")?>"></script>
+    '/views/chunks/dynamicMap/dynamicMapCommons.js')?>"></script>
 
 <!-- load markers popup templates -->
 <?php foreach($mapModel->getMarkerTypes() as $markerType) { ?>

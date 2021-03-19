@@ -28,9 +28,9 @@ function zamiana($Nstopien, $Nminuty)
 {
     $Ntemp = (int) ($Nminuty * 1666.66);
     if ($Nminuty < 10)
-        $N = $Nstopien . ".0" . $Ntemp;
+        $N = $Nstopien . '.0' . $Ntemp;
     else
-        $N = $Nstopien . "." . $Ntemp;
+        $N = $Nstopien . '.' . $Ntemp;
     return $N;
 }
 
@@ -47,9 +47,9 @@ function html2desc($desc)
 function html2hint($hint)
 {
     $temphint = $hint;
-    $temphint = str_replace("'", "`", $temphint);
-    $temphint = str_replace("\"", "``", $temphint);
-    $temphint = str_replace("&quot;", "``", $temphint);
+    $temphint = str_replace("'", '`', $temphint);
+    $temphint = str_replace('"', '``', $temphint);
+    $temphint = str_replace('&quot;', '``', $temphint);
     return $temphint;
 }
 
@@ -64,10 +64,10 @@ function html2log($log)
 // helper dla gpx'ów
 function gpxhelper($text)
 {
-    $text = str_replace("&nbsp;", " ", $text);
-    $text = str_replace("&quot;", "\"", $text);
-    $text = str_replace("&oacute;", "&", $text);
-    $text = str_replace("&", "&amp;", $text);
+    $text = str_replace('&nbsp;', ' ', $text);
+    $text = str_replace('&quot;', '"', $text);
+    $text = str_replace('&oacute;', '&', $text);
+    $text = str_replace('&', '&amp;', $text);
     $text = strip_tags($text);
     $text = preg_replace('/[[:cntrl:]]/', '', $text);
     return $text;

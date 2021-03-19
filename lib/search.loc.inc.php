@@ -30,16 +30,16 @@ $locLine = '
 
 $locFoot = '</loc>';
 
-$cacheTypeText[1] = "" . tr('cacheType_5') . "";
-$cacheTypeText[2] = "" . tr('cacheType_1') . "";
-$cacheTypeText[3] = "" . tr('cacheType_2') . "";
-$cacheTypeText[4] = "" . tr('cacheType_8') . "";
-$cacheTypeText[5] = "" . tr('cacheType_7') . "";
-$cacheTypeText[6] = "" . tr('cacheType_6') . "";
-$cacheTypeText[7] = "" . tr('cacheType_3') . "";
-$cacheTypeText[8] = "" . tr('cacheType_4') . "";
-$cacheTypeText[9] = "" . tr('cacheType_9') . "";
-$cacheTypeText[10] = "" . tr('cacheType_10') . "";
+$cacheTypeText[1] = '' . tr('cacheType_5') . '';
+$cacheTypeText[2] = '' . tr('cacheType_1') . '';
+$cacheTypeText[3] = '' . tr('cacheType_2') . '';
+$cacheTypeText[4] = '' . tr('cacheType_8') . '';
+$cacheTypeText[5] = '' . tr('cacheType_7') . '';
+$cacheTypeText[6] = '' . tr('cacheType_6') . '';
+$cacheTypeText[7] = '' . tr('cacheType_3') . '';
+$cacheTypeText[8] = '' . tr('cacheType_4') . '';
+$cacheTypeText[9] = '' . tr('cacheType_9') . '';
+$cacheTypeText[10] = '' . tr('cacheType_10') . '';
 
 if ($loggedUser || ! $hide_coords) {
     // prepare the output
@@ -54,7 +54,7 @@ if ($loggedUser || ! $hide_coords) {
             $query .= '0 distance, ';
         } else {
             // get the users home coords
-            $rs_coords = XDb::xSql("SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1", $loggedUser->getUserId());
+            $rs_coords = XDb::xSql('SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1', $loggedUser->getUserId());
             $record_coords = XDb::xFetchArray($rs_coords);
 
             if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
@@ -141,9 +141,9 @@ if ($loggedUser || ! $hide_coords) {
 
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim($rName['name']);
-                $sFilebasename = str_replace(" ", "_", $sFilebasename);
+                $sFilebasename = str_replace(' ', '_', $sFilebasename);
             } else {
-                $sFilebasename = "search" . $options['queryid'];
+                $sFilebasename = 'search' . $options['queryid'];
             }
         }
     }
@@ -214,13 +214,13 @@ if ($loggedUser || ! $hide_coords) {
         $phpzip->add_data($sFilebasename . '.loc', $content);
         $out = $phpzip->save($sFilebasename . '.zip', 'b');
 
-        header("content-type: application/zip");
+        header('content-type: application/zip');
         header('Content-Disposition: attachment; filename=' . $sFilebasename . '.zip');
         echo $out;
         ob_end_flush();
     } else {
-        header("Content-type: application/loc");
-        header("Content-Disposition: attachment; filename=" . $sFilebasename . ".loc");
+        header('Content-type: application/loc');
+        header('Content-Disposition: attachment; filename=' . $sFilebasename . '.loc');
         ob_end_flush();
     }
 

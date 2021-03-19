@@ -30,7 +30,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
     $res_q = XDb::xSql('SELECT id FROM cache_type WHERE id != 6');
 
     $no_types = 0;
-    $typ = "";
+    $typ = '';
     while ( $res = XDb::xFetchArray($res_q) ) {
         $no_types++;
         if (isset($_GET[$res['id']]) && $_GET[$res['id']] == 1) {
@@ -62,13 +62,13 @@ $cachelogscount = XDb::xSimpleQueryValue(
 
 
     if( $typ == '' ) { //without cache-type filter
-        $a = "SELECT COUNT(*) count, username, stat_ban, user.user_id
+        $a = 'SELECT COUNT(*) count, username, stat_ban, user.user_id
           FROM cache_logs, user
           WHERE `cache_logs`.`deleted`=0
             AND cache_logs.user_id=user.user_id
             AND cache_logs.type=1
           GROUP BY user.user_id
-          ORDER BY 1 DESC, user.username ASC";
+          ORDER BY 1 DESC, user.username ASC';
 
     } else { //with cache-type filter : very expensive!!!
         $a = "SELECT COUNT(*) count, username, stat_ban, user.user_id
@@ -97,7 +97,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
         OcMemCache::store($cache_key, 3600, $lines);
     }
 
-    echo "<br />";
+    echo '<br />';
 
 
     echo '<tr class="bgcolor2">' .
@@ -106,20 +106,20 @@ $cachelogscount = XDb::xSimpleQueryValue(
         '<td align="center"><b>' . tr('number_found_caches') . '</b></td>' .
         '<td align="center">&nbsp;&nbsp;<b>' . tr('username') . '</b>&nbsp;&nbsp;</td></tr><tr><td>';
 
-    $l2 = ""; // number of users within the same rank
+    $l2 = ''; // number of users within the same rank
     $rank = 0; // rank number; increamented by one for each group of users having the same caches discovered
     $position = 1; // position ex aequo; incremented by number of users in each rank
 
     foreach ($lines as $line) {
-        $color = "black";
-        $banned = "";
+        $color = 'black';
+        $banned = '';
         $loggedUser = ApplicationContainer::GetAuthorizedUser();
         if (($loggedUser && $loggedUser->hasOcTeamRole()) || $line['stat_ban'] == 0) {
             if ($line['stat_ban']) {
-                $color = "gray";
-                $banned = " (BAN)";
+                $color = 'gray';
+                $banned = ' (BAN)';
             }
-            $l1 = $line["count"];
+            $l1 = $line['count'];
             if ($l2 != $l1) {
                 // new rank (finish recent row and start new one)
                 echo '</td></tr>';
@@ -128,11 +128,11 @@ $cachelogscount = XDb::xSimpleQueryValue(
                     '<td align="right">&nbsp;&nbsp;<b>' . $rank . '</b>&nbsp;&nbsp;</td>' .
                     '<td align="right">&nbsp;&nbsp;' . $position . '&nbsp;&nbsp;</td>' .
                     '<td align="right">&nbsp;&nbsp;<b>' . $l1 . '</b>&nbsp;&nbsp;</td>' .
-                    '<td><a style="color:' . $color . '" href="viewprofile.php?userid=' . $line["user_id"] . '">' . htmlspecialchars($line["username"]) . $banned . '</a>';
+                    '<td><a style="color:' . $color . '" href="viewprofile.php?userid=' . $line['user_id'] . '">' . htmlspecialchars($line['username']) . $banned . '</a>';
                 $l2 = $l1;
             } else {
                 // the same rank (continue row)
-                echo ', <a style="color:' . $color . '" href="viewprofile.php?userid=' . $line["user_id"] . '">' . htmlspecialchars($line["username"]) . $banned . '</a>';
+                echo ', <a style="color:' . $color . '" href="viewprofile.php?userid=' . $line['user_id'] . '">' . htmlspecialchars($line['username']) . $banned . '</a>';
             }
             $position++;
         }

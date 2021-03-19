@@ -95,10 +95,10 @@ class Notify extends BaseObject
      */
     public static function getAllNotifiesForUserId($itemUserId)
     {
-        $query = "SELECT *
+        $query = 'SELECT *
             FROM `notify_waiting`
             WHERE `user_id` = :1
-            ORDER BY `id` ASC";
+            ORDER BY `id` ASC';
         $stmt = self::db()->multiVariableQuery($query, $itemUserId);
 
         return self::db()->dbFetchAllAsObjects($stmt, function ($row) {
@@ -113,9 +113,9 @@ class Notify extends BaseObject
      */
     public static function getUniqueUserIdNotifiesList()
     {
-        $query = "
+        $query = '
             SELECT DISTINCT `user_id`
-                FROM `notify_waiting`";
+                FROM `notify_waiting`';
         $stmt = self::db()->multiVariableQuery($query);
         return self::db()->dbResultFetchAll($stmt);
     }
@@ -127,10 +127,10 @@ class Notify extends BaseObject
      */
     public static function deleteNotifiesForUserId($userId)
     {
-        $query = "
+        $query = '
             DELETE
                 FROM `notify_waiting`
-                WHERE `user_id` = :1";
+                WHERE `user_id` = :1';
         self::db()->multiVariableQuery($query, $userId);
     }
 

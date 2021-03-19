@@ -12,7 +12,7 @@ class Column_GeoPathIcon extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/geoPathIconColumn";
+        return 'listOfCaches/geoPathIconColumn';
     }
 
     public function getCssClass(){

@@ -36,7 +36,7 @@ class GeoCode
         $ors_key = OcConfig::getMapKey('OpenRouteService');
 
         if (empty($ors_key)) {
-            Debug::errorLog("No api_key for OpenRouteService in configuration. Check /Config/map.default.php");
+            Debug::errorLog('No api_key for OpenRouteService in configuration. Check /Config/map.default.php');
             return null;
         }
 
@@ -45,8 +45,8 @@ class GeoCode
         $data = @file_get_contents($url);
 
         if (!$data) {
-            Debug::errorLog("Problem with fetching data from " . $url);
-            throw new Exception("Problem with fetching data from OpenRouteService");
+            Debug::errorLog('Problem with fetching data from ' . $url);
+            throw new Exception('Problem with fetching data from OpenRouteService');
             return;
         }
 

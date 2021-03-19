@@ -34,30 +34,30 @@ function t102CB(){
 </script>
 
 <?php
-echo "<script>";
-echo "function setOptions(){";
+echo '<script>';
+echo 'function setOptions(){';
 echo "gct.addOption('pagingSymbols', { prev: '" . tr('Prev1') . "', next: '" . tr('Next1') . "' });";
-echo "}";
-echo "</script>"
+echo '}';
+echo '</script>'
 ;
 
 use src\Utils\Database\OcDb;
 require_once (__DIR__ . '/ClassPathDictionary.php');
-$sRok = "";
-$sMc = "";
+$sRok = '';
+$sMc = '';
 
-$sDataOd = "";
-$sDataDo = "";
+$sDataOd = '';
+$sDataDo = '';
 
-$sData_od = "";
-$sData_do = "";
-$sJoinWDate = "";
-$sJoinWDateWOC = "";
+$sData_od = '';
+$sData_do = '';
+$sJoinWDate = '';
+$sJoinWDateWOC = '';
 
-$sRD = "";
+$sRD = '';
 
-$sDateCondition = "";
-$sTypeCondition = "";
+$sDateCondition = '';
+$sTypeCondition = '';
 
 $nIsCondition = 0;
 $nMyRanking = 0;
@@ -84,8 +84,8 @@ if (isset($_REQUEST['DataDo']))
     $sDataDo = $_REQUEST['DataDo'];
 
 
-if ($sRD == "R") {
-    if ($sRok <> "" and $sMc <> "") {
+if ($sRD == 'R') {
+    if ($sRok <> '' and $sMc <> '') {
         $sData_od = $sRok . '-' . $sMc . '-' . '01';
 
         $dDate = new DateTime($sData_od);
@@ -93,7 +93,7 @@ if ($sRD == "R") {
         $nIsCondition = 1;
     }
 
-    if ($sRok <> "" and $sMc == "") {
+    if ($sRok <> '' and $sMc == '') {
         $sData_od = $sRok . '-01-01';
 
         $dDate = new DateTime($sData_od);
@@ -104,11 +104,11 @@ if ($sRD == "R") {
 
     if ($nIsCondition) {
         $sData_do = $dDate->format('Y-m-d');
-        $sDateCondition = " " . $sJoinWDate . "date >='" . $sData_od . "' and " . $sJoinWDate . "date < '" . $sData_do . "' ";
+        $sDateCondition = ' ' . $sJoinWDate . "date >='" . $sData_od . "' and " . $sJoinWDate . "date < '" . $sData_do . "' ";
     }
 } else {
     try {
-        if ($sDataOd <> "") {
+        if ($sDataOd <> '') {
             $dDate = new DateTime($sDataOd);
             $sData_od = $dDate->format('Y-m-d');
         }
@@ -117,28 +117,28 @@ if ($sRD == "R") {
         $dDate->add(new DateInterval('P1D'));
         $sData_do = $dDate->format('Y-m-d');
 
-        if ($sData_od <> "")
-            $sDateCondition = " " . $sJoinWDate . "date >='" . $sData_od . "' ";
+        if ($sData_od <> '')
+            $sDateCondition = ' ' . $sJoinWDate . "date >='" . $sData_od . "' ";
 
-        if ($sData_do <> "") {
-            if ($sDateCondition != "")
-                $sDateCondition = $sDateCondition . " and ";
+        if ($sData_do <> '') {
+            if ($sDateCondition != '')
+                $sDateCondition = $sDateCondition . ' and ';
 
-            $sDateCondition = $sDateCondition . " " . $sJoinWDate . "date < '" . $sData_do . "' ";
+            $sDateCondition = $sDateCondition . ' ' . $sJoinWDate . "date < '" . $sData_do . "' ";
         }
     } catch (Exception $e) {
-        $sDateCondition = "";
+        $sDateCondition = '';
     }
 }
 
 
 $dbc = OcDb::instance();
 
-if ($sNameOfStat == "MaintenanceOfCaches") {
-    if ($sDateCondition != "")
-        $sDateCondition = " and " . $sDateCondition;
+if ($sNameOfStat == 'MaintenanceOfCaches') {
+    if ($sDateCondition != '')
+        $sDateCondition = ' and ' . $sDateCondition;
 
-    $query = "SELECT COUNT(*) count, u.username username, UPPER(u.username) UUN, u.user_id user_id,
+    $query = 'SELECT COUNT(*) count, u.username username, UPPER(u.username) UUN, u.user_id user_id,
         DATE(u.date_created) date_created, u.description description
 
         FROM
@@ -146,29 +146,29 @@ if ($sNameOfStat == "MaintenanceOfCaches") {
         join caches c on c.cache_id = cl.cache_id
         join user u on cl.user_id = u.user_id
 
-        WHERE cl.deleted=0  and  cl.type=6 and c.user_id <> cl.user_id "
+        WHERE cl.deleted=0  and  cl.type=6 and c.user_id <> cl.user_id '
             . $sDateCondition .
-            "GROUP BY u.user_id
-        ORDER BY count DESC, u.username ASC";
+            'GROUP BY u.user_id
+        ORDER BY count DESC, u.username ASC';
 
-}else if ($sNameOfStat == "NumberOfFinds") {
+}else if ($sNameOfStat == 'NumberOfFinds') {
 
-    if ($sDateCondition != "")
-        $sDateCondition = " WHERE " . $sDateCondition;
+    if ($sDateCondition != '')
+        $sDateCondition = ' WHERE ' . $sDateCondition;
 
 
-    $query = "SELECT f.c count, f.user_id, u.username username, UPPER(u.username) UUN,
+    $query = 'SELECT f.c count, f.user_id, u.username username, UPPER(u.username) UUN,
                         DATE(u.date_created) date_created, u.description description
 
     FROM (
 
     SELECT cl.user_id, sum( cl.number ) c
-    FROM user_finds cl "
+    FROM user_finds cl '
             . $sDateCondition .
-            "GROUP BY 1
+            'GROUP BY 1
     ORDER BY c DESC
     ) AS f
-    JOIN user u ON f.user_id = u.user_id";
+    JOIN user u ON f.user_id = u.user_id';
 } else {
     //strange $sNameOfStat
     exit;
@@ -176,55 +176,55 @@ if ($sNameOfStat == "MaintenanceOfCaches") {
 
 $s = $dbc->multiVariableQuery($query);
 
-echo "<script>";
+echo '<script>';
 
 
 
 $nRanking = 0;
-$sOpis = "";
+$sOpis = '';
 $nOldCount = -1;
 $nPos = 0;
 $nMyRanking = 0;
 $nMyRealPos = 0;
-$contentUsr = "";
+$contentUsr = '';
 
 while ($record = $dbc->dbResultFetch($s)) {
-    if ($record["description"] <> "") {
-        $sOpis = $record["description"];
+    if ($record['description'] <> '') {
+        $sOpis = $record['description'];
 
-        $sOpis = str_replace("\r\n", " ", $sOpis);
-        $sOpis = str_replace("\n", " ", $sOpis);
-        $sOpis = str_replace("'", "-", $sOpis);
-        $sOpis = str_replace("\"", " ", $sOpis);
+        $sOpis = str_replace("\r\n", ' ', $sOpis);
+        $sOpis = str_replace("\n", ' ', $sOpis);
+        $sOpis = str_replace("'", '-', $sOpis);
+        $sOpis = str_replace('"', ' ', $sOpis);
 
     } else
-        $sOpis = "";
+        $sOpis = '';
 
-    $sOpis = "" . $sOpis;
-
-
-    $sProfil = "<b>" . tr('registered_since_label') . "</b> " . $record["date_created"];
+    $sOpis = '' . $sOpis;
 
 
-    $nCount = $record["count"];
-    $sUUN = htmlspecialchars($record["UUN"]);
-    $sUserID = $record["user_id"];
-    $sDateCr = $record["date_created"];
+    $sProfil = '<b>' . tr('registered_since_label') . '</b> ' . $record['date_created'];
+
+
+    $nCount = $record['count'];
+    $sUUN = htmlspecialchars($record['UUN']);
+    $sUserID = $record['user_id'];
+    $sDateCr = $record['date_created'];
 
     if ($nCount != $nOldCount) {
         $nRanking++;
         $nOldCount = $nCount;
     }
 
-    $sUserClass = "";
+    $sUserClass = '';
     if ($nRanking <= 3)
         $sUserClass = ' class="GCT-link-3"; ';
     else
         $sUserClass = ' class="GCT-link"; ';
 
-    $sUserProfil = "viewprofile.php?userid=" . $record['user_id'];
-    $sUsername = '<span ' . $record["username"] . $sUserClass . '  onclick="GCTStatsGotoProfil( \\\'' . $sUserProfil . '\\\' )"  onmouseover="Tip(\\\'' . $sProfil . '\\\')" onmouseout="UnTip()"  >' . $record["username"] . '</span><a name="' . $sUUN . '"></a>';
-    $sUsername = str_replace("'", "&#39", $sUsername);
+    $sUserProfil = 'viewprofile.php?userid=' . $record['user_id'];
+    $sUsername = '<span ' . $record['username'] . $sUserClass . '  onclick="GCTStatsGotoProfil( \\\'' . $sUserProfil . '\\\' )"  onmouseover="Tip(\\\'' . $sProfil . '\\\')" onmouseout="UnTip()"  >' . $record['username'] . '</span><a name="' . $sUUN . '"></a>';
+    $sUsername = str_replace("'", '&#39', $sUsername);
 
     $nPos++;
 
@@ -244,21 +244,21 @@ while ($record = $dbc->dbResultFetch($s)) {
     }
 }
 
-echo "gctSetCallback( t102CB );";
+echo 'gctSetCallback( t102CB );';
 
-echo "function fillContent() {";
+echo 'function fillContent() {';
 echo $contentUsr;
-echo "}
-";
+echo '}
+';
 
 
 echo "document.Details.SelectedUser.value = '0';";
-echo "document.Position.Ranking.value = '" . $nMyRanking . " / " . $nRanking . "';";
+echo "document.Position.Ranking.value = '" . $nMyRanking . ' / ' . $nRanking . "';";
 echo "document.Position.RealPosOfTable.value = '" . $nMyRealPos . "';";
 echo "document.FilterDate.DateFrom.value = '" . $sData_od . "';";
 echo "document.FilterDate.DateTo.value = '" . $sData_do . "';";
 
 
-echo "</script>";
+echo '</script>';
 
 unset($dbc);

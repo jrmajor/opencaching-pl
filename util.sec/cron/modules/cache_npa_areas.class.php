@@ -12,7 +12,7 @@ use src\Utils\Database\XDb;
 require_once(__DIR__.'/../../../lib/common.inc.php');
 
 $rsCache = XDb::xSql(
-    "SELECT `cache_id`, `latitude`, `longitude` FROM `caches` WHERE `need_npa_recalc`=1");
+    'SELECT `cache_id`, `latitude`, `longitude` FROM `caches` WHERE `need_npa_recalc`=1');
 
 while ($rCache = XDb::xFetchArray($rsCache)) {
 
@@ -21,21 +21,21 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
     }
 
     XDb::xSql(
-        "DELETE FROM `cache_npa_areas`
+        'DELETE FROM `cache_npa_areas`
         WHERE `cache_id`= ? AND `calculated`=1
-        LIMIT 1", $rCache['cache_id']);
+        LIMIT 1', $rCache['cache_id']);
 
 
 
     // Natura 2000
     $rsLayers = XDb::xSql(
-        "SELECT `id`, AsText(`shape`) AS `geometry`
+        'SELECT `id`, AsText(`shape`) AS `geometry`
         FROM `npa_areas`
         WHERE ST_WITHIN(
             GEOMFROMTEXT(
-                POINT(" . $rCache['longitude'] . ', ' . $rCache['latitude'] . ")
+                POINT(' . $rCache['longitude'] . ', ' . $rCache['latitude'] . ')
             ), `shape`
-        )" );
+        )' );
 
     while ($rLayers = XDb::xFetchArray($rsLayers)) {
 
@@ -44,9 +44,9 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
                 'POINT(' . $rCache['longitude'] . ' ' . $rCache['latitude'] . ')')
             ) {
             XDb::xSql(
-                "INSERT INTO `cache_npa_areas` (`cache_id`, `npa_id`, `calculated`)
+                'INSERT INTO `cache_npa_areas` (`cache_id`, `npa_id`, `calculated`)
                 VALUES ( ?, ?, 1)
-                ON DUPLICATE KEY UPDATE `calculated`=1",
+                ON DUPLICATE KEY UPDATE `calculated`=1',
                 $rCache['cache_id'], $rLayers['id']);
 
         }
@@ -55,12 +55,12 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
 
     // Parki PL
     $rsLayers = XDb::xSql(
-        "SELECT `id`, AsText(`shape`) AS `geometry` FROM `parkipl`
+        'SELECT `id`, AsText(`shape`) AS `geometry` FROM `parkipl`
         WHERE ST_WITHIN(
             GEOMFROMTEXT(
-                POINT(" . $rCache['longitude'] . ', ' . $rCache['latitude'] . ")
+                POINT(' . $rCache['longitude'] . ', ' . $rCache['latitude'] . ')
             ), `shape`
-        )" );
+        )' );
 
     while ($rLayers = XDb::xFetchArray($rsLayers)) {
         if ( gis::ptInLineRing(
@@ -68,15 +68,15 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
                 'POINT(' . $rCache['longitude'] . ' ' . $rCache['latitude'] . ')')
             ) {
             XDb::xSql(
-                "INSERT INTO `cache_npa_areas` (`cache_id`, `parki_id`, `calculated`)
+                'INSERT INTO `cache_npa_areas` (`cache_id`, `parki_id`, `calculated`)
                 VALUES ( ?, ?, 1)
-                ON DUPLICATE KEY UPDATE `calculated`=1",
+                ON DUPLICATE KEY UPDATE `calculated`=1',
                 $rCache['cache_id'], $rLayers['id']);
         }
     }
     XDb::xFreeResults($rsLayers);
     // End of Parki PL
 
-    XDb::xSql("UPDATE `caches` SET `need_npa_recalc`=0 WHERE `cache_id`= ? LIMIT 1", $rCache['cache_id']);
+    XDb::xSql('UPDATE `caches` SET `need_npa_recalc`=0 WHERE `cache_id`= ? LIMIT 1', $rCache['cache_id']);
 }
 XDb::xFreeResults($rsCache);

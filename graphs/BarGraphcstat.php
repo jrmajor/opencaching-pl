@@ -29,7 +29,7 @@ $y = [];
 $x = [];
 
 
-if ($tit == "csy") {
+if ($tit == 'csy') {
     $rsCachesFindYear = XDb::xSql(
         "SELECT COUNT(*) `count`, YEAR(`date`) `year` FROM `cache_logs`
         WHERE type=1 AND cache_logs.deleted='0' AND cache_id= ?
@@ -37,8 +37,8 @@ if ($tit == "csy") {
         ORDER BY YEAR(`date`) ASC", $cache_id);
 
     if ($rsCachesFindYear !== false) {
-        $descibe = tr("annual_stat_founds");
-        $xtitle = "";
+        $descibe = tr('annual_stat_founds');
+        $xtitle = '';
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['year'];
@@ -47,7 +47,7 @@ if ($tit == "csy") {
     XDb::xFreeResults($rsCachesFindYear);
 }
 
-if ($tit == "csm") {
+if ($tit == 'csm') {
     $rsCachesFindMonth = XDb::xSql(
         "SELECT COUNT(*) `count`, YEAR(`date`) `year`, MONTH(`date`) `month` FROM `cache_logs`
         WHERE type=1 AND cache_logs.deleted='0' AND cache_id= ? AND YEAR(`date`)= ?
@@ -55,7 +55,7 @@ if ($tit == "csm") {
         ORDER BY YEAR(`date`) ASC, MONTH(`date`) ASC", $cache_id, $year);
 
     if ($rsCachesFindMonth !== false) {
-        $descibe = tr("monthly_stat_founds");
+        $descibe = tr('monthly_stat_founds');
         $describe .= $year;
         $xtitle = $year;
 
@@ -96,7 +96,7 @@ $graph->xaxis->SetTickLabels($x);
 
 // Some extra margin looks nicer
 //$graph->xaxis->SetLabelMargin(10);
-$nf = "";
+$nf = '';
 $graph->yaxis->title->Set($nf);
 
 $graph->title->SetFont(FF_ARIAL, FS_NORMAL);

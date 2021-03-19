@@ -3,7 +3,7 @@
 use src\Utils\Database\XDb;
 use src\Models\ApplicationContainer;
 if (isset($_POST['submitDownloadGpx'])) {
-    $fd = "";
+    $fd = '';
     $fd .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
     $fd .= "<gpx xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" \r\n";
     $fd .= "  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" version=\"1.0\" \r\n";
@@ -17,14 +17,14 @@ if (isset($_POST['submitDownloadGpx'])) {
     if (isset($_SESSION['log_cache_multi_filteredData'])) {
         $tempList = [];
         foreach ($_SESSION['log_cache_multi_filteredData'] as $k => $v) {
-            $v['cache_creator'] = str_replace("&", " ", $v['cache_creator']);
+            $v['cache_creator'] = str_replace('&', ' ', $v['cache_creator']);
 
-            $fd .= "<wpt lat=\"" . $v['latitude'] . "\" lon=\"" . $v['longitude'] . "\">\r\n";
-            $fd .= "    <time>" . $v['rok'] . "-" . $v['msc'] . "-" . $v['dzien'] . "T" . $v['godz'] . ":" . $v['min'] . ":00Z</time>\r\n";
-            $fd .= "    <name>" . $v['kod_str'] . " " . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</name>\r\n";
-            $fd .= "    <desc>" . $v['cache_name'] . " by " . $v['cache_creator'] . "</desc>\r\n";
-            $fd .= "    <url>http://opencaching.pl/viewcache.php?cacheid=" . $v['cache_id'] . "</url>\r\n";
-            $fd .= "    <urlname>" . $v['kod_str'] . " " . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</urlname>\r\n";
+            $fd .= '<wpt lat="' . $v['latitude'] . '" lon="' . $v['longitude'] . "\">\r\n";
+            $fd .= '    <time>' . $v['rok'] . '-' . $v['msc'] . '-' . $v['dzien'] . 'T' . $v['godz'] . ':' . $v['min'] . ":00Z</time>\r\n";
+            $fd .= '    <name>' . $v['kod_str'] . ' ' . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</name>\r\n";
+            $fd .= '    <desc>' . $v['cache_name'] . ' by ' . $v['cache_creator'] . "</desc>\r\n";
+            $fd .= '    <url>http://opencaching.pl/viewcache.php?cacheid=' . $v['cache_id'] . "</url>\r\n";
+            $fd .= '    <urlname>' . $v['kod_str'] . ' ' . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</urlname>\r\n";
             if ($v['status'] == 1 || $v['status'] == 5) { // found, need maintenance
                 $fd .= "    <sym>Geocache found</sym>\r\n";
             } else {
@@ -32,8 +32,8 @@ if (isset($_POST['submitDownloadGpx'])) {
             }
 //          $fd .= "    <sym>Flag, ".($v['status'] == "1" ? "Blue" : "Red")."</sym>\r\n";
             $fd .= "    <geocache xmlns=\"http://genpol.com/temp/geocache/\">\r\n";
-            $fd .= "        <name>" . $v['kod_str'] . " " . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</name>\r\n";
-            $fd .= "        <owner>" . $v['cache_creator'] . "</owner>\r\n";
+            $fd .= '        <name>' . $v['kod_str'] . ' ' . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</name>\r\n";
+            $fd .= '        <owner>' . $v['cache_creator'] . "</owner>\r\n";
             switch ($v['cache_type']) {
                 case 2: $fd .= "        <type>Traditional</type>\r\n";
                     break;
@@ -48,25 +48,25 @@ if (isset($_POST['submitDownloadGpx'])) {
                 default: $fd .= "       <type>Other</type>\r\n";
             }
             $fd .= "        <container>0</container>\r\n";
-            $fd .= "        <difficulty>" . $v['cache_difficulty'] . "</difficulty>\r\n";
-            $fd .= "        <terrain>" . $v['cache_terrain'] . "</terrain>\r\n";
+            $fd .= '        <difficulty>' . $v['cache_difficulty'] . "</difficulty>\r\n";
+            $fd .= '        <terrain>' . $v['cache_terrain'] . "</terrain>\r\n";
             $fd .= "    </geocache>\r\n";
             $fd .= "</wpt>\r\n";
 
             // pre-define TRK
             $tmpDate = $v['timestamp'] - 4 * 60 * 60; // -4 godziny do daty.
-            $td = date("Ymd", $tmpDate);
+            $td = date('Ymd', $tmpDate);
             if (!isset($tempList[$td])) { // zaloz dla daty:
-                $tempList[$td]['name'] = "OC-PL " . date("Y-m-d", $tmpDate);
+                $tempList[$td]['name'] = 'OC-PL ' . date('Y-m-d', $tmpDate);
                 $tempList[$td]['pts'] = [];
             }
-            $tempList[$td]['pts'][] = "     <trkpt lat=\"" . $v['latitude'] . "\" lon=\"" . $v['longitude'] . "\"><time>" . $v['rok'] . "-" . $v['msc'] . "-" . $v['dzien'] . "T" . $v['godz'] . ":" . $v['min'] . ":00Z</time></trkpt>\r\n";
+            $tempList[$td]['pts'][] = '     <trkpt lat="' . $v['latitude'] . '" lon="' . $v['longitude'] . '"><time>' . $v['rok'] . '-' . $v['msc'] . '-' . $v['dzien'] . 'T' . $v['godz'] . ':' . $v['min'] . ":00Z</time></trkpt>\r\n";
         }
         // EOF waypointy - zdefiniowane.
 
         foreach ($tempList as $k => $v) {
             $fd .= "\r\n<trk>\r\n";
-            $fd .= "    <name>" . $v['name'] . "</name>\r\n";
+            $fd .= '    <name>' . $v['name'] . "</name>\r\n";
             $fd .= "    <trkseg>\r\n";
             foreach ($v['pts'] as $k1 => $v1) {
                 $fd .= $v1;
@@ -75,20 +75,20 @@ if (isset($_POST['submitDownloadGpx'])) {
             $fd .= "</trk>\r\n";
         }
 
-        $fd .= "</gpx>";
+        $fd .= '</gpx>';
 
-        $filname = date("Ymd-Hi") . ".gpx";
-        header("Content-type: application/x-download");
-        header("Content-type: text/plain; charset=utf-8");
+        $filname = date('Ymd-Hi') . '.gpx';
+        header('Content-type: application/x-download');
+        header('Content-type: text/plain; charset=utf-8');
         header('Cache-Control: no-cache');
 
 //      header("Content-type: application/octet-stream");
-        header("Content-Disposition: attachment; filename=\"" . $filname . "\"");
-        echo pack("ccc", 0xef, 0xbb, 0xbf);
+        header('Content-Disposition: attachment; filename="' . $filname . '"');
+        echo pack('ccc', 0xef, 0xbb, 0xbf);
         echo $fd;
         exit();
     } else {
-        exit("No data");
+        exit('No data');
     }
 }
 
@@ -103,7 +103,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
 }
 
     $tplname = 'log_cache_multi';
-    $myHtml = "";
+    $myHtml = '';
 
     $statusy = [];
     $statusy = fcGetStatusyEn();
@@ -122,20 +122,20 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         if ($_FILES['userfile']['error'] != 0) {
             // jesli nie to jaki blad?
             if ($_FILES['userfile']['error'] == 2) {
-                exit("Plik zbyt duzy");
+                exit('Plik zbyt duzy');
             }
             exit;
         }
 
         // czy ktos cos nie kombinuje?
         if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-            exit("Cos nie tak z wysylaniem pliku, sprobuj ponownie...");
+            exit('Cos nie tak z wysylaniem pliku, sprobuj ponownie...');
         }
 
         // wczytuje plik
         $some_file = $_FILES['userfile']['tmp_name'];
         $filesize = filesize($some_file);
-        $fp = fopen($some_file, "r");
+        $fp = fopen($some_file, 'r');
         $filecontent = fread($fp, $filesize);
         fclose($fp);
         // kasuje tymczasowy plik uploadu
@@ -176,7 +176,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                     $listaKodowOP[] = $dane[$dane_i]['kod_str'];
                     // kod
                     // czas
-                    $regex = "/^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})[:Z]/";
+                    $regex = '/^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})[:Z]/';
                     if (preg_match($regex, trim($rec[1]), $matches)) {
                         $dane[$dane_i]['timestamp'] = mktime($matches[4], $matches[5], 0, $matches[2], $matches[3], $matches[1]);
                     } else {
@@ -189,7 +189,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
                     //status
                     $dane[$dane_i]['status'] = isset($statusy[trim($rec[2])]) ? $statusy[trim($rec[2])] : 0;
                     // komentarz
-                    $dane[$dane_i]['koment'] = str_replace("\"", "", trim($rec[3]));
+                    $dane[$dane_i]['koment'] = str_replace('"', '', trim($rec[3]));
                 }
             }
         }
@@ -247,15 +247,15 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         // dociagam info o ostatniej aktywnosci dla kazdej skrzynki
         if ( count($cacheIdList) > 0) {
             $rs = XDb::xSql(
-                "SELECT c.*
+                'SELECT c.*
                 FROM (
                         SELECT cache_id, MAX(date) date FROM `cache_logs`
                         WHERE user_id= ?
-                            AND cache_id IN (" . XDb::xEscape(implode(',',$cacheIdList)) . ")
+                            AND cache_id IN (' . XDb::xEscape(implode(',',$cacheIdList)) . ')
                         GROUP BY cache_id
                     ) as x
                     INNER JOIN `cache_logs` as c ON c.cache_id = x.cache_id
-                        AND c.date = x.date", $loggedUser->getUserId());
+                        AND c.date = x.date', $loggedUser->getUserId());
 
             while ($record = XDb::xFetchArray($rs)) {
 
@@ -326,7 +326,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
             if ($doFiltra) {
                 // dodaje mass komentarze dla filtrowanych skrzynek:
                 if (isset($_POST['submitCommentsForm']) && isset($_POST['logtext'])) {
-                    $v['koment'] .= " " . $_POST['logtext'];
+                    $v['koment'] .= ' ' . $_POST['logtext'];
                 }
             }
             $dane[$k] = $v;
@@ -342,8 +342,8 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         $dane = $daneFiltrowane;
     }
 
-    tpl_set_var('filter_from', date("d-m-Y H:i", $filter_from));
-    tpl_set_var('filter_to', date("d-m-Y H:i", $filter_to));
+    tpl_set_var('filter_from', date('d-m-Y H:i', $filter_from));
+    tpl_set_var('filter_to', date('d-m-Y H:i', $filter_to));
     tpl_set_var('log_cache_multi_html', $myHtml);
 
 
@@ -354,12 +354,12 @@ if ($no_tpl_build == false) {
 
 function UstawDatyZTimeStampa($rekord)
 {
-    $rekord['rok'] = date("Y", $rekord['timestamp']);
-    $rekord['msc'] = date("m", $rekord['timestamp']);
-    $rekord['dzien'] = date("d", $rekord['timestamp']);
-    $rekord['godz'] = date("H", $rekord['timestamp']);
-    $rekord['min'] = date("i", $rekord['timestamp']);
-    $rekord['data'] = date("d-m-Y H:i", $rekord['timestamp']);
+    $rekord['rok'] = date('Y', $rekord['timestamp']);
+    $rekord['msc'] = date('m', $rekord['timestamp']);
+    $rekord['dzien'] = date('d', $rekord['timestamp']);
+    $rekord['godz'] = date('H', $rekord['timestamp']);
+    $rekord['min'] = date('i', $rekord['timestamp']);
+    $rekord['data'] = date('d-m-Y H:i', $rekord['timestamp']);
     return $rekord;
 }
 

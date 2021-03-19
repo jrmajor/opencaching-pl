@@ -1,5 +1,5 @@
 <?php
-$secret = "dupa231";
+$secret = 'dupa231';
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?'.">\n";
@@ -67,14 +67,14 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
         <div id="navibar">
     <!--<span><a href="">Strona Główna</a></span>-->
             <?php
-            include("menu.inc");
+            include('menu.inc');
             ?>
         </div>
         <p>
 
             <?php
 
-            $options = ["input-encoding" => "utf8", "output-encoding" => "utf8", "output-xhtml" => true, "doctype" => "omit", "show-body-only" => true, "char-encoding" => "utf8", "quote-ampersand" => true, "quote-nbsp" => true];
+            $options = ['input-encoding' => 'utf8', 'output-encoding' => 'utf8', 'output-xhtml' => true, 'doctype' => 'omit', 'show-body-only' => true, 'char-encoding' => 'utf8', 'quote-ampersand' => true, 'quote-nbsp' => true];
             $text = $_POST['text'];
             //$text = preg_replace('~&#([0-9]+);~e', 'chr("\\1")', $text);
             #$text = preg_replace('~&#x([0-9a-fA-F]+);~ei', 'chr(hexdec("\\1"))', $text);
@@ -88,12 +88,12 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             //callback function for the regex
             function utf8_entity_decode($entity){
             $convmap = [0x0, 0x10000, 0, 0xfffff];
-            return "ż";
+            return 'ż';
             // return mb_decode_numericentity($entity, $convmap, 'UTF-8');
             }
 
 
-            $tidy =  tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, "UTF-8"), $options);
+            $tidy =  tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, 'UTF-8'), $options);
             tidy_clean_repair($tidy);
 
 
@@ -102,9 +102,9 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             {
             $removed = [];
 
-            echo "<br />Iterating over " .  $node->tagName ."\n";
+            echo '<br />Iterating over ' .  $node->tagName ."\n";
 
-            if($node->tagName == "span") {
+            if($node->tagName == 'span') {
             echo "deleting\n";
             array_push($removed, $node);
             }
@@ -115,7 +115,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             $attributes = $node->attributes;
             if(!is_null($attributes))
             foreach ($attributes as $index=>$attr)
-            echo $attr->name ." = " . htmlspecialchars($attr->value) . "\n";
+            echo $attr->name .' = ' . htmlspecialchars($attr->value) . "\n";
             }
             if($node->hasChildNodes()) {
             $children = $node->childNodes;
@@ -154,8 +154,8 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             $str = (string) $tidy;
             if($str) {
             //  $str = str_replace("&amp;", "&", $str);
-            $doc = DOMDocument::loadXML("<cache_description>".$str."</cache_description>");
-            $doc->encoding = "utf-8";
+            $doc = DOMDocument::loadXML('<cache_description>'.$str.'</cache_description>');
+            $doc->encoding = 'utf-8';
             $main = $doc->documentElement;
 
             if($main) {
@@ -168,16 +168,16 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             }
 
             $str = $doc->saveXML();
-            $str = str_replace('<?xml version="1.0" encoding="utf-8"?>'."\n", "", $str);
-            $str = str_replace('<cache_description>', "", $str);
-                $str = str_replace('</cache_description>', "", $str);
+            $str = str_replace('<?xml version="1.0" encoding="utf-8"?>'."\n", '', $str);
+            $str = str_replace('<cache_description>', '', $str);
+                $str = str_replace('</cache_description>', '', $str);
             }
 
             ?>
             <form method="post" action="index.php?page=cachevalidator">
                 <textarea name="text" id="validatorarea"><?php
 
-echo htmlspecialchars($str, ENT_NOQUOTES, "UTF-8");
+echo htmlspecialchars($str, ENT_NOQUOTES, 'UTF-8');
 
 ?></textarea>
                 <br/>

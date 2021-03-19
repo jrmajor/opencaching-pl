@@ -15,7 +15,7 @@ class Column_GeoPathIconObject extends AbstractColumn
      */
     protected function getChunkName()
     {
-        return "listOfCaches/geoPathIconObjectColumn";
+        return 'listOfCaches/geoPathIconObjectColumn';
     }
 
     /**

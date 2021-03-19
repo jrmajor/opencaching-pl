@@ -33,14 +33,14 @@ $head= (new ViewBadgeHeadController())->index();
 $tplname = 'badge_positions_list';
 
 
-$content = "";
+$content = '';
 
 $positionsMeritBadge = $meritBadgeCtrl->buildArrayGainedPositions($userid, $badge_id);
 
 foreach( $positionsMeritBadge as $onePositionBadge ){
 
-    $cacheName = str_replace("'", "-", $onePositionBadge->getName());
-    $cacheName = str_replace("\"", " ", $cacheName);
+    $cacheName = str_replace("'", '-', $onePositionBadge->getName());
+    $cacheName = str_replace('"', ' ', $cacheName);
 
     $cacheNameRef = '<a href="viewcache.php?cacheid={cacheId}">{cacheName}<a>';
     $cacheNameRef = str_replace('{cacheId}', $onePositionBadge->getId(), $cacheNameRef );
@@ -48,19 +48,19 @@ foreach( $positionsMeritBadge as $onePositionBadge ){
 
     $ownId = $onePositionBadge->getOwnerId();
 
-    $userName = str_replace("'", "-", $onePositionBadge->getOwnerName());
-    $userName = str_replace("\"", " ", $userName);
+    $userName = str_replace("'", '-', $onePositionBadge->getOwnerName());
+    $userName = str_replace('"', ' ', $userName);
 
     $userNameRef = '<a href="viewprofile.php?userid={userId}">{userName}<a>';
     $userNameRef = str_replace('{userId}', $ownId, $userNameRef );
     $userNameRef = str_replace('{userName}', $userName, $userNameRef );
 
     $typeIcon ='<img src="{src}" />';
-    $typeIcon = str_replace( "{src}",
+    $typeIcon = str_replace( '{src}',
         GeoCacheCommons::CacheIconByType($onePositionBadge->getType(), GeoCacheCommons::STATUS_READY), $typeIcon);
 
     $date = Formatter::date($onePositionBadge->getGainDate());
-    $dateSort = date("y.m.d", strtotime($onePositionBadge->getGainDate()));
+    $dateSort = date('y.m.d', strtotime($onePositionBadge->getGainDate()));
 
     $content .=  "
     gct.addEmptyRow();

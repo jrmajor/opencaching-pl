@@ -16,7 +16,7 @@ function call_okapi(User $user, $waypoints, $language, $file_base_name, $zip_par
         'recommendations' => 'desc:count',
         'latest_logs' => 'true',
         'lpc' => 'all', // TODO: is this configurable - somehow, someway - user entered parameter?
-        'my_notes' => isset($user) ? "desc:text" : "none",
+        'my_notes' => isset($user) ? 'desc:text' : 'none',
         'location_source' => 'alt_wpt:user-coords',
         'location_change_prefix' => '(F)',
     ]);

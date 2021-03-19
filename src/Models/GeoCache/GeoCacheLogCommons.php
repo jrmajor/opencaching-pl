@@ -160,7 +160,7 @@ class GeoCacheLogCommons extends BaseObject
     {
 
         //strip all tags but not <li>
-        $text = strip_tags($text, "<li>");
+        $text = strip_tags($text, '<li>');
 
         $replace = [
             //'<p>&nbsp;</p>' => '', //duplicated ? by strip_tags above
@@ -172,8 +172,8 @@ class GeoCacheLogCommons extends BaseObject
             //'<br>' => "", //duplicated ? by strip_tags above
             //'<br />' => "", //duplicated ? by strip_tags above
             //'<br/>' => "", //duplicated ? by strip_tags above
-            '<li>' => " - ",
-            '</li>' => "",
+            '<li>' => ' - ',
+            '</li>' => '',
             '&oacute;' => 'o',
             '&quot;' => '-',
             //'&[^;]*;' => '', ???

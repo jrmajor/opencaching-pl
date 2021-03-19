@@ -64,7 +64,7 @@ if (!$loggedUser) {
                 // log
                 case 1:
                     $rs = XDb::xSql(
-                        "SELECT `user_id`, `cache_id` FROM `cache_logs` WHERE `deleted`=0 AND `id`= ?", $objectid);
+                        'SELECT `user_id`, `cache_id` FROM `cache_logs` WHERE `deleted`=0 AND `id`= ?', $objectid);
 
                     if (! $r = XDb::xFetchArray($rs) )
                         $allok = false;
@@ -79,7 +79,7 @@ if (!$loggedUser) {
                         tpl_set_var('pictypedesc', $pictypedesc_log);
 
                         $rCache['name'] = XDb::xMultiVariableQueryValue(
-                            "SELECT `name` FROM `caches` WHERE `cache_id`= :1 LIMIT 1", '', $cacheid);
+                            'SELECT `name` FROM `caches` WHERE `cache_id`= :1 LIMIT 1', '', $cacheid);
                         tpl_set_var('cachename', htmlspecialchars($rCache['name'], ENT_COMPAT, 'UTF-8'));
 
                         tpl_set_var('begin_cacheonly', '<!--');
@@ -92,7 +92,7 @@ if (!$loggedUser) {
                 // cache
                 case 2:
                     $rs = XDb::xSql(
-                        "SELECT `user_id`, `cache_id`, `name` FROM `caches` WHERE `cache_id`= ? LIMIT 1",
+                        'SELECT `user_id`, `cache_id`, `name` FROM `caches` WHERE `cache_id`= ? LIMIT 1',
                         $objectid);
 
                     if (! $r = XDb::xFetchArray($rs) )
@@ -201,8 +201,8 @@ if (!$loggedUser) {
                             // log
                             case 1:
                                 XDb::xSql(
-                                "UPDATE `cache_logs` SET `picturescount`=`picturescount`+1, `last_modified`=NOW()
-                                WHERE `id`= ?", $objectid);
+                                'UPDATE `cache_logs` SET `picturescount`=`picturescount`+1, `last_modified`=NOW()
+                                WHERE `id`= ?', $objectid);
 
                                 tpl_redirect('viewcache.php?cacheid=' . urlencode($cacheid));
                                 break;
@@ -210,8 +210,8 @@ if (!$loggedUser) {
                             // cache
                             case 2:
                                 XDb::xSql(
-                                "UPDATE `caches` SET `picturescount`=`picturescount`+1, `last_modified`=NOW()
-                                WHERE `cache_id`= ? LIMIT 1", $objectid);
+                                'UPDATE `caches` SET `picturescount`=`picturescount`+1, `last_modified`=NOW()
+                                WHERE `cache_id`= ? LIMIT 1', $objectid);
                                 tpl_redirect('editcache.php?cacheid=' . urlencode($objectid));
                                 break;
                         }

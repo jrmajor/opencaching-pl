@@ -47,7 +47,7 @@ class Vote extends BaseObject
     public static function getAllVotes(Election $election): array
     {
         $rs = self::db()->multiVariableQuery(
-            "SELECT optionId, date FROM vote_votes WHERE electionId = :1 ORDER BY date ASC",
+            'SELECT optionId, date FROM vote_votes WHERE electionId = :1 ORDER BY date ASC',
             $election->getElectionId());
 
         return self::db()->dbFetchAllAsObjects($rs, function ($row){

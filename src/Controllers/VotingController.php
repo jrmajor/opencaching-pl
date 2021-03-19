@@ -43,7 +43,7 @@ class VotingController extends BaseController
         // check election
         $election = Election::fromElectionIdFactory($electionId);
         if (!$election) {
-            $this->displayCommonErrorPageAndExit("No such election");
+            $this->displayCommonErrorPageAndExit('No such election');
         }
         $this->view->setVar('election', $election);
         $this->view->addLocalCss('/views/voting/voting.css');
@@ -91,7 +91,7 @@ class VotingController extends BaseController
     {
         $election = Election::fromElectionIdFactory($electionId);
         if (!$election) {
-            $this->ajaxErrorResponse(tr('vote_saveResultInternalError').". [No such election]");
+            $this->ajaxErrorResponse(tr('vote_saveResultInternalError').'. [No such election]');
         }
 
         $votes = $_POST['votes'] ?? [];
@@ -99,7 +99,7 @@ class VotingController extends BaseController
         // check votes
         foreach ($votes as $vote) {
             if(!is_numeric($vote)) {
-                $this->ajaxErrorResponse(tr('vote_saveResultInternalError').". [Unknown format]");
+                $this->ajaxErrorResponse(tr('vote_saveResultInternalError').'. [Unknown format]');
             }
         }
 

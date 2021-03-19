@@ -15,7 +15,7 @@ class Column_CacheLastLogObject extends AbstractColumn
      */
     protected function getChunkName()
     {
-        return "listOfCaches/cacheLastLogObjectColumn";
+        return 'listOfCaches/cacheLastLogObjectColumn';
     }
 
     /**

@@ -18,13 +18,13 @@ class TitledCacheAddJob extends Job
         global $titled_cache_nr_found, $titled_cache_period_prefix;
 
         $daysSinceLastTitle = $this->db->simpleQueryValue(
-            "SELECT DATEDIFF(NOW(), MAX(date_alg)) FROM cache_titled",
+            'SELECT DATEDIFF(NOW(), MAX(date_alg)) FROM cache_titled',
             999
         );
 
-        if ($titled_cache_period_prefix == "week") {
+        if ($titled_cache_period_prefix == 'week') {
             $securityPeriod = 7;
-        } elseif ($titled_cache_period_prefix == "month") {
+        } elseif ($titled_cache_period_prefix == 'month') {
             $securityPeriod = 28;
         } else {
             $securityPeriod = 0;
@@ -38,9 +38,9 @@ class TitledCacheAddJob extends Job
         unset($daysSinceLastTitle);
         unset($securityPeriod);
 
-        $date_alg = date("Y-m-d");
+        $date_alg = date('Y-m-d');
 
-        $queryS = "
+        $queryS = '
             SELECT
                 top.cacheId, top.cacheName, top.userName,
                 top.cacheRegion, IFNULL(nrT.nrTinR, 0) nrTinR,
@@ -110,7 +110,7 @@ class TitledCacheAddJob extends Job
                 GROUP BY adm3
             ) AS nrT ON top.cacheRegion = nrT.cacheRegion
             ORDER BY nrTinR, cFounds DESC, cDateCrt, RATE DESC
-        ";
+        ';
 
         $s = $this->db->multiVariableQuery($queryS, $date_alg, $titled_cache_nr_found );
         $rec = $this->db->dbResultFetch($s);
@@ -120,7 +120,7 @@ class TitledCacheAddJob extends Job
             return;
         }
 
-        $queryL = "
+        $queryL = '
             SELECT i.id logId
             FROM
             (
@@ -137,18 +137,18 @@ class TitledCacheAddJob extends Job
                         ORDER BY length(cl.text) DESC
                         LIMIT 1
                     )
-            ) AS i";
+            ) AS i';
 
         $s = $this->db->multiVariableQuery($queryL, $rec['cacheId']);
         $recL = $this->db->dbResultFetchOneRowOnly($s);
 
-        $queryI = "
+        $queryI = '
             INSERT INTO cache_titled
                 (cache_id, rate, ratio, rating, found, days, date_alg, log_id)
-            VALUES (:1, :2, :3, :4, :5, :6, :7, :8)";
+            VALUES (:1, :2, :3, :4, :5, :6, :7, :8)';
 
-        $this->db->multiVariableQuery($queryI, $rec[ "cacheId" ], $rec[ "RATE" ], $rec[ "ratio" ],
-                $rec[ "cRating" ], $rec[ "cFounds" ], $rec[ "cNrDays" ], $date_alg, $recL["logId"] );
+        $this->db->multiVariableQuery($queryI, $rec[ 'cacheId' ], $rec[ 'RATE' ], $rec[ 'ratio' ],
+                $rec[ 'cRating' ], $rec[ 'cFounds' ], $rec[ 'cNrDays' ], $date_alg, $recL['logId'] );
 
         $SystemUser = -1;
         $LogType = GeoCacheLog::LOGTYPE_ADMINNOTE;

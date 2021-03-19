@@ -42,10 +42,10 @@ class Email
     {
         // Check mandantory addresses
         if (empty($this->toAddr)) {
-            throw new \RuntimeException("Missing email recipient.");
+            throw new \RuntimeException('Missing email recipient.');
         }
         if (empty($this->fromAddr)) {
-            throw new \RuntimeException("Missing email sender.");
+            throw new \RuntimeException('Missing email sender.');
         }
         if (!self::isValidEmailAddr($this->toAddr) ||
             !self::isValidEmailAddr($this->fromAddr)
@@ -61,7 +61,7 @@ class Email
         // Check subject. It is technically allowed to send a email without
         // subject, but we don't want to do that.
         if ($this->subject == '') {
-            throw new \RuntimeException("Email subject missing");
+            throw new \RuntimeException('Email subject missing');
         }
 
         if (empty($this->senderName)) {
@@ -86,7 +86,7 @@ class Email
         $headers[] = 'X-Mailer: PHP/' . phpversion();
 
         $to = implode(', ', $this->toAddr);
-        $subject = $this->subjectPrefix . " " . $this->subject;
+        $subject = $this->subjectPrefix . ' ' . $this->subject;
         $message = $this->htmlBody;
 
         return mb_send_mail($to, $subject, $message, implode("\r\n", $headers));
@@ -142,14 +142,14 @@ class Email
     public function setSubject($subject)
     {
         $this->subject = $subject;
-        return ($subject != "");
+        return ($subject != '');
     }
 
     public function addSubjectPrefix($newPrefix)
     {
         if (!empty($newPrefix)) { // because somebody may want to turn off the global prefix in config
 
-            $this->subjectPrefix = $this->subjectPrefix . "[" . $newPrefix . "]";
+            $this->subjectPrefix = $this->subjectPrefix . '[' . $newPrefix . ']';
         }
     }
 
@@ -160,7 +160,7 @@ class Email
 
     public function setPlainTextBody($plainText)
     {
-        $body = htmlentities($plainText, ENT_QUOTES, "UTF-8");
+        $body = htmlentities($plainText, ENT_QUOTES, 'UTF-8');
         $body = nl2br($body);
         $this->htmlBody = '<pre>' . $body . '</pre>';
     }
@@ -186,7 +186,7 @@ class Email
         }
 
         // TODO(mzylowski): Remove this if, when email refactoring will be finished:
-        if ($emailAddress == "user@ocpl-devel") {
+        if ($emailAddress == 'user@ocpl-devel') {
             return true;
         } // debugging purposes
 

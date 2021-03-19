@@ -23,7 +23,7 @@ function html2txt($html)
     $str = str_replace('<br />', "\n", $str);
     $str = str_replace('<br>', "\n", $str);
     $str = str_replace('</p>', "\n", $str);
-    $str = str_replace('<li>', "-", $str);
+    $str = str_replace('<li>', '-', $str);
     $str = str_replace('&quot;', '"', $str);
     $str = str_replace('&amp;', '&', $str);
     $str = str_replace('&lt;', '<', $str);
@@ -62,7 +62,7 @@ function xmlencode_text($str)
 {
     static $pattern = '/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u';
     $str = preg_replace($pattern, '', $str);
-    return strtr($str, ["<" => "&lt;", ">" => "&gt;", "\"" => "&quot;", "'" => "&apos;", "&" => "&amp;"]);
+    return strtr($str, ['<' => '&lt;', '>' => '&gt;', '"' => '&quot;', "'" => '&apos;', '&' => '&amp;']);
 }
 
 /**
@@ -75,7 +75,7 @@ function cleanup_text($str) {
     //$str = convert_lang('UTF-8','LATIN',$str);    // old implentation
     $str = convert_string($str);
 
-    $str = strip_tags($str, "<p><br /><li>");
+    $str = strip_tags($str, '<p><br /><li>');
 
     $from[] = '&nbsp;'; $to[] = ' ';
     $from[] = '<p>'; $to[] = '';        // <p> -> remove
@@ -84,7 +84,7 @@ function cleanup_text($str) {
     $from[] = '<br>'; $to[] = "\n";
     $from[] = '<br>'; $to[] = "\n";
 
-    $from[] = '<li>'; $to[] = " - ";    // <li> -> -
+    $from[] = '<li>'; $to[] = ' - ';    // <li> -> -
     $from[] = '</li>'; $to[] = "\n";    // </li> -> new line
 
     $from[] = '&oacute;'; $to[] = 'o';
@@ -147,9 +147,9 @@ function convert_lang($source,$dest,$str)
  */
 function convert_string($str) {
    if (!empty($str)) {
-        $str = iconv("UTF-8", "ASCII//TRANSLIT//IGNORE", $str);
+        $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
         if ($str === false) {
-            $str = "--- charset error ---";
+            $str = '--- charset error ---';
         }
     }
     return $str;

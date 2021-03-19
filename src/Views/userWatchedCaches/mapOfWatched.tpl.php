@@ -7,4 +7,4 @@
 </div>
 
 
-<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, "mapCanvas");?>
+<?php $view->callChunk('dynamicMap/dynamicMap', $view->mapModel, 'mapCanvas');?>

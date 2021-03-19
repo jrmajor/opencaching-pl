@@ -4,22 +4,22 @@ use src\Utils\Database\OcDb;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\I18n\I18n;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
-if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
+if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
 
 
 
     $wp = XDb::xEscape($_GET['wp']);
 
-    $query = "select votes,cache_id,topratings,user_id,type,size,status,cache_id,name,longitude,latitude,date_hidden,wp_oc,score,founds,notfounds,notes,picturescount";
+    $query = 'select votes,cache_id,topratings,user_id,type,size,status,cache_id,name,longitude,latitude,date_hidden,wp_oc,score,founds,notfounds,notes,picturescount';
     $query .= " from caches where wp_oc = '" . $wp . "';";
     $wynik = XDb::xSql($query);
     $caches = XDb::xFetchArray($wynik);
 
     // dodałem sprawdzanie statusu
     if (empty($caches) || $caches['status'] == 4 || $caches['status'] == 5 || $caches['status'] == 6)
-        $tpl->assign("error", "1");
+        $tpl->assign('error', '1');
 
     else {
 
@@ -50,7 +50,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
             }
         }
 
-        $query = "select username from user where user_id = " . $caches['user_id'] . ";";
+        $query = 'select username from user where user_id = ' . $caches['user_id'] . ';';
         $wynik = XDb::xSql($query);
         $user = XDb::xFetchArray($wynik);
 
@@ -68,13 +68,13 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
         while ($rekord = XDb::xFetchArray($wynik)) {
 
             if ($i > 0)
-                $cache_desc['desc'].="<br/><br/>";
+                $cache_desc['desc'].='<br/><br/>';
             $cache_desc['desc'].=$rekord['desc'];
             if ($i > 0)
-                $cache_desc['short_desc'].="<br/>";
+                $cache_desc['short_desc'].='<br/>';
             $cache_desc['short_desc'].=$rekord['short_desc'];
             if ($i > 0)
-                $cache_desc['hint'].="\\n\\n";
+                $cache_desc['hint'].='\\n\\n';
             $cache_desc['hint'].=$rekord['hint'];
 
             $i++;
@@ -83,13 +83,13 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
         $query = "select attrib_id from caches_attributes where cache_id ='" . $caches['cache_id'] . '\';';
         $cache_attributes = XDb::xSql($query);
 
-        $query = "select " . I18n::getCurrentLang() . " from cache_type where id =" . $caches['type'] . ';';
+        $query = 'select ' . I18n::getCurrentLang() . ' from cache_type where id =' . $caches['type'] . ';';
         $wynik = XDb::xSql($query);
         $cache_type = XDb::xFetchArray($wynik);
 
         $cache_size = tr(GeoCacheCommons::CacheSizeTranslationKey($caches['size']));
 
-        $query = "select " . I18n::getCurrentLang() . " from cache_status where id =" . $caches['status'] . ';';
+        $query = 'select ' . I18n::getCurrentLang() . ' from cache_status where id =' . $caches['status'] . ';';
         $wynik = XDb::xSql($query);
         $cache_status = XDb::xFetchArray($wynik);
 
@@ -151,7 +151,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
         $cache_info['picturescount'] = $caches['picturescount'];
         $cache_info['topratings'] = $caches['topratings'];
 
-        $tpl->assign("cache", $cache_info);
+        $tpl->assign('cache', $cache_info);
 
         if ($caches['picturescount'] > 0) {
 
@@ -163,25 +163,25 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
             while ($rekord = XDb::xFetchArray($wynik))
                 $photos[] = $rekord;
 
-            $tpl->assign("photos_list", $photos);
+            $tpl->assign('photos_list', $photos);
         }
 
         if (!empty($cache_attributes)) {
 
-            $attr_text = "";
+            $attr_text = '';
 
             while ($rekord = XDb::xFetchArray($cache_attributes)) {
 
                 $query = "select text_long from cache_attrib where id ='" . $rekord['attrib_id'] . "' and language = '" . I18n::getCurrentLang() . "';";
                 $wynik = XDb::xSql($query);
                 $attr = XDb::xFetchArray($wynik);
-                $attr_text .= "\\n" . $attr[0] . "\\n";
+                $attr_text .= '\\n' . $attr[0] . '\\n';
             }
 
-            $tpl->assign("attr_text", $attr_text);
+            $tpl->assign('attr_text', $attr_text);
         }
 
-        $gk = "";
+        $gk = '';
 
 //          $query="select name,distancetravelled from gk_item where latitude ='".$caches['latitude']."' and longitude='".$caches['longitude']."';";
         $query = "SELECT gk_item.id, name, distancetravelled FROM gk_item INNER JOIN gk_item_waypoint ON (gk_item.id = gk_item_waypoint.id) WHERE gk_item_waypoint.wp = '" . $caches['wp_oc'] . "' AND stateid<>1 AND stateid<>4 AND stateid <>5 AND typeid<>2 AND missing=0";
@@ -189,10 +189,10 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
         //print XDb::xNumRows($wynik);
         while ($rekord = XDb::xFetchArray($wynik)) {
             //print $rekord['name'];
-            $gk.=$rekord['name'] . " - " . $rekord['distancetravelled'] . " km\\n\\n";
+            $gk.=$rekord['name'] . ' - ' . $rekord['distancetravelled'] . ' km\\n\\n';
         }
 
-        $tpl->assign("gk", $gk);
+        $tpl->assign('gk', $gk);
     }
 } else {
     header('Location: ./index.php');

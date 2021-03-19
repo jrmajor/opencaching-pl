@@ -72,41 +72,41 @@ use src\Models\GeoCache\GeoCacheCommons;
                         // jesli zgodne daty i typ to inny kolor:
                         if ((isset($v['data']) && isset($v['last_date']) && $v['data'] == $v['last_date']) && (isset($v['status']) && isset($v['last_status']) && $v['status'] == $v['last_status'])) {
                             $zgodne = true;
-                            $styl = "bgcolorM1";
+                            $styl = 'bgcolorM1';
                         } else {
                             $zgodne = false;
-                            $styl = "bgcolor2";
+                            $styl = 'bgcolor2';
                         }
                         ?>
                         <tr class="<?php echo $styl; ?>">
                             <td width=560><?php echo isset($v['cache_name']) ?
-                                "<a href=\"viewcache.php?cacheid=" . $v['cache_id'] . "\" target=\"_blank\">" .
-                                    "<img src=\"" . GeoCacheCommons::CacheIconByType($v['cache_type'], GeoCacheCommons::STATUS_READY) . "\" /> " .
-                                        $v['kod_str'] . " " . $v['cache_name'] . "</a>" : " "; ?></td>
+                                '<a href="viewcache.php?cacheid=' . $v['cache_id'] . '" target="_blank">' .
+                                    '<img src="' . GeoCacheCommons::CacheIconByType($v['cache_type'], GeoCacheCommons::STATUS_READY) . '" /> ' .
+                                        $v['kod_str'] . ' ' . $v['cache_name'] . '</a>' : ' '; ?></td>
 
                             <td width=70 style="text-align: right"><?php
                                 $v['data'] = date($datetimeFormat, strtotime($v['data']));
 
 
-                                echo isset($v['data']) ? str_replace(" ", "<br />", $v['data']) : " ";
-                                echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                                echo isset($v['status']) ? "<img src=\"".GeoCacheLogCommons::GetIconForType($v['status'])."\" />" : " ";
+                                echo isset($v['data']) ? str_replace(' ', '<br />', $v['data']) : ' ';
+                                echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                                echo isset($v['status']) ? '<img src="'.GeoCacheLogCommons::GetIconForType($v['status']).'" />' : ' ';
                                 ?></td>
                             <td width=70 style="text-align: right"><?php
                                 if (isset($v['got_last_activity'])) {
                                     $v['last_date'] = date($datetimeFormat, strtotime($v['last_date']));
-                                    echo str_replace(" ", "<br />", $v['last_date']) . "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+                                    echo str_replace(' ', '<br />', $v['last_date']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                                     if (isset($v['last_status'])) {
-                                        echo "<img src=\"" . GeoCacheLogCommons::GetIconForType($v['last_status']) . "\" />";
+                                        echo '<img src="' . GeoCacheLogCommons::GetIconForType($v['last_status']) . '" />';
                                     } else {
-                                        echo " ";
+                                        echo ' ';
                                     }
                                 } else {
-                                    echo " ";
+                                    echo ' ';
                                 }
                                 ?></td>
                         </tr><tr class="<?php echo $styl; ?>">
-                            <td width="630" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : " "; ?>&nbsp;</td>
+                            <td width="630" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : ' '; ?>&nbsp;</td>
                             <td style="text-align: center"><?php
                                 if (isset($v['cache_id']) && (!$zgodne)) {
                                     echo "

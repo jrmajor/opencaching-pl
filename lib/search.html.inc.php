@@ -14,7 +14,7 @@ use src\Models\ApplicationContainer;
  * This script is used (can be loaded) by /search.php
  */
 
-function findColumn($name, $type = "C")
+function findColumn($name, $type = 'C')
 {
     global $colNameSearch;
 
@@ -30,15 +30,15 @@ function fHideColumn($nr, $set)
 {
     global $selectList, $NrColVisable, $colNameSearch, $NrColSortSearch;
 
-    $sNameColumnsSearch = "NCSearch" . $nr;
+    $sNameColumnsSearch = 'NCSearch' . $nr;
 
-    if (isset($_REQUEST["C" . $nr])) {
+    if (isset($_REQUEST['C' . $nr])) {
         $C = 1;
         if ($set) {
             OcCookie::set($sNameColumnsSearch, 1, true);
         }
     } else {
-        if (! isset($_REQUEST["notinit"])) // first ent.
+        if (! isset($_REQUEST['notinit'])) // first ent.
 {
 
             $C = OcCookie::getOrDefault($sNameColumnsSearch, 0);
@@ -80,111 +80,111 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 $dbc = OcDb::instance();
 
-$sNrColumnsSortSearch = "NrColumnsSortSearch";
-$sOrderSortSearch = "OrderSortSearch";
+$sNrColumnsSortSearch = 'NrColumnsSortSearch';
+$sOrderSortSearch = 'OrderSortSearch';
 
 $colNameSearch = [
     0 => [
-        "C" => "CacheID",
-        "O" => "CacheID",
+        'C' => 'CacheID',
+        'O' => 'CacheID',
     ],
     1 => [
-        "C" => "",
-        "O" => tr('cache_type'),
+        'C' => '',
+        'O' => tr('cache_type'),
     ],
     2 => [
-        "C" => tr('name_label'),
-        "O" => tr('cache_label'),
+        'C' => tr('name_label'),
+        'O' => tr('cache_label'),
     ],
     3 => [
-        "C" => tr('short_description'),
-        "O" => tr('short_description'),
+        'C' => tr('short_description'),
+        'O' => tr('short_description'),
     ],
     4 => [
-        "C" => tr('owner'),
-        "O" => tr('CacheOwner'),
+        'C' => tr('owner'),
+        'O' => tr('CacheOwner'),
     ],
     5 => [
-        "C" => tr('Hidden'),
-        "O" => tr('date_hidden_label'),
+        'C' => tr('Hidden'),
+        'O' => tr('date_hidden_label'),
     ],
     6 => [
-        "C" => tr('FNC'),
-        "O" => tr('FoundNotFoundComment'),
+        'C' => tr('FNC'),
+        'O' => tr('FoundNotFoundComment'),
     ],
     7 => [
-        "C" => tr('F'),
-        "O" => tr('Found'),
+        'C' => tr('F'),
+        'O' => tr('Found'),
     ],
     8 => [
-        "C" => tr('N'),
-        "O" => tr('NotFound'),
+        'C' => tr('N'),
+        'O' => tr('NotFound'),
     ],
     9 => [
-        "C" => tr('C'),
-        "O" => tr('note'),
+        'C' => tr('C'),
+        'O' => tr('note'),
     ],
     10 => [
-        "C" => "<img src='images/rating-star.png'>",
-        "O" => tr('RecommendationNumber'),
+        'C' => "<img src='images/rating-star.png'>",
+        'O' => tr('RecommendationNumber'),
     ],
     11 => [
-        "C" => tr('Entry_latest'),
-        "O" => tr('TypeDateLastEntry'),
+        'C' => tr('Entry_latest'),
+        'O' => tr('TypeDateLastEntry'),
     ],
     12 => [
-        "C" => tr('type'),
-        "O" => tr('LastTypeEntry'),
+        'C' => tr('type'),
+        'O' => tr('LastTypeEntry'),
     ],
     13 => [
-        "C" => tr('date_logged'),
-        "O" => tr('LastEntryDate'),
+        'C' => tr('date_logged'),
+        'O' => tr('LastEntryDate'),
     ],
     14 => [
-        "C" => tr('content'),
-        "O" => tr('LastEntryContent'),
+        'C' => tr('content'),
+        'O' => tr('LastEntryContent'),
     ],
     15 => [
-        "C" => tr('Coordinates'),
-        "O" => tr('Coordinates'),
+        'C' => tr('Coordinates'),
+        'O' => tr('Coordinates'),
     ],
     16 => [
-        "C" => tr('Distance'),
-        "O" => tr('DirectionDistance'),
+        'C' => tr('Distance'),
+        'O' => tr('DirectionDistance'),
     ],
     17 => [
-        "C" => tr('T_T'),
-        "O" => tr('TaskTerainDifficulty'),
+        'C' => tr('T_T'),
+        'O' => tr('TaskTerainDifficulty'),
     ],
     18 => [
-        "C" => "",
-        "O" => tr('srch_Send_to_GPS'),
+        'C' => '',
+        'O' => tr('srch_Send_to_GPS'),
     ],
     19 => [
-        "C" => "cache_code",
-        "O" => "cache_code",
+        'C' => 'cache_code',
+        'O' => 'cache_code',
     ],
 ];
 
-$sDefCol4Search = "DefCol4Search";
+$sDefCol4Search = 'DefCol4Search';
 if (! OcCookie::contains($sDefCol4Search)) {
-    OcCookie::set("NCSearch3", "1");
-    OcCookie::set("NCSearch6", "1");
-    OcCookie::set("NCSearch7", "1");
-    OcCookie::set("NCSearch8", "1");
-    OcCookie::set("NCSearch9", "1");
-    OcCookie::set("NCSearch12", "1");
-    OcCookie::set("NCSearch13", "1");
-    OcCookie::set("NCSearch14", "1");
-    OcCookie::set("NCSearch15", "1");
-    OcCookie::set("NCSearch16", "1");
-    OcCookie::set("NCSearch17", "1");
-    OcCookie::set($sNrColumnsSortSearch, "-1");
-    OcCookie::set($sOrderSortSearch, "M");
-    OcCookie::set($sDefCol4Search, "Y");
+    OcCookie::set('NCSearch3', '1');
+    OcCookie::set('NCSearch6', '1');
+    OcCookie::set('NCSearch7', '1');
+    OcCookie::set('NCSearch8', '1');
+    OcCookie::set('NCSearch9', '1');
+    OcCookie::set('NCSearch12', '1');
+    OcCookie::set('NCSearch13', '1');
+    OcCookie::set('NCSearch14', '1');
+    OcCookie::set('NCSearch15', '1');
+    OcCookie::set('NCSearch16', '1');
+    OcCookie::set('NCSearch17', '1');
+    OcCookie::set($sNrColumnsSortSearch, '-1');
+    OcCookie::set($sOrderSortSearch, 'M');
+    OcCookie::set($sDefCol4Search, 'Y');
 }
 
-if (! isset($_REQUEST["NrColSort"])) {
+if (! isset($_REQUEST['NrColSort'])) {
 
     if (OcCookie::contains($sNrColumnsSortSearch)){
         $NrColSortSearch = OcCookie::get($sNrColumnsSortSearch);
@@ -194,22 +194,22 @@ if (! isset($_REQUEST["NrColSort"])) {
 
 } else {
 
-    $NrColSortSearch = $_REQUEST["NrColSort"];
+    $NrColSortSearch = $_REQUEST['NrColSort'];
     OcCookie::set($sNrColumnsSortSearch, $NrColSortSearch);
 
 }
 
 // //////////////////////////////////
 
-if (! isset($_REQUEST["OrderSortSearch"])) {
+if (! isset($_REQUEST['OrderSortSearch'])) {
 
     if (OcCookie::contains($sOrderSortSearch)){
         $OrderSortSearch = OcCookie::get($sOrderSortSearch);
     }else{
-        OcCookie::set($sOrderSortSearch, "M");
+        OcCookie::set($sOrderSortSearch, 'M');
     }
 } else {
-    $OrderSortSearch = $_REQUEST["OrderSortSearch"];
+    $OrderSortSearch = $_REQUEST['OrderSortSearch'];
     OcCookie::set($sOrderSortSearch, $OrderSortSearch);
 }
 
@@ -254,7 +254,7 @@ if (fHideColumn(findColumn(tr('Coordinates')), false) == 1)
     $CalcCoordinates = false;
 
 $CalcSendToGPS = true;
-if (fHideColumn(findColumn(tr('srch_Send_to_GPS'), "O"), false) == 1)
+if (fHideColumn(findColumn(tr('srch_Send_to_GPS'), 'O'), false) == 1)
     $CalcSendToGPS = false;
 
 $CalcFNC = true;
@@ -284,7 +284,7 @@ if (isset($lat_rad) && isset($lon_rad)) {
             $query .= '0 distance, ';
     } elseif ($CalcDistance) {
         // get the users home coords
-        $s = $dbc->multiVariableQuery("SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`=:1", $loggedUser->getUserId());
+        $s = $dbc->multiVariableQuery('SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`=:1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetch($s);
 
         if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
@@ -427,8 +427,8 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
 
     $tmpline = str_replace('{short_desc}', htmlspecialchars(PrepareText($caches_record['short_desc']), ENT_COMPAT, 'UTF-8'), $tmpline);
 
-    $tmpline = str_replace('{diffpic}', icon_difficulty("diff", $caches_record['difficulty']), $tmpline);
-    $tmpline = str_replace('{terrpic}', icon_difficulty("terr", $caches_record['terrain']), $tmpline);
+    $tmpline = str_replace('{diffpic}', icon_difficulty('diff', $caches_record['difficulty']), $tmpline);
+    $tmpline = str_replace('{terrpic}', icon_difficulty('terr', $caches_record['terrain']), $tmpline);
 
     $typy = [
         0 => 0,
@@ -452,7 +452,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             $typy[($row['type'] - 1)] = $row['typy'];
         }
 
-        $tmpline = str_replace('{logtypes1}', "<span " . str_pad($typy[0], 5, 0, STR_PAD_LEFT) . " style='color:green'>" . $typy[0] . "</span>.<span style='color:red'>" . $typy[1] . "</span>.<span style='color:black'>" . $typy[2] . "</span>", $tmpline);
+        $tmpline = str_replace('{logtypes1}', '<span ' . str_pad($typy[0], 5, 0, STR_PAD_LEFT) . " style='color:green'>" . $typy[0] . "</span>.<span style='color:red'>" . $typy[1] . "</span>.<span style='color:black'>" . $typy[2] . '</span>', $tmpline);
 
     }
     $tmpline = str_replace('{find}', $typy[0], $tmpline);
@@ -473,7 +473,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             ORDER BY `cache_logs`.`date` DESC LIMIT 1', $caches_record['cache_id']);
 
         if ($row = $dbc->dbResultFetch($rs)) {
-            $tmpline = str_replace('{logimage1}', icon_log_type($row['icon_small'], "") . '<a href=\'viewlogs.php?cacheid=' . htmlspecialchars($caches_record['cache_id'], ENT_COMPAT, 'UTF-8') . '#' . htmlspecialchars($row['id'], ENT_COMPAT, 'UTF-8') . '\'>{gray_s}' . date($logdateformat, strtotime($row['date'])) . '{gray_e}</a>', $tmpline);
+            $tmpline = str_replace('{logimage1}', icon_log_type($row['icon_small'], '') . '<a href=\'viewlogs.php?cacheid=' . htmlspecialchars($caches_record['cache_id'], ENT_COMPAT, 'UTF-8') . '#' . htmlspecialchars($row['id'], ENT_COMPAT, 'UTF-8') . '\'>{gray_s}' . date($logdateformat, strtotime($row['date'])) . '{gray_e}</a>', $tmpline);
 
             $log_text = PrepareText($row['log_text']);
 
@@ -482,17 +482,17 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             $tmpline = str_replace('{logdate}', date($logdateformat_ymd, strtotime($row['date'])), $tmpline);
             $tmpline = str_replace('{logdesc}', $log_text, $tmpline);
 
-            $tmpline = str_replace('{logdate1}', "", $tmpline); //
+            $tmpline = str_replace('{logdate1}', '', $tmpline); //
         } else {
             $tmpline = str_replace('{logimage1}', "<img src='images/trans.gif' border='0' width='16' height='16' />", $tmpline);
-            $tmpline = str_replace('{logimage2}', "", $tmpline);
-            $tmpline = str_replace('{logdate1}', "", $tmpline);
-            $tmpline = str_replace('{logdate}', "", $tmpline);
-            $tmpline = str_replace('{logtype}', "", $tmpline);
-            $tmpline = str_replace('{logdesc}', "", $tmpline);
+            $tmpline = str_replace('{logimage2}', '', $tmpline);
+            $tmpline = str_replace('{logdate1}', '', $tmpline);
+            $tmpline = str_replace('{logdate}', '', $tmpline);
+            $tmpline = str_replace('{logtype}', '', $tmpline);
+            $tmpline = str_replace('{logdesc}', '', $tmpline);
         }
     }
-    $lastlogs = "";
+    $lastlogs = '';
 
     if ($CalcDistance) {
         // and now the direction ...
@@ -524,11 +524,11 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
             ;
         }
         if ($CalcSendToGPS) {
-            $tmpline = str_replace('{sendtogps}', ("<a href=\"#\" onclick=\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . "&amp;long=" . $caches_record['longitude'] . "&amp;wp=" . $caches_record['wp_oc'] . "&amp;name=" . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\"><img src='/images/garmin.jpg' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0' /></a>"), $tmpline);
-            $tmpline = str_replace('{sendtogpsnew}', "<a href='#' onclick=\\\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . "&amp;long=" . $caches_record['longitude'] . "&amp;wp=" . $caches_record['wp_oc'] . "&amp;name=" . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\\\"><img src='/images/blue/gps-receiving-32.png' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0'  height='16' width='16' /></a>", $tmpline);
+            $tmpline = str_replace('{sendtogps}', ("<a href=\"#\" onclick=\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . '&amp;long=' . $caches_record['longitude'] . '&amp;wp=' . $caches_record['wp_oc'] . '&amp;name=' . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\"><img src='/images/garmin.jpg' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0' /></a>"), $tmpline);
+            $tmpline = str_replace('{sendtogpsnew}', "<a href='#' onclick=\\\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . '&amp;long=' . $caches_record['longitude'] . '&amp;wp=' . $caches_record['wp_oc'] . '&amp;name=' . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\\\"><img src='/images/blue/gps-receiving-32.png' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0'  height='16' width='16' /></a>", $tmpline);
         }
     } else {
-        $tmpline = str_replace('{sendtogps}', "", $tmpline);
+        $tmpline = str_replace('{sendtogps}', '', $tmpline);
     }
 
     $tmpline = str_replace('{cachename}', htmlspecialchars($caches_record['name'], ENT_COMPAT, 'UTF-8'), $tmpline);
@@ -542,11 +542,11 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
 
     if ($CalcDistance) {
         if ($loggedUser || ! $hide_coords) {
-            $dist = htmlspecialchars(sprintf("%01.1f", $caches_record['distance']), ENT_COMPAT, 'UTF-8');
+            $dist = htmlspecialchars(sprintf('%01.1f', $caches_record['distance']), ENT_COMPAT, 'UTF-8');
             $tmpline = str_replace('{distance}', $dist, $tmpline);
             $tmpline = str_replace('{distance_pad}', str_pad($dist, 5, 0, STR_PAD_LEFT), $tmpline);
         } else
-            $tmpline = str_replace('{distance}', "", $tmpline);
+            $tmpline = str_replace('{distance}', '', $tmpline);
     }
 
     $tmpline = str_replace('{position}', $i + $startat + 1, $tmpline);
@@ -560,10 +560,10 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
     if ($inactive) {
         // $bgcolor = $bgcolor_inactive;
         $tmpline = str_replace('{gray_s}', "<span class='text_gray'>", $tmpline);
-        $tmpline = str_replace('{gray_e}', "</span>", $tmpline);
+        $tmpline = str_replace('{gray_e}', '</span>', $tmpline);
     } else {
-        $tmpline = str_replace('{gray_s}', "", $tmpline);
-        $tmpline = str_replace('{gray_e}', "", $tmpline);
+        $tmpline = str_replace('{gray_s}', '', $tmpline);
+        $tmpline = str_replace('{gray_e}', '', $tmpline);
     }
 
     $tmpline = str_replace('{bgcolor}', $bgcolor, $tmpline);
@@ -658,32 +658,32 @@ else
 
 function trChar( $word )
 {
-    $word = str_replace("Ą", "A|", $word);
-    $word = str_replace("ą", "A|", $word);
+    $word = str_replace('Ą', 'A|', $word);
+    $word = str_replace('ą', 'A|', $word);
 
-    $word = str_replace("Ć", "C|", $word);
-    $word = str_replace("ć", "C|", $word);
+    $word = str_replace('Ć', 'C|', $word);
+    $word = str_replace('ć', 'C|', $word);
 
-    $word = str_replace("Ę", "E|", $word);
-    $word = str_replace("ę", "E|", $word);
+    $word = str_replace('Ę', 'E|', $word);
+    $word = str_replace('ę', 'E|', $word);
 
-    $word = str_replace("Ł", "L|", $word);
-    $word = str_replace("ł", "L|", $word);
+    $word = str_replace('Ł', 'L|', $word);
+    $word = str_replace('ł', 'L|', $word);
 
-    $word = str_replace("Ń", "N|", $word);
-    $word = str_replace("ń", "N|", $word);
+    $word = str_replace('Ń', 'N|', $word);
+    $word = str_replace('ń', 'N|', $word);
 
-    $word = str_replace("Ó", "O|", $word);
-    $word = str_replace("ó", "O|", $word);
+    $word = str_replace('Ó', 'O|', $word);
+    $word = str_replace('ó', 'O|', $word);
 
-    $word = str_replace("Ś", "S|", $word);
-    $word = str_replace("ś", "S|", $word);
+    $word = str_replace('Ś', 'S|', $word);
+    $word = str_replace('ś', 'S|', $word);
 
-    $word = str_replace("Ź", "Z|", $word);
-    $word = str_replace("ź", "Z|", $word);
+    $word = str_replace('Ź', 'Z|', $word);
+    $word = str_replace('ź', 'Z|', $word);
 
-    $word = str_replace("Ż", "Ż|", $word);
-    $word = str_replace("ż", "Ż|", $word);
+    $word = str_replace('Ż', 'Ż|', $word);
+    $word = str_replace('ż', 'Ż|', $word);
 
     return $word;
 }
@@ -691,43 +691,43 @@ function trChar( $word )
 function PrepareText( $text )
 {
     $log_text = strip_tags( $text, '');
-    $log_text = str_replace("\r\n", " ",$log_text);
-    $log_text = str_replace("\n", " ",$log_text);
-    $log_text = str_replace("'", "-",$log_text);
-    $log_text = str_replace("\"", " ",$log_text);
-    $log_text = str_replace("\\", " ",$log_text);
+    $log_text = str_replace("\r\n", ' ',$log_text);
+    $log_text = str_replace("\n", ' ',$log_text);
+    $log_text = str_replace("'", '-',$log_text);
+    $log_text = str_replace('"', ' ',$log_text);
+    $log_text = str_replace('\\', ' ',$log_text);
 
     return $log_text;
 }
 
 function icon_difficulty($what, $difficulty)
 {
-    if ($what != "diff" && $what != "terr")
-        exit("Wrong difficulty-identifier!");
+    if ($what != 'diff' && $what != 'terr')
+        exit('Wrong difficulty-identifier!');
 
         $difficulty = (int) $difficulty;
         if ($difficulty < 2 || $difficulty > 10)
             exit("Wrong difficulty-value $what: $difficulty");
 
             $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
-            $text = sprintf($what == "diff" ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
+            $text = sprintf($what == 'diff' ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
             return "<img src='$icon' class='img-difficulty' width='19' height='16' alt='$text' title='$text'>";
 }
 
 function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconname)
 {
     $cacheicon_searchable = false;
-    $cacheicon_type = "";
+    $cacheicon_type = '';
     $inactive = false;
 
-    $iconname = str_replace("mystery", "quiz", $iconname);
+    $iconname = str_replace('mystery', 'quiz', $iconname);
 
 
     // mark if found
     if (isset($user_id)) {
         $db = OcDb::instance();
         $found = 0;
-        $respSql = "SELECT `type` FROM `cache_logs` WHERE `cache_id`=:1 AND `user_id`=:2 AND `deleted`=0 ORDER BY `type`";
+        $respSql = 'SELECT `type` FROM `cache_logs` WHERE `cache_id`=:1 AND `user_id`=:2 AND `deleted`=0 ORDER BY `type`';
         $s = $db->multiVariableQuery($respSql, $cache_id, $user_id);
 
         foreach ($db->dbResultFetchAll($s) as $row) {
@@ -735,11 +735,11 @@ function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconna
                 switch ($row['type']) {
                     case 1:
                     case 7: $found = $row['type'];
-                    $cacheicon_type = "-found";
+                    $cacheicon_type = '-found';
                     $inactive = true;
                     break;
                     case 2: $found = $row['type'];
-                    $cacheicon_type = "-dnf";
+                    $cacheicon_type = '-dnf';
                     break;
                 }
             }
@@ -747,43 +747,43 @@ function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconna
     }
 
     if ($cache_userid == $user_id) {
-        $cacheicon_type = "-owner";
+        $cacheicon_type = '-owner';
         $inactive = true;
         switch ($cache_status) {
-            case 1: $cacheicon_searchable = "-s";
+            case 1: $cacheicon_searchable = '-s';
             break;
-            case 2: $cacheicon_searchable = "-n";
+            case 2: $cacheicon_searchable = '-n';
             break;
-            case 3: $cacheicon_searchable = "-a";
+            case 3: $cacheicon_searchable = '-a';
             break;
-            case 4: $cacheicon_searchable = "-a";
+            case 4: $cacheicon_searchable = '-a';
             break;
-            case 6: $cacheicon_searchable = "-d";
+            case 6: $cacheicon_searchable = '-d';
             break;
-            default: $cacheicon_searchable = "-s";
+            default: $cacheicon_searchable = '-s';
             break;
         }
     } else {
         switch ($cache_status) {
-            case 1: $cacheicon_searchable = "-s";
+            case 1: $cacheicon_searchable = '-s';
             break;
             case 2: $inactive = true;
-            $cacheicon_searchable = "-n";
+            $cacheicon_searchable = '-n';
             break;
             case 3: $inactive = true;
-            $cacheicon_searchable = "-a";
+            $cacheicon_searchable = '-a';
             break;
             case 4: $inactive = true;
-            $cacheicon_searchable = "-a";
+            $cacheicon_searchable = '-a';
             break;
-            case 6: $cacheicon_searchable = "-d";
+            case 6: $cacheicon_searchable = '-d';
             break;
         }
     }
 
     // cacheicon
-    $iconname = mb_eregi_replace("\..*", "", $iconname);
-    $iconname .= $cacheicon_searchable . $cacheicon_type . ".png";
+    $iconname = mb_eregi_replace("\..*", '', $iconname);
+    $iconname .= $cacheicon_searchable . $cacheicon_type . '.png';
 
     return [$iconname, $inactive];
 }

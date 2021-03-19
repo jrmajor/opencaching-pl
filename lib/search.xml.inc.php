@@ -17,7 +17,7 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 $encoding = 'UTF-8';
 $distance_unit = 'km';
-$xmlLine = "    <cache>
+$xmlLine = '    <cache>
         <name><![CDATA[{mod_suffix}{cachename}]]></name>
         <owner><![CDATA[{owner}]]></owner>
         <id>{cacheid}</id>
@@ -26,20 +26,20 @@ $xmlLine = "    <cache>
         <status>{status}</status>
         <lon>{lon}</lon>
         <lat>{lat}</lat>
-        <distance unit=\"" . $distance_unit . "\">{distance}</distance>
+        <distance unit="' . $distance_unit . '">{distance}</distance>
         <type>{type}</type>
         <difficulty>{difficulty}</difficulty>
         <terrain>{terrain}</terrain>
         <size>{container}</size>
         <country>{country}</country>
-        <link><![CDATA[" . $absolute_server_URI . "viewcache.php?wp={waypoint}]]></link>
+        <link><![CDATA[' . $absolute_server_URI . 'viewcache.php?wp={waypoint}]]></link>
         <desc><![CDATA[{shortdesc}]]></desc>
         <longdesc><![CDATA[{desc}]]></longdesc>
         <hints><![CDATA[{hints}]]></hints>
     </cache>
-";
+';
 
-$txtLogs = "";
+$txtLogs = '';
 
 //prepare the output
 $caches_per_page = 20;
@@ -57,8 +57,8 @@ if (isset($lat_rad) && isset($lon_rad)) {
             $dbc = OcDb::instance();
         }
         $s = $dbc->multiVariableQuery(
-            "SELECT `latitude`, `longitude` FROM `user`
-            WHERE `user_id`= :1 LIMIT 1", $loggedUser->getUserId());
+            'SELECT `latitude`, `longitude` FROM `user`
+            WHERE `user_id`= :1 LIMIT 1', $loggedUser->getUserId());
         $record_coords = $dbc->dbResultFetchOneRowOnly($s);
 
         if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
@@ -140,16 +140,16 @@ if ($rCount['count'] == 1) {
 }
 
 
-header("Content-type: application/xml; charset=".$encoding);
-header("Content-Disposition: attachment; filename=" . $sFilebasename . ".xml");
+header('Content-type: application/xml; charset='.$encoding);
+header('Content-Disposition: attachment; filename=' . $sFilebasename . '.xml');
 
-echo "<?xml version=\"1.0\" encoding=\"".$encoding."\"?>\n";
+echo '<?xml version="1.0" encoding="'.$encoding."\"?>\n";
 echo "<result>\n";
 
 echo "  <docinfo>\n";
-echo "      <results>" . $rCount['count'] . "</results>\n";
-echo "      <startat>" . $startat . "</startat>\n";
-echo "      <perpage>" . $count . "</perpage>\n";
+echo '      <results>' . $rCount['count'] . "</results>\n";
+echo '      <startat>' . $startat . "</startat>\n";
+echo '      <perpage>' . $count . "</perpage>\n";
 echo "  </docinfo>\n";
 
 $language = I18n::getCurrentLang();
@@ -243,7 +243,7 @@ while($r = XDb::xFetchArray($stmt) ) {
     $thisline = str_replace('{terrain}', $terrain, $thisline);
 
     $thisline = str_replace('{owner}', filterevilchars($r['username']), $thisline);
-    $thisline = str_replace('{distance}', htmlspecialchars(sprintf("%01.1f", $r['distance'])), $thisline);
+    $thisline = str_replace('{distance}', htmlspecialchars(sprintf('%01.1f', $r['distance'])), $thisline);
 
     // logs ermitteln
     $logentries = '';

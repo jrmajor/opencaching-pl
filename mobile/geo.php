@@ -4,7 +4,7 @@ use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\I18n\I18n;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 function check_wp($wpts)
 {
@@ -24,10 +24,10 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
 
 
 
-    $wpts = explode("|", XDb::xEscape($_GET['wp']));
+    $wpts = explode('|', XDb::xEscape($_GET['wp']));
     $output = XDb::xEscape($_GET['output']);
 
-    if (preg_match("/^((gpx)|(gpxgc)|(loc)|(wpt)|(uam)){1}$/", $output)) {
+    if (preg_match('/^((gpx)|(gpxgc)|(loc)|(wpt)|(uam)){1}$/', $output)) {
         if (check_wp($wpts)) {
 
             $znalezione = [];
@@ -40,25 +40,25 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                 $wynik = XDb::xSql($query);
                 $wiersz = XDb::xFetchArray($wynik);
 
-                $query = "select user_id,username from user where user_id=" . $wiersz['user_id'];
+                $query = 'select user_id,username from user where user_id=' . $wiersz['user_id'];
                 $wynik = XDb::xSql($query);
                 $wiersz2 = XDb::xFetchArray($wynik);
 
-                $query = "select en from cache_type where id=" . $wiersz['type'];
+                $query = 'select en from cache_type where id=' . $wiersz['type'];
                 $wynik = XDb::xSql($query);
                 $wiersz3 = XDb::xFetchArray($wynik);
 
-                $query = "select en from cache_status where id=" . $wiersz['status'];
+                $query = 'select en from cache_status where id=' . $wiersz['status'];
                 $wynik = XDb::xSql($query);
                 $wiersz4 = XDb::xFetchArray($wynik);
 
                 $wiersz5 = tr(GeoCacheCommons::CacheSizeTranslationKey($wiersz['size']));
 
-                $query = "select short_desc,cache_desc.desc,hint from cache_desc where cache_id=" . $wiersz['cache_id'];
+                $query = 'select short_desc,cache_desc.desc,hint from cache_desc where cache_id=' . $wiersz['cache_id'];
                 $wynik = XDb::xSql($query);
                 $wiersz6 = XDb::xFetchArray($wynik);
 
-                $query = "select attrib_id from caches_attributes where cache_id=" . $wiersz['cache_id'];
+                $query = 'select attrib_id from caches_attributes where cache_id=' . $wiersz['cache_id'];
                 $wynik = XDb::xSql($query);
 
                 $attr_text = '';
@@ -67,19 +67,19 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                     $query = "select text_long from cache_attrib where id ='" . $rekord['attrib_id'] . "' and language = '" . I18n::getCurrentLang() . "';";
                     $wynik2 = XDb::xSql($query);
                     $attr = XDb::xFetchArray($wynik2);
-                    $attr_text .= $attr[0] . " | ";
+                    $attr_text .= $attr[0] . ' | ';
                     $attr_text = gpxhelper($attr_text);
                 }
 
                 $logs = [];
-                $query = "select cache_logs.text,cache_logs.id,cache_logs.date,user.username,log_types.en from (cache_logs inner join user on cache_logs.user_id = user.user_id) inner join log_types on log_types.id=cache_logs.type where cache_logs.cache_id=" . $wiersz['cache_id'] . " order by cache_logs.id desc";
+                $query = 'select cache_logs.text,cache_logs.id,cache_logs.date,user.username,log_types.en from (cache_logs inner join user on cache_logs.user_id = user.user_id) inner join log_types on log_types.id=cache_logs.type where cache_logs.cache_id=' . $wiersz['cache_id'] . ' order by cache_logs.id desc';
                 $wynik = XDb::xSql($query);
 
                 while ($rekord = XDb::xFetchArray($wynik)) {
 
                     $rekord2['id'] = $rekord['id'];
-                    $rekord2['date'] = date("Y-m-d", strtotime($rekord['date']));
-                    $rekord2['time'] = date("H:i:s", strtotime($rekord['date']));
+                    $rekord2['date'] = date('Y-m-d', strtotime($rekord['date']));
+                    $rekord2['time'] = date('H:i:s', strtotime($rekord['date']));
                     $rekord2['type'] = gpxhelper($rekord['en']);
                     $rekord2['text'] = gpxhelper($rekord['text']);
                     $rekord2['username'] = gpxhelper($rekord['username']);
@@ -108,7 +108,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                 $rekord['cache_id'] = $wiersz['cache_id'];
                 $rekord['latitude'] = $wiersz['latitude'];
                 $rekord['longitude'] = $wiersz['longitude'];
-                $rekord['date_hidden'] = date("Y-m-d", strtotime($wiersz['date_hidden']));
+                $rekord['date_hidden'] = date('Y-m-d', strtotime($wiersz['date_hidden']));
                 $rekord['wp_oc'] = $wp;
                 $rekord['desc'] = gpxhelper($wiersz6['desc']);
                 $rekord['short_desc'] = gpxhelper($wiersz6['short_desc']);
@@ -121,12 +121,12 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                 $i++;
             }
 
-            $tpl->assign('date', date("Y-m-d"));
-            $tpl->assign('time', date("H:i:s"));
+            $tpl->assign('date', date('Y-m-d'));
+            $tpl->assign('time', date('H:i:s'));
             $tpl->assign('znalezione', $znalezione);
 
             if ($i == 1)
-                $filename = $wpts[0] . ".";
+                $filename = $wpts[0] . '.';
             else
                 $filename = 'results.';
 
@@ -135,9 +135,9 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
             else
                 $filename.=$_GET['output'];
 
-            header("Content-disposition: attachment; filename=" . $filename);
-            header("Content-Type: application/force-download");
-            header("Content-Transfer-Encoding: binary");
+            header('Content-disposition: attachment; filename=' . $filename);
+            header('Content-Type: application/force-download');
+            header('Content-Transfer-Encoding: binary');
 
             switch ($_GET['output']) {
                 case 'gpx':

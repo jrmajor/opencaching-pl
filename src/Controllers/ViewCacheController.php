@@ -54,7 +54,7 @@ class ViewCacheController extends BaseController
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
         if (!$cache) {
-            $this->displayCommonErrorPageAndExit("No such geocache?!");
+            $this->displayCommonErrorPageAndExit('No such geocache?!');
         }
 
         $this->view->setVar('cacheName', $cache->getCacheName());
@@ -74,7 +74,7 @@ class ViewCacheController extends BaseController
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
         if (!$cache) {
-            $this->displayCommonErrorPageAndExit("No such geocache?!");
+            $this->displayCommonErrorPageAndExit('No such geocache?!');
         }
 
         if (isset($_POST['ocTeamComment']) && !empty($_POST['ocTeamComment'])) {
@@ -95,7 +95,7 @@ class ViewCacheController extends BaseController
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
         if (!$cache) {
-            $this->displayCommonErrorPageAndExit("No such geocache?!");
+            $this->displayCommonErrorPageAndExit('No such geocache?!');
         }
 
         // remove OC Team comment
@@ -155,7 +155,7 @@ class ViewCacheController extends BaseController
         }
         $this->view->setSubtitle(htmlspecialchars($this->geocache->getCacheName()) . ' - ');
 
-        $this->geocache->incCacheVisits($this->loggedUser, $_SERVER["REMOTE_ADDR"]);
+        $this->geocache->incCacheVisits($this->loggedUser, $_SERVER['REMOTE_ADDR']);
 
         // detailed cache access logging
         global $enable_cache_access_logs;
@@ -203,7 +203,7 @@ class ViewCacheController extends BaseController
         $this->view->setVar(
             'cachePublishedDate',
             empty($this->geocache->getDatePublished())
-                ? ""
+                ? ''
                 : Formatter::date($this->geocache->getDatePublished())
         );
 
@@ -251,7 +251,7 @@ class ViewCacheController extends BaseController
 
         $coords = Coordinates::FromCoordsFactory($lat, $lon);
         if (!$coords) {
-            $this->displayCommonErrorPageAndExit("Wrong coords?");
+            $this->displayCommonErrorPageAndExit('Wrong coords?');
         }
 
         $zoom = $config['maps']['cache_page_map']['zoom'];
@@ -634,7 +634,7 @@ class ViewCacheController extends BaseController
     {
         if ($this->loggedUser && $this->loggedUser->getHomeCoordinates()->areCordsReasonable()) {
 
-            $this->view->setVar('distanceToCache', sprintf("%.2f", Gis::distanceBetween($this->loggedUser->getHomeCoordinates(), $this->geocache->getCoordinates())));
+            $this->view->setVar('distanceToCache', sprintf('%.2f', Gis::distanceBetween($this->loggedUser->getHomeCoordinates(), $this->geocache->getCoordinates())));
             $this->view->setVar('displayDistanceToCache', true);
 
         } else {
@@ -647,23 +647,23 @@ class ViewCacheController extends BaseController
         if ($this->geocache->getRatingVotes() < 3) {
             // DO NOT show cache's score
             $score = tr('not_available');
-            $scoreColor = "#000000";
+            $scoreColor = '#000000';
         } else {
             switch ($this->geocache->getScoreAsRatingNum()) {
                 case 1:
-                    $scoreColor = "#DD0000";
+                    $scoreColor = '#DD0000';
                     break;
                 case 2:
-                    $scoreColor = "#F06464";
+                    $scoreColor = '#F06464';
                     break;
                 case 3:
-                    $scoreColor = "#5A5A5A";
+                    $scoreColor = '#5A5A5A';
                     break;
                 case 4:
-                    $scoreColor = "#77CC00";
+                    $scoreColor = '#77CC00';
                     break;
                 case 5:
-                    $scoreColor = "#00DD00";
+                    $scoreColor = '#00DD00';
                     break;
             }
             $score = $this->geocache->getScoreNameTranslation();
@@ -737,7 +737,7 @@ class ViewCacheController extends BaseController
             $this->view->setVar('mapImgLink', null);
         }
         $this->view->setVar('loginToSeeMapMsg',
-            mb_ereg_replace("{target}", urlencode("viewcache.php?cacheid=" . $this->geocache->getCacheId()), tr('map_msg')));
+            mb_ereg_replace('{target}', urlencode('viewcache.php?cacheid=' . $this->geocache->getCacheId()), tr('map_msg')));
     }
 
     private function processOtherSites()

@@ -39,7 +39,7 @@ return function (Coordinates $initCoords = null, $inputPrefix='') {
     $selectE = ($lonLetter == 'E')?'selected="selected"':'';
     $selectW = ($lonLetter == 'W')?'selected="selected"':'';
 
-    $bigFontStyle = "font-size: 15px;";
+    $bigFontStyle = 'font-size: 15px;';
 
 ?>
 <script src="/js/libs/jquery.mask.min.js"></script>

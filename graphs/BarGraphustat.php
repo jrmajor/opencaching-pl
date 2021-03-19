@@ -29,16 +29,16 @@ $y = [];
 $x = [];
 
 
-if ($tit == "ccy") {
+if ($tit == 'ccy') {
     $rsCreateCachesYear = XDb::xSql(
-        "SELECT COUNT(*) `count`,YEAR(`date_created`) `year` FROM `caches`
+        'SELECT COUNT(*) `count`,YEAR(`date_created`) `year` FROM `caches`
         WHERE status <> 4 AND status <> 5 AND status <> 6 AND user_id= ?
         GROUP BY YEAR(`date_created`)
-        ORDER BY YEAR(`date_created`) ASC", $user_id);
+        ORDER BY YEAR(`date_created`) ASC', $user_id);
 
     if ($rsCreateCachesYear !== false) {
-        $descibe = tr("annual_stat_created");
-        $xtitle = "";
+        $descibe = tr('annual_stat_created');
+        $xtitle = '';
         while ($ry = XDb::xFetchArray($rsCreateCachesYear)) {
             $y[] = $ry['count'];
             $x[] = $ry['year'];
@@ -48,17 +48,17 @@ if ($tit == "ccy") {
 }
 
 
-if ($tit == "ccm") {
+if ($tit == 'ccm') {
     for ($i = 1; $i < 13; $i++) {
         $month = $i;
         $rsCreateCachesMonth = XDb::xSql(
-            "SELECT COUNT(*) `count`, MONTH(`date_created`) `month`, YEAR(`date_created`) `year` FROM `caches`
+            'SELECT COUNT(*) `count`, MONTH(`date_created`) `month`, YEAR(`date_created`) `year` FROM `caches`
             WHERE status <> 4 AND status <> 5 AND status <> 6 AND user_id= ? AND YEAR(`date_created`)= ? AND MONTH(`date_created`)= ?
             GROUP BY MONTH(`date_created`), YEAR(`date_created`)
-            ORDER BY YEAR(`date_created`) ASC, MONTH(`date_created`) ASC",
+            ORDER BY YEAR(`date_created`) ASC, MONTH(`date_created`) ASC',
             $user_id, $year, $month);
 
-        $descibe = tr("monthly_stat_created_user");
+        $descibe = tr('monthly_stat_created_user');
         $xtitle = $year;
         $rm = XDb::xFetchArray($rsCreateCachesMonth);
         if ($rm !== false) {
@@ -73,7 +73,7 @@ if ($tit == "ccm") {
     XDb::xFreeResults($rsCreateCachesMonth);
 }
 
-if ($tit == "cfy") {
+if ($tit == 'cfy') {
     $rsCachesFindYear = XDb::xSql(
         "SELECT COUNT(*) `count`, YEAR(`date`) `year` FROM `cache_logs`
         WHERE type=1 AND cache_logs.deleted='0' AND user_id= ?
@@ -81,8 +81,8 @@ if ($tit == "cfy") {
         ORDER BY YEAR(`date`) ASC", $user_id);
 
     if ($rsCachesFindYear !== false) {
-        $descibe = tr("annual_stat_founds_user");
-        $xtitle = "";
+        $descibe = tr('annual_stat_founds_user');
+        $xtitle = '';
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['year'];
@@ -91,7 +91,7 @@ if ($tit == "cfy") {
     XDb::xFreeResults($rsCachesFindYear);
 }
 
-if ($tit == "cfm") {
+if ($tit == 'cfm') {
     for ($i = 1; $i < 13; $i++) {
         $month = $i;
         $rsCachesFindMonth = XDb::xSql(
@@ -101,7 +101,7 @@ if ($tit == "cfm") {
             ORDER BY YEAR(`date`) ASC, MONTH(`date`) ASC",
             $user_id, $year, $month);
 
-        $descibe = tr("monthly_stat_founds_user");
+        $descibe = tr('monthly_stat_founds_user');
         $xtitle = $year;
 
         $rfm = XDb::xFetchArray($rsCachesFindMonth);
@@ -140,7 +140,7 @@ $graph->xaxis->title->Set($xtitle);
 $graph->xaxis->SetTickLabels($x);
 
 // Some extra margin looks nicer
-$nc = tr("number_caches");
+$nc = tr('number_caches');
 $graph->yaxis->title->Set($nc);
 
 $graph->title->SetFont(FF_ARIAL, FS_NORMAL);

@@ -10,7 +10,7 @@ class RepairCacheScores
     {
         $db = OcDb::instance();
 
-        $sql = "SELECT cache_id, type FROM caches";
+        $sql = 'SELECT cache_id, type FROM caches';
         $params = [];
         if (isset($_GET['cache_id'])) {
             $sql .= ' WHERE cache_id=:cache_id';
@@ -26,13 +26,13 @@ class RepairCacheScores
         foreach ($caches as $cache) {
             $cache_id = $cache['cache_id'];
 
-            $db->multiVariableQuery("DELETE FROM scores WHERE cache_id = :1 AND user_id NOT IN (
+            $db->multiVariableQuery('DELETE FROM scores WHERE cache_id = :1 AND user_id NOT IN (
                     SELECT user_id FROM cache_logs WHERE deleted=0 AND cache_id = :1
-                )", $cache_id);
+                )', $cache_id);
 
             // recalculate scores
-            $s = $db->multiVariableQuery("
-                SELECT AVG(score) AS avg_score, COUNT(score) AS votes FROM scores WHERE cache_id = :1", $cache_id);
+            $s = $db->multiVariableQuery('
+                SELECT AVG(score) AS avg_score, COUNT(score) AS votes FROM scores WHERE cache_id = :1', $cache_id);
             $row = $db->dbResultFetch($s);
             if ($row == false) {
                 $votes = 0;
@@ -48,13 +48,13 @@ class RepairCacheScores
             unset($row);
 
             // repair founds etc.
-            $founds = $db->multiVariableQueryValue("SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type = :2", 0, $cache_id, $cache['type'] == 6 ? 7 : 1);
-            $notfounds = $db->multiVariableQueryValue("SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type = :2", 0, $cache_id, $cache['type'] == 6 ? 8 : 2);
-            $notes = $db->multiVariableQueryValue("SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type=3", 0, $cache_id);
-            $watchers = $db->multiVariableQueryValue("SELECT count(*) FROM cache_watches WHERE cache_id = :1", 0, $cache_id);
-            $ignorers = $db->multiVariableQueryValue("SELECT count(*) FROM cache_ignore WHERE cache_id = :1", 0, $cache_id);
-            $last_found = $db->multiVariableQueryValue("SELECT MAX(`cache_logs`.`date`) FROM `cache_logs` WHERE `cache_logs`.`type`IN (1, 7) AND `cache_logs`.`cache_id`= :1 AND `cache_logs`.`deleted` = 0", null, $cache_id);
-            $sql = "
+            $founds = $db->multiVariableQueryValue('SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type = :2', 0, $cache_id, $cache['type'] == 6 ? 7 : 1);
+            $notfounds = $db->multiVariableQueryValue('SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type = :2', 0, $cache_id, $cache['type'] == 6 ? 8 : 2);
+            $notes = $db->multiVariableQueryValue('SELECT count(*) FROM cache_logs WHERE deleted=0 AND cache_id = :1 AND type=3', 0, $cache_id);
+            $watchers = $db->multiVariableQueryValue('SELECT count(*) FROM cache_watches WHERE cache_id = :1', 0, $cache_id);
+            $ignorers = $db->multiVariableQueryValue('SELECT count(*) FROM cache_ignore WHERE cache_id = :1', 0, $cache_id);
+            $last_found = $db->multiVariableQueryValue('SELECT MAX(`cache_logs`.`date`) FROM `cache_logs` WHERE `cache_logs`.`type`IN (1, 7) AND `cache_logs`.`cache_id`= :1 AND `cache_logs`.`deleted` = 0', null, $cache_id);
+            $sql = '
                 UPDATE caches
                 SET
                     votes=:new_votes,
@@ -81,7 +81,7 @@ class RepairCacheScores
                         OR watcher!=:new_watchers
                         OR last_found!=:new_last_found
                     )
-            ";
+            ';
             $params = [];
             $params['new_votes']['value'] = intval($votes);
             $params['new_votes']['data_type'] = 'integer';

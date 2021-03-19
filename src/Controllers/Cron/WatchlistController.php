@@ -81,10 +81,10 @@ class WatchlistController extends BaseController
             if (isset($this->watchlistConfig['diag_file'])) {
                 $diagFilePath = $this->watchlistConfig['diag_file'];
             } else {
-                $diagFilePath = "";
+                $diagFilePath = '';
             }
             if (mb_strlen($diagFilePath) > 0) {
-                $this->diagFileHandle = fopen($diagFilePath, "a");
+                $this->diagFileHandle = fopen($diagFilePath, 'a');
             }
 
             $this->processNewLogs();
@@ -96,7 +96,7 @@ class WatchlistController extends BaseController
 
             Lock::unlock($lockHandle);
         } else {
-            echo "Another instance of " . get_class($this)
+            echo 'Another instance of ' . get_class($this)
                 . " is currently running.\nExiting.\n";
         }
     }

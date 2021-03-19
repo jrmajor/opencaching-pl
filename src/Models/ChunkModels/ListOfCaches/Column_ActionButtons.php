@@ -21,7 +21,7 @@ class Column_ActionButtons extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/actionButtonsColumn";
+        return 'listOfCaches/actionButtonsColumn';
     }
 
     public function getCssClass(){

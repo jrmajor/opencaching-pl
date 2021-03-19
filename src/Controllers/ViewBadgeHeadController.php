@@ -8,7 +8,7 @@ use src\Controllers\MeritBadgeController;
 
 class ViewBadgeHeadController extends BaseController{
 
-    private $sCode = "";
+    private $sCode = '';
 
     public function __construct()
     {

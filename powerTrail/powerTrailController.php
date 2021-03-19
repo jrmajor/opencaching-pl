@@ -127,23 +127,23 @@ class powerTrailController
         } else {
             $sortOder = 'DESC';
         }
-        if (isset($_REQUEST['historicLimitBool']) && $_REQUEST['historicLimitBool'] === "no") {
+        if (isset($_REQUEST['historicLimitBool']) && $_REQUEST['historicLimitBool'] === 'no') {
             $cacheCountLimit = powerTrailBase::historicMinimumCacheCount();
         } else {
             $cacheCountLimit = powerTrailBase::minimumCacheCount();
         }
         $userid = (!$this->user) ? null : $this->user->getUserId();
-        if (isset($_REQUEST['myPowerTrailsBool']) && isset($userid) && $_REQUEST['myPowerTrailsBool'] === "yes") {
+        if (isset($_REQUEST['myPowerTrailsBool']) && isset($userid) && $_REQUEST['myPowerTrailsBool'] === 'yes') {
             $myTrailsCondition = "and `id` NOT IN (SELECT `PowerTrailId` FROM `PowerTrail_owners`
             WHERE `userId` = $userid)";
         } else {
-            $myTrailsCondition = "";
+            $myTrailsCondition = '';
         }
-        if (isset($_REQUEST['gainedPowerTrailsBool']) && isset($userid) && $_REQUEST['gainedPowerTrailsBool'] === "yes") {
+        if (isset($_REQUEST['gainedPowerTrailsBool']) && isset($userid) && $_REQUEST['gainedPowerTrailsBool'] === 'yes') {
             $gainedTrailsCondition = "and `id` NOT IN (SELECT `PowerTrailId` FROM `PowerTrail_comments`
             WHERE `userId` = $userid and `commentType` = 2)";
         } else {
-            $gainedTrailsCondition = "";
+            $gainedTrailsCondition = '';
         }
         $q = 'SELECT * FROM `PowerTrail` WHERE `status` = 1 '.$myTrailsCondition.' '.$gainedTrailsCondition.'
         and cacheCount >= :1 '.$filter.' ORDER BY '.$sortBy.' '.$sortOder.' ';
@@ -194,9 +194,9 @@ class powerTrailController
         }
         $this->action = 'createNewSerie';
         if (isset($_POST['powerTrailName']) && $_POST['powerTrailName'] != '' && $_POST['type'] != 0 && $_SESSION['powerTrail']['userFounds'] >= powerTrailBase::userMinimumCacheFoundToSetNewPowerTrail()) {
-            $query = "INSERT INTO `PowerTrail`
+            $query = 'INSERT INTO `PowerTrail`
                        (`name`, `type`, `status`, `dateCreated`, `cacheCount`, `description`, `perccentRequired`, uuid)
-                       VALUES (:1,:2,:3,NOW(),0,:4,:5, ".Uuid::getSqlForUpperCaseUuid().")";
+                       VALUES (:1,:2,:3,NOW(),0,:4,:5, '.Uuid::getSqlForUpperCaseUuid().')';
             $db = OcDb::instance();
             if ($_POST['dPercent'] < \src\Controllers\PowerTrailController::MINIMUM_PERCENT_REQUIRED) {
                 $_POST['dPercent'] = \src\Controllers\PowerTrailController::MINIMUM_PERCENT_REQUIRED;
@@ -205,7 +205,7 @@ class powerTrailController
                 htmlspecialchars($_POST['description']), (int) $_POST['dPercent']);
             $newProjectId = $db->lastInsertId();
             // exit;
-            $query = "INSERT INTO `PowerTrail_owners`(`PowerTrailId`, `userId`, `privileages`) VALUES (:1,:2,:3)";
+            $query = 'INSERT INTO `PowerTrail_owners`(`PowerTrailId`, `userId`, `privileages`) VALUES (:1,:2,:3)';
             $db->multiVariableQuery($query, $newProjectId, $this->user->getUserId(), 1);
             $logQuery = 'INSERT INTO `PowerTrail_actionsLog`(`PowerTrailId`, `userId`, `actionDateTime`, `actionType`, `description`) VALUES (:1,:2,NOW(),1,:3)';
             $db->multiVariableQuery($logQuery, $newProjectId, $this->user->getUserId(),
@@ -224,7 +224,7 @@ class powerTrailController
         if (!$this->user) {
             return [];
         }
-        $query = "SELECT cache_id, wp_oc, PowerTrailId, name FROM `caches` LEFT JOIN powerTrail_caches ON powerTrail_caches.cacheId = caches.cache_id WHERE caches.status NOT IN (3,6) AND `user_id` = :1";
+        $query = 'SELECT cache_id, wp_oc, PowerTrailId, name FROM `caches` LEFT JOIN powerTrail_caches ON powerTrail_caches.cacheId = caches.cache_id WHERE caches.status NOT IN (3,6) AND `user_id` = :1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $this->user->getUserId());
         return $db->dbResultFetchAll($s);
@@ -236,7 +236,7 @@ class powerTrailController
             return [];
         }
 
-        $query = "SELECT * FROM `PowerTrail`, PowerTrail_owners  WHERE  PowerTrail_owners.userId = :1 AND PowerTrail_owners.PowerTrailId = PowerTrail.id";
+        $query = 'SELECT * FROM `PowerTrail`, PowerTrail_owners  WHERE  PowerTrail_owners.userId = :1 AND PowerTrail_owners.PowerTrailId = PowerTrail.id';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $this->user->getUserId());
         $userPTs = $db->dbResultFetchAll($s);
@@ -248,7 +248,7 @@ class powerTrailController
     public function debug($var, $name = null, $line = null)
     {
         //if($this->debug === false) return;
-        echo '<font color=green><b>#'.$line."</b> $name, </font>(".__FILE__.") <pre>";
+        echo '<font color=green><b>#'.$line."</b> $name, </font>(".__FILE__.') <pre>';
         print_r($var);
         echo '</pre>';
     }

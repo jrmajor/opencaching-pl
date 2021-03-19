@@ -14,7 +14,7 @@ use src\Models\GeoCache\GeoCacheCommons;
 return function (array $data) {
 
     // exit if there is no icon given
-    $statusAwareClass = "";
+    $statusAwareClass = '';
     if (isset($data['isStatusAware']) && $data['isStatusAware'] && $data['cacheStatus'] == 3) {
         $statusAwareClass = 'column_cacheName_archived';
     }

@@ -5,8 +5,8 @@ use src\Utils\Database\XDb;
 //include template handling
 require_once(__DIR__.'/../lib/common.inc.php');
 
-$rs = XDb::xSql("SELECT latitude, longitude, date_created FROM user ORDER BY `date_created`");
-$im = imagecreatefromjpeg("mapa.jpg");
+$rs = XDb::xSql('SELECT latitude, longitude, date_created FROM user ORDER BY `date_created`');
+$im = imagecreatefromjpeg('mapa.jpg');
 $blue = imagecolorallocate($im, 0, 0, 255);
 $green = imagecolorallocate($im, 0, 255, 0);
 $l = 0;
@@ -18,13 +18,13 @@ for ($i = 0; $i < $no_users; $i++) {
     $lat = $record['latitude'];
 
     $pt = latlon_to_pix($lat, $long);
-    imagefilledellipse($im, $pt["x"], $pt["y"], 2, 2, $blue);
+    imagefilledellipse($im, $pt['x'], $pt['y'], 2, 2, $blue);
     // Now mark the point on the map using a red 4 pixel rectangle
     if ($i % 50 == 0) {
         // Write the string at the top left
         imagefilledrectangle($im, 0, 0, 90, 14, $green);
         imagestring($im, 5, 0, 0, substr($record['date_created'], 0, 10), $blue);
-        imagejpeg($im, "pics/mapa-new-" . $l . ".jpg", 80);
+        imagejpeg($im, 'pics/mapa-new-' . $l . '.jpg', 80);
         $l++;
     }
 }
@@ -49,5 +49,5 @@ function latlon_to_pix($lat, $lon)
     $y = $y_max - ($y_max - $y_min) *
             ( ($lat - $lat_min) / ($lat_max - $lat_min) );
 //  return array(intval($x),intval($y));
-    return ["x" => round($x), "y" => round($y)];
+    return ['x' => round($x), 'y' => round($y)];
 }

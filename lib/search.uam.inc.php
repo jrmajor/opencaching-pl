@@ -54,7 +54,7 @@ if ($loggedUser || ! $hide_coords) {
         } else {
             // get the users home coords
             $rs_coords = XDb::xSql(
-                "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1", $loggedUser->getUserId());
+                'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? LIMIT 1', $loggedUser->getUserId());
             $record_coords = XDb::xFetchArray($rs_coords);
 
             if ((($record_coords['latitude'] == NULL) || ($record_coords['longitude'] == NULL)) || (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
@@ -136,7 +136,7 @@ if ($loggedUser || ! $hide_coords) {
             XDb::xFreeResults($rsName);
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim(convert_string($rName['name']));
-                $sFilebasename = str_replace(" ", "_", $sFilebasename);
+                $sFilebasename = str_replace(' ', '_', $sFilebasename);
             } else {
                 $sFilebasename = 'search' . $options['queryid'];
             }
@@ -161,7 +161,7 @@ if ($loggedUser || ! $hide_coords) {
             AND `wptcontent`.`type`=`cache_type`.`id`
             AND `wptcontent`.`user_id`=`user`.`user_id`');
 
-    echo pack("ccccl", 0xBB, 0x22, 0xD5, 0x3F, isset($rCount['count']) ? $rCount['count'] : 0);
+    echo pack('ccccl', 0xBB, 0x22, 0xD5, 0x3F, isset($rCount['count']) ? $rCount['count'] : 0);
 
     while ($r = $dbcSearch->dbResultFetch($s)) {
         $lat = $r['latitude'];
@@ -188,7 +188,7 @@ if ($loggedUser || ! $hide_coords) {
         $descr = "$name by $username [$difficulty/$terrain]";
         $poiname = "$cacheid $type$size";
 
-        $record = pack("llca64a255cca32", $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
+        $record = pack('llca64a255cca32', $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
 
         echo $record;
         // DO NOT USE HERE:

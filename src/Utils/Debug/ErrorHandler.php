@@ -82,11 +82,11 @@ class ErrorHandler
         } catch (\Exception $e) {
             try {
                 foreach (OcConfig::getEmailAddrTechAdminNotification() as $techAdminAddr) {
-                    mail($techAdminAddr, "OC site error", $msg);
+                    mail($techAdminAddr, 'OC site error', $msg);
                 }
             } catch (\Exception $e) {
                 try {
-                    mail("root@localhost", "OC site error", $msg);
+                    mail('root@localhost', 'OC site error', $msg);
                 } catch (\Exception $e) {
                     $mailFail = true;
                 }
@@ -106,7 +106,7 @@ class ErrorHandler
         }
 
         // Output error message
-        if (PHP_SAPI == "cli") {
+        if (PHP_SAPI == 'cli') {
             echo $msg . "\n";
         } else {
             try {
@@ -132,8 +132,8 @@ class ErrorHandler
                 $mainPageLinkTitle = 'Go to the main page';
             }
 
-            if (isset($_SERVER["SCRIPT_FILENAME"])) {
-                $showMainPageLink = basename($_SERVER["SCRIPT_FILENAME"]) != 'index.php';
+            if (isset($_SERVER['SCRIPT_FILENAME'])) {
+                $showMainPageLink = basename($_SERVER['SCRIPT_FILENAME']) != 'index.php';
             } else {
                 $showMainPageLink = false;
             }

@@ -365,7 +365,7 @@ class Neighbourhood extends BaseObject
         if (is_array($neighbourhoodDbRow)) {
             $this->loadFromRow($neighbourhoodDbRow);
         } else {
-            throw new \Exception("Neighbourhood not found");
+            throw new \Exception('Neighbourhood not found');
         }
     }
 

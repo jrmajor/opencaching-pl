@@ -57,7 +57,7 @@ class PaginationModel {
     private function getQueryOffset(){
         if( is_null($this->currentPage) || is_null($this->recordsPerPage) ){
             // TODO: how to handle errors?
-            Debug::errorLog("Pagination model used without initialization!");
+            Debug::errorLog('Pagination model used without initialization!');
             return 0;
         }
 
@@ -74,7 +74,7 @@ class PaginationModel {
     private function getRecordsPerPageNum(){
         if( is_null($this->currentPage) || is_null($this->recordsPerPage) ){
             // TODO: how to handle errors?
-            Debug::errorLog("Pagination model used without initialization!");
+            Debug::errorLog('Pagination model used without initialization!');
             return 0;
         }
 
@@ -162,11 +162,11 @@ class PaginationModel {
             }
             // "<<" mark
             $result[] =
-            new PageModel( "&lt;&lt;", false, $this->getLink(1), tr('pagination_first'));
+            new PageModel( '&lt;&lt;', false, $this->getLink(1), tr('pagination_first'));
 
             // "<" mark
             $result[] =
-            new PageModel( "&lt;", false, $this->getLink($destPage), tr('pagination_left'));
+            new PageModel( '&lt;', false, $this->getLink($destPage), tr('pagination_left'));
         }
 
         // generate pages marks
@@ -194,18 +194,18 @@ class PaginationModel {
 
                 // ">" mark
                 $result[] =
-                new PageModel( "&gt;",false,$this->getLink($destPage), tr('pagination_right'));
+                new PageModel( '&gt;',false,$this->getLink($destPage), tr('pagination_right'));
 
                 // ">" mark
                 $result[] =
-                new PageModel( "&gt;&gt;",false,$this->getLink($lastPage), tr('pagination_last'));
+                new PageModel( '&gt;&gt;',false,$this->getLink($lastPage), tr('pagination_last'));
 
             }
 
         }else{
             // ">" mark
             $result[] =
-            new PageModel( "&gt;",false,$this->getLink($destPage), tr('pagination_right'));
+            new PageModel( '&gt;',false,$this->getLink($destPage), tr('pagination_right'));
         }
 
 

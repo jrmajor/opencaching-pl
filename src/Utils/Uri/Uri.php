@@ -141,7 +141,7 @@ class Uri {
         }
 
         // main domain or any its subdomain
-        $domainRegex = "/([a-z0-9|-]+\.)*".OcConfig::getSiteMainDomain()."$/";
+        $domainRegex = "/([a-z0-9|-]+\.)*".OcConfig::getSiteMainDomain().'$/';
         if(preg_match($domainRegex, $domain)){
             return $domain;
         } else {

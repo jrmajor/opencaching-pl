@@ -14,7 +14,7 @@ class Column_UserNameObject extends AbstractColumn
      */
     protected function getChunkName()
     {
-        return "listOfCaches/userNameObjectColumn";
+        return 'listOfCaches/userNameObjectColumn';
     }
 
     /**

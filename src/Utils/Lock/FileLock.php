@@ -25,8 +25,8 @@ final class FileLock extends RealLock
     protected function internalConstruct($settings)
     {
         $lockDir = null;
-        if (!empty($settings["dir"])) {
-            $lockDir = OcConfig::instance()->getDynamicFilesPath() . $settings["dir"];
+        if (!empty($settings['dir'])) {
+            $lockDir = OcConfig::instance()->getDynamicFilesPath() . $settings['dir'];
         }
         if ($lockDir != null && !is_dir($lockDir)) {
             mkdir($lockDir, 0755, true);
@@ -61,10 +61,10 @@ final class FileLock extends RealLock
             if (is_resource($identifier)) {
                 $result = $identifier;
             } else {
-                $result = fopen($identifier, "w+");
+                $result = fopen($identifier, 'w+');
             }
         } else {
-            $result = fopen($this->getPathFromId($identifier), "w+");
+            $result = fopen($this->getPathFromId($identifier), 'w+');
         }
         if ($result) {
             if (!flock($result, $lockMode)) {
@@ -137,10 +137,10 @@ final class FileLock extends RealLock
     {
         if ($this->lockDir == null) {
             throw new RuntimeException(
-                "The locking directory is not specified in settings"
+                'The locking directory is not specified in settings'
             );
         }
-        $result = $this->lockDir . "/";
+        $result = $this->lockDir . '/';
         if (is_object($identifier)) {
             $result .= str_replace('\\', '.', get_class($identifier));
         } elseif (is_string($identifier)) {

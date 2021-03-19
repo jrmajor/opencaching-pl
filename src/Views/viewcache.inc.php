@@ -40,8 +40,8 @@ $gallery_link = '<a href="gallery_cache.php?cacheid={cacheid}">' . tr('gallery_s
 
 $viewtext_on = tr('enter_text');
 $viewtext_off = tr('enter_text_error');
-$event_attended_text = " " . tr('attendends');
-$event_will_attend_text = " " . tr('will_attend');
+$event_attended_text = ' ' . tr('attendends');
+$event_will_attend_text = ' ' . tr('will_attend');
 
 $found_icon = '<img src="images/log/16x16-found.png" class="icon16" alt="{{found}}"/>';
 $notfound_icon = '<img src="images/log/16x16-dnf.png" class="icon16" alt="{{not_found}}" />';

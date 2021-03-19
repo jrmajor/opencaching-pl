@@ -93,8 +93,8 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                         $target = 'oc';
                     }
                     $rs = XDb::xSql(
-                        "SELECT `cache_id`, `latitude`, `longitude` FROM `caches`
-                        WHERE `wp_" . XDb::xEscape($target) . "`= ? ", $searchfor);
+                        'SELECT `cache_id`, `latitude`, `longitude` FROM `caches`
+                        WHERE `wp_' . XDb::xEscape($target) . '`= ? ', $searchfor);
 
                     $count = XDb::xNumRows($rs);
                     if ($count == 1) {

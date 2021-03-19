@@ -36,13 +36,13 @@ if (!$loggedUser) {
 
         //does log with this logid exist?
         $log_rs = XDb::xSql(
-            "SELECT `cache_logs`.`cache_id` AS `cache_id`, `cache_logs`.`node` AS `node`, `cache_logs`.`text` AS `text`,
+            'SELECT `cache_logs`.`cache_id` AS `cache_id`, `cache_logs`.`node` AS `node`, `cache_logs`.`text` AS `text`,
                     `cache_logs`.`date` AS `date`, `cache_logs`.`user_id` AS `user_id`, `cache_logs`.`type` AS `logtype`,
                     `cache_logs`.`text_html` AS `text_html`,
                     `cache_logs`.`last_modified` AS `last_modified`, `caches`.`name` AS `cachename`, `caches`.`status` AS `cachestatus`,
                     `caches`.`type` AS `cachetype`, `caches`.`user_id` AS `cache_user_id`, `caches`.`logpw` as `logpw`
             FROM `cache_logs` INNER JOIN `caches` ON (`caches`.`cache_id`=`cache_logs`.`cache_id`)
-            WHERE `id`= ? AND `deleted` = ? LIMIT 1", $log_id, 0);
+            WHERE `id`= ? AND `deleted` = ? LIMIT 1', $log_id, 0);
 
         $log_record = XDb::xFetchArray($log_rs);
         if ($log_record) {
@@ -84,14 +84,14 @@ if (!$loggedUser) {
 
                 // check if user has exceeded his top5% limit
                 $userRecoCountForThisCache = XDb::xMultiVariableQueryValue(
-                    "SELECT COUNT(`cache_id`) FROM `cache_rating`
-                    WHERE `user_id`= :1 AND `cache_id`=:2 ", 0, $log_record['user_id'], $log_record['cache_id']);
+                    'SELECT COUNT(`cache_id`) FROM `cache_rating`
+                    WHERE `user_id`= :1 AND `cache_id`=:2 ', 0, $log_record['user_id'], $log_record['cache_id']);
 
                 $user_founds = XDb::xMultiVariableQueryValue(
-                    "SELECT `founds_count` FROM `user` WHERE `user_id`= :1 ", 0, $log_record['user_id']);
+                    'SELECT `founds_count` FROM `user` WHERE `user_id`= :1 ', 0, $log_record['user_id']);
 
                 $user_tops = XDb::xMultiVariableQueryValue(
-                    "SELECT COUNT(`user_id`) FROM `cache_rating` WHERE `user_id`= :1 ", 0, $log_record['user_id']);
+                    'SELECT COUNT(`user_id`) FROM `cache_rating` WHERE `user_id`= :1 ', 0, $log_record['user_id']);
 
                 if ($userRecoCountForThisCache == 0) {
                     if (($user_founds * GeoCacheCommons::RECOMENDATION_RATIO / 100) < 1) {
@@ -128,7 +128,7 @@ if (!$loggedUser) {
                 if ($log_record['cachetype'] != 6) {
                     tpl_set_var('rating_message', mb_ereg_replace('{rating_msg}', $rating_msg, $rating_tpl));
                 } else {
-                    tpl_set_var('rating_message', "");
+                    tpl_set_var('rating_message', '');
                 }
 
                 // fuer alte Versionen von OCProp
@@ -141,7 +141,7 @@ if (!$loggedUser) {
 
                 // fuer alte Versionen von OCProp
                 if (isset($_POST['submit']) && !isset($_POST['version2'])) {
-                    $log_text = iconv("ISO-8859-1", "UTF-8", $log_text);
+                    $log_text = iconv('ISO-8859-1', 'UTF-8', $log_text);
                 }
 
                 // check input
@@ -236,20 +236,20 @@ if (!$loggedUser) {
                     // https://github.com/opencaching/opencaching-pl/issues/696
                     if (floor((time() - strtotime($log_record['last_modified'])) / 60) <= $config['cache_log']['edit_time']) {
                         XDb::xSql(
-                            "UPDATE `cache_logs`
+                            'UPDATE `cache_logs`
                         SET `type`=?, `date`=?, `text`=?, `text_html`=?, `last_modified`=NOW(),
                             `edit_by_user_id` = ?
-                        WHERE `id`=?",
+                        WHERE `id`=?',
                             /*1*/$log_type,
                             /*2*/date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
                             /*3*/UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
                             /*4*/2, $loggedUser->getUserId(), $log_id);
                     } else {
                         XDb::xSql(
-                            "UPDATE `cache_logs`
+                            'UPDATE `cache_logs`
                         SET `type`=?, `date`=?, `text`=?, `text_html`=?, `last_modified`=NOW(),
                             `edit_by_user_id` = ?, `edit_count`= edit_count + 1
-                        WHERE `id`=?",
+                        WHERE `id`=?',
                             /*1*/$log_type,
                             /*2*/date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
                             /*3*/UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
@@ -259,8 +259,8 @@ if (!$loggedUser) {
                     //update user-stat if type changed
                     if ($log_record['logtype'] != $log_type) {
                         $user_rs = XDb::xSql(
-                            "SELECT `founds_count`, `notfounds_count`, `log_notes_count` FROM `user`
-                            WHERE `user_id`=? ", $log_record['user_id']);
+                            'SELECT `founds_count`, `notfounds_count`, `log_notes_count` FROM `user`
+                            WHERE `user_id`=? ', $log_record['user_id']);
                         $user_record = XDb::xFetchArray($user_rs);
                         XDb::xFreeResults($user_rs);
 
@@ -269,14 +269,14 @@ if (!$loggedUser) {
                             $user_record['founds_count'] --;
 
                             // recalc scores for this cache
-                            XDb::xSql("DELETE FROM `scores` WHERE `user_id` = ? AND `cache_id` = ?",
+                            XDb::xSql('DELETE FROM `scores` WHERE `user_id` = ? AND `cache_id` = ?',
                                 $log_record['user_id'], $log_record['cache_id']);
 
                             $liczba = XDb::xMultiVariableQueryValue(
-                                "SELECT count(*) FROM scores WHERE cache_id=:1", 0, $log_record['cache_id']);
+                                'SELECT count(*) FROM scores WHERE cache_id=:1', 0, $log_record['cache_id']);
 
                             $suma = XDb::xMultiVariableQueryValue(
-                                "SELECT SUM(score) FROM scores WHERE cache_id=:1", 0, $log_record['cache_id']);
+                                'SELECT SUM(score) FROM scores WHERE cache_id=:1', 0, $log_record['cache_id']);
 
                             // obliczenie nowej sredniej
                             if ($liczba != 0) {
@@ -285,7 +285,7 @@ if (!$loggedUser) {
                                 $srednia = 0;
                             }
 
-                            XDb::xSql("UPDATE caches SET votes= ?, score= ? WHERE cache_id= ? ",
+                            XDb::xSql('UPDATE caches SET votes= ?, score= ? WHERE cache_id= ? ',
                                 $liczba, $srednia, $log_record['cache_id']);
 
                         } elseif ($log_record['logtype'] == 2) {
@@ -313,8 +313,8 @@ if (!$loggedUser) {
                         }
 
                         XDb::xSql(
-                            "UPDATE `user` SET `founds_count`=?, `notfounds_count`=?, `log_notes_count`=?
-                            WHERE `user_id`= ?",
+                            'UPDATE `user` SET `founds_count`=?, `notfounds_count`=?, `log_notes_count`=?
+                            WHERE `user_id`= ?',
                             $user_record['founds_count'], $user_record['notfounds_count'],
                             $user_record['log_notes_count'], $log_record['user_id']);
 
@@ -326,7 +326,7 @@ if (!$loggedUser) {
 
                     //update cache-stat if type or log_date changed
                     $cache_rs = XDb::xSql(
-                        "SELECT `founds`, `notfounds`, `notes` FROM `caches` WHERE `cache_id`=?",
+                        'SELECT `founds`, `notfounds`, `notes` FROM `caches` WHERE `cache_id`=?',
                         $log_record['cache_id']);
 
                     $cache_record = XDb::xFetchArray($cache_rs);
@@ -358,12 +358,12 @@ if (!$loggedUser) {
                     // update top-list
                     if ($top_cache == 1){
                         XDb::xSql(
-                            "INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`)
-                            VALUES(?, ?)", $log_record['user_id'], $log_record['cache_id']);
+                            'INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`)
+                            VALUES(?, ?)', $log_record['user_id'], $log_record['cache_id']);
                     }else{
                         XDb::xSql(
-                            "DELETE FROM `cache_rating`
-                            WHERE `user_id`=? AND `cache_id`=?",
+                            'DELETE FROM `cache_rating`
+                            WHERE `user_id`=? AND `cache_id`=?',
                             $log_record['user_id'], $log_record['cache_id']);
                     }
 
@@ -373,18 +373,18 @@ if (!$loggedUser) {
 
                     //Update last found
                     $lastFoundDate = XDb::xMultiVariableQueryValue(
-                        "SELECT MAX(`date`) AS `date` FROM `cache_logs`
-                         WHERE `type` IN (:1, :2) AND `cache_id`= :3 AND deleted = 0",
+                        'SELECT MAX(`date`) AS `date` FROM `cache_logs`
+                         WHERE `type` IN (:1, :2) AND `cache_id`= :3 AND deleted = 0',
                          'NULL', GeoCacheLog::LOGTYPE_FOUNDIT, GeoCacheLog::LOGTYPE_ATTENDED,
                          $log_record['cache_id']);
 
                     XDb::xSql(
-                        "UPDATE `caches` SET `last_found`=?, `founds`=?, `notfounds`=?, `notes`=? WHERE `cache_id`=?",
+                        'UPDATE `caches` SET `last_found`=?, `founds`=?, `notfounds`=?, `notes`=? WHERE `cache_id`=?',
                         $lastFoundDate, $cache_record['founds'], $cache_record['notfounds'],
                         $cache_record['notes'], $log_record['cache_id']);
 
 
-                    $badgetParam = "";
+                    $badgetParam = '';
                     if ($config['meritBadges']){
 
                         $cache_id = $log_record['cache_id'];
@@ -396,13 +396,13 @@ if (!$loggedUser) {
                             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($cache_id, $loggedUser->getUserId());
                             $titledIds= $ctrlMeritBadge->updateTriggerTitledCache($cache_id, $loggedUser->getUserId());
 
-                            if ( $changedLevelBadgesIds != "" && $titledIds!= "")
-                                $changedLevelBadgesIds .= ",";
+                            if ( $changedLevelBadgesIds != '' && $titledIds!= '')
+                                $changedLevelBadgesIds .= ',';
 
                             $changedLevelBadgesIds .= $titledIds;
 
-                            if ( $changedLevelBadgesIds != "" )
-                                $badgetParam = "&badgesPopupFor=" . $changedLevelBadgesIds;
+                            if ( $changedLevelBadgesIds != '' )
+                                $badgetParam = '&badgesPopupFor=' . $changedLevelBadgesIds;
 
                             $ctrlMeritBadge->updateTriggerCacheAuthor($cache_id);
                         }
@@ -426,8 +426,8 @@ if (!$loggedUser) {
                 if ($founds2 > 0) {
 
                     $founds3 = XDb::xMultiVariableQueryValue(
-                        "SELECT count(*) as founds FROM `cache_logs`
-                        WHERE id= :1 AND type=1 AND deleted=0",
+                        'SELECT count(*) as founds FROM `cache_logs`
+                        WHERE id= :1 AND type=1 AND deleted=0',
                         0, $log_id );
 
                     if ($founds3 == 0){
@@ -563,7 +563,7 @@ if (!$loggedUser) {
             }
         } else {
             // no such log or log marked as deleted
-            echo "no_such_log...?!";
+            echo 'no_such_log...?!';
             exit();
         }
 

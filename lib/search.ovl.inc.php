@@ -32,7 +32,7 @@ if( $loggedUser || !$hide_coords ) {
         } else {
             //get the users home coords
             $rs_coords = XDb::xSql(
-                "SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? ", $loggedUser->getUserId());
+                'SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`= ? ', $loggedUser->getUserId());
 
             $record_coords = XDb::xFetchArray($rs_coords);
 
@@ -110,7 +110,7 @@ if( $loggedUser || !$hide_coords ) {
             XDb::xFreeResults($rsName);
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim(convert_string($rName['name']));
-                $sFilebasename = str_replace(" ", "_", $sFilebasename);
+                $sFilebasename = str_replace(' ', '_', $sFilebasename);
             } else {
                 $sFilebasename = 'search' . $options['queryid'];
             }
@@ -155,8 +155,8 @@ if( $loggedUser || !$hide_coords ) {
     echo $ovlFoot;
 
     // compress using phpzip
-    header("Content-type: application/ovl");
-    header("Content-Disposition: attachment; filename=" . $sFilebasename . ".ovl");
+    header('Content-type: application/ovl');
+    header('Content-Disposition: attachment; filename=' . $sFilebasename . '.ovl');
     ob_end_flush();
 }
 

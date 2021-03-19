@@ -21,43 +21,43 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 require_once (__DIR__.'/../lib/calculation.inc.php');
 
-    $txtLine = chr(239) . chr(187) . chr(191) .tr('search_text_01')." {mod_suffix}{cachename} ".tr('search_text_02')." {owner}
-".tr('search_text_03')." {lat} {lon}
-".tr('search_text_04')." {status}
+    $txtLine = chr(239) . chr(187) . chr(191) .tr('search_text_01').' {mod_suffix}{cachename} '.tr('search_text_02').' {owner}
+'.tr('search_text_03').' {lat} {lon}
+'.tr('search_text_04').' {status}
 
-".tr('search_text_05')." {{time}}
-".tr('search_text_06')." {{waypoint}}
-".tr('search_text_07')." {country}
-".tr('search_text_08')." {type}
-".tr('search_text_09')." {container}
+'.tr('search_text_05').' {{time}}
+'.tr('search_text_06').' {{waypoint}}
+'.tr('search_text_07').' {country}
+'.tr('search_text_08').' {type}
+'.tr('search_text_09').' {container}
 Z/T: {difficulty}/{terrain}
-Online: ".$absolute_server_URI."viewcache.php?wp={{waypoint}}
+Online: '.$absolute_server_URI.'viewcache.php?wp={{waypoint}}
 
-".tr('search_text_10')." {shortdesc}
+'.tr('search_text_10').' {shortdesc}
 
-".tr('search_text_11')." {htmlwarn}:
+'.tr('search_text_11').' {htmlwarn}:
 <===================>
 {desc}
 {rr_comment}
 {personal_cache_note}
 <===================>
 
-".tr('search_text_12')."
+'.tr('search_text_12').'
 <===================>
 {hints}
 <===================>
 A|B|C|D|E|F|G|H|I|J|K|L|M
 N|O|P|Q|R|S|T|U|V|W|X|Y|Z
 
-".tr('search_text_13')."
+'.tr('search_text_13').'
 {logs}
-";
+';
 
-    $txtLogs = "<===================>
+    $txtLogs = '<===================>
 {username} / {date} / {type}
 
 {{text}}
-";
+';
 
 if( $loggedUser || !$hide_coords ) {
     //prepare the output
@@ -151,9 +151,9 @@ if( $loggedUser || !$hide_coords ) {
             XDb::xFreeResults($rsName);
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim($rName['name']);
-                $sFilebasename = str_replace(" ", "_", $sFilebasename);
+                $sFilebasename = str_replace(' ', '_', $sFilebasename);
             } else {
-                $sFilebasename = "search" . $options['queryid'];
+                $sFilebasename = 'search' . $options['queryid'];
             }
         }
     }
@@ -224,7 +224,7 @@ if( $loggedUser || !$hide_coords ) {
             $thisline = str_replace('{hints}', Rot13::withoutHtml(strip_tags($r['hint'])), $thisline);
         }
 
-        $logpw = ($r['logpw']==""?"":"".tr('search_text_14')." <br/>");
+        $logpw = ($r['logpw']==''?'':''.tr('search_text_14').' <br/>');
 
         $thisline = str_replace('{shortdesc}', $r['short_desc'], $thisline);
 
@@ -242,19 +242,19 @@ if( $loggedUser || !$hide_coords ) {
 
             if ( !empty($cacheNote) ) {
                 $thisline = str_replace('{personal_cache_note}',
-                    html2txt("<br/><br/>-- ".tr('search_text_16')." --<br/> ".
-                        $cacheNote . "<br/>"), $thisline);
+                    html2txt('<br/><br/>-- '.tr('search_text_16').' --<br/> '.
+                        $cacheNote . '<br/>'), $thisline);
             } else {
-                $thisline = str_replace('{personal_cache_note}', "", $thisline);
+                $thisline = str_replace('{personal_cache_note}', '', $thisline);
             }
         } else {
-            $thisline = str_replace('{personal_cache_note}', "", $thisline);
+            $thisline = str_replace('{personal_cache_note}', '', $thisline);
         }
 
         if( $r['rr_comment'] == '' ) {
             $thisline = str_replace('{rr_comment}', '', $thisline);
         } else {
-            $thisline = str_replace('{rr_comment}', html2txt("<br /><br />--------<br />".$r['rr_comment']), $thisline);
+            $thisline = str_replace('{rr_comment}', html2txt('<br /><br />--------<br />'.$r['rr_comment']), $thisline);
         }
         $thisline = str_replace('{type}', tr(GeoCacheCommons::CacheTypeTranslationKey($r['type_id'])), $thisline);
         $thisline = str_replace('{container}', tr(GeoCacheCommons::CacheSizeTranslationKey($r['size'])), $thisline);
@@ -271,11 +271,11 @@ if( $loggedUser || !$hide_coords ) {
 
         $logentries = '';
         $rsLogs = XDb::xSql(
-            "SELECT `cache_logs`.`id`, `cache_logs`.`text_html`, `cache_logs`.`type`, `cache_logs`.`date`, `cache_logs`.`text`, `user`.`username`
+            'SELECT `cache_logs`.`id`, `cache_logs`.`text_html`, `cache_logs`.`type`, `cache_logs`.`date`, `cache_logs`.`text`, `user`.`username`
             FROM `cache_logs`, `user`
             WHERE `cache_logs`.`deleted`=0 AND `cache_logs`.`user_id`=`user`.`user_id`
                 AND `cache_logs`.`cache_id`= ?
-            ORDER BY `cache_logs`.`date` DESC LIMIT 20", $r['cacheid']);
+            ORDER BY `cache_logs`.`date` DESC LIMIT 20', $r['cacheid']);
 
         while ($rLog = XDb::xFetchArray($rsLogs)) {
             $thislog = $txtLogs;
@@ -310,14 +310,14 @@ if( $loggedUser || !$hide_coords ) {
 
     // compress using phpzip
     if ($bUseZip == true) {
-        header("content-type: application/zip");
+        header('content-type: application/zip');
         header('Content-Disposition: attachment; filename=' . $sFilebasename . '.zip');
         $out = $phpzip->save($sFilebasename . '.zip', 'b');
         echo $out;
         ob_end_flush();
     } else {
-        header("Content-type: text/plain");
-        header("Content-Disposition: attachment; filename=" . $sFilebasename . ".txt");
+        header('Content-type: text/plain');
+        header('Content-Disposition: attachment; filename=' . $sFilebasename . '.txt');
         ob_end_flush();
     }
 }

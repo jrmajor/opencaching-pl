@@ -15,7 +15,7 @@ class Column_CacheSetNameAndIcon extends AbstractColumn {
 
     protected function getChunkName()
     {
-        return "listOfCaches/cacheSetNameAndIconColumn";
+        return 'listOfCaches/cacheSetNameAndIconColumn';
     }
 
     public function getCssClass(){

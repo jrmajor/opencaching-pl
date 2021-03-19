@@ -69,7 +69,7 @@ class PowerTrail extends BaseObject
     {
         if (is_null($fields)) {
             // default select all fields
-            $fields = "*";
+            $fields = '*';
         }
 
         $ptq = "SELECT $fields FROM `PowerTrail` WHERE `id` = :1 LIMIT 1";

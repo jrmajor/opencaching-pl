@@ -43,23 +43,23 @@ if (!$loggedUser) {
 
             // get route_id
             $route_id = XDb::xMultiVariableQueryValue(
-                "SELECT route_id FROM `routes`
-                WHERE name=:1 AND description=:2 AND user_id=:3",
+                'SELECT route_id FROM `routes`
+                WHERE name=:1 AND description=:2 AND user_id=:3',
                 0, $name, $desc, $user_id);
 
             // Read file KML with route, load in the KML file through the my_routes page, and run that KML file through GPSBABEL which has a tool interpolate data points in the route.
             if (!$error) {
-                exec("/usr/bin/gpsbabel -i kml -f " . $upload_filename . " -x interpolate,distance=0.25k -o kml -F " . $upload_filename . "");
+                exec('/usr/bin/gpsbabel -i kml -f ' . $upload_filename . ' -x interpolate,distance=0.25k -o kml -F ' . $upload_filename . '');
                 $xml = simplexml_load_file($upload_filename);
 
                 // get length route
                 foreach ($xml->Document->Folder as $f) {
                     foreach ($f->Folder as $folder) {
                         $dis = $folder->description;
-                        $dis1 = explode(" ", trim($dis));
+                        $dis1 = explode(' ', trim($dis));
                         $len = (float) $dis1[27];
                         XDb::xSql(
-                            "UPDATE `routes` SET `length`=? WHERE `route_id`=?", $len, $route_id);
+                            'UPDATE `routes` SET `length`=? WHERE `route_id`=?', $len, $route_id);
                     }
                 }
 
@@ -68,10 +68,10 @@ if (!$loggedUser) {
                     foreach ($xmlelement->Folder as $folder) {
                         foreach ($folder->Placemark->LineString->coordinates as $coordinates) {
                             if ($coordinates) {
-                                $coords_raw = explode(" ", trim($coordinates));
+                                $coords_raw = explode(' ', trim($coordinates));
                                 foreach ($coords_raw as $coords_raw_part) {
                                     if ($coords_raw_part) {
-                                        $coords_raw_parts = explode(",", $coords_raw_part);
+                                        $coords_raw_parts = explode(',', $coords_raw_part);
                                         $coords[] = $coords_raw_parts[0];
                                         $coords[] = $coords_raw_parts[1];
                                     }
@@ -87,7 +87,7 @@ if (!$loggedUser) {
             if (!$error && isset($coords)) {
 
                 for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
-                    $points[] = ["lon" => $coords[$i], "lat" => $coords[$i + 1]];
+                    $points[] = ['lon' => $coords[$i], 'lat' => $coords[$i + 1]];
                     if (($coords[$i] + 0 == 0) OR ( $coords[$i + 1] + 0 == 0)) {
                         $error .= "Invalid Co-ords found in import file.<br>\n";
                         break;
@@ -100,9 +100,9 @@ if (!$loggedUser) {
                 foreach ($points as $point) {
                     $point_num++;
                     $result = XDb::xSql(
-                        "INSERT into route_points (route_id,point_nr,lat,lon)
-                        VALUES (?,?,?,?)",
-                        $route_id, $point_num, $point["lat"], $point["lon"]);
+                        'INSERT into route_points (route_id,point_nr,lat,lon)
+                        VALUES (?,?,?,?)',
+                        $route_id, $point_num, $point['lat'], $point['lon']);
                 }
             }
             tpl_redirect('myroutes.php');

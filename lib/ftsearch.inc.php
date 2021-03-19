@@ -50,7 +50,7 @@ function ftsearch_hash(&$str)
 
     foreach ($astr AS $k => $s) {
         if (strlen($s) > 2)
-            $astr[$k] = sprintf("%u", crc32($s));
+            $astr[$k] = sprintf('%u', crc32($s));
         else
             unset($astr[$k]);
     }
@@ -90,7 +90,7 @@ function ftsearch_split(&$str, $simple)
 
     for ($i = count($astr) - 1; $i >= 0; $i--) {
         // ignore?
-        if ($ftsearch_ignores != "" && array_search(mb_strtolower($astr[$i]), $ftsearch_ignores) !== false)
+        if ($ftsearch_ignores != '' && array_search(mb_strtolower($astr[$i]), $ftsearch_ignores) !== false)
         {
             unset($astr[$i]);
         }
@@ -233,7 +233,7 @@ function ftsearch_refresh_all_caches()
 
 function ftsearch_refresh_cache($cache_id)
 {
-    $rs = XDb::xSql("SELECT `name`, `last_modified` FROM `caches` WHERE `cache_id`= ? LIMIT 1", $cache_id);
+    $rs = XDb::xSql('SELECT `name`, `last_modified` FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
     if ($r = XDb::xFetchArray($rs)) {
         ftsearch_set_entries(2, $cache_id, $cache_id, $r['name'], $r['last_modified']);
     }
@@ -266,7 +266,7 @@ function ftsearch_refresh_all_cache_desc()
 
 function ftsearch_refresh_cache_desc($id)
 {
-    $rs = XDb::xSql("SELECT `cache_id`, `desc`, `last_modified` FROM `cache_desc` WHERE `id`= ? LIMIT 1", $id);
+    $rs = XDb::xSql('SELECT `cache_id`, `desc`, `last_modified` FROM `cache_desc` WHERE `id`= ? LIMIT 1', $id);
     if ($r = XDb::xFetchArray($rs)) {
         $r['desc'] = ftsearch_strip_html($r['desc']);
         ftsearch_set_entries(3, $id, $r['cache_id'], $r['desc'], $r['last_modified']);
@@ -297,7 +297,7 @@ function ftsearch_refresh_all_pictures()
 function ftsearch_refresh_picture($id)
 {
     $rs = XDb::xSql(
-        "SELECT `caches`.`cache_id`, `pictures`.`title`, `pictures`.`last_modified`
+        'SELECT `caches`.`cache_id`, `pictures`.`title`, `pictures`.`last_modified`
         FROM `pictures`
             INNER JOIN `caches` ON `pictures`.`object_type`=2
                 AND `caches`.`cache_id`=`pictures`.`object_id`
@@ -307,7 +307,7 @@ function ftsearch_refresh_picture($id)
             FROM `pictures` INNER JOIN `cache_logs` ON `pictures`.`object_type`=1
                 AND `cache_logs`.`id`=`pictures`.`object_id`
             WHERE `cache_logs`.`deleted`=0 AND `pictures`.`id`= ?
-            LIMIT 1", $id, $id);
+            LIMIT 1', $id, $id);
     if ($r = XDb::xFetchArray($rs)) {
         ftsearch_set_entries(6, $id, $r['cache_id'], $r['title'], $r['last_modified']);
     }
@@ -338,10 +338,10 @@ function ftsearch_refresh_all_cache_logs()
 function ftsearch_refresh_cache_logs($id)
 {
     $rs = XDb::xSql(
-        "SELECT `cache_id`, `text`, `last_modified`
+        'SELECT `cache_id`, `text`, `last_modified`
         FROM `cache_logs`
         WHERE `id`= ?
-            AND `cache_logs`.`deleted` = ? ", $id, 0);
+            AND `cache_logs`.`deleted` = ? ', $id, 0);
     if ($r = XDb::xFetchArray($rs)) {
         $r['text'] = ftsearch_strip_html($r['text']);
         ftsearch_set_entries(1, $id, $r['cache_id'], $r['text'], $r['last_modified']);
@@ -352,15 +352,15 @@ function ftsearch_refresh_cache_logs($id)
 function ftsearch_delete_entries($object_type, $object_id, $cache_id)
 {
     XDb::xSql(
-        "DELETE FROM `search_index`
+        'DELETE FROM `search_index`
         WHERE `object_type`= ?
-            AND `cache_id`= ?",
+            AND `cache_id`= ?',
         $object_type, $cache_id);
 
     XDb::xSql(
-        "DELETE FROM `search_index_times`
+        'DELETE FROM `search_index_times`
         WHERE `object_type`= ?
-            AND `object_id`= ?",
+            AND `object_id`= ?',
         $object_type, $object_id);
 }
 
@@ -371,14 +371,14 @@ function ftsearch_set_entries($object_type, $object_id, $cache_id, &$text, $last
     $ahash = ftsearch_hash($text);
     foreach ($ahash AS $k => $h) {
         XDb::xSql(
-            "INSERT DELAYED INTO `search_index` (`object_type`, `cache_id`, `hash`, `count`)
+            'INSERT DELAYED INTO `search_index` (`object_type`, `cache_id`, `hash`, `count`)
             VALUES ( ?, ?, ?, ?)
-            ON DUPLICATE KEY UPDATE `count`=`count`+1",
+            ON DUPLICATE KEY UPDATE `count`=`count`+1',
             $object_type, $cache_id, $h, 1);
     }
     XDb::xSql(
-        "INSERT INTO `search_index_times` (`object_id`, `object_type`, `last_refresh`)
-        VALUES (?,?,?) ON DUPLICATE KEY UPDATE `last_refresh`= ? ",
+        'INSERT INTO `search_index_times` (`object_id`, `object_type`, `last_refresh`)
+        VALUES (?,?,?) ON DUPLICATE KEY UPDATE `last_refresh`= ? ',
         $object_id, $object_type, $last_modified, $last_modified);
 }
 

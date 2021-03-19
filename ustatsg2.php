@@ -25,35 +25,35 @@ $view->setTemplate('ustat');
 $view->setVar('userId', $user_id);
 $view->setVar('displayCreatedStats', true);
 
-$content = "";
+$content = '';
 
 $rsGeneralStat = XDb::xSql(
-    "SELECT  hidden_count, founds_count, log_notes_count, notfounds_count, username
-    FROM `user` WHERE user_id= ? LIMIT 1", $user_id);
+    'SELECT  hidden_count, founds_count, log_notes_count, notfounds_count, username
+    FROM `user` WHERE user_id= ? LIMIT 1', $user_id);
 
 $user_record = XDb::xFetchArray($rsGeneralStat);
 tpl_set_var('username', htmlspecialchars($user_record['username']));
 if ($user_record['founds_count'] == 0) {
-    $content .= '<p>&nbsp;</p><p>&nbsp;</p><div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Caches Find" title="Caches Find" />&nbsp;&nbsp;&nbsp;' . tr("graph_find") . '</p></div><br /><br /><p> <b>' . tr("there_is_no_caches_found") . '</b></p>';
+    $content .= '<p>&nbsp;</p><p>&nbsp;</p><div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Caches Find" title="Caches Find" />&nbsp;&nbsp;&nbsp;' . tr('graph_find') . '</p></div><br /><br /><p> <b>' . tr('there_is_no_caches_found') . '</b></p>';
 } else {
 
     // calculate diif days between date of register on OC  to current date
     $ddays = XDb::xMultiVariableQueryValue(
-        "SELECT TO_DAYS( NOW() ) - TO_DAYS(`date_created`) `diff` FROM `user` WHERE user_id= :1 LIMIT 1 ", 0, $user_id);
+        'SELECT TO_DAYS( NOW() ) - TO_DAYS(`date_created`) `diff` FROM `user` WHERE user_id= :1 LIMIT 1 ', 0, $user_id);
 
     $rsGeneralStat = XDb::xSql(
-        "SELECT YEAR(`date_created`) usertime,hidden_count, founds_count, log_notes_count, username
-        FROM `user` WHERE user_id= ? LIMIT 1", $user_id);
+        'SELECT YEAR(`date_created`) usertime,hidden_count, founds_count, log_notes_count, username
+        FROM `user` WHERE user_id= ? LIMIT 1', $user_id);
     if ($rsGeneralStat !== false) {
         $user_record = XDb::xFetchArray($rsGeneralStat);
         XDb::xFreeResults($rsGeneralStat);
 
         tpl_set_var('username', htmlspecialchars($user_record['username']));
     }
-    $content .='<p>&nbsp;</p><p>&nbsp;</p><div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Caches Find" title="Caches Find" />&nbsp;&nbsp;&nbsp;' . tr("graph_find") . '</p></div><br />';
+    $content .='<p>&nbsp;</p><p>&nbsp;</p><div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Caches Find" title="Caches Find" />&nbsp;&nbsp;&nbsp;' . tr('graph_find') . '</p></div><br />';
     $content .= '<p><img src="graphs/PieGraphustat.php?userid=' . $user_id . '&amp;t=cf"  border="0" alt="" width="500" height="300" /></p>';
 
-    $year = date("Y");
+    $year = date('Y');
 
     $content .= '<p><img src="graphs/BarGraphustat.php?userid=' . $user_id . '&amp;t=cfm' . $year . '"  border="0" alt="" width="500" height="200" /></p>';
 
@@ -68,7 +68,7 @@ if ($user_record['founds_count'] == 0) {
 
 // Parameter
 $jpeg_qualitaet = 80;
-$fontfile = "./resources/fonts/arial.ttf";
+$fontfile = './resources/fonts/arial.ttf';
 $tplpath = 'images/PLmapa.gif';
 $im = ImageCreateFromGIF($tplpath);
 $clrWhite = ImageColorAllocate($im, 255, 255, 255);
@@ -106,7 +106,7 @@ $wyniki = XDb::xSql(
 
 while ($wynik = XDb::xFetchArray($wyniki)) {
     $text = $wynik['ilosc'];
-    if ($text != "0")
+    if ($text != '0')
         ImageTTFText($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
 };
 

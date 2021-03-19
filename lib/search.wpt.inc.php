@@ -50,8 +50,8 @@ if( $loggedUser || !$hide_coords ) {
     } else {
         //get the users home coords
         $rs_coords = XDb::xSql(
-            "SELECT `latitude`, `longitude` FROM `user`
-            WHERE `user_id`= ? ", $loggedUser->getUserId());
+            'SELECT `latitude`, `longitude` FROM `user`
+            WHERE `user_id`= ? ', $loggedUser->getUserId());
 
         $record_coords = XDb::xFetchArray($rs_coords);
 
@@ -133,7 +133,7 @@ if( $loggedUser || !$hide_coords ) {
         XDb::xFreeResults($rsName);
         if (isset($rName['name']) && ($rName['name'] != '')) {
             $sFilebasename = trim(convert_string($rName['name']));
-            $sFilebasename = str_replace(" ", "_", $sFilebasename);
+            $sFilebasename = str_replace(' ', '_', $sFilebasename);
         } else {
             $sFilebasename = 'search' . $options['queryid'];
         }
@@ -185,7 +185,7 @@ if( $loggedUser || !$hide_coords ) {
         $id = $r['cacheid'];
 
         $date_hidden = $r['date_hidden'];
-        $userid = XDb::xMultiVariableQueryValue("SELECT user_id FROM caches WHERE cache_id = :1 LIMIT 1",0, $id);
+        $userid = XDb::xMultiVariableQueryValue('SELECT user_id FROM caches WHERE cache_id = :1 LIMIT 1',0, $id);
 
         $kolor = 16776960;
         if ($loggedUser && $userid == $loggedUser->getUserId()) {
@@ -200,15 +200,15 @@ if( $loggedUser || !$hide_coords ) {
         $sss=
 
         $r['ozi_filips']= XDb::xMultiVariableQueryValue(
-            "SELECT ozi_filips FROM user WHERE user_id= :1 LIMIT 1", null, $loggedUser->getUserId());
+            'SELECT ozi_filips FROM user WHERE user_id= :1 LIMIT 1', null, $loggedUser->getUserId());
 
-        if($r['ozi_filips']!=""||$r['ozi_filips']!=null) {
-            $attach = $r['ozi_filips']."\\op\\".$r['wp_oc'][2]."\\".$r['wp_oc'][3]."\\".$r['wp_oc'][4].$r['wp_oc'][5].".html";
+        if($r['ozi_filips']!=''||$r['ozi_filips']!=null) {
+            $attach = $r['ozi_filips'].'\\op\\'.$r['wp_oc'][2].'\\'.$r['wp_oc'][3].'\\'.$r['wp_oc'][4].$r['wp_oc'][5].'.html';
         } else {
-            $attach = "";
+            $attach = '';
         }
         // remove double slashes
-        $attach = str_replace("\\\\", "\\", $attach);
+        $attach = str_replace('\\\\', '\\', $attach);
         $line = "$cacheid / D:$difficulty / T:$terrain / Size:$size";
 
         $record  = "-1,$name,$lat,$lon,,117,1,4,0,$kolor,$line,0,0,0, -777,8,0,17,0,10.0,2,$attach,,\r\n";

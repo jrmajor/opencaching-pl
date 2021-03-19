@@ -64,7 +64,7 @@ class DbUpdateHistory
 
         unlink(self::$path . $uuid);
         OcDb::instance()->multiVariableQuery(
-            "DELETE FROM db_update_history WHERE uuid = :1",
+            'DELETE FROM db_update_history WHERE uuid = :1',
             $uuid
         );
         unset(self::$history[$uuid]);
@@ -126,9 +126,9 @@ class DbUpdateHistory
     private static function writeToDb($uuid)
     {
         OcDb::instance()->multiVariableQuery(
-            "INSERT INTO db_update_history (uuid, name, wasRunAt)
+            'INSERT INTO db_update_history (uuid, name, wasRunAt)
             VALUES (:1, :2, :3)
-            ON DUPLICATE KEY UPDATE name = :2, wasRunAt = :3",
+            ON DUPLICATE KEY UPDATE name = :2, wasRunAt = :3',
             $uuid,
             self::$history[$uuid]['name'],
             self::$history[$uuid]['wasRunAt']
@@ -172,7 +172,7 @@ class DbUpdateHistory
 
             self::$history = $db->dbResultFetchAllAsDict(
                 $db->simpleQuery(
-                    "SELECT uuid, name, wasRunAt FROM db_update_history"
+                    'SELECT uuid, name, wasRunAt FROM db_update_history'
                 )
             );
             $fileHistory = glob(self::$path . Uuid::getMask());

@@ -29,9 +29,9 @@ if (isset($_POST['delete'])) {
     $remove = 1;
 }
 
-$wp_rs = XDb::xSql("SELECT `wp_id`, `cache_id`, `type`, `longitude`, `latitude`,  `desc`, `status`, `stage`,
+$wp_rs = XDb::xSql('SELECT `wp_id`, `cache_id`, `type`, `longitude`, `latitude`,  `desc`, `status`, `stage`,
                               `opensprawdzacz`, `waypoint_type`.`pl` `wp_type`, `waypoint_type`.`icon` `wp_icon`
-                      FROM `waypoints` INNER JOIN waypoint_type ON (waypoints.type = waypoint_type.id) WHERE `wp_id`= ? ", $wp_id);
+                      FROM `waypoints` INNER JOIN waypoint_type ON (waypoints.type = waypoint_type.id) WHERE `wp_id`= ? ', $wp_id);
 
 if ($wp_record = XDb::xFetchArray($wp_rs)) {
     $cache_id = $wp_record['cache_id'];
@@ -41,19 +41,19 @@ if ($wp_record = XDb::xFetchArray($wp_rs)) {
     exit;
 }
 
-$cache_rs = XDb::xSql("SELECT `user_id`, `name`, `type`,  `longitude`, `latitude`,  `status`, `logpw`
-                               FROM `caches` WHERE `cache_id`= ? LIMIT 1", $cache_id);
+$cache_rs = XDb::xSql('SELECT `user_id`, `name`, `type`,  `longitude`, `latitude`,  `status`, `logpw`
+                               FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
 
 if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
     if ($cache_record['type'] == '2' || $cache_record['type'] == '4' ||
         $cache_record['type'] == '5' || $cache_record['type'] == '6' ||
         $cache_record['type'] == '8' || $cache_record['type'] == '9') {
-        tpl_set_var("start_stage", '<!--');
-        tpl_set_var("end_stage", '-->');
+        tpl_set_var('start_stage', '<!--');
+        tpl_set_var('end_stage', '-->');
     } else {
-        tpl_set_var("start_stage", '');
-        tpl_set_var("end_stage", '');
+        tpl_set_var('start_stage', '');
+        tpl_set_var('end_stage', '');
     }
 
 
@@ -61,8 +61,8 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
         if ($remove == 1) {
             //remove
-            XDb::xSql("DELETE FROM `waypoints` WHERE `wp_id`= ? ", $wp_id);
-            XDb::xSql("UPDATE `caches` SET  `last_modified`=NOW() WHERE `cache_id`= ? ", $cache_id);
+            XDb::xSql('DELETE FROM `waypoints` WHERE `wp_id`= ? ', $wp_id);
+            XDb::xSql('UPDATE `caches` SET  `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
             tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
             exit;
         }
@@ -138,8 +138,8 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             $coords_lat_h = floor($coords_lat);
             $coords_lon_h = floor($coords_lon);
 
-            $coords_lat_min = sprintf("%02.3f", round(($coords_lat - $coords_lat_h) * 60, 3));
-            $coords_lon_min = sprintf("%02.3f", round(($coords_lon - $coords_lon_h) * 60, 3));
+            $coords_lat_min = sprintf('%02.3f', round(($coords_lat - $coords_lat_h) * 60, 3));
+            $coords_lon_min = sprintf('%02.3f', round(($coords_lon - $coords_lon_h) * 60, 3));
         }
 
         //here we validate the data
@@ -175,28 +175,28 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             $lat_not_ok = true;
         }
         $wp_stage = isset($_POST['stage']) ? $_POST['stage'] : $wp_record['stage'];
-        $status1 = "";
-        $status2 = "";
-        $status3 = "";
+        $status1 = '';
+        $status2 = '';
+        $status3 = '';
         $wp_status = isset($_POST['status']) ? $_POST['status'] : $wp_record['status'];
         if ($wp_status == 1) {
-            $status1 = "checked";
+            $status1 = 'checked';
         }
         if ($wp_status == 2) {
-            $status2 = "checked";
+            $status2 = 'checked';
         }
         if ($wp_status == 3) {
-            $status3 = "checked";
+            $status3 = 'checked';
         }
-        tpl_set_var("checked1", $status1);
-        tpl_set_var("checked2", $status2);
-        tpl_set_var("checked3", $status3);
+        tpl_set_var('checked1', $status1);
+        tpl_set_var('checked2', $status2);
+        tpl_set_var('checked3', $status3);
 
         $wp_desc = isset($_POST['desc']) ? $_POST['desc'] : $wp_record['desc'];
 //                  $wp_desc = nl2br($wp_desc);
         $descwp_not_ok = false;
         if (isset($_POST['desc'])) {
-            if ($_POST['desc'] == "")
+            if ($_POST['desc'] == '')
                 $descwp_not_ok = true;
         }
 
@@ -223,11 +223,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
 //                          $wp_desc=nl2br($wp_desc);
                 //save to DB
-                XDb::xSql("UPDATE `waypoints` SET `longitude`=?, `latitude`=?, `type`=?,`status`=?,
-                                                    `stage`= ?,`desc`= ?, `opensprawdzacz`= ? WHERE `wp_id`= ?",
+                XDb::xSql('UPDATE `waypoints` SET `longitude`=?, `latitude`=?, `type`=?,`status`=?,
+                                                    `stage`= ?,`desc`= ?, `opensprawdzacz`= ? WHERE `wp_id`= ?',
                     $wp_lon, $wp_lat, $wp_type, $wp_status, $wp_stage, $wp_desc, $OpenChecker_present, $wp_id);
 
-                XDb::xSql("UPDATE `caches` SET  `last_modified`=NOW() WHERE `cache_id`= ? ", $cache_id);
+                XDb::xSql('UPDATE `caches` SET  `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
 
                 // ==== openchecker ===============================================
                 // add/update active status to/in opensprawdzacz table
@@ -266,16 +266,16 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         if ($lon_not_ok || $lat_not_ok || $descwp_not_ok)
             tpl_set_var('general_message', $error_general);
         else
-            tpl_set_var('general_message', "");
+            tpl_set_var('general_message', '');
 
-        tpl_set_var("desc", htmlspecialchars($wp_desc));
-        tpl_set_var("type", htmlspecialchars($wp_type));
-        tpl_set_var("stage", htmlspecialchars($wp_stage));
-        tpl_set_var("nextstage", htmlspecialchars($wp_stage));
-        tpl_set_var("status", htmlspecialchars($wp_status));
-        tpl_set_var("wpid", htmlspecialchars($wp_record['wp_id']));
-        tpl_set_var("cacheid", htmlspecialchars($wp_record['cache_id']));
-        tpl_set_var("cache_name", htmlspecialchars($cache_record['name']));
+        tpl_set_var('desc', htmlspecialchars($wp_desc));
+        tpl_set_var('type', htmlspecialchars($wp_type));
+        tpl_set_var('stage', htmlspecialchars($wp_stage));
+        tpl_set_var('nextstage', htmlspecialchars($wp_stage));
+        tpl_set_var('status', htmlspecialchars($wp_status));
+        tpl_set_var('wpid', htmlspecialchars($wp_record['wp_id']));
+        tpl_set_var('cacheid', htmlspecialchars($wp_record['cache_id']));
+        tpl_set_var('cache_name', htmlspecialchars($cache_record['name']));
     }
     XDb::xFreeResults($cache_rs);
     XDb::xFreeResults($wp_rs);

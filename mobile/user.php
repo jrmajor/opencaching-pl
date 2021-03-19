@@ -1,7 +1,7 @@
 <?php
 use src\Utils\Database\XDb;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
@@ -36,7 +36,7 @@ if (isset($_SESSION['user_id'])) {
         else {
             $tpl->assign('user_id', $id);
             $tpl->assign('username', $wiersz['username']);
-            $tpl->assign('date_created', date("d-m-Y", strtotime($wiersz['date_created'])));
+            $tpl->assign('date_created', date('d-m-Y', strtotime($wiersz['date_created'])));
             $tpl->assign('hidden_count', $wiersz['hidden_count']);
             $tpl->assign('log_notes_count', $wiersz['log_notes_count']);
             $tpl->assign('founds_count', $wiersz2[0]);

@@ -90,7 +90,7 @@ class UserMeritBadge{
     }
 
     public function getPicture(){
-        if ( $this->getOLevel()->getPicture() != "" )
+        if ( $this->getOLevel()->getPicture() != '' )
             return $this->getOLevel()->getPicture();
 
         return $this->getOBadge()->getPicture();

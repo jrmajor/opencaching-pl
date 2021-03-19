@@ -8,21 +8,21 @@ use src\Models\GeoCache\GeoCache;
 class AdminNote extends BaseObject
 {
 
-    const VERIFY_ALL = "1";
-    const NO_VERIFY_ALL = "2";
-    const BAN_STATS = "3";
-    const UNBAN_STATS = "4";
-    const BAN = "5";
-    const UNBAN = "6";
-    const CACHE_PASS = "7";
-    const CACHE_BLOCKED = "8";
-    const IGNORE_FOUND_LIMIT = "9";
-    const IGNORE_FOUND_LIMIT_RM = "10";
-    const NOTIFY_CACHES_ON = "11";
-    const NOTIFY_CACHES_OFF = "12";
-    const NOTIFY_LOGS_ON = "13";
-    const NOTIFY_LOGS_OFF = "14";
-    const ACTIVATE = "15";
+    const VERIFY_ALL = '1';
+    const NO_VERIFY_ALL = '2';
+    const BAN_STATS = '3';
+    const UNBAN_STATS = '4';
+    const BAN = '5';
+    const UNBAN = '6';
+    const CACHE_PASS = '7';
+    const CACHE_BLOCKED = '8';
+    const IGNORE_FOUND_LIMIT = '9';
+    const IGNORE_FOUND_LIMIT_RM = '10';
+    const NOTIFY_CACHES_ON = '11';
+    const NOTIFY_CACHES_OFF = '12';
+    const NOTIFY_LOGS_ON = '13';
+    const NOTIFY_LOGS_OFF = '14';
+    const ACTIVATE = '15';
 
     /** @var int */
     private $noteId;
@@ -339,14 +339,14 @@ class AdminNote extends BaseObject
     private function loadByNoteId($noteId)
     {
         $s = $this->db->multiVariableQuery(
-            "SELECT * FROM `admin_user_notes` WHERE `note_id` = :1 LIMIT 1", $noteId);
+            'SELECT * FROM `admin_user_notes` WHERE `note_id` = :1 LIMIT 1', $noteId);
 
         $dbRow = $this->db->dbResultFetchOneRowOnly($s);
 
         if(is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
-            throw new \Exception("No such admin note");
+            throw new \Exception('No such admin note');
         }
     }
 
@@ -384,7 +384,7 @@ class AdminNote extends BaseObject
 
     private function insertNoteIntoDb()
     {
-        $query = "INSERT INTO `admin_user_notes`(`user_id`, `admin_id`, `cache_id`, `automatic`, `content`) VALUES (:1, :2, :3, :4, :5)";
+        $query = 'INSERT INTO `admin_user_notes`(`user_id`, `admin_id`, `cache_id`, `automatic`, `content`) VALUES (:1, :2, :3, :4, :5)';
         $this->db->multiVariableQuery($query, $this->getUserId(), $this->getAdminId(), $this->getCacheId(), $this->isAutomatic(), $this->getContent());
     }
 

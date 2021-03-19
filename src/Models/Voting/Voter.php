@@ -28,7 +28,7 @@ class Voter extends BaseObject
     public static function hasUserAlreadyVoted(User $user, Election $election): bool
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM vote_voters WHERE userId = :1 AND electionId = :2",
+            'SELECT COUNT(*) FROM vote_voters WHERE userId = :1 AND electionId = :2',
             0, $user->getUserId(), $election->getElectionId()) > 0;
     }
 
@@ -40,14 +40,14 @@ class Voter extends BaseObject
      */
     public static function saveToDb(User $user, Election $election)
     {
-        self::db()->multiVariableQuery("INSERT INTO vote_voters (electionId, userId, ip, additionalData)
-                                        VALUES (:1, :2, :3, :4)",
+        self::db()->multiVariableQuery('INSERT INTO vote_voters (electionId, userId, ip, additionalData)
+                                        VALUES (:1, :2, :3, :4)',
         $election->getElectionId(), $user->getUserId(), $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT']);
     }
 
     public static function getVotersCount(Election $election): int
     {
         return self::db()->multiVariableQueryValue(
-            "SELECT COUNT(*) FROM vote_voters WHERE electionId = :1", 0, $election->getElectionId());
+            'SELECT COUNT(*) FROM vote_voters WHERE electionId = :1', 0, $election->getElectionId());
     }
 }

@@ -58,14 +58,14 @@ class MobileCacheMove extends BaseObject
     private function loadById($id)
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT * FROM `cache_moved` WHERE `id` = :1 LIMIT 1", $id);
+            'SELECT * FROM `cache_moved` WHERE `id` = :1 LIMIT 1', $id);
 
         $dbRow = $this->db->dbResultFetch($stmt);
 
         if (is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
-            throw new \Exception("Cache Moved Id not found");
+            throw new \Exception('Cache Moved Id not found');
         }
     }
 
@@ -74,7 +74,7 @@ class MobileCacheMove extends BaseObject
         $this->km = $newDistance;
 
         $this->db->multiVariableQuery(
-            "UPDATE `cache_moved` SET `km` = :1 WHERE `log_id` = :2",
+            'UPDATE `cache_moved` SET `km` = :1 WHERE `log_id` = :2',
             $this->km,
             $this->logId);
 
@@ -86,7 +86,7 @@ class MobileCacheMove extends BaseObject
     {
 
         self::db()->multiVariableQuery(
-            "UPDATE cache_moved SET date=:1 WHERE log_id=:2", $newDate, $log->getId());
+            'UPDATE cache_moved SET date=:1 WHERE log_id=:2', $newDate, $log->getId());
 
         self::recalculateMobileMoves($log->getGeoCache());
     }
@@ -94,7 +94,7 @@ class MobileCacheMove extends BaseObject
     public static function updateMovesOnLogRemove(GeoCacheLog $log)
     {
         self::db()->multiVariableQuery(
-            "DELETE FROM `cache_moved` WHERE `log_id` = :1 LIMIT 1", $log->getId());
+            'DELETE FROM `cache_moved` WHERE `log_id` = :1 LIMIT 1', $log->getId());
 
         self::recalculateMobileMoves($log->getGeoCache());
     }
@@ -113,10 +113,10 @@ class MobileCacheMove extends BaseObject
         $db = self::db();
 
         $stmt = $db->multiVariableQuery(
-            "SELECT `id`
+            'SELECT `id`
             FROM `cache_moved`
             WHERE `cache_id` = :1
-            ORDER BY `date` ASC",
+            ORDER BY `date` ASC',
             $cache->getCacheId()
         );
 

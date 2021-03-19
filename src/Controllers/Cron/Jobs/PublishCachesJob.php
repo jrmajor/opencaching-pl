@@ -11,11 +11,11 @@ class PublishCachesJob extends Job
     public function run()
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT `cache_id`
+            'SELECT `cache_id`
              FROM `caches`
              WHERE `status` = :1
                AND `date_activate` != 0
-               AND `date_activate` <= NOW()",
+               AND `date_activate` <= NOW()',
             GeoCache::STATUS_NOTYETAVAILABLE);
 
         while ($row = $this->db->dbResultFetch($stmt)) {

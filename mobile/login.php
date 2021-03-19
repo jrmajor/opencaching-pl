@@ -1,14 +1,14 @@
 <?php
 use src\Utils\Database\XDb;
 
-require_once("./lib/common.inc.php");
+require_once('./lib/common.inc.php');
 
 if (!isset($_SESSION['user_id'])) {
 
     if (!isset($_SESSION['target']))
         $_SESSION['target'] = $_SERVER['HTTP_REFERER'];
     if (empty($_SESSION['target']))
-        $_SESSION['target'] = "./index.php";
+        $_SESSION['target'] = './index.php';
 
     $cookie->set('test', '1');
     $cookie->header();
@@ -29,7 +29,7 @@ if (!isset($_SESSION['user_id'])) {
             $login->try_login($username, $pass, $remember);
 
             if ($login->userid == '0')
-                $tpl->assign("error", "1");
+                $tpl->assign('error', '1');
             else {
                 $temp_target = $_SESSION['target'];
                 unset($_SESSION['target']);
@@ -37,7 +37,7 @@ if (!isset($_SESSION['user_id'])) {
                 exit;
             }
         } else
-            $tpl->assign("error", "2");
+            $tpl->assign('error', '2');
     }
 }else {
     header('Location: ./index.php');

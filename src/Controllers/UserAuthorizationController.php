@@ -129,7 +129,7 @@ class UserAuthorizationController extends BaseController
         try {
             $user = self::checkUserAndCode($usr, $code);
         } catch (RuntimeException $e){
-            $this->showErrorMessage(tr("userAuth_codeCheckError", [$e->getMessage()]));
+            $this->showErrorMessage(tr('userAuth_codeCheckError', [$e->getMessage()]));
             return;
         }
 
@@ -179,19 +179,19 @@ class UserAuthorizationController extends BaseController
     private function checkUserAndCode($usr, $code)
     {
         if (is_null($usr) || is_null($code)) {
-            throw new RuntimeException("Wrong parameters");
+            throw new RuntimeException('Wrong parameters');
         }
         $usr = urldecode($usr);
         if (is_null($user = User::fromUsernameFactory($usr))) {
-            throw new RuntimeException("There is no such user!");
+            throw new RuntimeException('There is no such user!');
         }
         if (! $user->isActive()) {
-            throw new RuntimeException("Inactive user account!");
+            throw new RuntimeException('Inactive user account!');
 
         }
         if (! UserAuthorization::checkPwCode($user, $code)) {
             UserAuthorization::removePwCode($user);
-            throw new RuntimeException("Wrong authorization code!");
+            throw new RuntimeException('Wrong authorization code!');
         }
         return $user;
     }

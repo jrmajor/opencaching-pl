@@ -44,15 +44,15 @@ class MultiUserQueries extends BaseObject
 
         $query = QueryBuilder::instance();
 
-        $query->select("COUNT(*) AS usersCount, MONTH(date_created) AS month")->from("user")->where("YEAR(date_created)", $year);
+        $query->select('COUNT(*) AS usersCount, MONTH(date_created) AS month')->from('user')->where('YEAR(date_created)', $year);
 
         if($activeOnly) {
-            $query->where("is_active_flag", 1);
+            $query->where('is_active_flag', 1);
         }
-        $query->groupBy("MONTH(date_created)");
+        $query->groupBy('MONTH(date_created)');
 
         $rs = $db->simpleQuery( $query->build() );
-        return $db->dbFetchAsKeyValArray($rs, "month", "usersCount");
+        return $db->dbFetchAsKeyValArray($rs, 'month', 'usersCount');
     }
 
     public static function getUsersRegistratedCount($fromLastdays)
@@ -108,7 +108,7 @@ class MultiUserQueries extends BaseObject
 
         // get active guides
         $s = $db->simpleQuery(
-            "SELECT user_id, latitude, longitude, username, description
+            'SELECT user_id, latitude, longitude, username, description
              FROM user
              WHERE guru <> 0
                  AND is_active_flag <> 0
@@ -117,7 +117,7 @@ class MultiUserQueries extends BaseObject
                  AND (
                      user_id IN (
                          SELECT DISTINCT user_id FROM cache_logs
-                         WHERE type = ".GeoCacheLogCommons::LOGTYPE_FOUNDIT."
+                         WHERE type = '.GeoCacheLogCommons::LOGTYPE_FOUNDIT."
                              AND date_created > DATE_ADD(NOW(), INTERVAL -$guideActivePeriod DAY)
                      )
                      OR
@@ -161,11 +161,11 @@ class MultiUserQueries extends BaseObject
 
     public static function getOcTeamMembersArray()
     {
-        $query = "
+        $query = '
             SELECT user_id, username
             FROM user
-            WHERE role & ".User::ROLE_OC_TEAM.">0 AND is_active_flag = 1
-            ORDER BY username";
+            WHERE role & '.User::ROLE_OC_TEAM.'>0 AND is_active_flag = 1
+            ORDER BY username';
         $stmt = self::db()->simpleQuery($query);
         return self::db()->dbResultFetchAll($stmt);
     }
@@ -179,12 +179,12 @@ class MultiUserQueries extends BaseObject
      */
     public static function searchUser($subString)
     {
-        $query = "
+        $query = '
             SELECT `user_id`
             FROM `user`
             WHERE `username` LIKE :1
             ORDER BY `username`
-            ";
+            ';
         $stmt = self::db()->multiVariableQuery($query, '%' . $subString . '%');
         return self::db()->dbFetchAllAsObjects($stmt, function ($row) {
             return User::fromUserIdFactory($row['user_id']);

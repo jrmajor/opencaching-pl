@@ -44,8 +44,8 @@ if (!$loggedUser) {
                 // log
                 case 1:
                     $rs = XDb::xSql(
-                        "SELECT `user_id`, `cache_id` FROM `cache_logs`
-                        WHERE `deleted`=0 AND `id`= ? LIMIT 1", $objectid);
+                        'SELECT `user_id`, `cache_id` FROM `cache_logs`
+                        WHERE `deleted`=0 AND `id`= ? LIMIT 1', $objectid);
 
                     if ( ! $r = XDb::xFetchArray($rs))
                         $allok = false;
@@ -58,7 +58,7 @@ if (!$loggedUser) {
                         tpl_set_var('mp3typedesc', $mp3typedesc_log);
 
                         $rCache['name'] = XDb::xMultiVariableQueryValue(
-                            "SELECT `name` FROM `caches` WHERE `cache_id`= :1 LIMIT 1", '-no-name-', $cacheid);
+                            'SELECT `name` FROM `caches` WHERE `cache_id`= :1 LIMIT 1', '-no-name-', $cacheid);
 
                         tpl_set_var('cachename', htmlspecialchars($rCache['name'], ENT_COMPAT, 'UTF-8'));
 
@@ -72,8 +72,8 @@ if (!$loggedUser) {
                 // cache
                 case 2:
                     $rs = XDb::xSql(
-                        "SELECT `user_id`, `cache_id`, `name` FROM `caches`
-                        WHERE `cache_id`= ? LIMIT 1", $objectid);
+                        'SELECT `user_id`, `cache_id`, `name` FROM `caches`
+                        WHERE `cache_id`= ? LIMIT 1', $objectid);
 
                     if ( !$r = XDb::xFetchArray($rs) )
                         $allok = false;
@@ -158,9 +158,9 @@ if (!$loggedUser) {
                         // move the file and insert entry to DB
                         move_uploaded_file($_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension);
                         XDb::xSql(
-                            "INSERT INTO mp3 (`uuid`, `url`, `last_modified`, `title`, `date_created`, `last_url_check`,
+                            'INSERT INTO mp3 (`uuid`, `url`, `last_modified`, `title`, `date_created`, `last_url_check`,
                                               `object_id`, `object_type`, `user_id`, `local`, `display`, `node`, `seq`)
-                            VALUES (? , ?, NOW(), ?, NOW(), NOW(), ?, ?, ?, 1, ?, ?, ?)",
+                            VALUES (? , ?, NOW(), ?, NOW(), NOW(), ?, ?, ?, 1, ?, ?, ?)',
                             $uuid, $mp3url . '/' . $uuid . '.' . $extension, $title, $objectid,
                             $type, $loggedUser->getUserId(), ($bNoDisplay == 1) ? '0' : '1', OcConfig::getSiteNodeId(), $def_seq_m);
 
@@ -168,8 +168,8 @@ if (!$loggedUser) {
                             // log
                             case 1:
                                 XDb::xSql(
-                                    "UPDATE `cache_logs` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
-                                    WHERE `id`= ? LIMIT 1", $objectid);
+                                    'UPDATE `cache_logs` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
+                                    WHERE `id`= ? LIMIT 1', $objectid);
 
                                 tpl_redirect('viewcache.php?cacheid=' . urlencode($cacheid));
                                 break;
@@ -177,8 +177,8 @@ if (!$loggedUser) {
                             // cache
                             case 2:
                                 XDb::xSql(
-                                    "UPDATE `caches` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
-                                    WHERE `cache_id`= ? LIMIT 1", $objectid);
+                                    'UPDATE `caches` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
+                                    WHERE `cache_id`= ? LIMIT 1', $objectid);
 
                                 tpl_redirect('editcache.php?cacheid=' . urlencode($objectid));
                                 break;

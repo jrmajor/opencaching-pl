@@ -11,18 +11,18 @@ require_once(__DIR__.'/../../lib/ClassPathDictionary.php');
 require_once(__DIR__.'/../../lib/settingsGlue.inc.php');
 
 $rsPublish = XDb::xSql(
-                "SELECT `cache_id`, `user_id`
+                'SELECT `cache_id`, `user_id`
                 FROM `caches`
                 WHERE `status` = 5
                   AND `date_activate` != 0
-                  AND `date_activate` <= NOW()");
+                  AND `date_activate` <= NOW()');
 
 while ($rPublish = XDb::xFetchArray($rsPublish)) {
     $userid = $rPublish['user_id'];
     $cacheid = $rPublish['cache_id'];
 
     // update cache status to active
-    XDb::xSql("UPDATE `caches` SET `status`=1, `date_activate`=NULL, `last_modified`=NOW() WHERE `cache_id`= ? ", $cacheid);
+    XDb::xSql('UPDATE `caches` SET `status`=1, `date_activate`=NULL, `last_modified`=NOW() WHERE `cache_id`= ? ', $cacheid);
 
     // send events
     $cache = GeoCache::fromCacheIdFactory($cacheid);
