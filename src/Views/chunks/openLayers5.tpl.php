@@ -1,7 +1,7 @@
 <?php
 
-use src\Utils\Uri\Uri;
 use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
+use src\Utils\Uri\Uri;
 
 /**
  * Load local copy of Openlayers scripts

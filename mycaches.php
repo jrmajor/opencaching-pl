@@ -1,11 +1,11 @@
 <?php
 
+use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\Database\OcDb;
 use src\Utils\Database\XDb;
-use src\Utils\Text\Formatter;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
+use src\Utils\Text\Formatter;
 
 //include template handling
 require_once(__DIR__.'/lib/common.inc.php');

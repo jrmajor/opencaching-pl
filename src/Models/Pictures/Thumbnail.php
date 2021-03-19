@@ -1,12 +1,12 @@
 <?php
 namespace src\Models\Pictures;
 
+use Exception;
 use src\Models\BaseObject;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Debug\Debug;
 use src\Utils\I18n\I18n;
 use src\Utils\Img\OcImage;
-use src\Utils\Debug\Debug;
-use Exception;
 
 
 /**

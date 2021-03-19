@@ -1,8 +1,8 @@
 <?php
 namespace src\Utils\Img;
 
-use src\Utils\System\PhpInfo;
 use Exception;
+use src\Utils\System\PhpInfo;
 
 /**
  *

@@ -1,10 +1,10 @@
 <?php
 namespace src\Controllers;
 
+use ArrayObject;
 use src\Models\GeoCache\GeoCache;
 use src\Models\MeritBadge\MeritBadge;
 use src\Utils\Database\OcDb;
-use ArrayObject;
 
 
 class MeritBadgeController{

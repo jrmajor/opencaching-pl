@@ -1,16 +1,16 @@
 <?php
 namespace src\Models\News;
 
-use src\Utils\Text\Formatter;
-use src\Utils\Text\UserInputFilter;
-use src\Models\BaseObject;
-use src\Models\User\User;
-use src\Models\OcConfig\OcConfig;
-use src\Utils\Uri\SimpleRouter;
-use src\Utils\Debug\Debug;
-use Exception;
 use DateInterval;
 use DateTime;
+use Exception;
+use src\Models\BaseObject;
+use src\Models\OcConfig\OcConfig;
+use src\Models\User\User;
+use src\Utils\Debug\Debug;
+use src\Utils\Text\Formatter;
+use src\Utils\Text\UserInputFilter;
+use src\Utils\Uri\SimpleRouter;
 
 class News extends BaseObject
 {

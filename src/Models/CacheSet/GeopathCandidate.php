@@ -3,9 +3,9 @@
 namespace src\Models\CacheSet;
 
 use src\Models\BaseObject;
+use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\User\User;
-use src\Models\GeoCache\GeoCache;
 use src\Utils\Debug\Debug;
 
 

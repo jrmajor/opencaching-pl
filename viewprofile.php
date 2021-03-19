@@ -1,24 +1,24 @@
 <?php
 
+use src\Controllers\MeritBadgeController;
 use src\Controllers\MyRecommendationsController;
-use src\Utils\Database\XDb;
-use src\Utils\Database\OcDb;
+use src\Models\Admin\AdminNoteSet;
+use src\Models\ApplicationContainer;
+use src\Models\GeoCache\GeoCache;
+use src\Models\GeoCache\GeoCacheLog;
+use src\Models\MeritBadge\MeritBadge;
+use src\Models\OcConfig\OcConfig;
 use src\Models\PowerTrail\PowerTrail;
 use src\Models\User\User;
-use src\Models\GeoCache\GeoCacheLog;
-use src\Models\GeoCache\GeoCache;
-use src\Models\OcConfig\OcConfig;
-use src\Models\MeritBadge\MeritBadge;
-use src\Utils\DateTime\Year;
-use src\Utils\Uri\SimpleRouter;
-use src\Utils\Uri\OcCookie;
-use src\Utils\View\View;
-use src\Controllers\MeritBadgeController;
-use src\Utils\Text\Formatter;
-use src\Models\Admin\AdminNoteSet;
 use src\Models\User\UserStats;
+use src\Utils\Database\OcDb;
+use src\Utils\Database\XDb;
+use src\Utils\DateTime\Year;
 use src\Utils\Debug\StopWatch;
-use src\Models\ApplicationContainer;
+use src\Utils\Text\Formatter;
+use src\Utils\Uri\OcCookie;
+use src\Utils\Uri\SimpleRouter;
+use src\Utils\View\View;
 
 const ADMINNOTES_PER_PAGE = 10;
 

@@ -1,9 +1,9 @@
 <?php
 
-use src\Utils\Database\OcDb;
-use src\Utils\Generators\Uuid;
 use src\Controllers\MeritBadgeController;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Database\OcDb;
+use src\Utils\Generators\Uuid;
 
 global $titled_cache_nr_found, $titled_cache_period_prefix;
 

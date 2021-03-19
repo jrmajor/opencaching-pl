@@ -2,9 +2,9 @@
 
 namespace src\Models\GeoCache;
 
-use src\Models\BaseObject;
-use Exception;
 use DateTime;
+use Exception;
+use src\Models\BaseObject;
 
 class CacheTitled extends BaseObject
 {

@@ -1,6 +1,6 @@
 <?php
-use src\Utils\Uri\SimpleRouter;
 use src\Controllers\CacheAdoptionController;
+use src\Utils\Uri\SimpleRouter;
 ?>
 
 <?php $view->callChunk('infoBar', SimpleRouter::getLink(CacheAdoptionController::class), $view->infoMsg, $view->errorMsg ); ?>

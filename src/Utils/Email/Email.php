@@ -9,9 +9,9 @@
  */
 namespace src\Utils\Email;
 
-use src\Utils\Text\Validator;
-use src\Models\OcConfig\OcConfig;
 use RuntimeException;
+use src\Models\OcConfig\OcConfig;
+use src\Utils\Text\Validator;
 
 class Email
 {

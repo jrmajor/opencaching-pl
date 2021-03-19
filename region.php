@@ -1,9 +1,9 @@
 <?php
 
-use src\Models\Coordinates\Coordinates;
-use src\Models\Coordinates\NutsLocation;
 use src\Models\ApplicationContainer;
+use src\Models\Coordinates\Coordinates;
 use src\Models\Coordinates\GeoCode;
+use src\Models\Coordinates\NutsLocation;
 
 $tplname = 'region';
 

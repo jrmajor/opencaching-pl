@@ -1,12 +1,12 @@
 <?php
 namespace src\Controllers;
 
-use src\Models\ChunkModels\PaginationModel;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheLog;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheName;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheTypeIcon;
 use src\Models\ChunkModels\ListOfCaches\Column_OnClickActionIcon;
 use src\Models\ChunkModels\ListOfCaches\ListOfCachesModel;
+use src\Models\ChunkModels\PaginationModel;
 use src\Models\GeoCache\UserIgnoredCache;
 
 class UserIgnoredCachesController extends BaseController

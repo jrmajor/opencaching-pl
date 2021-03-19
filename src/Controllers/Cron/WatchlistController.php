@@ -4,15 +4,15 @@
  */
 namespace src\Controllers\Cron;
 
+use DateTime;
 use src\Controllers\BaseController;
-use src\Utils\Email\Email;
-use src\Utils\Lock\Lock;
 use src\Models\User\UserNotify;
 use src\Models\Watchlist\Watchlist;
 use src\Models\Watchlist\WatchlistItem;
 use src\Models\Watchlist\WatchlistReport;
 use src\Models\Watchlist\WatchlistWatcher;
-use DateTime;
+use src\Utils\Email\Email;
+use src\Utils\Lock\Lock;
 
 /**
  * Initiates and performs operations included in watchlist processing: new logs

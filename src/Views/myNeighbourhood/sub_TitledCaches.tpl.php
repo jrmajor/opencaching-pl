@@ -1,8 +1,8 @@
 <?php
-use src\Utils\Gis\Gis;
-use src\Utils\Text\Formatter;
 use src\Models\GeoCache\CacheTitled;
 use src\Models\Neighbourhood\Neighbourhood;
+use src\Utils\Gis\Gis;
+use src\Utils\Text\Formatter;
 use src\Utils\Uri\SimpleRouter;
 
 ?>

@@ -1,11 +1,11 @@
 <?php
 namespace src\Models\User;
 
+use src\Models\OcConfig\OcConfig;
+use src\Utils\Debug\Debug;
 use src\Utils\Email\Email;
 use src\Utils\Email\EmailFormatter;
 use src\Utils\Uri\SimpleRouter;
-use src\Models\OcConfig\OcConfig;
-use src\Utils\Debug\Debug;
 
 class UserEmailSender
 {

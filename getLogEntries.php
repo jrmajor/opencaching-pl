@@ -1,17 +1,17 @@
 <?php
 
-use src\Utils\Database\OcDb;
 use src\Controllers\LogEntryController;
 use src\Controllers\PictureController;
-use src\Utils\Text\TextConverter;
-use src\Utils\Text\SmilesInText;
-use src\Utils\Text\UserInputFilter;
-use src\Utils\Uri\SimpleRouter;
+use src\Models\ApplicationContainer;
+use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
-use src\Models\Coordinates\Coordinates;
+use src\Utils\Database\OcDb;
 use src\Utils\DateTime\Year;
-use src\Models\ApplicationContainer;
+use src\Utils\Text\SmilesInText;
+use src\Utils\Text\TextConverter;
+use src\Utils\Text\UserInputFilter;
+use src\Utils\Uri\SimpleRouter;
 
 require_once (__DIR__.'/lib/common.inc.php');
 require(__DIR__.'/src/Views/lib/icons.inc.php');

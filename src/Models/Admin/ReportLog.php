@@ -1,12 +1,12 @@
 <?php
 namespace src\Models\Admin;
 
-use src\Models\BaseObject;
-use src\Models\User\User;
-use src\Models\OcConfig\OcConfig;
-use src\Models\GeoCache\GeoCache;
-use src\Utils\Debug\Debug;
 use DateTime;
+use src\Models\BaseObject;
+use src\Models\GeoCache\GeoCache;
+use src\Models\OcConfig\OcConfig;
+use src\Models\User\User;
+use src\Utils\Debug\Debug;
 
 class ReportLog extends BaseObject
 {

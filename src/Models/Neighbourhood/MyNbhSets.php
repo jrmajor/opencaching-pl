@@ -4,8 +4,8 @@ namespace src\Models\Neighbourhood;
 use src\Models\BaseObject;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCache;
-use src\Models\GeoCache\GeoCacheLog;
 use src\Models\GeoCache\GeoCacheCommons;
+use src\Models\GeoCache\GeoCacheLog;
 
 class MyNbhSets extends BaseObject
 {

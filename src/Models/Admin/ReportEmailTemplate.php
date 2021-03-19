@@ -1,9 +1,9 @@
 <?php
 namespace src\Models\Admin;
 
+use DateTime;
 use src\Models\BaseObject;
 use src\Models\User\User;
-use DateTime;
 
 class ReportEmailTemplate extends BaseObject
 {

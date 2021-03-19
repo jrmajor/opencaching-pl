@@ -1,8 +1,8 @@
 <?php
 
+use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
-use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
 
 /**
  * This chunk displays dynamic map with different kinds of markers.

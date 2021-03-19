@@ -2,10 +2,10 @@
 namespace src\Controllers\News;
 
 use src\Controllers\BaseController;
-use src\Models\News\News;
 use src\Models\ChunkModels\PaginationModel;
-use src\Utils\Uri\Uri;
+use src\Models\News\News;
 use src\Utils\Uri\SimpleRouter;
+use src\Utils\Uri\Uri;
 
 class NewsListController extends BaseController
 {

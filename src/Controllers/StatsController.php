@@ -3,11 +3,11 @@
 namespace src\Controllers;
 
 
-use src\Utils\DateTime\Year;
-use src\Models\User\MultiUserQueries;
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\Pictures\StatPic;
+use src\Models\User\MultiUserQueries;
 use src\Models\User\User;
+use src\Utils\DateTime\Year;
 
 class StatsController extends BaseController
 {

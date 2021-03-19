@@ -3,10 +3,10 @@
 namespace src\Controllers;
 
 use src\Models\ApplicationContainer;
-use src\Models\User\User;
 use src\Models\OcConfig\OcConfig;
-use src\Utils\View\View;
+use src\Models\User\User;
 use src\Utils\Uri\Uri;
+use src\Utils\View\View;
 
 require_once(__DIR__.'/../../lib/common.inc.php');
 

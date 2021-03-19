@@ -1,8 +1,8 @@
 <?php
 
+use src\Models\User\User;
 use src\Utils\Database\OcDb;
 use src\Utils\Generators\Uuid;
-use src\Models\User\User;
 
 class powerTrailController
 {

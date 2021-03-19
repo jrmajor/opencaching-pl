@@ -2,8 +2,8 @@
 namespace src\Models\Admin;
 
 use src\Models\BaseObject;
-use src\Models\User\User;
 use src\Models\User\MultiUserQueries;
+use src\Models\User\User;
 
 class ReportCommons extends BaseObject
 {

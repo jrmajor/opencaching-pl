@@ -1,8 +1,8 @@
 <?php
 namespace src\Models\GeoCache;
 
-use src\Models\BaseObject;
 use DateTime;
+use src\Models\BaseObject;
 
 class EventAttenders extends BaseObject
 {

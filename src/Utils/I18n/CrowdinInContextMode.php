@@ -2,10 +2,10 @@
 
 namespace src\Utils\I18n;
 
-use src\Utils\Uri\OcCookie;
 use src\Models\OcConfig\OcConfig;
-use src\Utils\Uri\Uri;
+use src\Utils\Uri\OcCookie;
 use src\Utils\Uri\SimpleRouter;
+use src\Utils\Uri\Uri;
 
 class CrowdinInContextMode
 {

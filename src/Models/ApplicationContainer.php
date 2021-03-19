@@ -2,8 +2,8 @@
 
 namespace src\Models;
 
-use src\Models\User\User;
 use src\Models\OcConfig\OcConfig;
+use src\Models\User\User;
 use src\Utils\Database\OcDb;
 
 final class ApplicationContainer

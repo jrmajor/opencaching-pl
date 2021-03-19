@@ -1,9 +1,6 @@
 <?php
 namespace src\Controllers;
 
-use src\Utils\Text\Formatter;
-use src\Utils\Uri\Uri;
-use src\Models\ChunkModels\PaginationModel;
 use src\Models\ChunkModels\DynamicMap\CacheWithLogMarkerModel;
 use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheLog;
@@ -11,11 +8,14 @@ use src\Models\ChunkModels\ListOfCaches\Column_CacheName;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheTypeIcon;
 use src\Models\ChunkModels\ListOfCaches\Column_OnClickActionIcon;
 use src\Models\ChunkModels\ListOfCaches\ListOfCachesModel;
+use src\Models\ChunkModels\PaginationModel;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Models\GeoCache\GeoCacheLogCommons;
 use src\Models\User\UserWatchedCache;
+use src\Utils\Text\Formatter;
+use src\Utils\Uri\Uri;
 
 class UserWatchedCachesController extends BaseController
 {

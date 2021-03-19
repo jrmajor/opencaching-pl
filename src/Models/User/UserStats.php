@@ -1,10 +1,10 @@
 <?php
 namespace src\Models\User;
 
-use src\Models\BaseObject;
-use src\Models\PowerTrail\PowerTrail;
-use src\Models\GeoCache\GeoCacheLog;
 use ArrayObject;
+use src\Models\BaseObject;
+use src\Models\GeoCache\GeoCacheLog;
+use src\Models\PowerTrail\PowerTrail;
 
 class UserStats extends BaseObject
 {

@@ -1,8 +1,8 @@
 <?php
 namespace src\Models\GeoCache;
 
-use src\Utils\Debug\Debug;
 use src\Models\BaseObject;
+use src\Utils\Debug\Debug;
 
 /**
  * Common consts etc. for geocache log

@@ -2,17 +2,17 @@
 namespace src\Controllers\Admin;
 
 use src\Controllers\BaseController;
-use src\Utils\Text\UserInputFilter;
-use src\Utils\Uri\SimpleRouter;
-use src\Utils\Uri\Uri;
 use src\Models\Admin\AdminNote;
 use src\Models\Admin\AdminNoteSet;
+use src\Models\User\MultiUserQueries;
 use src\Models\User\User;
 use src\Models\User\UserAdmin;
 use src\Models\User\UserAuthorization;
 use src\Models\User\UserEmailSender;
 use src\Models\User\UserNotify;
-use src\Models\User\MultiUserQueries;
+use src\Utils\Text\UserInputFilter;
+use src\Utils\Uri\SimpleRouter;
+use src\Utils\Uri\Uri;
 
 class UserAdminController extends BaseController
 {

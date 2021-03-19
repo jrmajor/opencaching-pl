@@ -2,10 +2,10 @@
 
 namespace src\Models\PowerTrail;
 
-use src\Utils\Database\OcDb;
-use src\Models\User\User;
-use src\Utils\Generators\Uuid;
 use DateTime;
+use src\Models\User\User;
+use src\Utils\Database\OcDb;
+use src\Utils\Generators\Uuid;
 
 class Log
 {

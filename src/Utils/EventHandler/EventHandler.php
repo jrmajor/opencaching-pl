@@ -1,9 +1,9 @@
 <?php
 namespace src\Utils\EventHandler;
 
+use src\Models\GeoCache\GeoCache;
 use src\Models\Notify\Notify;
 use src\Models\User\User;
-use src\Models\GeoCache\GeoCache;
 
 class EventHandler
 {

@@ -3,8 +3,8 @@
 namespace src\Models\GeoCache;
 
 
-use src\Utils\Database\XDb;
 use Exception;
+use src\Utils\Database\XDb;
 
 class OpenChecker
 {

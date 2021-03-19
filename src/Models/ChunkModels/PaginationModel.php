@@ -10,8 +10,8 @@
  */
 namespace src\Models\ChunkModels;
 
-use src\Utils\Uri\Uri;
 use src\Utils\Debug\Debug;
+use src\Utils\Uri\Uri;
 
 class PaginationModel {
 

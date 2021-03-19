@@ -2,10 +2,10 @@
 
 namespace src\Models\Voting;
 
+use DateTime;
 use src\Models\BaseObject;
 use src\Models\User\User;
 use src\Utils\DateTime\OcDateTime;
-use DateTime;
 
 class Vote extends BaseObject
 {

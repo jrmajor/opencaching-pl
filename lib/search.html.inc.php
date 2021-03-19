@@ -1,14 +1,14 @@
 <?php
 
+use src\Models\ApplicationContainer;
+use src\Models\Coordinates\Coordinates;
+use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\Database\OcDb;
 use src\Utils\Gis\Gis;
-use src\Utils\Text\Formatter;
-use src\Utils\Uri\Uri;
-use src\Utils\Uri\OcCookie;
-use src\Models\Coordinates\Coordinates;
 use src\Utils\I18n\I18n;
-use src\Models\GeoCache\GeoCacheCommons;
-use src\Models\ApplicationContainer;
+use src\Utils\Text\Formatter;
+use src\Utils\Uri\OcCookie;
+use src\Utils\Uri\Uri;
 
 /**
  * This script is used (can be loaded) by /search.php

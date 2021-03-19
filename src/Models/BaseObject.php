@@ -1,9 +1,9 @@
 <?php
 namespace src\Models;
 
-use src\Utils\Database\OcDb;
 use okapi\Facade;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Database\OcDb;
 
 abstract class BaseObject
 {

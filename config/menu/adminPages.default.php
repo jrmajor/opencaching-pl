@@ -16,8 +16,8 @@
  * Do NOT change $menu variable name!
  */
 
-use src\Utils\Uri\SimpleRouter;
 use src\Controllers\Admin\CacheSetAdminController;
+use src\Utils\Uri\SimpleRouter;
 
 /** @var array $links OcConfig::$links is accessible in within this scope */
 

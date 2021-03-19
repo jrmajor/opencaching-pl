@@ -3,9 +3,9 @@
  * This script is used (can be loaded) by /search.php
  */
 
-use src\Utils\Database\OcDb;
-use src\Models\OcConfig\OcConfig;
 use src\Models\ApplicationContainer;
+use src\Models\OcConfig\OcConfig;
+use src\Utils\Database\OcDb;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 

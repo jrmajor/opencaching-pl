@@ -1,7 +1,7 @@
 <?php
 
-use src\Utils\Database\XDb;
 use src\Models\ApplicationContainer;
+use src\Utils\Database\XDb;
 
 require_once (__DIR__.'/lib/common.inc.php');
 

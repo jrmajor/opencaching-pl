@@ -1,7 +1,7 @@
 <?php
 use src\Models\Voting\Election;
-use src\Utils\View\View;
 use src\Utils\Text\Formatter;
+use src\Utils\View\View;
 ?>
 
 <div class="content2-pagetitle"><?=tr('vote_elListTitle')?></div>

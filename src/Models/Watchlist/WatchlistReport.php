@@ -4,12 +4,12 @@
  */
 namespace src\Models\Watchlist;
 
-use src\Models\OcConfig\OcConfig;
-use src\Utils\Text\Formatter;
-use src\Utils\Email\EmailFormatter;
-use src\Utils\Email\Email;
-use src\Utils\Uri\SimpleRouter;
 use DateTime;
+use src\Models\OcConfig\OcConfig;
+use src\Utils\Email\Email;
+use src\Utils\Email\EmailFormatter;
+use src\Utils\Text\Formatter;
+use src\Utils\Uri\SimpleRouter;
 
 /**
  * Used for preparing and sending email to watcher

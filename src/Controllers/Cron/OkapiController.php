@@ -1,10 +1,10 @@
 <?php
 namespace src\Controllers\Cron;
 
+use okapi\Facade;
 use src\Controllers\BaseController;
 use src\Controllers\MeritBadgeController;
 use src\Models\GeoCache\GeoCache;
-use okapi\Facade;
 
 class OkapiController extends BaseController
 {

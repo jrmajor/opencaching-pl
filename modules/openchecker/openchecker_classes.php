@@ -4,10 +4,10 @@ namespace OpenChecker;
 
 use PDO;
 use PDOException;
-use src\Utils\Database\XDb;
+use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\Waypoint;
-use src\Models\Coordinates\Coordinates;
+use src\Utils\Database\XDb;
 
 class OpenCheckerSetup {
 

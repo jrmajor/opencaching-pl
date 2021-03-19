@@ -1,9 +1,9 @@
 <?php
 
-use src\Utils\Text\Formatter;
 use src\Controllers\ViewBadgeHeadController;
-use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\ApplicationContainer;
+use src\Models\GeoCache\GeoCacheCommons;
+use src\Utils\Text\Formatter;
 
 require_once(__DIR__.'/lib/common.inc.php');
 

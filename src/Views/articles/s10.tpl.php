@@ -1,7 +1,7 @@
 <?php
 
-use src\Utils\Database\XDb;
 use src\Models\ApplicationContainer;
+use src\Utils\Database\XDb;
 
 if (isset($_REQUEST['region'])) {
     $region = $_REQUEST['region'];

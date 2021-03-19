@@ -1,8 +1,8 @@
 <?php
 
-use src\Models\PowerTrail\PowerTrail;
 use src\Controllers\PowerTrailController;
 use src\Models\ApplicationContainer;
+use src\Models\PowerTrail\PowerTrail;
 
 require_once __DIR__.'/../lib/common.inc.php';
 

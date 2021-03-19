@@ -1,17 +1,17 @@
 <?php
 namespace src\Controllers;
 
+use ArrayObject;
+use Exception;
 use okapi\Facade;
 use src\Models\Coordinates\GeoCode;
 use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
 use src\Models\User\UserPreferences\MainMapSettings;
 use src\Models\User\UserPreferences\UserPreferences;
-use src\Utils\Text\Formatter;
 use src\Utils\Debug\Debug;
+use src\Utils\Text\Formatter;
 use stdClass;
-use Exception;
-use ArrayObject;
 
 /**
  * This class provides:

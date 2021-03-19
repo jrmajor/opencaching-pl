@@ -2,8 +2,8 @@
 namespace src\Utils\Database;
 
 use Exception;
-use src\Utils\Generators\Uuid;
 use src\Utils\Database\Updates\UpdateScript;
+use src\Utils\Generators\Uuid;
 
 /**
  * This class represents one database update. It contains all data from the

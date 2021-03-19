@@ -5,8 +5,8 @@
  */
 namespace src\Utils\Log;
 
-use src\Utils\Database\OcDb;
 use src\Models\User\User;
+use src\Utils\Database\OcDb;
 
 class Log
 {

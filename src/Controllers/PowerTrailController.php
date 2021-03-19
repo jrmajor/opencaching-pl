@@ -2,12 +2,12 @@
 
 namespace src\Controllers;
 
-use src\Models\PowerTrail\PowerTrail;
+use DateTime;
+use sendEmail;
 use src\Models\PowerTrail\Log;
+use src\Models\PowerTrail\PowerTrail;
 use src\Models\User\User;
 use src\Utils\Database\OcDb;
-use sendEmail;
-use DateTime;
 
 class PowerTrailController
 {

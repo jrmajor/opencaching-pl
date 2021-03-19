@@ -1,10 +1,10 @@
 <?php
-use src\Utils\Uri\Uri;
 use src\Controllers\PictureController;
 use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\Pictures\Thumbnail;
 use src\Utils\Uri\SimpleRouter;
+use src\Utils\Uri\Uri;
 
 require_once (__DIR__.'/lib/common.inc.php');
 

@@ -1,9 +1,9 @@
 <?php
 namespace src\Utils\Uri;
 
+use src\Models\User\UserAuthorization;
 use src\Utils\Debug\Debug;
 use src\Utils\Text\UserInputFilter;
-use src\Models\User\UserAuthorization;
 use stdClass;
 
 class OcCookie

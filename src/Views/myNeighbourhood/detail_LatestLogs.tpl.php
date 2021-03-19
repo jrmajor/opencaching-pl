@@ -1,9 +1,9 @@
 <?php
+use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\Gis\Gis;
 use src\Utils\Text\Formatter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
-use src\Models\GeoCache\GeoCacheLog;
 
 ?>
 <div class="content2-container">

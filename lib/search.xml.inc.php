@@ -1,10 +1,10 @@
 <?php
-use src\Utils\Database\XDb;
-use src\Utils\Database\OcDb;
+use src\Models\ApplicationContainer;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCacheCommons;
+use src\Utils\Database\OcDb;
+use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 /**
  * This script is used (can be loaded) by /search.php
  */

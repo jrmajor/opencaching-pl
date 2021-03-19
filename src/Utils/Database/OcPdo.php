@@ -2,9 +2,9 @@
 
 namespace src\Utils\Database;
 
-use src\Models\OcConfig\OcConfig;
 use PDO;
 use PDOException;
+use src\Models\OcConfig\OcConfig;
 
 class OcPdo extends PDO
 {

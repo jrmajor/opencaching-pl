@@ -1,9 +1,9 @@
 <?php
 namespace src\Utils\Feed;
 
+use DateTime;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\Uri;
-use DateTime;
 
 /**
  * Class to create complete RSS feed in Atom 1.0 standard

@@ -2,10 +2,10 @@
 
 namespace src\Models\GeoKret;
 
-use src\Models\User\User;
-use src\Models\GeoCache\GeoCache;
-use src\Models\BaseObject;
 use DateTime;
+use src\Models\BaseObject;
+use src\Models\GeoCache\GeoCache;
+use src\Models\User\User;
 
 /**
  * GeokretLog represents GK-logs-queue entry stored in DB

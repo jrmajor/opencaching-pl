@@ -1,9 +1,9 @@
 <?php
 namespace src\Controllers\Cron;
 
+use okapi\Facade;
 use src\Controllers\BaseController;
 use src\Utils\Lock\Lock;
-use okapi\Facade;
 
 class CronJobsController extends BaseController
 {

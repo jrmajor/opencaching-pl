@@ -4,10 +4,10 @@
  */
 namespace src\Models\Watchlist;
 
-use src\Models\OcConfig\OcConfig;
-use src\Models\GeoCache\GeoCacheLogCommons;
-use src\Utils\Text\Formatter;
 use src\Models\GeoCache\GeoCache;
+use src\Models\GeoCache\GeoCacheLogCommons;
+use src\Models\OcConfig\OcConfig;
+use src\Utils\Text\Formatter;
 
 /**
  * Used for preparing formatted items of watchlist report based on log data

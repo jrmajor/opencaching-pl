@@ -1,10 +1,10 @@
 <?php
 namespace src\Models\Stats;
 
-use src\Utils\Cache\OcMemCache;
 use src\Models\BaseObject;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheLog;
+use src\Utils\Cache\OcMemCache;
 
 class CacheStats extends BaseObject
 {

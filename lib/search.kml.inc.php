@@ -5,10 +5,10 @@
 
 ob_start();
 
-use src\Utils\Database\XDb;
-use src\Models\GeoCache\GeoCacheCommons;
-use src\Utils\I18n\I18n;
 use src\Models\ApplicationContainer;
+use src\Models\GeoCache\GeoCacheCommons;
+use src\Utils\Database\XDb;
+use src\Utils\I18n\I18n;
 
 global $absolute_server_URI, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
 require_once (__DIR__.'/format.kml.inc.php');

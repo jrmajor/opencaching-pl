@@ -7,8 +7,8 @@
  */
 
 namespace src\Utils\Database;
-use PDOStatement;
 use PDOException;
+use PDOStatement;
 
 class XDb extends OcDb {
 

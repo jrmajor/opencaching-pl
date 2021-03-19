@@ -1,6 +1,6 @@
 <?php
-use src\Utils\Uri\Uri;
 use src\Models\GeoCache\GeoCacheLogCommons;
+use src\Utils\Uri\Uri;
 
 return function($isUserAuthorized, $cacheType) {
     $chunkCSS = Uri::getLinkWithModificationTime(

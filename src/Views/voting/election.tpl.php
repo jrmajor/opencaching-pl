@@ -1,6 +1,6 @@
 <?php
-use src\Models\Voting\Election;
 use src\Models\Voting\ChoiceOption;
+use src\Models\Voting\Election;
 use src\Utils\Text\Formatter;
 use src\Utils\View\View;
 

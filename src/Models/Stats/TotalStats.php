@@ -1,14 +1,14 @@
 <?php
 namespace src\Models\Stats;
 
-use src\Utils\Cache\OcMemCache;
-use src\Utils\Text\Formatter;
 use src\Models\BaseObject;
 use src\Models\CacheSet\CacheSet;
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\GeoCache\MultiLogStats;
 use src\Models\Stats\TotalStats\BasicStats;
 use src\Models\User\MultiUserQueries;
+use src\Utils\Cache\OcMemCache;
+use src\Utils\Text\Formatter;
 
 /**
  * This class provides general statsistics of service

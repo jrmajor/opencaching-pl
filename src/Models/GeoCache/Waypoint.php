@@ -2,8 +2,8 @@
 
 namespace src\Models\GeoCache;
 
-use src\Utils\Database\XDb;
 use src\Models\Coordinates\Coordinates;
+use src\Utils\Database\XDb;
 
 /**
  * Geocache Waypoint (place of interest)

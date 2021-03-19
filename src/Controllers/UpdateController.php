@@ -2,10 +2,10 @@
 
 namespace src\Controllers;
 
+use Exception;
+use okapi\Facade;
 use src\Utils\Database\DbUpdates;
 use src\Utils\Lock\Lock;
-use okapi\Facade;
-use Exception;
 
 /**
  * This class runs all updates that are necessary after a code deployment.

@@ -2,14 +2,14 @@
 
 namespace src\Models\PowerTrail;
 
+use DateTime;
+use powerTrailBase;
+use src\Models\BaseObject;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\Collection;
 use src\Models\GeoCache\GeoCache;
-use src\Models\BaseObject;
 use src\Models\User\User;
 use src\Utils\Debug\Debug;
-use powerTrailBase;
-use DateTime;
 
 class PowerTrail extends BaseObject
 {

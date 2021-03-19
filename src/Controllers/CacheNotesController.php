@@ -6,21 +6,21 @@ namespace src\Controllers;
  * This controller handled user notes list view
  */
 
-use src\Utils\Uri\Uri;
-use src\Models\ChunkModels\PaginationModel;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheLog;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheName;
 use src\Models\ChunkModels\ListOfCaches\Column_CacheTypeIcon;
 use src\Models\ChunkModels\ListOfCaches\Column_EllipsedText;
 use src\Models\ChunkModels\ListOfCaches\Column_OnClickActionIcon;
+use src\Models\ChunkModels\ListOfCaches\Column_SimpleText;
 use src\Models\ChunkModels\ListOfCaches\ListOfCachesModel;
-use src\Models\GeoCache\CacheNote;
-use src\Models\GeoCache\UserCacheCoords;
+use src\Models\ChunkModels\PaginationModel;
 use src\Models\Coordinates\Coordinates;
+use src\Models\GeoCache\CacheNote;
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\GeoCache\MultiLogStats;
+use src\Models\GeoCache\UserCacheCoords;
 use src\Models\User\MultiUserQueries;
-use src\Models\ChunkModels\ListOfCaches\Column_SimpleText;
+use src\Utils\Uri\Uri;
 
 class CacheNotesController extends BaseController
 {

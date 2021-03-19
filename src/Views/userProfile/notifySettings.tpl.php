@@ -1,8 +1,8 @@
 <?php
 
-use src\Utils\Uri\SimpleRouter;
-use src\Models\User\UserNotify;
 use src\Controllers\UserWatchedCachesController;
+use src\Models\User\UserNotify;
+use src\Utils\Uri\SimpleRouter;
 
 ?>
 

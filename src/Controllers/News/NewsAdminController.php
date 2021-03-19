@@ -2,11 +2,11 @@
 namespace src\Controllers\News;
 
 use src\Controllers\BaseController;
+use src\Models\ChunkModels\PaginationModel;
+use src\Models\News\News;
 use src\Utils\DateTime\Converter;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
-use src\Models\ChunkModels\PaginationModel;
-use src\Models\News\News;
 
 class NewsAdminController extends BaseController
 {

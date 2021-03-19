@@ -4,8 +4,8 @@
  */
 namespace src\Models\Watchlist;
 
-use src\Models\BaseObject;
 use DateTime;
+use src\Models\BaseObject;
 
 /**
  * Represents single row data from watchlist watchers query result, extended by

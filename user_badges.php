@@ -1,7 +1,7 @@
 <?php
 
-use src\Models\MeritBadge\MeritBadge;
 use src\Models\ApplicationContainer;
+use src\Models\MeritBadge\MeritBadge;
 
 require_once (__DIR__.'/lib/common.inc.php');
 require_once (__DIR__.'/src/Views/user_badges.inc.php');

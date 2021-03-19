@@ -1,6 +1,6 @@
 <?php
-use src\Utils\Uri\SimpleRouter;
 use src\Controllers\ViewCacheController;
+use src\Utils\Uri\SimpleRouter;
 ?>
 <div class="content2-pagetitle">
   {{add_rr_comment}}:

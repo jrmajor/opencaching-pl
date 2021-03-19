@@ -1,11 +1,11 @@
 <?php
 namespace src\Utils\Debug;
 
-use Throwable;
-use src\Models\OcConfig;
-use src\Utils\Email\EmailSender;
 use ErrorException;
 use Exception;
+use src\Models\OcConfig;
+use src\Utils\Email\EmailSender;
+use Throwable;
 
 class ErrorHandler
 {

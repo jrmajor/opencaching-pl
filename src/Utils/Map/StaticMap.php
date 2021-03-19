@@ -24,8 +24,8 @@ namespace src\Utils\Map;
  *       @author Gerhard Koch <gerhard.koch AT ymail.com>
  *       @link: https://github.com/dfacts/staticmaplite
  */
-use src\Models\OcConfig\OcConfig;
 use src\Models\Coordinates\Coordinates;
+use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\Uri;
 
 class StaticMap

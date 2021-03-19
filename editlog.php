@@ -1,19 +1,19 @@
 <?php
 
-use src\Utils\Database\XDb;
-use src\Utils\Text\UserInputFilter;
+use okapi\Facade;
+use src\Controllers\MeritBadgeController;
+use src\Models\ApplicationContainer;
+use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLog;
-use src\Controllers\MeritBadgeController;
-use okapi\Facade;
-use src\Utils\EventHandler\EventHandler;
-use src\Utils\Text\InputFilter;
+use src\Models\GeoCache\GeoCacheLogCommons;
 use src\Models\GeoCache\MobileCacheMove;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Database\XDb;
+use src\Utils\EventHandler\EventHandler;
 use src\Utils\I18n\I18n;
-use src\Models\GeoCache\GeoCacheLogCommons;
-use src\Models\GeoCache\GeoCache;
-use src\Models\ApplicationContainer;
+use src\Utils\Text\InputFilter;
+use src\Utils\Text\UserInputFilter;
 
 //prepare the templates and include all neccessary
 require_once(__DIR__.'/lib/common.inc.php');

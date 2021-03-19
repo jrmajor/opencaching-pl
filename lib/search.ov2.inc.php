@@ -3,9 +3,9 @@
  * This script is used (can be loaded) by /search.php
  */
 
-use src\Utils\Database\XDb;
-use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\ApplicationContainer;
+use src\Models\GeoCache\GeoCacheCommons;
+use src\Utils\Database\XDb;
 
 ob_start();
 

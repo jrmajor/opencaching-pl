@@ -2,11 +2,11 @@
 
 require_once __DIR__ . '/ClassPathDictionary.php'; // class autoloader
 
-use src\Utils\Debug\ErrorHandler;
-use src\Utils\View\View;
-use src\Models\User\UserAuthorization;
 use src\Models\OcConfig\OcConfig;
+use src\Models\User\UserAuthorization;
+use src\Utils\Debug\ErrorHandler;
 use src\Utils\I18n\I18n;
+use src\Utils\View\View;
 
 ErrorHandler::install ();
 

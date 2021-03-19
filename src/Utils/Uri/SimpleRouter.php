@@ -1,8 +1,8 @@
 <?php
 namespace src\Utils\Uri;
 
-use ReflectionException;
 use ReflectionClass;
+use ReflectionException;
 
 /**
  * Route schema:

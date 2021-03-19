@@ -1,10 +1,10 @@
 <?php
 
-use src\Utils\Database\XDb;
-use src\Utils\Database\OcDb;
-use src\Utils\Generators\Uuid;
 use src\Models\ApplicationContainer;
 use src\Models\User\User;
+use src\Utils\Database\OcDb;
+use src\Utils\Database\XDb;
+use src\Utils\Generators\Uuid;
 
 require(__DIR__.'/lib/common.inc.php');
 

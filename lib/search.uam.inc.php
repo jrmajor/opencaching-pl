@@ -6,8 +6,8 @@
 
 ob_start();
 
-use src\Utils\Database\XDb;
 use src\Models\ApplicationContainer;
+use src\Utils\Database\XDb;
 
 set_time_limit(1800);
 

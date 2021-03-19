@@ -3,12 +3,12 @@ namespace src\Models\User;
 
 use ArrayObject;
 use DateTime;
-use src\Utils\Generators\TextGen;
-use src\Utils\Generators\Uuid;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
+use src\Utils\Generators\TextGen;
+use src\Utils\Generators\Uuid;
 
 /**
  * Description of user

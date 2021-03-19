@@ -1,10 +1,10 @@
 <?php
-use src\Models\Voting\Election;
 use src\Models\Voting\ChoiceOption;
-use src\Utils\Text\Formatter;
-use src\Utils\View\View;
+use src\Models\Voting\Election;
 use src\Models\Voting\ElectionResult;
 use src\Utils\Generators\ColorGenerator;
+use src\Utils\Text\Formatter;
+use src\Utils\View\View;
 
 /** @var $v View */
 /** @var $el Election */

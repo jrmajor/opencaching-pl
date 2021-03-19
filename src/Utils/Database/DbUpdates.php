@@ -2,8 +2,8 @@
 namespace src\Utils\Database;
 
 use Exception;
-use src\Utils\Generators\Uuid;
 use okapi\Facade;
+use src\Utils\Generators\Uuid;
 
 /**
  * Static container of DbUpdate objects, each representing one of the scripts

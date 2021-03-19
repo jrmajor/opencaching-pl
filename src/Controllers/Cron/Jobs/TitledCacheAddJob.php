@@ -1,10 +1,10 @@
 <?php
 
 use src\Controllers\Cron\Jobs\Job;
-use src\Models\GeoCache\GeoCacheLog;
-use src\Utils\Generators\Uuid;
 use src\Controllers\MeritBadgeController;
+use src\Models\GeoCache\GeoCacheLog;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Generators\Uuid;
 
 class TitledCacheAddJob extends Job
 {

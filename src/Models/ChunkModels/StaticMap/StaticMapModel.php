@@ -1,11 +1,11 @@
 <?php
 namespace src\Models\ChunkModels\StaticMap;
 
+use src\Controllers\StartPageController;
 use src\Models\Coordinates\Coordinates;
+use src\Models\OcConfig\OcConfig;
 use src\Utils\Gis\Gis;
 use src\Utils\Uri\SimpleRouter;
-use src\Controllers\StartPageController;
-use src\Models\OcConfig\OcConfig;
 
 class StaticMapModel
 {

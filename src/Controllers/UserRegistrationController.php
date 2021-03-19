@@ -1,12 +1,12 @@
 <?php
 namespace src\Controllers;
 
+use DateTime;
+use src\Models\User\User;
+use src\Models\User\UserEmailSender;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Text\Validator;
 use src\Utils\Uri\Uri;
-use src\Models\User\User;
-use src\Models\User\UserEmailSender;
-use DateTime;
 
 class UserRegistrationController extends BaseController
 {

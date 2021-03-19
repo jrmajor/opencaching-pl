@@ -2,11 +2,11 @@
 
 namespace src\Utils\Database;
 
+use Exception;
+use PDO;
 use PDOException;
 use PDOStatement;
 use src\Utils\Debug\Debug;
-use PDO;
-use Exception;
 
 class OcDb extends OcPdo
 {

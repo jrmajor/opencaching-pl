@@ -1,14 +1,14 @@
 <?php
 namespace src\Controllers;
 
-use src\Models\User\User;
 use src\Models\GeoCache\GeoCache;
-use src\Utils\Email\EmailSender;
-use src\Utils\Database\OcDb;
-use src\Utils\Uri\Uri;
-use src\Utils\Generators\Uuid;
 use src\Models\OcConfig\OcConfig;
+use src\Models\User\User;
+use src\Utils\Database\OcDb;
+use src\Utils\Email\EmailSender;
+use src\Utils\Generators\Uuid;
 use src\Utils\Uri\SimpleRouter;
+use src\Utils\Uri\Uri;
 
 class CacheAdoptionController extends BaseController
 {

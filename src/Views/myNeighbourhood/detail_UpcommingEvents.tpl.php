@@ -1,9 +1,9 @@
 <?php
+use src\Controllers\LogEntryController;
+use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\Gis\Gis;
 use src\Utils\Text\Formatter;
 use src\Utils\Uri\SimpleRouter;
-use src\Controllers\LogEntryController;
-use src\Models\GeoCache\GeoCacheLog;
 
 $logController = new LogEntryController();
 ?>

@@ -16,12 +16,12 @@
  * Do NOT change $menu variable name!
  */
 
-use src\Controllers\MyRecommendationsController;
-use src\Utils\Uri\SimpleRouter;
 use src\Controllers\CacheNotesController;
-use src\Utils\I18n\I18n;
+use src\Controllers\MyRecommendationsController;
 use src\Controllers\UserIgnoredCachesController;
 use src\Controllers\UserWatchedCachesController;
+use src\Utils\I18n\I18n;
+use src\Utils\Uri\SimpleRouter;
 
 /** @var array $links OcConfig::$links is accessible in within this scope */
 

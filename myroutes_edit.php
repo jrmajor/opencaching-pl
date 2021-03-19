@@ -1,8 +1,8 @@
 <?php
 
+use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
-use src\Models\ApplicationContainer;
 
 global $googlemap_key;
 

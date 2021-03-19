@@ -2,8 +2,8 @@
 
 ob_start();
 
-use src\Utils\Database\XDb;
 use src\Models\GeoCache\GeoCacheCommons;
+use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 
 /* Bounding Box:

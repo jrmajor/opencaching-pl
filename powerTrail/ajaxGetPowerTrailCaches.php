@@ -1,9 +1,9 @@
 <?php
 
+use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Models\PowerTrail\PowerTrail;
-use src\Models\GeoCache\GeoCache;
 
 require_once __DIR__ . '/../lib/common.inc.php';
 

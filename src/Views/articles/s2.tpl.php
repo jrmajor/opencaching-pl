@@ -1,7 +1,7 @@
 <?php
-use src\Utils\Database\XDb;
-use src\Utils\Cache\OcMemCache;
 use src\Models\ApplicationContainer;
+use src\Utils\Cache\OcMemCache;
+use src\Utils\Database\XDb;
 ?>
 <div class="content2-container">
   <div class="content2-pagetitle">

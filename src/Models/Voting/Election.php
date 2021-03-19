@@ -5,8 +5,8 @@ namespace src\Models\Voting;
 use DateTime;
 use src\Models\BaseObject;
 use src\Models\User\User;
-use src\Utils\Debug\Debug;
 use src\Utils\DateTime\OcDateTime;
+use src\Utils\Debug\Debug;
 
 /**
  * Model of elections - contains information related to election process

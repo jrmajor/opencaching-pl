@@ -1,10 +1,10 @@
 <?php
 
-use src\Utils\Text\Formatter;
-use src\Models\MeritBadge\MeritBadge; //for static functions
 use src\Controllers\ViewBadgeHeadController;
 use src\Controllers\ViewBadgeShowPositionsController;
 use src\Models\ApplicationContainer;
+use src\Models\MeritBadge\MeritBadge;
+use src\Utils\Text\Formatter;
 
 require_once(__DIR__.'/lib/common.inc.php');
 

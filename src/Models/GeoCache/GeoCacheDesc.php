@@ -2,13 +2,13 @@
 
 namespace src\Models\GeoCache;
 
+use Exception;
+use src\Models\BaseObject;
+use src\Models\User\User;
 use src\Utils\Email\EmailSender;
+use src\Utils\Text\Formatter;
 use src\Utils\Text\SmilesInText;
 use src\Utils\Text\UserInputFilter;
-use src\Models\User\User;
-use src\Models\BaseObject;
-use src\Utils\Text\Formatter;
-use Exception;
 
 class GeoCacheDesc extends BaseObject
 {

@@ -1,8 +1,8 @@
 <?php
 namespace src\Models\User;
 
-use src\Utils\Database\OcDb;
 use Exception;
+use src\Utils\Database\OcDb;
 
 class PasswordManager
 {

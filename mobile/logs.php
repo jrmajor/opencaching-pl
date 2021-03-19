@@ -1,10 +1,10 @@
 <?php
 
-use src\Utils\Log\CacheAccessLog;
-use src\Utils\Text\Formatter;
 use src\Controllers\LogEntryController;
 use src\Models\GeoCache\GeoCache;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Log\CacheAccessLog;
+use src\Utils\Text\Formatter;
 
 const LOGS_PER_PAGE = 10;
 

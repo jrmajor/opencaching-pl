@@ -1,6 +1,6 @@
 <?php
-use src\Utils\Uri\OcCookie;
 use src\Utils\I18n\I18n;
+use src\Utils\Uri\OcCookie;
 ?>
 <link rel="stylesheet" type="text/css" media="screen,projection" href="/css/GCT.css" />
 <link rel="stylesheet" type="text/css" media="screen,projection" href="/css/GCTStats.css" />

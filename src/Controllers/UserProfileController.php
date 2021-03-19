@@ -1,18 +1,18 @@
 <?php
 namespace src\Controllers;
 
-use src\Utils\Log\Log;
-use src\Utils\Text\UserInputFilter;
-use src\Utils\Uri\Uri;
+use src\Models\GeoCache\MultiLogStats;
 use src\Models\Neighbourhood\Neighbourhood;
+use src\Models\Pictures\StatPic;
 use src\Models\User\User;
 use src\Models\User\UserEmailSender;
 use src\Models\User\UserNotify;
 use src\Models\User\UserPreferences\UserPreferences;
 use src\Models\User\UserPreferences\UserProfilePref;
-use src\Models\GeoCache\MultiLogStats;
+use src\Utils\Log\Log;
 use src\Utils\Text\InputFilter;
-use src\Models\Pictures\StatPic;
+use src\Utils\Text\UserInputFilter;
+use src\Utils\Uri\Uri;
 
 class UserProfileController extends BaseController
 {

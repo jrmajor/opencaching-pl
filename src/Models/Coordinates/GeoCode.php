@@ -2,9 +2,9 @@
 
 namespace src\Models\Coordinates;
 
+use Exception;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
-use Exception;
 use src\Utils\I18n\I18n;
 
 class GeoCode

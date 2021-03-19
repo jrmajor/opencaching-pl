@@ -1,7 +1,7 @@
 <?php
-use src\Utils\Uri\SimpleRouter;
-use src\Models\Neighbourhood\Neighbourhood;
 use src\Models\Coordinates\Coordinates;
+use src\Models\Neighbourhood\Neighbourhood;
+use src\Utils\Uri\SimpleRouter;
 
 ?>
 <div class="content2-container">

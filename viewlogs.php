@@ -2,6 +2,7 @@
 
 use src\Controllers\LogEntryController;
 use src\Controllers\PictureController;
+use src\Models\ApplicationContainer;
 use src\Models\Coordinates\Coordinates;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\OcDb;
@@ -11,7 +12,6 @@ use src\Utils\Text\TextConverter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
-use src\Models\ApplicationContainer;
 
 require_once(__DIR__ . '/lib/common.inc.php');
 

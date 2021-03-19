@@ -1,9 +1,9 @@
 <?php
 namespace src\Models\GeoCache;
 
+use okapi\Facade;
 use src\Controllers\MeritBadgeController;
 use src\Models\BaseObject;
-use okapi\Facade;
 
 class CacheRecommendation extends BaseObject
 {

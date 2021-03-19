@@ -1,7 +1,7 @@
 <?php
 
-use src\Utils\Uri\SimpleRouter as SRouter;
 use src\Models\OcConfig\OcConfig;
+use src\Utils\Uri\SimpleRouter as SRouter;
 
 ?>
 <!DOCTYPE html>

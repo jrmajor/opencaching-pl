@@ -1,10 +1,10 @@
 <?php
 namespace src\Models\Neighbourhood;
 
+use Exception;
 use src\Models\BaseObject;
 use src\Models\Coordinates\Coordinates;
 use src\Models\User\User;
-use Exception;
 
 class Neighbourhood extends BaseObject
 {

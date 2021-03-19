@@ -24,10 +24,10 @@
 
 use OpenChecker\OpenCheckerCore;
 use OpenChecker\OpenCheckerSetup;
-use src\Utils\Database\XDb;
-use src\Models\GeoCache\Waypoint;
-use src\Utils\View\View;
 use src\Models\ApplicationContainer;
+use src\Models\GeoCache\Waypoint;
+use src\Utils\Database\XDb;
+use src\Utils\View\View;
 
 //prepare the templates and include all neccessary
 require_once (__DIR__.'/lib/common.inc.php');

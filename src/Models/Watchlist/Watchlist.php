@@ -4,12 +4,12 @@
  */
 namespace src\Models\Watchlist;
 
-use src\Models\BaseObject;
-use src\Utils\Database\OcDb;
-use src\Utils\Log\Log;
-use src\Models\User\UserNotify;
 use DateTime;
 use PDOStatement;
+use src\Models\BaseObject;
+use src\Models\User\UserNotify;
+use src\Utils\Database\OcDb;
+use src\Utils\Log\Log;
 
 /**
  * DAO for performing watchlist operations

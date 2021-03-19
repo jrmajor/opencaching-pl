@@ -1,13 +1,13 @@
 <?php
 namespace src\Controllers\Admin;
 
+use Exception;
 use src\Controllers\BaseController;
 use src\Controllers\UpdateController;
-use src\Utils\DataBase\OcDb;
 use src\Utils\Database\DbUpdates;
+use src\Utils\DataBase\OcDb;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
-use Exception;
 
 class DbUpdateController extends BaseController
 {
