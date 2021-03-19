@@ -58,8 +58,8 @@ use src\Models\Coordinates\Coordinates;
   <?php } ?>
   </div>
   <?php
-    list($latNS, $lat_h, $lat_min) = $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLatitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
-    list($lonEW, $lon_h, $lon_min) =  $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
+    [$latNS, $lat_h, $lat_min] = $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLatitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
+    [$lonEW, $lon_h, $lon_min] =  $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
   ?>
   <div class="buffer"></div>
   <div class="align-center">

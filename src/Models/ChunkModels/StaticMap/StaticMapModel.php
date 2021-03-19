@@ -77,7 +77,7 @@ class StaticMapModel
     public function createMarker($id, Coordinates $coords, $color,
         $tooltip=null, $link=null){
 
-        list($left, $top, ) = Gis::positionAtMapImg(
+        [$left, $top] = Gis::positionAtMapImg(
             $coords, $this->mapCenter, $this->mapZoom, $this->imgWidth, $this->imgHeight);
 
         $marker = StaticMapMarker::createWithImgPosition(

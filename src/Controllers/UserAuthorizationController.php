@@ -39,7 +39,7 @@ class UserAuthorizationController extends BaseController
             return;
         }
 
-        list ($userEmail, $userPassword) = $this->getCredentialsData();
+        [$userEmail, $userPassword] = $this->getCredentialsData();
 
         if ($userEmail && $userPassword) {
 

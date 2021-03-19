@@ -121,7 +121,7 @@ class MultiLogStats extends BaseObject
 
         $db = self::db();
 
-        list($limit, $offset) = $db->quoteLimitOffset($numberOfLogs, $offset);
+        [$limit, $offset] = $db->quoteLimitOffset($numberOfLogs, $offset);
 
         /*
          * This query has a VERY BAD performance without STRAIGHT_JOIN on mariaDB
@@ -188,7 +188,7 @@ class MultiLogStats extends BaseObject
      */
     public static function getNewestLogs($limit, $offset = null)
     {
-        list ($limit, $offset) = self::db()->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = self::db()->quoteLimitOffset($limit, $offset);
 
         $stmt = self::db()->multiVariableQuery("
             SELECT `cache_logs`.`id`
@@ -217,7 +217,7 @@ class MultiLogStats extends BaseObject
      */
     public static function getNewestLogsForUser(User $user, $limit, $offset = null)
     {
-        list ($limit, $offset) = self::db()->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = self::db()->quoteLimitOffset($limit, $offset);
 
         $stmt = self::db()->multiVariableQuery("
             SELECT `cache_logs`.`id`
@@ -242,7 +242,7 @@ class MultiLogStats extends BaseObject
 
     public static function getNewestLogsForUserCaches(User $user, $limit, $offset = null)
     {
-        list ($limit, $offset) = self::db()->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = self::db()->quoteLimitOffset($limit, $offset);
 
         $stmt = self::db()->multiVariableQuery("
             SELECT `cache_logs`.`id`

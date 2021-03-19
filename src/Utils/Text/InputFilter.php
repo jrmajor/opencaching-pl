@@ -179,13 +179,13 @@ class InputFilter
             // is end tag
             if (mb_substr($currentTag, 0, 1) == "/") {
                 $isCloseTag = TRUE;
-                list($tagName) = mb_split(' ', $currentTag);
+                [$tagName] = mb_split(' ', $currentTag);
                 $tagName = mb_substr($tagName, 1);
 
                 // is start tag
             } else {
                 $isCloseTag = FALSE;
-                list($tagName) = mb_split(' ', $currentTag);
+                [$tagName] = mb_split(' ', $currentTag);
             }
 
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
@@ -291,7 +291,7 @@ class InputFilter
 
             // split into attr name and value
             $attrSubSet = mb_split('=', trim($attrSet[$i]));
-            list($attrSubSet[0]) = mb_split(' ', $attrSubSet[0]);
+            [$attrSubSet[0]] = mb_split(' ', $attrSubSet[0]);
 
             // bugfix ... '=' inside attributes
             $aCount = count($attrSubSet);

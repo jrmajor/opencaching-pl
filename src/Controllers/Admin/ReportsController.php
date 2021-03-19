@@ -263,7 +263,7 @@ class ReportsController extends BaseController
         $paginationModel = new PaginationModel(ReportCommons::REPORTS_PER_PAGE);
         $reportsCount = ReportCommons::getReportsCounts($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser']);
         $paginationModel->setRecordsCount($reportsCount);
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+         [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $reports = ReportCommons::getReports($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser'], $offset, $limit);
         $this->view->setVar('paginationModel', $paginationModel);
         $this->view->setVar('reports', $reports);
@@ -320,7 +320,7 @@ class ReportsController extends BaseController
         $paginationModel = new PaginationModel(ReportCommons::REPORTS_PER_PAGE);
         $reportsCount = ReportCommons::getReportsCounts($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser']);
         $paginationModel->setRecordsCount($reportsCount);
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+         [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $reports = ReportCommons::getWatchedReports($this->loggedUser, $offset, $limit);
         $this->view->setVar('paginationModel', $paginationModel);
         $this->view->setVar('reports', $reports);

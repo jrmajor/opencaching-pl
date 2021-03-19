@@ -141,7 +141,7 @@ class CacheNotesController extends BaseController
 
             $pagination = new PaginationModel(50); //per-page number of caches
             $pagination->setRecordsCount($rowCount);
-            list($queryLimit, $queryOffset) = $pagination->getQueryLimitAndOffset();
+            [$queryLimit, $queryOffset] = $pagination->getQueryLimitAndOffset();
             $model->setPaginationModel($pagination);
 
             $model->addDataRows( self::completeDataRows(

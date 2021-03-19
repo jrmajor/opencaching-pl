@@ -185,7 +185,7 @@ class DbUpdateHistory
                 $uuid = basename($filePath);
                 if (!isset(self::$history[$uuid])) {
                     $fileData = file_get_contents($filePath);
-                    list($date, $time, $name) = explode(' ', $fileData);
+                    [$date, $time, $name] = explode(' ', $fileData);
                     self::$history[$uuid] = ['name' => $name, 'wasRunAt' => $date.' '.$time];
                     self::writeToDb($uuid);
                 }

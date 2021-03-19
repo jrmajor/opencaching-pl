@@ -283,7 +283,7 @@ class UserProfileController extends BaseController
 
         $this->view->setTemplate('userProfile/changeStatPic');
 
-        list ($statPicText, $statPicLogo) = $this->loggedUser->getStatPicDataArr();
+        [$statPicText, $statPicLogo] = $this->loggedUser->getStatPicDataArr();
         $this->view->setVar('statPicText', $statPicText);
         $this->view->setVar('statPicLogo', $statPicLogo);
 

@@ -29,7 +29,7 @@ class AdminNoteSet extends BaseObject
      */
     public static function getNotesForUser(User $user, $limit = self::DEFAULT_NOTES_COUNT, $offset = 0)
     {
-        list($limit, $offset) = self::db()->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = self::db()->quoteLimitOffset($limit, $offset);
 
         $query = "
             SELECT `note_id`

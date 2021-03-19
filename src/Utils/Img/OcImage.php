@@ -97,7 +97,7 @@ class OcImage
      */
     public function resizeToMaxDimensions(array $maxDimensions)
     {
-        list($maxWidth, $maxHeight) = $maxDimensions;
+        [$maxWidth, $maxHeight] = $maxDimensions;
 
         if ($this->getWidth() > $maxWidth) {
             // width is too high - resize

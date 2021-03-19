@@ -182,7 +182,7 @@ class MainMapController extends BaseController
                 $this->mapJsParams->dontSaveFilters = true;
                 $mapModel->setInfoMessage(tr('map_searchResultsMode'));
 
-                list($swLon, $swLat, $neLon, $neLat) = explode('|', $_GET['bbox']);
+                [$swLon, $swLat, $neLon, $neLat] = explode('|', $_GET['bbox']);
 
                 $swCoord = Coordinates::FromCoordsFactory($swLat, $swLon);
                 $neCoord = Coordinates::FromCoordsFactory($neLat, $neLon);

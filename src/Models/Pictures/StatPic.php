@@ -80,7 +80,7 @@ class StatPic extends BaseObject
     {
 
         // find user template
-        list ($statPicText, $statPicLogo) = $user->getStatPicDataArr();
+        [$statPicText, $statPicLogo] = $user->getStatPicDataArr();
         $statPicTpl = self::fromTplIdFactory($statPicLogo);
         if (is_null($statPicTpl)) {
             // there is no such tpl - take the defaut one

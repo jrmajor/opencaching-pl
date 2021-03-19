@@ -120,7 +120,7 @@ class OcDb extends OcPdo
         $result = [];
         while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
             if ($extractor !== null) {
-                list($key, $val) = $extractor($row);
+                [$key, $val] = $extractor($row);
                 $result[$key] = $val;
             } else {
                 $key = reset($row);

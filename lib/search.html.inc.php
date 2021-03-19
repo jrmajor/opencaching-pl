@@ -378,7 +378,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
     }
     $tmpline = $cache_line;
 
-    list ($iconname, $inactive) = getCacheIcon($loggedUser->getUserId(), $caches_record['cache_id'],
+     [$iconname, $inactive] = getCacheIcon($loggedUser->getUserId(), $caches_record['cache_id'],
             $caches_record['status'], $caches_record['user_id'], $caches_record['icon_large']);
 
     $tmpline = str_replace('{icon_large}', $iconname, $tmpline);

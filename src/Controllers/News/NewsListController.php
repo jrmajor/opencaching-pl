@@ -38,7 +38,7 @@ class NewsListController extends BaseController
     {
         $paginationModel = new PaginationModel();
         $paginationModel->setRecordsCount(News::getAllNewsCount($this->isUserLogged(), false));
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('paginationModel', $paginationModel);
         $this->showNewsList(News::getAllNews($this->isUserLogged(), false, $offset, $limit));
     }

@@ -101,7 +101,7 @@ class SimpleRouter
     public static function run()
     {
         // identify requested (or default) Controller/Action/params
-        list($ctrlName, $actionName, $params) = self::parse();
+        [$ctrlName, $actionName, $params] = self::parse();
 
         // first check the class filename
         if(!file_exists(self::getClassFilePath($ctrlName))) {

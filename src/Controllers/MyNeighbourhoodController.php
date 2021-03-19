@@ -153,7 +153,7 @@ class MyNeighbourhoodController extends BaseController
         $nbhItemSet = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($nbhItemSet->getLatestCachesCount(false));
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('caches', $nbhItemSet->getLatestCaches($limit, $offset, false));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);
@@ -186,7 +186,7 @@ class MyNeighbourhoodController extends BaseController
         $nbhItemSet = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($nbhItemSet->getTopRatedCachesCount());
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('caches', $nbhItemSet->getTopRatedCaches($limit, $offset));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);
@@ -219,7 +219,7 @@ class MyNeighbourhoodController extends BaseController
         $nbhItemSet = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($nbhItemSet->getLatestCachesCount(true));
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('caches', $nbhItemSet->getLatestCaches($limit, $offset, true));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);
@@ -252,7 +252,7 @@ class MyNeighbourhoodController extends BaseController
         $nbhItemSet = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($nbhItemSet->getLatestTitledCachesCount());
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('caches', $nbhItemSet->getLatestTitledCaches($limit, $offset));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);
@@ -285,7 +285,7 @@ class MyNeighbourhoodController extends BaseController
         $nbhItemSet = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($nbhItemSet->getUpcomingEventsCount());
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('caches', $nbhItemSet->getUpcomingEvents($limit, $offset));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);
@@ -318,7 +318,7 @@ class MyNeighbourhoodController extends BaseController
         $logset = new MyNbhSets($coords, $neighbourhoodsList[$selectedNbh]->getRadius());
         $paginationModel = new PaginationModel(self::ITEMS_PER_DETAIL_PAGE);
         $paginationModel->setRecordsCount($logset->getLatestLogsCount());
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('logs', $logset->getLatestLogs($limit, $offset));
         $this->view->setVar('neighbourhoodsList', $neighbourhoodsList);
         $this->view->setVar('paginationModel', $paginationModel);

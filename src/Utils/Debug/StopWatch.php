@@ -107,7 +107,7 @@ class StopWatch {
 
     private static function microTimeToMs($microtime)
     {
-        list($usec, $sec) = explode(" ", $microtime);
+        [$usec, $sec] = explode(" ", $microtime);
         return ((float) $usec + (float) $sec);
     }
 

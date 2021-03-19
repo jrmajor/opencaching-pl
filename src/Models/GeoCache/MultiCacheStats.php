@@ -24,7 +24,7 @@ class MultiCacheStats extends BaseObject
     {
 
         $db = self::db();
-        list($limit, $offset) = $db->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);
 
         $rs = $db->multiVariableQuery(
             "SELECT
@@ -56,7 +56,7 @@ class MultiCacheStats extends BaseObject
     public static function getIncomingEvents($limit)
     {
         $db = self::db();
-        list($limit, $offset) = $db->quoteLimitOffset($limit, 0);
+        [$limit, $offset] = $db->quoteLimitOffset($limit, 0);
 
         $rs = $db->multiVariableQuery(
             "SELECT
@@ -229,7 +229,7 @@ class MultiCacheStats extends BaseObject
      */
     public static function getAllLatestCaches($limit, $offset = 0)
     {
-        list ($limit, $offset) = self::db()->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = self::db()->quoteLimitOffset($limit, $offset);
 
         $stmt = self::db()->multiVariableQuery("
             SELECT `cache_id`

@@ -683,8 +683,8 @@ class ViewCacheController extends BaseController
     {
         global $hide_coords;
 
-        list($lat_dir, $lat_h, $lat_min) = $this->geocache->getCoordinates()->getLatitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
-        list($lon_dir, $lon_h, $lon_min) = $this->geocache->getCoordinates()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
+        [$lat_dir, $lat_h, $lat_min] = $this->geocache->getCoordinates()->getLatitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
+        [$lon_dir, $lon_h, $lon_min] = $this->geocache->getCoordinates()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
 
 
         if ($this->loggedUser || !$hide_coords) {

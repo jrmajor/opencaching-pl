@@ -19,7 +19,7 @@ $name = $_FILES['myfile']['name'];
 $size = $_FILES['myfile']['size'];
 
 if (strlen($name)) {
-    list($txt, $ext) = explode(".", $name);
+    [$txt, $ext] = explode(".", $name);
     $ext = strtolower($ext);
     if (in_array($ext, $valid_formats)) {
         if ($size < (1024 * 1024 * 2)) { // Image size max 2 MB

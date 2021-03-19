@@ -91,7 +91,7 @@ class CacheNote extends BaseObject
     {
         $db = self::db();
 
-        list($limit, $offset) = $db->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);
 
         $stmt = $db->multiVariableQuery(
             "SELECT cache_id FROM (

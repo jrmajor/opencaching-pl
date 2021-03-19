@@ -38,7 +38,7 @@ class Uri {
             $uri = $_SERVER['REQUEST_URI'];
         }
 
-        list ($uriWithoutHash) = explode('#', $uri);
+        [$uriWithoutHash] = explode('#', $uri);
 
         return $uriWithoutHash.'#' . $anchorName;
 

@@ -98,7 +98,7 @@ class Coordinates
      */
     public function loadFromOkapi($okapiLocation)
     {
-        list ($lat, $lon) = explode("|", $okapiLocation);
+        [$lat, $lon] = explode("|", $okapiLocation);
         $this->latitude = (float) $lat;
         $this->longitude = (float) $lon;
     }
@@ -196,7 +196,7 @@ class Coordinates
     {
         $prefix = $this->getLongitudeHemisphereSymbol();
 
-        list($deg, $min, $sec) = $this->getParts($this->longitude);
+        [$deg, $min, $sec] = $this->getParts($this->longitude);
 
         return $this->getFormattedPartsArray($format, $prefix, $deg, $min, $sec);
     }
@@ -211,7 +211,7 @@ class Coordinates
     {
         $prefix = $this->getLatitudeHemisphereSymbol();
 
-        list($deg, $min, $sec) = $this->getParts($this->latitude);
+        [$deg, $min, $sec] = $this->getParts($this->latitude);
 
         return $this->getFormattedPartsArray($format, $prefix, $deg, $min, $sec);
 

@@ -47,7 +47,7 @@ class UserIgnoredCache extends BaseObject
     ){
         $db = self::db();
 
-        list($limit, $offset) = $db->quoteLimitOffset($limit, $offset);
+        [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);
 
         $stmt = $db->multiVariableQuery(
             "SELECT c.cache_id, c.name, c.type, c.status, c.wp_oc,

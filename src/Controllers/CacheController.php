@@ -49,7 +49,7 @@ class CacheController extends BaseController
 
         $pagination = new PaginationModel(self::CACHES_PER_NEW_CACHES_PAGE);
         $pagination->setRecordsCount($newCachesCount);
-        list($limit, $offset) = $pagination->getQueryLimitAndOffset();
+        [$limit, $offset] = $pagination->getQueryLimitAndOffset();
 
         $model = new ListOfCachesModel();
         $model->addColumn(new Column_DateTime(tr('cs_publicationDate'),
@@ -187,7 +187,7 @@ class CacheController extends BaseController
 
         $pagination = new PaginationModel(self::CACHES_PER_NEW_CACHES_PAGE);
         $pagination->setRecordsCount($titledCachesCount);
-        list($limit, $offset) = $pagination->getQueryLimitAndOffset();
+        [$limit, $offset] = $pagination->getQueryLimitAndOffset();
 
         $model = new ListOfCachesModel();
         $model->addColumn(new Column_DateTime(tr('titled_cache_date'),
@@ -248,7 +248,7 @@ class CacheController extends BaseController
 
         $pagination = new PaginationModel(self::CACHES_PER_NEW_CACHES_PAGE);
         $pagination->setRecordsCount($cachesCount);
-        list($limit, $offset) = $pagination->getQueryLimitAndOffset();
+        [$limit, $offset] = $pagination->getQueryLimitAndOffset();
 
         $model = new ListOfCachesModel();
         $model->addColumn(new Column_SimpleText(ucfirst(tr('recommendations')),

@@ -94,7 +94,7 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
 
         $i = 0;
 
-        while (list($klucz, $wartosc) = each($output['results'])) {
+        while ([$klucz, $wartosc] = each($output['results'])) {
 
             $query = "select status,cache_id,name, score, latitude, longitude, user_id, type from caches where wp_oc = '" . $wartosc . "'";
             $wynik = XDb::xSql($query);

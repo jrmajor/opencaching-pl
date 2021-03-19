@@ -33,7 +33,7 @@ class NewsAdminController extends BaseController
     {
         $paginationModel = new PaginationModel(10);
         $paginationModel->setRecordsCount(News::getAdminNewsCount());
-        list ($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $this->view->setVar('paginationModel', $paginationModel);
         $this->showAdminNewsList(News::getAdminNews($offset, $limit));
     }

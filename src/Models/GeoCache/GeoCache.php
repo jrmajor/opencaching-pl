@@ -1691,7 +1691,7 @@ class GeoCache extends GeoCacheCommons
 
     public function recalculateCacheScore()
     {
-        list($newVotes, $newScore) = GeoCacheScore::getVotesScoreForCache($this->getCacheId());
+        [$newVotes, $newScore] = GeoCacheScore::getVotesScoreForCache($this->getCacheId());
 
         $this->db->multiVariableQuery("UPDATE caches SET votes=:1, score=:2 WHERE cache_id=:3",
             $newVotes, $newScore, $this->getCacheId());

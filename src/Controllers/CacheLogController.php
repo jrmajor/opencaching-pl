@@ -162,7 +162,7 @@ class CacheLogController extends BaseController
         $paginationModel = new PaginationModel(25);
 
         $paginationModel->setRecordsCount(MultiLogStats::getLastLogsNumber());
-        list($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
 
         $allLogs = MultiLogStats::getLastLogs($limit, $offset);
 

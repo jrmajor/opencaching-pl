@@ -45,7 +45,7 @@ class CacheSetsListController extends BaseController
         $paginationModel->setRecordsCount(
             CacheSet::GetAllCacheSetsCount($allowedStatuses) );
 
-        list($limit, $offset) = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
 
         $allCacheSets = CacheSet::GetAllCacheSets($allowedStatuses, $offset, $limit);
 
