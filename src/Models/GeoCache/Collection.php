@@ -6,7 +6,7 @@ class Collection extends \ArrayObject
 {
 
     private $isReady = false;
-    private $geocachesIdArray = array();
+    private $geocachesIdArray = [];
 
     public function append($geoCache)
     {

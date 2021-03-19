@@ -30,7 +30,7 @@ class UserEmailSender
         $userMessage = new EmailFormatter(self::TEMPLATE_PATH . 'messageU2U.email.html', true);
         $userMessage->setVariable('fromUserMailUrl', SimpleRouter::getAbsLink('UserProfile', 'mailTo', [
             $from->getUserId(),
-            urlencode($subject)
+            urlencode($subject),
         ]));
         $userMessage->setVariable('fromUserProfileUrl', $from->getProfileUrl());
         $userMessage->setVariable('fromUsername', $from->getUserName());
@@ -112,7 +112,7 @@ class UserEmailSender
         $intro = mb_ereg_replace('{OCsiteLink}', '<a href="' . OcConfig::getAbsolute_server_URI() . '">' . OcConfig::getSiteName() . '</a>', tr('activate_mail_intro'));
         $activateUrl = SimpleRouter::getAbsLink('UserRegistration', 'activate', [
             $user->getUserId(),
-            urlencode($user->getActivationCode())
+            urlencode($user->getActivationCode()),
         ]);
 
         $userMessage = new EmailFormatter(self::TEMPLATE_PATH . 'activation.email.html', true);

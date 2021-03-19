@@ -54,7 +54,7 @@ class UserInputFilter
         // this is ony for debug purpose - don't turn it on at production!
         $config->set('Core.CollectErrors', isset($debug_page) ? $debug_page : false);
 
-        $config->set('Attr.AllowedFrameTargets', array('_blank'));
+        $config->set('Attr.AllowedFrameTargets', ['_blank']);
 
         // $config->set('HTML.Trusted', true); // <-- DO NOT ENABLE!
 
@@ -147,16 +147,14 @@ class OC_HTMLSafeEmbed extends HTMLPurifier_HTMLModule_SafeEmbed
 
     public function setup($config)
     {
-        $newEmbed = HTMLPurifier_ElementDef::create(
-            null, null, array(
-                // TODO: jeżeli brak atrybutu type, lub nie spełnia kryterów, to usuń cały element ?
-                'type' => 'Enum#application/x-shockwave-flash,image/svg+xml',
-                'width' => 'Length#1280',
-                'height' => 'Length#1920',
-                'allowscriptaccess' => 'Enum#never,always,sameDomain',
-                'allownetworking' => 'Enum#all,internal,none',
-            )
-            );
+        $newEmbed = HTMLPurifier_ElementDef::create(null, null, [
+            // TODO: jeżeli brak atrybutu type, lub nie spełnia kryterów, to usuń cały element ?
+            'type' => 'Enum#application/x-shockwave-flash,image/svg+xml',
+            'width' => 'Length#1280',
+            'height' => 'Length#1920',
+            'allowscriptaccess' => 'Enum#never,always,sameDomain',
+            'allownetworking' => 'Enum#all,internal,none',
+        ]);
         parent::setup($config);
         $embed = &$this->info['embed'];
         $embed->mergeIn($newEmbed);
@@ -170,14 +168,12 @@ class OC_HTMLSafeObject extends HTMLPurifier_HTMLModule_SafeObject
 
     public function setup($config)
     {
-        $newObject = HTMLPurifier_ElementDef::create(
-            null, null, array(
-                // TODO: j.w.
-                'type' => 'Enum#application/x-shockwave-flash,image/svg+xml',
-                'width' => 'Length#1280',
-                'height' => 'Length#1920',
-            )
-            );
+        $newObject = HTMLPurifier_ElementDef::create(null, null, [
+            // TODO: j.w.
+            'type' => 'Enum#application/x-shockwave-flash,image/svg+xml',
+            'width' => 'Length#1280',
+            'height' => 'Length#1920',
+        ]);
         parent::setup($config);
         $object = &$this->info['object'];
         $object->mergeIn($newObject);
@@ -200,8 +196,8 @@ class OC_HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
     public function __construct()
     {
         parent::__construct();
-        $this->allowScriptAccess = new HTMLPurifier_AttrDef_Enum(array('never', 'always', 'sameDomain'));
-        $this->allowNetworking = new HTMLPurifier_AttrDef_Enum(array('all', 'internal', 'none'));
+        $this->allowScriptAccess = new HTMLPurifier_AttrDef_Enum(['never', 'always', 'sameDomain']);
+        $this->allowNetworking = new HTMLPurifier_AttrDef_Enum(['all', 'internal', 'none']);
     }
 
     public function transform($attr, $config, $context)

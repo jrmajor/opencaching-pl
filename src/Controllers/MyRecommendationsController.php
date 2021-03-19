@@ -116,7 +116,7 @@ class MyRecommendationsController extends BaseController
                         return [
                             'icon' => '/images/log/16x16-trash.png',
                             'onClick' => "removeRecommendation(this, {$row['cache_id']})",
-                            'title' => tr('myRecommendations_removeRecommendation')
+                            'title' => tr('myRecommendations_removeRecommendation'),
                         ];
                     }
                 ));

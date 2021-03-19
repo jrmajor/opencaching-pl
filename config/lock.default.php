@@ -29,5 +29,5 @@ $lock = [
     'file' => [
         'class' => 'src\Utils\Lock\FileLock',
         'dir' => 'oc_lock',
-    ]
+    ],
 ];

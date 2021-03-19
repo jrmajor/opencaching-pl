@@ -533,12 +533,12 @@ class ViewCacheController extends BaseController
             // check if user has any activities based on cache type
             if ($this->geocache->getCacheType() == GeoCache::TYPE_EVENT) {
                 $activityTypes = [
-                    GeoCacheLog::LOGTYPE_ATTENDED
+                    GeoCacheLog::LOGTYPE_ATTENDED,
                 ];
             } else {
                 $activityTypes = [
                     GeoCacheLog::LOGTYPE_FOUNDIT,
-                    GeoCacheLog::LOGTYPE_DIDNOTFIND
+                    GeoCacheLog::LOGTYPE_DIDNOTFIND,
                 ];
             }
             $userActivityLogsCount = $this->geocache->getLogsCountByType(

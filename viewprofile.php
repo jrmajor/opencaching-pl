@@ -848,9 +848,9 @@ $view->buildView();
  */
 function buildPowerTrailIcons(ArrayObject $powerTrails)
 {
-    $allowedPtStatus = array(
-        PowerTrail::STATUS_OPEN, PowerTrail::STATUS_INSERVICE, PowerTrail::STATUS_CLOSED
-    );
+    $allowedPtStatus = [
+        PowerTrail::STATUS_OPEN, PowerTrail::STATUS_INSERVICE, PowerTrail::STATUS_CLOSED,
+    ];
     $result = '<table width="100%"><tr><td>';
     /* @var $powertrail PowerTrail */
     foreach ($powerTrails as $powertrail) {

@@ -21,7 +21,7 @@ class PrintList {
 
             // add cache to print (do not duplicate items)
             if ( !isset($_SESSION['print_list']) || !is_array($_SESSION['print_list']) ){
-                $_SESSION['print_list'] = array();
+                $_SESSION['print_list'] = [];
             }
 
             $_SESSION['print_list'][$cacheId] = $cacheId;
@@ -73,13 +73,13 @@ class PrintList {
         if( isset($_SESSION['print_list']) && is_array($_SESSION['print_list']) ){
             return $_SESSION['print_list'];
         }else{
-            return array();
+            return [];
         }
     }
 
     public static function Flush()
     {
-        $_SESSION['print_list'] = array();
+        $_SESSION['print_list'] = [];
     }
 
     public static function RemoveCache($cacheId)

@@ -260,20 +260,20 @@ if (!$loggedUser) {
                 if ($_REQUEST['cache_attribs'] != '')
                     $options['cache_attribs'] = mb_split(';', $_REQUEST['cache_attribs']);
                 else
-                    $options['cache_attribs'] = array();
+                    $options['cache_attribs'] = [];
             }
             else
-                $options['cache_attribs'] = array();
+                $options['cache_attribs'] = [];
 
             if (isset($_REQUEST['cache_attribs_not']))
             {
                 if ($_REQUEST['cache_attribs_not'] != '')
                     $options['cache_attribs_not'] = mb_split(';', $_REQUEST['cache_attribs_not']);
                 else
-                    $options['cache_attribs_not'] = array();
+                    $options['cache_attribs_not'] = [];
             }
             else
-                $options['cache_attribs_not'] = array();
+                $options['cache_attribs_not'] = [];
 
             if (!isset($_REQUEST['unit']))
             {
@@ -492,12 +492,12 @@ if (!$loggedUser) {
             if(!isset($options['expert'])) $options['expert']='';
             if ($options['expert'] == 0)
             {
-                $sql_select = array();
-                $sql_from = array();
-                $sql_join = array();
-                $sql_where = array();
-                $sql_having = array();
-                $sql_group = array();
+                $sql_select = [];
+                $sql_from = [];
+                $sql_join = [];
+                $sql_where = [];
+                $sql_having = [];
+                $sql_group = [];
 
                 // show only published caches
                 $sql_where[] = '(`caches`.`status` != 4 OR `caches`.`user_id`=' . XDb::xEscape($loggedUser->getUserId()) . ')';
@@ -969,7 +969,7 @@ if (!$loggedUser) {
                         outputSearchForm($options, $loggedUser);
                     }
 
-                    $ft_types = array();
+                    $ft_types = [];
                     if (isset($options['ft_name']) && $options['ft_name'])
                         $ft_types[] = 2;
                     if (isset($options['ft_logs']) && $options['ft_logs'])
@@ -1006,9 +1006,9 @@ if (!$loggedUser) {
 
                     $dbcSearch->simpleQuery('CREATE TEMPORARY TABLE `tmpFTCaches` (`cache_id` int (11) PRIMARY KEY) ' . $queryFilter);
 
-                    $sql_select = array();
-                    $sql_from = array();
-                    $sql_where = array();
+                    $sql_select = [];
+                    $sql_from = [];
+                    $sql_where = [];
 
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
                     $sql_from[] = '`tmpFTCaches`';
@@ -1073,7 +1073,7 @@ if (!$loggedUser) {
 
                 if($pos !== false)
                 {
-                    $c_type = array();
+                    $c_type = [];
                     for ($i=0; $i<strlen($options['cachetype']);$i++){
                         if ($options['cachetype'][$i] == '1') {
                             $c_type[] = $i+1;
@@ -1109,7 +1109,7 @@ if (!$loggedUser) {
                     }
                 }
 
-                $cachesize = array();
+                $cachesize = [];
 
                 if (isset($options['cachesize_1']) && ($options['cachesize_1'] == '1')) { $cachesize[] = '1'; }
                 if (isset($options['cachesize_2']) && ($options['cachesize_2'] == '1')) { $cachesize[] = '2'; }

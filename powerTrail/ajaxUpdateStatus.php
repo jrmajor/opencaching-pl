@@ -15,7 +15,7 @@ if(!$loggedUser){
 $ptAPI = new powerTrailBase;
 
 $powerTrailId = (int) $_REQUEST['projectId'];
-$powerTrail = new PowerTrail(array('id' => $powerTrailId));
+$powerTrail = new PowerTrail(['id' => $powerTrailId]);
 $newStatus = (int) $_REQUEST['newStatus'];
 if(isset($_REQUEST['commentTxt'])) {
     $commentText = htmlspecialchars($_REQUEST['commentTxt']);
@@ -71,10 +71,10 @@ if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId)
         $db->multiVariableQuery($logQuery, $powerTrailId, $loggedUser->getUserId(), $ptAPI->logActionTypes[6]['type'], 0);
     }
 } else {
-    $updateStatusResult = array (
+    $updateStatusResult =  [
         'updateStatusResult' => false,
         'message' => tr('pt241'),
-    );
+    ];
 }
 
 $updateStatusResult['currentStatus'] = $powerTrail->getStatus();

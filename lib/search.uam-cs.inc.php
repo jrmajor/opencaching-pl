@@ -198,11 +198,11 @@ exit();
 
 function cs2cs_core2($lat, $lon, $to) {
 
-    $descriptorspec = array(
-        0 => array("pipe", "r"),     // stdin is a pipe that the child will read from
-        1 => array("pipe", "w"),     // stdout is a pipe that the child will write to
-        2 => array("pipe", "w")      // stderr is a pipe that the child will write to
-    );
+    $descriptorspec = [
+        0 => ["pipe", "r"],     // stdin is a pipe that the child will read from
+        1 => ["pipe", "w"],     // stdout is a pipe that the child will write to
+        2 => ["pipe", "w"],      // stderr is a pipe that the child will write to
+    ];
 
     if (mb_eregi('^[a-z0-9_ ,.\+\-=]*$', $to) == 0) {
         die("invalid arguments in command: " . $to ."\n");

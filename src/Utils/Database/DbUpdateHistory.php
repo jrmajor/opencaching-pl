@@ -156,7 +156,7 @@ class DbUpdateHistory
                 'db_update_history', [
                     'uuid varchar(36) NOT NULL',
                     "name varchar(60) NOT NULL COMMENT 'redundant information / cache'",
-                    'wasRunAt datetime NOT NULL'
+                    'wasRunAt datetime NOT NULL',
                 ],
                 ['engine' => 'InnoDB']
             );

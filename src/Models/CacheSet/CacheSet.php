@@ -148,11 +148,11 @@ class CacheSet extends CacheSetCommon
      * Returns list of all cache-sets
      * @return array
      */
-    public static function GetAllCacheSets($statusIn=array(), $offset=null, $limit=null)
+    public static function GetAllCacheSets($statusIn=[], $offset=null, $limit=null)
     {
 
         if(empty($statusIn)){
-            $statusIn = array(CacheSetCommon::STATUS_OPEN);
+            $statusIn = [CacheSetCommon::STATUS_OPEN];
         }
 
 
@@ -171,7 +171,7 @@ class CacheSet extends CacheSetCommon
         });
     }
 
-    public static function GetAllCacheSetsCount(array $statusIn = array())
+    public static function GetAllCacheSetsCount(array $statusIn = [])
     {
 
         $query = QueryBuilder::instance()

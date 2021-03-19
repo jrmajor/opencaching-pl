@@ -83,88 +83,88 @@ $dbc = OcDb::instance();
 $sNrColumnsSortSearch = "NrColumnsSortSearch";
 $sOrderSortSearch = "OrderSortSearch";
 
-$colNameSearch = array(
-    0 => array(
+$colNameSearch = [
+    0 => [
         "C" => "CacheID",
-        "O" => "CacheID"
-    ),
-    1 => array(
+        "O" => "CacheID",
+    ],
+    1 => [
         "C" => "",
-        "O" => tr('cache_type')
-    ),
-    2 => array(
+        "O" => tr('cache_type'),
+    ],
+    2 => [
         "C" => tr('name_label'),
-        "O" => tr('cache_label')
-    ),
-    3 => array(
+        "O" => tr('cache_label'),
+    ],
+    3 => [
         "C" => tr('short_description'),
-        "O" => tr('short_description')
-    ),
-    4 => array(
+        "O" => tr('short_description'),
+    ],
+    4 => [
         "C" => tr('owner'),
-        "O" => tr('CacheOwner')
-    ),
-    5 => array(
+        "O" => tr('CacheOwner'),
+    ],
+    5 => [
         "C" => tr('Hidden'),
-        "O" => tr('date_hidden_label')
-    ),
-    6 => array(
+        "O" => tr('date_hidden_label'),
+    ],
+    6 => [
         "C" => tr('FNC'),
-        "O" => tr('FoundNotFoundComment')
-    ),
-    7 => array(
+        "O" => tr('FoundNotFoundComment'),
+    ],
+    7 => [
         "C" => tr('F'),
-        "O" => tr('Found')
-    ),
-    8 => array(
+        "O" => tr('Found'),
+    ],
+    8 => [
         "C" => tr('N'),
-        "O" => tr('NotFound')
-    ),
-    9 => array(
+        "O" => tr('NotFound'),
+    ],
+    9 => [
         "C" => tr('C'),
-        "O" => tr('note')
-    ),
-    10 => array(
+        "O" => tr('note'),
+    ],
+    10 => [
         "C" => "<img src='images/rating-star.png'>",
-        "O" => tr('RecommendationNumber')
-    ),
-    11 => array(
+        "O" => tr('RecommendationNumber'),
+    ],
+    11 => [
         "C" => tr('Entry_latest'),
-        "O" => tr('TypeDateLastEntry')
-    ),
-    12 => array(
+        "O" => tr('TypeDateLastEntry'),
+    ],
+    12 => [
         "C" => tr('type'),
-        "O" => tr('LastTypeEntry')
-    ),
-    13 => array(
+        "O" => tr('LastTypeEntry'),
+    ],
+    13 => [
         "C" => tr('date_logged'),
-        "O" => tr('LastEntryDate')
-    ),
-    14 => array(
+        "O" => tr('LastEntryDate'),
+    ],
+    14 => [
         "C" => tr('content'),
-        "O" => tr('LastEntryContent')
-    ),
-    15 => array(
+        "O" => tr('LastEntryContent'),
+    ],
+    15 => [
         "C" => tr('Coordinates'),
-        "O" => tr('Coordinates')
-    ),
-    16 => array(
+        "O" => tr('Coordinates'),
+    ],
+    16 => [
         "C" => tr('Distance'),
-        "O" => tr('DirectionDistance')
-    ),
-    17 => array(
+        "O" => tr('DirectionDistance'),
+    ],
+    17 => [
         "C" => tr('T_T'),
-        "O" => tr('TaskTerainDifficulty')
-    ),
-    18 => array(
+        "O" => tr('TaskTerainDifficulty'),
+    ],
+    18 => [
         "C" => "",
-        "O" => tr('srch_Send_to_GPS')
-    ),
-    19 => array(
+        "O" => tr('srch_Send_to_GPS'),
+    ],
+    19 => [
         "C" => "cache_code",
-        "O" => "cache_code"
-    ),
-);
+        "O" => "cache_code",
+    ],
+];
 
 $sDefCol4Search = "DefCol4Search";
 if (! OcCookie::contains($sDefCol4Search)) {
@@ -430,11 +430,11 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
     $tmpline = str_replace('{diffpic}', icon_difficulty("diff", $caches_record['difficulty']), $tmpline);
     $tmpline = str_replace('{terrpic}', icon_difficulty("terr", $caches_record['terrain']), $tmpline);
 
-    $typy = array(
+    $typy = [
         0 => 0,
         1 => 0,
-        2 => 0
-    );
+        2 => 0,
+    ];
     if ($CalcFNC) {
 
         $rs = $dbc->multiVariableQuery(
@@ -785,5 +785,5 @@ function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconna
     $iconname = mb_eregi_replace("\..*", "", $iconname);
     $iconname .= $cacheicon_searchable . $cacheicon_type . ".png";
 
-    return array($iconname, $inactive);
+    return [$iconname, $inactive];
 }

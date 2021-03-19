@@ -595,7 +595,7 @@ class OcDb extends OcPdo
     {
         return [
             self::quoteLimit($limit),
-            self::quoteOffset($offset)
+            self::quoteOffset($offset),
         ];
     }
 

@@ -29,19 +29,19 @@ class OcPdo extends PDO
         $conf = OcConfig::instance();
         $this->dbName = $conf->getDbName();
 
-        $dsnarr = array(
+        $dsnarr = [
             'host' => $conf->getDbHost(),
             'dbname' => $this->dbName,
-            'charset' => 'utf8'
-        );
+            'charset' => 'utf8',
+        ];
 
-        $options = array(
+        $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::MYSQL_ATTR_LOCAL_INFILE => true,
-            PDO::ATTR_EMULATE_PREPARES => true /* TODO: we should consider disabling the emulation!
+            PDO::ATTR_EMULATE_PREPARES => true, /* TODO: we should consider disabling the emulation!
             But this means that placeholders can't be reuse in one query (case: multiVariableQuery) */
-        );
+        ];
 
         /*
          * Older PHP versions do not support the 'charset' DSN option.
@@ -51,7 +51,7 @@ class OcPdo extends PDO
             $options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . $dsnarr['charset'];
         }
 
-        $dsnpairs = array();
+        $dsnpairs = [];
         foreach ($dsnarr as $k => $v) {
             if ($v === null) {
                 continue;

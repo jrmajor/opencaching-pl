@@ -178,7 +178,7 @@ if( $loggedUser || !$hide_coords ) {
             $user_id = $loggedUser->getUserId();
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id];
             if ($access_log === null) {
-                $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id] = array();
+                $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id];
             }
             if (@$access_log[$cache_id] !== true) {

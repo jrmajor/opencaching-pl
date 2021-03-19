@@ -352,14 +352,14 @@ class OpenCheckerCore {
  * obtain correct counters
  */
 
-            $status = array(
+            $status = [
                 '1' => '<img src="images/log/16x16-found.png" border="0" alt="Gotowa do szukania">',
                 '2' => '<img src="images/log/16x16-temporary.png" border="0" alt="Tymczasowo niedost�pna">',
                 '3' => '<img src="images/log/16x16-dnf.png" border="0" alt="zarchiwizowana">',
                 '4' => '<img src="images/log/16x16-temporary.png" border="0" alt="Ukryta do czasu weryfikacji">',
                 '5' => '<img src="images/log/16x16-temporary.png" border="0" alt="jeszcze niedost�pna">',
-                '6' => '<img src="images/log/16x16-dnf.png" border="0" alt="Zablokowana przez COG">'
-            );
+                '6' => '<img src="images/log/16x16-dnf.png" border="0" alt="Zablokowana przez COG">',
+            ];
 
             $conn = XDb::instance();
             $conn->query('SET CHARSET utf8');
@@ -484,7 +484,7 @@ class Pagination
         $param1 = ($current_page - 1) * $per_page;
         $this->data = array_slice($values, $param1, $per_page);
 
-        $numbers = array();
+        $numbers = [];
         for ($x = 1; $x <= $counts; $x++) {
             $numbers[] = $x;
         }

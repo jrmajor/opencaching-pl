@@ -25,9 +25,9 @@ $db = OcDb::instance();
 // inline options
 $shortopts = "u:";
 $shortopts .= "h";
-$longopts  = array(
-    "userId:"           // No value
-);
+$longopts  = [
+    "userId:",           // No value
+];
 $options = getopt($shortopts, $longopts);
 
 

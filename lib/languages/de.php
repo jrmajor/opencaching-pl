@@ -1,6 +1,6 @@
 <?php
 
-$translations = array(
+$translations = [
     'main_menu' => 'Hauptmenü',
     'user_menu' => 'Benutzermenü',
     'new' => 'NEU',
@@ -3101,4 +3101,4 @@ Verwaltet die Opencaching-Website, kümmert sich um das Wiki, prüft neue Caches
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
 //  '' => '',
-);
+];

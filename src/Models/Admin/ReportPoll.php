@@ -102,7 +102,7 @@ class ReportPoll extends BaseObject
     {
         if ($this->report == null && $this->dataLoaded) {
             $this->report = new Report([
-                'reportId' => $this->reportId
+                'reportId' => $this->reportId,
             ]);
         }
         return $this->report;

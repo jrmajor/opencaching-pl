@@ -15,12 +15,12 @@ require_once(__DIR__.'/../lib/common.inc.php');
 
 class AutoArch
 {
-    private $step = array(
+    private $step = [
         "START" => 0,
         "AFTER_FIRST_MAIL_SENT" => 1,
         "AFTER_SECOND_MAIL_SENT" => 2,
-        "ARCH_COMPLETE" => 3
-    );
+        "ARCH_COMPLETE" => 3,
+    ];
 
     /**
      *  @var $ocConfig OcConfig
@@ -74,7 +74,7 @@ class AutoArch
     {
         $octeamEmailAddress = OcConfig::getEmailAddrOcTeam();
         $siteName = $this->ocConfig->getSiteName();
-        $cache = new GeoCache(array('cacheId' => (int) $cacheid));
+        $cache = new GeoCache(['cacheId' => (int) $cacheid]);
         switch ($step) {
             case $this->step["START"]:
                 $email_content = file_get_contents(__DIR__.'/../resources/email/arch1.email');
@@ -108,7 +108,7 @@ class AutoArch
         if(!$status){
             Debug::errorLog('Mail sending failure: to:'.$cache->getOwner()->getEmail());
         }
-        Log::logentry(Log::EVENT_AUTOARCHIVE, $cache->getOwner()->getUserId(), $cache->getCacheId(), 0, 'Sending mail to ' . $cache->getOwner()->getEmail(), array('status' => $status));
+        Log::logentry(Log::EVENT_AUTOARCHIVE, $cache->getOwner()->getUserId(), $cache->getCacheId(), 0, 'Sending mail to ' . $cache->getOwner()->getEmail(), ['status' => $status]);
     }
 
     private function loadCachesToProcess()

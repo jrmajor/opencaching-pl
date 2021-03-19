@@ -264,5 +264,5 @@ function wgs2u1992($lat, $lon)
     $X = $mo * $Xgk + $FN;
     $Y = $mo * $Ygk + $FE;
 
-    return (array($X, $Y));
+    return ([$X, $Y]);
 }

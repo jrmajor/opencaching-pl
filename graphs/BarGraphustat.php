@@ -25,8 +25,8 @@ if (isset($_REQUEST['userid']) && isset($_REQUEST['t'])) {
     }
 }
 
-$y = array();
-$x = array();
+$y = [];
+$x = [];
 
 
 if ($tit == "ccy") {

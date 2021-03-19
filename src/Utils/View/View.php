@@ -368,7 +368,7 @@ class View
         $this->_localJs[] = [
             'url' => $jsUrl,
             'async' => $async,
-            'defer' => $defer
+            'defer' => $defer,
         ];
         $this->_localJs = array_unique($this->_localJs, SORT_REGULAR);
 

@@ -435,7 +435,7 @@ $gpxAttribID[999] = '999';        $gpxAttribName[999] = 'Log password';
             $user_id = $loggedUser ? $loggedUser->getUserId() : null;
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
             if ($access_log === null) {
-                $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = array();
+                $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
             }
             if (@$access_log[$cache_id] !== true) {

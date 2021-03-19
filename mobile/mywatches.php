@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
         $ile2 = XDb::xNumRows($wynik);
 
         if ($ile2 > 0) {
-            $znalezione = array();
+            $znalezione = [];
             while ($rek = XDb::xFetchArray($wynik)) {
 
                 $query = "select status,cache_id,name, score, latitude, longitude, wp_oc, user_id, type, date_hidden, null as distance from caches where cache_id=" . $rek['cache_id'] . " order by name";

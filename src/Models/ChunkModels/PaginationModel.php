@@ -45,7 +45,7 @@ class PaginationModel {
     }
 
     public function getQueryLimitAndOffset(){
-        return array($this->getRecordsPerPageNum(), $this->getQueryOffset());
+        return [$this->getRecordsPerPageNum(), $this->getQueryOffset()];
     }
 
     /**

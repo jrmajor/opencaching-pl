@@ -61,8 +61,8 @@ class PrintListController extends BaseController
                     return [
                         'icon' => '/images/log/16x16-trash.png',
                         'onClick' => "removeFromList(this, {$cache->getCacheId()})",
-                        'title' => tr('mylist_02')
-                        ];
+                        'title' => tr('mylist_02'),
+                    ];
                 }
                 ));
 

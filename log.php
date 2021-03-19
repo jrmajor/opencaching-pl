@@ -166,7 +166,7 @@ $is_scored_query = XDb::xMultiVariableQueryValue(
 
 if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
 
-    $color_table = array("#DD0000", "#F06464", "#5A5A5A", "#77CC00", "#00DD00");
+    $color_table = ["#DD0000", "#F06464", "#5A5A5A", "#77CC00", "#00DD00"];
 
     $score = '';
     $line_cnt = 0;
@@ -240,7 +240,7 @@ if (isGeokretInCache($geoCache->getCacheId())) {
 $dbConWpt = OcDb::instance();
 $s = $dbConWpt->paramQuery(
     "SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:user_id LIMIT 1",
-    array('user_id' => array('value' => $user->getUserId(), 'data_type' => 'integer')));
+    ['user_id' => ['value' => $user->getUserId(), 'data_type' => 'integer']]);
 
 
 if ($databaseResponse = $dbConWpt->dbResultFetchOneRowOnly($s)) {
@@ -252,7 +252,7 @@ if ($databaseResponse = $dbConWpt->dbResultFetchOneRowOnly($s)) {
 
     $rs = $dbConWpt->paramQuery(
         "SELECT `wp_oc` FROM `caches` WHERE `cache_id` = :cache_id LIMIT 1",
-        array('cache_id' => array('value' => $geoCache->getCacheId(), 'data_type' => 'integer')));
+        ['cache_id' => ['value' => $geoCache->getCacheId(), 'data_type' => 'integer']]);
 
     $cwpt = $dbConWpt->dbResultFetchOneRowOnly($rs);
     $cache_waypt = $cwpt['wp_oc'];

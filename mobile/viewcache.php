@@ -33,7 +33,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
             $user_id = @$_SESSION['user_id'] > 0 ? $_SESSION['user_id'] : null;
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
             if ($access_log === null) {
-                $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = array();
+                $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
             }
             if (@$access_log[$cache_id] !== true) {
@@ -60,7 +60,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
         $wynik = XDb::xSql($query);
 
         $i = 0;
-        $cache_desc = array();
+        $cache_desc = [];
         $cache_desc['desc'] = '';
         $cache_desc['short_desc'] = '';
         $cache_desc['hint'] = '';
@@ -105,7 +105,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
             $if_found = 0;
         }
 
-        $cache_info = array();
+        $cache_info = [];
 
         $cache_info['if_found'] = $if_found;
 
@@ -158,7 +158,7 @@ if (isSet($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != "OP") {
             $query = "select url, title, spoiler from pictures where object_id = '" . $caches['cache_id'] . "' and display=1 and object_type=2;";
             $wynik = XDb::xSql($query);
 
-            $znalezione = array();
+            $znalezione = [];
 
             while ($rekord = XDb::xFetchArray($wynik))
                 $photos[] = $rekord;

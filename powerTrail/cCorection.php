@@ -12,7 +12,7 @@ class powerTrail_cCorection
     private $cacheId = 0;
     private $latitude = 0;
     private $longitude = 0;
-    private $userArray = array();
+    private $userArray = [];
     private $cacheType = 0;
 
     public function __construct($params)
@@ -133,7 +133,7 @@ class powerTrail_cCorection
 final class UserCollection
 {
 
-    private $userArray = array();
+    private $userArray = [];
 
     public static function Instance()
     {

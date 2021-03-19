@@ -15,7 +15,7 @@ class SmilesInText
     {
         global $absolute_server_URI;
 
-        return array(
+        return [
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-smile.gif" alt=":)" title=":)" width="18px" height="18px" />',
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-smile.gif" alt=":-)" title=":-)" width="18px" height="18px" />',
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-wink.gif" alt=";)" title=";)" width="18px" height="18px" />',
@@ -35,12 +35,12 @@ class SmilesInText
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-tongue-out.gif" alt=":-P" title=":-P" width="18px" height="18px" />',
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-undecided.gif" alt=":-/" title=":-/" width="18px" height="18px" />',
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-undecided.gif" alt=":/" title=":/" width="18px" height="18px" />',
-            '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-yell.gif" alt="XO" title="XO" width="18px" height="18px" />'
-        );
+            '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-yell.gif" alt="XO" title="XO" width="18px" height="18px" />',
+        ];
 
     }
 
-    private static $smileytext = array(
+    private static $smileytext = [
         " :) ",
         " :-) ",
         " ;) ",
@@ -60,7 +60,7 @@ class SmilesInText
         " :-P ",
         " :-/ ",
         " :/ ",
-        " XO "
-    );
+        " XO ",
+    ];
 
 }

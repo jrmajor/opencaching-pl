@@ -493,7 +493,7 @@ if (!$loggedUser) {
                         }
                         unset($record);
                     } else {
-                        $cache_attribs = array();
+                        $cache_attribs = [];
                     }
                 }
 

@@ -62,7 +62,7 @@ require_once(__DIR__.'/common.inc.php');
 
         $sCondition = "";
 
-        $aNrColumn = array();
+        $aNrColumn = [];
 
         foreach ($asUserID as $sID) {
             if (strlen($sCondition))
@@ -85,7 +85,7 @@ require_once(__DIR__.'/common.inc.php');
         $query = "SELECT user_id, username FROM user cl where " . $sConditionUser;
         $s = $dbc->multiVariableQuery($query);
 
-        $aUserName = array();
+        $aUserName = [];
 
         while ($record = $dbc->dbResultFetch($s)) {
             $sID = $record['user_id'];
@@ -135,7 +135,7 @@ require_once(__DIR__.'/common.inc.php');
 
         $s = $dbc->multiVariableQuery($query);
 
-        $nCount = array();
+        $nCount = [];
 
         foreach ($asUserID as $sID) {
             $anCount[$sID] = 0;

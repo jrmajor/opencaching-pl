@@ -32,7 +32,7 @@ class News extends BaseObject
     const STATUS_ONLY_NEWSPAGE = 3;
     const STATUS_ARCHIVED = 4;
 
-    public function __construct(array $params = array())
+    public function __construct(array $params = [])
     {
         parent::__construct();
         if (isset($params['newsId'])) {
@@ -194,18 +194,18 @@ class News extends BaseObject
                     if ($val == $this::USER_NOT_SET) {
                         $this->author = null;
                     } else {
-                        $this->author = new User(array(
-                            'userId' => (int) $val
-                        ));
+                        $this->author = new User([
+                            'userId' => (int) $val,
+                        ]);
                     }
                     break;
                 case 'edited_by':
                     if ($val == $this::USER_NOT_SET) {
                         $this->last_editor = null;
                     } else {
-                        $this->last_editor = new User(array(
-                            'userId' => (int) $val
-                        ));
+                        $this->last_editor = new User([
+                            'userId' => (int) $val,
+                        ]);
                     }
                     break;
                 case 'hide_author':

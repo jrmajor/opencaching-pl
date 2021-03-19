@@ -4,21 +4,22 @@ use src\Models\User\User;
 
 function call_okapi(User $user, $waypoints, $language, $file_base_name, $zip_part)
 {
-    $okapi_response = \okapi\Facade::service_call('services/caches/formatters/ggz', $user->getUserId(), array(
-                'cache_codes' => $waypoints,
-                'langpref' => $language,
-                'ns_ground' => 'true',
-                'ns_ox' => 'true',
-                'images' => 'none',
-                'attrs' => 'ox:tags',
-                'trackables' => 'desc:count',
-                'alt_wpts' => 'true',
-                'recommendations' => 'desc:count',
-                'latest_logs' => 'true',
-                'lpc' => 'all', // TODO: is this configurable - somehow, someway - user entered parameter?
-                'my_notes' => isset($user) ? "desc:text" : "none",
-                'location_source' => 'alt_wpt:user-coords',
-                'location_change_prefix' => '(F)'));
+    $okapi_response = \okapi\Facade::service_call('services/caches/formatters/ggz', $user->getUserId(), [
+        'cache_codes' => $waypoints,
+        'langpref' => $language,
+        'ns_ground' => 'true',
+        'ns_ox' => 'true',
+        'images' => 'none',
+        'attrs' => 'ox:tags',
+        'trackables' => 'desc:count',
+        'alt_wpts' => 'true',
+        'recommendations' => 'desc:count',
+        'latest_logs' => 'true',
+        'lpc' => 'all', // TODO: is this configurable - somehow, someway - user entered parameter?
+        'my_notes' => isset($user) ? "desc:text" : "none",
+        'location_source' => 'alt_wpt:user-coords',
+        'location_change_prefix' => '(F)',
+    ]);
     // Modifying OKAPI's default HTTP Response headers.
     $okapi_response->content_disposition = 'attachment; filename=' . $file_base_name . (($zip_part != 0) ? '-' . $zip_part : '') . '.ggz';
     return $okapi_response;

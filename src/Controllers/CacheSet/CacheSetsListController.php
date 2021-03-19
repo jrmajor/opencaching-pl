@@ -38,7 +38,7 @@ class CacheSetsListController extends BaseController
     public function showAll()
     {
 
-        $allowedStatuses = array(CacheSetCommon::STATUS_OPEN);
+        $allowedStatuses = [CacheSetCommon::STATUS_OPEN];
 
         // prepare pagination for cacheSets list
         $paginationModel = new PaginationModel(50);
@@ -58,7 +58,7 @@ class CacheSetsListController extends BaseController
                     return [
                         'id' => $row->getId(),
                         'type' => $row->getType(),
-                        'name' => $row->getName()
+                        'name' => $row->getName(),
                     ];
         }));
         $listModel->setPaginationModel($paginationModel);

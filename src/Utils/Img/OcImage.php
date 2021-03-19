@@ -265,7 +265,7 @@ class OcImage
         }
 
         // 3 : palette decoding
-        $palette = array();
+        $palette = [];
         if ($bmp['colors'] < 0x1000000) {
             $palette = unpack('V' . $bmp['colors'], fread($fileHandler, $bmp['colors'] * 4));
         }

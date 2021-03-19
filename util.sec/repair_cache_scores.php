@@ -11,7 +11,7 @@ class RepairCacheScores
         $db = OcDb::instance();
 
         $sql = "SELECT cache_id, type FROM caches";
-        $params = array();
+        $params = [];
         if (isset($_GET['cache_id'])) {
             $sql .= ' WHERE cache_id=:cache_id';
             $params['cache_id']['value'] = intval($_GET['cache_id']);
@@ -82,7 +82,7 @@ class RepairCacheScores
                         OR last_found!=:new_last_found
                     )
             ";
-            $params = array();
+            $params = [];
             $params['new_votes']['value'] = intval($votes);
             $params['new_votes']['data_type'] = 'integer';
             $params['new_score']['value'] = strval($average);

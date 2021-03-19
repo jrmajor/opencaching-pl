@@ -15,7 +15,7 @@ if (isset($_POST['submitDownloadGpx'])) {
     $fd .= "<name>Opencaching.pl Oregon multiload</name>\r\n";
     session_start();
     if (isset($_SESSION['log_cache_multi_filteredData'])) {
-        $tempList = array();
+        $tempList = [];
         foreach ($_SESSION['log_cache_multi_filteredData'] as $k => $v) {
             $v['cache_creator'] = str_replace("&", " ", $v['cache_creator']);
 
@@ -58,7 +58,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             $td = date("Ymd", $tmpDate);
             if (!isset($tempList[$td])) { // zaloz dla daty:
                 $tempList[$td]['name'] = "OC-PL " . date("Y-m-d", $tmpDate);
-                $tempList[$td]['pts'] = array();
+                $tempList[$td]['pts'] = [];
             }
             $tempList[$td]['pts'][] = "     <trkpt lat=\"" . $v['latitude'] . "\" lon=\"" . $v['longitude'] . "\"><time>" . $v['rok'] . "-" . $v['msc'] . "-" . $v['dzien'] . "T" . $v['godz'] . ":" . $v['min'] . ":00Z</time></trkpt>\r\n";
         }
@@ -105,11 +105,11 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
     $tplname = 'log_cache_multi';
     $myHtml = "";
 
-    $statusy = array();
+    $statusy = [];
     $statusy = fcGetStatusyEn();
 
     // moje dane o skrzynkach z pliku...
-    $dane = array();
+    $dane = [];
 
     if (isset($_FILES['userfile'])) {
         // usuwam zapamietane a nieaktualne juz dane...
@@ -163,7 +163,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         $dane_i = -1;
 
         // parsuje plik
-        $listaKodowOP = array();
+        $listaKodowOP = [];
         foreach ($filecontent as $line) {
             $rec = preg_split('[,]', trim($line), 4);
             if (count($rec) >= 4) {
@@ -202,7 +202,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         $dane = $_SESSION['log_cache_multi_data'];
 
         // pomocna lista do WHEREa
-        $listaKodowOP = array();
+        $listaKodowOP = [];
         $minTimeStamp = time();
         $maxTimeStamp = 1;
         foreach ($dane as $k => $v) {
@@ -214,7 +214,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         }
 
         // lista identyfikatorow cache ktore znalazlem w bazie
-        $cacheIdList = array();
+        $cacheIdList = [];
 
         // dociagam informacje o nazwie i id skrzynki...
         if ( count($listaKodowOP) > 0) {
@@ -304,7 +304,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
 
 
         // lece po wszystkim i kolejne opracje:
-        $daneFiltrowane = array();
+        $daneFiltrowane = [];
         foreach ($dane as $k => $v) {
 
             if (isset($_POST['SubmitShiftTimeMinusOne'])) {
@@ -405,7 +405,7 @@ function utf16_to_utf8($str)
 
 function fcGetStatusyEn()
 {
-    $statusy = array();
+    $statusy = [];
     $statusy['Found it'] = 1; // Znaleziona
     $statusy['Didn\'t find it'] = 2; // Nie znaleziona
     $statusy['Unattempted'] = 3; // Komentarz

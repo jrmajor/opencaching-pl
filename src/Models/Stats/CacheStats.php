@@ -36,18 +36,18 @@ class CacheStats extends BaseObject
             ORDER BY `count` DESC";
         $stmt = self::db()->multiVariableQuery($query, GeoCache::STATUS_READY);
 
-        $rows = array();
-        $table = array();
-        $table['cols'] = array (
-            array('label' => tr('cache_type'), 'type' => 'string'),
-            array('label' => tr('number_of_caches'), 'type' => 'number'),
-        );
+        $rows = [];
+        $table = [];
+        $table['cols'] =  [
+            ['label' => tr('cache_type'), 'type' => 'string'],
+            ['label' => tr('number_of_caches'), 'type' => 'number'],
+        ];
 
         while ($row = self::db()->dbResultFetch($stmt)) {
-            $temp = array();
-            $temp[] = array('v' => (string) tr(GeoCache::CacheTypeTranslationKey($row['type'])));
-            $temp[] = array('v' => (int) $row['count']);
-            $rows[] = array('c' => $temp);
+            $temp = [];
+            $temp[] = ['v' => (string) tr(GeoCache::CacheTypeTranslationKey($row['type']))];
+            $temp[] = ['v' => (int) $row['count']];
+            $rows[] = ['c' => $temp];
         }
 
         $table['rows'] = $rows;
@@ -85,22 +85,22 @@ class CacheStats extends BaseObject
 
         $caches = 0;
         $finds = 0;
-        $rows = array();
-        $table = array();
-        $table['cols'] = array (
-            array('label' => tr('graph_statistics_04'), 'type' => 'date'),
-            array('label' => tr('graph_statistics_02'), 'type' => 'number'),
-            array('label' => tr('graph_statistics_03'), 'type' => 'number'),
-        );
+        $rows = [];
+        $table = [];
+        $table['cols'] =  [
+            ['label' => tr('graph_statistics_04'), 'type' => 'date'],
+            ['label' => tr('graph_statistics_02'), 'type' => 'number'],
+            ['label' => tr('graph_statistics_03'), 'type' => 'number'],
+        ];
 
         while ($row = self::db()->dbResultFetch($stmt)) {
-            $temp = array();
+            $temp = [];
             $caches += (int) $row['caches'];
             $finds += (int) $row['founds'];
-            $temp[] = array('v' => 'Date(' . (string) $row['year'] . ', ' . (string) ($row['month'] - 1) . ')');
-            $temp[] = array('v' => $caches);
-            $temp[] = array('v' => $finds);
-            $rows[] = array('c' => $temp);
+            $temp[] = ['v' => 'Date(' . (string) $row['year'] . ', ' . (string) ($row['month'] - 1) . ')'];
+            $temp[] = ['v' => $caches];
+            $temp[] = ['v' => $finds];
+            $rows[] = ['c' => $temp];
         }
 
         $table['rows'] = $rows;

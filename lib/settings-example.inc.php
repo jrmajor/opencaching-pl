@@ -126,22 +126,22 @@ $powerTrailModuleSwitchOn = true;
 
 // minimum cache count for power trail to be public displayed
 // (PT having less than $powerTrailMinimumCacheCount ) are visible only to owners.
-$powerTrailMinimumCacheCount = array(
+$powerTrailMinimumCacheCount = [
     'current' => 25,
-    'old' => array(
-        1 => array(
+    'old' => [
+        1 => [
             'dateFrom' => '1970-01-01 01:00',
             'dateTo' => '2013-10-29 23:59:59',
             'limit' => 5,
-        ),
+        ],
 // if limit change in future, just uncomment and place here current limit and period of time
 //              2 => array (
 //                  'dateFrom' => '2013-10-30 00:00:00',
 //                  'dateTo' => '20??-??-?? 23:59:59',
 //                  'limit' => 25,
 //              ),
-    ),
-);
+    ],
+];
 
 
 // minimum cahes Found count of user, to alow user set new Power Trail
@@ -182,73 +182,73 @@ $short_sitename = 'OC PL';
 
 // Configuration for OC.PL contact page
 // Translated to Polish and English only :/
-$contactDataPL = array(
-    array(
+$contactDataPL = [
+    [
         'groupName' => 'contact_pl_about_title',
-        'groupDescription' => array(
+        'groupDescription' => [
             'contact_pl_about_description_1',
-            'contact_pl_about_description_2'
-        )
-    ),
-    array(
+            'contact_pl_about_description_2',
+        ],
+    ],
+    [
         'groupName' => 'OpenCaching PL Team',
-        'subgroup' => array(
-            array(
+        'subgroup' => [
+            [
                 'groupName' => 'Rada Rejsu',
                 'groupDescription' => 'contact_pl_rr_description',
                 'emailAddress' => 'rr at opencaching.pl',
-                'link' => 'http://forum.opencaching.pl/viewtopic.php?f=19&t=6297'
-            ),
-            array(
+                'link' => 'http://forum.opencaching.pl/viewtopic.php?f=19&t=6297',
+            ],
+            [
                 'groupName' => 'Rada Techniczna',
                 'groupDescription' => 'contact_pl_rt_description',
                 'emailAddress' => 'rt at opencaching.pl',
-                'link' => 'https://code.google.com/p/opencaching-pl/people/list'  # No longer valid!
-            ),
-            array(
+                'link' => 'https://code.google.com/p/opencaching-pl/people/list',  # No longer valid!
+            ],
+            [
                 'groupName' => 'Centrum Obsługi Geocachera',
                 'groupDescription' => 'contact_pl_cog_description',
                 'emailAddress' => 'cog at opencaching.pl',
-                'link' => 'http://forum.opencaching.pl/viewtopic.php?f=19&t=6297'
-            ),
-        ),
-    ),
-    array(
+                'link' => 'http://forum.opencaching.pl/viewtopic.php?f=19&t=6297',
+            ],
+        ],
+    ],
+    [
         'groupName' => 'contact_pl_other_title',
-        'groupDescription' => 'contact_pl_other_description'
-    ),
-    array(
+        'groupDescription' => 'contact_pl_other_description',
+    ],
+    [
         'groupName' => 'contact_ocpl_title',
-        'groupDescription' => array(
+        'groupDescription' => [
             'contact_ocpl_description_1',
             'contact_ocpl_description_2',
             'contact_ocpl_description_3',
-        )
-    )
-);
+        ],
+    ],
+];
 
 // Configuration from OC.DE contact page
 // This is only a template, to be translated/updated for OC.NL
-$contactDataDE = array(
-    array(
+$contactDataDE = [
+    [
         'groupName' => 'Allgemeine Fragen zu Opencaching.de und zum Thema Geocaching',
-        'groupDescription' => array(
+        'groupDescription' => [
             'Für Fragen rund um Opencaching und zum Thema Geocaching ist das <a href="http://wiki.opencaching.de/">Opencaching-Wiki</a> eine gute Anlaufstelle. Weitere Informationen zum Geocaching gibt es auf <a href="http://www.geocaching.de">www.geocaching.de</a>.',
-            'Wenn du ein spezielles Problem hast und darauf keine Antwort findest, kannst du dir unter <a href="http://forum.opencaching-network.org">forum.opencaching-network.org</a> ein passendes Forum raussuchen und dich dort erkundigen.'
-        )
-    ),
-    array(
+            'Wenn du ein spezielles Problem hast und darauf keine Antwort findest, kannst du dir unter <a href="http://forum.opencaching-network.org">forum.opencaching-network.org</a> ein passendes Forum raussuchen und dich dort erkundigen.',
+        ],
+    ],
+    [
         'groupName' => 'Bedienung der Website, Anregungen und Kritik',
-        'groupDescription' => 'Hierfür gibt es ein eigenes Unterforum auf <a href="http://forum.opencaching-network.org/index.php?board=33.0">forum.opencaching-network.org</a>. Dort findest du auch weitere Informationen, falls du in unserem Team mitmachen möchtest.'
-    ),
-    array(
+        'groupDescription' => 'Hierfür gibt es ein eigenes Unterforum auf <a href="http://forum.opencaching-network.org/index.php?board=33.0">forum.opencaching-network.org</a>. Dort findest du auch weitere Informationen, falls du in unserem Team mitmachen möchtest.',
+    ],
+    [
         'groupName' => 'Sonstiges',
-        'groupDescription' => array(
+        'groupDescription' => [
             'Sollten die oben genannten Möglichkeiten nicht ausreichen oder die Betreiber von <i>opencaching.de</i> direkt kontaktiert werden, kannst du auch eine Email an <a href="mailto:contact@opencaching.de">contact@opencaching.de</a> schreiben.',
             'Bitte werde nicht ungeduldig wenn nicht sofort eine Antwort kommt, <i>opencaching.de</i> wird von Freiwilligen betreut, die leider nicht immer und sofort zur Verfügung stehen können.',
-        )
-    )
-);
+        ],
+    ],
+];
 //
 $contactData = $contactDataPL;
 // Contact data definition END
@@ -265,10 +265,10 @@ $datetimeFormat = 'Y-m-d H:i';
 // map of garmin keys,
 // key: domain name, value: garmin key value
 // the map may contain only one entry
-$config['garmin-key'] = array(
+$config['garmin-key'] = [
         'http://opencaching.pl' => '0fe1300131fcc0e417bb04de798c5acf',
-        'http://www.opencaching.nl' => 'b01f02cba1c000fe034471d2b08044c6'
-);
+        'http://www.opencaching.nl' => 'b01f02cba1c000fe034471d2b08044c6',
+];
 
 $titled_cache_nr_found=10;
 $titled_cache_period_prefix='week';
@@ -288,7 +288,7 @@ $config['maps']['main_page_map']['source'] = 'mapnik';
 
 
 // Configuration of feeds displayed on the main page
-$config['feed']['enabled'] = array('forum', 'blog');    // This array defines which feeds to display and in what order.
+$config['feed']['enabled'] = ['forum', 'blog'];    // This array defines which feeds to display and in what order.
                                                         // You can increase feeds number,
                                                         // but remember to add feed description as feed_{feedname} to language files
 $config['feed']['forum']['url'] = 'https://forum.opencaching.pl/feed.php';  // URL of the feed. System supports RSS and Atom feeds.

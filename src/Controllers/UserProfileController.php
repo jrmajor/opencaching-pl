@@ -95,7 +95,7 @@ class UserProfileController extends BaseController
         return (is_numeric($watchmailMode) && in_array($watchmailMode, [
             UserNotify::SEND_NOTIFICATION_DAILY,
             UserNotify::SEND_NOTIFICATION_HOURLY,
-            UserNotify::SEND_NOTIFICATION_WEEKLY
+            UserNotify::SEND_NOTIFICATION_WEEKLY,
         ]) && is_numeric($watchmailHour) && $watchmailHour >= 0 && $watchmailHour <= 23 && is_numeric($watchmailDay) && $watchmailDay >= 1 && $watchmailDay <= 7);
     }
 

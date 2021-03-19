@@ -48,7 +48,7 @@ if (!$loggedUser) {
 
         if (isset($_POST['submitform'])) {
             $length = isset($_POST['distance']) ? $_POST['distance'] : '0';
-            $route_points = isset($_POST['route_points']) ? explode(" ", $_POST['route_points']) : array();
+            $route_points = isset($_POST['route_points']) ? explode(" ", $_POST['route_points']) : [];
 
             // insert route name
             XDb::xSql(

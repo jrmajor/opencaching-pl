@@ -21,8 +21,9 @@ class OcPicture extends BaseObject
     public const TYPE_LOG = 1;
     public const TYPE_CACHE = 2;
 
-    private const DB_COLS = ['id', 'uuid', 'local', 'url', 'thumb_last_generated', 'last_modified',
-        'thumb_url', 'spoiler', 'object_type', 'object_id', 'title', 'display', 'seq'
+    private const DB_COLS = [
+        'id', 'uuid', 'local', 'url', 'thumb_last_generated', 'last_modified',
+        'thumb_url', 'spoiler', 'object_type', 'object_id', 'title', 'display', 'seq',
     ];
 
     private $uuid;      // UUID of image

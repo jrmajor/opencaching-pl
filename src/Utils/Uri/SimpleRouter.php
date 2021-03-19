@@ -148,7 +148,7 @@ class SimpleRouter
         }
 
         // run this requests
-        call_user_func_array(array($ctrl, $actionName), $params);
+        call_user_func_array([$ctrl, $actionName], $params);
         exit;
     }
 
@@ -206,7 +206,7 @@ class SimpleRouter
     private static function parse()
     {
         if (!isset($_GET[self::ROUTE_GET_VAR])) {
-            $routeParts = array();
+            $routeParts = [];
         } else {
             $routeParts = explode('/', $_GET[self::ROUTE_GET_VAR]);
         }
@@ -238,13 +238,13 @@ class SimpleRouter
         // and params...
         $params = array_slice($routeParts, 2);
 
-        return array($ctrl, $action, $params);
+        return [$ctrl, $action, $params];
     }
 
     private static function checkControllerName($ctrl)
     {
         // remove Controllers/Controller words from the ctrl path
-        $ctrl = str_replace(array('Controllers\\','Controller'), '', $ctrl);
+        $ctrl = str_replace(['Controllers\\', 'Controller'], '', $ctrl);
 
         // normalize slashes - replace backslashes
         $ctrl = str_replace('\\', '/', $ctrl);
@@ -263,7 +263,7 @@ class SimpleRouter
         $message = $debug_page ? $message : 'Improper request';
 
         $ctrlName = self::getControllerWithNamespace(self::ERROR_CTRL);
-        call_user_func_array(array(new $ctrlName(self::ERROR_ACTION),  self::ERROR_ACTION), [$message, $httpCode]);
+        call_user_func_array([new $ctrlName(self::ERROR_ACTION),  self::ERROR_ACTION], [$message, $httpCode]);
         exit;
     }
 }

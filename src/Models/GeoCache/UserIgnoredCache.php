@@ -15,7 +15,7 @@ class UserIgnoredCache extends BaseObject
     public static function addCacheToIgnored($userId, $cacheWp){
         $params = [
             'cache_code' => $cacheWp,
-            'ignored' => 'true' // true need to be a string!!!
+            'ignored' => 'true', // true need to be a string!!!
         ];
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);
@@ -27,7 +27,7 @@ class UserIgnoredCache extends BaseObject
 
         $params = [
            'cache_code' => $cacheWp,
-           'ignored' => 'false' // false need to be a string!!!
+           'ignored' => 'false', // false need to be a string!!!
         ];
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);

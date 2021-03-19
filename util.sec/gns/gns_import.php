@@ -41,12 +41,13 @@ header('Content-Type: text/plain');
 set_time_limit(0);
 
 /* defaults */
-$importfiles = array("pl.txt", "pl_administrative_a.txt",
+$importfiles = [
+    "pl.txt", "pl_administrative_a.txt",
     "nl.txt", "nl_administrative_a.txt",
     "be.txt", "be_administrative_a.txt",
     "lu.txt", "lu_administrative_a.txt",
-    "ro.txt", "ro_administrative_a.txt"
-); # first download the file from the URLs above
+    "ro.txt", "ro_administrative_a.txt",
+]; # first download the file from the URLs above
 
 
 sql("DROP TABLE IF EXISTS `gns_locations` ");

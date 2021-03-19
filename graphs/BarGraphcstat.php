@@ -25,8 +25,8 @@ if (isset($_REQUEST['cacheid']) && isset($_REQUEST['t'])) {
 }
 
 
-$y = array();
-$x = array();
+$y = [];
+$x = [];
 
 
 if ($tit == "csy") {

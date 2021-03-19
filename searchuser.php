@@ -24,13 +24,12 @@ if (!$loggedUser) {
         if ($options['username'] != '') {
 
             $query = "SELECT user_id, username, date_created FROM user WHERE username LIKE :username ORDER BY username ASC";
-            $params = array(
-                "username" =>
-                array(
+            $params = [
+                "username" => [
                     "value" => '%' . XDb::xEscape($options['username']) . '%',
-                    "data_type" => "string"
-                ),
-            );
+                    "data_type" => "string",
+                ],
+            ];
 
             $dbc = OcDb::instance();
             $s = $dbc->paramQuery($query, $params);

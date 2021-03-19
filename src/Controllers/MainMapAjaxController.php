@@ -176,7 +176,7 @@ class MainMapAjaxController extends BaseController
         // we need only id from OKAPI...
         $fields = 'code';
 
-        $params = array();
+        $params = [];
         $params['search_method'] = 'services/caches/search/bbox';
         $params['search_params'] = json_encode($this->searchParams);
         $params['retr_method'] = 'services/caches/geocaches';
@@ -338,8 +338,8 @@ class MainMapAjaxController extends BaseController
 
 
         // exclusion of types - convert to OKAPI's "type" filter
-        $typesToExclude = array();
-        $types = ["Other","Traditional","Multi","Virtual","Webcam","Event","Quiz","Moving","Own"];
+        $typesToExclude = [];
+        $types = ["Other", "Traditional", "Multi", "Virtual", "Webcam", "Event", "Quiz", "Moving", "Own"];
 
         foreach ($types as $type) {
             if( isset($_GET['exType'.$type]) ){

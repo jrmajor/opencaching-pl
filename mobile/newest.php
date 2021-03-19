@@ -10,8 +10,8 @@ $wynik = XDb::xSql($query);
 $ile = XDb::xNumRows($wynik);
 $tpl->assign("ile", $ile);
 
-$znalezione = array();
-$lista = array();
+$znalezione = [];
+$lista = [];
 $tpl->assign("address", "viewcache");
 
 while ($rekord = XDb::xFetchArray($wynik)) {

@@ -77,14 +77,14 @@ class ReportCacheController extends BaseController
         }
         try {
             $cache = new GeoCache([
-                'cacheId' => $_POST['cacheid']
+                'cacheId' => $_POST['cacheid'],
             ]);
         } catch (\Exception $e) {
             $this->errorMsg = tr('admin_reports_info_errform') . ' (cacheid)';
             $this->redirectToInfoPage();
         }
         $cacheOwner = new User([
-            'userId' => $cache->getOwnerId()
+            'userId' => $cache->getOwnerId(),
         ]);
         $content = nl2br(strip_tags($_POST['content']));
         switch ($_POST['type']) {
@@ -110,7 +110,7 @@ class ReportCacheController extends BaseController
                     $userlist = MultiUserQueries::getOcTeamMembersArray();
                     foreach ($userlist as $user) { // Send mails to all OC Team members
                         ReportEmailSender::sendReport2OCTMail2OCTeam(new User([
-                            'userId' => $user['user_id']
+                            'userId' => $user['user_id'],
                         ]), $report);
                     }
                     $this->infoMsg = tr('reports_user_msg_reportok');

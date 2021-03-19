@@ -640,10 +640,11 @@ class GeoCacheLog extends GeoCacheLogCommons
         if (!$this->getDeleted()) {
             return false; //log is NOT deleted
         }
-        if (in_array($this->getType(),
-            [GeoCacheLog::LOGTYPE_FOUNDIT,
-                GeoCacheLog::LOGTYPE_ATTENDED,
-                GeoCacheLog::LOGTYPE_WILLATTENDED])) {
+        if (in_array($this->getType(), [
+            GeoCacheLog::LOGTYPE_FOUNDIT,
+            GeoCacheLog::LOGTYPE_ATTENDED,
+            GeoCacheLog::LOGTYPE_WILLATTENDED,
+        ])) {
             // There can be only one log "found", "attended", "will attend"
             return (!$this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType()));
         }

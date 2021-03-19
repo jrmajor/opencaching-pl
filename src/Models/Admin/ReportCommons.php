@@ -385,11 +385,11 @@ class ReportCommons extends BaseObject
             self::TYPE_INCORRECT_PLACE,
             self::TYPE_NEED_ARCHIVE,
             self::TYPE_COPYRIGHT,
-            self::TYPE_OTHER
+            self::TYPE_OTHER,
         ];
         if ($includeVirtual) {
             $types = array_merge([
-                self::TYPE_ALL
+                self::TYPE_ALL,
             ], $types);
         }
         return $types;
@@ -407,12 +407,12 @@ class ReportCommons extends BaseObject
             self::STATUS_NEW,
             self::STATUS_IN_PROGRESS,
             self::STATUS_LOOK_HERE,
-            self::STATUS_CLOSED
+            self::STATUS_CLOSED,
         ];
         if ($includeVirtual) {
             $statuses = array_merge([
                 self::STATUS_ALL,
-                self::STATUS_OPEN
+                self::STATUS_OPEN,
                 ], $statuses);
         }
         return $statuses;
@@ -427,7 +427,7 @@ class ReportCommons extends BaseObject
     {
         return [
             self::RECIPIENT_OWNER,
-            self::RECIPIENT_OCTEAM
+            self::RECIPIENT_OCTEAM,
         ];
     }
 
@@ -587,7 +587,7 @@ class ReportCommons extends BaseObject
                 self::USER_ALL,
                 self::USER_NOBODY,
                 self::USER_YOU,
-                self::USER_YOU2
+                self::USER_YOU2,
             ];
             foreach ($users as $user) {
                 $result .= '<option value="' . $user . '"';

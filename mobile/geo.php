@@ -30,7 +30,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
     if (preg_match("/^((gpx)|(gpxgc)|(loc)|(wpt)|(uam)){1}$/", $output)) {
         if (check_wp($wpts)) {
 
-            $znalezione = array();
+            $znalezione = [];
 
             $i = 0;
 
@@ -71,7 +71,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                     $attr_text = gpxhelper($attr_text);
                 }
 
-                $logs = array();
+                $logs = [];
                 $query = "select cache_logs.text,cache_logs.id,cache_logs.date,user.username,log_types.en from (cache_logs inner join user on cache_logs.user_id = user.user_id) inner join log_types on log_types.id=cache_logs.type where cache_logs.cache_id=" . $wiersz['cache_id'] . " order by cache_logs.id desc";
                 $wynik = XDb::xSql($query);
 
@@ -87,7 +87,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                     $logs[] = $rekord2;
                 }
 
-                $geokrets = array();
+                $geokrets = [];
                 $query = "select name from gk_item where latitude ='" . $wiersz['latitude'] . "' and longitude='" . $wiersz['longitude'] . "';";
                 $wynik = XDb::xSql($query);
 

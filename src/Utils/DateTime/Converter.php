@@ -11,7 +11,7 @@ class Converter
      */
     public static function dateformat_PHP_to_jQueryUI($php_format)
     {
-        $SYMBOLS_MATCHING = array(
+        $SYMBOLS_MATCHING = [
             // Day
             'd' => 'dd',
             'D' => 'D',
@@ -44,8 +44,8 @@ class Converter
             'H' => '',
             'i' => '',
             's' => '',
-            'u' => ''
-        );
+            'u' => '',
+        ];
         $jqueryui_format = "";
         $escaping = false;
         for ($i = 0; $i < strlen($php_format); $i ++) {

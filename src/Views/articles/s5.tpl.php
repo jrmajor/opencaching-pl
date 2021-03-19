@@ -7,7 +7,7 @@
 <?php
 use src\Utils\Database\XDb;
 
-$tops = array();
+$tops = [];
 ?>
 
 <center><table style="padding-left:32px; padding-bottom:32px; line-heigh: 1.6em; font-size: 12px;">
@@ -94,7 +94,7 @@ $rsCaches = XDb::xSql(
         AND `caches`.`status` = 1
     ORDER BY `idx` DESC");
 
-$items = array();
+$items = [];
 while ( $rCaches = XDb::xFetchArray($rsCaches) ) {
 
     $widthB = round(100 * ($rCaches['idx'] / 200) / 1, 0);

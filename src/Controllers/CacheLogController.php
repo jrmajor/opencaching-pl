@@ -209,14 +209,14 @@ class CacheLogController extends BaseController
             return [
                 'type' => $row['cacheType'],
                 'status' => $row['status'],
-                'user_sts' => $userStsDict[$row['cache_id']]
+                'user_sts' => $userStsDict[$row['cache_id']],
             ];
         }, "width5"));
 
         $listModel->addColumn(new Column_CacheName(tr('lastLogList_geocacheName'), function ($row) {
             return [
                 'cacheWp' => $row['wp_oc'],
-                'cacheName' => $row['name']
+                'cacheName' => $row['name'],
             ];
         }, "width30"));
 
@@ -227,7 +227,7 @@ class CacheLogController extends BaseController
                 'logText' => $row['text'],
                 'logUserName' => $usernameDict[$row['logAuthor']],
                 'logDate' => $row['date'],
-                'recommended' => $row['recom']
+                'recommended' => $row['recom'],
             ];
         });
         $logColumn->showFullLogText();

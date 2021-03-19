@@ -25,8 +25,8 @@ if (isset($_REQUEST['cacheid']) && isset($_REQUEST['t'])) {
     }
 }
 
-$y = array();
-$x = array();
+$y = [];
+$x = [];
 
 if ($tit == "csy") {
     $rsCachesFindYear1 = XDb::xSql(
@@ -134,7 +134,7 @@ $graph->legend->Pos(0.5, 0.94, "center", "bottom");
 $graph->legend->SetLineWeight(8);
 
 // Create the grouped bar plot
-$gbplot = new GroupBarPlot(array($b1plot, $b2plot));
+$gbplot = new GroupBarPlot([$b1plot, $b2plot]);
 // ...and add it to the graPH
 $graph->Add($gbplot);
 

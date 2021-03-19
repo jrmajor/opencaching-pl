@@ -28,32 +28,32 @@ class PowerTrailController
     }
 
     public static function getEntryTypes(){
-        return array (
-            Log::TYPE_COMMENT => array ( //comment
+        return  [
+            Log::TYPE_COMMENT =>  [ //comment
                 'translate' => 'pt056',
                 'color' => '#000000',
-            ),
-            Log::TYPE_CONQUESTED => array ( // conquested
+            ],
+            Log::TYPE_CONQUESTED =>  [ // conquested
                 'translate' => 'cs_gainedCount',
                 'color' => '#00CC00',
-            ),
-            Log::TYPE_OPENING => array ( // geoPath Publishing
+            ],
+            Log::TYPE_OPENING =>  [ // geoPath Publishing
                 'translate' => 'pt214',
                 'color' => '#0000CC',
-            ),
-            Log::TYPE_DISABLING => array ( // geoPath temp. closed
+            ],
+            Log::TYPE_DISABLING =>  [ // geoPath temp. closed
                 'translate' => 'pt216',
                 'color' => '#CC0000',
-            ),
-            Log::TYPE_CLOSING => array ( // geoPath Closure (permanent)
+            ],
+            Log::TYPE_CLOSING =>  [ // geoPath Closure (permanent)
                 'translate' => 'pt213',
                 'color' => '#CC0000',
-            ),
-            Log::TYPE_ADD_WARNING => array ( // oc team comment (permanent)
+            ],
+            Log::TYPE_ADD_WARNING =>  [ // oc team comment (permanent)
                 'translate' => 'pt237',
                 'color' => '#CC0000',
-            ),
-        );
+            ],
+        ];
     }
 
     /**
@@ -112,7 +112,7 @@ class PowerTrailController
         $s = $db->simpleQuery($archiveAbandonQuery);
         if ($db->rowCount($s) > 0) { // close all abandon geoPaths
             $ptToClose = $db->dbResultFetchAll($s);
-            $updateArr = array();
+            $updateArr = [];
             foreach ($ptToClose as $pt) {
                 array_push($updateArr, $pt['id']);
             }
@@ -133,20 +133,20 @@ class PowerTrailController
      * here power Trail status
      */
     public static function getPowerTrailStatus(){
-        return array (
-            1 => array ( // public
+        return  [
+            1 =>  [ // public
                 'translate' => 'cs_statusPublic',
-            ),
-            2 => array ( // not yet available
+            ],
+            2 =>  [ // not yet available
                 'translate' => 'cs_statusNotYetAvailable',
-            ),
-            4 => array ( // service
+            ],
+            4 =>  [ // service
                 'translate' => 'cs_statusInService',
-            ),
-            3 => array ( // archived
+            ],
+            3 =>  [ // archived
                 'translate' => 'cs_statusClosed',
-            ),
-        );
+            ],
+        ];
     }
 
 }

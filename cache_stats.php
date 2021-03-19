@@ -20,7 +20,7 @@ if (!$loggedUser) {
         } else {
             $cache_id = 0;
         }
-        $geoCache = new GeoCache(array('cacheId' => $cache_id));
+        $geoCache = new GeoCache(['cacheId' => $cache_id]);
         $tplname = 'cache_stats';
         $content = "";
         $cachename = $geoCache->getCacheName();

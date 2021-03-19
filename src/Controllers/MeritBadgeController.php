@@ -24,13 +24,13 @@ class MeritBadgeController{
     //N = none
     //C = cache
     //G - geoPath
-    static private $_check_if_belong  = array(
+    static private $_check_if_belong  = [
         "N" => "",
         "C" => "caches.cache_id=:1",
-        "G" => "" //not supported yet
-    );
+        "G" => "", //not supported yet
+    ];
 
-    static private $_trigger_type = array(
+    static private $_trigger_type = [
         self::TRIGGER_NONE => "N",
         self::TRIGGER_CRON => "N",
         self::TRIGGER_LOG_CACHE => "C",
@@ -40,8 +40,8 @@ class MeritBadgeController{
         self::TRIGGER_LOG_GEOPATH => "G",
         self::TRIGGER_LOG_GEOPATH_AUTHOR => "G",
         self::TRIGGER_RECOMMENDATION => "C",
-        self::TRIGGER_CACHE_AUTHOR=> "N"
-    );
+        self::TRIGGER_CACHE_AUTHOR=> "N",
+    ];
 
     public function __construct(){
         $this->db = OcDb::instance();
@@ -58,7 +58,7 @@ class MeritBadgeController{
     //Update CurrVal for badges which are triggering by self::TRIGGER_CACHE_AUTHOR
     public function updateTriggerCacheAuthor( $cache_id ){
         $meritBadges = $this->buildArrayMeritBadgesTriggerBy(self::TRIGGER_CACHE_AUTHOR);
-        $geoCache = new GeoCache(array('cacheId' => $cache_id));
+        $geoCache = new GeoCache(['cacheId' => $cache_id]);
         return $this->updateCurrValUserMeritBadges( $meritBadges, $cache_id, $geoCache->getOwnerId());
     }
 

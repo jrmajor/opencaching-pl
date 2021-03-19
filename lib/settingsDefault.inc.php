@@ -11,7 +11,7 @@ use src\Models\GeoCache\GeoCacheCommons;
 // enable detailed cache access logging
 $enable_cache_access_logs = false;
 
-$config = array(
+$config = [
     /**
      * country-id of the running node: pl|ro|nl...
      */
@@ -46,9 +46,9 @@ $config = array(
     'qrCodeUrl' => 'https://opencaching.pl/viewcache.php?wp=OP3C90',
 
     /** Language list for new caches and for GPX */
-    'defaultLanguageList' => array(
-        'PL', 'EN', 'FR', 'DE', 'NL', 'RO'
-    ),
+    'defaultLanguageList' => [
+        'PL', 'EN', 'FR', 'DE', 'NL', 'RO',
+    ],
     /** default country in user registration form */
     'defaultCountry' => 'PL',
 
@@ -70,24 +70,24 @@ $config = array(
      *
      * Cachetypes must be GeoCacheCommons constant TYPE_*
      */
-    'cacheLimitByTypePerUser' => array(
+    'cacheLimitByTypePerUser' => [
         GeoCacheCommons::TYPE_OWNCACHE => 1,
-    ),
+    ],
     /** The filter fragment selecting provinces from nuts_codes table. */
     'provinceNutsCondition' => '`code` like \'PL__\'',
     /** Nature2000 link - used in viewcache.php */
     'nature2000link' => '<a style="color:blue;" target="_blank" href="http://obszary.natura2000.org.pl/index.php?s=obszar&amp;id={linkid}">{sitename}&nbsp;&nbsp;-&nbsp;&nbsp;{sitecode}</a>',
     /** customization of cache-attribute icons */
-    'search-attr-icons' => array(
-        'password' => array (
+    'search-attr-icons' => [
+        'password' =>  [
             // has attribute
             'images/attributes/password.png',
             // does not have attribute
             'images/attributes/password-no.png',
             // does not care
-            'images/attributes/password-undef.png'
-        )
-    ),
+            'images/attributes/password-undef.png',
+        ],
+    ],
     'numberFormatDecPoint' => '.',
     'numberFormatThousandsSep' => ',',
     'meritBadges' => false,
@@ -99,8 +99,8 @@ $config = array(
      * Common datetime and date format
      */
     'datetimeformat' => '%Y-%m-%d %H:%M:%S',
-    'dateformat' => '%Y-%m-%d'
-);
+    'dateformat' => '%Y-%m-%d',
+];
 
 // *** Repository automatic updates script location
 $config['server']['update']['script'] = '/var/www/ocpl-update.sh';
@@ -180,7 +180,7 @@ $config['cache_log']['edit_time'] = 5;
 $config['license_html'] = '';
 
 // Configuration of feeds on the main page (for instruction - see setting-example.inc.php)
-$config['feed']['enabled'] = array();
+$config['feed']['enabled'] = [];
 $config['feed']['forum']['url'] = '';
 $config['feed']['forum']['posts'] = 5;
 $config['feed']['forum']['showAuthor'] = true;

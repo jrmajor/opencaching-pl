@@ -440,9 +440,12 @@ if (!$loggedUser) {
                 foreach (GeoCacheLogCommons::logTypesArray() as $type) {
 
                     // skip types allowed only for cacheOwner (9,10,11)
-                    $allowedOnlyForOwner = [GeoCacheLogCommons::LOGTYPE_READYTOSEARCH,
-                                            GeoCacheLogCommons::LOGTYPE_ARCHIVED,
-                                            GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE];
+                    $allowedOnlyForOwner = [
+                        GeoCacheLogCommons::LOGTYPE_READYTOSEARCH,
+                        GeoCacheLogCommons::LOGTYPE_ARCHIVED,
+                        GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE,
+                    ];
+
                     if (in_array($type,$allowedOnlyForOwner) &&
                         $log_record['user_id'] != $cache_user_id && !$loggedUser->hasOcTeamRole()) {
                         continue;

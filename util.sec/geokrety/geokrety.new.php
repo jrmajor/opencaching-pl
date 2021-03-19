@@ -64,7 +64,7 @@ foreach ($gkxml->geokret as $geokret) {
     $rs = XDb::xSql(
         "SELECT distinct wp FROM gk_item_waypoint
         WHERE id='" . XDb::xEscape($id) . "'");
-    $cache_codes = array();
+    $cache_codes = [];
     while ($row = XDb::xFetchArray($rs))
         $cache_codes[] = $row[0];
     Facade::schedule_geocache_check($cache_codes);
@@ -87,7 +87,7 @@ foreach ($gkxml->geokret as $geokret) {
 
 /* Notify OKAPI. https://github.com/opencaching/okapi/issues/179 */
 $rs = XDb::xSql("SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)");
-$cache_codes = array();
+$cache_codes = [];
 while ($row = XDb::xFetchArray($rs)){
     $cache_codes[] = $row[0];
 }

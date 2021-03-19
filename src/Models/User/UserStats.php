@@ -36,9 +36,9 @@ class UserStats extends BaseObject
         $list = self::db()->dbResultFetchAll($stmt);
 
         foreach ($list as $row) {
-            $geoPathsCompleted->append(new PowerTrail(array(
-                'dbRow' => $row
-            )));
+            $geoPathsCompleted->append(new PowerTrail([
+                'dbRow' => $row,
+            ]));
         }
         return $geoPathsCompleted;
     }
@@ -63,7 +63,7 @@ class UserStats extends BaseObject
 
             $list = self::db()->dbResultFetchAll($stmt);
             foreach ($list as $row) {
-                $geoPathsOwned->append(new PowerTrail(array('dbRow' => $row)));
+                $geoPathsOwned->append(new PowerTrail(['dbRow' => $row]));
             }
         return $geoPathsOwned;
     }

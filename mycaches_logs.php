@@ -92,7 +92,7 @@ if (!$loggedUser) {
             LIMIT ".intval($start).", ".intval($LOGS_PER_PAGE),
         $user_id);
 
-    $log_ids = array();
+    $log_ids = [];
     while ($record = XDb::xFetchArray($rs)) {
         $log_ids[] = $record['id'];
     };

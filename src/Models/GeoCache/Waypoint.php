@@ -28,14 +28,14 @@ class Waypoint extends WaypointCommons
     private $openChecker;
 
 
-    private $iconNames = array(
+    private $iconNames = [
         self::TYPE_PHYSICAL => 'images/waypoints/wp_physical.png',
         self::TYPE_VIRTUAL => 'images/waypoints/wp_virtual.png',
         self::TYPE_FINAL => 'images/waypoints/wp_final.png',
         self::TYPE_INTERESTING => 'images/waypoints/wp_reference.png',
         self::TYPE_PARKING => 'images/waypoints/wp_parking.png',
-        self::TYPE_TRAILHEAD => 'images/waypoints/wp_trailhead.png'
-    );
+        self::TYPE_TRAILHEAD => 'images/waypoints/wp_trailhead.png',
+    ];
 
 
     private static function FromDbRow($row)

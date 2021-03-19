@@ -6,7 +6,7 @@ class cookie
 {
 
     var $changed = false;
-    var $values = array();
+    var $values = [];
 
     function cookie()
     {
@@ -21,9 +21,9 @@ class cookie
                 $this->values = @json_decode($decoded, true, 2);
 
                 if (!is_array($this->values))
-                    $this->values = array();
+                    $this->values = [];
             } else
-                $this->values = array();
+                $this->values = [];
         }
     }
 

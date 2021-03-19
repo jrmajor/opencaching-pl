@@ -17,7 +17,7 @@ class GeoCacheScore extends BaseObject
         $row = $db->dbResultFetchOneRowOnly($stmt);
 
         if ($row['votes'] == 0) {
-            return [0,0];
+            return [0, 0];
         } else {
             return [$row['votes'], $row['avgScore']];
         }

@@ -57,26 +57,29 @@ class StaticMap
 
     protected $attribution = '(c) OpenStreetMap contributors';
 
-    protected $markerPrototypes = array(
-        'marker-blue' => array('regex' => '/^marker-blue([A-Z]+)$/',
+    protected $markerPrototypes = [
+        'marker-blue' => [
+            'regex' => '/^marker-blue([A-Z]+)$/',
             'extension' => '.png',
             'shadow' => false,
             'offsetImage' => '-12,-39',
-            'offsetShadow' => false
-        ),
-        'marker-orange' => array('regex' => '/^marker-orange([A-Z]+)$/',
+            'offsetShadow' => false,
+        ],
+        'marker-orange' => [
+            'regex' => '/^marker-orange([A-Z]+)$/',
             'extension' => '.png',
             'shadow' => false,
             'offsetImage' => '-12,-39',
-            'offsetShadow' => false
-        ),
-        'marker-small' => array('regex' => '/^mark-small(|-blue|-orange)$/',
+            'offsetShadow' => false,
+        ],
+        'marker-small' => [
+            'regex' => '/^mark-small(|-blue|-orange)$/',
             'extension' => '.png',
             'shadow' => false,
             'offsetImage' => '-8,-23',
-            'offsetShadow' => false
-        )
-    );
+            'offsetShadow' => false,
+        ],
+    ];
 
     protected $useTileCache = true;
     protected $tileCacheBaseDir = '';
@@ -177,7 +180,7 @@ class StaticMap
         $this->markers[] = [
             'lat' => $coords->getLatitude(),
             'lon' => $coords->getLongitude(),
-            'type' => $type
+            'type' => $type,
         ];
     }
 
@@ -245,7 +248,7 @@ class StaticMap
 
         for ($x = $startX; $x <= $endX; $x++) {
             for ($y = $startY; $y <= $endY; $y++) {
-                $url = str_replace(array('{Z}', '{X}', '{Y}'), array($this->zoom, $x, $y), $this->tileSrcUrl[$this->maptype]);
+                $url = str_replace(['{Z}', '{X}', '{Y}'], [$this->zoom, $x, $y], $this->tileSrcUrl[$this->maptype]);
                 $tileData = $this->fetchTile($url);
                 if (!$tileData || !$tileImage = @imagecreatefromstring($tileData)) {
                     // error on fetch tile image or error on image creation
@@ -332,7 +335,7 @@ class StaticMap
 
     private function tileUrlToFilename($url)
     {
-        return $this->tileCacheBaseDir . "/" . str_replace(array('http://'), '', $url);
+        return $this->tileCacheBaseDir . "/" . str_replace(['http://'], '', $url);
     }
 
     private function checkTileCache($url)
@@ -356,7 +359,7 @@ class StaticMap
 
     private function serializeParams()
     {
-        return join("&", array($this->zoom, $this->lat, $this->lon, $this->width, $this->height, serialize($this->markers), $this->maptype));
+        return join("&", [$this->zoom, $this->lat, $this->lon, $this->width, $this->height, serialize($this->markers), $this->maptype]);
     }
 
     private function mapCacheIDToFilename()
@@ -392,12 +395,12 @@ class StaticMap
             'http' => [
                 'method' => "GET",
                 'timeout' => 2.0,
-                'header' => "User-Agent: https://github.com/opencaching/opencaching-pl"
+                'header' => "User-Agent: https://github.com/opencaching/opencaching-pl",
                 ],
 //            'ssl' => [
 //                    'verify_peer' => false,
 //                    'verify_peer_name' => false,
-//                ]
+//                ],
             ];
 
         $context = stream_context_create($opts);

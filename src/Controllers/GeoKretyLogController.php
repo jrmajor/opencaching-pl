@@ -124,7 +124,7 @@ class GeoKretyLogController extends BaseController
                 ' (autom. log oc.' . substr($this->ocConfig->getAbsolute_server_URI(), -3, 2) . ')',
             'wpt' => $geoKretyLog->getGeoCache()->getWaypointId(),
             'app' => 'Opencaching',
-            'app_ver' => 'PL'
+            'app_ver' => 'PL',
         ];
     }
 

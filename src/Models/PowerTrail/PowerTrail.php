@@ -237,7 +237,7 @@ class PowerTrail extends BaseObject
             $s = $this->db->multiVariableQuery($query, $this->id);
             $geoCachesDbResult = $this->db->dbResultFetchAll($s);
 
-            $geocachesIdArray = array();
+            $geocachesIdArray = [];
             foreach ($geoCachesDbResult as $geoCacheDbRow) {
                 $geocache = new GeoCache();
                 $geocache->loadFromRow($geoCacheDbRow)->setIsPowerTrailPart(true);
@@ -384,7 +384,7 @@ class PowerTrail extends BaseObject
 
     public function getFoundCachsByUser($userId)
     {
-        $cachesFoundByUser = array();
+        $cachesFoundByUser = [];
         $sqlInStString = $this->buildSqlStringOfAllPtGeocachesId();
         if ($sqlInStString !== '') {
             $query = 'SELECT `cache_id` AS `geocacheId` FROM `cache_logs` WHERE `cache_id` in (' . $sqlInStString . ') AND `deleted` = 0 AND `user_id` = :1 AND `type` = "1" ';
@@ -501,13 +501,13 @@ class PowerTrail extends BaseObject
         $s = $this->db->multiVariableQuery($qr, $this->id, $userId);
         $powerTrailCacheLogsArr = $this->db->dbResultFetchAll($s);
 
-        $powerTrailCachesUserLogsByCache = array();
+        $powerTrailCachesUserLogsByCache = [];
         foreach ($powerTrailCacheLogsArr as $log) {
-            $powerTrailCachesUserLogsByCache[$log['cache_id']] = array(
+            $powerTrailCachesUserLogsByCache[$log['cache_id']] = [
                 'date' => $log['date'],
                 'text_html' => $log['text_html'],
                 'text' => $log['text'],
-            );
+            ];
         }
         return $powerTrailCachesUserLogsByCache;
     }
@@ -580,18 +580,18 @@ class PowerTrail extends BaseObject
     public function setAndStoreStatus($status)
     {
         if ($status == self::STATUS_OPEN && $this->canBeOpened() === false) {
-            $result = array(
+            $result = [
                 'updateStatusResult' => false,
-                'message' => tr('pt240')
-            );
+                'message' => tr('pt240'),
+            ];
         } else {
             $this->status = $status;
             $query = 'UPDATE `PowerTrail` SET `status` = :1 WHERE `PowerTrail`.`id` = :2 ';
             $this->db->multiVariableQuery($query, $status, $this->id);
-            $result = array(
+            $result = [
                 'updateStatusResult' => true,
-                'message' => tr('pt239')
-            );
+                'message' => tr('pt239'),
+            ];
         }
         return $result;
     }

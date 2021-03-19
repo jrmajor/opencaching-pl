@@ -13,7 +13,7 @@ class RepairUserScores
 
         $sql = "SELECT user_id FROM user where user_id >= 0 ";
 
-        $params = array();
+        $params = [];
         if (isset($_GET['user_id'])) {
             $sql .= ' and user_id=:user_id';
             $params['user_id']['value'] = intval($_GET['user_id']);
@@ -65,7 +65,7 @@ class RepairUserScores
                     )
             ";
 
-            $params = array();
+            $params = [];
             $params['new_hidden_count']['value'] = intval($hidden_count);
             $params['new_hidden_count']['data_type'] = 'integer';
             $params['new_cache_ignores']['value'] = intval($cache_ignores);

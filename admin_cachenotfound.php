@@ -21,7 +21,7 @@ if (empty($user) || !$user->hasOcTeamRole()) {
  */
 if ($short_sitename == 'OC PL') {
 
-    $GLOBALS['regions'] = array(
+    $GLOBALS['regions'] = [
         'PL51' => 'dolnośląskie',
         'PL61' => 'kujawsko-pomorskie',
         'PL31' => 'lubelskie',
@@ -39,12 +39,12 @@ if ($short_sitename == 'OC PL') {
         'PL42' => 'zachodniopomorskie',
         'PL41' => 'wielkopolskie',
         'NON_PL' => '* zagraniczne',
-        'XXX' => '* polskie-nie-ustalone'
-    );
+        'XXX' => '* polskie-nie-ustalone',
+    ];
 
 } else {
     //OC !PL
-    $GLOBALS['regions'] = array(); //temporary empty list
+    $GLOBALS['regions'] = []; //temporary empty list
     tpl_set_var('region_name', 'all country'); //temporary
 }
 

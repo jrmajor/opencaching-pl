@@ -56,7 +56,7 @@ class CacheController extends BaseController
             function (GeoCache $row) {
                 return [
                     'date' => $row->getDatePublished(),
-                    'showTime' => false
+                    'showTime' => false,
                 ];
             }))
             ->addColumn(new Column_CacheGeoKretIconObject(''))
@@ -86,7 +86,7 @@ class CacheController extends BaseController
                 function (GeoCache $row) {
                     return [
                         'date' => $row->getDatePublished(),
-                        'showTime' => false
+                        'showTime' => false,
                     ];
                 }))
                 ->addColumn(new Column_CacheGeoKretIconObject(''))
@@ -121,7 +121,7 @@ class CacheController extends BaseController
                 function (GeoCache $row) {
                     return [
                         'date' => $row->getDatePublished(),
-                        'showTime' => false
+                        'showTime' => false,
                     ];
                 }))
                 ->addColumn(new Column_CacheGeoKretIconObject(''))
@@ -158,7 +158,7 @@ class CacheController extends BaseController
                 function (GeoCache $row) {
                     return [
                         'date' => $row->getDatePlaced(),
-                        'showTime' => false
+                        'showTime' => false,
                     ];
                 }))
                 ->addColumn(new Column_CacheNameObject(tr('event')))
@@ -194,7 +194,7 @@ class CacheController extends BaseController
             function (array $row) {
                 return [
                     'date' => $row['date'],
-                    'showTime' => false
+                    'showTime' => false,
                 ];
             }))
             ->addColumn(new Column_CacheGeoKretIconObject('',

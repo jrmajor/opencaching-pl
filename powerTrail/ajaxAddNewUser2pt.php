@@ -29,7 +29,7 @@ $db->multiVariableQuery($addQuery, $projectId, $userResult['user_id'], 1);
 $logQuery = 'INSERT INTO `PowerTrail_actionsLog`(`PowerTrailId`, `userId`, `actionDateTime`, `actionType`, `description`, `cacheId`) VALUES (:1,:2,NOW(),4,:3,:4)';
 $db->multiVariableQuery($logQuery, $projectId, $_SESSION['user_id'], $ptAPI->logActionTypes[4]['type'] . ' new owner is: ' . $userResult['user_id'], $userResult['user_id']);
 
-$powerTrail = new PowerTrail(array('id' => $projectId));
+$powerTrail = new PowerTrail(['id' => $projectId]);
 $ptOwners = displayPtOwnerList($powerTrail->getOwners());
 
 echo $ptOwners;

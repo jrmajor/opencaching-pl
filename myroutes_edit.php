@@ -120,7 +120,7 @@ if (!$loggedUser) {
 
                 if (!$error) {
                     for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
-                        $points[] = array("lon" => $coords[$i], "lat" => $coords[$i + 1]);
+                        $points[] = ["lon" => $coords[$i], "lat" => $coords[$i + 1]];
                         if (($coords[$i] + 0 == 0) OR ( $coords[$i + 1] + 0 == 0)) {
                             $error .= "Invalid Co-ords found in import file.<br>\n";
                             break;

@@ -42,26 +42,26 @@ class powerTrailBase{
         return $powerTrailUserMinimumCacheFoundToSetNewPowerTrail;
     }
 
-    public $logActionTypes = array (
-        1 => array (
+    public $logActionTypes =  [
+        1 =>  [
             'type' => 'create new Power Trail',
-        ),
-        2 => array (
+        ],
+        2 =>  [
             'type' => 'attach cache to PowerTrail',
-        ),
-        3 => array (
+        ],
+        3 =>  [
             'type' => 'remove cache from PowerTrail',
-        ),
-        4 => array (
+        ],
+        4 =>  [
             'type' => 'add another owner to PowerTrail',
-        ),
-        5 => array (
+        ],
+        5 =>  [
             'type' => 'remove owner from PowerTrail',
-        ),
-        6 => array (
+        ],
+        6 =>  [
             'type' => 'change PowerTrail status',
-        ),
-    );
+        ],
+    ];
 
     function __construct() {
         //include __DIR__.'/../lib/settings.inc.php';
@@ -84,28 +84,28 @@ class powerTrailBase{
      * here power Trail types
      */
     public static function getPowerTrailTypes(){
-        return array (
-            self::GEODRAW => array (
+        return  [
+            self::GEODRAW =>  [
                 'geopathTypeName' => self::getConstName(self::GEODRAW),
                 'translate' => 'cs_typeGeoDraw',
                 'icon' => self::iconPath.'footprintRed.png',
-            ),
-            self::TOURING => array (
+            ],
+            self::TOURING =>  [
                 'geopathTypeName' => self::getConstName(self::TOURING),
                 'translate' => 'cs_typeTouring',
                 'icon' => self::iconPath.'footprintBlue.png',
-            ),
-            self::NATURE => array (
+            ],
+            self::NATURE =>  [
                 'geopathTypeName' => self::getConstName(self::NATURE),
                 'translate' => 'cs_typeNature',
                 'icon' => self::iconPath.'footprintGreen.png',
-            ),
-            self::TEMATIC => array (
+            ],
+            self::TEMATIC =>  [
                 'geopathTypeName' => self::getConstName(self::TEMATIC),
                 'translate' => 'cs_typeThematic',
                 'icon' => self::iconPath.'footprintYellow.png',
-            ),
-        );
+            ],
+        ];
     }
 
     private static function getConstName($constValue) {
@@ -123,28 +123,28 @@ class powerTrailBase{
      */
 
     public static function getPowerTrailIconsByType() {
-        $ret = array (
+        $ret =  [
             1 => 'footprintRed.png',
             2 => 'footprintBlue.png',
             3 => 'footprintGreen.png',
             4 => 'footprintYellow.png',
-        );
+        ];
         return $ret;
     }
 
     public static function cacheSizePoints() {
-        return array (
+        return  [
         2 => 2.5,   # Micro
         3 => 2, # Small
         4 => 1.5,   # Normal [from 1 to 3 litres]
         5 => 1, # Large [from 3 to 10 litres]
         6 => 0.5,   # Very large [more than 10 litres]
         7 => 0, # Bez pojemnika
-    );
+    ];
     }
 
     public static function cacheTypePoints() {
-        return array (
+        return  [
             1 => 2, #Other
             2 => 2, #Trad.
             3 => 3, #Multi
@@ -155,7 +155,7 @@ class powerTrailBase{
             8 => 2, #Moving
             9 => 1, #podcast
             10 => 1, #own
-        );
+        ];
     }
 
     public static function checkUserConquestedPt($userId, $ptId){
@@ -225,21 +225,21 @@ class powerTrailBase{
         $points = $db->dbResultFetchAll($s);
         $totalPoint = 0;
         $geoPathCount = 0;
-        $pointsDetails = array();
+        $pointsDetails = [];
         foreach ($points as $ptPoints) {
             $magnifier = self::calculateMagnifier($ptPoints['cacheCount']);
             $earnedPoints = $ptPoints['pointsSum']*$magnifier;
-            $pointsDetails[$ptPoints['PowerTrailId']] = array(
+            $pointsDetails[$ptPoints['PowerTrailId']] = [
                 'cacheCount' => $ptPoints['cacheCount'],
                 'pointsSum' => $ptPoints['pointsSum'],
                 'magnifier' => $magnifier,
                 'pointsEarned' => $earnedPoints,
                 'ptName' => $ptPoints['name'],
-            );
+            ];
             $totalPoint += $earnedPoints;
             $geoPathCount++;
         }
-        return array('totalPoints' => round($totalPoint,2), 'geoPathCount' => $geoPathCount, 'pointsDetails' => $pointsDetails);
+        return ['totalPoints' => round($totalPoint,2), 'geoPathCount' => $geoPathCount, 'pointsDetails' => $pointsDetails];
     }
 
     public static function checkForPowerTrailByCache($cacheId){
@@ -254,7 +254,7 @@ class powerTrailBase{
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $ptId);
         $dbResult = $db->dbResultFetchAll($s);
-        $result = array();
+        $result = [];
         foreach ($dbResult as $ptOwner) {
             $result[$ptOwner['user_id']] = $ptOwner;
         }

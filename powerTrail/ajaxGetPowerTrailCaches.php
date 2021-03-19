@@ -7,7 +7,7 @@ use src\Models\GeoCache\GeoCache;
 
 require_once __DIR__ . '/../lib/common.inc.php';
 
-$powerTrail = new PowerTrail(array('id' => (int) $_REQUEST['ptrail']));
+$powerTrail = new PowerTrail(['id' => (int) $_REQUEST['ptrail']]);
 
 if (isset($_REQUEST['choseFinalCaches'])) {
     $choseFinalCaches = true;
@@ -25,7 +25,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 {
     $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : -9999;
     $powerTrailCachesUserLogsByCache = $powerTrail->getFoundCachsByUser($userId);
-    $geocacheFoundArr = array();
+    $geocacheFoundArr = [];
     foreach ($powerTrailCachesUserLogsByCache as $geocache) {
         $geocacheFoundArr[$geocache['geocacheId']] = $geocache;
     }
@@ -35,21 +35,21 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         return '<br /><br />' . tr('pt082');
     }
 
-    $statusIcons = array(
+    $statusIcons = [
         1 => '/images/log/16x16-published.png',
         2 => '/images/log/16x16-temporary.png',
         3 => '/images/log/16x16-trash.png',
         5 => '/images/log/16x16-need-maintenance.png',
-        6 => '/images/log/16x16-stop.png'
-    );
+        6 => '/images/log/16x16-stop.png',
+    ];
 
-    $statusDesc = array(
+    $statusDesc = [
         1 => tr('pt141'),
         2 => tr('pt142'),
         3 => tr('pt143'),
         5 => tr('pt144'),
-        6 => tr('pt244')
-    );
+        6 => tr('pt244'),
+    ];
 
     $cacheRows = '<table class="ptCacheTable" align="center" width="90%"><tr>
         <th>' . tr('pt075') . '</th>
@@ -185,8 +185,16 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         }
 
         // same for sizes
-        $sizesToShow = [ GeoCache::SIZE_NANO, GeoCache::SIZE_MICRO, GeoCache::SIZE_SMALL,
-                         GeoCache::SIZE_REGULAR, GeoCache::SIZE_LARGE, GeoCache::SIZE_XLARGE, GeoCache::SIZE_NONE];
+        $sizesToShow = [
+            GeoCache::SIZE_NANO,
+            GeoCache::SIZE_MICRO,
+            GeoCache::SIZE_SMALL,
+            GeoCache::SIZE_REGULAR,
+            GeoCache::SIZE_LARGE,
+            GeoCache::SIZE_XLARGE,
+            GeoCache::SIZE_NONE,
+        ];
+
         $sizesNumberList = [];
         $sizesLabelsList = [];
         foreach($sizesToShow as $size) {

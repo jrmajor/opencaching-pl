@@ -16,7 +16,7 @@ class UserWatchedCache extends BaseObject
     public static function addCacheToWatched($userId, $cacheWp){
         $params = [
             'cache_code' => $cacheWp,
-            'watched' => 'true' // true need to be a string!!!
+            'watched' => 'true', // true need to be a string!!!
         ];
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);
@@ -28,7 +28,7 @@ class UserWatchedCache extends BaseObject
 
         $params = [
            'cache_code' => $cacheWp,
-           'watched' => 'false' // false need to be a string!!!
+           'watched' => 'false', // false need to be a string!!!
         ];
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);

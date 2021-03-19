@@ -31,7 +31,7 @@ class MultiGeopathsStats extends BaseObject
 
         $cacheIdsStr = $db->quoteString(implode(',', $cacheIds));
         $allowedGeopathStatus = implode(',', [
-            CacheSet::STATUS_OPEN, CacheSet::STATUS_INSERVICE
+            CacheSet::STATUS_OPEN, CacheSet::STATUS_INSERVICE,
         ]);
 
         $rs = $db->multiVariableQuery(

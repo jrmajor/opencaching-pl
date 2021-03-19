@@ -90,7 +90,7 @@ class GeoPathController extends BaseController
         $newLogoPath = OcConfig::getDynFilesPath(true) . CacheSet::DIR_LOGO_IMG . '/' . Uuid::create();
 
         // resize the new logo
-        $newLogoPath = OcImage::createThumbnail($uploadModel->getDirAtServer().'/'.$tmpLogoFile, $newLogoPath, [250,250]);
+        $newLogoPath = OcImage::createThumbnail($uploadModel->getDirAtServer().'/'.$tmpLogoFile, $newLogoPath, [250, 250]);
 
         // create URL of the image
         $newLogoFileUrl = CacheSet::DIR_LOGO_IMG .'/'.basename($newLogoPath);
@@ -442,7 +442,7 @@ class GeoPathController extends BaseController
                 'cacheWp' => $cache->getWaypointId(),
                 'cacheName' => $cache->getCacheName(),
                 'isStatusAware' => true,
-                'cacheStatus' => $cache->getStatus()
+                'cacheStatus' => $cache->getStatus(),
             ];
         }));
 
@@ -524,7 +524,7 @@ class GeoPathController extends BaseController
                     'cacheWp' => $cache->getWaypointId(),
                     'cacheName' => $cache->getCacheName(),
                     'isStatusAware' => true,
-                    'cacheStatus' => $cache->getStatus()
+                    'cacheStatus' => $cache->getStatus(),
                 ];
             }
         ));

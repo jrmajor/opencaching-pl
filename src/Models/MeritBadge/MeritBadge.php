@@ -10,16 +10,18 @@ class MeritBadge
     const PROGRESIVE_BAR_SIZE = 16;
     const THE_HIGHEST_LEVEL = 999999;
 
-    static private $_colors = array("#89af2b",//0
-                                    "#af992b",
-                                    "#af5e2b",
-                                    "#af2b2b",
-                                    "#af2b7e",
-                                    "#962baf",
-                                    "#2b5caf",
-                                    "#8E6343", /*"#2b90af"*/
-                                    "#A5A5A5",  /*"#2baf99"*/
-                                    "#FFCC00" /*"#3daf2c"*/);//9
+    static private $_colors = [
+        "#89af2b",
+        "#af992b",
+        "#af5e2b",
+        "#af2b2b",
+        "#af2b7e",
+        "#962baf",
+        "#2b5caf",
+        "#8E6343", /*"#2b90af"*/
+        "#A5A5A5",  /*"#2baf99"*/
+        "#FFCC00", /*"#3daf2c"*/
+    ];
 
     private $id;
     private $name;
@@ -30,7 +32,7 @@ class MeritBadge
     private $cfg_show_positions;
     private $picture;
     private $trigger_type;
-    
+
     private $graphic_author;
     private $description_author;
     private $attendant;
@@ -71,11 +73,11 @@ class MeritBadge
     public function getCfgShowPositions(){
         return $this->cfg_show_positions;
     }
-    
+
     public function getTriggerType(){
         return $this->trigger_type;
     }
-    
+
     public function getPicture(){
         return $this->picture;
     }
@@ -134,10 +136,10 @@ class MeritBadge
 
         if ( isset($rec['badges_cfg_show_positions']) )
             $this->cfg_show_positions = $rec[ 'badges_cfg_show_positions' ];
-        
+
         if ( isset($rec['badges_trigger_type']) )
             $this->trigger_type= $rec[ 'badges_trigger_type' ];
-                            
+
         if ( isset($rec['badges_picture']) )
             $this->picture = $rec[ 'badges_picture' ];
 
@@ -186,17 +188,17 @@ class MeritBadge
     public static function getProgressBarValueMax($prevValue, $nextValue){
         if ( $nextValue== self::THE_HIGHEST_LEVEL)
             return 1;
-        
+
        return $nextValue-$prevValue;
     }
 
     public static function getProgressBarCurrValue($prevValue, $nextValue, $threshold){
         if ( $threshold== self::THE_HIGHEST_LEVEL)
             return 1;
-            
+
             return $nextValue-$prevValue;
     }
-    
+
     public static function prepareShortDescription($desc, $threshold, $currVal ){
         if ( $threshold == self::THE_HIGHEST_LEVEL)
             return "<span style='font-weight:bold;color:". self::getColor( self::COLOR_NUMBER, self::COLOR_NUMBER) .";'>".tr('merit_badge_gain_max_level' )."</span>";

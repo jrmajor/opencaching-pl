@@ -127,7 +127,7 @@ require_once(__DIR__.'/common.inc.php');
         $s = $dbc->multiVariableQuery($query);
 
 
-        $aNrColumn = array();
+        $aNrColumn = [];
         $i = 0;
 
         echo "<script>";

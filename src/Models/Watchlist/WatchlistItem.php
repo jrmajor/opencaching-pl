@@ -19,10 +19,10 @@ class WatchlistItem
     /** Default logtype color */
     const LOGTYPE_COLOR_DEFAULT = 'black';
     /** Logtype colors array, indexed by logtype value */
-    const LOGTYPE_COLORS = array(
+    const LOGTYPE_COLORS = [
         self::LOGTYPE_COLOR_DEFAULT, 'green', 'red', 'black', 'green', 'orange',
-        'red', 'green', 'green', 'red', 'green', 'red', 'black'
-    );
+        'red', 'green', 'green', 'red', 'green', 'red', 'black',
+    ];
 
     /** @var string source template contents used for further completion */
     private $itemTemplate;

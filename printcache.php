@@ -60,7 +60,7 @@ if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
     $rs = XDb::xSql("SELECT `cache_watches`.`cache_id` AS `cache_id`
                          FROM `cache_watches` WHERE `cache_watches`.`user_id`= ? ", $loggedUser->getUserId());
     if (XDb::xNumRows($rs) > 0) {
-        $caches_list = array();
+        $caches_list = [];
         for ($i = 0; $i < XDb::xNumRows($rs); $i++) {
             $record = XDb::xFetchArray($rs);
             $caches_list[] = $record['cache_id'];
@@ -68,7 +68,7 @@ if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
     }
 } else {
     if ($cache_id) {
-        $caches_list = array();
+        $caches_list = [];
         $caches_list[] = $cache_id;
     } else {
         $caches_list = PrintList::GetContent();

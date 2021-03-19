@@ -56,8 +56,10 @@ $s = $database->paramQuery(
         'SELECT `user_id`,`name`, `description`, `radius`, `options` FROM `routes`
         WHERE `route_id`=:route_id AND `user_id`=:user_id
         LIMIT 1',
-        array('user_id' => array('value' => $user_id, 'data_type' => 'integer'),
-        'route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+        [
+            'user_id' => ['value' => $user_id, 'data_type' => 'integer'],
+            'route_id' => ['value' => $route_id, 'data_type' => 'integer'],
+        ]
 );
 $record = $database->dbResultFetchOneRowOnly($s);
 $distance = $record['radius'];
@@ -69,8 +71,10 @@ $s = $database->paramQuery(
     'SELECT  length(`options`) `optsize`, `options` FROM `routes`
     WHERE `route_id`=:route_id AND `user_id`=:user_id
     LIMIT 1',
-    array('user_id' => array('value' => $user_id, 'data_type' => 'integer'),
-    'route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+    [
+        'user_id' => ['value' => $user_id, 'data_type' => 'integer'],
+        'route_id' => ['value' => $route_id, 'data_type' => 'integer'],
+    ]
 );
 
 $rec = $database->dbResultFetchOneRowOnly($s);
@@ -84,18 +88,18 @@ if (isset($_POST['cache_attribs_not'])) {
     if ($_POST['cache_attribs_not'] != '')
         $options['cache_attribs_not'] = mb_split(';', $_POST['cache_attribs_not']);
     else
-        $options['cache_attribs_not'] = array();
+        $options['cache_attribs_not'] = [];
 } else
-    $options['cache_attribs_not'] = array();
+    $options['cache_attribs_not'] = [];
 
 
 if (isset($_POST['cache_attribs'])) {
     if ($_POST['cache_attribs'] != '')
         $options['cache_attribs'] = mb_split(';', $_POST['cache_attribs']);
     else
-        $options['cache_attribs'] = array();
+        $options['cache_attribs'] = [];
 } else
-    $options['cache_attribs'] = array();
+    $options['cache_attribs'] = [];
 
 
 if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
@@ -398,7 +402,7 @@ if (isset($options['cache_attribs_not']) && count($options['cache_attribs_not'])
 
 
 
-$cachetype = array();
+$cachetype = [];
 
 if (isset($options['cachetype1']) && ($options['cachetype1'] == '1')) {
     $cachetype[] = '1';
@@ -436,7 +440,7 @@ if ((sizeof($cachetype) > 0) && (sizeof($cachetype) < 10)) {
 }
 
 
-$cachesize = array();
+$cachesize = [];
 
 if (isset($options['cachesize_1']) && ($options['cachesize_1'] == '1')) {
     $cachesize[] = '1';
@@ -528,7 +532,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $s = $database->paramQuery(
         'SELECT `user_id`,`name`, `description`, `radius` FROM `routes`
         WHERE `route_id`=:route_id LIMIT 1',
-        array('route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+        ['route_id' => ['value' => $route_id, 'data_type' => 'integer']]
     );
     $record = $database->dbResultFetchOneRowOnly($s);
 
@@ -546,7 +550,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $s = $database->paramQuery(
         'SELECT `route_points`.`lat`, `route_points`.`lon` FROM `route_points`
         WHERE `route_id`=:route_id ORDER BY `route_points`.`point_nr` LIMIT 1',
-        array('route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+        ['route_id' => ['value' => $route_id, 'data_type' => 'integer']]
     );
     $record = $database->dbResultFetchOneRowOnly($s);
 
@@ -666,8 +670,8 @@ if (isset($_POST['submit_gpx_with_photos'])) {
         WHERE `caches`.`wp_oc` IN(\'' . implode('\', \'', $caches_list) . '\')
             AND `caches`.`cache_id` IN (' . $qFilter . ')'
     );
-    $waypoints_tab = array();
-    $cache_ids_tab = array();
+    $waypoints_tab = [];
+    $cache_ids_tab = [];
     while ($r = $database->dbResultFetch($stmt)) {
         $waypoints_tab[] = $r['wp_oc'];
         $cache_ids_tab[] = $r['cache_id'];
@@ -682,7 +686,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
         tpl_set_var('zip_total_cache_count', $caches_count);
         tpl_set_var('zip_max_count', $okapi_max_caches);
 
-        $options = array();
+        $options = [];
         $options['showresult'] = 1;
         $options['searchtype'] = 'bylist';
         $options['cache_ids'] = $cache_ids_tab;
@@ -691,7 +695,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
 
         $queryid = $database->paramQueryValue(
                 'select `queries`.`id` from `queries` where `user_id` = 0 and `options` = :options', -1, // default value
-                array('options' => array('value' => $options_text, 'data_type' => 'string'))
+                ['options' => ['value' => $options_text, 'data_type' => 'string']]
         );
         if ($queryid > 0) {
             $database->multiVariableQuery(
@@ -701,7 +705,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
             $database->paramQuery(
                     'INSERT INTO `queries` (`user_id`, `name`, `last_queried`, `uuid`, `options`)
                     VALUES ( 0, "", NOW(), UUID(), :options)',
-                    array('options' => array('value' => $options_text, 'data_type' => 'large'))
+                    ['options' => ['value' => $options_text, 'data_type' => 'large']]
             );
             $queryid = $database->lastInsertId();
         }
@@ -718,9 +722,16 @@ if (isset($_POST['submit_gpx_with_photos'])) {
         try {
             $waypoints = implode("|", $waypoints_tab);
             // TODO: why the langpref is fixed to pl? shouldn't it depend on current user/session language?
-            $okapi_response = Facade::service_call('services/caches/formatters/garmin', $loggedUser->getUserId(),
-                        array('cache_codes' => $waypoints, 'langpref' => 'pl',
-                        'location_source' => 'alt_wpt:user-coords', 'location_change_prefix' => '(F)'));
+            $okapi_response = Facade::service_call(
+                'services/caches/formatters/garmin',
+                $loggedUser->getUserId(),
+                [
+                    'cache_codes' => $waypoints,
+                    'langpref' => 'pl',
+                    'location_source' => 'alt_wpt:user-coords',
+                    'location_change_prefix' => '(F)',
+                ]
+            );
 
             // Modifying OKAPI's default HTTP Response headers.
             $okapi_response->content_type = 'application/zip';
@@ -749,7 +760,7 @@ if (isset($_POST['submit_gpx'])) {
     $stmt = $database->paramQuery(
         'SELECT `user_id`,`name`, `description`, `radius` FROM `routes`
         WHERE `route_id`=:route_id LIMIT 1',
-        array('route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+        ['route_id' => ['value' => $route_id, 'data_type' => 'integer']]
     );
     $record = $database->dbResultFetchOneRowOnly($stmt);
 
@@ -847,7 +858,7 @@ if (isset($_POST['submit_gpx'])) {
             $user_id = $loggedUser->getUserId();
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
             if ($access_log === null) {
-                $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = array();
+                $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
             }
             if (@$access_log[$cache_id] !== true) {
@@ -1218,9 +1229,9 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
 function caches_along_route($route_id, $distance)
 {
 
-    $initial_cache_list = array();
-    $inter_cache_list = array();
-    $final_cache_list = array();
+    $initial_cache_list = [];
+    $inter_cache_list = [];
+    $final_cache_list = [];
 
     // Get caches where within the minimum bounding box of the route
     // Actually, add the distance to the minimum bounding box
@@ -1270,19 +1281,19 @@ function caches_along_route($route_id, $distance)
         $bounds_min_lat, $bounds_max_lat, $bounds_min_lon, $bounds_max_lon);
 
     while ($row = $database->dbResultFetch($s)) {
-        $initial_cache_list[] = array("waypoint" => $row['waypoint'], "lat" => $row['lat'], "lon" => $row['lon']);
+        $initial_cache_list[] = ["waypoint" => $row['waypoint'], "lat" => $row['lat'], "lon" => $row['lon']];
     }
 
-    $points = array();
+    $points = [];
     $s = $database->paramQuery(
         'SELECT * FROM route_points
                 WHERE route_id = :route_id
                 ORDER BY point_nr',
-        array('route_id' => array('value' => $route_id, 'data_type' => 'integer'))
+        ['route_id' => ['value' => $route_id, 'data_type' => 'integer']]
         );
 
     while ($row = $database->dbResultFetch($s)) {
-        $points[] = array("lat" => $row["lat"], "lon" => $row["lon"]);
+        $points[] = ["lat" => $row["lat"], "lon" => $row["lon"]];
     }
     foreach ($initial_cache_list as $list) {
         foreach ($points as $point) {
@@ -1310,10 +1321,12 @@ function set_route_options($route_id, $options)
 {
     $database = OcDb::instance();
     $database->paramQuery(
-        'UPDATE `routes` SET `options`=:options WHERE `route_id`=:route_id', array('route_id' => array('value' => $route_id, 'data_type' => 'integer'),
-            'options' => array('value' => serialize($options), 'data_type' => 'string'),
-        )
-        );
+        'UPDATE `routes` SET `options`=:options WHERE `route_id`=:route_id',
+        [
+            'route_id' => ['value' => $route_id, 'data_type' => 'integer'],
+            'options' => ['value' => serialize($options), 'data_type' => 'string'],
+        ]
+    );
 }
 
 // end of function
@@ -1378,7 +1391,7 @@ function cache_distances($lat1, $lon1, $lat2, $lon2)
         return(0);
     } else {
         $earth_radius = 6378;
-        foreach (array("lat1", "lon1", "lat2", "lon2") as $ordinate)
+        foreach (["lat1", "lon1", "lat2", "lon2"] as $ordinate)
             $$ordinate = $$ordinate * (pi() / 180);
             $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +

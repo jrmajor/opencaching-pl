@@ -37,7 +37,7 @@ if (
         [
             GeoCache::STATUS_READY,
             GeoCache::STATUS_UNAVAILABLE,
-            GeoCache::STATUS_ARCHIVED
+            GeoCache::STATUS_ARCHIVED,
         ]
     )
 ) {

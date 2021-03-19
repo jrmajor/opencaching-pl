@@ -20,8 +20,8 @@ if (isset($_REQUEST['userid']) && isset($_REQUEST['t'])) {
     $tit = $_REQUEST['t'];
 }
 
-$y = array();
-$x = array();
+$y = [];
+$x = [];
 
 $lang_db = I18n::getLangForDbTranslations('cache_type');
 

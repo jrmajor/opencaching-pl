@@ -23,9 +23,9 @@ function find_news($start, $limit)
         CacheAccessLog::logCacheAccess($cache->getCacheId(), $user_id, 'view_logs', CacheAccessLog::SOURCE_MOBILE);
     }
 
-    $znalezione = array();
+    $znalezione = [];
     foreach ($logs as $log) {
-        $tmplog = array();
+        $tmplog = [];
         $tmplog['id'] = $log['logid'];
         $tmplog['user_id'] = $log['user_id'];
         $tmplog['newtype'] = $log['type'];

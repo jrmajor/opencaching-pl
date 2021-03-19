@@ -135,16 +135,15 @@ class GoogleOAuth extends OAuthSimpleUserBase
             'client_id' => self::getClientId(),
             'client_secret' => self::getClientSecret(),
             'redirect_uri' => Uri::getCurrentRequestUri(),
-            'grant_type' => 'authorization_code'
+            'grant_type' => 'authorization_code',
         ];
-        $opts = array('http' =>
-            array(
-                'method'  => 'POST',
-                'header'  => "Content-Type: application/x-www-form-urlencoded",
-                'content' => http_build_query($postData),
-                'timeout' => 60
-            )
-        );
+
+        $opts = ['http' => [
+            'method'  => 'POST',
+            'header'  => "Content-Type: application/x-www-form-urlencoded",
+            'content' => http_build_query($postData),
+            'timeout' => 60,
+        ]];
 
         $context  = stream_context_create($opts);
         $response = file_get_contents($tokenServiceUrl, false, $context);

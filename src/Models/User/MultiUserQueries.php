@@ -24,7 +24,7 @@ class MultiUserQueries extends BaseObject
 
         $countedTypes = implode(',',[
             GeoCacheLog::LOGTYPE_FOUNDIT,
-            GeoCacheLog::LOGTYPE_DIDNOTFIND
+            GeoCacheLog::LOGTYPE_DIDNOTFIND,
         ]);
 
         return self::db()->simpleQueryValue(
@@ -74,7 +74,7 @@ class MultiUserQueries extends BaseObject
     {
 
         if(empty($userIds)){
-            return array();
+            return [];
         }
 
         $db = self::db();
@@ -95,10 +95,11 @@ class MultiUserQueries extends BaseObject
     {
         $db = self::db();
 
-        $cacheActiveStatusList = implode(',',
-            [GeoCacheCommons::STATUS_READY,
-             GeoCache::STATUS_UNAVAILABLE,
-             GeoCache::STATUS_ARCHIVED]);
+        $cacheActiveStatusList = implode(',', [
+            GeoCacheCommons::STATUS_READY,
+            GeoCache::STATUS_UNAVAILABLE,
+            GeoCache::STATUS_ARCHIVED,
+        ]);
 
         $config = self::OcConfig()->getGuidesConfig();
 

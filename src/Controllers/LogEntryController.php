@@ -27,20 +27,20 @@ class LogEntryController
         }
         $query .= ' ORDER BY `cache_logs`.`date` DESC
             LIMIT :limit OFFSET :offset';
-        $params = array(
-            'cacheid' => array(
+        $params = [
+            'cacheid' => [
                 'value' => (integer)$cache->getCacheId(),
                 'data_type' => 'integer',
-            ),
-            'limit' => array(
+            ],
+            'limit' => [
                 'value' => OcDb::quoteLimit($limit),
                 'data_type' => 'integer',
-            ),
-            'offset' => array(
+            ],
+            'offset' => [
                 'value' => OcDb::quoteOffset($offset),
                 'data_type' => 'integer',
-            ),
-        );
+            ],
+        ];
         $db = OcDb::instance();
         $stmt = $db->paramQuery($query, $params);
         return $db->dbFetchAllAsObjects($stmt, function ($row) {
@@ -52,25 +52,25 @@ class LogEntryController
     public function loadLogsFromDb($geocacheId, $includeDeletedLogs = false, $offset = 0, $limit = 0, $logId = false)
     {
         $query = $this->generateGetLogsQuery($includeDeletedLogs, $logId);
-        $params = array(
-            'v1' => array(
+        $params = [
+            'v1' => [
                 'value' => (integer)$geocacheId,
                 'data_type' => 'integer',
-            ),
-            'v2' => array(
+            ],
+            'v2' => [
                 'value' => OcDb::quoteLimit($limit),
                 'data_type' => 'integer',
-            ),
-            'v3' => array(
+            ],
+            'v3' => [
                 'value' => OcDb::quoteOffset($offset),
                 'data_type' => 'integer',
-            ),
-        );
+            ],
+        ];
         if ($logId) {
-            $params['v4'] = array(
+            $params['v4'] = [
                 'value' => (integer)$logId,
                 'data_type' => 'integer',
-            );
+            ];
         }
         $db = OcDb::instance();
 

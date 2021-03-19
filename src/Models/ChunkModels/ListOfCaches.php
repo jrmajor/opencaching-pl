@@ -8,7 +8,7 @@ namespace src\Models\ChunkModels;
 
 class ListOfCaches{
 
-    private $listOfCaches = array();
+    private $listOfCaches = [];
     private $recomendationColumn = false;
     private $logTooltipEnabled = false;
 

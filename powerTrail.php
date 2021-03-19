@@ -244,7 +244,7 @@ switch ($actionPerformed) {
             header("Location: " . "//" . $_SERVER['HTTP_HOST'] . '/powerTrail.php');
             exit;
         }
-        $powerTrail = new PowerTrail(array('id' => (int)$_GET['ptrail']));
+        $powerTrail = new PowerTrail(['id' => (int)$_GET['ptrail']]);
         $ptOwners = $pt->getPtOwners();
         $_SESSION['ptName'] = powerTrailBase::clearPtNames($powerTrail->getName());
         tpl_set_var('powerTrailId', $powerTrail->getId());
@@ -449,7 +449,7 @@ function displayPTrails($pTrails, $areOwnSeries)
         </tr>';
     }
 
-    return array($dataForList, rtrim($dataForMap, ","));
+    return [$dataForList, rtrim($dataForMap, ",")];
 }
 
 function displayPowerTrailserStats(PowerTrail $powerTrail, $cachesFoundByUser)
@@ -577,50 +577,50 @@ function displayPowerTrailLogo($ptId, $img)
 
 function getSortBySelector($sel)
 {
-    $array = array(
-        1 => array('val' => "type", 'tr' => 'pt174'),
-        2 => array('val' => "name", 'tr' => 'pt168'),
-        3 => array('val' => "dateCreated", 'tr' => 'pt169'),
-        4 => array('val' => "cacheCount", 'tr' => 'pt170'),
-        5 => array('val' => "points", 'tr' => 'pt171'),
-        6 => array('val' => "conquestedCount", 'tr' => 'pt172'),
-    );
+    $array = [
+        1 => ['val' => "type", 'tr' => 'pt174'],
+        2 => ['val' => "name", 'tr' => 'pt168'],
+        3 => ['val' => "dateCreated", 'tr' => 'pt169'],
+        4 => ['val' => "cacheCount", 'tr' => 'pt170'],
+        5 => ['val' => "points", 'tr' => 'pt171'],
+        6 => ['val' => "conquestedCount", 'tr' => 'pt172'],
+    ];
     return generateSelector($array, $sel, 'sortBy');
 }
 
 function getSortDirSelector($sel)
 {
-    $arr = array(
-        1 => array('val' => 'asc', 'tr' => 'pt176'),
-        2 => array('val' => 'desc', 'tr' => 'pt177'),
-    );
+    $arr = [
+        1 => ['val' => 'asc', 'tr' => 'pt176'],
+        2 => ['val' => 'desc', 'tr' => 'pt177'],
+    ];
     return generateSelector($arr, $sel, 'sortDir');
 }
 
 function getGainedPowerTrailsSelector($sel)
 {
-    $arr = array(
-        1 => array('val' => 'no', 'tr' => 'no'),
-        2 => array('val' => 'yes', 'tr' => 'yes'),
-    );
+    $arr = [
+        1 => ['val' => 'no', 'tr' => 'no'],
+        2 => ['val' => 'yes', 'tr' => 'yes'],
+    ];
     return generateSelector($arr, $sel, 'gainedPowerTrailsBool');
 }
 
 function getMyPowerTrailsSelector($sel)
 {
-    $arr = array(
-        1 => array('val' => 'no', 'tr' => 'no'),
-        2 => array('val' => 'yes', 'tr' => 'yes'),
-    );
+    $arr = [
+        1 => ['val' => 'no', 'tr' => 'no'],
+        2 => ['val' => 'yes', 'tr' => 'yes'],
+    ];
     return generateSelector($arr, $sel, 'myPowerTrailsBool');
 }
 
 function getMiniPowerTrailSelector($sel)
 {
-    $arr = array(
-        1 => array('val' => 'no', 'tr' => 'no'),
-        2 => array('val' => 'yes', 'tr' => 'yes'),
-    );
+    $arr = [
+        1 => ['val' => 'no', 'tr' => 'no'],
+        2 => ['val' => 'yes', 'tr' => 'yes'],
+    ];
     return generateSelector($arr, $sel, 'historicLimitBool');
 }
 

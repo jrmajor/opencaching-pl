@@ -85,7 +85,7 @@ abstract class BaseController
     }
     protected function ajaxSuccessResponse($message=null, array $additionalResponseData=null){
         $response = [
-            'status' => 'OK'
+            'status' => 'OK',
         ];
 
         if(!is_null($message)){
@@ -100,7 +100,7 @@ abstract class BaseController
     }
     protected function ajaxErrorResponse($message=null, $statusCode=null, array $additionalResponseData=null){
         $response = [
-            'status' => 'ERROR'
+            'status' => 'ERROR',
         ];
         if(!is_null($message)){
             $response['message'] = $message;

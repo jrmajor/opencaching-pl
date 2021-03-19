@@ -364,7 +364,7 @@ class ReportLog extends BaseObject
             self::TYPE_POLL,
             self::TYPE_POLL_CANCEL,
             self::TYPE_CACHELOG_ADD,
-            self::TYPE_CHANGE_CACHE_STATUS
+            self::TYPE_CHANGE_CACHE_STATUS,
         ]);
     }
 

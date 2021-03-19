@@ -375,7 +375,7 @@ foreach ($defaultCountryList as $record) {
 tpl_set_var('countryoptions', $countriesoptions);
 
 // cache-attributes
-$cache_attribs = (isset($_POST['cache_attribs'])&&!empty($_POST['cache_attribs'])) ? mb_split(';', $_POST['cache_attribs']) : array();
+$cache_attribs = (isset($_POST['cache_attribs'])&&!empty($_POST['cache_attribs'])) ? mb_split(';', $_POST['cache_attribs']) : [];
 
 
 
@@ -808,7 +808,7 @@ function buildDescriptionLanguageSelector($show_all_langs, $langCode, $defaultLa
         $s = $db->simpleQuery('SELECT short FROM languages');
         $dbResult = $db->dbResultFetchAll($s);
 
-        $defaultLangugaeList = array();
+        $defaultLangugaeList = [];
         foreach ($dbResult as $langTmp) {
             $defaultLangugaeList[] = $langTmp['short'];
         }

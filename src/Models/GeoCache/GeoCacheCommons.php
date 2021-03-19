@@ -155,7 +155,7 @@ class GeoCacheCommons extends BaseObject {
         //       (see OKAPI issue #519)
         //       (+ adjust order in myroutes_search.tpl.php)
 
-        return array(
+        return [
             self::SIZE_NANO,
             self::SIZE_MICRO,
             self::SIZE_SMALL,
@@ -163,8 +163,8 @@ class GeoCacheCommons extends BaseObject {
             self::SIZE_LARGE,
             self::SIZE_XLARGE,
             self::SIZE_NONE,
-            self::SIZE_OTHER
-        );
+            self::SIZE_OTHER,
+        ];
     }
 
     /**
@@ -180,7 +180,7 @@ class GeoCacheCommons extends BaseObject {
             self::STATUS_ARCHIVED,
             self::STATUS_WAITAPPROVERS,
             self::STATUS_NOTYETAVAILABLE,
-            self::STATUS_BLOCKED
+            self::STATUS_BLOCKED,
         ];
     }
 
@@ -446,7 +446,7 @@ class GeoCacheCommons extends BaseObject {
         return implode(', ', [
             self::STATUS_READY,
             self::STATUS_UNAVAILABLE,
-            self::STATUS_ARCHIVED
+            self::STATUS_ARCHIVED,
         ]);
     }
 
@@ -459,7 +459,7 @@ class GeoCacheCommons extends BaseObject {
     {
         return implode(', ', [
             self::STATUS_READY,
-            self::STATUS_UNAVAILABLE
+            self::STATUS_UNAVAILABLE,
         ]);
     }
 

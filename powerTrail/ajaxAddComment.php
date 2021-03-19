@@ -23,14 +23,14 @@ try{
     exit;
 }
 
-$powerTrail = new PowerTrail(array('id' => (int) $_REQUEST['projectId']));
+$powerTrail = new PowerTrail(['id' => (int) $_REQUEST['projectId']]);
 $type = (int) $_REQUEST['type'];
 
 $ptController = new PowerTrailController();
 $result = $ptController->addComment($powerTrail, $loggedUser, $dateTime, $type, $text);
 
-$resultArray = array (
+$resultArray =  [
     'result' => $result,
-);
+];
 
 echo json_encode($resultArray);

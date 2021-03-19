@@ -7,14 +7,14 @@ require_once("./lib/common.inc.php");
 function makeUrl($url)
 {
 
-    $url = str_replace(array('ą', 'Ą', 'ę', 'Ę', 'Ż', 'ż', 'Ź', 'ź', 'Ć', 'ć', 'Ó', 'ó', 'ń', 'Ń', 'ł', 'Ł', 'ś', 'Ś', ' '), array('a', 'A', 'e', 'E', 'Z', 'z', 'Z', 'z', 'C', 'c', 'O', 'o', 'n', 'N', 'l', 'L', 's', 'S', '_'), $url);
+    $url = str_replace(['ą', 'Ą', 'ę', 'Ę', 'Ż', 'ż', 'Ź', 'ź', 'Ć', 'ć', 'Ó', 'ó', 'ń', 'Ń', 'ł', 'Ł', 'ś', 'Ś', ' '], ['a', 'A', 'e', 'E', 'Z', 'z', 'Z', 'z', 'C', 'c', 'O', 'o', 'n', 'N', 'l', 'L', 's', 'S', '_'], $url);
     return $url;
 }
 
 function wytnij($tab, $start, $end)
 {
 
-    $temp = Array();
+    $temp = [];
 
     for ($i = $start; $i < $end; $i++) {
         if (!empty($tab[$i]))
@@ -89,8 +89,8 @@ if (isset($_GET['ns']) && isset($_GET['ew']) && isset($_GET['radius']) && isset(
         $input = file_get_contents($jsonurl);
         $output = json_decode($input, true);
 
-        $znalezione = array();
-        $lista = array();
+        $znalezione = [];
+        $lista = [];
 
         $i = 0;
 

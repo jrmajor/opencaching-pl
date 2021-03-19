@@ -136,7 +136,7 @@ class UserWatchedCachesController extends BaseController
                         'logType'       => $row['llog_type'],
                         'logText'       => $row['llog_text'],
                         'logUserName'   => $row['llog_username'],
-                        'logDate'       => $row['llog_date']
+                        'logDate'       => $row['llog_date'],
                     ];
                 }
             ));
@@ -146,7 +146,7 @@ class UserWatchedCachesController extends BaseController
                     return [
                         'icon' => '/images/log/16x16-trash.png',
                         'onClick' => "removeFromWatched(this, '".$row['wp_oc']."')",
-                        'title' => tr('usrWatch_removeWatched')
+                        'title' => tr('usrWatch_removeWatched'),
                     ];
                 }
             ));

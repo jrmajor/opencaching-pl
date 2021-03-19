@@ -107,7 +107,7 @@ class Watchlist extends BaseObject
                 $log->getLogId(),
                 0,
                 $itemText,
-                array()
+                []
             );
         }
     }
@@ -135,7 +135,7 @@ class Watchlist extends BaseObject
             $this->insertOwnerWaitingsStmt->execute([
                 $log->getCacheOwnerId(),
                 $log->getLogId(),
-                $itemText
+                $itemText,
             ]);
         }
         if ($this->insertWatchersWaitingsStmt == null) {
@@ -154,7 +154,7 @@ class Watchlist extends BaseObject
         }
         $this->insertWatchersWaitingsStmt->execute([
             $itemText,
-            $log->getLogId()
+            $log->getLogId(),
         ]);
     }
 
@@ -255,7 +255,7 @@ class Watchlist extends BaseObject
                         );
                     }
                     $this->deleteWatchersWaitingStmt->execute([
-                        $watcher->getUserId()
+                        $watcher->getUserId(),
                     ]);
                     if ($watcher->getWatchmailNext() != null
                         && $watcher->getWatchmailNext()->getTimestamp() > 0
@@ -269,7 +269,7 @@ class Watchlist extends BaseObject
                         }
                         $this->updateNextWatchmailStmt->execute([
                             $watcher->getWatchmailNext()->format($dbFormat),
-                            $watcher->getUserId()
+                            $watcher->getUserId(),
                         ]);
                     }
                     if ($useLogentries) {
@@ -279,7 +279,7 @@ class Watchlist extends BaseObject
                             0,
                             0,
                             'Sending mail to ' . $watcher->getEmail(),
-                            array('status' => $watcher->getSendStatus())
+                            ['status' => $watcher->getSendStatus()]
                         );
                     }
                 }

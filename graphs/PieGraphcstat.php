@@ -18,8 +18,8 @@ if (isset($_REQUEST['cacheid'])) {
     $cache_id = $_REQUEST['cacheid'];
 }
 
-$y = array();
-$x = array();
+$y = [];
+$x = [];
 
 $lang_db = I18n::getLangForDbTranslations('log_types');
 
@@ -91,7 +91,7 @@ $p1 = new PiePlot($y);
 $p1->SetTheme("earth");
 $p1->value->SetFormat("%d");
 $p1->SetLabelType(PIE_VALUE_ABS);
-$p1->SetSliceColors(array('chartreuse3', 'chocolate2', 'wheat1'));
+$p1->SetSliceColors(['chartreuse3', 'chocolate2', 'wheat1']);
 
 // Adjust size and position of plot
 $p1->SetSize(0.35);
@@ -101,7 +101,7 @@ $dnf = tr("not_found");
 $com = tr("log_note");
 
 // Setup slice labels and move them into the plot
-$xx = array($f, $dnf, $com);
+$xx = [$f, $dnf, $com];
 $p1->value->SetFont(FF_COURIER, FS_NORMAL);
 $p1->value->SetColor("black");
 $p1->SetLabelPos(0.65);

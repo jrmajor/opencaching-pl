@@ -10,8 +10,8 @@ class UserProfilePref extends UserPreferencesBaseData
         return [
             'email' => [
                 'showMyEmail' => false,
-                'recieveCopy' => false
-            ]
+                'recieveCopy' => false,
+            ],
         ];
     }
 }

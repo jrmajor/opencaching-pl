@@ -9,7 +9,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
         case '1':
             $query = "select name, wp_oc, founds from caches where type!='4' and type!='5' order by founds desc limit 50 ";
             $wynik = XDb::xSql($query);
-            $znalezione = Array();
+            $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
                 $odp['name'] = $odp2['name'];
                 $odp['wp_oc'] = $odp2['wp_oc'];
@@ -21,7 +21,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
         case '2':
             $query = "select name,wp_oc,ile from caches inner join (select cache_id as yy,ile from(select cache_id,count(*) as ile from cache_rating group by cache_id)tab order by ile desc limit 50)a on yy=caches.cache_id where type!='4' and type!='5'";
             $wynik = XDb::xSql($query);
-            $znalezione = Array();
+            $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
                 $odp['name'] = $odp2['name'];
                 $odp['ile'] = $odp2['ile'];
@@ -33,7 +33,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
         case '3':
             $query = "select username,user_id,founds_count from user order by founds_count desc limit 50";
             $wynik = XDb::xSql($query);
-            $znalezione = Array();
+            $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
                 $odp['username'] = $odp2['username'];
                 $odp['user_id'] = $odp2['user_id'];
@@ -45,7 +45,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
         case '4':
             $query = "select username,user_id,hidden_count from user order by hidden_count desc limit 50";
             $wynik = XDb::xSql($query);
-            $znalezione = Array();
+            $znalezione = [];
             while ($odp2 = XDb::xFetchArray($wynik)) {
                 $odp['username'] = $odp2['username'];
                 $odp['user_id'] = $odp2['user_id'];
@@ -80,7 +80,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
 
     $query = "select name, wp_oc, founds from caches where type!='4' and type!='5' order by founds desc limit 5 ";
     $wynik = XDb::xSql($query);
-    $znalezione = Array();
+    $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
         $odp['name'] = $odp2['name'];
         $odp['wp_oc'] = $odp2['wp_oc'];
@@ -104,7 +104,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
             ORDER BY `ile` DESC, `caches`.`name` ASC
             LIMIT 5";
     $wynik = XDb::xSql($query);
-    $znalezione = Array();
+    $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
         $odp['name'] = $odp2['name'];
         $odp['ile'] = $odp2['ile'];
@@ -115,7 +115,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
 
     $query = "select username,user_id,founds_count from user order by founds_count desc limit 5";
     $wynik = XDb::xSql($query);
-    $znalezione = Array();
+    $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
         $odp['username'] = $odp2['username'];
         $odp['user_id'] = $odp2['user_id'];
@@ -126,7 +126,7 @@ if (isset($_GET['more']) && ($_GET['more'] == '1' || $_GET['more'] == '2' || $_G
 
     $query = "select username,user_id,hidden_count from user order by hidden_count desc limit 5";
     $wynik = XDb::xSql($query);
-    $znalezione = Array();
+    $znalezione = [];
     while ($odp2 = XDb::xFetchArray($wynik)) {
         $odp['username'] = $odp2['username'];
         $odp['user_id'] = $odp2['user_id'];

@@ -13,7 +13,7 @@ $destination_path = OcConfig::getPicUploadFolder(true) . DIRECTORY_SEPARATOR;
 
 $result = "No Data";
 
-$valid_formats = array("gpx");
+$valid_formats = ["gpx"];
 
 $name = $_FILES['myfile']['name'];
 $size = $_FILES['myfile']['size'];
@@ -68,7 +68,7 @@ function loadWaypointFromGpx($wpts)
         $coords_lat_min = sprintf("%02.3f", round(($coordsLat - $coords_lat_h) * 60, 3));
         $coords_lon_min = sprintf("%02.3f", round(($coordsLon - $coords_lon_h) * 60, 3));
 
-        $result[$key] = array(
+        $result[$key] = [
             'name' => (string) $waypoint->name,
             'coords_latNS' => $coords_latNS,
             'coords_lonEW' => $coords_lonEW,
@@ -80,7 +80,7 @@ function loadWaypointFromGpx($wpts)
             'altitude' => (float) $waypoint->ele,
             'desc' => '',
             'cmt' => '',
-        );
+        ];
         //insert waypoint description in result array
         if (isset($waypoint->cmt) && $wpts->wpt->cmt != '') {
             $result[$key]['desc'] .= (string) $wpts->wpt->desc;

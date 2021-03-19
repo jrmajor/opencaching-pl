@@ -47,7 +47,7 @@ class CacheVisits
             WHERE `cache_id`= ? AND type = ?",
             $cacheId, self::TYPE_PREPUBLICATION_VISIT);
 
-        $result = array();
+        $result = [];
         while($row = XDb::xFetchArray($s)){
             $result[] = $row['user_id_ip'];
         }

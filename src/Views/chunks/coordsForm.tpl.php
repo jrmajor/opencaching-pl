@@ -31,8 +31,8 @@ return function (Coordinates $initCoords = null, $inputPrefix='') {
 
     $f = Coordinates::COORDINATES_FORMAT_DEG_MIN;
 
-    list($latLetter, $latDeg, $latMin) = ($initCoords)?$initCoords->getLatitudeParts($f):array($defaultLat,'','');
-    list($lonLetter, $lonDeg, $lonMin) = ($initCoords)?$initCoords->getLongitudeParts($f):array($defaultLon,'','');
+    list($latLetter, $latDeg, $latMin) = ($initCoords)?$initCoords->getLatitudeParts($f):[$defaultLat, '', ''];
+    list($lonLetter, $lonDeg, $lonMin) = ($initCoords)?$initCoords->getLongitudeParts($f):[$defaultLon, '', ''];
 
     $selectN = ($latLetter == 'N')?'selected="selected"':'';
     $selectS = ($latLetter == 'S')?'selected="selected"':'';

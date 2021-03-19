@@ -52,11 +52,11 @@ if(count($statsArr) == 0){ // no result!
 foreach ($statsArr as $user) {
     $tmpDate = substr($user['date'], 0, -9);
     if(!isset($sorted[$user["user_id"]])) {
-        $sorted[$user["user_id"]] = array(
+        $sorted[$user["user_id"]] = [
             'user_id' => $user['user_id'],
             'username' => $user['username'],
             'FoundCount' => $user['FoundCount'],
-        );
+        ];
         $tmp[$user["user_id"]]['dates'][] = $tmpDate;
     } else {
         $sorted[$user["user_id"]]['FoundCount'] += $user['FoundCount'];
@@ -70,7 +70,7 @@ foreach ($tmp as $userId => $value) {
     $sorted[$userId]['daysSpent'] = count($value['dates']);
 }
 
-$sort = array();
+$sort = [];
 foreach($sorted as $k=>$v) {
     $sort['username'][$k] = $v['username'];
     $sort['FoundCount'][$k] = $v['FoundCount'];

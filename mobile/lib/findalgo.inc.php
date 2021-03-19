@@ -73,7 +73,7 @@ if (isSet($_GET['nazwa']) && !empty($_GET['nazwa']) ||
 
         if ($czykilka == 1) {
 
-            $znalezione = array();
+            $znalezione = [];
 
             while ($rekord = XDb::xFetchArray($wynik)) {
 

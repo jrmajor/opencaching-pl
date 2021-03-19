@@ -100,7 +100,7 @@ class RssFeed {
      */
     public function random() {
         if ($this->remaining === null) {
-            $this->remaining = array();
+            $this->remaining = [];
             for ($i = 0; $i < $this->count(); $i++) {
                 $this->remaining[] = $i;
             }
@@ -121,7 +121,7 @@ class RssFeed {
      * @return array of stdClass
      */
     public function find($count) {
-        $items = array();
+        $items = [];
 
         while ($item = $this->next()) {
             $items[] = $item;
@@ -299,14 +299,14 @@ class AtomReader implements FeedReader {
             return null;
         }
 
-        $item = array(
+        $item = [
             'title' => (string)$node->title,
             'description' => (string)$node->description,
             'image' => null,
             'link' => null,
             'date' => strtotime($node->published),
             'author' => (string)$node->author->name,
-        );
+        ];
 
         //Iterate through link nodes getting content URL and images.
         foreach ($node->link as $link) {
@@ -349,14 +349,14 @@ class RSSReader implements FeedReader {
             return null;
         }
         $dc = $node->children('http://purl.org/dc/elements/1.1/');
-        return (object)array(
+        return (object)[
             'title' => (string)$node->title,
             'description' => (string)$node->description,
             'link' => (string)$node->link,
             'image' => null,
             'date' => strtotime($node->pubDate),
             'author' => (string)$dc->creator,
-        );
+        ];
     }
 
     public static function canRead(SimpleXMLElement $root) {

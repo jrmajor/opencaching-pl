@@ -60,8 +60,8 @@ class WatchlistWatcher extends BaseObject
         $this->setWatchmailHour($watchmailHour);
         $this->setWatchmailDay($watchmailDay);
         $this->setWatchmailNext($watchmailNext);
-        $this->ownerLogs = array();
-        $this->watchLogs = array();
+        $this->ownerLogs = [];
+        $this->watchLogs = [];
     }
 
     /**

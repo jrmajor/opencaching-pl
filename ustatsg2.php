@@ -78,24 +78,24 @@ $clrRed = ImageColorAllocate($im, 255, 0, 0);
 $clrBlue = ImageColorAllocate($im, 0, 0, 255);
 $fontsize = 18;
 
-$wojewodztwa = array(
-    'PL11' => array(110, 138), // Lodzkie
-    'PL12' => array(155, 108), // Mazowieckie
-    'PL21' => array(135, 208), // Malopolskie
-    'PL22' => array(103, 188), // Slaskie
-    'PL31' => array(200, 150), // Lubelskie
-    'PL32' => array(180, 200), // Podkarpackie
-    'PL33' => array(146, 170), // Swietokrzyskie
-    'PL34' => array(195, 75), // Podlaskie
-    'PL41' => array(65, 115), // Wielkopolskie
-    'PL42' => array(26, 55), // Zachodniopmorskie
-    'PL43' => array(19, 100), // Lubuskie
-    'PL51' => array(35, 149), // Dolnoslaskie
-    'PL52' => array(78, 169), // Opolskie
-    'PL61' => array(90, 85), // Kujawskie
-    'PL62' => array(145, 50), // Warminskie
-    'PL63' => array(85, 43)     // Pomorskie
-);
+$wojewodztwa = [
+    'PL11' => [110, 138], // Lodzkie
+    'PL12' => [155, 108], // Mazowieckie
+    'PL21' => [135, 208], // Malopolskie
+    'PL22' => [103, 188], // Slaskie
+    'PL31' => [200, 150], // Lubelskie
+    'PL32' => [180, 200], // Podkarpackie
+    'PL33' => [146, 170], // Swietokrzyskie
+    'PL34' => [195, 75], // Podlaskie
+    'PL41' => [65, 115], // Wielkopolskie
+    'PL42' => [26, 55], // Zachodniopmorskie
+    'PL43' => [19, 100], // Lubuskie
+    'PL51' => [35, 149], // Dolnoslaskie
+    'PL52' => [78, 169], // Opolskie
+    'PL61' => [90, 85], // Kujawskie
+    'PL62' => [145, 50], // Warminskie
+    'PL63' => [85, 43],     // Pomorskie
+];
 $wyniki = XDb::xSql(
     "SELECT cache_location.code3 wojewodztwo, COUNT(*) ilosc FROM cache_logs, cache_location
     WHERE cache_logs.user_id= ? AND cache_logs.type='1'

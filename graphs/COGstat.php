@@ -28,14 +28,14 @@ if ($count_days < 181) {
 }
 
 
-$y = array();
-$x = array();
-$y2 = array();
-$x2 = array();
-$y3 = array();
-$x3 = array();
-$y4 = array();
-$x4 = array();
+$y = [];
+$x = [];
+$y2 = [];
+$x2 = [];
+$y3 = [];
+$x3 = [];
+$y4 = [];
+$x4 = [];
 
 $rsreports = XDb::xSql(
     "SELECT count(*) count, responsible_id, username FROM reports, user

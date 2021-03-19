@@ -48,12 +48,12 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         </head>
         <body>
          <?php
-            $dane = array();
+            $dane = [];
 
             if (isset($_SESSION['log_cache_multi_filteredData'])) {
                 $dane = $_SESSION['log_cache_multi_filteredData'];
 
-                $cacheIdList = array();
+                $cacheIdList = [];
                 foreach ($dane as $k => $v) {
                     $cacheIdList[] = $v['cache_id'];
                 }

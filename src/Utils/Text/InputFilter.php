@@ -47,8 +47,8 @@ class InputFilter
     var $tagsMethod;        // default = 0
     var $attrMethod;        // default = 0
     var $xssAuto;           // default = 1
-    var $tagBlacklist = array('applet', 'body', 'bgsound', 'base', 'basefont', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'script', 'style', 'title', 'xml');
-    var $attrBlacklist = array('action', 'dynsrc', 'lowsrc');  // also will strip ALL event handlers
+    var $tagBlacklist = ['applet', 'body', 'bgsound', 'base', 'basefont', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'script', 'style', 'title', 'xml'];
+    var $attrBlacklist = ['action', 'dynsrc', 'lowsrc'];  // also will strip ALL event handlers
 
     /**
      * Constructor for inputFilter class. Only first parameter is required.
@@ -60,7 +60,7 @@ class InputFilter
      * @param int $xssAuto - 0= only auto clean essentials, 1= allow clean blacklisted tags/attr
      */
 
-    private function __construct($tagsArray = array(), $attrArray = array(), $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
+    private function __construct($tagsArray = [], $attrArray = [], $tagsMethod = 0, $attrMethod = 0, $xssAuto = 1)
     {
         // make sure user defined arrays are in lowercase
         for ($i = 0; $i < count($tagsArray); $i++)
@@ -173,7 +173,7 @@ class InputFilter
 
             // iterate through tag finding attribute pairs - setup
             $tagLeft = $currentTag;
-            $attrSet = array();
+            $attrSet = [];
             $currentSpace = mb_strpos($tagLeft, ' ');
 
             // is end tag
@@ -281,7 +281,7 @@ class InputFilter
      */
     private function filterAttr($attrSet)
     {
-        $newSet = array();
+        $newSet = [];
 
         // process attributes
         for ($i = 0; $i < count($attrSet); $i++) {

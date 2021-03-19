@@ -1,6 +1,6 @@
 <?php
 
-$translations = array(
+$translations = [
     'main_menu' => 'crwdns5540:0crwdne5540:0',
     'user_menu' => 'crwdns5541:0crwdne5541:0',
     'new' => 'crwdns5542:0crwdne5542:0',
@@ -3100,4 +3100,4 @@ $translations = array(
     'vote_elListThStart' => 'crwdns27344:0crwdne27344:0',
     'vote_elListThEnd' => 'crwdns27346:0crwdne27346:0',
 //  '' => '',
-);
+];

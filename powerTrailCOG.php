@@ -30,7 +30,7 @@ $view->loadJQuery();
 $view->addLocalCss(Uri::getLinkWithModificationTime('/css/powerTrail.css'));
 
 if (isset($_REQUEST['ptSelector'])) {
-    $powerTrail = new PowerTrail(array('id' => $_REQUEST['ptSelector']));
+    $powerTrail = new PowerTrail(['id' => $_REQUEST['ptSelector']]);
     $_SESSION['ptRmByCog'] = 1;
     $ptData = powerTrailBase::getPtDbRow($_REQUEST['ptSelector']);
     $ptStatus = \src\Controllers\PowerTrailController::getPowerTrailStatus();

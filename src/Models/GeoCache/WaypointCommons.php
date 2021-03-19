@@ -17,14 +17,14 @@ class WaypointCommons extends BaseObject {
     const STATUS_VISIBLE_HIDDEN_COORDS = 2;
     const STATUS_HIDDEN = 3;
 
-    const ICONS = array(
+    const ICONS = [
         self::TYPE_PHYSICAL => 'images/waypoints/wp_physical.png',
         self::TYPE_VIRTUAL => 'images/waypoints/wp_virtual.png',
         self::TYPE_FINAL => 'images/waypoints/wp_final.png',
         self::TYPE_INTERESTING => 'images/waypoints/wp_reference.png',
         self::TYPE_PARKING => 'images/waypoints/wp_parking.png',
-        self::TYPE_TRAILHEAD => 'images/waypoints/wp_trailhead.png'
-    );
+        self::TYPE_TRAILHEAD => 'images/waypoints/wp_trailhead.png',
+    ];
 
     public static function typeTranslationKey($type)
     {
@@ -36,14 +36,14 @@ class WaypointCommons extends BaseObject {
         $cacheTypesWithSimpleWps = [
             GeoCacheCommons::TYPE_TRADITIONAL, GeoCacheCommons::TYPE_VIRTUAL,
             GeoCacheCommons::TYPE_WEBCAM, GeoCacheCommons::TYPE_EVENT,
-            GeoCacheCommons::TYPE_GEOPATHFINAL
+            GeoCacheCommons::TYPE_GEOPATHFINAL,
         ];
 
         if ($forCacheType && in_array($forCacheType, $cacheTypesWithSimpleWps) ) {
             return [
                 self::TYPE_INTERESTING,
                 self::TYPE_PARKING,
-                self::TYPE_TRAILHEAD
+                self::TYPE_TRAILHEAD,
             ];
         } else {
             return [
@@ -52,7 +52,7 @@ class WaypointCommons extends BaseObject {
                 self::TYPE_FINAL,
                 self::TYPE_INTERESTING,
                 self::TYPE_PARKING,
-                self::TYPE_TRAILHEAD
+                self::TYPE_TRAILHEAD,
             ];
         }
     }

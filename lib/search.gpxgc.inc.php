@@ -181,7 +181,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
         $user_id = ($user) ? $user->getUserId() : null;
         $access_log = @$_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
         if ($access_log === null) {
-            $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = array();
+            $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = [];
             $access_log = $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
         }
         if (@$access_log[$cache_id] !== true) {

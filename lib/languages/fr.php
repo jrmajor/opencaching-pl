@@ -1,6 +1,6 @@
 <?php
 
-$translations = array(
+$translations = [
     'main_menu' => 'Menu principal',
     'user_menu' => 'Menu Utilisateur',
     'new' => 'NOUVEAU',
@@ -3100,4 +3100,4 @@ $translations = array(
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
 //  '' => '',
-);
+];

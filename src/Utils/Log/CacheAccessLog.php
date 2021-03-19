@@ -19,7 +19,7 @@ class CacheAccessLog
     public static function logCacheAccess($cacheId, $userId, $event, $source){
         $accessLog = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $userId];
         if ($accessLog === null) {
-            $_SESSION['CACHE_ACCESS_LOG_VC_' . $userId] = array();
+            $_SESSION['CACHE_ACCESS_LOG_VC_' . $userId] = [];
             $accessLog = $_SESSION['CACHE_ACCESS_LOG_VC_' . $userId];
         }
         if (@$accessLog[$cacheId] !== true) {

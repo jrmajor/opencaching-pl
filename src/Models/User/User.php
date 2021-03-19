@@ -102,7 +102,7 @@ class User extends UserCommons
         parent::__construct();
 
         if (is_null($params)) {
-            $params = array();
+            $params = [];
         }
 
         if (isset($params['fieldsStr'])) {
@@ -392,7 +392,7 @@ class User extends UserCommons
         // if coordinates are present set the homeCords.
         if ($cordsPresent) {
             $this->homeCoordinates =
-                new Coordinates(array('dbRow' => $dbRow));
+                new Coordinates(['dbRow' => $dbRow]);
         }
         $this->dataLoaded = true; // mark object as containing data
     }
@@ -992,7 +992,7 @@ class User extends UserCommons
                 "SELECT statpic_text, statpic_logo FROM user WHERE user_id=:1 LIMIT 1",
                 $this->getUserId()));
 
-        return [$row['statpic_text'],$row['statpic_logo']];
+        return [$row['statpic_text'], $row['statpic_logo']];
     }
 
     /**

@@ -89,13 +89,13 @@ class MultiCacheStats extends BaseObject
     {
         if ($activeOnly) {
             $countedStatuses = implode(',', [
-                GeoCache::STATUS_READY
+                GeoCache::STATUS_READY,
             ]);
         } else {
             $countedStatuses = implode(',', [
                 GeoCache::STATUS_ARCHIVED,
                 GeoCache::STATUS_UNAVAILABLE,
-                GeoCache::STATUS_READY
+                GeoCache::STATUS_READY,
             ]);
         }
 
@@ -110,13 +110,13 @@ class MultiCacheStats extends BaseObject
 
         if ($activeOnly) {
             $countedStatuses = implode(',', [
-                GeoCache::STATUS_READY
+                GeoCache::STATUS_READY,
             ]);
         } else {
             $countedStatuses = implode(',', [
                 GeoCache::STATUS_ARCHIVED,
                 GeoCache::STATUS_UNAVAILABLE,
-                GeoCache::STATUS_READY
+                GeoCache::STATUS_READY,
             ]);
         }
 
@@ -132,7 +132,7 @@ class MultiCacheStats extends BaseObject
         $countedStatuses = implode(',', [
             GeoCache::STATUS_ARCHIVED,
             GeoCache::STATUS_UNAVAILABLE,
-            GeoCache::STATUS_READY
+            GeoCache::STATUS_READY,
         ]);
 
         return self::db()->simpleQueryValue(
@@ -151,7 +151,7 @@ class MultiCacheStats extends BaseObject
         $countedStatuses = implode(',', [
             GeoCache::STATUS_ARCHIVED,
             GeoCache::STATUS_UNAVAILABLE,
-            GeoCache::STATUS_READY
+            GeoCache::STATUS_READY,
         ]);
 
         $rs = $db->multiVariableQuery(
@@ -181,8 +181,10 @@ class MultiCacheStats extends BaseObject
         $db = self::db();
 
         if (empty($fieldsArr)) {
-            $fieldsArr = ['cache_id', 'status', 'type', 'wp_oc', 'user_id',
-                'latitude', 'longitude', 'name'];
+            $fieldsArr = [
+                'cache_id', 'status', 'type', 'wp_oc', 'user_id',
+                'latitude', 'longitude', 'name',
+            ];
         }
 
         $cacheIdsStr = implode(',', $cacheIds);
@@ -506,7 +508,7 @@ class MultiCacheStats extends BaseObject
         while ($index < $cachesCount && $index < $offset + $limit) {
             $result[] = [
                 'date' => $cachesId[$index]['date'],
-                'cache' => GeoCache::fromCacheIdFactory($cachesId[$index]['cache_id'])
+                'cache' => GeoCache::fromCacheIdFactory($cachesId[$index]['cache_id']),
             ];
             $index++;
         }

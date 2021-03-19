@@ -182,7 +182,7 @@ class Report extends BaseObject
     public function getUserSubmit()
     {
         if ($this->userSubmit == null && $this->dataLoaded) {
-            $this->userSubmit = new User([ 'userId' => $this->userIdSubmit ]);
+            $this->userSubmit = new User(['userId' => $this->userIdSubmit]);
         }
         return $this->userSubmit;
     }
@@ -195,7 +195,7 @@ class Report extends BaseObject
     public function getUserLeader()
     {
         if ($this->userLeader == null && $this->dataLoaded) {
-            $this->userLeader = new User([ 'userId' => $this->userIdLeader]);
+            $this->userLeader = new User(['userId' => $this->userIdLeader]);
         }
         return $this->userLeader;
     }
@@ -208,7 +208,7 @@ class Report extends BaseObject
     public function getUserLastChange()
     {
         if ($this->userLastChange == null && $this->dataLoaded) {
-            $this->userLastChange = new User([ 'userId' => $this->userIdLastChange ]);
+            $this->userLastChange = new User(['userId' => $this->userIdLastChange]);
         }
         return $this->userLastChange;
     }
@@ -221,7 +221,7 @@ class Report extends BaseObject
     public function getCache()
     {
         if ($this->cache == null && $this->dataLoaded) {
-            $this->cache = new GeoCache([ 'cacheId' => $this->cacheId ]);
+            $this->cache = new GeoCache(['cacheId' => $this->cacheId]);
         }
         return $this->cache;
     }
@@ -467,7 +467,7 @@ class Report extends BaseObject
             $this->sendWatchEmails($logId);
         } else { // Assign report to other user
             ReportEmailSender::sendReportNewLeader($this, $this->getUserLeader());
-            $this->sendWatchEmails($logId, [ $this->userIdLeader ]);
+            $this->sendWatchEmails($logId, [$this->userIdLeader]);
         }
         if (! $this->isReportWatched($oldLeaderId) && ! is_null($oldLeaderId)) { // If previeous leader don't watch this report - inform him anyway
             ReportEmailSender::sendReportWatch($this, new User(['userId' => $oldLeaderId]), $logId);

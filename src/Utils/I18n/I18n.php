@@ -315,7 +315,7 @@ namespace src\Utils\I18n
                 // Otherwise the old cached data can crash the changed implementation.
                 'failover-filetime' => $fallbackFiletime,
                 'main-filetime' => $currentLangFiletime,
-                'translations' => $translations
+                'translations' => $translations,
             ]);
 
             return $translations;

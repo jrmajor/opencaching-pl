@@ -71,7 +71,7 @@ class UserIgnoredCachesController extends BaseController
                         'logType'       => $row['llog_type'],
                         'logText'       => $row['llog_text'],
                         'logUserName'   => $row['llog_username'],
-                        'logDate'       => $row['llog_date']
+                        'logDate'       => $row['llog_date'],
                     ];
                 }
             ));
@@ -81,7 +81,7 @@ class UserIgnoredCachesController extends BaseController
                     return [
                         'icon' => 'images/log/16x16-trash.png',
                         'onClick' => "removeFromIgnored(this, '".$row['wp_oc']."')",
-                        'title' => tr('usrIgnore_off_ignore')
+                        'title' => tr('usrIgnore_off_ignore'),
                     ];
                 }
             ));

@@ -15,7 +15,7 @@ class TextGen
     public static function randomText($textLen)
     {
         $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789";
-        $text = array();
+        $text = [];
         $alphaLength = strlen($alphabet) - 1;
         for ($i = 0; $i < $textLen; $i++) {
             $n = rand(0, $alphaLength);

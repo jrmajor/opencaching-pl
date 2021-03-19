@@ -109,7 +109,7 @@ class GeoCacheLogCommons extends BaseObject
 
     public static function logTypesArray()
     {
-        return array(
+        return [
             self::LOGTYPE_FOUNDIT,
             self::LOGTYPE_DIDNOTFIND,
             self::LOGTYPE_COMMENT,
@@ -122,7 +122,7 @@ class GeoCacheLogCommons extends BaseObject
             self::LOGTYPE_READYTOSEARCH,
             self::LOGTYPE_TEMPORARYUNAVAILABLE,
             self::LOGTYPE_ADMINNOTE,
-        );
+        ];
     }
 
     /**
@@ -162,7 +162,7 @@ class GeoCacheLogCommons extends BaseObject
         //strip all tags but not <li>
         $text = strip_tags($text, "<li>");
 
-        $replace = array(
+        $replace = [
             //'<p>&nbsp;</p>' => '', //duplicated ? by strip_tags above
             '&nbsp;' => ' ',
             //'<p>' => '', //duplicated ? by strip_tags above
@@ -185,8 +185,8 @@ class GeoCacheLogCommons extends BaseObject
             '(' => ' -',
             ')' => '- ',
             ']]>' => ']] >',
-            '' => ''
-        );
+            '' => '',
+        ];
 
         $text = str_ireplace( array_keys($replace), array_values($replace), $text);
         return preg_replace('/[\x00-\x08\x0E-\x1F\x7F\x0A\x0C]+/', '', $text);
@@ -215,7 +215,7 @@ class GeoCacheLogCommons extends BaseObject
             self::LOGTYPE_COMMENT, self::LOGTYPE_NEEDMAINTENANCE,
             self::LOGTYPE_MADEMAINTENANCE, self::LOGTYPE_ARCHIVED,
             self::LOGTYPE_READYTOSEARCH, self::LOGTYPE_TEMPORARYUNAVAILABLE,
-            self::LOGTYPE_ADMINNOTE
+            self::LOGTYPE_ADMINNOTE,
         ];
         if ($cacheType == GeoCacheCommons::TYPE_EVENT) {
             array_push($logTypes,

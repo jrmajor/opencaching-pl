@@ -77,7 +77,7 @@ class CacheSetAdminController extends BaseController
                     return [
                         'id' => $row['id'],
                         'type' => $row['type'],
-                        'name' => $row['name']
+                        'name' => $row['name'],
                     ];
                 }));
         $listModel->addColumn(
@@ -143,7 +143,7 @@ class CacheSetAdminController extends BaseController
             $ptArr = PowerTrail::CheckForPowerTrailByCache($cacheid, TRUE);
             $pts[$cacheid] = [];
             foreach ($ptArr as $ptRow) {
-                $pts[$cacheid][] = new PowerTrail(array('dbRow' => $ptRow));
+                $pts[$cacheid][] = new PowerTrail(['dbRow' => $ptRow]);
             }
         }
         $this->view->setVar('pts', $pts);

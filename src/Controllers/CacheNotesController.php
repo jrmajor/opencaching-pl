@@ -90,7 +90,7 @@ class CacheNotesController extends BaseController
                             'logType'       => $row['llog_type'],
                             'logText'       => $row['llog_text'],
                             'logUserName'   => $row['llog_userName'],
-                            'logDate'       => $row['llog_date']
+                            'logDate'       => $row['llog_date'],
                         ];
                     }else{
                         return [];
@@ -113,7 +113,7 @@ class CacheNotesController extends BaseController
                     return [
                         'icon' => isset($row['noteTxt'])?'/images/log/16x16-trash.png':null,
                         'onClick' => "removeNote(this, {$row['cache_id']})",
-                        'title' => tr('myNotes_removeNote')
+                        'title' => tr('myNotes_removeNote'),
                     ];
                 }
             ));
@@ -134,7 +134,7 @@ class CacheNotesController extends BaseController
                     return [
                         'icon' => isset($row['coords'])?'/images/log/16x16-trash.png':null,
                         'onClick' => "removeCoords(this, {$row['cache_id']})",
-                        'title' => tr('myNotes_removeCoords')
+                        'title' => tr('myNotes_removeCoords'),
                     ];
                 }
             ));
@@ -224,7 +224,7 @@ class CacheNotesController extends BaseController
         }
 
         // find last logs
-        $logFields = ['id','text','type','user_id','date'];
+        $logFields = ['id', 'text', 'type', 'user_id', 'date'];
         foreach( MultiLogStats::getLastLogForEachCache($cacheIds) as $log) {
             foreach($logFields as $col){
                 $result[ $log['cache_id'] ]['llog_'.$col] = $log[$col];

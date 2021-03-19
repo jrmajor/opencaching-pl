@@ -221,13 +221,13 @@ class Coordinates
     {
         switch ($format) {
             case self::COORDINATES_FORMAT_DECIMAL:
-                return array($prefix, sprintf("%02d", $deg));
+                return [$prefix, sprintf("%02d", $deg)];
 
             case self::COORDINATES_FORMAT_DEG_MIN:
-                return array($prefix, sprintf("%02d", floor($deg)), sprintf("%06.3f", $min));
+                return [$prefix, sprintf("%02d", floor($deg)), sprintf("%06.3f", $min)];
 
             case self::COORDINATES_FORMAT_DEG_MIN_SEC:
-                return array($prefix, sprintf("%02d", floor($deg)), sprintf("%02d", floor($min)), sprintf("%03d", $sec));
+                return [$prefix, sprintf("%02d", floor($deg)), sprintf("%02d", floor($min)), sprintf("%03d", $sec)];
             default:
                 return '';
         }
@@ -313,7 +313,7 @@ class Coordinates
         $deg = abs($coordinate);
         $min = 60 * ($deg - floor($deg));
         $sec = 3600 * ($deg - floor($deg)) - 60 * floor($min);
-        return array($deg, $min, $sec);
+        return [$deg, $min, $sec];
     }
 
     private function convertToDegMin($decimalCoordinate)

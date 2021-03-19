@@ -149,12 +149,11 @@ class GeoKretyApi extends BaseObject
 
     private function connect($url, $operationType)
     {
-        $opts = array('http' =>
-            array(
-                'header' => 'Content-type: application/x-www-form-urlencoded',
-                'timeout' => $this->connectionTimeout,
-            )
-        );
+        $opts = ['http' => [
+            'header' => 'Content-type: application/x-www-form-urlencoded',
+            'timeout' => $this->connectionTimeout,
+        ]];
+
         $context = stream_context_create($opts);
         @$response = file_get_contents($url, false, $context);
         if ($response) {

@@ -74,7 +74,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             <?php
 
-            $options = array("input-encoding" => "utf8", "output-encoding" => "utf8", "output-xhtml" => true, "doctype" => "omit", "show-body-only" => true, "char-encoding" => "utf8", "quote-ampersand" => true, "quote-nbsp" => true);
+            $options = ["input-encoding" => "utf8", "output-encoding" => "utf8", "output-xhtml" => true, "doctype" => "omit", "show-body-only" => true, "char-encoding" => "utf8", "quote-ampersand" => true, "quote-nbsp" => true];
             $text = $_POST['text'];
             //$text = preg_replace('~&#([0-9]+);~e', 'chr("\\1")', $text);
             #$text = preg_replace('~&#x([0-9a-fA-F]+);~ei', 'chr(hexdec("\\1"))', $text);
@@ -87,7 +87,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             //callback function for the regex
             function utf8_entity_decode($entity){
-            $convmap = array(0x0, 0x10000, 0, 0xfffff);
+            $convmap = [0x0, 0x10000, 0, 0xfffff];
             return "ż";
             // return mb_decode_numericentity($entity, $convmap, 'UTF-8');
             }
@@ -100,7 +100,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             function iterate_over($node)
             {
-            $removed = array();
+            $removed = [];
 
             print "<br />Iterating over " .  $node->tagName ."\n";
 
@@ -141,7 +141,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             {
             if($domElement->hasChildNodes()) {
             $children = $domElement->childNodes;
-            $toAppend = array();
+            $toAppend = [];
             foreach($children as $child)
             array_unshift($toAppend, $child);
             foreach($toAppend as $child)

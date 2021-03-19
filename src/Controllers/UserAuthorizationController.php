@@ -150,7 +150,7 @@ class UserAuthorizationController extends BaseController
         $this->view->setTemplate('userAuth/newPasswordInput');
         $this->view->setVar('returnUrl', SimpleRouter::getLink('UserAuthorization', 'newPasswordInput', [
             $usr,
-            $code
+            $code,
         ]));
         $this->view->setVar('errorMsg', $errorMsg);
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/userAuth/userAuth.css'));
@@ -251,12 +251,12 @@ class UserAuthorizationController extends BaseController
         if (isset($_POST['email']) && isset($_POST['password'])) {
             return [
                 $_POST['email'],
-                $_POST['password']
+                $_POST['password'],
             ];
         } else {
             return [
                 null,
-                null
+                null,
             ];
         }
     }
