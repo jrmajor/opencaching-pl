@@ -32,7 +32,7 @@ require_once(__DIR__.'/common.inc.php');
         $sGranulate = '';
         $sPeriodName = '';
 
-        if ($sDateFrom <> '' and $sDateTo <> '') {
+        if ($sDateFrom != '' and $sDateTo != '') {
             $dDateFrom = new DateTime($sDateFrom);
             $dDateTo = new DateTime($sDateTo);
             $interval = $dDateFrom->diff($dDateTo);
@@ -51,10 +51,10 @@ require_once(__DIR__.'/common.inc.php');
         }
 
 
-        if ($sDateFrom <> '')
+        if ($sDateFrom != '')
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
 
-        if ($sDateTo <> '')
+        if ($sDateTo != '')
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
 
 
@@ -74,7 +74,7 @@ require_once(__DIR__.'/common.inc.php');
         if (count($asUserID) > 30)
             $sEND = tr('more30');
 
-        if ($sEND <> '') {
+        if ($sEND != '') {
             echo '<script>';
             echo "alert( '$sEND' );";
             //$asUserID = explode(",", "");
@@ -83,7 +83,7 @@ require_once(__DIR__.'/common.inc.php');
 
 
 
-        if ($sEND <> '') {
+        if ($sEND != '') {
             echo '<script>';
             echo 'return;';
             echo '</script>';

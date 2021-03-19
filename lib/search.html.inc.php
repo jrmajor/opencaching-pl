@@ -60,7 +60,7 @@ function fHideColumn($nr, $set)
                     gct.hideColumns([$nr])";
     } else {
         $descCol = $colNameSearch[$nr]['O'];
-        $NrColVisable += 1;
+        $NrColVisable++;
         if ($NrColSortSearch != $NrColVisable)
             $selectList .= "<option value=$NrColVisable>$descCol</option>";
         else

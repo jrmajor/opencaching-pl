@@ -84,7 +84,7 @@ if (isset($_REQUEST['DataDo']))
 
 
 if ($sRD == 'R') {
-    if ($sRok <> '' and $sMc <> '') {
+    if ($sRok != '' and $sMc != '') {
         $sData_od = $sRok . '-' . $sMc . '-' . '01';
 
         $dDate = new DateTime($sData_od);
@@ -92,7 +92,7 @@ if ($sRD == 'R') {
         $nIsCondition = 1;
     }
 
-    if ($sRok <> '' and $sMc == '') {
+    if ($sRok != '' and $sMc == '') {
         $sData_od = $sRok . '-01-01';
 
         $dDate = new DateTime($sData_od);
@@ -107,7 +107,7 @@ if ($sRD == 'R') {
     }
 } else {
     try {
-        if ($sDataOd <> '') {
+        if ($sDataOd != '') {
             $dDate = new DateTime($sDataOd);
             $sData_od = $dDate->format('Y-m-d');
         }
@@ -116,10 +116,10 @@ if ($sRD == 'R') {
         $dDate->add(new DateInterval('P1D'));
         $sData_do = $dDate->format('Y-m-d');
 
-        if ($sData_od <> '')
+        if ($sData_od != '')
             $sDateCondition = ' ' . $sJoinWDate . "date >='" . $sData_od . "' ";
 
-        if ($sData_do <> '') {
+        if ($sData_do != '') {
             if ($sDateCondition != '')
                 $sDateCondition = $sDateCondition . ' and ';
 
@@ -188,7 +188,7 @@ $nMyRealPos = 0;
 $contentUsr = '';
 
 while ($record = $dbc->dbResultFetch($s)) {
-    if ($record['description'] <> '') {
+    if ($record['description'] != '') {
         $sOpis = $record['description'];
 
         $sOpis = str_replace("\r\n", ' ', $sOpis);

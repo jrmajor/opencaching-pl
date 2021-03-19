@@ -484,7 +484,7 @@ class MyNeighbourhoodController extends BaseController
         $counter = 1;
         foreach ($order['item'] as $itemOrder) {
             $preferences['items'][$itemOrder]['order'] = $counter;
-            $counter += 1;
+            $counter++;
         }
         if (! UserPreferences::savePreferencesJson(NeighbourhoodPref::KEY, json_encode($preferences))) {
             $this->ajaxErrorResponse('Error saving UserPreferences');

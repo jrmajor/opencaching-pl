@@ -57,16 +57,16 @@ class Validator
     {
         $diff = 0;
         if (preg_match('/[a-z]/', $password)) {
-            $diff += 1;
+            $diff++;
         }
         if (preg_match('/[A-Z]/', $password)) {
-            $diff += 1;
+            $diff++;
         }
         if (preg_match('/[0-9]/', $password)) {
-            $diff += 1;
+            $diff++;
         }
         if (preg_match('/[!%&@#$^*?_~]/', $password)) {
-            $diff += 1;
+            $diff++;
         }
         if (mb_strlen($password) >= self::MIN_PASSWORD_LENGTH && $diff > 1) {
             return true;

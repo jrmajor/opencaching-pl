@@ -29,10 +29,10 @@ require_once(__DIR__.'/common.inc.php');
 
 
 
-        if ($sDateFrom <> '')
+        if ($sDateFrom != '')
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
 
-        if ($sDateTo <> '')
+        if ($sDateTo != '')
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
 
 
@@ -53,7 +53,7 @@ require_once(__DIR__.'/common.inc.php');
             $sEND = tr('more10');
 
         echo '<script>';
-        if ($sEND <> '') {
+        if ($sEND != '') {
             echo "alert( '$sEND' );";
             $asUserID = explode(',', '');
         }

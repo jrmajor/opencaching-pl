@@ -70,7 +70,7 @@ $imax = 4;
 
 $extra=0;
 
-for($i=1; $i<=$imax+$extra; ++$i) {
+for($i=1; $i<=$imax+$extra; $i++) {
 $page=$i;
 if($logbook_type == 1) {
 if($_POST['noftf'] && $i == 4)
@@ -100,7 +100,7 @@ $svg->validateOnParse=true;
 $svg->Load("work/$shortname.svg");
 
 if($_POST['noborders'] && !($i % 2)) {
-for($f = 1; $f<=4; ++$f) {
+for($f = 1; $f<=4; $f++) {
 $elem = $svg->getElementById('frame'.$f);
 if($elem)
 $elem->setAttribute('style', 'fill:none;stroke-opacity: 0');
@@ -116,7 +116,7 @@ $elem->setAttribute('x', $elem->getAttribute('x')+(float) $_POST['x1']);
 $elem->setAttribute('y', $elem->getAttribute('y')+(float) $_POST['y1']);
 $mod = 1;
 }
-for($j = 1; $j <= 4; ++$j) {
+for($j = 1; $j <= 4; $j++) {
 if($j > 1)
 $bgid = $j;
 else
@@ -211,7 +211,7 @@ $pid[$i]=run_in_bg("inkscape \"work/$shortname.svg\" -A \"work/$shortname-page$i
 $pages .= "work/$shortname-page$i.pdf ";
 }
 }
-for($i=1; $i<=$imax+$extra; ++$i) {
+for($i=1; $i<=$imax+$extra; $i++) {
 wait_for_pid($pid[$i]);
 }
 if($_POST['pdf'])

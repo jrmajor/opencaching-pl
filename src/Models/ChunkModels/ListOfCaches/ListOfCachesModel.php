@@ -40,7 +40,7 @@ class ListOfCachesModel
     public function __construct()
     {
         $this->id = self::$idCounter;
-        self::$idCounter += 1;
+        self::$idCounter++;
     }
 
     public function getId()

@@ -338,7 +338,7 @@ if (isset($options['cachetype10'])) {
     tpl_set_var('cachetype10', ($options['cachetype10'] == 1) ? ' checked="checked"' : '');
 }
 
-for ($size = 1; $size <= 8; ++$size) {
+for ($size = 1; $size <= 8; $size++) {
 
     $enabled = in_array($size, GeoCache::getSizesInUse());
     tpl_set_var(

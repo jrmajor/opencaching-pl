@@ -1322,7 +1322,7 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('cachetype', '');
     }
 
-    for ($size = 1; $size <= 8; ++$size) {
+    for ($size = 1; $size <= 8; $size++) {
         if (isset($options['cachesize_'.$size])) {
             tpl_set_var('cachesize_'.$size, htmlspecialchars($options['cachesize_'.$size], ENT_COMPAT, 'UTF-8'));
         }

@@ -94,7 +94,7 @@ $hash = uniqid();
 $f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
 while ($r = $dbcSearch->dbResultFetch($stmt)) {
 
-    ++ $cnt;
+     $cnt++;
     fprintf($f, "%s\n", $r['cache_id']);
 }
 fclose($f);
