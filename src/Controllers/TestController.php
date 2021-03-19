@@ -31,6 +31,7 @@ use src\Utils\DateTime\OcDateTime;
 use src\Models\Voting\ChoiceOption;
 use src\Models\Voting\Election;
 use src\Models\User\User;
+use RuntimeException;
 
 class TestController extends BaseController
 {
@@ -368,7 +369,7 @@ class TestController extends BaseController
             // save uploaded files
             $newFiles = FileUploadMgr::processFileUpload($uploadModel);
 
-        } catch (\RuntimeException $e){
+        } catch (RuntimeException $e){
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }

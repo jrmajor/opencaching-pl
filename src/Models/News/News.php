@@ -8,6 +8,9 @@ use src\Models\User\User;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Debug\Debug;
+use Exception;
+use DateInterval;
+use DateTime;
 
 class News extends BaseObject
 {
@@ -46,7 +49,7 @@ class News extends BaseObject
             return false;
         }
         if (is_null($this->date_publication)) {
-            $this->date_publication = new \DateTime('now');
+            $this->date_publication = new DateTime('now');
         }
         if ($this->id == 0) {
             return $this->insertIntoDb();
@@ -124,13 +127,13 @@ class News extends BaseObject
                     $this->show_notlogged = ($val == 'on') ? 1 : 0;
                     break;
                 case 'date-publication':
-                    $this->date_publication = ($val == '') ? null : \DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
+                    $this->date_publication = ($val == '') ? null : DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
                     break;
                 case 'date-expiration':
-                    $this->date_expiration = ($val == '') ? null : \DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
+                    $this->date_expiration = ($val == '') ? null : DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
                     break;
                 case 'date-mainpageexp':
-                    $this->date_mainpageexp = ($val == '') ? null : \DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
+                    $this->date_mainpageexp = ($val == '') ? null : DateTime::createFromFormat(OcConfig::instance()->getDateFormat(), $val);
                     break;
                 case 'action':
                 case 'submit':
@@ -159,7 +162,7 @@ class News extends BaseObject
             } else {
                 return null;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -218,16 +221,16 @@ class News extends BaseObject
                     $this->show_notlogged = (bool) $val;
                     break;
                 case 'date_publication':
-                    $this->date_publication = (is_null($val)) ? null : new \DateTime($val);
+                    $this->date_publication = (is_null($val)) ? null : new DateTime($val);
                     break;
                 case 'date_expiration':
-                    $this->date_expiration = (is_null($val)) ? null : new \DateTime($val);
+                    $this->date_expiration = (is_null($val)) ? null : new DateTime($val);
                     break;
                 case 'date_mainpageexp':
-                    $this->date_mainpageexp = (is_null($val)) ? null : new \DateTime($val);
+                    $this->date_mainpageexp = (is_null($val)) ? null : new DateTime($val);
                     break;
                 case 'date_lastmod':
-                    $this->date_lastmod = new \DateTime($val);
+                    $this->date_lastmod = new DateTime($val);
                     break;
                 default:
                     Debug::errorLog("Unknown column: $key");
@@ -314,8 +317,8 @@ class News extends BaseObject
 
     public function generateDefaultValues()
     {
-        $this->date_mainpageexp = new \DateTime('NOW');
-        $this->date_mainpageexp->add(new \DateInterval('P1M'));
+        $this->date_mainpageexp = new DateTime('NOW');
+        $this->date_mainpageexp->add(new DateInterval('P1M'));
         $this->dataLoaded = true;
     }
 
@@ -417,7 +420,7 @@ class News extends BaseObject
      */
     public function canBeViewed($isUserLogged)
     {
-        $now = new \DateTime();
+        $now = new DateTime();
         if ($this->getDatePublication() != null && $this->getDatePublication() > $now) {
             // not published yet
             return false;
@@ -453,14 +456,14 @@ class News extends BaseObject
         }
     }
 
-    private static function truncateTime(\DateTime $date)
+    private static function truncateTime(DateTime $date)
     {
         return $date->format('Y-m-d') . ' 00:00:00';
     }
 
     public function getStatus()
     {
-        $currentTime = new \DateTime('NOW');
+        $currentTime = new DateTime('NOW');
         if ($this->date_publication > $currentTime) {
             return self::STATUS_FUTURE;
         } elseif (! is_null($this->date_expiration) && $this->date_expiration < $currentTime) {

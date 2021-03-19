@@ -10,6 +10,8 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\Generators\Uuid;
 use src\Utils\FileSystem\FileManager;
+use DateTime;
+use stdClass;
 
 /**
  * Generic representation of picture atahed to log/cache/...
@@ -52,7 +54,7 @@ class OcPicture extends BaseObject
      * Create OcPicture object based on given uuid
      *
      * @param string $uuid
-     * @throws \Exception
+     * @throws Exception
      */
     public static function fromUuidFactory($uuid)
     {
@@ -228,7 +230,7 @@ class OcPicture extends BaseObject
         if (is_array($row)) {
             $this->loadFromRow($row);
         } else {
-            throw new \Exception('Picture not found');
+            throw new Exception('Picture not found');
         }
     }
 
@@ -252,13 +254,13 @@ class OcPicture extends BaseObject
                     $this->isSpoiler = ($val == 1);
                     break;
                 case 'last_modified':
-                    $this->fileUploadDate = new \DateTime($val);
+                    $this->fileUploadDate = new DateTime($val);
                     break;
                 case 'thumb_url':
                     $this->thumbnailUrl = $val;
                     break;
                 case 'thumb_last_generated':
-                    $this->thumbnailGenDate = new \DateTime($val);
+                    $this->thumbnailGenDate = new DateTime($val);
                     break;
                 case 'object_id':
                     $this->parentId = $val;
@@ -501,9 +503,9 @@ class OcPicture extends BaseObject
         $this->order = $index;
     }
 
-    public function getData(): \stdClass
+    public function getData(): stdClass
     {
-        $obj = new \stdClass();
+        $obj = new stdClass();
         $obj->fullPicUrl = $this->getFullImgUrl();
         $obj->thumbUrl = $this->getThumbnail(Thumbnail::SIZE_SMALL, true);
         $obj->uuid = $this->getUuid();

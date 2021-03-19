@@ -6,6 +6,7 @@ use src\Models\User\User;
 use src\Models\OcConfig\OcConfig;
 use src\Models\GeoCache\GeoCache;
 use src\Utils\Debug\Debug;
+use DateTime;
 
 class ReportLog extends BaseObject
 {
@@ -99,7 +100,7 @@ class ReportLog extends BaseObject
 
     /**
      * DateTime object of ReportLog creation date
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateCreated;
 
@@ -398,7 +399,7 @@ class ReportLog extends BaseObject
                     $this->poll = null;
                     break;
                 case 'date_created':
-                    $this->dateCreated = new \DateTime($val);
+                    $this->dateCreated = new DateTime($val);
                     break;
                 default:
                     Debug::errorLog("Unknown column: $key");

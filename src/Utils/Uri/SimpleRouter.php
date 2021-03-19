@@ -3,6 +3,7 @@ namespace src\Utils\Uri;
 
 use ReflectionException;
 use src\Utils\Debug\Debug;
+use ReflectionClass;
 
 /**
  * Route schema:
@@ -110,7 +111,7 @@ class SimpleRouter
 
         // create class reflection
         try {
-            $ctrlReflection = new \ReflectionClass ($ctrlName);
+            $ctrlReflection = new ReflectionClass ($ctrlName);
         } catch (ReflectionException $ex) {
             self::displayErrorAndExit('Improper ctrl name', 403);
         }

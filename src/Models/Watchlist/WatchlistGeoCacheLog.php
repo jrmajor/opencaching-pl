@@ -5,6 +5,7 @@
 namespace src\Models\Watchlist;
 
 use src\Models\BaseObject;
+use DateTime;
 
 /**
  * Represents single row data from watchlist new logs query result
@@ -19,7 +20,7 @@ class WatchlistGeoCacheLog extends BaseObject
     private $logType;
     /** @var string {@see WatchlistGeoCacheLog::setLogText()} */
     private $logText;
-    /** @var \DateTime {@see WatchlistGeoCacheLog::setLogDate()} */
+    /** @var DateTime {@see WatchlistGeoCacheLog::setLogDate()} */
     private $logDate;
     /** @var integer {@see WatchlistGeoCacheLog::setCacheId()} */
     private $cacheId;
@@ -39,7 +40,7 @@ class WatchlistGeoCacheLog extends BaseObject
      * @param string $logger {@see WatchlistGeoCacheLog::setLogger()}
      * @param integer $logType {@see WatchlistGeoCacheLog::setLogType()}
      * @param string $logText {@see WatchlistGeoCacheLog::setLogText()}
-     * @param \DateTime $logDate {@see WatchlistGeoCacheLog::setLogDate()}
+     * @param DateTime $logDate {@see WatchlistGeoCacheLog::setLogDate()}
      * @param integer $cacheId {@see WatchlistGeoCacheLog::setCacheId()}
      * @param integer $cacheOwnerId {@see WatchlistGeoCacheLog::setCacheOwnerId()}
      * @param string $cacheWaypoint {@see WatchlistGeoCacheLog::setCacheWaypoint()}
@@ -114,7 +115,7 @@ class WatchlistGeoCacheLog extends BaseObject
     /**
      * Gives date and time related to the cache log, entered by user
      *
-     * @return \DateTime date and time related to the cache log
+     * @return DateTime date and time related to the cache log
      */
     public function getLogDate()
     {
@@ -225,9 +226,9 @@ class WatchlistGeoCacheLog extends BaseObject
     /**
      * Sets date and time related to the cache log, entered by user
      *
-     * @param \DateTime $logDate date and time related to the cache log
+     * @param DateTime $logDate date and time related to the cache log
      */
-    public function setLogDate(\DateTime $logDate)
+    public function setLogDate(DateTime $logDate)
     {
         $this->logDate = $logDate;
     }

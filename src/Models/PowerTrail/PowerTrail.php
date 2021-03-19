@@ -8,6 +8,8 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\BaseObject;
 use src\Models\User\User;
 use src\Utils\Debug\Debug;
+use powerTrailBase;
+use DateTime;
 
 class PowerTrail extends BaseObject
 {
@@ -107,7 +109,7 @@ class PowerTrail extends BaseObject
                     $this->status = (int) $val;
                     break;
                 case 'dateCreated':
-                    $this->dateCreated = new \DateTime($val);
+                    $this->dateCreated = new DateTime($val);
                     break;
                 case 'cacheCount':
                     $this->cacheCount = (int) $val;
@@ -205,9 +207,9 @@ class PowerTrail extends BaseObject
     }
 
     /**
-     * @param \DateTime $dateCreated
+     * @param DateTime $dateCreated
      */
-    public function setDateCreated(\DateTime $dateCreated)
+    public function setDateCreated(DateTime $dateCreated)
     {
         $this->dateCreated = $dateCreated;
         return $this;
@@ -312,7 +314,7 @@ class PowerTrail extends BaseObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateCreated()
     {
@@ -616,7 +618,7 @@ class PowerTrail extends BaseObject
         if ($this->activeGeocacheCount < $this->caclulateRequiredGeocacheCount()) {
             return false;
         }
-        if ($this->activeGeocacheCount < \powerTrailBase::minimumCacheCount()) {
+        if ($this->activeGeocacheCount < powerTrailBase::minimumCacheCount()) {
             return false;
         }
         if ($this->status === self::STATUS_CLOSED && !$this->getCurrentUser()->hasOcTeamRole()) {

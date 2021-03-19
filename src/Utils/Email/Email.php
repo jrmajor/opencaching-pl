@@ -12,6 +12,7 @@ namespace src\Utils\Email;
 use Exception;
 use src\Utils\Text\Validator;
 use src\Models\OcConfig\OcConfig;
+use RuntimeException;
 
 class Email
 {
@@ -42,10 +43,10 @@ class Email
     {
         // Check mandantory addresses
         if (empty($this->toAddr)) {
-            throw new \RuntimeException('Missing email recipient.');
+            throw new RuntimeException('Missing email recipient.');
         }
         if (empty($this->fromAddr)) {
-            throw new \RuntimeException('Missing email sender.');
+            throw new RuntimeException('Missing email sender.');
         }
         if (!self::isValidEmailAddr($this->toAddr) ||
             !self::isValidEmailAddr($this->fromAddr)
@@ -54,14 +55,14 @@ class Email
             // the return values of setFromAddr() and addToAddr() if handling
             // is needed.
             $to = implode(',', $this->toAddr);
-            throw new \RuntimeException("Invalid recipient/sender address! $to/{$this->fromAddr}");
+            throw new RuntimeException("Invalid recipient/sender address! $to/{$this->fromAddr}");
         }
         $headers = [];
 
         // Check subject. It is technically allowed to send a email without
         // subject, but we don't want to do that.
         if ($this->subject == '') {
-            throw new \RuntimeException('Email subject missing');
+            throw new RuntimeException('Email subject missing');
         }
 
         if (empty($this->senderName)) {

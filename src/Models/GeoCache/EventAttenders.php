@@ -2,6 +2,7 @@
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
+use DateTime;
 
 class EventAttenders extends BaseObject
 {
@@ -24,7 +25,7 @@ class EventAttenders extends BaseObject
         if (! $cache->isEvent()) {
             return [];
         }
-        if ($cache->getDatePlaced() > new \DateTime()) {
+        if ($cache->getDatePlaced() > new DateTime()) {
             $logTypes = GeoCacheLog::LOGTYPE_WILLATTENDED;
         } else {
             $logTypes = GeoCacheLog::LOGTYPE_ATTENDED;

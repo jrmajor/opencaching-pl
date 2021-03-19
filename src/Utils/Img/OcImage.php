@@ -3,6 +3,7 @@ namespace src\Utils\Img;
 
 use src\Utils\System\PhpInfo;
 use src\Utils\Debug\Debug;
+use Exception;
 
 /**
  *
@@ -72,7 +73,7 @@ class OcImage
     {
         // check if input file exists
         if (!is_file($inputImagePath)){
-            throw new \Exception("Image not found: $inputImagePath");
+            throw new Exception("Image not found: $inputImagePath");
         }
 
         // load img type
@@ -87,7 +88,7 @@ class OcImage
         }
 
         if ($this->gdImage === false) {
-            throw new \Exception("Can't open image - unsupported format.");
+            throw new Exception("Can't open image - unsupported format.");
         }
     }
 
@@ -123,20 +124,20 @@ class OcImage
      *
      * @param int $width
      * @param int $height
-     * @throws \Exception
+     * @throws Exception
      */
     public function resize($width, $height)
     {
         // prepare new image
         $newImage = @imagecreatetruecolor($width, $height);
         if (!$newImage) {
-            throw new \Exception("Can't create new image");
+            throw new Exception("Can't create new image");
         }
 
         if (!@imagecopyresampled($newImage, $this->gdImage, 0, 0, 0, 0,
                 $width, $height, $this->getWidth(), $this->getHeight())) {
 
-            throw new \Exception("Can't resample new image");
+            throw new Exception("Can't resample new image");
         }
 
         $this->gdImage = $newImage;
@@ -149,13 +150,13 @@ class OcImage
      * @param int $y
      * @param int $width
      * @param int $height
-     * @throws \Exception
+     * @throws Exception
      */
     public function crop($x, $y, $width, $height)
     {
         $this->gdImage = @imagecrop($this->gdImage, [$x, $y, $width, $height] );
         if (!$this->gdImage) {
-            throw new \Exception("Can't crop the image");
+            throw new Exception("Can't crop the image");
         }
     }
 
@@ -163,13 +164,13 @@ class OcImage
      * Rotate image by given degrees number
      *
      * @param int $degrees - degrees number <0-360>
-     * @throws \Exception
+     * @throws Exception
      */
     public function rotate($degrees)
     {
         $this->gdImage = @imagerotate ($this->gdImage, $degrees, 0);
         if (!$this->gdImage) {
-            throw new \Exception("Can't rotate the image");
+            throw new Exception("Can't rotate the image");
         }
     }
 
@@ -179,19 +180,19 @@ class OcImage
      *
      * @param string $outputPath - path to save the file
      * @param boolean $overwrite - overwrite the file if exists
-     * @throws \Exception
+     * @throws Exception
      */
     public function save($outputPath, $overwrite=false)
     {
         if (!$overwrite && is_file($outputPath)) {
-            throw new \Exception("Can't save - file already exists!");
+            throw new Exception("Can't save - file already exists!");
         }
 
         if (!is_dir(dirname($outputPath))) {
             // there is no such dir - try to create it
             $dir = dirname($outputPath);
             if ( ! mkdir($dir, 0755, true)) {
-                throw new \Exception("Can't save - there is no such directory and can't create it!");
+                throw new Exception("Can't save - there is no such directory and can't create it!");
             }
         }
 
@@ -212,7 +213,7 @@ class OcImage
         }
 
         if(!$result){
-            throw new \Exception("Can't save the output file: $outputPath");
+            throw new Exception("Can't save the output file: $outputPath");
         }
 
         return $outputPath;
@@ -223,7 +224,7 @@ class OcImage
         if($imgParams = @getimagesize($inputImagePath)) {
             $this->gdImageType =  $imgParams[2];
         } else {
-            throw new \Exception("Can't read image type?");
+            throw new Exception("Can't read image type?");
         }
     }
 

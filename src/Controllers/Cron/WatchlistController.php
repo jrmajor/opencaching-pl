@@ -12,6 +12,7 @@ use src\Models\Watchlist\Watchlist;
 use src\Models\Watchlist\WatchlistItem;
 use src\Models\Watchlist\WatchlistReport;
 use src\Models\Watchlist\WatchlistWatcher;
+use DateTime;
 
 /**
  * Initiates and performs operations included in watchlist processing: new logs
@@ -191,7 +192,7 @@ class WatchlistController extends BaseController
      * @param WatchlistWatcher $watcher watcher to compute
      *     new date and time for
      *
-     * @return \DateTime computed new send mail date and time
+     * @return DateTime computed new send mail date and time
      */
     private function computeWatchmailNextDateTime(WatchlistWatcher $watcher)
     {
@@ -200,7 +201,7 @@ class WatchlistController extends BaseController
             $watcher->getWatchmailMode() !=
                 UserNotify::SEND_NOTIFICATION_HOURLY
         ) {
-            $now = new \DateTime();
+            $now = new DateTime();
             if (
                 $watcher->getWatchmailMode() ==
                     UserNotify::SEND_NOTIFICATION_DAILY
@@ -238,15 +239,15 @@ class WatchlistController extends BaseController
      * Formats time using db format defined in OcConfig. Used only in
      * diagnostic file.
      *
-     * @param \DateTime $time instance to format, current date and time is used
+     * @param DateTime $time instance to format, current date and time is used
      *     if null
      *
      * @return string formatted date and time
      */
-    private function getDbFormattedTime(\DateTime $time = null)
+    private function getDbFormattedTime(DateTime $time = null)
     {
         if ($time == null) {
-            $time = new \DateTime();
+            $time = new DateTime();
         }
         return $time->format($this->ocConfig->getDbDateTimeFormat());
     }

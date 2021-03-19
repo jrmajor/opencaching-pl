@@ -4,6 +4,7 @@ namespace src\Models\Neighbourhood;
 use src\Models\BaseObject;
 use src\Models\Coordinates\Coordinates;
 use src\Models\User\User;
+use Exception;
 
 class Neighbourhood extends BaseObject
 {
@@ -164,7 +165,7 @@ class Neighbourhood extends BaseObject
         $result = new self();
         try {
             $result->loadById($id);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
         return $result;
@@ -365,7 +366,7 @@ class Neighbourhood extends BaseObject
         if (is_array($neighbourhoodDbRow)) {
             $this->loadFromRow($neighbourhoodDbRow);
         } else {
-            throw new \Exception('Neighbourhood not found');
+            throw new Exception('Neighbourhood not found');
         }
     }
 

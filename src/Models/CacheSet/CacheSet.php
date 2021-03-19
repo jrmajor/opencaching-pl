@@ -18,6 +18,8 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Email\EmailFormatter;
 use src\Utils\Email\Email;
 use src\Controllers\GeoPathController;
+use DateTime;
+use RuntimeException;
 
 class CacheSet extends CacheSetCommon
 {
@@ -100,7 +102,7 @@ class CacheSet extends CacheSetCommon
                     $this->status = (int) $val;
                     break;
                 case 'dateCreated':
-                    $this->dateCreated = new \DateTime($val);
+                    $this->dateCreated = new DateTime($val);
                     break;
                 case 'cacheCount':
                     $this->cacheCount = (int) $val;
@@ -427,12 +429,12 @@ class CacheSet extends CacheSetCommon
     {
         // check cache stataus - only "active" caches can be added to geopath
         if(!self::isCacheStatusAllowedForGeoPathAdd($cache)){
-            throw new \RuntimeException('Cache in wrong status!');
+            throw new RuntimeException('Cache in wrong status!');
         }
 
         // check cache type
         if(!self::isCacheTypeAllowedForGeoPath($cache)){
-            throw new \RuntimeException('Cache of wrong type!');
+            throw new RuntimeException('Cache of wrong type!');
         }
 
         $this->db->multiVariableQuery(
@@ -512,7 +514,7 @@ class CacheSet extends CacheSetCommon
 
         try {
             $email->send();
-        } catch(\RuntimeException $e) {
+        } catch(RuntimeException $e) {
             Debug::errorLog('Mail sending failure: '.$e->getMessage());
             return false;
         }

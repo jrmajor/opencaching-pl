@@ -10,6 +10,8 @@ use src\Models\User\MultiUserQueries;
 use src\Models\User\User;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\Debug\Debug;
+use Exception;
+use DateTime;
 
 class Report extends BaseObject
 {
@@ -122,14 +124,14 @@ class Report extends BaseObject
     /**
      * Date of report submit
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateSubmit = null;
 
     /**
      * Date of last report change
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateLastChange = null;
 
@@ -354,9 +356,9 @@ class Report extends BaseObject
     public function getReportStyle()
     {
         if ($this->status == ReportCommons::STATUS_IN_PROGRESS || $this->status == ReportCommons::STATUS_LOOK_HERE) {
-            $interval = $this->dateLastChange->diff(new \DateTime('now'))->days;
+            $interval = $this->dateLastChange->diff(new DateTime('now'))->days;
         } elseif ($this->status == ReportCommons::STATUS_NEW) {
-            $interval = $this->dateSubmit->diff(new \DateTime('now'))->days;
+            $interval = $this->dateSubmit->diff(new DateTime('now'))->days;
         } else {
             $interval = 0;
         }
@@ -681,7 +683,7 @@ class Report extends BaseObject
      */
     public function updateLastChanged() {
         unset($this->dateLastChange);
-        $this->dateLastChange = new \DateTime('now');
+        $this->dateLastChange = new DateTime('now');
         $this->userIdLastChange = $this->getCurrentUser()->getUserId();
         unset($this->userLastChange);
         $this->userLastChange = $this->getCurrentUser();
@@ -863,7 +865,7 @@ class Report extends BaseObject
                     $this->note = $val;
                     break;
                 case 'submit_date':
-                    $this->dateSubmit = new \DateTime($val);
+                    $this->dateSubmit = new DateTime($val);
                     break;
                 case 'status':
                     $this->status = $val;
@@ -872,7 +874,7 @@ class Report extends BaseObject
                     $this->userIdLastChange = ($val == 0) ? null : $val;
                     break;
                 case 'changed_date':
-                    $this->dateLastChange = ($val == null || $val == '') ? null : new \DateTime($val);
+                    $this->dateLastChange = ($val == null || $val == '') ? null : new DateTime($val);
                     break;
                 case 'responsible_id':
                     $this->userIdLeader = ($val == ReportCommons::USER_NOBODY) ? null : $val;
@@ -919,7 +921,7 @@ class Report extends BaseObject
             } else {
                 return null;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }

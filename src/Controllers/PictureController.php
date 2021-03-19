@@ -10,6 +10,7 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheLog;
 use src\Utils\FileSystem\FileUploadMgr;
 use src\Utils\FileSystem\FileManager;
+use RuntimeException;
 
 class PictureController extends BaseController
 {
@@ -52,7 +53,7 @@ class PictureController extends BaseController
         try{
             // save uploaded files
             $newFiles = FileUploadMgr::processFileUpload($uploadModel);
-        } catch (\RuntimeException $e){
+        } catch (RuntimeException $e){
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }

@@ -9,6 +9,9 @@ use src\Models\User\UserPreferences\MainMapSettings;
 use src\Models\User\UserPreferences\UserPreferences;
 use src\Utils\Text\Formatter;
 use src\Utils\Debug\Debug;
+use stdClass;
+use Exception;
+use ArrayObject;
 
 /**
  * This class provides:
@@ -55,7 +58,7 @@ class MainMapAjaxController extends BaseController
             $this->ajaxJsonResponse(null);
         }
 
-        $resp = new \stdClass();
+        $resp = new stdClass();
         $resp->url = $cache->getCacheUrl();
 
         $resp->cacheName = $cache->getCacheName();
@@ -64,7 +67,7 @@ class MainMapAjaxController extends BaseController
         $resp->cacheUrl = $cache->getCacheUrl();
         $resp->cacheSizeDesc = tr($cache->getSizeTranslationKey());
 
-        $resp->coords = new \stdClass();
+        $resp->coords = new stdClass();
         $resp->coords->lat = $cache->getCoordinates()->getLatitude();
         $resp->coords->lon = $cache->getCoordinates()->getLongitude();
 
@@ -135,7 +138,7 @@ class MainMapAjaxController extends BaseController
         try {
             $placesDetails = GeoCode::fromOpenRouteService($place);
             $this->ajaxJsonResponse($placesDetails);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }
     }
@@ -185,7 +188,7 @@ class MainMapAjaxController extends BaseController
 
 
         // call OKAPI
-        /** @var \ArrayObject */
+        /** @var ArrayObject */
         $okapiResp = Facade::service_call(
             'services/caches/shortcuts/search_and_retrieve',
             null,   // Do NOT pass a user ID here! See OKAPI issue #496.

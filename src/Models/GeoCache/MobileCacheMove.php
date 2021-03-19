@@ -6,6 +6,8 @@ use src\Models\BaseObject;
 use src\Models\Coordinates\Coordinates;
 use okapi\Facade;
 use src\Utils\Gis\Gis;
+use Exception;
+use DateTime;
 
 class MobileCacheMove extends BaseObject
 {
@@ -13,7 +15,7 @@ class MobileCacheMove extends BaseObject
     private $userId;
     private $cacheId;
     private $logId;
-    /** @var \DateTime */
+    /** @var DateTime */
     private $date;
     /** @var Coordinates */
     private $coordinates;
@@ -42,7 +44,7 @@ class MobileCacheMove extends BaseObject
                     $this->logId = $val;
                     break;
                 case 'date':
-                    $this->date = new \DateTime($val);
+                    $this->date = new DateTime($val);
                     break;
                 case 'km':
                     $this->km = floatval($val);
@@ -65,7 +67,7 @@ class MobileCacheMove extends BaseObject
         if (is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
-            throw new \Exception('Cache Moved Id not found');
+            throw new Exception('Cache Moved Id not found');
         }
     }
 

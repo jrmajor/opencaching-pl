@@ -1,5 +1,6 @@
 <?php
 namespace src\Utils\Feed;
+use DateTime;
 
 /**
  * This structure stores data about one Atom feed entry
@@ -18,10 +19,10 @@ class AtomFeedEntry
     /** @var string */
     private $id;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $updated;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $published;
 
     /** @var string */
@@ -36,7 +37,7 @@ class AtomFeedEntry
     public function __construct()
     {
         // Set default values
-        $this->updated = new \DateTime();
+        $this->updated = new DateTime();
     }
 
     /**
@@ -72,7 +73,7 @@ class AtomFeedEntry
     /**
      * Returns entry updated date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdated()
     {
@@ -82,7 +83,7 @@ class AtomFeedEntry
     /**
      * Returns entry published date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getPublished()
     {
@@ -158,10 +159,10 @@ class AtomFeedEntry
     /**
      * Sets entry updated date
      *
-     * @param \DateTime $updated
-     * @return \DateTime
+     * @param DateTime $updated
+     * @return DateTime
      */
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(DateTime $updated)
     {
         $this->updated = $updated;
         return $this->getUpdated();
@@ -170,10 +171,10 @@ class AtomFeedEntry
     /**
      * Sets entry published date
      *
-     * @param \DateTime $published
-     * @return \DateTime
+     * @param DateTime $published
+     * @return DateTime
      */
-    public function setPublished(\DateTime $published)
+    public function setPublished(DateTime $published)
     {
         $this->published = $published;
         return $this->getPublished();
@@ -230,9 +231,9 @@ class AtomFeedEntry
         $result = '<entry>' . PHP_EOL;
         $result .= '<title>' . htmlspecialchars($this->getTitle()) . '</title>' . PHP_EOL;
         if (! empty($this->getPublished())) {
-            $result .= '<published>' . $this->getPublished()->format(\DateTime::ATOM) . '</published>' . PHP_EOL;
+            $result .= '<published>' . $this->getPublished()->format(DateTime::ATOM) . '</published>' . PHP_EOL;
         }
-        $result .= '<updated>' . $this->getUpdated()->format(\DateTime::ATOM) . '</updated>' . PHP_EOL;
+        $result .= '<updated>' . $this->getUpdated()->format(DateTime::ATOM) . '</updated>' . PHP_EOL;
         $result .= '<id>' . $this->getId() . '</id>' . PHP_EOL;
         $result .= '<link href="' . $this->getLink() . '" />' . PHP_EOL;
         if (! empty($this->getSummary())) {

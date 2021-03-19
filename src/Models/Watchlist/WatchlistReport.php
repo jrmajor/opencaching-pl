@@ -9,6 +9,7 @@ use src\Utils\Text\Formatter;
 use src\Utils\Email\EmailFormatter;
 use src\Utils\Email\Email;
 use src\Utils\Uri\SimpleRouter;
+use DateTime;
 
 /**
  * Used for preparing and sending email to watcher
@@ -60,7 +61,7 @@ class WatchlistReport
     {
         $subject = $this->watchlistSubject
             . ' ' . OcConfig::getSiteName() . ': '
-            . Formatter::dateTime(new \DateTime());
+            . Formatter::dateTime(new DateTime());
 
         $report = clone $this->reportTemplate;
         $report->addFooterAndHeader($watcher->getUsername());

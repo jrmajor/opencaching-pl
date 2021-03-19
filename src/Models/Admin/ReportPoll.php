@@ -4,6 +4,8 @@ namespace src\Models\Admin;
 use src\Models\BaseObject;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
+use DateInterval;
+use DateTime;
 
 class ReportPoll extends BaseObject
 {
@@ -41,14 +43,14 @@ class ReportPoll extends BaseObject
     /**
      * Start time of the poll (creation date)
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateStart;
 
     /**
      * End time of the poll
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateEnd;
 
@@ -148,7 +150,7 @@ class ReportPoll extends BaseObject
         if (! $this->dataLoaded) {
             return null;
         }
-        if ($this->dateEnd > new \DateTime('now')) {
+        if ($this->dateEnd > new DateTime('now')) {
             return true;
         } else {
             return false;
@@ -166,7 +168,7 @@ class ReportPoll extends BaseObject
             return false;
         }
         unset($this->dateEnd);
-        $this->dateEnd = new \DateTime('now');
+        $this->dateEnd = new DateTime('now');
         $query = '
             UPDATE `reports_poll`
             SET `date_end` = :date_end
@@ -242,9 +244,9 @@ class ReportPoll extends BaseObject
         $poll->ans1 = strip_tags($ans1);
         $poll->ans2 = strip_tags($ans2);
         $poll->ans3 = ($ans3 == '' || $ans3 === null) ? null : strip_tags($ans3);
-        $poll->dateStart = new \DateTime('now');
+        $poll->dateStart = new DateTime('now');
         $poll->dateEnd = clone $poll->dateStart;
-        $poll->dateEnd->add(new \DateInterval('P' . (int) $period . 'D'));
+        $poll->dateEnd->add(new DateInterval('P' . (int) $period . 'D'));
         $poll->dataLoaded = true;
         $pollId = $poll->insertToDb();
         unset($poll);
@@ -499,10 +501,10 @@ class ReportPoll extends BaseObject
                     $this->report = null;
                     break;
                 case 'date_start':
-                    $this->dateStart = new \DateTime($val);
+                    $this->dateStart = new DateTime($val);
                     break;
                 case 'date_end':
-                    $this->dateEnd = new \DateTime($val);
+                    $this->dateEnd = new DateTime($val);
                     break;
                 case 'question':
                     $this->question = $val;

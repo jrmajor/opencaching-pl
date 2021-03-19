@@ -7,6 +7,7 @@ use src\Utils\DataBase\OcDb;
 use src\Utils\Database\DbUpdates;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
+use Exception;
 
 class DbUpdateController extends BaseController
 {
@@ -177,7 +178,7 @@ class DbUpdateController extends BaseController
                     $messages = $update->run();
                 }
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
         }
 
@@ -209,7 +210,7 @@ class DbUpdateController extends BaseController
         } else {
             try {
                 $messages = $this->getUpdateFromUuid($uuid)->rollback();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
             }
         }

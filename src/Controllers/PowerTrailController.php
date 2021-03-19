@@ -6,6 +6,8 @@ use src\Models\PowerTrail\PowerTrail;
 use src\Models\PowerTrail\Log;
 use src\Models\User\User;
 use src\Utils\Database\OcDb;
+use sendEmail;
+use DateTime;
 
 class PowerTrailController
 {
@@ -61,12 +63,12 @@ class PowerTrailController
      *
      * @param PowerTrail $powerTrail
      * @param User $user
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      * @param type $type
      * @param type $text
      * @return boolean
      */
-    public function addComment(PowerTrail $powerTrail, User $user, \DateTime $dateTime, $type, $text )
+    public function addComment(PowerTrail $powerTrail, User $user, DateTime $dateTime, $type, $text )
     {
         $log = new Log();
         $result = $log->setPowerTrail($powerTrail)
@@ -76,7 +78,7 @@ class PowerTrailController
             ->setText($text)
             ->storeInDb();
         if($result){
-            \sendEmail::emailOwners($powerTrail->getId(), $log->getType(), $dateTime->format('Y-m-d H:i'), $text, 'newComment');
+            sendEmail::emailOwners($powerTrail->getId(), $log->getType(), $dateTime->format('Y-m-d H:i'), $text, 'newComment');
         }
         return $result;
     }

@@ -9,6 +9,7 @@ use src\Models\OcConfig\OcConfig;
 use src\Models\User\User;
 use src\Models\User\UserCommons;
 use src\Utils\Uri\SimpleRouter;
+use DateTime;
 
 class ReportEmailSender
 {
@@ -213,7 +214,7 @@ class ReportEmailSender
      */
     public static function sendReport2COMail2CO(User $toUser, User $submitter, GeoCache $cache, $content, $reason, $publishMail)
     {
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
         $server = rtrim(OcConfig::getAbsolute_server_URI(), '/');
         $subject = tr('reports_user_mail_subj1');
         $subject = mb_ereg_replace('{user}', $submitter->getUserName(), $subject);
@@ -254,7 +255,7 @@ class ReportEmailSender
      */
     public static function sendReport2COMail2S(User $toUser, GeoCache $cache, $content, $reason)
     {
-        $now = new \DateTime('now');
+        $now = new DateTime('now');
         $server = rtrim(OcConfig::getAbsolute_server_URI(), '/');
         $subject = tr('reports_user_mail_subj2');
         $subject = mb_ereg_replace('{user}', $cache->getOwner()->getUserName(), $subject);

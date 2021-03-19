@@ -6,6 +6,8 @@ use src\Utils\Lock\Lock;
 use src\Models\Notify\Notify;
 use src\Models\User\User;
 use src\Models\Notify\NotifyEmailSender;
+use DateInterval;
+use DateTime;
 
 class NotifyController extends BaseController
 {
@@ -62,7 +64,7 @@ class NotifyController extends BaseController
      */
     private function checkIfShouldSendToUser(User $user)
     {
-        $right_time = new \DateTime();
+        $right_time = new DateTime();
         $hour_now = $right_time->format('H');
 
         switch ($user->getWatchmailMode()) {
@@ -71,18 +73,18 @@ class NotifyController extends BaseController
                 break;
             case '0': // Notify once per day
                 if ($user->getWatchmailHour() > $hour_now) {
-                    $right_time->sub(new \DateInterval('P1D'));
+                    $right_time->sub(new DateInterval('P1D'));
                 }
                 $right_time->setTime(intval($user->getWatchmailHour()), 0, 0);
                 break;
             case '2': // Notify once per week
                 if ($user->getWatchmailHour() > $hour_now) {
-                    $right_time->sub(new \DateInterval('P1D'));
+                    $right_time->sub(new DateInterval('P1D'));
                 }
                 $right_time->setTime(intval($user->getWatchmailHour()), 0, 0);
                 if (intval($user->getWatchmailDay()) >= 1 && intval($user->getWatchmailDay()) <= 7) { // Check for sure
                     while (intval($right_time->format('N')) != intval($user->getWatchmailDay())) {
-                        $right_time->sub(new \DateInterval('P1D'));
+                        $right_time->sub(new DateInterval('P1D'));
                     }
                 }
                 break;
@@ -110,11 +112,11 @@ class NotifyController extends BaseController
     /**
      * Returns DateTime object of mtime Flag file
      *
-     * @return \DateTime - last modification time of NOTIFY_FLAG
+     * @return DateTime - last modification time of NOTIFY_FLAG
      */
     private function getFlagTime()
     {
-        $mTime = new \DateTime();
+        $mTime = new DateTime();
         if (file_exists($this->getFlagFilename())) {
             $mTime->setTimestamp(filemtime($this->getFlagFilename()));
         } else {

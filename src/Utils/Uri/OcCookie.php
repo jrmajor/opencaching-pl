@@ -4,6 +4,7 @@ namespace src\Utils\Uri;
 use src\Utils\Debug\Debug;
 use src\Utils\Text\UserInputFilter;
 use src\Models\User\UserAuthorization;
+use stdClass;
 
 class OcCookie
 {
@@ -104,10 +105,10 @@ class OcCookie
             if (isset($_COOKIE[self::getOcCookieName()])) {
                 self::$ocData = json_decode(base64_decode($_COOKIE[self::getOcCookieName()]));
                 if(!is_object(self::$ocData)){
-                    self::$ocData = new \stdClass();
+                    self::$ocData = new stdClass();
                 }
             } else {
-                self::$ocData = new \stdClass();
+                self::$ocData = new stdClass();
             }
         }
         return self::$ocData;

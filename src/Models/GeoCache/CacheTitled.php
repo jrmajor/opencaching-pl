@@ -3,6 +3,8 @@
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
+use Exception;
+use DateTime;
 
 class CacheTitled extends BaseObject
 {
@@ -10,7 +12,7 @@ class CacheTitled extends BaseObject
     private $cacheId;
     private $logId;
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateTitled;
 
@@ -30,7 +32,7 @@ class CacheTitled extends BaseObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getTitledDate()
     {
@@ -47,7 +49,7 @@ class CacheTitled extends BaseObject
         try {
             $result->loadByCacheId($cacheId);
             return $result;
-        } catch (\Exception $e){
+        } catch (Exception $e){
             return null;
         }
     }
@@ -58,7 +60,7 @@ class CacheTitled extends BaseObject
 
         $this->cacheId = $cacheTitledDbRow['cache_id'];
         $this->logId = $cacheTitledDbRow['log_id'];
-        $this->dateTitled = new \DateTime($cacheTitledDbRow['date_alg']);
+        $this->dateTitled = new DateTime($cacheTitledDbRow['date_alg']);
 
         return $this;
     }
@@ -100,7 +102,7 @@ class CacheTitled extends BaseObject
         if (is_array($cacheTitledDbRow)) {
             $this->loadFromRow($cacheTitledDbRow);
         } else {
-            throw new \Exception('CacheTitled row not found');
+            throw new Exception('CacheTitled row not found');
         }
     }
 

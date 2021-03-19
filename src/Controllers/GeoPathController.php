@@ -21,6 +21,7 @@ use src\Models\ChunkModels\ListOfCaches\Column_CacheSetNameAndIcon;
 use src\Models\User\MultiUserQueries;
 use src\Models\ChunkModels\ListOfCaches\Column_UserName;
 use src\Models\ChunkModels\ListOfCaches\Column_ActionButtons;
+use RuntimeException;
 
 class GeoPathController extends BaseController
 {
@@ -80,7 +81,7 @@ class GeoPathController extends BaseController
         try {
             $tmpLogoFileArr = FileUploadMgr::processFileUpload($uploadModel);
             $tmpLogoFile = array_shift($tmpLogoFileArr);
-        } catch (\RuntimeException $e){
+        } catch (RuntimeException $e){
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }
@@ -137,7 +138,7 @@ class GeoPathController extends BaseController
 
         try{
             $geoPath->addCache($cache);
-        }catch(\RuntimeException $e){
+        }catch(RuntimeException $e){
             $this->ajaxErrorResponse($e->getMessage());
         }
 
@@ -306,7 +307,7 @@ class GeoPathController extends BaseController
         if ($proposalAccepted) {
             try {
                 $geoPath->addCache($cache);
-            } catch (\RuntimeException $e) {
+            } catch (RuntimeException $e) {
                 $this->displayCommonErrorPageAndExit($e->getMessage());
             }
             // cache added to geopath - cancel all other proposals
@@ -378,7 +379,7 @@ class GeoPathController extends BaseController
 
         try{
             $candidate->acceptOffer();
-        } catch (\RuntimeException $e) {
+        } catch (RuntimeException $e) {
             $this->displayCommonErrorPageAndExit($e->getMessage());
         }
 

@@ -6,6 +6,7 @@ use src\Utils\Database\OcDb;
 use src\Models\User\User;
 use src\Models\PowerTrail\PowerTrail;
 use src\Utils\Generators\Uuid;
+use DateTime;
 
 class Log
 {
@@ -49,7 +50,7 @@ class Log
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
@@ -76,7 +77,7 @@ class Log
         return $this;
     }
 
-    public function setDateTime(\DateTime $dateTime)
+    public function setDateTime(DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
         return $this;

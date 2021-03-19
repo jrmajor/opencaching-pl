@@ -6,6 +6,7 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\I18n\I18n;
 use src\Utils\Img\OcImage;
 use src\Utils\Debug\Debug;
+use Exception;
 
 
 /**
@@ -125,7 +126,7 @@ class Thumbnail extends BaseObject
         try {
             //ddd($orginalImagePath, $outPath, $maxSize);
             $outPath = OcImage::createThumbnail($orginalImagePath, "$outPath/$uuid", $maxSize);
-        } catch ( \Exception $e) {
+        } catch ( Exception $e) {
             Debug::logException($e);
             return null;
         }

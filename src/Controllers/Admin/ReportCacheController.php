@@ -9,6 +9,8 @@ use src\Models\Admin\ReportEmailSender;
 use src\Models\GeoCache\GeoCache;
 use src\Models\User\MultiUserQueries;
 use src\Models\User\User;
+use Exception;
+use DateTime;
 
 class ReportCacheController extends BaseController
 {
@@ -79,7 +81,7 @@ class ReportCacheController extends BaseController
             $cache = new GeoCache([
                 'cacheId' => $_POST['cacheid'],
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->errorMsg = tr('admin_reports_info_errform') . ' (cacheid)';
             $this->redirectToInfoPage();
         }
@@ -100,7 +102,7 @@ class ReportCacheController extends BaseController
                 $report->setCacheId($cache->getCacheId());
                 $report->setType($_POST['reason']);
                 $report->setContent($content);
-                $report->setDateSubmit(new \DateTime('now'));
+                $report->setDateSubmit(new DateTime('now'));
                 $report->setStatus(ReportCommons::STATUS_NEW);
                 if ($report->saveReport() == null) {
                     $this->errorMsg = tr('reports_user_msg_reporterr');

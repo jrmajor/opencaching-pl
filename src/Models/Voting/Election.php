@@ -228,7 +228,7 @@ class Election extends BaseObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getStartDate()
     {
@@ -236,7 +236,7 @@ class Election extends BaseObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getEndDate()
     {

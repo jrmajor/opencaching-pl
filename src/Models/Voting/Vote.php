@@ -5,6 +5,7 @@ namespace src\Models\Voting;
 use src\Models\BaseObject;
 use src\Models\User\User;
 use src\Utils\DateTime\OcDateTime;
+use DateTime;
 
 class Vote extends BaseObject
 {
@@ -53,7 +54,7 @@ class Vote extends BaseObject
         return self::db()->dbFetchAllAsObjects($rs, function ($row){
             $vote = new self();
             $vote->optId = $row['optionId'];
-            $vote->date = new \DateTime($row['date']);
+            $vote->date = new DateTime($row['date']);
             return $vote;
         });
     }
@@ -67,9 +68,9 @@ class Vote extends BaseObject
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): DateTime
     {
         return $this->date;
     }

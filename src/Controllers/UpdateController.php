@@ -5,6 +5,7 @@ namespace src\Controllers;
 use src\Utils\Database\DbUpdates;
 use src\Utils\Lock\Lock;
 use okapi\Facade;
+use Exception;
 
 /**
  * This class runs all updates that are necessary after a code deployment.
@@ -60,7 +61,7 @@ class UpdateController extends BaseController
     {
         $lockHandle = Lock::tryLock('DbUpdate', Lock::EXCLUSIVE | Lock::NONBLOCKING);
         if (!$lockHandle) {
-            throw new \Exception('Database update is already running, or problem with lock file.');
+            throw new Exception('Database update is already running, or problem with lock file.');
         }
 
         try {

@@ -5,6 +5,7 @@ namespace src\Models\GeoKret;
 use src\Models\User\User;
 use src\Models\GeoCache\GeoCache;
 use src\Models\BaseObject;
+use DateTime;
 
 /**
  * GeokretLog represents GK-logs-queue entry stored in DB
@@ -14,12 +15,12 @@ class GeoKretLog extends BaseObject
     private $id;
 
     /**
-     *  @var \DateTime
+     *  @var DateTime
      */
     private $logDateTime;
 
     /**
-     *  @var \DateTime
+     *  @var DateTime
      */
     private $enqueueDatetime;
 
@@ -55,8 +56,8 @@ class GeoKretLog extends BaseObject
 
         $geoKretyLog
             ->setId($row['id'])
-            ->setLogDateTime(new \DateTime($row['log_date_time']))
-            ->setEnqueueDatetime(new \DateTime($row['enqueue_date_time']))
+            ->setLogDateTime(new DateTime($row['log_date_time']))
+            ->setEnqueueDatetime(new DateTime($row['enqueue_date_time']))
             ->setUser(new User(['userId' => $row['user_id']]))
             ->setGeoCache(GeoCache::fromCacheIdFactory($row['geocache_id']) )
             ->setLogType($row['log_type'])
@@ -121,13 +122,13 @@ class GeoKretLog extends BaseObject
         return $this->geoKretName;
     }
 
-    public function setLogDateTime(\DateTime $logDateTime)
+    public function setLogDateTime(DateTime $logDateTime)
     {
         $this->logDateTime = $logDateTime;
         return $this;
     }
 
-    public function setEnqueueDatetime(\DateTime $enqueueDatetime)
+    public function setEnqueueDatetime(DateTime $enqueueDatetime)
     {
         $this->enqueueDatetime = $enqueueDatetime;
         return $this;

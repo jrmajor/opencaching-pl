@@ -4,6 +4,7 @@ namespace src\Models\User;
 use src\Models\BaseObject;
 use src\Models\PowerTrail\PowerTrail;
 use src\Models\GeoCache\GeoCacheLog;
+use ArrayObject;
 
 class UserStats extends BaseObject
 {
@@ -17,11 +18,11 @@ class UserStats extends BaseObject
      * Returns all GeoPaths completed by $userId
      *
      * @param integer $userId
-     * @return \ArrayObject
+     * @return ArrayObject
      */
     public static function getGeoPathsCompleted($userId)
     {
-        $geoPathsCompleted = new \ArrayObject();
+        $geoPathsCompleted = new ArrayObject();
         $query = '
                 SELECT *
                 FROM `PowerTrail`
@@ -47,11 +48,11 @@ class UserStats extends BaseObject
      * Returns all GeoPaths owned by $userId
      *
      * @param integer $userId
-     * @return \ArrayObject
+     * @return ArrayObject
      */
     public static function getGeoPathsOwned($userId)
     {
-            $geoPathsOwned = new \ArrayObject();
+            $geoPathsOwned = new ArrayObject();
 
             $stmt = self::db()->multiVariableQuery(
                 'SELECT `PowerTrail`.*

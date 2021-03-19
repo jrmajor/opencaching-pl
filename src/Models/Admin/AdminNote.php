@@ -4,6 +4,8 @@ namespace src\Models\Admin;
 use src\Models\BaseObject;
 use src\Models\User\User;
 use src\Models\GeoCache\GeoCache;
+use Exception;
+use DateTime;
 
 class AdminNote extends BaseObject
 {
@@ -48,7 +50,7 @@ class AdminNote extends BaseObject
     /** @var bool */
     private $automatic;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $date = null;
 
     /** @var string */
@@ -302,7 +304,7 @@ class AdminNote extends BaseObject
     }
 
     /**
-     * @param \DateTime $date
+     * @param DateTime $date
      */
     public function setDate($date)
     {
@@ -327,14 +329,14 @@ class AdminNote extends BaseObject
         try {
             $obj->loadByNoteId($noteId);
             return $obj;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return null;
         }
     }
 
     /**
      * @param int $noteId
-     * @throws \Exception
+     * @throws Exception
      */
     private function loadByNoteId($noteId)
     {
@@ -346,7 +348,7 @@ class AdminNote extends BaseObject
         if(is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
-            throw new \Exception('No such admin note');
+            throw new Exception('No such admin note');
         }
     }
 
@@ -360,7 +362,7 @@ class AdminNote extends BaseObject
         $this->setAdminId($row['admin_id']);
         $this->setCacheId($row['cache_id']);
         $this->setAutomatic(boolval($row['automatic']));
-        $this->setDate(new \DateTime($row['datetime']));
+        $this->setDate(new DateTime($row['datetime']));
         $this->setContent($row['content']);
     }
 

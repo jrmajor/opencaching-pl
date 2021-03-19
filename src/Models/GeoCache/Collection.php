@@ -1,8 +1,9 @@
 <?php
 
 namespace src\Models\GeoCache;
+use ArrayObject;
 
-class Collection extends \ArrayObject
+class Collection extends ArrayObject
 {
 
     private $isReady = false;

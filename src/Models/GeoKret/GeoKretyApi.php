@@ -3,6 +3,7 @@
 namespace src\Models\GeoKret;
 
 use src\Models\BaseObject;
+use Exception;
 
 /**
  * This class contain methods used to communicate with Geokrety, via Geokrety Api
@@ -44,7 +45,7 @@ class GeoKretyApi extends BaseObject
         if ($xml) {
             try {
                 $result = simplexml_load_string($xml);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->storeErrorsInDb(self::OPERATION_TAKE_USER_GEOKRETS, $url);
                 return [];
             }
@@ -68,7 +69,7 @@ class GeoKretyApi extends BaseObject
             libxml_use_internal_errors(true);
             try {
                 $result = simplexml_load_string($xml);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->storeErrorsInDb(self::OPERATION_TAKE_GEOKRETS_IN_CACHE, $url);
 
                 return [];

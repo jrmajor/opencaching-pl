@@ -4,6 +4,7 @@ namespace src\Models\ChunkModels;
 
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Text\TextConverter;
+use Exception;
 
 /**
  * This is model of file upload operation.
@@ -102,7 +103,7 @@ class UploadModel {
   public function getBaseUrl()
   {
       if(!$this->urlBase){
-        throw new \Exception('Trying to use unset baseUrl for uploaded file!');
+        throw new Exception('Trying to use unset baseUrl for uploaded file!');
       }
       return $this->urlBase;
   }
@@ -132,7 +133,7 @@ class UploadModel {
       $this->dirAtServer = OcConfig::getDynFilesPath(true).$dirInDirBasePath;
 
       if (!is_dir($this->dirAtServer)) {
-          throw(new \Exception("Improper path to save uploaded files! ({$this->dirAtServer})"));
+          throw(new Exception("Improper path to save uploaded files! ({$this->dirAtServer})"));
       }
   }
 
@@ -142,7 +143,7 @@ class UploadModel {
       $phpMaxFilesize = TextConverter::bytesNumberWithUnitToBytes(ini_get('upload_max_filesize'));
 
       if($this->maxFileSize > $phpMaxFilesize) {
-          throw new \Exception("Uploaded size in model {$this->maxFileSize} > php.ini::upload_max_filesize ($phpMaxFilesize)");
+          throw new Exception("Uploaded size in model {$this->maxFileSize} > php.ini::upload_max_filesize ($phpMaxFilesize)");
       }
   }
 

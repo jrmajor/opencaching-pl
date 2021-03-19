@@ -5,6 +5,7 @@ namespace src\Utils\Feed;
 use Exception;
 use SimpleXMLElement;
 use src\Models\OcConfig\OcConfig;
+use stdClass;
 
 /**
  * Simple reader for RSS and Atom feeds.
@@ -74,7 +75,7 @@ class RssFeed {
     /**
      * Get the next item in the feed.
      *
-     * @return \stdClass Object representing the item. Will return null when the list is exhausted.
+     * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
     public function next() {
         if ($this->current < $this->count()) {
@@ -87,7 +88,7 @@ class RssFeed {
     /**
      * Get the current item in the feed.
      *
-     * @return \stdClass Object representing the item. Will return null when the list is exhausted.
+     * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
     public function current() {
         return $this->getReader()->item(max(0, $this->current));
@@ -96,7 +97,7 @@ class RssFeed {
     /**
      * Get random item from the feed. Will not return an item more than once.
      *
-     * @return \stdClass Object representing the item. Will return null when the list is exhausted.
+     * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
     public function random() {
         if ($this->remaining === null) {

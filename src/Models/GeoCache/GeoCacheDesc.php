@@ -9,6 +9,7 @@ use src\Utils\Text\UserInputFilter;
 use src\Models\User\User;
 use src\Models\BaseObject;
 use src\Utils\Text\Formatter;
+use Exception;
 
 class GeoCacheDesc extends BaseObject
 {
@@ -42,7 +43,7 @@ class GeoCacheDesc extends BaseObject
             $obj = new self();
             $obj->loadByCacheId($cacheId, $descLang);
             return $obj;
-        }catch (\Exception $e){
+        }catch (Exception $e){
             return null;
         }
     }
@@ -68,7 +69,7 @@ class GeoCacheDesc extends BaseObject
         if(is_array($descDbRow)){
             $this->loadFromRow($descDbRow);
         }else{
-            throw new \Exception("Description not found for cacheId=$cacheId");
+            throw new Exception("Description not found for cacheId=$cacheId");
         }
     }
 

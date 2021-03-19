@@ -3,6 +3,7 @@ namespace src\Models\Admin;
 
 use src\Models\BaseObject;
 use src\Models\User\User;
+use DateTime;
 
 class ReportEmailTemplate extends BaseObject
 {
@@ -94,7 +95,7 @@ class ReportEmailTemplate extends BaseObject
     /**
      * DateTime object - when current version was saved
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateCreated;
 

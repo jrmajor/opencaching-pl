@@ -4,6 +4,7 @@ namespace src\Controllers;
 use src\Models\GeoCache\GeoCache;
 use src\Models\MeritBadge\MeritBadge;
 use src\Utils\Database\OcDb;
+use ArrayObject;
 
 
 class MeritBadgeController{
@@ -95,7 +96,7 @@ class MeritBadgeController{
         $condition = ' WHERE badge_user.user_id=:1 and badge_categories.id =:2 ';
         $stm = $this->db->multiVariableQuery( $this->getUserBadgeQuery($condition), $user_id, $category_id );
 
-        $retArray = new \ArrayObject();
+        $retArray = new ArrayObject();
 
         for( $i = 0; $i < $this->db->rowCount($stm); $i++ ){
             $rec = $this->db->dbResultFetch($stm);
@@ -283,7 +284,7 @@ class MeritBadgeController{
     }
 
     private function buildArray( $class, $stm ){
-        $retArray = new \ArrayObject();
+        $retArray = new ArrayObject();
 
         for( $i = 0; $i < $this->db->rowCount($stm); $i++ ){
 

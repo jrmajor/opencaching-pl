@@ -4,6 +4,8 @@ namespace src\Utils\Debug;
 use Throwable;
 use src\Models\OcConfig;
 use src\Utils\Email\EmailSender;
+use ErrorException;
+use Exception;
 
 class ErrorHandler
 {
@@ -32,7 +34,7 @@ class ErrorHandler
             // Map error / warning / notice to exception, which will either
             // get caught or be handled by self::handleException().
 
-            throw new \ErrorException($message, 0, $severity, $filename, $lineno);
+            throw new ErrorException($message, 0, $severity, $filename, $lineno);
         }
     }
 
@@ -79,15 +81,15 @@ class ErrorHandler
         $mailFail = false;
         try {
             EmailSender::adminOnErrorMessage($msg);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             try {
                 foreach (OcConfig::getEmailAddrTechAdminNotification() as $techAdminAddr) {
                     mail($techAdminAddr, 'OC site error', $msg);
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 try {
                     mail('root@localhost', 'OC site error', $msg);
-                } catch (\Exception $e) {
+                } catch (Exception $e) {
                     $mailFail = true;
                 }
             }
@@ -100,7 +102,7 @@ class ErrorHandler
             } else {
                 Debug::errorLog($msg);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // logging failed
             error_log('OC ERROR HANDLER: Problem with logging.');
         }
@@ -122,7 +124,7 @@ class ErrorHandler
                                   'the OC team and describe step by step how to reproduce this error.';
                     $mainPageLinkTitle = 'Go to the main page';
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $pageError = 'An error occured while processing your request. ';
                 $pageError .=
                     $mailFail

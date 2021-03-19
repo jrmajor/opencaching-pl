@@ -4,6 +4,7 @@ namespace src\Models\GeoCache;
 
 
 use src\Utils\Database\XDb;
+use Exception;
 
 class OpenChecker
 {
@@ -26,7 +27,7 @@ class OpenChecker
         if($row = XDb::xFetchArray($s)){
             $this->loadFromDbRow($row);
         }else{
-            throw new \Exception();
+            throw new Exception();
         }
 
     }
@@ -36,7 +37,7 @@ class OpenChecker
 
         try{
           return new OpenChecker($cacheId);
-        } catch(\Exception $e){
+        } catch(Exception $e){
             return null;
         }
     }

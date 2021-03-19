@@ -5,6 +5,8 @@ namespace src\Utils\Database;
 use PDOException;
 use PDOStatement;
 use src\Utils\Debug\Debug;
+use PDO;
+use Exception;
 
 class OcDb extends OcPdo
 {
@@ -386,7 +388,7 @@ class OcDb extends OcPdo
                     case 'integer':
                     case 'int':
                     case 'i':
-                        $stmt->bindParam($key, $val['value'], \PDO::PARAM_INT);
+                        $stmt->bindParam($key, $val['value'], PDO::PARAM_INT);
                         break;
                     case 'boolean':
                         $stmt->bindParam($key, $val['value'], self::PARAM_BOOL);
@@ -890,7 +892,7 @@ class OcDb extends OcPdo
 
     public function addFulltextIfNotExists($table, $index, array $columns = [])
     {
-        throw new \Exception(
+        throw new Exception(
             'FULLTEXT is not available at OC RO (MySQL 5.0)'
         );
         $this->addIndexOfTypeIfNotExists($table, $index, 'FULLTEXT', $columns);

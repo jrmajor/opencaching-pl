@@ -8,6 +8,8 @@ use src\Models\BaseObject;
 use src\Utils\Database\OcDb;
 use src\Utils\Log\Log;
 use src\Models\User\UserNotify;
+use DateTime;
+use PDOStatement;
 
 /**
  * DAO for performing watchlist operations
@@ -19,18 +21,18 @@ class Watchlist extends BaseObject
     /** Operation regarding watched caches logs, used in watches_waiting table */
     const WATCHTYPE_WATCH = 2;
 
-    /** @var \PDOStatement statement for inserting owner to watches_waitings */
+    /** @var PDOStatement statement for inserting owner to watches_waitings */
     private $insertOwnerWaitingsStmt;
-    /** @var \PDOStatement statement for inserting watcher to watches_waitings */
+    /** @var PDOStatement statement for inserting watcher to watches_waitings */
     private $insertWatchersWaitingsStmt;
     /**
-     * @var \PDOStatement statement for updating owner_notified status
+     * @var PDOStatement statement for updating owner_notified status
      *      in cache_logs
      */
     private $updateCacheLogsStmt;
-    /** @var \PDOStatement statement for deleting processed from watches_waiting */
+    /** @var PDOStatement statement for deleting processed from watches_waiting */
     private $deleteWatchersWaitingStmt;
-    /** @var \PDOStatement statement for updating next mail watch datetime */
+    /** @var PDOStatement statement for updating next mail watch datetime */
     private $updateNextWatchmailStmt;
 
     /**
@@ -65,7 +67,7 @@ class Watchlist extends BaseObject
                 $row['username'],
                 $row['type'],
                 $row['text'],
-                new \DateTime($row['date']),
+                new DateTime($row['date']),
                 $row['cache_id'],
                 $row['user_id'],
                 $row['wp_oc'],
@@ -204,7 +206,7 @@ class Watchlist extends BaseObject
                     $row['watchmail_mode'],
                     $row['watchmail_hour'],
                     $row['watchmail_day'],
-                    is_null($nextmail) ? null: new \DateTime($nextmail)
+                    is_null($nextmail) ? null: new DateTime($nextmail)
                 );
             }
             if ($row['watchtype'] != null && (

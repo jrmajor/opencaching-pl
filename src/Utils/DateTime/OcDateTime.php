@@ -8,7 +8,7 @@ class OcDateTime
 
     public static function now(): DateTime
     {
-        return new \DateTime();
+        return new DateTime();
     }
 
     /**

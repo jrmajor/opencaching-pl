@@ -5,6 +5,7 @@
 namespace src\Models\Watchlist;
 
 use src\Models\BaseObject;
+use DateTime;
 
 /**
  * Represents single row data from watchlist watchers query result, extended by
@@ -24,7 +25,7 @@ class WatchlistWatcher extends BaseObject
     private $watchmailHour;
     /** @var integer {@see WatchlistWatcher::setWatchmailDay()} */
     private $watchmailDay;
-    /** @var \DateTime {@see WatchlistWatcher::setWatchmailNext()} */
+    /** @var DateTime {@see WatchlistWatcher::setWatchmailNext()} */
     private $watchmailNext;
     /** @var string[] {@see WatchlistWatcher::getOwnerLogs()} */
     private $ownerLogs;
@@ -42,7 +43,7 @@ class WatchlistWatcher extends BaseObject
      * @param integer $watchmailMode {@see WatchlistWatcher::setWatchmailMode()}
      * @param integer $watchmailHour {@see WatchlistWatcher::setWatchmailHour()}
      * @param integer $watchmailDay {@see WatchlistWatcher::setWatchmailDay()}
-     * @param \DateTime $watchmailNext {@see WatchlistWatcher::setWatchmailNext()}
+     * @param DateTime $watchmailNext {@see WatchlistWatcher::setWatchmailNext()}
      */
     public function __construct(
         $userId,
@@ -128,7 +129,7 @@ class WatchlistWatcher extends BaseObject
     /**
      * Gives the watcher next mail sending date and time
      *
-     * @return \DateTime the watcher next mail sending date and time
+     * @return DateTime the watcher next mail sending date and time
      */
     public function getWatchmailNext()
     {
@@ -230,9 +231,9 @@ class WatchlistWatcher extends BaseObject
     /**
      * Sets the watcher next mail sending date and time
      *
-     * @param \DateTime $watchmailNext next mail sending date and time to set
+     * @param DateTime $watchmailNext next mail sending date and time to set
      */
-    public function setWatchmailNext(\DateTime $watchmailNext = null)
+    public function setWatchmailNext(DateTime $watchmailNext = null)
     {
         $this->watchmailNext = $watchmailNext;
     }

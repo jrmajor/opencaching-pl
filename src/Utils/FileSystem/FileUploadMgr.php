@@ -17,7 +17,7 @@ class FileUploadMgr
      *
      * @param UploadModel $model
      *
-     * @throws \RuntimeException on error
+     * @throws RuntimeException on error
      * @return string|string[] - file|array of files
      */
     public static function processFileUpload(UploadModel $model){

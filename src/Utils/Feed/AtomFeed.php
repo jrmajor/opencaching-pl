@@ -3,6 +3,7 @@ namespace src\Utils\Feed;
 
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Uri\Uri;
+use DateTime;
 
 /**
  * Class to create complete RSS feed in Atom 1.0 standard
@@ -33,7 +34,7 @@ class AtomFeed
     /** @var string */
     private $id;
 
-    /** @var \DateTime */
+    /** @var DateTime */
     private $updated;
 
     /** @var string */
@@ -57,7 +58,7 @@ class AtomFeed
     public function __construct()
     {
         // Set default values
-        $this->setUpdated(new \DateTime());
+        $this->setUpdated(new DateTime());
         $this->setLink(Uri::getCurrentUriBase() . Uri::getCurrentUri(true));
         $this->setTitle(OcConfig::getSiteName());
         $this->setIcon(OcConfig::getAbsolute_server_URI() . 'images/oc_logo.png');
@@ -86,7 +87,7 @@ class AtomFeed
     /**
      * Returns feed last updated date
      *
-     * @return \DateTime
+     * @return DateTime
      */
     public function getUpdated()
     {
@@ -160,10 +161,10 @@ class AtomFeed
     /**
      * Sets last feed updated date
      *
-     * @param \DateTime $updated
-     * @return \DateTime
+     * @param DateTime $updated
+     * @return DateTime
      */
-    public function setUpdated(\DateTime $updated)
+    public function setUpdated(DateTime $updated)
     {
         $this->updated = $updated;
         return $this->getUpdated();
@@ -298,7 +299,7 @@ class AtomFeed
         $result .= '<feed xmlns="http://www.w3.org/2005/Atom">' . PHP_EOL;
         $result .= '<title type="text">' . strip_tags($this->getTitle()) . '</title>' . PHP_EOL;
         $result .= '<id>' . $this->getId() . '</id>' . PHP_EOL;
-        $result .= '<updated>' . $this->getUpdated()->format(\DateTime::ATOM) . '</updated>' . PHP_EOL;
+        $result .= '<updated>' . $this->getUpdated()->format(DateTime::ATOM) . '</updated>' . PHP_EOL;
         $result .= '<link href="' . OcConfig::getAbsolute_server_URI() . '" />' . PHP_EOL;
         if (! empty($this->getLink())) {
             $result .= '<link type="application/atom+xml" rel="self" href="' . $this->getLink() . '" />' . PHP_EOL;
