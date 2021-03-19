@@ -82,8 +82,8 @@ class Coordinates
     public function loadFromDb($dbRow)
     {
         if (isset($dbRow['latitude'], $dbRow['longitude'])) {
-            $this->latitude = (float)$dbRow['latitude'];
-            $this->longitude = (float)$dbRow['longitude'];
+            $this->latitude = (float) $dbRow['latitude'];
+            $this->longitude = (float) $dbRow['longitude'];
         } else {
             // at least one cord is NULL => improper cords
             $this->latitude = null;

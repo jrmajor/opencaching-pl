@@ -23,7 +23,7 @@ tpl_set_var('desc_updated', '');
 tpl_set_var('displayGeoPathSection', displayGeoPathSection('table'));
 if (isset($_POST['description'])) {
     $q = "UPDATE user SET description = :1 WHERE user_id=:2";
-    $db->multiVariableQuery($q, strip_tags($_POST['description']), (int)$user->getUserId());
+    $db->multiVariableQuery($q, strip_tags($_POST['description']), (int) $user->getUserId());
     tpl_set_var('desc_updated', "<font color='green'>" . tr('desc_updated') . "</font>");
 }
 
@@ -58,7 +58,7 @@ if ($record['guru'] == 1) {
     tpl_set_var('guides_start', '<!--');
     tpl_set_var('guides_end', '-->');
 }
-tpl_set_var('userid', (int)$user->getUserId());
+tpl_set_var('userid', (int) $user->getUserId());
 tpl_set_var('profileurl', $absolute_server_URI . 'viewprofile.php?userid=' . ($user->getUserId()));
 tpl_set_var('statlink', Uri::getAbsUri('/stats/statPic/' . $user->getUserId()));
 tpl_set_var('username', htmlspecialchars($record['username'], ENT_COMPAT, 'UTF-8'));
@@ -95,14 +95,14 @@ if (isset($_REQUEST['action'])) {
             tpl_set_var('guide_start', '<!--');
             tpl_set_var('guide_end', '-->');
         }
-        $guide = isset($_POST['guide']) ? (int)$_POST['guide'] : 0;
+        $guide = isset($_POST['guide']) ? (int) $_POST['guide'] : 0;
         if (isset($_POST['submit'])) {
             // load datas from form
             $username = $_POST['username'];
             $ozi_path = strip_tags($_POST['ozi_path']);
             tpl_set_var('ozi_path', $ozi_path);
 
-            $using_permantent_login = isset($_POST['using_permanent_login']) ? (int)$_POST['using_permanent_login'] : 0;
+            $using_permantent_login = isset($_POST['using_permanent_login']) ? (int) $_POST['using_permanent_login'] : 0;
             if ($using_permantent_login == 1) {
                 tpl_set_var('permanent_login_sel', ' checked="checked"');
             } else {
@@ -115,7 +115,7 @@ if (isset($_REQUEST['action'])) {
                 tpl_set_var('guide_sel', '');
             }
             /* geoPaths - switch on/off notification email */
-            $geoPathsEmail = isset($_POST['geoPathsEmail']) ? (int)$_POST['geoPathsEmail'] : 0;
+            $geoPathsEmail = isset($_POST['geoPathsEmail']) ? (int) $_POST['geoPathsEmail'] : 0;
             if ($geoPathsEmail == 1) {
                 tpl_set_var('geoPathsEmailCheckboxChecked', ' checked="checked"');
             } else {
@@ -180,27 +180,27 @@ if (isset($_REQUEST['action'])) {
                                   SET `last_modified` = NOW(),
                                       `permanent_login_flag`=:1,
                                       `power_trail_email`=:2 , `ozi_filips`=:3, `guru`=:4
-                                  WHERE `user_id`=:5", $using_permantent_login, $geoPathsEmail, $ozi_path, $guide, (int)$user->getUserId());
+                                  WHERE `user_id`=:5", $using_permantent_login, $geoPathsEmail, $ozi_path, $guide, (int) $user->getUserId());
 
                     // update user nick
                     if ($username != $user->getUserName()) {
                         $db->beginTransaction();
                         $q = "select count(id) from user_nick_history where user_id = :1";
-                        $hist_count = $db->multiVariableQueryValue($q, 0, (int)$user->getUserId());
+                        $hist_count = $db->multiVariableQueryValue($q, 0, (int) $user->getUserId());
                         if ($hist_count == 0) {
                             // no history at all
                             $q = "insert into user_nick_history (user_id, date_from, date_to, username) select user_id, date_created, now(), username from user where user_id = :1";
-                            $db->multiVariableQuery($q, (int)$user->getUserId());
+                            $db->multiVariableQuery($q, (int) $user->getUserId());
                         } else {
                             // close previous entry
                             $q = "update user_nick_history set date_to = NOW() where date_to is null and user_id = :1";
-                            $db->multiVariableQuery($q, (int)$user->getUserId());
+                            $db->multiVariableQuery($q, (int) $user->getUserId());
                         }
                         // update and save current nick
                         $q = "update user set username = :1 where user_id = :2";
-                        $db->multiVariableQuery($q, $username, (int)$user->getUserId());
+                        $db->multiVariableQuery($q, $username, (int) $user->getUserId());
                         $q = "insert into user_nick_history (user_id, date_from, username) select user_id, now(), username from user where user_id = :1";
-                        $db->multiVariableQuery($q, (int)$user->getUserId());
+                        $db->multiVariableQuery($q, (int) $user->getUserId());
                         $db->commit();
 
                         // $usr['username'] = $username; //TODO: update username?!

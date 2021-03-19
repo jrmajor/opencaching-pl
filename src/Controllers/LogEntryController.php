@@ -29,7 +29,7 @@ class LogEntryController
             LIMIT :limit OFFSET :offset';
         $params = [
             'cacheid' => [
-                'value' => (int)$cache->getCacheId(),
+                'value' => (int) $cache->getCacheId(),
                 'data_type' => 'integer',
             ],
             'limit' => [
@@ -54,7 +54,7 @@ class LogEntryController
         $query = $this->generateGetLogsQuery($includeDeletedLogs, $logId);
         $params = [
             'v1' => [
-                'value' => (int)$geocacheId,
+                'value' => (int) $geocacheId,
                 'data_type' => 'integer',
             ],
             'v2' => [
@@ -68,7 +68,7 @@ class LogEntryController
         ];
         if ($logId) {
             $params['v4'] = [
-                'value' => (int)$logId,
+                'value' => (int) $logId,
                 'data_type' => 'integer',
             ];
         }

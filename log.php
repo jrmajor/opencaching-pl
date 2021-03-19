@@ -1106,7 +1106,7 @@ function enqueueGeoKretyLog(DateTime $logDateTime, User $user, GeoCache $geoCach
 
 function processGeoKrety(DateTime $logDateTime, $user, $geoCache)
 {
-    $MaxNr = isset($_POST['MaxNr']) ? (int)$_POST['MaxNr'] : 0;
+    $MaxNr = isset($_POST['MaxNr']) ? (int) $_POST['MaxNr'] : 0;
     if ($MaxNr > 0) {
         enqueueGeoKretyLog($logDateTime, $user, $geoCache, $MaxNr);
     }

@@ -244,7 +244,7 @@ switch ($actionPerformed) {
             header("Location: " . "//" . $_SERVER['HTTP_HOST'] . '/powerTrail.php');
             exit;
         }
-        $powerTrail = new PowerTrail(['id' => (int)$_GET['ptrail']]);
+        $powerTrail = new PowerTrail(['id' => (int) $_GET['ptrail']]);
         $ptOwners = $pt->getPtOwners();
         $_SESSION['ptName'] = powerTrailBase::clearPtNames($powerTrail->getName());
         tpl_set_var('powerTrailId', $powerTrail->getId());

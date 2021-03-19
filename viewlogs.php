@@ -31,10 +31,10 @@ $view->setVar('isUserAuthorized', is_object($loggedUser));
 
 $cache_id = 0;
 if (isset($_REQUEST['cacheid'])) {
-    $cache_id = (int)$_REQUEST['cacheid'];
+    $cache_id = (int) $_REQUEST['cacheid'];
 }
 if (isset($_REQUEST['logid'])) {
-    $logid = (int)$_REQUEST['logid'];
+    $logid = (int) $_REQUEST['logid'];
 } else {
     $logid = false;
 }

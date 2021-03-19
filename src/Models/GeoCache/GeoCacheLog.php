@@ -314,7 +314,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             WHERE `cache_id` = :cacheid
               AND `user_id` = :userid
         ';
-        return (bool)$this->db->paramQueryValue($query, false, $params);
+        return (bool) $this->db->paramQueryValue($query, false, $params);
     }
 
     /**

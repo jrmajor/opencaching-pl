@@ -147,7 +147,7 @@ final class FileLock extends RealLock
             $idnetifier = str_replace('\\', '.', $identifier);
             $result .= str_replace('/', '.', $identifier);
         } else {
-            $result .= (string)$identifier;
+            $result .= (string) $identifier;
         }
         return $result;
     }

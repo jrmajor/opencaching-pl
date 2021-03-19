@@ -127,7 +127,7 @@ class MultiCacheStats extends BaseObject
     public static function getNewCachesCount($fromLastDays)
     {
 
-        $days = (int)$fromLastDays;
+        $days = (int) $fromLastDays;
 
         $countedStatuses = implode(',', [
             GeoCache::STATUS_ARCHIVED,
@@ -146,7 +146,7 @@ class MultiCacheStats extends BaseObject
     public static function getNewCachesCountMonthly($year)
     {
         $db = self::db();
-        $year = (int)$year;
+        $year = (int) $year;
 
         $countedStatuses = implode(',', [
             GeoCache::STATUS_ARCHIVED,

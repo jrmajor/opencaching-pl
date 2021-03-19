@@ -110,10 +110,10 @@ $elem->setAttribute("style", "fill:none;stroke-opacity: 0");
 $elem = $svg->getElementById('titlelogo');
 $mod = 0;
 if($elem) {
-$elem->setAttribute("height", $elem->getAttribute("height")+(float)$_POST['h1']);
-$elem->setAttribute("width", $elem->getAttribute("width")+(float)$_POST['w1']);
-$elem->setAttribute("x", $elem->getAttribute("x")+(float)$_POST['x1']);
-$elem->setAttribute("y", $elem->getAttribute("y")+(float)$_POST['y1']);
+$elem->setAttribute("height", $elem->getAttribute("height")+(float) $_POST['h1']);
+$elem->setAttribute("width", $elem->getAttribute("width")+(float) $_POST['w1']);
+$elem->setAttribute("x", $elem->getAttribute("x")+(float) $_POST['x1']);
+$elem->setAttribute("y", $elem->getAttribute("y")+(float) $_POST['y1']);
 $mod = 1;
 }
 for($j = 1;$j <= 4;++$j) {
@@ -123,10 +123,10 @@ else
 $bgid="";
 $elem = $svg->getElementById("bglogo$bgid");
 if($elem) {
-$elem->setAttribute("height", $elem->getAttribute("height")+(float)$_POST['h2']);
-$elem->setAttribute("width", $elem->getAttribute("width")+(float)$_POST['w2']);
-$elem->setAttribute("x", $elem->getAttribute("x")+(float)$_POST['x2']);
-$elem->setAttribute("y", $elem->getAttribute("y")+(float)$_POST['y2']);
+$elem->setAttribute("height", $elem->getAttribute("height")+(float) $_POST['h2']);
+$elem->setAttribute("width", $elem->getAttribute("width")+(float) $_POST['w2']);
+$elem->setAttribute("x", $elem->getAttribute("x")+(float) $_POST['x2']);
+$elem->setAttribute("y", $elem->getAttribute("y")+(float) $_POST['y2']);
 $mod = 1;
 }
 }
@@ -176,7 +176,7 @@ if($mod)
 $svg->save("work/$shortname.svg");
 
 $pid1 = run_in_bg("convert -background white -flatten /tmp/bg$shortname.$ext2 /tmp/".$shortname."2.$ext2");
-$opacity = max(0, min((int)$_POST['opacity'], 100));
+$opacity = max(0, min((int) $_POST['opacity'], 100));
 
 $pid2 = run_in_bg("convert -alpha on -channel o -evaluate set $opacity% -background white -flatten /tmp/".$shortname."2.$ext2 /tmp/".$shortname."3.$ext2 && ".
 "convert -background white -flatten /tmp/$shortname.$ext /tmp/".$shortname."2.$ext");

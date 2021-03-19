@@ -151,7 +151,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             }
 
 
-            $str = (string)$tidy;
+            $str = (string) $tidy;
             if($str) {
             //  $str = str_replace("&amp;", "&", $str);
             $doc = DOMDocument::loadXML("<cache_description>".$str."</cache_description>");

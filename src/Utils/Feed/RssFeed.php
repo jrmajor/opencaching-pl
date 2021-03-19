@@ -300,25 +300,25 @@ class AtomReader implements FeedReader {
         }
 
         $item = [
-            'title' => (string)$node->title,
-            'description' => (string)$node->description,
+            'title' => (string) $node->title,
+            'description' => (string) $node->description,
             'image' => null,
             'link' => null,
             'date' => strtotime($node->published),
-            'author' => (string)$node->author->name,
+            'author' => (string) $node->author->name,
         ];
 
         //Iterate through link nodes getting content URL and images.
         foreach ($node->link as $link) {
             if (strpos($link['type'], 'text') === 0 || $item['link'] === null) {
-                $item['link'] = (string)$link['href'];
+                $item['link'] = (string) $link['href'];
             }
             if (strpos($link['type'], 'image') === 0) {
-                $item['image'] = (string)$link['href'];
+                $item['image'] = (string) $link['href'];
             }
         }
 
-        return (object)$item;
+        return (object) $item;
     }
 
     public static function canRead(SimpleXMLElement $root) {
@@ -349,13 +349,13 @@ class RSSReader implements FeedReader {
             return null;
         }
         $dc = $node->children('http://purl.org/dc/elements/1.1/');
-        return (object)[
-            'title' => (string)$node->title,
-            'description' => (string)$node->description,
-            'link' => (string)$node->link,
+        return (object) [
+            'title' => (string) $node->title,
+            'description' => (string) $node->description,
+            'link' => (string) $node->link,
             'image' => null,
             'date' => strtotime($node->pubDate),
-            'author' => (string)$dc->creator,
+            'author' => (string) $dc->creator,
         ];
     }
 

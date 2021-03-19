@@ -179,9 +179,9 @@ if (!$loggedUser) {
             ORDER BY `$sort_warunek` $sort_txt
             LIMIT ".intval($start).", ".intval($LOGS_PER_PAGE);
 
-    $params['user_id']['value'] = (int)$user_id;
+    $params['user_id']['value'] = (int) $user_id;
     $params['user_id']['data_type'] = 'integer';
-    $params['stat_cache']['value'] = (int)$stat_cache;
+    $params['stat_cache']['value'] = (int) $stat_cache;
     $params['stat_cache']['data_type'] = 'integer';
 
 
@@ -250,7 +250,7 @@ if (!$loggedUser) {
         }
         $table .= '&nbsp;</td>';
 
-        $params['v1']['value'] = (int)$log_record['cache_id'];
+        $params['v1']['value'] = (int) $log_record['cache_id'];
         $params['v1']['data_type'] = 'integer';
         $s = $dbc->paramQuery($logs_query, $params);
 

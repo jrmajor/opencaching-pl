@@ -27,7 +27,7 @@ class MultiLogStats extends BaseObject
 
     public static function getLastSearchesCount($fromLastDays)
     {
-        $days = (int)$fromLastDays;
+        $days = (int) $fromLastDays;
 
         $countedTypes = implode(',', [
             GeoCacheLog::LOGTYPE_FOUNDIT,
@@ -43,7 +43,7 @@ class MultiLogStats extends BaseObject
 
     public static function getLastRecommendationsCount($fromLastDays)
     {
-        $days = (int)$fromLastDays;
+        $days = (int) $fromLastDays;
 
         return self::db()->multiVariableQueryValue(
             "SELECT COUNT(*) FROM cache_logs

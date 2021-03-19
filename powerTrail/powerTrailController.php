@@ -100,7 +100,7 @@ class powerTrailController
 
         // filters here
         if (isset($_REQUEST['filter'])) {
-            $filterValue = (int)$_REQUEST['filter'];
+            $filterValue = (int) $_REQUEST['filter'];
             switch ($_REQUEST['filter']) {
                 case '0':
                     $filter = ' ';
@@ -201,8 +201,8 @@ class powerTrailController
             if ($_POST['dPercent'] < \src\Controllers\PowerTrailController::MINIMUM_PERCENT_REQUIRED) {
                 $_POST['dPercent'] = \src\Controllers\PowerTrailController::MINIMUM_PERCENT_REQUIRED;
             }
-            $db->multiVariableQuery($query, strip_tags($_POST['powerTrailName']), (int)$_POST['type'], 2,
-                htmlspecialchars($_POST['description']), (int)$_POST['dPercent']);
+            $db->multiVariableQuery($query, strip_tags($_POST['powerTrailName']), (int) $_POST['type'], 2,
+                htmlspecialchars($_POST['description']), (int) $_POST['dPercent']);
             $newProjectId = $db->lastInsertId();
             // exit;
             $query = "INSERT INTO `PowerTrail_owners`(`PowerTrailId`, `userId`, `privileages`) VALUES (:1,:2,:3)";
