@@ -21,7 +21,7 @@ class LogEntryController
     public function loadLogs(GeoCache $cache, $includeDeletedLogs = false, $offset = 0, $limit = 0)
     {
         $query = 'SELECT * FROM `cache_logs` WHERE `cache_logs`.`cache_id` = :cacheid';
-        if (!$includeDeletedLogs) {
+        if (! $includeDeletedLogs) {
             $query .= ' AND `cache_logs`.`deleted` = 0';
         }
         $query .= ' ORDER BY `cache_logs`.`date` DESC

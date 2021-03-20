@@ -236,7 +236,7 @@ while ($record = $dbc->dbResultFetch($s)) {
             gct.addToLastRow( 5, '$sUserID' );
         ";
 
-    if (!empty($user) && $user->getUserId() == $record['user_id']) {
+    if (! empty($user) && $user->getUserId() == $record['user_id']) {
         $nMyRanking = $nRanking;
         $nMyRealPos = $nPos - 1;
     }

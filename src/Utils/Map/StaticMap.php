@@ -30,10 +30,10 @@ use src\Utils\Uri\Uri;
 
 class StaticMap
 {
-    const MAP_MAPNIK    = 'mapnik';
-    const MAP_STERRAIN  = 'sterrain';
-    const MAP_STONER    = 'stoner';
-    const MAP_CYCLE     = 'cycle';
+    const MAP_MAPNIK = 'mapnik';
+    const MAP_STERRAIN = 'sterrain';
+    const MAP_STONER = 'stoner';
+    const MAP_CYCLE = 'cycle';
 
     const MARKERS_DIR = '/resources/images/staticMapMarkers';
     const MARKER_BLUE = 'mark-small-blue';
@@ -47,10 +47,10 @@ class StaticMap
     protected $tileSize = 256;
 
     protected $tileSrcUrl = [
-        self::MAP_MAPNIK   => 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png',        // -> https://openstreetmap.org
+        self::MAP_MAPNIK => 'http://tile.openstreetmap.org/{Z}/{X}/{Y}.png',        // -> https://openstreetmap.org
         self::MAP_STERRAIN => 'http://d.tile.stamen.com/terrain/{Z}/{X}/{Y}.png',     // -> http://maps.stamen.com/
-        self::MAP_STONER   => 'http://d.tile.stamen.com/toner/{Z}/{X}/{Y}.png',       // -> http://maps.stamen.com/
-        self::MAP_CYCLE    => 'http://a.tile.opencyclemap.org/cycle/{Z}/{X}/{Y}.png', // -> http://opencyclemap.org
+        self::MAP_STONER => 'http://d.tile.stamen.com/toner/{Z}/{X}/{Y}.png',       // -> http://maps.stamen.com/
+        self::MAP_CYCLE => 'http://a.tile.opencyclemap.org/cycle/{Z}/{X}/{Y}.png', // -> http://opencyclemap.org
     ];
 
     protected $markerBaseDir;       // where the markers imgs are stored
@@ -108,7 +108,7 @@ class StaticMap
     }
 
     public static function displayMapWithMarkerAtCenter(
-        Coordinates $center, $zoom, array $size, $mapType, $markerImg=null)
+        Coordinates $center, $zoom, array $size, $mapType, $markerImg = null)
     {
         $map = new self();
         $map->lat = $center->getLatitude();
@@ -133,8 +133,8 @@ class StaticMap
         $this->markers = [];
         $this->maptype = self::MAP_MAPNIK;
 
-        $this->tileCacheBaseDir = OcConfig::getDynFilesPath() .'images/staticmap/tiles';
-        $this->mapCacheBaseDir = OcConfig::getDynFilesPath() .'images/staticmap/maps';
+        $this->tileCacheBaseDir = OcConfig::getDynFilesPath() . 'images/staticmap/tiles';
+        $this->mapCacheBaseDir = OcConfig::getDynFilesPath() . 'images/staticmap/maps';
         $this->markerBaseDir = Uri::getAbsServerPath(self::MARKERS_DIR);
     }
 
@@ -143,7 +143,7 @@ class StaticMap
         $this->parseParams();
         if ($this->useMapCache) {
             // use map cache, so check cache for map
-            if (!$this->checkMapCache()) {
+            if (! $this->checkMapCache()) {
                 // map is not in cache, needs to be build
                 $this->makeMap();
                 $this->mkdir_recursive(dirname($this->mapCacheIDToFilename()), 0755);
@@ -169,9 +169,9 @@ class StaticMap
         }
     }
 
-    private function addMarker(Coordinates $coords, $type=null)
+    private function addMarker(Coordinates $coords, $type = null)
     {
-        if (!$type) {
+        if (! $type) {
             // default marker img
             $type = self::MARKER_BLUE;
         }
@@ -208,7 +208,7 @@ class StaticMap
             $this->height = $this->minHeight;
         }
 
-        if (!array_key_exists($this->maptype, $this->tileSrcUrl)) {
+        if (! array_key_exists($this->maptype, $this->tileSrcUrl)) {
             $this->maptype = self::MAP_MAPNIK;
         }
     }
@@ -249,7 +249,7 @@ class StaticMap
             for ($y = $startY; $y <= $endY; $y++) {
                 $url = str_replace(['{Z}', '{X}', '{Y}'], [$this->zoom, $x, $y], $this->tileSrcUrl[$this->maptype]);
                 $tileData = $this->fetchTile($url);
-                if (!$tileData || !$tileImage = @imagecreatefromstring($tileData)) {
+                if (! $tileData || ! $tileImage = @imagecreatefromstring($tileData)) {
                     // error on fetch tile image or error on image creation
                     $tileImage = imagecreate($this->tileSize, $this->tileSize);
                     $color = imagecolorallocate($tileImage, 255, 255, 255);
@@ -295,7 +295,7 @@ class StaticMap
             }
 
             // check required files or set default
-            if ($markerFilename == '' || !file_exists($this->markerBaseDir . '/' . $markerFilename)) {
+            if ($markerFilename == '' || ! file_exists($this->markerBaseDir . '/' . $markerFilename)) {
                 $markerFilename = $this->markerBaseDir . '/mark-small-blue.png';
                 $markerImageOffsetX = -8;
                 $markerImageOffsetY = -23;
@@ -361,7 +361,7 @@ class StaticMap
 
     private function mapCacheIDToFilename()
     {
-        if (!$this->mapCacheFile) {
+        if (! $this->mapCacheFile) {
             $this->mapCacheFile = $this->mapCacheBaseDir . '/' . $this->maptype . '/' . $this->zoom .
                 '/cache_' . substr($this->mapCacheID, 0, 2) .
                 '/' . substr($this->mapCacheID, 2, 2) . '/' . substr($this->mapCacheID, 4);
@@ -415,7 +415,7 @@ class StaticMap
         $string = $this->attribution;
         $font_size = 1;
         $len = strlen($string);
-        $width  = imagefontwidth($font_size)*$len;
+        $width = imagefontwidth($font_size) * $len;
         $height = imagefontheight($font_size);
         $img = imagecreate($width,$height);
 

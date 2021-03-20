@@ -117,8 +117,8 @@ class DbUpdateHistory
 
     private static function verifyUuid($uuid)
     {
-        if (!isset(self::$history[$uuid])) {
-            throw new Exception("Unknown UUID '".$uuid."'");
+        if (! isset(self::$history[$uuid])) {
+            throw new Exception("Unknown UUID '" . $uuid . "'");
         }
     }
 
@@ -146,7 +146,7 @@ class DbUpdateHistory
     {
         static $initialized = false;
 
-        if (!$initialized) {
+        if (! $initialized) {
             $db = OcDb::instance();
 
             // create history storages, if not exist
@@ -162,7 +162,7 @@ class DbUpdateHistory
             $db->addPrimaryKeyIfNotExists('db_update_history', 'uuid');
 
             self::$path = OcConfig::instance()->getDynFilesPath() . 'db_update_history';
-            if (!file_exists(self::$path)) {
+            if (! file_exists(self::$path)) {
                 mkdir(self::$path);
             }
             self::$path .= '/';
@@ -182,17 +182,17 @@ class DbUpdateHistory
             // add missing entries to DB history
             foreach ($fileHistory as $filePath) {
                 $uuid = basename($filePath);
-                if (!isset(self::$history[$uuid])) {
+                if (! isset(self::$history[$uuid])) {
                     $fileData = file_get_contents($filePath);
                     [$date, $time, $name] = explode(' ', $fileData);
-                    self::$history[$uuid] = ['name' => $name, 'wasRunAt' => $date.' '.$time];
+                    self::$history[$uuid] = ['name' => $name, 'wasRunAt' => $date . ' ' . $time];
                     self::writeToDb($uuid);
                 }
             }
 
             // add missing entries to file history
             foreach (self::$history as $uuid => $props) {
-                if (!in_array(self::$path . $uuid, $fileHistory)) {
+                if (! in_array(self::$path . $uuid, $fileHistory)) {
                     self::writeToFile($uuid);
                 }
             }

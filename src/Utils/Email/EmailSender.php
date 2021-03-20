@@ -25,11 +25,11 @@ class EmailSender
      */
     public static function adminOnErrorMessage(
         $message,
-        $spamDomain=OcSpamDomain::GENERIC_ERRORS)
+        $spamDomain = OcSpamDomain::GENERIC_ERRORS)
     {
 
         //first check if sending email is allowed
-        if(!OcSpamDomain::isEmailAllowed($spamDomain)){
+        if(! OcSpamDomain::isEmailAllowed($spamDomain)){
             //skip email
             return;
         }
@@ -43,19 +43,19 @@ class EmailSender
             $email->setFromAddr( OcConfig::getEmailAddrNoReply());
 
             $email->addSubjectPrefix('OC Admin Email');
-            $email->setSubject('Error in domain: '.$spamDomain); //TODO
+            $email->setSubject('Error in domain: ' . $spamDomain); //TODO
             $email->setPlainTextBody($message);
 
-            if (!$email->send()) {
+            if (! $email->send()) {
                 // The only available fallback here is logging.
-                Debug::errorLog( __METHOD__.": Admin email sending failed! Message:\n" . $message, false);
+                Debug::errorLog( __METHOD__ . ": Admin email sending failed! Message:\n" . $message, false);
             }
         } // foreach
     }
 
     public static function sendRemoveLogNotification(GeoCacheLog $log, User $loggedUser)
     {
-        $emailTemplateFile = __DIR__.'/../../../resources/email/removed_log.email.html';
+        $emailTemplateFile = __DIR__ . '/../../../resources/email/removed_log.email.html';
 
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('log_owner', $log->getUser()->getUserName());
@@ -114,7 +114,7 @@ class EmailSender
         $emailCOG->setReplyToAddr(OcConfig::getEmailAddrOcTeam());
         $emailCOG->setFromAddr(OcConfig::getEmailAddrOcTeam());
         $emailCOG->addSubjectPrefix(OcConfig::getEmailSubjectPrefixForOcTeam());
-        $emailCOG->setSubject(tr('octeam_comment_subject_copy').' '.$admin->getUserName());
+        $emailCOG->setSubject(tr('octeam_comment_subject_copy') . ' ' . $admin->getUserName());
         $emailCOG->setHtmlBody($formattedMessage->getEmailContent());
         $emailCOG->send();
     }
@@ -123,8 +123,8 @@ class EmailSender
         $oldOwnerUserName, $userEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_26'));
-        $formattedMessage->setVariable('userName', '<b>'.$oldOwnerUserName.'</b>');
-        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('userName', '<b>' . $oldOwnerUserName . '</b>');
+        $formattedMessage->setVariable('cacheName', '<b>' . $cacheName . '</b>');
 
         $formattedMessage->addFooterAndHeader($newOwnerUserName);
 
@@ -142,8 +142,8 @@ class EmailSender
         $oldOwnerUserName, $oldOwnerEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_31'));
-        $formattedMessage->setVariable('userName', '<b>'.$newOwnerUserName.'</b>');
-        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('userName', '<b>' . $newOwnerUserName . '</b>');
+        $formattedMessage->setVariable('cacheName', '<b>' . $cacheName . '</b>');
 
         $formattedMessage->addFooterAndHeader($oldOwnerUserName);
 
@@ -161,8 +161,8 @@ class EmailSender
         $oldOwnerUserName, $oldOwnerEmail) {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_29'));
-        $formattedMessage->setVariable('userName', '<b>'.$newOwnerUserName.'</b>');
-        $formattedMessage->setVariable('cacheName', '<b>'.$cacheName.'</b>');
+        $formattedMessage->setVariable('userName', '<b>' . $newOwnerUserName . '</b>');
+        $formattedMessage->setVariable('cacheName', '<b>' . $cacheName . '</b>');
 
         $formattedMessage->addFooterAndHeader($oldOwnerUserName);
 
@@ -200,9 +200,9 @@ class EmailSender
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefixForOcTeam());
 
         if (isset($region, $country)  ) {
-            $email->setSubject(tr('ocTeamNewCache_sub').': '.$country.' -> '.$region);
+            $email->setSubject(tr('ocTeamNewCache_sub') . ': ' . $country . ' -> ' . $region);
         } else {
-            $email->setSubject(tr('ocTeamNewCache_sub').': '.tr('dummy_outside'));
+            $email->setSubject(tr('ocTeamNewCache_sub') . ': ' . tr('dummy_outside'));
         }
 
         $email->setHtmlBody($formattedMessage->getEmailContent());

@@ -22,13 +22,13 @@ use src\Utils\View\View;
 
 const ADMINNOTES_PER_PAGE = 10;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 StopWatch::click('start');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -47,10 +47,10 @@ if (isset($_REQUEST['errorMsg'])) {
 if (isset($_REQUEST['save'])) {
 
     if (isset($_REQUEST['checkBadges']))
-        OcCookie::set('checkBadges', !$_REQUEST['checkBadges']);
+        OcCookie::set('checkBadges', ! $_REQUEST['checkBadges']);
 
     if (isset($_REQUEST['checkGeoPaths']))
-        OcCookie::set('checkGeoPaths', !$_REQUEST['checkGeoPaths']);
+        OcCookie::set('checkGeoPaths', ! $_REQUEST['checkGeoPaths']);
 }
 
 $checkBadges = OcCookie::getOrDefault('checkBadges', 1);
@@ -69,7 +69,7 @@ if (isset($_REQUEST['userid'])) {
     $user_id = $loggedUser->getUserId();
 }
 
-require (__DIR__.'/src/Views/lib/icons.inc.php');
+require (__DIR__ . '/src/Views/lib/icons.inc.php');
 $tplname = 'viewprofile';
 
 /** @var View */
@@ -142,7 +142,7 @@ if ($user_id == $loggedUser->getUserId()) {
     // new with recommendations
     $guides = OcConfig::instance()->getGuidesConfig();
 
-    if ($nrecom >= $guides['guideGotRecommendations'] && !$user->isGuide() && $user_id == $loggedUser->getUserId()) {
+    if ($nrecom >= $guides['guideGotRecommendations'] && ! $user->isGuide() && $user_id == $loggedUser->getUserId()) {
         $guide_info = '<div class="content-title-noshade box-blue"><table><tr><td><img style="margin-right: 10px;margin-left:10px;" src="/images/blue/info-b.png" alt="guide"></td><td>
             <span style="font-size:12px;"> ' . tr('guru_17') . '
             <a class="links" href="myprofile.php?action=change"> ' . tr('guru_18') . '</a>.
@@ -174,7 +174,7 @@ tpl_set_var('lastloginClass', $user->getLastLoginPeriodClass());
 //Admin Note (table only)
 if ($loggedUser->hasOcTeamRole()) {
     $content .= '<div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Cog Note" title="Cog Note"> ' . tr('admin_notes') . '</p></div>';
-    $content .= '<div class="notice">'.tr('admin_notes_visible').'</div><p><a href="' . SimpleRouter::getLink('Admin.UserAdmin', 'index', $user_id) . '" class="links">'.tr('admin_user_management').' <img src="/images/misc/linkicon.png" alt="user admin"></a></p>';
+    $content .= '<div class="notice">' . tr('admin_notes_visible') . '</div><p><a href="' . SimpleRouter::getLink('Admin.UserAdmin', 'index', $user_id) . '" class="links">' . tr('admin_user_management') . ' <img src="/images/misc/linkicon.png" alt="user admin"></a></p>';
     $adminNotes = AdminNoteSet::getNotesForUser($user, ADMINNOTES_PER_PAGE);
 
     if (empty($adminNotes)) {
@@ -187,16 +187,16 @@ if ($loggedUser->hasOcTeamRole()) {
         foreach ($adminNotes as $adminNote) {
             $content .= '<tr>
               <td>' . Formatter::dateTime($adminNote->getDateTime()) . '
-              - <a class="links" href="'. $adminNote->getAdmin()->getProfileUrl() . '">' . htmlspecialchars($adminNote->getAdmin()->getUserName()) . '</a></td><td>';
+              - <a class="links" href="' . $adminNote->getAdmin()->getProfileUrl() . '">' . htmlspecialchars($adminNote->getAdmin()->getUserName()) . '</a></td><td>';
             if ($adminNote->isAutomatic()) {
-                $content .= '<img title="'.tr('admin_notes_auto').'" alt="' . tr('admin_notes_auto') . '" class="icon16" src="' . $adminNote->getAutomaticPictureUrl() . '"> ';
+                $content .= '<img title="' . tr('admin_notes_auto') . '" alt="' . tr('admin_notes_auto') . '" class="icon16" src="' . $adminNote->getAutomaticPictureUrl() . '"> ';
                 $content .= tr($adminNote->getContentTranslationKey());
                 if (! empty($adminNote->getCacheId())) {
                     $content .= ' <a class="links" href="' . $adminNote->getCache()->getCacheUrl() . '">' . $adminNote->getCache()->getCacheName() . ' (' . $adminNote->getCache()->getGeocacheWaypointId() . ')</a>';
                 }
 
             } else {
-                $content .= '<img title="'.tr('admin_notes_man').'" alt="'.tr('admin_notes_man').'" class="icon16" src="' . $adminNote->getAutomaticPictureUrl() . '"> ';
+                $content .= '<img title="' . tr('admin_notes_man') . '" alt="' . tr('admin_notes_man') . '" class="icon16" src="' . $adminNote->getAutomaticPictureUrl() . '"> ';
                 $content .= $adminNote->getContent();
             }
             $content .= '</td></tr>';
@@ -397,7 +397,7 @@ if ($seek == 0) {
 
 
     if ( $found >= 10 ) {
-        $content .= '<br><table style="border-collapse: collapse; font-size: 110%;" width="250" border="1"><tr><td colspan="3" align="center" bgcolor="#DBE6F1"><b>' . tr('milestones') . '</b></td> </tr><tr><td bgcolor="#EEEDF9"><b> Nr </b></td> <td bgcolor="#EEEDF9"><b>'.tr('date').'</b></td> <td bgcolor="#EEEDF9"><b>'.tr('cache').'</b> </td> </tr>';
+        $content .= '<br><table style="border-collapse: collapse; font-size: 110%;" width="250" border="1"><tr><td colspan="3" align="center" bgcolor="#DBE6F1"><b>' . tr('milestones') . '</b></td> </tr><tr><td bgcolor="#EEEDF9"><b> Nr </b></td> <td bgcolor="#EEEDF9"><b>' . tr('date') . '</b></td> <td bgcolor="#EEEDF9"><b>' . tr('cache') . '</b> </td> </tr>';
 
         if ( $found > 101 ) {
             $milestone = 100;
@@ -425,7 +425,7 @@ if ($seek == 0) {
 
         $rsms->nextRowset(); //to switch to second query results :)
         while( $rms = XDb::xFetchArray($rsms)) {
-            $content .= '<tr> <td>' . ($rms['row']-1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['cache_wp'] . '</a></td></tr>';
+            $content .= '<tr> <td>' . ($rms['row'] - 1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['cache_wp'] . '</a></td></tr>';
         }
 
         $content .= '</table>';
@@ -559,7 +559,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
             GROUP BY YEAR(`date_created`), MONTH(`date_created`), DAY(`date_created`)
         )AS COUNTS_IN_DAYS', 0, $user_id);
 
-    if ($num_rows>0)
+    if ($num_rows > 0)
         $aver2 = round(($user->getHiddenGeocachesCount() / $num_rows), 2);
     else
         $aver2 = 0;
@@ -659,7 +659,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
     $content .= '<p><span class="content-title-noshade txt-blue08">' . tr('latest_created_cache') . ':</span>&nbsp;&nbsp;<strong><a class="links" href="viewcache.php?cacheid=' . $rcc2['cache_id'] . '">' . $rcc2['wp_oc'] . '</a>&nbsp;&nbsp;</strong>(' . $rcc2['data'] . ')</p>';
 
     if ( $total_created_and_owned_caches >= 10 ) {
-        $content .= '<br><table style="border-collapse: collapse; font-size: 110%;" width="250" border="1"><tr><td colspan="3" align="center" bgcolor="#DBE6F1"><b>' . tr('milestones') . '</b></td> </tr><tr><td bgcolor="#EEEDF9"><b> Nr </b></td> <td bgcolor="#EEEDF9"><b>'.tr('date').'</b></td> <td bgcolor="#EEEDF9"><b>'.tr('cache').'</b> </td> </tr>';
+        $content .= '<br><table style="border-collapse: collapse; font-size: 110%;" width="250" border="1"><tr><td colspan="3" align="center" bgcolor="#DBE6F1"><b>' . tr('milestones') . '</b></td> </tr><tr><td bgcolor="#EEEDF9"><b> Nr </b></td> <td bgcolor="#EEEDF9"><b>' . tr('date') . '</b></td> <td bgcolor="#EEEDF9"><b>' . tr('cache') . '</b> </td> </tr>';
 
         if ( $total_created_and_owned_caches > 101 ) {
             $milestone = 100;
@@ -693,7 +693,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
 
         $rsms->nextRowset(); //to switch to second query results :)
         while( $rms = XDb::xFetchArray($rsms)) {
-            $content .= '<tr> <td>' . ($rms['row']-1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['wp_oc'] . '</a></td></tr>';
+            $content .= '<tr> <td>' . ($rms['row'] - 1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['wp_oc'] . '</a></td></tr>';
         }
 
         $content .= '</table>';
@@ -759,7 +759,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
 
             // ukrywanie nicka autora komentarza COG przed zwykłym userem
             // (Łza)
-            if (($record_logs['log_type'] == 12) && (!$loggedUser->hasOcTeamRole())) {
+            if (($record_logs['log_type'] == 12) && (! $loggedUser->hasOcTeamRole())) {
                 $record_logs['user_name'] = 'Centrum Obsługi Geocachera';
                 $record_logs['user_id'] = 0;
             }
@@ -863,7 +863,7 @@ function buildPowerTrailIcons(ArrayObject $powerTrails)
 function buildGeocacheHtml(GeoCache $geocache, $html)
 {
     $ocConfig = OcConfig::instance();
-    $html = mb_ereg_replace('{cacheimage}', '<img src="'.$geocache->getCacheIcon().'" width="16">', $html);
+    $html = mb_ereg_replace('{cacheimage}', '<img src="' . $geocache->getCacheIcon() . '" width="16">', $html);
     $html = mb_ereg_replace('{cachestatus}', htmlspecialchars(tr($geocache->getStatusTranslationKey()), ENT_COMPAT, 'UTF-8'), $html);
     $html = mb_ereg_replace('{cacheid}', htmlspecialchars(urlencode($geocache->getCacheId()), ENT_COMPAT, 'UTF-8'), $html);
     if ($geocache->getDateActivate() === null) {
@@ -899,7 +899,7 @@ foreach ($userCategories as $oneCategory) {
 
         $short_desc = mb_ereg_replace( "'", "\\'", $short_desc);
 
-        $element='<div class="Badge-div-element-small">
+        $element = '<div class="Badge-div-element-small">
         <a href="badge.php?badge_id={badge_id}&user_id={user_id}" onmouseover="Tip(\'{content_tip}\', PADDING,10)" onmouseout="UnTip()">
             <div class="Badge-pie-progress-small" role="progressbar" data-goal="{progresbar_curr_val}" data-trackcolor="#d9d9d9" data-barcolor="{progresbar_color}" data-barsize="{progresbar_size}" aria-valuemin="0" aria-valuemax="{progresbar_next_val}">
             <div class="pie_progress__content"><img src="{picture}" class="Badge-pic-small" /><br>
@@ -908,29 +908,29 @@ foreach ($userCategories as $oneCategory) {
         </a>
         </div>';
 
-        $element=mb_ereg_replace('{content_tip}',
+        $element = mb_ereg_replace('{content_tip}',
             "<div style =\'width:500px;\'><img src=\'{picture}\' style= \'float: left;margin-right:20px;\' /> \\
              <p style=\'font-size:20px; font-weight:bold;\'> {name} <br>\\
              <span style=\'font-size:13px; font-weight:normal; font-style:italic;\'> {short_desc} </span></p> \\
              <p style=\'font-size:13px;font-weight:normal;\'>\\"
-            .tr('merit_badge_level_name').': <b>{level_name}</b><br>\\'
-            .tr('merit_badge_number').': <b>{curr_val}</b><br>\\'
-            .tr('merit_badge_next_level_threshold').': <b>{next_val}</b><br>\\
+            . tr('merit_badge_level_name') . ': <b>{level_name}</b><br>\\'
+            . tr('merit_badge_number') . ': <b>{curr_val}</b><br>\\'
+            . tr('merit_badge_next_level_threshold') . ': <b>{next_val}</b><br>\\
              </p></div>', $element);
-        $element=mb_ereg_replace('{name}', $oneBadge->getOBadge()->getName(), $element);
-        $element=mb_ereg_replace('{short_desc}', $short_desc , $element);
-        $element=mb_ereg_replace('{picture}', $oneBadge->getPicture(), $element );
-        $element=mb_ereg_replace('{level_name}', $oneBadge->getOLevel()->getLevelName(), $element );
-        $element=mb_ereg_replace('{badge_id}', $oneBadge->getBadgeId(), $element );
-        $element=mb_ereg_replace('{user_id}', $user_id, $element );
-        $element=mb_ereg_replace('{curr_val}', $oneBadge->getCurrVal(), $element );
-        $element=mb_ereg_replace('{progresbar_curr_val}', MeritBadge::getProgressBarCurrValue($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getCurrVal(), $oneBadge->getNextVal()), $element );
-        $element=mb_ereg_replace('{progresbar_next_val}', MeritBadge::getProgressBarValueMax($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getNextVal()), $element );
-        $element=mb_ereg_replace('{progresbar_size}', MeritBadge::getBarSize( $oneBadge->getLevelId(),  $oneBadge->getOBadge()->getLevelsNumber() ), $element );
-        $element=mb_ereg_replace('{progresbar_color}', MeritBadge::getColor( $oneBadge->getLevelId(), $oneBadge->getOBadge()->getLevelsNumber() ), $element );
-        $element=mb_ereg_replace('{next_val}', MeritBadge::prepareTextThreshold($oneBadge->getNextVal()), $element );
+        $element = mb_ereg_replace('{name}', $oneBadge->getOBadge()->getName(), $element);
+        $element = mb_ereg_replace('{short_desc}', $short_desc , $element);
+        $element = mb_ereg_replace('{picture}', $oneBadge->getPicture(), $element );
+        $element = mb_ereg_replace('{level_name}', $oneBadge->getOLevel()->getLevelName(), $element );
+        $element = mb_ereg_replace('{badge_id}', $oneBadge->getBadgeId(), $element );
+        $element = mb_ereg_replace('{user_id}', $user_id, $element );
+        $element = mb_ereg_replace('{curr_val}', $oneBadge->getCurrVal(), $element );
+        $element = mb_ereg_replace('{progresbar_curr_val}', MeritBadge::getProgressBarCurrValue($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getCurrVal(), $oneBadge->getNextVal()), $element );
+        $element = mb_ereg_replace('{progresbar_next_val}', MeritBadge::getProgressBarValueMax($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getNextVal()), $element );
+        $element = mb_ereg_replace('{progresbar_size}', MeritBadge::getBarSize( $oneBadge->getLevelId(),  $oneBadge->getOBadge()->getLevelsNumber() ), $element );
+        $element = mb_ereg_replace('{progresbar_color}', MeritBadge::getColor( $oneBadge->getLevelId(), $oneBadge->getOBadge()->getLevelsNumber() ), $element );
+        $element = mb_ereg_replace('{next_val}', MeritBadge::prepareTextThreshold($oneBadge->getNextVal()), $element );
 
-        $content_badge.= $element;
+        $content_badge .= $element;
     }
 
     $content_badge_rows .= mb_ereg_replace('{content_badge}', $content_badge,
@@ -946,8 +946,8 @@ $content .= mb_ereg_replace('{content_badge_rows}', $content_badge_rows, '
                     </tbody>
                 </table>
                 <br>');
-$content .= "<a class='links'  href='user_badges.php?user_id=$user_id'>[".tr('merit_badge_show_details').']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-$content .= "<a class='links'  href='user_badges.php?user_id=999999'>[".tr('merit_badge_show_list').']</a><br><br>';
+$content .= "<a class='links'  href='user_badges.php?user_id=$user_id'>[" . tr('merit_badge_show_details') . ']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+$content .= "<a class='links'  href='user_badges.php?user_id=999999'>[" . tr('merit_badge_show_list') . ']</a><br><br>';
 return $content;
 }
 
@@ -959,7 +959,7 @@ $content = "<form action='/viewprofile.php' style='display:inline;'>";
 $content .= "<div class='content2-container bg-blue02'>
                                 <table style='width: 100%; padding: 5px;'><tr><td>
                                 <p class='content-title-noshade-size1'>
-                                <img src='/images/blue/$pic' width='33' class='icon32' alt='$title' title='$title'>&nbsp;$txt".
+                                <img src='/images/blue/$pic' width='33' class='icon32' alt='$title' title='$title'>&nbsp;$txt" .
                                 '</p></td>';
 
 $content .= "<td style='text-align: right'>

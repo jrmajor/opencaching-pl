@@ -102,7 +102,7 @@ function assignUserToCase($userid, $cacheid)
 {
     // check if user is in OC Team Member
     $user = User::fromUserIdFactory($userid);
-    if (!$user || !$user->hasOcTeamRole()) {
+    if (! $user || ! $user->hasOcTeamRole()) {
         return false;
     }
 
@@ -119,7 +119,7 @@ function notifyOwner($cacheid, $msgType)
     global $absolute_server_URI;
 
     $user = ApplicationContainer::GetAuthorizedUser();
-    if(!$user) {
+    if(! $user) {
         return;
     }
 
@@ -195,7 +195,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 $view = tpl_getView();
 $user = ApplicationContainer::Instance()->getLoggedUser();
 
-if (empty($user) || !$user->hasOcTeamRole()) {
+if (empty($user) || ! $user->hasOcTeamRole()) {
     $view->setTemplate('viewpendings_error');
     $view->buildView();
 }
@@ -214,7 +214,7 @@ if (isset($_GET['cacheid'])) {
     } else {
         if (actionRequired($_GET['cacheid'])) {
             // requires activation
-            if (isset($_GET['confirm'], $_GET['user_id'])   && $_GET['confirm'] == 1) {
+            if (isset($_GET['confirm'], $_GET['user_id']) && $_GET['confirm'] == 1) {
                 // confirmed - change the status and notify the owner now
                 if (activateCache($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
@@ -224,7 +224,7 @@ if (isset($_GET['cacheid'])) {
                 } else {
                     $confirm = '<p> ' . tr('viewPending_10') . '.</p>';
                 }
-            } else if (isset($_GET['confirm'], $_GET['user_id'])   && $_GET['confirm'] == 2) {
+            } else if (isset($_GET['confirm'], $_GET['user_id']) && $_GET['confirm'] == 2) {
                 // declined - change status to archived and notify the owner now
                 if (declineCache($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
@@ -282,7 +282,7 @@ $row_num = 0;
 while ($report = XDb::xFetchArray($stmt)) {
     $assignedUserId = getAssignedUserId($report['cache_id']);
 
-    if (!$assignedUserId && new DateTime($report['date_created']) < new DateTime('5 days ago')) {
+    if (! $assignedUserId && new DateTime($report['date_created']) < new DateTime('5 days ago')) {
         //set alert for forgotten cache
         $trstyle = 'alert';
     } else if ($user->getUserId() == $assignedUserId) {

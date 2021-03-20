@@ -57,10 +57,10 @@ class DbUpdateController extends BaseController
         $wasRun = ($update->wasRunAt() !== null);
         $specialPurpose = substr($update->getName(), 0, 3) < 100;
 
-        if (!$this->ocConfig->inDebugMode()) {
+        if (! $this->ocConfig->inDebugMode()) {
             // production site
 
-            if (!$wasRun) {
+            if (! $wasRun) {
                 $actions['run'] = 'run';
             } else {
                 if ($update->getRuntype() == 'always' || $specialPurpose) {
@@ -78,7 +78,7 @@ class DbUpdateController extends BaseController
         } else {
             // developer site
 
-            if (!$wasRun) {
+            if (! $wasRun) {
                 $actions['run'] = 'run';
 
                 if ($update->hasRollback()) {
@@ -96,7 +96,7 @@ class DbUpdateController extends BaseController
 
                 $actions['run'] = 'run again';
 
-                if ($update->hasRollback() && (!$update->isInGitMasterBranch() || $specialPurpose)) {
+                if ($update->hasRollback() && (! $update->isInGitMasterBranch() || $specialPurpose)) {
 
                     # The workflow for rolling back an already deployed
                     # update is to create a new rollback-update and run that.
@@ -107,9 +107,9 @@ class DbUpdateController extends BaseController
                 }
             }
 
-            if (!$update->isInGitMasterBranch()) {
+            if (! $update->isInGitMasterBranch()) {
 
-                if (!($wasRun && $update->hasRollback())) {
+                if (! ($wasRun && $update->hasRollback())) {
                     $actions['askDelete'] = 'delete';
                 } else {
                     # If there is a rollback method, we require developers
@@ -159,14 +159,14 @@ class DbUpdateController extends BaseController
         $this->securityCheck(false);
 
         try {
-            if (!$id) {
+            if (! $id) {
                 $messages = UpdateController::runOcDatabaseUpdate();
             } elseif (substr($id, -4) == '.sql') {
                 $messages = DbUpdates::runRoutines($id);
             } else {
                 $update = $this->getUpdateFromUuid($id);
 
-                if (!isset($this->getAvailableActions($update)['run'])
+                if (! isset($this->getAvailableActions($update)['run'])
                     && empty($_REQUEST['override'])
                 ) {
 
@@ -179,7 +179,7 @@ class DbUpdateController extends BaseController
                 }
             }
         } catch (Exception $e) {
-            $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
+            $messages = get_class($e) . ': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
         }
 
         $this->showAdminView($messages);
@@ -199,7 +199,7 @@ class DbUpdateController extends BaseController
 
         $update = $this->getUpdateFromUuid($uuid);
 
-        if (!isset($this->getAvailableActions($update)['rollback'])
+        if (! isset($this->getAvailableActions($update)['rollback'])
             && empty($_REQUEST['override'])
         ) {
 
@@ -211,7 +211,7 @@ class DbUpdateController extends BaseController
             try {
                 $messages = $this->getUpdateFromUuid($uuid)->rollback();
             } catch (Exception $e) {
-                $messages = get_class($e).': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
+                $messages = get_class($e) . ': ' . $e->getMessage() . "\n\n" . $e->getTraceAsString();
             }
         }
 
@@ -303,8 +303,8 @@ class DbUpdateController extends BaseController
 
     private function securityCheck($onlyDevelopers = true)
     {
-        if (!$this->isUserLogged() || !$this->loggedUser->hasSysAdminRole() ||
-            ($onlyDevelopers && !$this->ocConfig->inDebugMode())
+        if (! $this->isUserLogged() || ! $this->loggedUser->hasSysAdminRole() ||
+            ($onlyDevelopers && ! $this->ocConfig->inDebugMode())
         ) {
             $this->view->redirect('/');
             exit();

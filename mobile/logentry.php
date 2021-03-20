@@ -4,7 +4,7 @@ use src\Utils\Database\XDb;
 
 require_once('./lib/common.inc.php');
 
-if (isset($_SESSION['user_id'], $_GET['wp'])   && !empty($_GET['wp'])) {
+if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
 
     $wp = XDb::xEscape($_GET['wp']);
 
@@ -12,7 +12,7 @@ if (isset($_SESSION['user_id'], $_GET['wp'])   && !empty($_GET['wp'])) {
     $wynik = XDb::xSql($query);
     $caches = XDb::xFetchArray($wynik);
 
-    if (!empty($caches)) {
+    if (! empty($caches)) {
 
         // Prevent https://github.com/opencaching/opencaching-pl/issues/228
         XDb::xSql('start transaction');
@@ -20,8 +20,8 @@ if (isset($_SESSION['user_id'], $_GET['wp'])   && !empty($_GET['wp'])) {
             select 1
             from cache_logs
             where
-                user_id = '".XDb::xEscape($_SESSION['user_id'])."'
-                and cache_id = '".XDb::xEscape($caches['cache_id'])."'
+                user_id = '" . XDb::xEscape($_SESSION['user_id']) . "'
+                and cache_id = '" . XDb::xEscape($caches['cache_id']) . "'
             for update
         ");
         if ($caches['type'] == 6)
@@ -74,21 +74,21 @@ if (isset($_SESSION['user_id'], $_GET['wp'])   && !empty($_GET['wp'])) {
                 $tpl->assign('error', '4');
             elseif ($rodzaj != '3' && $rodzaj != '7' && $rodzaj != '8' && $caches['type'] == 6)
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 0 && !preg_match('/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/', $ocena))
+            elseif ($temp_found == 0 && ! preg_match('/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/', $ocena))
                 $tpl->assign('error', '4');
             elseif ($temp_found == 1 && ($rodzaj == 1 || $rodzaj == 2 || $rodzaj == 7))
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 1 && !empty($rekomendacja))
+            elseif ($temp_found == 1 && ! empty($rekomendacja))
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 1 && !empty($ocena))
+            elseif ($temp_found == 1 && ! empty($ocena))
                 $tpl->assign('error', '4');
-            elseif (!empty($caches['logpw']) && $caches['logpw'] != $logpw && $rodzaj == 1) {
+            elseif (! empty($caches['logpw']) && $caches['logpw'] != $logpw && $rodzaj == 1) {
                 $tpl->assign('error', '5');
             } else {
 
                 $uuid = mb_strtoupper(md5(uniqid(rand(), true)));
                 $query = 'insert into cache_logs (uuid, cache_id, user_id, type, date, text, last_modified, date_created, node) ';
-                $query.="values ('" . $uuid . "','" . $caches['cache_id'] . "','" . $_SESSION['user_id'] . "','" . $rodzaj . "','" . $dzis . "','" . $tekst . "',now(),now(), '2');";
+                $query .= "values ('" . $uuid . "','" . $caches['cache_id'] . "','" . $_SESSION['user_id'] . "','" . $rodzaj . "','" . $dzis . "','" . $tekst . "',now(),now(), '2');";
                 XDb::xSql($query);
 
                 switch ($rodzaj) {

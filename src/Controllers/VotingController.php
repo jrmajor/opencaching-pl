@@ -42,7 +42,7 @@ class VotingController extends BaseController
     {
         // check election
         $election = Election::fromElectionIdFactory($electionId);
-        if (!$election) {
+        if (! $election) {
             $this->displayCommonErrorPageAndExit('No such election');
         }
         $this->view->setVar('election', $election);
@@ -90,21 +90,21 @@ class VotingController extends BaseController
     public function saveVote(int $electionId)
     {
         $election = Election::fromElectionIdFactory($electionId);
-        if (!$election) {
-            $this->ajaxErrorResponse(tr('vote_saveResultInternalError').'. [No such election]');
+        if (! $election) {
+            $this->ajaxErrorResponse(tr('vote_saveResultInternalError') . '. [No such election]');
         }
 
         $votes = $_POST['votes'] ?? [];
 
         // check votes
         foreach ($votes as $vote) {
-            if(!is_numeric($vote)) {
-                $this->ajaxErrorResponse(tr('vote_saveResultInternalError').'. [Unknown format]');
+            if(! is_numeric($vote)) {
+                $this->ajaxErrorResponse(tr('vote_saveResultInternalError') . '. [Unknown format]');
             }
         }
 
         $errorMsg = '';
-        if (!$election->saveVotes($this->loggedUser, $votes, $errorMsg)) {
+        if (! $election->saveVotes($this->loggedUser, $votes, $errorMsg)) {
             $this->ajaxErrorResponse($errorMsg);
         }
         $this->ajaxSuccessResponse();
@@ -120,7 +120,7 @@ class VotingController extends BaseController
 
         $electionId = $election->getElectionId();
 
-        $results = OcMemCache::getOrCreate(__METHOD__."($electionId)", 3600, function () use ($election) {
+        $results = OcMemCache::getOrCreate(__METHOD__ . "($electionId)", 3600, function () use ($election) {
             $elResults = new ElectionResult($election);
             $elResults->prepareForSerialization();
             return $elResults;

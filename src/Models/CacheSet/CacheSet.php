@@ -149,7 +149,7 @@ class CacheSet extends CacheSetCommon
      * Returns list of all cache-sets
      * @return array
      */
-    public static function GetAllCacheSets($statusIn=[], $offset=null, $limit=null)
+    public static function GetAllCacheSets($statusIn = [], $offset = null, $limit = null)
     {
 
         if(empty($statusIn)){
@@ -194,7 +194,7 @@ class CacheSet extends CacheSetCommon
      */
     public static function getCacheSetsByName($name = null)
     {
-        if (is_null($name) || !is_string($name)) {
+        if (is_null($name) || ! is_string($name)) {
             $query = 'SELECT * FROM `PowerTrail` WHERE `status` = :1 ORDER BY `name`';
             $stmt = self::db()->multiVariableQuery($query, CacheSet::STATUS_OPEN);
         } else {
@@ -280,7 +280,7 @@ class CacheSet extends CacheSetCommon
      */
     public function getLocation()
     {
-        if(!$this->location){
+        if(! $this->location){
             $this->location = NutsLocation::fromCoordsFactory($this->centerCoordinates);
         }
 
@@ -294,7 +294,7 @@ class CacheSet extends CacheSetCommon
 
     public function getOwners()
     {
-        if(!$this->owners){
+        if(! $this->owners){
             $arr = CacheSetOwner::getOwnersOfCacheSets([$this->getId()]);
             $this->owners = $arr[$this->getId()];
         }
@@ -329,8 +329,8 @@ class CacheSet extends CacheSetCommon
                 FROM PowerTrail AS pt
                 JOIN powerTrail_caches AS ptc ON ptc.PowerTrailId = pt.id
                 JOIN caches AS c ON ptc.cacheId = c.cache_id
-                WHERE pt.status = '.CacheSet::STATUS_OPEN.'
-                    AND c.status = '.GeoCache::STATUS_READY.'
+                WHERE pt.status = ' . CacheSet::STATUS_OPEN . '
+                    AND c.status = ' . GeoCache::STATUS_READY . '
                 GROUP BY pt.id
             ) AS allPts WHERE currentRatio < ratioRequired');
 
@@ -352,7 +352,7 @@ class CacheSet extends CacheSetCommon
             ORDER BY dateCreated DESC
             LIMIT $limit", self::STATUS_OPEN);
 
-        $result=[];
+        $result = [];
         while($row = $db->dbResultFetch($rs, OcDb::FETCH_ASSOC)){
             $result[] = self::FromDbRowFactory($row);
         }
@@ -412,8 +412,8 @@ class CacheSet extends CacheSetCommon
 
         if($oldLogo != $newLogoUrl){
             // delete old logo
-            if (is_file(OcConfig::getDynFilesPath().$oldLogo)) {
-                unlink (OcConfig::getDynFilesPath().$oldLogo);
+            if (is_file(OcConfig::getDynFilesPath() . $oldLogo)) {
+                unlink (OcConfig::getDynFilesPath() . $oldLogo);
             }
         }
     }
@@ -426,12 +426,12 @@ class CacheSet extends CacheSetCommon
     public function addCache(GeoCache $cache)
     {
         // check cache stataus - only "active" caches can be added to geopath
-        if(!self::isCacheStatusAllowedForGeoPathAdd($cache)){
+        if(! self::isCacheStatusAllowedForGeoPathAdd($cache)){
             throw new RuntimeException('Cache in wrong status!');
         }
 
         // check cache type
-        if(!self::isCacheTypeAllowedForGeoPath($cache)){
+        if(! self::isCacheTypeAllowedForGeoPath($cache)){
             throw new RuntimeException('Cache of wrong type!');
         }
 
@@ -513,14 +513,14 @@ class CacheSet extends CacheSetCommon
         try {
             $email->send();
         } catch(RuntimeException $e) {
-            Debug::errorLog('Mail sending failure: '.$e->getMessage());
+            Debug::errorLog('Mail sending failure: ' . $e->getMessage());
             return false;
         }
 
         return true;
     }
 
-    public function isCandidateExists(GeoCache $cache, $toThisGeoPath=false)
+    public function isCandidateExists(GeoCache $cache, $toThisGeoPath = false)
     {
         if($toThisGeoPath) {
             $matchingRecords = self::db()->multiVariableQueryValue(
@@ -546,7 +546,7 @@ class CacheSet extends CacheSetCommon
         return $matchingRecords != 0;
     }
 
-    public function deleteCandidateCode(Geocache $cache, $code=null){
+    public function deleteCandidateCode(Geocache $cache, $code = null){
         if($code){
             // delete only one candidate record assign to this cache (by code)
             self::db()->multiVariableQuery(
@@ -564,12 +564,12 @@ class CacheSet extends CacheSetCommon
     private function addActionLogEntry($actionLogType, $cacheId)
     {
         $actionLogDesc = [
-            self::ACTIONLOG_CREATE          => 'create new Power Trail',
-            self::ACTIONLOG_ATTACH_CACHE    => 'attach cache to PowerTrail',
-            self::ACTIONLOG_REMOVE_CACHE    => 'remove cache from PowerTrail',
-            self::ACTIONLOG_ADD_OWNER       => 'add another owner to PowerTrail',
-            self::ACTIONLOG_REMOVE_OWNER    => 'remove owner from PowerTrail',
-            self::ACTIONLOG_CHANGE_STATUS   => 'change PowerTrail status',
+            self::ACTIONLOG_CREATE => 'create new Power Trail',
+            self::ACTIONLOG_ATTACH_CACHE => 'attach cache to PowerTrail',
+            self::ACTIONLOG_REMOVE_CACHE => 'remove cache from PowerTrail',
+            self::ACTIONLOG_ADD_OWNER => 'add another owner to PowerTrail',
+            self::ACTIONLOG_REMOVE_OWNER => 'remove owner from PowerTrail',
+            self::ACTIONLOG_CHANGE_STATUS => 'change PowerTrail status',
         ];
 
         $this->db->multiVariableQuery(

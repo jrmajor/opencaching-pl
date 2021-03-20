@@ -16,9 +16,9 @@ class OcDateTime
      * @param DateTime $checkedDate   date to check
      * @param DateTime $baseDate      base date to comepare (or now if not given)
      */
-    public static function isBefore (DateTime $checkedDate, DateTime $baseDate=null)
+    public static function isBefore (DateTime $checkedDate, DateTime $baseDate = null)
     {
-        if (!$baseDate) {
+        if (! $baseDate) {
             $baseDate = self::now();
         }
         return $checkedDate->getTimestamp() < $baseDate->getTimestamp();
@@ -30,9 +30,9 @@ class OcDateTime
      * @param DateTime $checkedDate   date to check
      * @param DateTime $baseDate      base date to comepare (or now if not given)
      */
-    public static function isAfter (DateTime $checkedDate, DateTime $baseDate=null)
+    public static function isAfter (DateTime $checkedDate, DateTime $baseDate = null)
     {
-        if (!$baseDate) {
+        if (! $baseDate) {
             $baseDate = self::now();
         }
         return $checkedDate->getTimestamp() > $baseDate->getTimestamp();

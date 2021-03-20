@@ -27,7 +27,7 @@ class login
             $this->lastlogin = XDb::xEscape($cookie->get('lastlogin'));
             $this->sessionid = XDb::xEscape($cookie->get('sessionid'));
 
-            if (!isset($_SESSION['user_id']) && !empty($this->username) && !empty($this->userid) && !empty($this->lastlogin) && !empty($this->sessionid))
+            if (! isset($_SESSION['user_id']) && ! empty($this->username) && ! empty($this->userid) && ! empty($this->lastlogin) && ! empty($this->sessionid))
                 $this->verify();
         }
     }
@@ -66,7 +66,7 @@ class login
         $wynik = XDb::xSql($query);
         $ile = XDb::xFetchArray($wynik);
 
-        if (!empty($ile['username']) && !empty($ile['user_id']) && $ile['uuid_mobile'] != 'NULL' && $ile['last_login_mobile'] != '0000-00-00 00:00:00') {
+        if (! empty($ile['username']) && ! empty($ile['user_id']) && $ile['uuid_mobile'] != 'NULL' && $ile['last_login_mobile'] != '0000-00-00 00:00:00') {
             $_SESSION['username'] = $ile['username'];
             $_SESSION['user_id'] = $ile['user_id'];
             $this->verified = true;
@@ -92,12 +92,12 @@ class login
         if ($user_id) {
             /* User exists. Is the password correct? */
 
-            if(!PasswordManager::verifyPassword($user_id, $password)){
+            if(! PasswordManager::verifyPassword($user_id, $password)){
                 $user_id = null;
             }
         }
 
-        if (!empty($user_id)) {
+        if (! empty($user_id)) {
             $_SESSION['username'] = $wiersz['username'];
             $_SESSION['user_id'] = $user_id;
 

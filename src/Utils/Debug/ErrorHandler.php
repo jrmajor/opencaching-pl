@@ -62,7 +62,7 @@ class ErrorHandler
      */
     public static function handleFatalError()
     {
-        if (!self::$errorHandled &&
+        if (! self::$errorHandled &&
             ($error = error_get_last()) &&
             in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR])
         ) {
@@ -119,7 +119,7 @@ class ErrorHandler
                 } else {
                     // sometimes error can occured befor I18n init...
                     $pageError = 'An error occured while processing your request.' . ' ';
-                    $pageError .= 'If the problem persists, please '.
+                    $pageError .= 'If the problem persists, please ' .
                                   '<a href="/articles.php?page=contact">contact</a>' .
                                   'the OC team and describe step by step how to reproduce this error.';
                     $mainPageLinkTitle = 'Go to the main page';

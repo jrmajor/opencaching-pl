@@ -5,7 +5,7 @@ require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
-    if (isset($_GET['wp']) && !empty($_GET['wp'])) {
+    if (isset($_GET['wp']) && ! empty($_GET['wp'])) {
 
 
 
@@ -16,7 +16,7 @@ if (isset($_SESSION['user_id'])) {
         $wiersz = XDb::xFetchArray($wynik);
         $wiersz = $wiersz[0];
 
-        if (!empty($wiersz)) {
+        if (! empty($wiersz)) {
             $query = "insert into cache_watches (cache_id,user_id) values ('" . $wiersz . "','" . $_SESSION['user_id'] . "')";
             $wynik = XDb::xSql($query);
 

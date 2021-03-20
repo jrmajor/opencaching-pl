@@ -7,7 +7,7 @@
  *
  */
 
-return function ($inputName, $accepted, $maxFileSize=0) {
+return function ($inputName, $accepted, $maxFileSize = 0) {
 
 // begining of chunk
 ?>

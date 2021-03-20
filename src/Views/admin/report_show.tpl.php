@@ -30,7 +30,7 @@ use src\Utils\Text\Formatter;
 <div class="content2-container">
   <div class="content2-pagetitle">
     <div style="float: right;">
-      <button type="button" class="btn btn-default" onclick="watchOff(<?=$view->report->getId()?>)" id="report-btn-on" <?php if (!$view->report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
+      <button type="button" class="btn btn-default" onclick="watchOff(<?=$view->report->getId()?>)" id="report-btn-on" <?php if (! $view->report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
         <img src="/images/misc/eye.svg" class="report-watch-img" alt="{{admin_reports_watch_on}}" id="report-img-on"> {{admin_reports_watch_on}}
       </button>
       <button type="button" class="btn btn-default" onclick="watchOn(<?=$view->report->getId()?>)" id="report-btn-off" <?php if ($view->report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
@@ -304,7 +304,7 @@ use src\Utils\Text\Formatter;
         </form>
       </td>
     </tr>
-    <?php if (!empty($view->reportLogs)) { ?>
+    <?php if (! empty($view->reportLogs)) { ?>
       <tr>
         <td colspan="2"><p class="content-title-noshade-size1">{{admin_reports_lbl_activity}}</p></td>
       </tr>

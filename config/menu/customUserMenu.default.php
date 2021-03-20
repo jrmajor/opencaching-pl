@@ -37,5 +37,5 @@ $menu = [
     'mnu_ignoredCaches' => SimpleRouter::getLink(UserIgnoredCachesController::class),
     'mnu_myRecommends' => SimpleRouter::getLink(MyRecommendationsController::class, 'recommendations'),
     'mnu_savedQueries' => '/query.php',
-    'mnu_okapiExtApps' => '/okapi/apps/?langpref='.I18n::getCurrentLang(),
+    'mnu_okapiExtApps' => '/okapi/apps/?langpref=' . I18n::getCurrentLang(),
 ];

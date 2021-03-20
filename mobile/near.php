@@ -17,7 +17,7 @@ function wytnij($tab, $start, $end)
     $temp = [];
 
     for ($i = $start; $i < $end; $i++) {
-        if (!empty($tab[$i]))
+        if (! empty($tab[$i]))
             $temp[] = $tab[$i];
     }
     return $temp;
@@ -33,11 +33,11 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
     if ($ile <= $na_stronie)
         $znalezione = wytnij($znalezione, 0, $na_stronie);
     else {
-        if (!isset($page)) {
+        if (! isset($page)) {
 
             $znalezione = wytnij($znalezione, 0, $na_stronie);
             $next_page = '2';
-        } elseif (isset($page) && !empty($page) && preg_match("/^\d+$/", $page)) {
+        } elseif (isset($page) && ! empty($page) && preg_match("/^\d+$/", $page)) {
             $start = (($page - 1) * $na_stronie);
             $end = $start + $na_stronie;
             $znalezione = wytnij($znalezione, $start, $end);
@@ -71,11 +71,25 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
     $tpl->display('tpl/find2.tpl');
 }
 
-if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['Nminuty'], $_GET['Estopien'], $_GET['Eminuty'])            ) {
-    if (!empty($_GET['ns']) && !empty($_GET['ew']) && !empty($_GET['radius']) && !empty($_GET['Nstopien']) && !empty($_GET['Nminuty']) && !empty($_GET['Estopien']) && !empty($_GET['Eminuty']) && ($_GET['ns'] == 'N' || $_GET['ns'] == 'S') && ($_GET['ew'] == 'E' || $_GET['ew'] == 'W') && preg_match("/^\d+$/", $_GET['radius']) && $_GET['radius'] >= 1 && $_GET['radius'] <= 25 && preg_match("/^\d+$/", $_GET['Nstopien']) && $_GET['Nstopien'] >= 0 && $_GET['Nstopien'] <= 90 && preg_match("/^\d+$/", $_GET['Estopien']) && $_GET['Estopien'] >= 0 && $_GET['Estopien'] <= 180 && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Eminuty']) && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Nminuty']) && $_GET['Nminuty'] >= 0 && $_GET['Nminuty'] < 60 && $_GET['Eminuty'] >= 0 && $_GET['Eminuty'] < 60) {
-
-
-
+if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['Nminuty'], $_GET['Estopien'], $_GET['Eminuty'])) {
+    if (
+        ! empty($_GET['ns']) && ! empty($_GET['ew'])
+        && ! empty($_GET['radius'])
+        && ! empty($_GET['Nstopien']) && ! empty($_GET['Nminuty'])
+        && ! empty($_GET['Estopien']) && ! empty($_GET['Eminuty'])
+        && ($_GET['ns'] == 'N' || $_GET['ns'] == 'S')
+        && ($_GET['ew'] == 'E' || $_GET['ew'] == 'W')
+        && preg_match("/^\d+$/", $_GET['radius'])
+        && $_GET['radius'] >= 1 && $_GET['radius'] <= 25
+        && preg_match("/^\d+$/", $_GET['Nstopien'])
+        && $_GET['Nstopien'] >= 0 && $_GET['Nstopien'] <= 90
+        && preg_match("/^\d+$/", $_GET['Estopien'])
+        && $_GET['Estopien'] >= 0 && $_GET['Estopien'] <= 180
+        && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Eminuty'])
+        && preg_match("/^\d{1,2}\.\d{1,3}$/", $_GET['Nminuty'])
+        && $_GET['Nminuty'] >= 0 && $_GET['Nminuty'] < 60
+        && $_GET['Eminuty'] >= 0 && $_GET['Eminuty'] < 60
+    ) {
         $kord1 = zamiana($_GET['Nstopien'], $_GET['Nminuty']);
         if ($_GET['ns'] == 'S')
             $kord1 = '-' . $kord1;
@@ -239,7 +253,7 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
     } else
         $tpl->assign('error', 1);
 }elseif (isset($_POST['city'], $_POST['radius'])  ) {
-    if (!empty($_POST['city']) && !empty($_POST['radius']) && preg_match("/^\d+$/", $_POST['radius']) && $_POST['radius'] >= 1 && $_POST['radius'] <= 25) {
+    if (! empty($_POST['city']) && ! empty($_POST['radius']) && preg_match("/^\d+$/", $_POST['radius']) && $_POST['radius'] >= 1 && $_POST['radius'] <= 25) {
         $city = makeUrl($_POST['city']);
 
         $jsonurl = 'http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=' . $city;
@@ -271,19 +285,19 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
         $link = './near.php?ns=' . $ns . '&Nstopien=' . $lat_h . '&Nminuty=' . $lat_m . '&ew=' . $ew . '&Estopien=' . $lon_h . '&Eminuty=' . $lon_m . '&radius=' . $_POST['radius'];
 
         if (isset($_POST['skip_mine'])) {
-            $link.='&skip_mine=on';
+            $link .= '&skip_mine=on';
         }
 
         if (isset($_POST['skip_found'])) {
-            $link.='&skip_found=on';
+            $link .= '&skip_found=on';
         }
 
         if (isset($_POST['skip_ignored'])) {
-            $link.='&skip_ignored=on';
+            $link .= '&skip_ignored=on';
         }
 
         if (isset($_POST['skip_inactive'])) {
-            $link.='&skip_inactive=on';
+            $link .= '&skip_inactive=on';
         }
 
         header('Location: ' . $link);

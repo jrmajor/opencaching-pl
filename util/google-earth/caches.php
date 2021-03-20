@@ -11,9 +11,9 @@ use src\Utils\I18n\I18n;
  */
 
 header('Content-type: text/html; charset=utf-8');
-require(__DIR__.'/../../lib/common.inc.php');
-require(__DIR__.'/../../lib/export.inc.php');
-require_once(__DIR__.'/../../lib/format.kml.inc.php');
+require(__DIR__ . '/../../lib/common.inc.php');
+require(__DIR__ . '/../../lib/export.inc.php');
+require_once(__DIR__ . '/../../lib/format.kml.inc.php');
 
 $bbox = isset($_REQUEST['BBOX']) ? $_REQUEST['BBOX'] : '0,0,0,0';
 $abox = mb_split(',', $bbox);
@@ -21,13 +21,13 @@ $abox = mb_split(',', $bbox);
 if (count($abox) != 4)
     exit;
 
-if (!is_numeric($abox[0]))
+if (! is_numeric($abox[0]))
     exit;
-if (!is_numeric($abox[1]))
+if (! is_numeric($abox[1]))
     exit;
-if (!is_numeric($abox[2]))
+if (! is_numeric($abox[2]))
     exit;
-if (!is_numeric($abox[3]))
+if (! is_numeric($abox[3]))
     exit;
 
 $lat_from = $abox[1];

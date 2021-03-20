@@ -334,7 +334,7 @@ class ReportLog extends BaseObject
      */
     public static function addLog($reportId, $type, $content = null, $pollId = null)
     {
-        if (!in_array($type, self::getTypeArray())) {
+        if (! in_array($type, self::getTypeArray())) {
             return null;
         }
         $newlog = new ReportLog();

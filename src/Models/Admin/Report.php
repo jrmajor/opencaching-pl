@@ -819,7 +819,7 @@ class Report extends BaseObject
         $params['changed_by']['value'] = ($this->userIdLastChange !== null) ? $this->userIdLastChange : 0;
         $params['changed_by']['data_type'] = 'integer';
         if ($this->dateLastChange === null) {
-            $params['changed_date']['value'] =  null;
+            $params['changed_date']['value'] = null;
             $params['changed_date']['data_type'] = 'null';
         } else {
             $params['changed_date']['value'] = $this->dateLastChange->format(OcConfig::instance()->getDbDateTimeFormat());

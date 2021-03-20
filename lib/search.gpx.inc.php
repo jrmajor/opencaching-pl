@@ -14,8 +14,8 @@ use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
-require_once (__DIR__.'/common.inc.php');
-require_once (__DIR__.'/calculation.inc.php');
+require_once (__DIR__ . '/common.inc.php');
+require_once (__DIR__ . '/calculation.inc.php');
 set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -282,9 +282,9 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
     $query = 'SELECT ';
 
     if (isset($lat_rad, $lon_rad)  ) {
-        $query .= getCalcDistanceSqlFormula(!is_null($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
+        $query .= getCalcDistanceSqlFormula(! is_null($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
-        if (!$loggedUser) {
+        if (! $loggedUser) {
             $query .= '0 distance, ';
         } else {
             // get the users home coords
@@ -301,14 +301,14 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
                 $lon_rad = $record_coords['longitude'] * 3.14159 / 180;
                 $lat_rad = $record_coords['latitude'] * 3.14159 / 180;
 
-                $query .= getCalcDistanceSqlFormula(!is_null($loggedUser), $record_coords['longitude'], $record_coords['latitude'], 0, $multiplier[$distance_unit]) . ' `distance`, ';
+                $query .= getCalcDistanceSqlFormula(! is_null($loggedUser), $record_coords['longitude'], $record_coords['latitude'], 0, $multiplier[$distance_unit]) . ' `distance`, ';
             }
             XDb::xFreeResults($rs_coords);
         }
     }
 
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, `caches`.`votes` `votes`, `caches`.`score` `score`, `caches`.`topratings` `topratings`, ';
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
     } else {
         $query .= ' IFNULL(`cache_mod_cords`.`longitude`, `caches`.`longitude`) `longitude`, IFNULL(`cache_mod_cords`.`latitude`, `caches`.`latitude`) `latitude`, IFNULL(cache_mod_cords.latitude,0) as cache_mod_cords_id
@@ -319,7 +319,7 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {
@@ -386,7 +386,7 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
     $bUseZip = false; // workaround for timeouts with big files
     if ($bUseZip == true) {
         $content = '';
-        require_once (__DIR__.'/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -489,7 +489,7 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
 
             $cacheNote = CacheNote::getNote($loggedUser->getUserId(), $r['cacheid']);
 
-            if (!empty($cacheNote)) {
+            if (! empty($cacheNote)) {
                 $thisline = str_replace('{personal_cache_note}',
                     cleanup_text('<br/><br/>-- ' . tr('search_gpxgc_02') .
                         ': --<br/> ' . $cacheNote . '<br/>'), $thisline);

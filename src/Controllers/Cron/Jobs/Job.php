@@ -103,7 +103,7 @@ abstract class Job
                 ['mon', 'tues', 'wednes', 'thurs', 'fri', 'satur', 'sun']
             );
             if ($dow === false) {
-                exit('Invalid day of week ('.$matches[1].'day) for '.$jobName."\n");
+                exit('Invalid day of week (' . $matches[1] . 'day) for ' . $jobName . "\n");
             }
 
             return
@@ -116,7 +116,7 @@ abstract class Job
             $this->validateMinutes($matches[3]);
             if ($matches[1] > 28) {
                 exit(
-                    'Invalid day of month ('.$matches[1].') for '.$jobName.
+                    'Invalid day of month (' . $matches[1] . ') for ' . $jobName .
                     "; must range between 1 and 28.\n"
                 );
             }
@@ -127,7 +127,7 @@ abstract class Job
                 date('H:i') >= sprintf('%02d:%02d', $matches[2], $matches[3]);
 
         } else {
-            exit("Invalid schedule '".$schedule."' for ".$jobName);
+            exit("Invalid schedule '" . $schedule . "' for " . $jobName);
         }
     }
 
@@ -135,7 +135,7 @@ abstract class Job
     {
         if ($minutes % 5 != 0) {
             exit(
-                'Invalid minutes setting ('.$minutes.') for '.get_class($this).
+                'Invalid minutes setting (' . $minutes . ') for ' . get_class($this) .
                 "; must be a multiple of 5.\n"
             );
         }
@@ -143,13 +143,13 @@ abstract class Job
 
     public final function getLastRun()
     {
-        return Facade::cache_get('ocpl/cronJobRun#'.get_class($this));
+        return Facade::cache_get('ocpl/cronJobRun#' . get_class($this));
     }
 
     public final function setLastRun()
     {
         Facade::cache_set(
-            'ocpl/cronJobRun#'.get_class($this),
+            'ocpl/cronJobRun#' . get_class($this),
             date('Y-m-d H:i:s'),
             366 * 24 * 3600
         );

@@ -1,4 +1,4 @@
-<?php if(!$view->feedsData || !is_array($view->feedsData)) {?>
+<?php if(! $view->feedsData || ! is_array($view->feedsData)) {?>
   <!-- No feeds data! -->
 <?php } else { //if-feedsData-array ?>
 
@@ -6,7 +6,7 @@
       <div class="feedArea">
         <p class="content-title-noshade-size3"
            title="<?=tr('startPage_validAt')?>: <?=$view->feedsDataValidAt?>">
-          <?=tr('feed_'.$feedName)?>
+          <?=tr('feed_' . $feedName)?>
         </p>
         <ul class="feedList">
           <?php foreach($feedPosts as $post){ ?>

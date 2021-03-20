@@ -43,12 +43,12 @@ class CacheLogController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if (!$logId || !is_numeric($logId)) {
+        if (! $logId || ! is_numeric($logId)) {
             $this->ajaxErrorResponse('Improper logId', 400);
         }
 
         $log = GeoCacheLog::fromLogIdFactory($logId);
-        if (!$log) {
+        if (! $log) {
             $this->ajaxErrorResponse('Incorrect logId', 400);
         }
 
@@ -73,7 +73,7 @@ class CacheLogController extends BaseController
         $this->checkUserLoggedAjax();
 
         $log = GeoCacheLog::fromLogIdFactory($logId);
-        if (!$log) {
+        if (! $log) {
             $this->ajaxErrorResponse('Incorrect logId', 400);
         }
 
@@ -194,7 +194,7 @@ class CacheLogController extends BaseController
 
         $listModel->addColumn(new Column_GeoPathIcon('', function ($row) use ($geopathDict) {
 
-            if (!$geopathDict[$row['cache_id']]) {
+            if (! $geopathDict[$row['cache_id']]) {
                 return [];
             }
             return [

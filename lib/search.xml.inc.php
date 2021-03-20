@@ -11,7 +11,7 @@ use src\Utils\I18n\I18n;
 
 global $content, $bUseZip, $dbcSearch;
 
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
@@ -49,11 +49,11 @@ $query = 'SELECT ';
 if (isset($lat_rad, $lon_rad)  ) {
     $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= '0 distance, ';
     } else {
         //get the users home coords
-        if (!isset($dbc)) {
+        if (! isset($dbc)) {
             $dbc = OcDb::instance();
         }
         $s = $dbc->multiVariableQuery(
@@ -74,7 +74,7 @@ if (isset($lat_rad, $lon_rad)  ) {
 
 $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`,
         `caches`.`user_id` `user_id`, ';
-if (!$loggedUser) {
+if (! $loggedUser) {
     $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
 } else {
     $query .= ' IFNULL(`cache_mod_cords`.`longitude`, `caches`.`longitude`) `longitude`, IFNULL(`cache_mod_cords`.`latitude`,
@@ -83,7 +83,7 @@ if (!$loggedUser) {
             . $loggedUser->getUserId();
 }
 
-if(!empty($queryFilter)){
+if(! empty($queryFilter)){
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 } else{
     // empty $queryFilter == there is no results!
@@ -91,7 +91,7 @@ if(!empty($queryFilter)){
 }
 
 $sortby = $options['sort'];
-if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } elseif ($sortby == 'bycreated') {
     $query .= ' ORDER BY date_created DESC';
@@ -118,7 +118,7 @@ $queryLimit = ' LIMIT ' . $startat . ', ' . $count;
 
 $dbcSearch->simpleQuery('CREATE TEMPORARY TABLE `xmlcontent` ' . $query . $queryLimit);
 
-$s = $dbcSearch->simpleQuery('SELECT COUNT(cache_id) `count` FROM ('.$query.') query');
+$s = $dbcSearch->simpleQuery('SELECT COUNT(cache_id) `count` FROM (' . $query . ') query');
 $rCount = $dbcSearch->dbResultFetchOneRowOnly($s);
 
 // Filename generation
@@ -140,10 +140,10 @@ if ($rCount['count'] == 1) {
 }
 
 
-header('Content-type: application/xml; charset='.$encoding);
+header('Content-type: application/xml; charset=' . $encoding);
 header('Content-Disposition: attachment; filename=' . $sFilebasename . '.xml');
 
-echo '<?xml version="1.0" encoding="'.$encoding."\"?>\n";
+echo '<?xml version="1.0" encoding="' . $encoding . "\"?>\n";
 echo "<result>\n";
 
 echo "  <docinfo>\n";
@@ -158,7 +158,7 @@ $stmt = XDb::xSql(
             `xmlcontent`.cache_mod_cords_id, `caches`.`wp_oc` `waypoint`, `caches`.`date_hidden` `date_hidden`,
             `caches`.`name` `name`, `caches`.`country` `country`, `caches`.`type` `type_id`, `caches`.`terrain` `terrain`,
             `caches`.`difficulty` `difficulty`, `caches`.`desc_languages` `desc_languages`,
-            `caches`.`size`, `cache_type`.`'.$language.'` `type`, `cache_status`.`'.$language.'` `status`,
+            `caches`.`size`, `cache_type`.`' . $language . '` `type`, `cache_status`.`' . $language . '` `status`,
             `user`.`username` `username`, `cache_desc`.`desc` `desc`, `cache_desc`.`short_desc` `short_desc`,
             `cache_desc`.`hint` `hint`, `cache_desc`.`desc_html` `html`, `xmlcontent`.`distance` `distance`
     FROM `xmlcontent`, `caches`, `user`, `cache_desc`, `cache_type`, `cache_status`
@@ -174,10 +174,10 @@ while($r = XDb::xFetchArray($stmt) ) {
 
         $cache_id = $r['cacheid'];
         $user_id = $loggedUser ? $loggedUser->getUserId() : null;
-        $access_log = @$_SESSION['CACHE_ACCESS_LOG_VC_'.$user_id];
+        $access_log = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
         if ($access_log === null) {
-            $_SESSION['CACHE_ACCESS_LOG_VC_'.$user_id] = [];
-            $access_log = $_SESSION['CACHE_ACCESS_LOG_VC_'.$user_id];
+            $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = [];
+            $access_log = $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
         }
         if (@$access_log[$cache_id] !== true) {
             $dbc->multiVariableQuery(
@@ -190,7 +190,7 @@ while($r = XDb::xFetchArray($stmt) ) {
                     ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
                     );
             $access_log[$cache_id] = true;
-            $_SESSION['CACHE_ACCESS_LOG_VC_'.$user_id] = $access_log;
+            $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = $access_log;
         }
     }
 

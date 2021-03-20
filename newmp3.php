@@ -5,11 +5,11 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 use src\Utils\Generators\Uuid;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -19,7 +19,7 @@ if (!$loggedUser) {
         $view = tpl_getView();
         $view->setVar('maxMp3Size', $maxmp3size);
 
-        require_once(__DIR__.'/src/Views/newmp3.inc.php');
+        require_once(__DIR__ . '/src/Views/newmp3.inc.php');
 
         $objectid = isset($_REQUEST['objectid']) ? $_REQUEST['objectid'] : 0;
         $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : -1;
@@ -33,9 +33,9 @@ if (!$loggedUser) {
         $title = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
 
         $allok = true;
-        if (!is_numeric($objectid))
+        if (! is_numeric($objectid))
             $allok = false;
-        if (!is_numeric($type))
+        if (! is_numeric($type))
             $allok = false;
 
         if ($allok == true) {
@@ -75,7 +75,7 @@ if (!$loggedUser) {
                         'SELECT `user_id`, `cache_id`, `name` FROM `caches`
                         WHERE `cache_id`= ? LIMIT 1', $objectid);
 
-                    if ( !$r = XDb::xFetchArray($rs) )
+                    if ( ! $r = XDb::xFetchArray($rs) )
                         $allok = false;
                     else {
 

@@ -54,7 +54,7 @@ else
     }
 
 
-    if (!isset($_REQUEST['init'])) {
+    if (! isset($_REQUEST['init'])) {
         $sRok = $_REQUEST['Rok'];
         $sMc = $_REQUEST['Mc'];
 

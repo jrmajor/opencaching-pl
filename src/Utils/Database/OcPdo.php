@@ -108,7 +108,7 @@ class OcPdo extends PDO
     protected static function instance($access = self::NORMAL_ACCESS)
     {
         static $instance = [];
-        if (!isset($instance[$access])) {
+        if (! isset($instance[$access])) {
             $instance[$access] = new static($access == self::ADMIN_ACCESS, false);
         }
         return $instance[$access];

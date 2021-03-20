@@ -35,7 +35,7 @@ if ($ocConfig->isPowerTrailModuleSwitchOn() === false) {
 $loggedUser = ApplicationContainer::Instance()->getLoggedUser();
 $view = tpl_getView();
 
-$_SESSION['powerTrail']['userFounds'] = (!$loggedUser) ? 0 : $loggedUser->getFoundGeocachesCount();
+$_SESSION['powerTrail']['userFounds'] = (! $loggedUser) ? 0 : $loggedUser->getFoundGeocachesCount();
 
 $firePtMenu = true;
 
@@ -65,14 +65,14 @@ $view->loadTimepicker();
 $view->addHeaderChunk('openLayers5');
 
 
-if (!$loggedUser && $hide_coords) {
+if (! $loggedUser && $hide_coords) {
     $mapControls = 0;
     tpl_set_var('gpxOptionsTrDisplay', 'none');
 } else {
     $mapControls = 1;
     tpl_set_var('gpxOptionsTrDisplay', 'table-row');
 }
-if (!$loggedUser) {
+if (! $loggedUser) {
     tpl_set_var('statsOptionsDisplay', 'display: none;');
 } else {
     tpl_set_var('statsOptionsDisplay', '');
@@ -127,7 +127,7 @@ tpl_set_var('demandPercentMinimum', src\Controllers\PowerTrailController::MINIMU
 tpl_set_var('powerTrailDemandPercent', '100');
 tpl_set_var('leadingUserId', '');
 
-if (!$loggedUser){
+if (! $loggedUser){
     tpl_set_var('ptMenu', 'none');
 }
 $ptMenu = new powerTrailMenu($loggedUser);
@@ -239,7 +239,7 @@ switch ($actionPerformed) {
 
 
     case 'showSerie':
-        if (!isset($_GET['ptrail'])) {
+        if (! isset($_GET['ptrail'])) {
             // just redirect to all powertrails
             header('Location: ' . '//' . $_SERVER['HTTP_HOST'] . '/powerTrail.php');
             exit;
@@ -248,19 +248,19 @@ switch ($actionPerformed) {
         $ptOwners = $pt->getPtOwners();
         $_SESSION['ptName'] = powerTrailBase::clearPtNames($powerTrail->getName());
         tpl_set_var('powerTrailId', $powerTrail->getId());
-        if (!$loggedUser && $hide_coords) {
+        if (! $loggedUser && $hide_coords) {
             tpl_set_var('mapOuterdiv', 'none');
         } else {
             tpl_set_var('mapOuterdiv', 'block');
         }
 
-        $userIsOwner = (!$loggedUser) ? false : $powerTrail->isUserOwner($loggedUser->getUserId());
+        $userIsOwner = (! $loggedUser) ? false : $powerTrail->isUserOwner($loggedUser->getUserId());
         if ($powerTrail->getStatus() == 1 || $userIsOwner ||
             ($loggedUser && $loggedUser->hasOcTeamRole())) {
 
             $ptTypesArr = powerTrailBase::getPowerTrailTypes();
             $ptStatusArr = \src\Controllers\PowerTrailController::getPowerTrailStatus();
-            $foundCachsByUser = (!$loggedUser) ? [] : $powerTrail->getFoundCachsByUser($loggedUser->getUserId());
+            $foundCachsByUser = (! $loggedUser) ? [] : $powerTrail->getFoundCachsByUser($loggedUser->getUserId());
             $leadingUser = powerTrailBase::getLeadingUser($powerTrail->getId());
             if ($powerTrail->getConquestedCount() > 0) {
                 $removeCacheButtonDisplay = 'none';
@@ -333,7 +333,7 @@ switch ($actionPerformed) {
             tpl_set_var('mapCenterLat', $powerTrail->getCenterCoordinates()->getLatitude());
             tpl_set_var('mapCenterLon', $powerTrail->getCenterCoordinates()->getLongitude());
 
-            if ($loggedUser || !$hide_coords) {
+            if ($loggedUser || ! $hide_coords) {
                 $mapModel->addMarkersWithExtractor(CacheMarkerModel::class, $powerTrail->getGeocaches()->getArrayCopy(), function ($geocache) use ($loggedUser) {
 
                     return CacheMarkerModel::fromGeocacheFactory($geocache, $loggedUser);
@@ -419,7 +419,7 @@ function displayPTrails($pTrails, $areOwnSeries)
     $dataForList = '';
     $dataForMap = '';
 
-    if (!is_array($pTrails)) {
+    if (! is_array($pTrails)) {
         return ['', ''];
     }
 
@@ -431,7 +431,7 @@ function displayPTrails($pTrails, $areOwnSeries)
             ",'<a href=powerTrail.php?ptAction=showSerie&ptrail=" . $pTrail['id'] . '>' . $pTrail['name'] .
             "</a>','" . $ptTypes[$pTrail['type']]['icon'] . "','" . $pTrail['name'] . "'],";
 
-        if (!$areOwnSeries)
+        if (! $areOwnSeries)
             $ownOrAll = round($pTrail['points'], 2);
         else
             $ownOrAll = tr($ptStatus[$pTrail['status']]['translate']);
@@ -513,7 +513,7 @@ function displayPtTypesSelector($htmlid, $selectedId = 0, $witchZeroOption = fal
 function displayPtCommentsSelector($htmlid, PowerTrail $powerTrail, $selectedId = 0, User $loggedUser = null)
 {
 
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         return '';
     }
     $cachesFoundByUser = $powerTrail->getFoundCachsByUser($loggedUser->getUserId());
@@ -538,7 +538,7 @@ function displayPtCommentsSelector($htmlid, PowerTrail $powerTrail, $selectedId 
             $selected = 'selected="selected"';
         }
 
-        if (!isset($ptOwners[$loggedUser->getUserId()]) && ($id == 3 || $id == 4 || $id == 5)) {
+        if (! isset($ptOwners[$loggedUser->getUserId()]) && ($id == 3 || $id == 4 || $id == 5)) {
             continue;
         }
 
@@ -546,11 +546,11 @@ function displayPtCommentsSelector($htmlid, PowerTrail $powerTrail, $selectedId 
             continue;
         }
 
-        if ($id === Log::TYPE_ADD_WARNING && !$loggedUser->hasOcTeamRole()) {
+        if ($id === Log::TYPE_ADD_WARNING && ! $loggedUser->hasOcTeamRole()) {
             continue;
         }
 
-        if (!isset($selected)) {
+        if (! isset($selected)) {
             $selected = '';
         }
         if ($selectedId == $id) {

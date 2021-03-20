@@ -8,7 +8,7 @@ use src\Utils\I18n\Languages;
 use src\Utils\Text\UserInputFilter;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //Preprocessing
 if ($error) {
@@ -20,7 +20,7 @@ $descid = ( isset($_REQUEST['descid']) && is_numeric($_REQUEST['descid']) ) ? $_
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -41,7 +41,7 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
     $cache_id = $desc_record['cache_id'];
 
     if ($desc_record['user_id'] != $loggedUser->getUserId() &&
-        !$loggedUser->hasOcTeamRole()) {
+        ! $loggedUser->hasOcTeamRole()) {
         tpl_errorMsg('editdesc', "You're not an owner of this cache!");
         exit;
     }
@@ -58,7 +58,7 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
         $hints = $_POST['hints'];
         $desclang = $_POST['desclang'];
         $show_all_langs = isset($_POST['show_all_langs_value']) ? $_POST['show_all_langs_value'] : 0;
-        if (!is_numeric($show_all_langs))
+        if (! is_numeric($show_all_langs))
             $show_all_langs = 0;
 
         // Text from textarea

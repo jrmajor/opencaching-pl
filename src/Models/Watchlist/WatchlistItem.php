@@ -15,7 +15,7 @@ use src\Utils\Text\Formatter;
 class WatchlistItem
 {
     /** Default report item template path */
-    const DEFAULT_TEMPLATE_PATH = __DIR__.'/../../../resources/email/watchlist_item.html';
+    const DEFAULT_TEMPLATE_PATH = __DIR__ . '/../../../resources/email/watchlist_item.html';
     /** Default logtype color */
     const LOGTYPE_COLOR_DEFAULT = 'black';
     /** Logtype colors array, indexed by logtype value */

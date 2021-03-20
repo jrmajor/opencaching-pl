@@ -1,7 +1,7 @@
 <?php
 use src\Controllers\Cron\NotifyController;
 
-require_once (__DIR__.'/../../lib/common.inc.php');
+require_once (__DIR__ . '/../../lib/common.inc.php');
 
 $ctrl = new NotifyController();
 $ctrl->index();

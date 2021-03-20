@@ -32,8 +32,8 @@ class TitledCacheAddJob extends Job
 
         if ($daysSinceLastTitle < $securityPeriod) {
             return
-                'Titled cache security period underrun ('.
-                $daysSinceLastTitle.' vs '.$securityPeriod.' days)';
+                'Titled cache security period underrun (' .
+                $daysSinceLastTitle . ' vs ' . $securityPeriod . ' days)';
         }
         unset($daysSinceLastTitle, $securityPeriod);
         
@@ -115,7 +115,7 @@ class TitledCacheAddJob extends Job
         $s = $this->db->multiVariableQuery($queryS, $date_alg, $titled_cache_nr_found );
         $rec = $this->db->dbResultFetch($s);
 
-        if (!$rec) {
+        if (! $rec) {
             // No cache matches the criteria.
             return;
         }
@@ -152,7 +152,7 @@ class TitledCacheAddJob extends Job
 
         $SystemUser = -1;
         $LogType = GeoCacheLog::LOGTYPE_ADMINNOTE;
-        $ntitled_cache = $titled_cache_period_prefix.'_titled_cache_congratulations';
+        $ntitled_cache = $titled_cache_period_prefix . '_titled_cache_congratulations';
         $msgText = str_replace('{ownerName}', htmlspecialchars($rec['userName']), tr($ntitled_cache));
         $LogUuid = Uuid::create();
 

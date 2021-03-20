@@ -70,7 +70,7 @@ use src\Models\GeoCache\GeoCacheLogCommons;
 
                     <table border="0" style="table-layout: fixed; border: 1px dotted black; line-height: 1.6em; font-size: 10px; "><?php
                         // jesli zgodne daty i typ to inny kolor:
-                        if ((isset($v['data'], $v['last_date'])   && $v['data'] == $v['last_date']) && (isset($v['status'], $v['last_status'])   && $v['status'] == $v['last_status'])) {
+                        if ((isset($v['data'], $v['last_date']) && $v['data'] == $v['last_date']) && (isset($v['status'], $v['last_status']) && $v['status'] == $v['last_status'])) {
                             $zgodne = true;
                             $styl = 'bgcolorM1';
                         } else {
@@ -90,7 +90,7 @@ use src\Models\GeoCache\GeoCacheLogCommons;
 
                                 echo isset($v['data']) ? str_replace(' ', '<br />', $v['data']) : ' ';
                                 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-                                echo isset($v['status']) ? '<img src="'.GeoCacheLogCommons::GetIconForType($v['status']).'" />' : ' ';
+                                echo isset($v['status']) ? '<img src="' . GeoCacheLogCommons::GetIconForType($v['status']) . '" />' : ' ';
                                 ?></td>
                             <td width=70 style="text-align: right"><?php
                                 if (isset($v['got_last_activity'])) {
@@ -108,7 +108,7 @@ use src\Models\GeoCache\GeoCacheLogCommons;
                         </tr><tr class="<?php echo $styl; ?>">
                             <td width="630" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : ' '; ?>&nbsp;</td>
                             <td style="text-align: center"><?php
-                                if (isset($v['cache_id']) && (!$zgodne)) {
+                                if (isset($v['cache_id']) && (! $zgodne)) {
                                     echo "
     <input type=\"submit\" value=\"Log\" style=\"width: 40px\"/>
 <!--    <input onclick=\"this.form.submit(); setTimeout(function() { window.open('viewcache.php?cacheid=" . $v['cache_id'] . "'); }, 250); return false;\" type=\"submit\" value=\"T 1\" style=\"width: 20px\"/> -->

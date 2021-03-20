@@ -2,7 +2,7 @@
 
 use src\Controllers\PictureController;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 
 if (isset($_REQUEST['uuid'])) {

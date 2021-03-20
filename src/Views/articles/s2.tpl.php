@@ -82,7 +82,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
         ORDER BY 1 DESC, user.username ASC";
     }
 
-    $cache_key = 'articles_s2'.md5($a);
+    $cache_key = 'articles_s2' . md5($a);
     $lines = OcMemCache::get($cache_key);
 
     if ($lines === false) {

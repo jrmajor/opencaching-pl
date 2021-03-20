@@ -18,7 +18,7 @@ class PrintList {
         if (isset($_REQUEST['print_list']) && $_REQUEST['print_list'] == 'y') {
 
             // add cache to print (do not duplicate items)
-            if ( !isset($_SESSION['print_list']) || !is_array($_SESSION['print_list']) ){
+            if ( ! isset($_SESSION['print_list']) || ! is_array($_SESSION['print_list']) ){
                 $_SESSION['print_list'] = [];
             }
 

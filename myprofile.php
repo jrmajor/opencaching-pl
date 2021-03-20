@@ -13,7 +13,7 @@ $db = XDb::instance();
 $description = '';
 
 $user = ApplicationContainer::GetAuthorizedUser();
-if (!$user) {
+if (! $user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
 }
@@ -143,7 +143,7 @@ if (isset($_REQUEST['action'])) {
 
             // check if username is in the DB
             $username_exists = false;
-            $username_not_ok = !Validator::isValidUsername($username);
+            $username_not_ok = ! Validator::isValidUsername($username);
 
             if ($username_not_ok) {
                 tpl_set_var('username_message', $error_username_not_ok);
@@ -161,7 +161,7 @@ if (isset($_REQUEST['action'])) {
             // submit
             if (isset($_POST['submit'])) {
                 // try to save
-                if (!($username_not_ok || $username_exists || $secid_not_ok)) {
+                if (! ($username_not_ok || $username_exists || $secid_not_ok)) {
 
                     /* GeoKretyApi - insert or update in DB user secid from Geokrety */
                     if (strlen($GeoKretyApiSecid) == 128) {

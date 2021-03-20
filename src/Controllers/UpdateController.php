@@ -60,7 +60,7 @@ class UpdateController extends BaseController
     public static function runOcDatabaseUpdate()
     {
         $lockHandle = Lock::tryLock('DbUpdate', Lock::EXCLUSIVE | Lock::NONBLOCKING);
-        if (!$lockHandle) {
+        if (! $lockHandle) {
             throw new Exception('Database update is already running, or problem with lock file.');
         }
 

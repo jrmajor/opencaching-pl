@@ -45,19 +45,19 @@ class DbUpdate
         # It takes less than a second to load 1000 typical update scripts from
         # disk (uncached). So preloading ALL scripts is fine.
 
-        if (!isset(self::$scripts[$name])) {
+        if (! isset(self::$scripts[$name])) {
             self::$scripts[$name] = include $this->getFilePath();
         }
         $this->script = self::$scripts[$name];
         $props = $this->script->getProperties();
 
-        if (!Uuid::isValidUpperCaseUuid($props['uuid'])) {
+        if (! Uuid::isValidUpperCaseUuid($props['uuid'])) {
             throw new Exception('Invalid uuid in ' . $this->getFileName());
         }
         $this->uuid = $props['uuid'];
 
-        if (!in_array($props['run'], ['manual', 'auto', 'always'])) {
-            throw new Exception("Invalid run setting '".$props['run']."' in " . $this->getFileName());
+        if (! in_array($props['run'], ['manual', 'auto', 'always'])) {
+            throw new Exception("Invalid run setting '" . $props['run'] . "' in " . $this->getFileName());
         }
         $this->runtype = $props['run'];
     }
@@ -82,7 +82,7 @@ class DbUpdate
 
         if ($scriptsInMaster === null) {
             exec(
-                'git ls-tree master --name-only -r '.DbUpdates::getUpdatesDir(),
+                'git ls-tree master --name-only -r ' . DbUpdates::getUpdatesDir(),
                 $scriptsInMaster
             );
             foreach ($scriptsInMaster as &$script) {
@@ -99,7 +99,7 @@ class DbUpdate
 
     public function shouldRun()
     {
-        if ($this->getRuntype() == 'auto' && !$this->wasRunAt()) {
+        if ($this->getRuntype() == 'auto' && ! $this->wasRunAt()) {
             return true;
         }
         if ($this->getRuntype() == 'always') {
@@ -144,8 +144,8 @@ class DbUpdate
      */
     private function execute($action)
     {
-        if (!method_exists($this->script, $action)) {
-            throw new Exception("missing method '".$action."' in " . $this->getFileName());
+        if (! method_exists($this->script, $action)) {
+            throw new Exception("missing method '" . $action . "' in " . $this->getFileName());
         }
 
         $oldTimeLimit = ini_get('max_execution_time');
@@ -179,21 +179,21 @@ class DbUpdate
     public function rename($newName)
     {
         $oldPath = $this->getFilePath();
-        $newPath = dirname($oldPath) . '/' . $newName.'.php';
+        $newPath = dirname($oldPath) . '/' . $newName . '.php';
         if (file_exists($newPath)) {
             return false;
         }
 
-        if (preg_match('/^'.self::REGEX_VALID_UPDATE_NAME.'$/', $newName)) {
+        if (preg_match('/^' . self::REGEX_VALID_UPDATE_NAME . '$/', $newName)) {
 
             // try to move via git
-            exec('git mv '.$oldPath.' '.$newPath);
+            exec('git mv ' . $oldPath . ' ' . $newPath);
 
             if (file_exists($oldPath)) {
                 // Looks like the file was not staged/committed to Git yet.
                 rename($oldPath, $newPath);
             }
-            if (!file_exists($oldPath)) {
+            if (! file_exists($oldPath)) {
                 $this->name = $newName;
                 if (DbUpdateHistory::contains($this->uuid)) {
                     DbUpdateHistory::rename($this->uuid, $newName);

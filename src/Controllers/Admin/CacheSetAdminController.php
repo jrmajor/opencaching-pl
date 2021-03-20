@@ -81,14 +81,14 @@ class CacheSetAdminController extends BaseController
                 }));
         $listModel->addColumn(
             new Column_SimpleText( tr('admCs_currentRatio'), function($row){
-                return $row['activeCaches'] . ' ( '. round($row['currentRatio']).'% ) ';
+                return $row['activeCaches'] . ' ( ' . round($row['currentRatio']) . '% ) ';
             }));
 
         $listModel->addColumn(
             new Column_SimpleText( tr('admCs_requiredRatio'), function($row){
                 // find number of required caches
-                $requiredCachesNum = ceil($row['cacheCount']*$row['ratioRequired']/100);
-                return $requiredCachesNum . ' ( '. round($row['ratioRequired']).'% )';
+                $requiredCachesNum = ceil($row['cacheCount'] * $row['ratioRequired'] / 100);
+                return $requiredCachesNum . ' ( ' . round($row['ratioRequired']) . '% )';
             }));
 
         $listModel->addDataRows($csToArchive);
@@ -102,7 +102,7 @@ class CacheSetAdminController extends BaseController
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $csToArchive, function($row){
 
-            $ratioTxt = round($row['currentRatio']).'/'.$row['ratioRequired'].'%';
+            $ratioTxt = round($row['currentRatio']) . '/' . $row['ratioRequired'] . '%';
 
             $marker = new CacheSetMarkerModel();
 
@@ -111,7 +111,7 @@ class CacheSetAdminController extends BaseController
             $marker->icon = CacheSet::GetTypeIcon($row['type']);
 
             $marker->link = CacheSet::getCacheSetUrlById($row['id']);
-            $marker->name = $row['name']." ($ratioTxt)";
+            $marker->name = $row['name'] . " ($ratioTxt)";
             return $marker;
         });
 
@@ -137,7 +137,7 @@ class CacheSetAdminController extends BaseController
         $this->view->setTemplate('cacheSet/duplicatedCachesList');
         $this->view->setVar('caches', $caches);
 
-        $pts=[];
+        $pts = [];
         foreach ($cacheIds as $cacheid) {
             $ptArr = PowerTrail::CheckForPowerTrailByCache($cacheid, true);
             $pts[$cacheid] = [];
@@ -155,17 +155,17 @@ class CacheSetAdminController extends BaseController
 
         $this->checkUserLoggedAjax();
 
-        if (!is_numeric($gpId) || !is_numeric($cacheId)) {
+        if (! is_numeric($gpId) || ! is_numeric($cacheId)) {
             $this->ajaxErrorResponse('Incorrect params');
         }
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
-        if (!$cache) {
+        if (! $cache) {
             $this->ajaxErrorResponse("No such geocache: $cacheId");
         }
 
-        if (!$this->loggedUser->hasOcTeamRole() &&
-            !$cache->getOwnerId() != $this->loggedUser->getUserId()) {
+        if (! $this->loggedUser->hasOcTeamRole() &&
+            ! $cache->getOwnerId() != $this->loggedUser->getUserId()) {
             $this->ajaxErrorResponse('User is not allowed to remove this geocache from goepath');
         }
 
@@ -174,12 +174,12 @@ class CacheSetAdminController extends BaseController
         Debug::dumpToLog($cacheIds);
         Debug::dumpToLog($cacheId);
 
-        if (!in_array($cacheId, $cacheIds)) {
+        if (! in_array($cacheId, $cacheIds)) {
             $this->ajaxErrorResponse('This cache is not a duplicate');
         }
 
         $gp = CacheSet::fromCacheSetIdFactory($gpId);
-        if (!$gp) {
+        if (! $gp) {
             $this->ajaxErrorResponse('No such GP');
         }
 

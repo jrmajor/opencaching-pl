@@ -4,11 +4,11 @@ use src\Controllers\PowerTrailController;
 use src\Models\ApplicationContainer;
 use src\Models\PowerTrail\PowerTrail;
 
-require_once __DIR__.'/../lib/common.inc.php';
+require_once __DIR__ . '/../lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (!$loggedUser){
+if (! $loggedUser){
     echo 'User not authorized!';
     exit;
 }
@@ -28,7 +28,7 @@ $type = (int) $_REQUEST['type'];
 $ptController = new PowerTrailController();
 $result = $ptController->addComment($powerTrail, $loggedUser, $dateTime, $type, $text);
 
-$resultArray =  [
+$resultArray = [
     'result' => $result,
 ];
 

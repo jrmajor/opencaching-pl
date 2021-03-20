@@ -27,7 +27,7 @@ use src\Utils\Uri\SimpleRouter;
 <div class="content2-container line-box">
 
     <div id="cache-menu" class="line-box">
-        <?php if (!$view->isUserAuthorized) { ?>
+        <?php if (! $view->isUserAuthorized) { ?>
           <span class="notlogged-cacheview"><?=tr('cache_logged_required')?></span>
         <?php } else { ?>
 
@@ -84,7 +84,7 @@ use src\Utils\Uri\SimpleRouter;
         <div id="cache-title-icons">
 
             <div class="align-center">
-                <?php if (!empty($view->showActivitiesTooltip) && !empty($view->userActivityLogs)) { ?>
+                <?php if (! empty($view->showActivitiesTooltip) && ! empty($view->userActivityLogs)) { ?>
                     <img src="<?=$view->cacheMainIcon?>" class="icon32 lightTipped" alt="" title="">
                     <div class="lightTip">
                         <div class="currentuser-activity-logs-tooltip">
@@ -115,7 +115,7 @@ use src\Utils\Uri\SimpleRouter;
             </div>
             <div class="align-center">
 
-              <?php if ( !$view->geoCache->isEvent() ) { ?>
+              <?php if ( ! $view->geoCache->isEvent() ) { ?>
 
                     <?php if (($view->geoCache->getFounds() + $view->geoCache->getNotFounds() + $view->geoCache->getNotesCount()) != 0) { ?>
 
@@ -165,7 +165,7 @@ use src\Utils\Uri\SimpleRouter;
                 <?php if ($view->geoCache->isAdopted()) { ?>
                   <div class="common-desc">
                     <?=tr('creator')?>:
-                    <a class="links" href="<?=$view->geoCache-> getFounder()->getProfileUrl() ?>"><?=$view->founderName?></a>
+                    <a class="links" href="<?=$view->geoCache->getFounder()->getProfileUrl() ?>"><?=$view->founderName?></a>
                   </div>
                 <?php } //if-is-adopted ?>
 
@@ -220,7 +220,7 @@ use src\Utils\Uri\SimpleRouter;
                     id="cacheCoordinates"
                     onclick="changeCoordsFormat()"
                     title="<?=tr('viewCache_switchCoordsFormat')?>">
-                <?php if (!$view->userModifiedCacheCoords) { ?>
+                <?php if (! $view->userModifiedCacheCoords) { ?>
                     <span class="CoordsDegMin">
                         <?=$view->geoCache->getCoordinates()->getAsText(
                             Coordinates::COORDINATES_FORMAT_DEG_MIN)?>
@@ -359,7 +359,7 @@ use src\Utils\Uri\SimpleRouter;
                 {{last_modified_label}}: <?=$view->cacheLastModifiedDate?>
             </div>
 
-            <?php if (!empty($view->otherSitesListing)) { ?>
+            <?php if (! empty($view->otherSitesListing)) { ?>
                 <div>
                     <img src="images/free_icons/link.png" class="icon16" alt="">
                     {{listed_also_on}}:
@@ -466,7 +466,7 @@ use src\Utils\Uri\SimpleRouter;
               <div class="img-shadow">
                 <a data-fancybox data-type="iframe"
                    data-src="<?=SimpleRouter::getLink(MainMapController::class, 'fullScreen')?>?lat=<?=$view->geoCache->getCoordinates()->getLatitude()?>&lon=<?=$view->geoCache->getCoordinates()->getLongitude()?>&openPopup" href="javascript:;">
-                  <?php if(!empty($view->mapImgLink)) { ?>
+                  <?php if(! empty($view->mapImgLink)) { ?>
                   <img src="<?=$view->mapImgLink?>" alt="<?=tr('map')?>" title="<?=tr('map')?>">
                   <?php } //if-!empty($view->mapImgLink ?>
                  </a>
@@ -489,7 +489,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 </div>
 
-<?php if (!empty($view->geoCache->getCacheAttributesList())) { ?>
+<?php if (! empty($view->geoCache->getCacheAttributesList())) { ?>
     <!-- cache attributes: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -514,7 +514,7 @@ use src\Utils\Uri\SimpleRouter;
 
 
 
-<?php if (!empty($view->geoCacheDesc->getAdminComment() )) { ?>
+<?php if (! empty($view->geoCacheDesc->getAdminComment() )) { ?>
     <!-- admin comments: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -571,7 +571,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 </div>
 
-<?php if ( !is_null($view->openChecker) ) { ?>
+<?php if ( ! is_null($view->openChecker) ) { ?>
 <!-- openChecker container -->
 
     <div class="content2-container bg-blue02">
@@ -599,7 +599,7 @@ use src\Utils\Uri\SimpleRouter;
 
 <?php } // if-openchacker-present ?>
 
-<?php if ( !empty($view->waypointsList) ) { ?>
+<?php if ( ! empty($view->waypointsList) ) { ?>
     <!-- waypoints: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -637,7 +637,7 @@ use src\Utils\Uri\SimpleRouter;
                         <?=tr($wp->getTypeTranslationKey())?>
                     </td>
                     <td>
-                            <?php if ($view->isUserAuthorized && !$wp->areCoordsHidden()) { ?>
+                            <?php if ($view->isUserAuthorized && ! $wp->areCoordsHidden()) { ?>
 
                               <?=$wp->getCoordinates()->getLatitudeString()?><br><?=$wp->getCoordinates()->getLongitudeString()?>
 
@@ -662,7 +662,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } //if-waypoints-present ?>
 
-<?php if ( !empty($view->geoCacheDesc->getHint()) ) { ?>
+<?php if ( ! empty($view->geoCacheDesc->getHint()) ) { ?>
     <!-- cache hint: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -679,7 +679,7 @@ use src\Utils\Uri\SimpleRouter;
             <p id="hintDecrypted" style="display: none"><?=$view->hintEncrypted?></p>
 
             <div id="hintEncTable">
-                <?php if (!$view->showUnencryptedHint) { ?>
+                <?php if (! $view->showUnencryptedHint) { ?>
                     A|B|C|D|E|F|G|H|I|J|K|L|M<br>
                     N|O|P|Q|R|S|T|U|V|W|X|Y|Z
                 <?php } //if-show-unencrypted-hint ?>
@@ -689,7 +689,7 @@ use src\Utils\Uri\SimpleRouter;
         <?php } // if-user-authorized or showAll set in config ?>
 
         <?php if ($view->isUserAuthorized || $view->alwaysShowCoords) { ?>
-            <?php if (!$view->showUnencryptedHint) { ?>
+            <?php if (! $view->showUnencryptedHint) { ?>
                 <a class="btn btn-default btn-sm" href="#" onclick="return showHint(event);">
                     <span id="decryptLinkStr"><?=tr('decrypt')?></span>
                     <span id="encryptLinkStr" style="display:none"><?=tr('encrypt')?></span>
@@ -786,7 +786,7 @@ use src\Utils\Uri\SimpleRouter;
 
 <?php } //if-isUserAuthorized ?>
 
-<?php if ( !empty($view->geoCache->getNatureRegions() ) || !empty($view->geoCache->getNatura2000Sites())) { ?>
+<?php if ( ! empty($view->geoCache->getNatureRegions() ) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
     <!-- natura2000 etc. -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -796,7 +796,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 
     <div class="content2-container align-center">
-        <?php if ( !empty($view->geoCache->getNatureRegions() ) ) { ?>
+        <?php if ( ! empty($view->geoCache->getNatureRegions() ) ) { ?>
             <table class="naturaTable">
                 <tr>
                     <td>
@@ -819,7 +819,7 @@ use src\Utils\Uri\SimpleRouter;
             </table>
 
         <?php } //if-NatureRegions-presents ?>
-        <?php if ( !empty($view->geoCache->getNatura2000Sites())) { ?>
+        <?php if ( ! empty($view->geoCache->getNatura2000Sites())) { ?>
             <table class="naturaTable">
                 <tr>
                     <td>
@@ -846,7 +846,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } //if-natureRegions-present ?>
 
-<?php if ( !empty($view->geoCache->getGeokretsHosted())) { ?>
+<?php if ( ! empty($view->geoCache->getGeokretsHosted())) { ?>
     <!-- geokrety: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -868,7 +868,7 @@ use src\Utils\Uri\SimpleRouter;
 <?php } //if-geokrety-inside ?>
 
 
-<?php if ( !empty($view->geoCache->getMp3List() )) { ?>
+<?php if ( ! empty($view->geoCache->getMp3List() )) { ?>
     <!-- mp3-list -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -892,7 +892,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } // if-mp3-presents ?>
 
-<?php if ( !empty($view->picturesToDisplay) ) { ?>
+<?php if ( ! empty($view->picturesToDisplay) ) { ?>
     <!-- pics-list: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">

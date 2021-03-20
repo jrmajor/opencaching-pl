@@ -128,7 +128,7 @@ class MobileCacheMove extends BaseObject
             $move = new self();
             $move->loadById($row['id']);
 
-            if (!$lastMove) {
+            if (! $lastMove) {
                 // this is initial location of cache
                 $distance = 0;
             } else {
@@ -145,7 +145,7 @@ class MobileCacheMove extends BaseObject
 
         if ($lastMove) {
             // update cache coords if last (if necessary)
-            if (!$cache->getCoordinates()->areSameAs($lastMove->coordinates)) {
+            if (! $cache->getCoordinates()->areSameAs($lastMove->coordinates)) {
                 $cache->updateCoordinates($lastMove->coordinates);
                 $cache->updateAltitude(); // reset altitude of the position
             }

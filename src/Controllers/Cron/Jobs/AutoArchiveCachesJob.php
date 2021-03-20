@@ -20,7 +20,7 @@ class AutoArchiveCachesJob extends Job
     const STEP_3_ARCHIVED = 3;
     const ARCHIVE_EVENT = 100;
 
-    const TEMPLATE_DIR = __DIR__.'/../../../../resources/email/autoarchive/';
+    const TEMPLATE_DIR = __DIR__ . '/../../../../resources/email/autoarchive/';
 
     public function run()
     {
@@ -137,7 +137,7 @@ class AutoArchiveCachesJob extends Job
     private function sendEmail(GeoCache $cache, $reason)
     {
         $email = new Email();
-        if (!$email->addToAddr($cache->getOwner()->getEmail())) {
+        if (! $email->addToAddr($cache->getOwner()->getEmail())) {
             return;
         }
 
@@ -161,13 +161,13 @@ class AutoArchiveCachesJob extends Job
                 $subject = tr('autoArchiveEventSubject');
                 break;
         }
-        $subject .= ' '.$cache->getWaypointId().' '.$cache->getCacheName();
+        $subject .= ' ' . $cache->getWaypointId() . ' ' . $cache->getCacheName();
 
         $formattedMessage = new EmailFormatter($email_template, true);
         $formattedMessage->addFooterAndHeader($cache->getOwner()->getUserName(), true)
             ->setVariable('cacheName', $cache->getCacheName())
             ->setVariable('cacheWp', $cache->getGeocacheWaypointId())
-            ->setVariable('cacheUrl', $this->ocConfig->getAbsolute_server_URI().$cache->getCacheUrl());
+            ->setVariable('cacheUrl', $this->ocConfig->getAbsolute_server_URI() . $cache->getCacheUrl());
 
         $email->setFromAddr(OcConfig::getEmailAddrOcTeam());
         $email->setReplyToAddr(OcConfig::getEmailAddrOcTeam());

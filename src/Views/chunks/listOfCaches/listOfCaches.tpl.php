@@ -42,7 +42,7 @@ return function (ListOfCachesModel $listModel) {
         <?php } //if-display-header ?>
 
         <tbody>
-        <?php if (!empty($listModel->getRows())) { ?>
+        <?php if (! empty($listModel->getRows())) { ?>
             <?php foreach ($listModel->getRows() as $row) { ?>
                 <tr>
                     <?php foreach ($listModel->getColumns() as /** @var AbstractColumn */ $column) { ?>

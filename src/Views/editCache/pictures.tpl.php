@@ -18,7 +18,7 @@
 <script id="pictureRowTpl" type="text/x-handlebars-template">
   <?php
   // template for each row of pictures table
-  require(__DIR__.'/pictureRow.tpl.php');
+  require(__DIR__ . '/pictureRow.tpl.php');
   ?>
 </script>
 

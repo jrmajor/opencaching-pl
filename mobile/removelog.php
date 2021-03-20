@@ -7,7 +7,7 @@ require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
-    if (isset($_GET['id']) && !empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
+    if (isset($_GET['id']) && ! empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
 
 
         $id = XDb::xEscape($_GET['id']);

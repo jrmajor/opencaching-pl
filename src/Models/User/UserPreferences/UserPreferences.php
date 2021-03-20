@@ -61,7 +61,7 @@ class UserPreferences extends BaseObject
 
         // check keys
         foreach ($keys as $key){
-            if(!self::isKeyAllowed($key)){
+            if(! self::isKeyAllowed($key)){
                 Debug::errorLog("Unknown UserPreferences key = $key");
                 return null;
             }
@@ -81,8 +81,8 @@ class UserPreferences extends BaseObject
      */
     public static function savePreferencesJson($key, $json){
 
-        if( !self::isKeyAllowed($key) ){
-            Debug::errorLog(__METHOD__.": Unknown key $key");
+        if( ! self::isKeyAllowed($key) ){
+            Debug::errorLog(__METHOD__ . ": Unknown key $key");
             return false;
         }
 
@@ -125,7 +125,7 @@ class UserPreferences extends BaseObject
             $className = self::ALLOWED_KEYS[$key];
             return new $className($key);
         } else {
-            Debug::errorLog(__METHOD__.": Unknown class for key: $key");
+            Debug::errorLog(__METHOD__ . ": Unknown class for key: $key");
             return null;
         }
     }
@@ -169,7 +169,7 @@ class UserPreferences extends BaseObject
 
         // add keys not found in DB with default values
         foreach ($keys as $key){
-            if(!array_key_exists($key, $this->dataObjects)){
+            if(! array_key_exists($key, $this->dataObjects)){
                 $obj = self::getUserPrefObjForKey($key);
                 $obj->loadDefaults();
                 $this->dataObjects[$key] = $obj;

@@ -19,12 +19,12 @@ class powerTrailBase{
     const iconPath = '/images/blue/';
 
     public static function minimumCacheCount(){
-        include __DIR__.'/../lib/settingsGlue.inc.php';
+        include __DIR__ . '/../lib/settingsGlue.inc.php';
         return $powerTrailMinimumCacheCount['current'];
     }
 
     public static function historicMinimumCacheCount(){
-        include __DIR__.'/../lib/settingsGlue.inc.php';
+        include __DIR__ . '/../lib/settingsGlue.inc.php';
         $min = $powerTrailMinimumCacheCount['current'];
         foreach ($powerTrailMinimumCacheCount['old'] as $date) {
             //var_dump($date['dateFrom'], $ptPublished, $date['dateTo']);
@@ -36,27 +36,27 @@ class powerTrailBase{
     }
 
     public static function userMinimumCacheFoundToSetNewPowerTrail(){
-        include __DIR__.'/../lib/settingsGlue.inc.php';
+        include __DIR__ . '/../lib/settingsGlue.inc.php';
         return $powerTrailUserMinimumCacheFoundToSetNewPowerTrail;
     }
 
-    public $logActionTypes =  [
-        1 =>  [
+    public $logActionTypes = [
+        1 => [
             'type' => 'create new Power Trail',
         ],
-        2 =>  [
+        2 => [
             'type' => 'attach cache to PowerTrail',
         ],
-        3 =>  [
+        3 => [
             'type' => 'remove cache from PowerTrail',
         ],
-        4 =>  [
+        4 => [
             'type' => 'add another owner to PowerTrail',
         ],
-        5 =>  [
+        5 => [
             'type' => 'remove owner from PowerTrail',
         ],
-        6 =>  [
+        6 => [
             'type' => 'change PowerTrail status',
         ],
     ];
@@ -83,25 +83,25 @@ class powerTrailBase{
      */
     public static function getPowerTrailTypes(){
         return  [
-            self::GEODRAW =>  [
+            self::GEODRAW => [
                 'geopathTypeName' => self::getConstName(self::GEODRAW),
                 'translate' => 'cs_typeGeoDraw',
-                'icon' => self::iconPath.'footprintRed.png',
+                'icon' => self::iconPath . 'footprintRed.png',
             ],
-            self::TOURING =>  [
+            self::TOURING => [
                 'geopathTypeName' => self::getConstName(self::TOURING),
                 'translate' => 'cs_typeTouring',
-                'icon' => self::iconPath.'footprintBlue.png',
+                'icon' => self::iconPath . 'footprintBlue.png',
             ],
-            self::NATURE =>  [
+            self::NATURE => [
                 'geopathTypeName' => self::getConstName(self::NATURE),
                 'translate' => 'cs_typeNature',
-                'icon' => self::iconPath.'footprintGreen.png',
+                'icon' => self::iconPath . 'footprintGreen.png',
             ],
-            self::TEMATIC =>  [
+            self::TEMATIC => [
                 'geopathTypeName' => self::getConstName(self::TEMATIC),
                 'translate' => 'cs_typeThematic',
-                'icon' => self::iconPath.'footprintYellow.png',
+                'icon' => self::iconPath . 'footprintYellow.png',
             ],
         ];
     }
@@ -121,7 +121,7 @@ class powerTrailBase{
      * here power Trail icons
      */
     public static function getPowerTrailIconsByType() {
-        $ret =  [
+        $ret = [
             1 => 'footprintRed.png',
             2 => 'footprintBlue.png',
             3 => 'footprintGreen.png',
@@ -199,8 +199,8 @@ class powerTrailBase{
      */
     public static function calculateMagnifier($x){
             $w = self::cCountForMaxMagnifier;
-            $b = (2-$w)/(-$w+1);
-            return (1-$b)*$x+$b;
+            $b = (2 - $w) / (-$w + 1);
+            return (1 - $b) * $x + $b;
         }
 
     public static function getOwnerPoints($userId){
@@ -226,7 +226,7 @@ class powerTrailBase{
         $pointsDetails = [];
         foreach ($points as $ptPoints) {
             $magnifier = self::calculateMagnifier($ptPoints['cacheCount']);
-            $earnedPoints = $ptPoints['pointsSum']*$magnifier;
+            $earnedPoints = $ptPoints['pointsSum'] * $magnifier;
             $pointsDetails[$ptPoints['PowerTrailId']] = [
                 'cacheCount' => $ptPoints['cacheCount'],
                 'pointsSum' => $ptPoints['pointsSum'],
@@ -337,8 +337,8 @@ class powerTrailBase{
         $sortOder = 'ASC';
         $sortBy = 'name';
 
-        $q = 'SELECT * FROM `PowerTrail` WHERE cacheCount >= '.self::historicMinimumCacheCount() .' '.$filter.'
-                ORDER BY '.$sortBy.' '.$sortOder.' ';
+        $q = 'SELECT * FROM `PowerTrail` WHERE cacheCount >= ' . self::historicMinimumCacheCount() . ' ' . $filter . '
+                ORDER BY ' . $sortBy . ' ' . $sortOder . ' ';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q);
         return $db->dbResultFetchAll($s);

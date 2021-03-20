@@ -47,9 +47,9 @@ class QueryBuilder
         return new self();
     }
 
-    public function select($columns=null){
+    public function select($columns = null){
         $this->method = 'SELECT';
-        if(!is_null($columns)){
+        if(! is_null($columns)){
 
             if(is_array($columns)){
                 $this->columns = implode(',',$columns);
@@ -65,13 +65,13 @@ class QueryBuilder
         return $this;
     }
 
-    public function join($tableName, $onStr=null)
+    public function join($tableName, $onStr = null)
     {
         $this->joins[] = "$tableName ON $onStr";
         return $this;
     }
 
-    public function where($column=null, $value=null){
+    public function where($column = null, $value = null){
         if($column && $value){
             $this->eq($column, $value);
         }
@@ -87,7 +87,7 @@ class QueryBuilder
 
     public function in($column, array $arrayOfValues)
     {
-        if(!empty($arrayOfValues)){
+        if(! empty($arrayOfValues)){
             $queryStr = self::escapeStr(implode(',',$arrayOfValues));
             $this->wheres[] = "$column IN ($queryStr)";
         }
@@ -99,7 +99,7 @@ class QueryBuilder
         $this->groupBy[] = $column;
     }
 
-    public function limit($limit=null, $offset=null)
+    public function limit($limit = null, $offset = null)
     {
         $this->limit = self::getNonNegativeIntValOrNull($limit);
         $this->offset = self::getNonNegativeIntValOrNull($offset);
@@ -108,7 +108,7 @@ class QueryBuilder
 
     private function getFromString()
     {
-        $result = ' FROM '.$this->fromTable;
+        $result = ' FROM ' . $this->fromTable;
         foreach ($this->joins as $join){
             $result .= " JOIN $join";
         }
@@ -117,16 +117,16 @@ class QueryBuilder
 
     private function getWhereString()
     {
-        if(!empty($this->wheres)){
-            return ' WHERE '.implode(' AND ', $this->wheres);
+        if(! empty($this->wheres)){
+            return ' WHERE ' . implode(' AND ', $this->wheres);
         }
         return '';
     }
 
     private function getGroupByString()
     {
-        if(!empty($this->groupBy)){
-            return ' GROUP BY '.implode(',', $this->groupBy);
+        if(! empty($this->groupBy)){
+            return ' GROUP BY ' . implode(',', $this->groupBy);
         }
         return '';
     }
@@ -134,18 +134,18 @@ class QueryBuilder
     private function getLimitString()
     {
         $result = '';
-        if(!is_null($this->limit)){
-            $result .= ' LIMIT '.$this->limit;
+        if(! is_null($this->limit)){
+            $result .= ' LIMIT ' . $this->limit;
         }
-        if(!is_null($this->offset)){
-            $result .= ' OFFSET '.$this->offset;
+        if(! is_null($this->offset)){
+            $result .= ' OFFSET ' . $this->offset;
         }
         return $result;
     }
 
     public function build(){
         $result = $this->method;
-        $result .= ' '.$this->columns;
+        $result .= ' ' . $this->columns;
         $result .= $this->getFromString();
         $result .= $this->getWhereString();
         $result .= $this->getGroupByString();

@@ -128,8 +128,8 @@ class TextConverter
             return $val;
         }
 
-        $unit = strtolower( $val[strlen($val)-1]);
-        $val  = substr($val, 0, -1); // necessary since PHP 7.1; otherwise optional
+        $unit = strtolower( $val[strlen($val) - 1]);
+        $val = substr($val, 0, -1); // necessary since PHP 7.1; otherwise optional
 
         switch($unit) {
             // The 'G' modifier is available since PHP 5.1.0

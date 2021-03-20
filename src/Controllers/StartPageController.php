@@ -84,7 +84,7 @@ class StartPageController extends BaseController
         global $config;
 
         $center = OcConfig::getMapDefaultCenter();
-        if (!$center) {
+        if (! $center) {
             $this->displayCommonErrorPageAndExit('Wrong default coords?');
         }
 
@@ -180,7 +180,7 @@ class StartPageController extends BaseController
         $cacheSetsEnabledInConfig = $this->ocConfig->isPowertrailsEnabled();
 
         $this->view->setVar('displayLastCacheSets', $cacheSetsEnabledInConfig);
-        if (!$cacheSetsEnabledInConfig) {
+        if (! $cacheSetsEnabledInConfig) {
             return;
         }
 
@@ -286,13 +286,13 @@ class StartPageController extends BaseController
 
                     /** @var GeoCache */
                     $geocache = GeoCache::fromCacheIdFactory($lastTitledCache->getCacheId());
-                    if (!$geocache) {
+                    if (! $geocache) {
                         return null;
                     }
                     $geocache->prepareForSerialization();
 
                     $log = GeoCacheLog::fromLogIdFactory($lastTitledCache->getLogId());
-                    if (!$log) {
+                    if (! $log) {
                         return null;
                     }
                     $log->prepareForSerialization();
@@ -307,7 +307,7 @@ class StartPageController extends BaseController
                 }
             });
 
-        if (!$titledCacheDataObj) {
+        if (! $titledCacheDataObj) {
             // there is no titledCache? - some error occurred?!
             $this->view->setVar('titledCacheData', null);
             return;
@@ -411,7 +411,7 @@ class StartPageController extends BaseController
 
                         for ($i = 0; $i < $postsCount; $i++) {
                             $post = new stdClass();
-                            $post->author = (!empty($feed->next()->author) &&
+                            $post->author = (! empty($feed->next()->author) &&
                                 $config['feed'][$feedName]['showAuthor']) ? $feed->current()->author : '';
 
                             $post->link = $feed->current()->link;

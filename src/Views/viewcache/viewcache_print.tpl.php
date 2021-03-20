@@ -59,7 +59,7 @@ use src\Models\GeoKret\GeoKretyApi;
         <img src="images/cache-rate.png" class="icon16" alt="">
         <?=tr('score_label')?>: <b style="color:<?=$view->scoreColor?>"><?=$view->score?></b>
 
-        <?php if (!empty($view->otherSitesListing)) { ?>
+        <?php if (! empty($view->otherSitesListing)) { ?>
           <img src="images/free_icons/link.png" class="icon16" alt="" title="">&nbsp;{{listed_also_on}}:
           <span class="listed-on">
           <?php foreach ($view->otherSitesListing as $site) { ?>
@@ -88,7 +88,7 @@ use src\Models\GeoKret\GeoKretyApi;
 </div>
 
 
-<?php if ( !empty($view->geoCacheDesc->getHint()) ) { ?>
+<?php if ( ! empty($view->geoCacheDesc->getHint()) ) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -101,7 +101,7 @@ use src\Models\GeoKret\GeoKretyApi;
     <?php if ($view->isUserAuthorized || $view->alwaysShowCoords) { ?>
 
         <div style="width:200px;align:right;float:right">
-          <?php if (!$view->showUnencryptedHint) { ?>
+          <?php if (! $view->showUnencryptedHint) { ?>
             <font face="Courier" size="2" style="font-family : 'Courier New', FreeMono, Monospace;">A|B|C|D|E|F|G|H|I|J|K|L|M</font><br>
             <font face="Courier" size="2" style="font-family : 'Courier New', FreeMono, Monospace;">N|O|P|Q|R|S|T|U|V|W|X|Y|Z</font>
           <?php } //if-show-unencrypted-hint ?>
@@ -141,7 +141,7 @@ use src\Models\GeoKret\GeoKretyApi;
     </div>
 <?php } //if-isUserAuthorized ?>
 
-<?php if ( !empty($view->waypointsList) ) { ?>
+<?php if ( ! empty($view->waypointsList) ) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -198,7 +198,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
 
 
-<?php if ( !empty($view->geoCache->getNatureRegions() ) || !empty($view->geoCache->getNatura2000Sites())) { ?>
+<?php if ( ! empty($view->geoCache->getNatureRegions() ) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -212,7 +212,7 @@ use src\Models\GeoKret\GeoKretyApi;
             <tr>
                 <td align="center" valign="middle">&nbsp;</td><td align="center" valign="middle">
 
-                        <?php if ( !empty($view->geoCache->getNatureRegions() ) ) { ?>
+                        <?php if ( ! empty($view->geoCache->getNatureRegions() ) ) { ?>
 
                             <table width="90%" border="0" style="border-collapse: collapse; font-weight: bold;font-size: 14px; line-height: 1.6em">
                               <tr>
@@ -240,7 +240,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
                          <?php } //if-NatureRegions-presents ?>
 
-                         <?php if (  !empty($view->geoCache->getNatura2000Sites()) ) { ?>
+                         <?php if (  ! empty($view->geoCache->getNatura2000Sites()) ) { ?>
 
                             <table width="90%" border="0" style="border-collapse: collapse; font-weight: bold;font-size: 14px; line-height: 1.6em\">
                               <tr>
@@ -293,7 +293,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
 <!-- koniec sekcji modyfikatora współrzędnych -->
 
-<?php if ( !empty($view->geoCache->getGeokretsHosted())) { ?>
+<?php if ( ! empty($view->geoCache->getGeokretsHosted())) { ?>
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
         <img src="/images/blue/travelbug.png" class="icon32" alt="" align="absmiddle">
@@ -314,7 +314,7 @@ use src\Models\GeoKret\GeoKretyApi;
 <?php } //if-geokrety-inside ?>
 
 
-<?php if ( !empty($view->picturesToDisplay) ) { ?>
+<?php if ( ! empty($view->picturesToDisplay) ) { ?>
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
         <img src="/images/blue/picture.png" class="icon32" alt="" align="absmiddle">
@@ -328,12 +328,12 @@ use src\Models\GeoKret\GeoKretyApi;
 
             <?php foreach ($view->picturesToDisplay as $pic) { ?>
 
-              <?php if (!$view->displayBigPictures) { ?>
+              <?php if (! $view->displayBigPictures) { ?>
 
                 <!-- <br style="clear: left;"> at every 4 pic... TODO -->
                 <div class="viewcache-pictureblock">
 
-                    <?php if ( !$pic->spoiler || $view->isUserAuthorized || $view->alwaysShowCoords ) { ?>
+                    <?php if ( ! $pic->spoiler || $view->isUserAuthorized || $view->alwaysShowCoords ) { ?>
                       <div class="img-shadow">
                         <a href="<?=$pic->url?>" title="<?=$pic->title?>" >
                           <img src="<?=$pic->thumbUrl?>" alt="<?=$pic->title?>" title="<?=$pic->title?>">
@@ -368,7 +368,7 @@ use src\Models\GeoKret\GeoKretyApi;
 <?php } //if-pictures-to-display-present ?>
 
 <!-- Text container -->
-<?php if (!$view->hideLogbook) { ?>
+<?php if (! $view->hideLogbook) { ?>
 
     <div class="content2-container bg-blue02 logs">
         <p class="content-title-noshade-size1">

@@ -10,14 +10,14 @@ function check_wp($wpts)
 {
 
     foreach ($wpts as &$wp) {
-        if (!preg_match("/^O((\d)|([A-Z])){5}$/", $wp))
+        if (! preg_match("/^O((\d)|([A-Z])){5}$/", $wp))
             return false;
     }
     return true;
 }
 
-if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empty($_GET['output'])) {
-    if (!$show_coords) {
+if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! empty($_GET['output'])) {
+    if (! $show_coords) {
         header('Location: ./viewcache.php?wp=' . $_GET['wp']);
         exit;
     }
@@ -131,9 +131,9 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && isset($_GET['output']) && !empt
                 $filename = 'results.';
 
             if ($_GET['output'] == 'gpxgc')
-                $filename.='gpx';
+                $filename .= 'gpx';
             else
-                $filename.=$_GET['output'];
+                $filename .= $_GET['output'];
 
             header('Content-disposition: attachment; filename=' . $filename);
             header('Content-Type: application/force-download');

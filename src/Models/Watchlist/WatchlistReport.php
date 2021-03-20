@@ -17,7 +17,7 @@ use src\Utils\Uri\SimpleRouter;
 class WatchlistReport
 {
     /** Default report email contents template path */
-    const DEFAULT_TEMPLATE_PATH = __DIR__.'/../../../resources/email/watchlist.email.html';
+    const DEFAULT_TEMPLATE_PATH = __DIR__ . '/../../../resources/email/watchlist.email.html';
 
     /** @var \src\Utils\Email\EmailFormatter template instance to format email */
     private $reportTemplate;

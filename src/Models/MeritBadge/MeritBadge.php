@@ -105,9 +105,9 @@ class MeritBadge
     public function whoPrepared(){
 
         $text =
-        tr('merit_badge_graphic_author').' <b>'. $this->getGraphicAuthor() . '</b>, '.
-        tr('merit_badge_description_author'). ' <b>'. $this->getDescriptionAuthor() . '</b>, '.
-        tr('merit_badge_attendant'). ' <b>'. $this->getAttendant() . '</b>';
+        tr('merit_badge_graphic_author') . ' <b>' . $this->getGraphicAuthor() . '</b>, ' .
+        tr('merit_badge_description_author') . ' <b>' . $this->getDescriptionAuthor() . '</b>, ' .
+        tr('merit_badge_attendant') . ' <b>' . $this->getAttendant() . '</b>';
 
         return $text;
     }
@@ -136,25 +136,25 @@ class MeritBadge
             $this->cfg_show_positions = $rec[ 'badges_cfg_show_positions' ];
 
         if ( isset($rec['badges_trigger_type']) )
-            $this->trigger_type= $rec[ 'badges_trigger_type' ];
+            $this->trigger_type = $rec[ 'badges_trigger_type' ];
 
         if ( isset($rec['badges_picture']) )
             $this->picture = $rec[ 'badges_picture' ];
 
         if ( isset($rec['badges_belonging_query']) )
-            $this->belonging_query= $rec[ 'badges_belonging_query' ];
+            $this->belonging_query = $rec[ 'badges_belonging_query' ];
 
         if ( isset($rec['badges_gained_query']) )
             $this->gained_query = $rec[ 'badges_gained_query' ];
 
         if ( isset($rec['badges_graphic_author']) )
-            $this->graphic_author= $rec[ 'badges_graphic_author' ];
+            $this->graphic_author = $rec[ 'badges_graphic_author' ];
 
         if ( isset($rec['badges_description_author']) )
-            $this->description_author= $rec[ 'badges_description_author' ];
+            $this->description_author = $rec[ 'badges_description_author' ];
 
         if ( isset($rec['badges_attendant']) )
-            $this->attendant= $rec[ 'badges_attendant' ];
+            $this->attendant = $rec[ 'badges_attendant' ];
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -162,8 +162,8 @@ class MeritBadge
     //////////////////////////////////////////////////////////////////////
 
     public static function getBarSize( $level, $amountOfLevels){
-        if (!$amountOfLevels) $amountOfLevels=1;
-        $size = round((($level+1)*self::PROGRESIVE_BAR_SIZE)/$amountOfLevels);
+        if (! $amountOfLevels) $amountOfLevels = 1;
+        $size = round((($level + 1) * self::PROGRESIVE_BAR_SIZE) / $amountOfLevels);
 
         if($size <= 0 ) $size = 1;
         if($size > self::PROGRESIVE_BAR_SIZE ) $size = self::PROGRESIVE_BAR_SIZE;
@@ -172,44 +172,44 @@ class MeritBadge
     }
 
     public static function getColor( $level, $amountOfLevels){
-        if (!$amountOfLevels) $amountOfLevels=1;
+        if (! $amountOfLevels) $amountOfLevels = 1;
 
-        $idx = round((($level+1)*self::COLOR_NUMBER)/($amountOfLevels));
+        $idx = round((($level + 1) * self::COLOR_NUMBER) / ($amountOfLevels));
         if($idx > (self::COLOR_NUMBER) ) $idx = self::COLOR_NUMBER;
         if($idx <= 0 ) $idx = 1;
 
-        return self::$_colors[ $idx-1 ];
+        return self::$_colors[ $idx - 1 ];
     }
 
     public static function getProgressBarValueMax($prevValue, $nextValue){
-        if ( $nextValue== self::THE_HIGHEST_LEVEL)
+        if ( $nextValue == self::THE_HIGHEST_LEVEL)
             return 1;
 
-       return $nextValue-$prevValue;
+       return $nextValue - $prevValue;
     }
 
     public static function getProgressBarCurrValue($prevValue, $nextValue, $threshold){
-        if ( $threshold== self::THE_HIGHEST_LEVEL)
+        if ( $threshold == self::THE_HIGHEST_LEVEL)
             return 1;
 
-            return $nextValue-$prevValue;
+            return $nextValue - $prevValue;
     }
 
     public static function prepareShortDescription($desc, $threshold, $currVal ){
         if ( $threshold == self::THE_HIGHEST_LEVEL)
-            return "<span style='font-weight:bold;color:". self::getColor( self::COLOR_NUMBER, self::COLOR_NUMBER) .";'>".tr('merit_badge_gain_max_level' ).'</span>';
+            return "<span style='font-weight:bold;color:" . self::getColor( self::COLOR_NUMBER, self::COLOR_NUMBER) . ";'>" . tr('merit_badge_gain_max_level' ) . '</span>';
 
-            $desc = str_replace( '{userThreshold}', $threshold- $currVal, $desc);
+            $desc = str_replace( '{userThreshold}', $threshold - $currVal, $desc);
             return $desc;
     }
 
     //it is used functions in badge.php to prepare the table with levels
     public static function preparePeriodOrThreshold($first, $second, $PeriodOrThreshold){
-        $out =  $first;
+        $out = $first;
 
         if ($PeriodOrThreshold == 'P'){
             if ($second != self::THE_HIGHEST_LEVEL)
-                $out .= ' - ' . ($second-1);
+                $out .= ' - ' . ($second - 1);
             else
                 $out .= '';
         }
@@ -236,7 +236,7 @@ class MeritBadge
         foreach( $sqlOut[1] as $sql ){
             $stmt = $db->simpleQuery($sql);
             $rec = $db->dbResultFetch($stmt);
-            $text = str_replace('#'.$sql.'#', number_format( $rec['value'], 0, $config['numberFormatDecPoint'], $config['numberFormatThousandsSep']), $text);
+            $text = str_replace('#' . $sql . '#', number_format( $rec['value'], 0, $config['numberFormatDecPoint'], $config['numberFormatThousandsSep']), $text);
 
         }
 
@@ -255,7 +255,7 @@ class MeritBadge
 
             $cache_list .= '</ul>';
 
-            $text = str_replace('@'.$sql.'@', $cache_list, $text);
+            $text = str_replace('@' . $sql . '@', $cache_list, $text);
         }
 
         return $text;

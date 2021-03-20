@@ -47,7 +47,7 @@ class MainMapAjaxController extends BaseController
         // map is only for logged users
         $this->checkUserLoggedAjax();
 
-        if(!preg_match(self::BBOX_REGEX, $bboxStr)){
+        if(! preg_match(self::BBOX_REGEX, $bboxStr)){
             $this->ajaxErrorResponse('Incorrect bbox!', 500);
             exit;
         }
@@ -93,7 +93,7 @@ class MainMapAjaxController extends BaseController
         $resp->cacheRecosNumber = $cache->getRecommendations();
         if( $cache->isTitled() ) {
             global $titled_cache_period_prefix; //TODO: move it to the ocConfig
-            $resp->titledDesc = tr($titled_cache_period_prefix.'_titled_cache');
+            $resp->titledDesc = tr($titled_cache_period_prefix . '_titled_cache');
         }
 
         if ($cache->isPowerTrailPart()) {
@@ -148,7 +148,7 @@ class MainMapAjaxController extends BaseController
 
         $this->checkUserLoggedAjax();
 
-        if (!isset($_POST['userMapSettings'])) {
+        if (! isset($_POST['userMapSettings'])) {
             $this->ajaxErrorResponse('no filtersData var in JSON', 400);
         }
 
@@ -203,7 +203,7 @@ class MainMapAjaxController extends BaseController
 
         $iterator = $okapiResp->getIterator();
 
-        if(!$iterator->valid()){
+        if(! $iterator->valid()){
             // no caches found - just return empty result
             return null;
         }
@@ -256,7 +256,7 @@ class MainMapAjaxController extends BaseController
 
         // exMyOwn (hide user's own caches) - convert to OKAPI's "exclude_my_own" parameter.
         if (isset($_GET['exMyOwn'])) {
-            $this->searchParams['owner_uuid'] = '-'.$userUuid;
+            $this->searchParams['owner_uuid'] = '-' . $userUuid;
         }
 
         // filter out found or not yet found caches
@@ -280,10 +280,10 @@ class MainMapAjaxController extends BaseController
 
         // OKAPI's "status" filter.
         $status = ['Available']; // available is always present
-        if ( !isset($_GET['exTempUnavail']) ) {
+        if ( ! isset($_GET['exTempUnavail']) ) {
             $status[] = 'Temporarily unavailable';
         }
-        if ( !isset($_GET['exArchived']) ) {
+        if ( ! isset($_GET['exArchived']) ) {
             $status[] = 'Archived';
         }
         $this->searchParams['status'] = implode('|', $status);
@@ -345,11 +345,11 @@ class MainMapAjaxController extends BaseController
         $types = ['Other', 'Traditional', 'Multi', 'Virtual', 'Webcam', 'Event', 'Quiz', 'Moving', 'Own'];
 
         foreach ($types as $type) {
-            if( isset($_GET['exType'.$type]) ){
+            if( isset($_GET['exType' . $type]) ){
                 $typesToExclude[] = $type;
             }
         }
-        if ( !empty($typesToExclude) ) {
+        if ( ! empty($typesToExclude) ) {
             $this->searchParams['type'] = '-' . implode('|', $typesToExclude);
         }
     }

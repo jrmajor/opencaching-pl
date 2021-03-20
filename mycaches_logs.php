@@ -6,13 +6,13 @@ use src\Utils\Database\XDb;
 use src\Utils\Text\Formatter;
 
 //include template handling
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
-    tpl_redirect('login.php?target='.$target);
+    tpl_redirect('login.php?target=' . $target);
     exit;
 }
 
@@ -26,7 +26,7 @@ if (!$loggedUser) {
 
     //get the news
     $tplname = 'mycaches_logs';
-    require(__DIR__.'/src/Views/newlogs.inc.php');
+    require(__DIR__ . '/src/Views/newlogs.inc.php');
 
     $user_record['username'] = XDb::xMultiVariableQueryValue(
         'SELECT  username FROM user WHERE user_id= :1 LIMIT 1', '-noname-', $loggedUser->getUserId());
@@ -49,7 +49,7 @@ if (!$loggedUser) {
     $pages = '';
     $total_pages = ceil($total_logs / $LOGS_PER_PAGE);
 
-    if (!isset($_GET['start']) || intval($_GET['start']) < 0 || intval($_GET['start']) > $total_logs) {
+    if (! isset($_GET['start']) || intval($_GET['start']) < 0 || intval($_GET['start']) > $total_logs) {
         $start = 0;
     } else {
         $start = intval($_GET['start']);
@@ -58,8 +58,8 @@ if (!$loggedUser) {
     $startat = max(0, floor((($start / $LOGS_PER_PAGE) + 1) / $PAGES_LISTED) * $PAGES_LISTED);
 
     if (($start / $LOGS_PER_PAGE) + 1 >= $PAGES_LISTED) {
-        $pages .= '<a href="mycaches_logs.php?userid='.$user_id.'&amp;start='.max(0,
-                ($startat - $PAGES_LISTED - 1) * $LOGS_PER_PAGE).'">{first_img}</a> ';
+        $pages .= '<a href="mycaches_logs.php?userid=' . $user_id . '&amp;start=' . max(0,
+                ($startat - $PAGES_LISTED - 1) * $LOGS_PER_PAGE) . '">{first_img}</a> ';
     } else {
         $pages .= '{first_img_inactive}';
     }
@@ -68,13 +68,13 @@ if (!$loggedUser) {
         if ($page_number == $start) {
             $pages .= '<b>';
         }
-        $pages .= '<a href="mycaches_logs.php?userid='.$user_id.'&amp;start='.$page_number.'">'.$i.'</a> ';
+        $pages .= '<a href="mycaches_logs.php?userid=' . $user_id . '&amp;start=' . $page_number . '">' . $i . '</a> ';
         if ($page_number == $start) {
             $pages .= '</b>';
         }
     }
     if ($total_pages > $PAGES_LISTED) {
-        $pages .= '<a href="mycaches_logs.php?userid='.$user_id.'&amp;start='.(($i - 1) * $LOGS_PER_PAGE).'">{last_img}</a> ';
+        $pages .= '<a href="mycaches_logs.php?userid=' . $user_id . '&amp;start=' . (($i - 1) * $LOGS_PER_PAGE) . '">{last_img}</a> ';
     } else {
         $pages .= '{last_img_inactive}';
     }
@@ -89,7 +89,7 @@ if (!$loggedUser) {
                 AND `caches`.`status` != 6
                 AND `caches`.`user_id`= ?
             ORDER BY  `cache_logs`.`date_created` DESC
-            LIMIT '.intval($start).', '.intval($LOGS_PER_PAGE),
+            LIMIT ' . intval($start) . ', ' . intval($LOGS_PER_PAGE),
         $user_id);
 
     $log_ids = [];
@@ -98,7 +98,7 @@ if (!$loggedUser) {
     }
     XDb::xFreeResults($rs);
 
-    if (!empty($log_ids)) {
+    if (! empty($log_ids)) {
         $rs = XDb::xSql(
             'SELECT cache_logs.id, cache_logs.cache_id AS cache_id, cache_logs.type AS log_type,
                         cache_logs.text AS log_text, cache_logs.date AS log_date, caches.name AS cache_name,
@@ -119,7 +119,7 @@ if (!$loggedUser) {
                         AND gk_item.stateid<>1 AND gk_item.stateid<>4
                         AND gk_item.typeid<>2 AND gk_item.stateid !=5
                 WHERE cache_logs.deleted=0
-                    AND cache_logs.id IN ('.implode(',', $log_ids).')
+                    AND cache_logs.id IN (' . implode(',', $log_ids) . ')
                     AND `caches`.`user_id`= ?
                 GROUP BY cache_logs.id
                 ORDER BY cache_logs.date_created DESC',
@@ -129,9 +129,9 @@ if (!$loggedUser) {
         while ($log_record = XDb::xFetchArray($rs)) {
 
             $file_content .= '<tr>';
-            $file_content .= '<td style="width: 70px;">'.htmlspecialchars(
+            $file_content .= '<td style="width: 70px;">' . htmlspecialchars(
                 Formatter::date($log_record['log_date']), ENT_COMPAT, 'UTF-8'
-            ).'</td>';
+            ) . '</td>';
 
             if ($log_record['geokret_in'] != '0') {
                 $file_content .= '<td width="22">&nbsp;<img src="images/gk.png" border="0" alt="" title="GeoKret" /></td>';
@@ -145,24 +145,24 @@ if (!$loggedUser) {
             } else {
                 $file_content .= '<td width="22">&nbsp;</td>';
             }
-            $file_content .= '<td width="22"><img src="/images/'.$log_record['icon_small'].'" border="0" alt="" /></td>';
-            $file_content .= '<td width="22"><a class="links" href="viewcache.php?cacheid='.$log_record['cache_id'].'"><img src="/images/'.$log_record['cache_icon_small'].'" border="0" alt=""/></a></td>';
-            $file_content .= '<td><b><a class="links" href="viewlogs.php?logid='.htmlspecialchars($log_record['id'],
-                    ENT_COMPAT, 'UTF-8').'" onmouseover="Tip(\'';
+            $file_content .= '<td width="22"><img src="/images/' . $log_record['icon_small'] . '" border="0" alt="" /></td>';
+            $file_content .= '<td width="22"><a class="links" href="viewcache.php?cacheid=' . $log_record['cache_id'] . '"><img src="/images/' . $log_record['cache_icon_small'] . '" border="0" alt=""/></a></td>';
+            $file_content .= '<td><b><a class="links" href="viewlogs.php?logid=' . htmlspecialchars($log_record['id'],
+                    ENT_COMPAT, 'UTF-8') . '" onmouseover="Tip(\'';
             // ukrywanie nicka autora komentarza COG
             // Łza
-            if ($log_record['log_type'] == 12 && !$loggedUser->hasOcTeamRole()) {
+            if ($log_record['log_type'] == 12 && ! $loggedUser->hasOcTeamRole()) {
                 $log_record['user_name'] = tr('cog_user_name');
                 $log_record['user_id'] = 0;
             }
             // koniec ukrywania nicka autora komentarza COG
-            $file_content .= '<b>'.htmlspecialchars($log_record['user_name']).'</b>:<br>';
+            $file_content .= '<b>' . htmlspecialchars($log_record['user_name']) . '</b>:<br>';
             $file_content .= GeoCacheLog::cleanLogTextForToolTip($log_record['log_text']);
-            $file_content .= '\', PADDING,5, WIDTH,280,SHADOW,true)" onmouseout="UnTip()">'.htmlspecialchars($log_record['cache_name'],
-                    ENT_COMPAT, 'UTF-8').'</a></b></td>';
-            $file_content .= '<td><b><a class="links" href="viewprofile.php?userid='.htmlspecialchars($log_record['user_id'],
-                    ENT_COMPAT, 'UTF-8').'">'.htmlspecialchars($log_record['user_name'], ENT_COMPAT,
-                    'UTF-8').'</a></b></td>';
+            $file_content .= '\', PADDING,5, WIDTH,280,SHADOW,true)" onmouseout="UnTip()">' . htmlspecialchars($log_record['cache_name'],
+                    ENT_COMPAT, 'UTF-8') . '</a></b></td>';
+            $file_content .= '<td><b><a class="links" href="viewprofile.php?userid=' . htmlspecialchars($log_record['user_id'],
+                    ENT_COMPAT, 'UTF-8') . '">' . htmlspecialchars($log_record['user_name'], ENT_COMPAT,
+                    'UTF-8') . '</a></b></td>';
             $file_content .= '</tr>';
 
         }//while

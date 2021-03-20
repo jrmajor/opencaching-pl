@@ -6,8 +6,8 @@ use src\Models\ApplicationContainer;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 
-require_once(__DIR__.'/../../lib/common.inc.php');
-require_once(__DIR__.'/../../lib/export.inc.php');
+require_once(__DIR__ . '/../../lib/common.inc.php');
+require_once(__DIR__ . '/../../lib/export.inc.php');
 
 header('Content-Type: application/vnd.google-earth.kml; charset=utf8');
 header('Content-Disposition: attachment; filename="opencaching.kml"');

@@ -2,8 +2,8 @@
 $secret = 'dupa231';
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
-echo '<?xml version="1.0" encoding="utf-8"?'.">\n";
-echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
+echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
+echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
 
 
 ?>
@@ -123,7 +123,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                     <select name="logbook_type" id="logbook_type" onchange="parentNode.submit();">
                         <?php
                         $_GET['logbook_type'] = (int) $_GET['logbook_type'];
-                        if(!($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type']<= 2)) print '<option value="0" selected="true">Wybierz</option>'; ?>
+                        if(! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) print '<option value="0" selected="true">Wybierz</option>'; ?>
                         <option value="1" <?if($_GET['logbook_type'] == 1) print "selected=\"true\"";?>>Logbook A6 Dwustronny</option>
                         <option value="2" <?if($_GET['logbook_type'] == 2) print "selected=\"true\"";?>>Logbook A7 Dwustronny</option>
                     </select>
@@ -138,7 +138,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
+                <input type="hidden" name="secret" value="' . encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
                 <p><label for="cache_name">Nazwa skrzynki:</label> <input type="text" maxlength="80" name="cache_name" id="cache_name" /></p>
                 <p><label for="coords">Współrzędne:</label> <input type="hidden" maxlength="80" name="coords" id="coords" /> N <input type="text" name="d1" maxlength="3" class="degrees" /> ° <input class="minutes" maxlength="6" name="m1" type="text" /> \' E <input class="degrees" maxlength="3" name="d2" type="text" /> ° <input class="minutes" maxlength="6" name="m2" type="text" /> \'</p>
                 <p><label for="image_file">Obrazek tytułowy:</label> <input type="file" name="image_file" id="image_file" class="file" /><br />
@@ -167,7 +167,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-                <input type="hidden" name="secret" value="' .encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
+                <input type="hidden" name="secret" value="' . encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
                 <p><label for="cache_name">Nazwa skrzynki:</label> <input type="text" maxlength="80" name="cache_name" id="cache_name" /></p>
                 <p><label for="coords">Współrzędne:</label> <input type="hidden" maxlength="80" name="coords" id="coords" /> N <input type="text" name="d1" maxlength="3" class="degrees" /> ° <input class="minutes" maxlength="6" name="m1" type="text" /> \' E <input class="degrees" maxlength="3" name="d2" type="text" /> ° <input class="minutes" maxlength="6" name="m2" type="text" /> \'</p>
                 <p><label for="image_file">Obrazek tytułowy:</label> <input type="file" name="image_file" id="image_file" class="file" /><br />

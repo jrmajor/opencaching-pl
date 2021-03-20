@@ -49,7 +49,7 @@ abstract class UserPreferencesBaseData {
 
     public function setValues($values){
 
-        foreach ($this->getDefaults() as $key=>$default){
+        foreach ($this->getDefaults() as $key => $default){
             if(array_key_exists($key, $values)){
                 $this->values[$key] = $values[$key];
             }else{

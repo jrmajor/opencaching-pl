@@ -28,7 +28,7 @@ return function (DynamicMapModel $mapModel, $canvasId){
 <!-- load markers popup templates -->
 <?php foreach($mapModel->getMarkerTypes() as $markerType) { ?>
   <script type="text/x-handlebars-template" class="<?=$markerType?>" >
-    <?php include(__DIR__.'/markers/'.$markerType.'Popup.tpl.php'); ?>
+    <?php include(__DIR__ . '/markers/' . $markerType . 'Popup.tpl.php'); ?>
   </script>
 <?php } //foreach-popupTemplates ?>
 
@@ -47,7 +47,7 @@ var dynamicMapParams_<?=$canvasId?> = {
   markerData: <?=$mapModel->getMarkersDataJson()?>,
   markerMgr: {
     <?php foreach($mapModel->getMarkerTypes() as $markerType) { ?>
-      <?=$markerType?>: <?php include(__DIR__.'/markers/'.$markerType.'Mgr.tpl.php'); ?>,
+      <?=$markerType?>: <?php include(__DIR__ . '/markers/' . $markerType . 'Mgr.tpl.php'); ?>,
     <?php } //foreach $markerTypes ?>
   },
   compiledPopupTpls: []

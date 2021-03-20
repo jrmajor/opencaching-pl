@@ -71,14 +71,14 @@ class OcImage
     private function load($inputImagePath)
     {
         // check if input file exists
-        if (!is_file($inputImagePath)){
+        if (! is_file($inputImagePath)){
             throw new Exception("Image not found: $inputImagePath");
         }
 
         // load img type
         $this->loadType($inputImagePath);
 
-        if(!PhpInfo::versionAtLeast(7,2) && $this->gdImageType == IMAGETYPE_BMP){
+        if(! PhpInfo::versionAtLeast(7,2) && $this->gdImageType == IMAGETYPE_BMP){
             // GD doens't support BMP import before PHP 7.2
             $this->gdImage = $this->loadBmp($inputImagePath);
         } else {
@@ -129,11 +129,11 @@ class OcImage
     {
         // prepare new image
         $newImage = @imagecreatetruecolor($width, $height);
-        if (!$newImage) {
+        if (! $newImage) {
             throw new Exception("Can't create new image");
         }
 
-        if (!@imagecopyresampled($newImage, $this->gdImage, 0, 0, 0, 0,
+        if (! @imagecopyresampled($newImage, $this->gdImage, 0, 0, 0, 0,
                 $width, $height, $this->getWidth(), $this->getHeight())) {
 
             throw new Exception("Can't resample new image");
@@ -154,7 +154,7 @@ class OcImage
     public function crop($x, $y, $width, $height)
     {
         $this->gdImage = @imagecrop($this->gdImage, [$x, $y, $width, $height] );
-        if (!$this->gdImage) {
+        if (! $this->gdImage) {
             throw new Exception("Can't crop the image");
         }
     }
@@ -168,7 +168,7 @@ class OcImage
     public function rotate($degrees)
     {
         $this->gdImage = @imagerotate ($this->gdImage, $degrees, 0);
-        if (!$this->gdImage) {
+        if (! $this->gdImage) {
             throw new Exception("Can't rotate the image");
         }
     }
@@ -181,13 +181,13 @@ class OcImage
      * @param boolean $overwrite - overwrite the file if exists
      * @throws Exception
      */
-    public function save($outputPath, $overwrite=false)
+    public function save($outputPath, $overwrite = false)
     {
-        if (!$overwrite && is_file($outputPath)) {
+        if (! $overwrite && is_file($outputPath)) {
             throw new Exception("Can't save - file already exists!");
         }
 
-        if (!is_dir(dirname($outputPath))) {
+        if (! is_dir(dirname($outputPath))) {
             // there is no such dir - try to create it
             $dir = dirname($outputPath);
             if ( ! mkdir($dir, 0755, true)) {
@@ -211,7 +211,7 @@ class OcImage
                 $result = imagejpeg($this->gdImage, $outputPath, self::DEFAULT_JPEG_COMPRESSION);
         }
 
-        if(!$result){
+        if(! $result){
             throw new Exception("Can't save the output file: $outputPath");
         }
 
@@ -221,7 +221,7 @@ class OcImage
     private function loadType($inputImagePath)
     {
         if($imgParams = @getimagesize($inputImagePath)) {
-            $this->gdImageType =  $imgParams[2];
+            $this->gdImageType = $imgParams[2];
         } else {
             throw new Exception("Can't read image type?");
         }
@@ -318,10 +318,10 @@ class OcImage
                 } else
                     return false;
                 imagesetpixel($res, $x, $y, $color[1]);
-                $x ++;
+                $x++;
                 $p += $bmp['bytes_per_pixel'];
             }
-            $y --;
+            $y--;
             $p += $bmp['decal'];
         }
 

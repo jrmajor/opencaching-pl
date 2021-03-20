@@ -106,7 +106,7 @@ class MainLayoutController extends BaseController
 
         }
 
-        if (!$this->legacyLayout) {
+        if (! $this->legacyLayout) {
             $this->view->addLocalCss(Uri::getLinkWithModificationTime(
                 '/views/common/mainLayout.css'));
         }
@@ -140,7 +140,7 @@ class MainLayoutController extends BaseController
             $logoSubtitle = tr('oc_subtitle_on_all_pages_' . $config['ocNode']);
         }
 
-        $this->view->setVar('_mainLogo', '/images/'.$logo);
+        $this->view->setVar('_mainLogo', '/images/' . $logo);
         $this->view->setVar('_logoTitle', $logoTitle);
         $this->view->setVar('_logoSubtitle', $logoSubtitle);
 
@@ -256,7 +256,7 @@ class MainLayoutController extends BaseController
                 // add number of caches in clipboard
                 if (! empty(PrintList::GetContent()) ) {
                     $cachesInClipboard = count(PrintList::GetContent());
-                    $key = tr($key)." ($cachesInClipboard)";
+                    $key = tr($key) . " ($cachesInClipboard)";
                 } else {
                     $key = ''; //empty link
                     $url = '';
@@ -306,7 +306,7 @@ class MainLayoutController extends BaseController
 
                 default:
                     $key = tr($key);
-                    if (!is_array($url)) {
+                    if (! is_array($url)) {
                         $url = htmlspecialchars($url);
                     }
             }
@@ -333,7 +333,7 @@ class MainLayoutController extends BaseController
             return null;
         }
 
-        return OcMemCache::getOrCreate(__METHOD__, 5*60, function() {
+        return OcMemCache::getOrCreate(__METHOD__, 5 * 60, function() {
             $obj = new stdClass();
             $obj->listOfUsers = UserAuthorization::getOnlineUsersFromDb();
             $obj->validAt = time();

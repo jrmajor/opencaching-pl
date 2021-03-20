@@ -207,9 +207,9 @@ class GeoKretLog extends BaseObject
                   VALUES ';
         $paramId = 1;
         foreach ($geoKretogs as $geoKretLog) {
-            $query .= '(:'.$paramId++.', NOW(), :'.$paramId++.','
-                . ' :'.$paramId++.', :'.$paramId++.', :'.$paramId++.', :'.$paramId++.','
-                    . ' :'.$paramId++.', :'.$paramId++.'),';
+            $query .= '(:' . $paramId++ . ', NOW(), :' . $paramId++ . ','
+                . ' :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ','
+                    . ' :' . $paramId++ . ', :' . $paramId++ . '),';
                     $queryParams[] = $geoKretLog->getLogDateTime()->format('Y-m-d H:i:s');
                     $queryParams[] = $geoKretLog->getUser()->getUserId();
                     $queryParams[] = $geoKretLog->getGeoCache()->getCacheId();
@@ -227,13 +227,13 @@ class GeoKretLog extends BaseObject
     public static function RemoveFromQueueByIds(array $ids)
     {
         if( count($ids) > 0 ){
-            self::db()->query('DELETE FROM geokret_log WHERE id IN ('.implode(',', $ids).')');
+            self::db()->query('DELETE FROM geokret_log WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
 
     public static function UpdateLastTryForIds(array $ids){
         if( count($ids) > 0 ){
-            self::db()->query('UPDATE geokret_log SET last_try = NOW() WHERE id IN ('.implode(',', $ids).')');
+            self::db()->query('UPDATE geokret_log SET last_try = NOW() WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
 

@@ -32,5 +32,5 @@ $cronjobs['schedule'] = [
 
     // Reentrant jobs; these will always run *after* non-reentrant jobs.
     // See Jobs::isReentrant() for explanation.
-    'OkapiSignallingJob'    => 'every 5 minutes',
+    'OkapiSignallingJob' => 'every 5 minutes',
 ];

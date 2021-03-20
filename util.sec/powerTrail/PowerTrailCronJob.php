@@ -1,7 +1,7 @@
 <?php
 use src\Controllers\PowerTrailController;
 
-require_once(__DIR__.'/../../lib/common.inc.php');
+require_once(__DIR__ . '/../../lib/common.inc.php');
 
 PowerTrailCronJobController::run();
 

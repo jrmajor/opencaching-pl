@@ -60,7 +60,7 @@ final class ApplicationContainer
         return $this;
     }
 
-    public static function SetAuthorizedUser(User $loggedUser=null)
+    public static function SetAuthorizedUser(User $loggedUser = null)
     {
         self::Instance()->loggedUser = $loggedUser;
     }

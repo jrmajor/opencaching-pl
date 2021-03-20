@@ -99,7 +99,7 @@ class RSSController extends BaseController
             $entry['datePublished'] = $log->getDateCreated();
             $entry['dateUpdated'] = $log->getLastModified();
             $entry['logUri'] = Uri::getAbsUri($log->getLogUrl());
-            $entry['content'] = '<img src="' . Uri::getAbsUri($log->getLogIcon()) .'" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
+            $entry['content'] = '<img src="' . Uri::getAbsUri($log->getLogIcon()) . '" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
             $entry['content'] .= '<strong>' . tr($log->getTypeTranslationKey()) . '</strong>';
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {
@@ -172,7 +172,7 @@ class RSSController extends BaseController
             $entry['datePublished'] = $cache->getDatePublished();
             $entry['dateUpdated'] = $cache->getLastModificationDate();
             $entry['cacheUri'] = $cache->getCacheUrl();
-            $entry['content'] =  '<img src="' . Uri::getAbsUri($cache->getCacheIcon()) . '" alt="' . tr($cache->getCacheTypeTranslationKey()) .'" style="height: 24px" /> ';
+            $entry['content'] = '<img src="' . Uri::getAbsUri($cache->getCacheIcon()) . '" alt="' . tr($cache->getCacheTypeTranslationKey()) . '" style="height: 24px" /> ';
             $entry['content'] .= '<img src="' . Uri::getAbsUri($cache->getTerrainIcon()) . '" alt="Terrain icon" style="height: 24px" /> ';
             $entry['content'] .= '<img src="' . Uri::getAbsUri($cache->getDifficultyIcon()) . '" alt="Difficulty icon" style="height: 24px" /> ';
             $entry['content'] .= $cache->getCacheLocationObj()->getLocationDesc(' > ') . ' | ';
@@ -287,7 +287,7 @@ class RSSController extends BaseController
             $entry->setId(Uri::getAbsUri($log->getLogUrl()));
             $entry->setLink(Uri::getAbsUri($log->getLogUrl()));
 
-            $content = '<img src="' . Uri::getAbsUri($log->getLogIcon()) .'" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
+            $content = '<img src="' . Uri::getAbsUri($log->getLogIcon()) . '" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
             $content .= '<strong>' . tr($log->getTypeTranslationKey()) . '</strong>';
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {
@@ -333,7 +333,7 @@ class RSSController extends BaseController
             $entry->setId(Uri::getAbsUri($log->getLogUrl()));
             $entry->setLink(Uri::getAbsUri($log->getLogUrl()));
 
-            $content = '<img src="' . Uri::getAbsUri($log->getLogIcon()) .'" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
+            $content = '<img src="' . Uri::getAbsUri($log->getLogIcon()) . '" alt="' . tr($log->getTypeTranslationKey()) . '" /> ';
             $content .= '<strong>' . tr($log->getTypeTranslationKey()) . '</strong>';
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {

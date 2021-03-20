@@ -5,11 +5,11 @@ use src\Utils\Database\XDb;
 use src\Utils\Text\TextConverter;
 use src\Utils\Uri\SimpleRouter;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 // former: searchplugin.inc.php');
 $errmsg_no_cache_found = '<span class="errormsg">' . tr('searchplugin_dnf') . '</span>';
-$errmsg_many_caches_found = '<span class="errormsg">' . tr('searchplugin_many') .'</span>';
+$errmsg_many_caches_found = '<span class="errormsg">' . tr('searchplugin_many') . '</span>';
 $errmsg_unknown_format = '<span class="errormsg">' . tr('searchplugin_format') . '</span>';
 
 $ocWP = strtolower($GLOBALS['oc_waypoint']);

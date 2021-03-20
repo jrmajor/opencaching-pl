@@ -9,14 +9,14 @@ use src\Utils\Database\OcDb;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
-require_once (__DIR__.'/../lib/common.inc.php');
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/common.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
 set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (!$loggedUser && $hide_coords)
+if (! $loggedUser && $hide_coords)
     exit();
 
 $dbc = OcDb::instance();
@@ -27,7 +27,7 @@ if (isset($lat_rad, $lon_rad)  ) {
     $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159,
         0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= '0 distance, ';
     } else {
         // get the users home coords
@@ -52,7 +52,7 @@ if (isset($lat_rad, $lon_rad)  ) {
 }
 $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
 
-if (!$loggedUser) {
+if (! $loggedUser) {
     $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
 } else {
     $query .= ' IFNULL(`cache_mod_cords`.`longitude`, `caches`.`longitude`) `longitude`,
@@ -66,7 +66,7 @@ $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 /* ,AVG(`caches`.`longitude`) AS avglongitude, AVG(`caches`.`latitude`) AS avglatitude */
 
 $sortby = $options['sort'];
-if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } else
     if ($sortby == 'bycreated') {

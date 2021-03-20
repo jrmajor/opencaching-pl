@@ -6,7 +6,7 @@ function cords2($cord)
 {
     $Ntemp = number_format($cord, 5);
     $N = (int) $Ntemp . '?';
-    $Ntemp-=(int) $Ntemp;
+    $Ntemp -= (int) $Ntemp;
     $Ntemp = $Ntemp / 0.0166666;
     $N = number_format($Ntemp, 3);
     return $N;
@@ -17,9 +17,9 @@ function cords($cord)
 {
     $Ntemp = number_format($cord, 5);
     $N = (int) $Ntemp . '° ';
-    $Ntemp-=(int) $Ntemp;
+    $Ntemp -= (int) $Ntemp;
     $Ntemp = $Ntemp / 0.0166666;
-    $N.=number_format($Ntemp, 3) . "'";
+    $N .= number_format($Ntemp, 3) . "'";
     return $N;
 }
 

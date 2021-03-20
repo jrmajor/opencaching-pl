@@ -8,11 +8,11 @@ if ($ile <= $na_stronie)
     find_news(0, $na_stronie);
 else {
 
-    if (!isset($_GET['page'])) {
+    if (! isset($_GET['page'])) {
 
         find_news(0, $na_stronie);
         $next_page = '2';
-    } elseif (isset($_GET['page']) && !empty($_GET['page']) && preg_match("/^\d+$/", $_GET['page'])) {
+    } elseif (isset($_GET['page']) && ! empty($_GET['page']) && preg_match("/^\d+$/", $_GET['page'])) {
 
         $start = (($_GET['page'] - 1) * $na_stronie);
         $limit = $na_stronie;

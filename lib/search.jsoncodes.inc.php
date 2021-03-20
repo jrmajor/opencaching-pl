@@ -15,7 +15,7 @@ global $content, $dbcSearch;
 $rs = $dbcSearch->simpleQuery('
     select wp_oc
     from caches
-    where cache_id in ('.$queryFilter.')
+    where cache_id in (' . $queryFilter . ')
 ');
 $result = [];
 foreach ($dbcSearch->dbResultFetchAll($rs) as &$row_ref) {

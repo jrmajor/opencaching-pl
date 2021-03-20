@@ -75,7 +75,7 @@ class PrintListController extends BaseController
     public function removeFromListAjax($cacheId)
     {
         $geocache = GeoCache::fromCacheIdFactory($cacheId);
-        if (!$geocache) {
+        if (! $geocache) {
             $this->ajaxErrorResponse('No such geocache');
         }
 

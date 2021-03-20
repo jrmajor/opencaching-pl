@@ -23,7 +23,7 @@ class OpenCheckerSetup {
 
     function __construct() {
         $this->scriptname = 'openchecker.php';
-        include __DIR__.'/../../lib/settingsGlue.inc.php';
+        include __DIR__ . '/../../lib/settingsGlue.inc.php';
 
         // Limit number of checks
         // how many times a user can try his answer
@@ -135,7 +135,7 @@ class OpenCheckerCore {
         /** @var GeoCache */
         $geoCache = GeoCache::fromCacheIdFactory($cache_id);
 
-        if (!$geoCache) { //there is no such geocache?
+        if (! $geoCache) { //there is no such geocache?
             tpl_set_var('openchecker_wrong_cache', tr(openchecker_wrong_cache));
             tpl_set_var('section_2_start', '<!--');
             tpl_set_var('section_2_stop', '-->');
@@ -148,7 +148,7 @@ class OpenCheckerCore {
 
         tpl_set_var('wp_oc', $geoCache->getWaypointId());
 
-        tpl_set_var('cache_icon', '<img src="'. $geoCache->getCacheIcon() . '" />');
+        tpl_set_var('cache_icon', '<img src="' . $geoCache->getCacheIcon() . '" />');
         tpl_set_var('cacheid', $cache_id);
         tpl_set_var('user_name', htmlspecialchars($owner->getUserName()));
         tpl_set_var('cachename', htmlspecialchars($geoCache->getCacheName()));
@@ -251,7 +251,7 @@ class OpenCheckerCore {
         tpl_set_var('score', '');
         if ($guessCorrds !== null) {
             tpl_set_var('result_text', tr('openchecker_your_coordinates') .
-                ': <b>'.$guessCorrds->getAsText(Coordinates::COORDINATES_FORMAT_DEG_MIN).'</b>');
+                ': <b>' . $guessCorrds->getAsText(Coordinates::COORDINATES_FORMAT_DEG_MIN) . '</b>');
         } else {
             tpl_set_var('result_text', '');
         }

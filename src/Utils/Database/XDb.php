@@ -116,12 +116,12 @@ class XDb extends OcDb {
             $stmt->execute($argList);
         } catch (PDOException $e) {
 
-            $db->error('Query: '.$query, $e);
+            $db->error('Query: ' . $query, $e);
             return null;
         }
 
         if ($db->debug) {
-            self::debugOut(__METHOD__.":\n\nQuery: ".$query);
+            self::debugOut(__METHOD__ . ":\n\nQuery: " . $query);
         }
 
         return $stmt;

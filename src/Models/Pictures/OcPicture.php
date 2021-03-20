@@ -123,7 +123,7 @@ class OcPicture extends BaseObject
             NOW(), :9, :10, :11)',
             $this->uuid, $this->isLocal, $this->url,
             $thumbUrl, $this->isSpoiler, $this->parentType, $this->parentId, $this->title,
-            !$this->isHidden, $this->order, OcConfig::getSiteNodeId());
+            ! $this->isHidden, $this->order, OcConfig::getSiteNodeId());
 
         // update pic count in parent recod (+last_modified)
         $this->updateParentPicturesCountInDb(1);
@@ -161,7 +161,7 @@ class OcPicture extends BaseObject
     {
         $this->db->multiVariableQuery(
             'UPDATE pictures SET display = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
-            !$this->isHidden, $this->uuid);
+            ! $this->isHidden, $this->uuid);
         $this->updateParentLastUpdateInDb();
     }
 
@@ -208,7 +208,7 @@ class OcPicture extends BaseObject
 
         // thumbnail not found - try to generate new one
         $instance = self::fromUuidFactory($uuid);
-        if(!$instance) {
+        if(! $instance) {
             // there is no picture with given uuid
             return Thumbnail::PHD_ERROR_404;
         }
@@ -236,7 +236,7 @@ class OcPicture extends BaseObject
 
     private function loadFromRow(array $row)
     {
-        foreach($row as $col=>$val){
+        foreach($row as $col => $val){
             switch($col){
                 case 'id':
                     $this->id = $val;
@@ -315,9 +315,9 @@ class OcPicture extends BaseObject
         $path = OcConfig::getPicUploadFolder();
 
         if ($result = glob("$path/{$this->uuid}.*")) {
-            if (!empty($result)) {
+            if (! empty($result)) {
                 // thumbnail found
-                return $path.'/'.basename($result[0]);
+                return $path . '/' . basename($result[0]);
             }
         }
         return null;
@@ -350,12 +350,12 @@ class OcPicture extends BaseObject
             'SELECT MAX(seq) FROM pictures WHERE object_id = :1 AND object_type = :2',
             0, $this->getParentId(), $this->getParentType());
 
-        return $highestOrderIndex+1;
+        return $highestOrderIndex + 1;
     }
 
     public function remove(User $user)
     {
-        if(!$this->isUserAllowedToModifyIt($user)) {
+        if(! $this->isUserAllowedToModifyIt($user)) {
             return false;
         }
 
@@ -372,7 +372,7 @@ class OcPicture extends BaseObject
 
         // DB is cleared - remove files from disk
 
-        if (!$this->isLocalImg()){
+        if (! $this->isLocalImg()){
             // external image - there is nothing more to do
             return true;
         }
@@ -423,13 +423,13 @@ class OcPicture extends BaseObject
      * @param $size
      * @return string   url to given thumbnails size (defaul == medium)
      */
-    private function regenerateThumbnails($size=null)
+    private function regenerateThumbnails($size = null)
     {
-        if(!$this->isLocalImg()) {
+        if(! $this->isLocalImg()) {
             return Thumbnail::placeholderUri(Thumbnail::PHD_EXTERN);
         }
 
-        if(!$this->getPathToImg()) {
+        if(! $this->getPathToImg()) {
             // strange - there is image in DB but no such image on disk
             Debug::errorLog("Can't find image uuid={$this->uuid}");
             return Thumbnail::placeholderUri(Thumbnail::PHD_ERROR_INTERN);

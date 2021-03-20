@@ -36,7 +36,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function listOfIgnored()
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
         }
 
@@ -67,11 +67,11 @@ class UserIgnoredCachesController extends BaseController
             $model->addColumn(new Column_CacheLog(tr('usrIgnore_lastLogColumn'),
                 function($row){
                     return [
-                        'logId'         => $row['llog_id'],
-                        'logType'       => $row['llog_type'],
-                        'logText'       => $row['llog_text'],
-                        'logUserName'   => $row['llog_username'],
-                        'logDate'       => $row['llog_date'],
+                        'logId' => $row['llog_id'],
+                        'logType' => $row['llog_type'],
+                        'logText' => $row['llog_text'],
+                        'logUserName' => $row['llog_username'],
+                        'logDate' => $row['llog_date'],
                     ];
                 }
             ));
@@ -80,7 +80,7 @@ class UserIgnoredCachesController extends BaseController
                 function($row){
                     return [
                         'icon' => 'images/log/16x16-trash.png',
-                        'onClick' => "removeFromIgnored(this, '".$row['wp_oc']."')",
+                        'onClick' => "removeFromIgnored(this, '" . $row['wp_oc'] . "')",
                         'title' => tr('usrIgnore_off_ignore'),
                     ];
                 }
@@ -109,7 +109,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function removeFromIgnoredAjax($cacheWp)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
@@ -130,7 +130,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function addToIgnoredAjax($cacheWp)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }

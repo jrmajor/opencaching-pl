@@ -5,7 +5,7 @@ use src\Models\OcConfig\OcConfig;
  * This script allow to upload GPX file with new cache description
  */
 
-require_once __DIR__.'/lib/common.inc.php';
+require_once __DIR__ . '/lib/common.inc.php';
 
 
 $destination_path = OcConfig::getPicUploadFolder(true) . DIRECTORY_SEPARATOR;

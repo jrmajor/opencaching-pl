@@ -39,7 +39,7 @@ class TestController extends BaseController
 
         // test pages are only for users with AdvancedUsers role
         $this->redirectNotLoggedUsers();
-        if(!$this->loggedUser->hasAdvUserRole()){
+        if(! $this->loggedUser->hasAdvUserRole()){
             $this->displayCommonErrorPageAndExit('Sorry, no such page.');
         }
     }
@@ -96,7 +96,7 @@ class TestController extends BaseController
         if($fbTestEnabled){
             $this->view->setVar('fbLink',
                 FacebookOAuth::getOAuthStartUrl(
-                    Uri::getCurrentUriBase().'/Test/oAuthCallback/Facebook'));
+                    Uri::getCurrentUriBase() . '/Test/oAuthCallback/Facebook'));
         }
 
 
@@ -104,7 +104,7 @@ class TestController extends BaseController
         if($gTestEnabled){
             $this->view->setVar('gLink',
                 GoogleOAuth::getOAuthStartUrl(
-                    Uri::getCurrentUriBase().'/Test/oAuthCallback/Google'));
+                    Uri::getCurrentUriBase() . '/Test/oAuthCallback/Google'));
         }
 
         $this->view->buildView();
@@ -114,7 +114,7 @@ class TestController extends BaseController
      * This is callback for external services in test authorizatio by exernal services
      * @param string $service - service name
      */
-    public function oAuthCallback($service=null)
+    public function oAuthCallback($service = null)
     {
         $this->view->addLocalCss(
             Uri::getLinkWithModificationTime('/views/test/oAuth.css'));
@@ -145,7 +145,7 @@ class TestController extends BaseController
 
         $this->view->setVar('service', $service);
 
-        if(!$oAuth->isUserAuthorized()){
+        if(! $oAuth->isUserAuthorized()){
             $this->view->setVar('error', true);
             $this->view->setVar('errorDesc', $oAuth->getErrorDescription());
         }else{
@@ -176,8 +176,8 @@ class TestController extends BaseController
             $cleanedHTML = htmlentities($rawCleanedHtml);
 
         }else{
-            $html='';
-            $errorHTML='';
+            $html = '';
+            $errorHTML = '';
             $rawCleanedHtml = '';
             $cleanedHTML = '';
         }
@@ -442,7 +442,7 @@ class TestController extends BaseController
         d(OcConfig::getEmailSubjectPrefix());
     }
 
-    public function routerTester($arg1=null, $arg2=null)
+    public function routerTester($arg1 = null, $arg2 = null)
     {
         d($_GET);
         d($arg1);
@@ -452,12 +452,12 @@ class TestController extends BaseController
         echo "<a href='$link'>GO</a>";
     }
 
-    public function altitudeTest($lat=null, $lon=null)
+    public function altitudeTest($lat = null, $lon = null)
     {
-        if(!$lat){
+        if(! $lat){
             $lat = 54;
         }
-        if(!$lon){
+        if(! $lon){
             $lon = 18;
         }
 
@@ -509,13 +509,13 @@ class TestController extends BaseController
             }
 
             $user = User::fromUserIdFactory($userId);
-            if (!$user) {
+            if (! $user) {
                 continue;
             }
 
             // OK this is next unique user
             $users[$userId] = $user;
-        } while ($step < 2*$MAX_CANDIDATEDS && count($users) < $candidates);
+        } while ($step < 2 * $MAX_CANDIDATEDS && count($users) < $candidates);
 
         // generate options
         $i = 0;
@@ -535,7 +535,7 @@ class TestController extends BaseController
                 VALUES (:1, :2, :3, :4, :5)',
                 $electionId, $optName, $optDesc, $optLink, $optOrder);
         }
-        echo '- '.count($users).' options generated<br>';
+        echo '- ' . count($users) . ' options generated<br>';
 
         $options = ChoiceOption::getOptionsForElection(Election::fromElectionIdFactory($electionId));
         $optionIds = array_map(function (ChoiceOption $opt) {

@@ -25,7 +25,7 @@ abstract class RealLock extends Lock
         $trace = debug_backtrace();
         if (
             empty($trace[1])
-            || !isset($trace[1]['class'])
+            || ! isset($trace[1]['class'])
             || $trace[1]['class'] !== __NAMESPACE__ . '\\Lock'
         ) {
             throw new RuntimeException(

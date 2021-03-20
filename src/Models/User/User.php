@@ -142,7 +142,7 @@ class User extends UserCommons
     public static function fromUsernameFactory($username, $fields = null)
     {
 
-        if (!$fields) {
+        if (! $fields) {
             $fields = self::COMMON_COLUMNS;
         }
 
@@ -162,7 +162,7 @@ class User extends UserCommons
     public static function fromEmailFactory($email, $fields = null)
     {
 
-        if (!$fields) {
+        if (! $fields) {
             $fields = self::COMMON_COLUMNS;
         }
 
@@ -460,7 +460,7 @@ class User extends UserCommons
      */
     public function getProfileUrl()
     {
-        if (!$this->profileUrl) {
+        if (! $this->profileUrl) {
             $this->profileUrl = self::GetUserProfileUrl($this->getUserId());
         }
         return $this->profileUrl;
@@ -704,7 +704,7 @@ class User extends UserCommons
      */
     public function isAdoptionApplicable()
     {
-        if ( $this->canCreateNewCache() && !$this->isUnderCacheVerification() ) {
+        if ( $this->canCreateNewCache() && ! $this->isUnderCacheVerification() ) {
             return true;
         }
         return false;
@@ -784,7 +784,7 @@ class User extends UserCommons
 
     public function isActive()
     {
-        return $this->isActive && !empty($this->getEmail());
+        return $this->isActive && ! empty($this->getEmail());
     }
 
     public function getIsActive()

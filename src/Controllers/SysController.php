@@ -10,7 +10,7 @@ class SysController extends BaseController
 
         // test pages are only for users with AdvancedUsers role
         $this->redirectNotLoggedUsers();
-        if(!$this->loggedUser->hasSysAdminRole()){
+        if(! $this->loggedUser->hasSysAdminRole()){
             $this->displayCommonErrorPageAndExit('Sorry, no such page.');
         }
     }
@@ -33,7 +33,7 @@ class SysController extends BaseController
      *
      * APC control panel needs to be called directly
      */
-    public function apc($redirectToApcScript=true)
+    public function apc($redirectToApcScript = true)
     {
         if($redirectToApcScript){
             $this->view->redirect('/src/Libs/Apc/apc.php');

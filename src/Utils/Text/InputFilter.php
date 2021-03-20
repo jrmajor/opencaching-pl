@@ -22,18 +22,18 @@ class InputFilter
 {
     public static function cleanupUserInput($dirtyText)
     {
-        $allowedtags = mb_split(',', 'a,b,i,p,q,s,u,br,dd,dl,dt,em,h1,h2,h3,h4,h5,h6,hr,'.
-                                     ',li,td,th,tr,tt,ol,ul,big,bdo,col,dfn,del,dir,div,ins,img,kbd,map,'.
-                                     'pre,sub,sup,var,abbr,area,cite,code,font,menu,marquee,samp,span,small,'.
-                                     'thead,tfoot,tbody,table,strong,center,strike,acronym,address,caption,isindex,'.
+        $allowedtags = mb_split(',', 'a,b,i,p,q,s,u,br,dd,dl,dt,em,h1,h2,h3,h4,h5,h6,hr,' .
+                                     ',li,td,th,tr,tt,ol,ul,big,bdo,col,dfn,del,dir,div,ins,img,kbd,map,' .
+                                     'pre,sub,sup,var,abbr,area,cite,code,font,menu,marquee,samp,span,small,' .
+                                     'thead,tfoot,tbody,table,strong,center,strike,acronym,address,caption,isindex,' .
                                      'colgroup,fieldset,object,param,embed');
 
-        $allowedattr = mb_split(',', 'marquee,id,src,alt,dir,rel,rev,abbr,axis,char,cite,face,href,lang,name,size,'.
-                                     'span,type,align,class,clear,color,frame,ismap,rules,scope,shape,start,style,'.
-                                     'title,value,width,border,coords,height,hspace,nowrap,nohref,target,usemap,'.
-                                     'vspace,valign,bgcolor,charoff,charset,colspan,compact,headers,noshade,rowspan,'.
-                                     'summary,longdesc,hreflang,datetime,tabindex,accesskey,background,cellspacing,'.
-                                     'cellpadding,allowscriptaccess,allowfullscreen,classid,codebase,standby,'.
+        $allowedattr = mb_split(',', 'marquee,id,src,alt,dir,rel,rev,abbr,axis,char,cite,face,href,lang,name,size,' .
+                                     'span,type,align,class,clear,color,frame,ismap,rules,scope,shape,start,style,' .
+                                     'title,value,width,border,coords,height,hspace,nowrap,nohref,target,usemap,' .
+                                     'vspace,valign,bgcolor,charoff,charset,colspan,compact,headers,noshade,rowspan,' .
+                                     'summary,longdesc,hreflang,datetime,tabindex,accesskey,background,cellspacing,' .
+                                     'cellpadding,allowscriptaccess,allowfullscreen,classid,codebase,standby,' .
                                      'pluginspage,data');
 
         $myFilter = new self($allowedtags, $allowedattr);
@@ -160,7 +160,7 @@ class InputFilter
             $tagOpen_nested = (mb_strpos($fromTagOpen, '<') + $tagOpen_start + 1);
             $currentTag = mb_substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength = mb_strlen($currentTag);
-            if (!$tagOpen_end) {
+            if (! $tagOpen_end) {
                 $preTag .= $postTag;
                 $tagOpen_start = mb_strpos($postTag, '<');
             }
@@ -186,7 +186,7 @@ class InputFilter
             }
 
             // excludes all "non-regular" tagnames OR no tagname OR remove if xssauto is on and tag is blacklisted
-            if ((!mb_eregi('^[a-z][a-z0-9]*$', $tagName)) || (!$tagName) || ((in_array(mb_strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto))) {
+            if ((! mb_eregi('^[a-z][a-z0-9]*$', $tagName)) || (! $tagName) || ((in_array(mb_strtolower($tagName), $this->tagBlacklist)) && ($this->xssAuto))) {
                 $postTag = mb_substr($postTag, ($tagLength + 2));
                 $tagOpen_start = mb_strpos($postTag, '<');
 
@@ -216,7 +216,7 @@ class InputFilter
                 }
 
                 // last attr pair
-                if (!$attr)
+                if (! $attr)
                     $attr = $fromSpace;
 
                 // add to attribute pairs array
@@ -240,9 +240,9 @@ class InputFilter
             $tagFound = in_array(mb_strtolower($tagName), $this->tagsArray);
 
             // remove this tag on condition
-            if ((!$tagFound && $this->tagsMethod) || ($tagFound && !$this->tagsMethod)) {
+            if ((! $tagFound && $this->tagsMethod) || ($tagFound && ! $this->tagsMethod)) {
                 // reconstruct tag with allowed attributes
-                if (!$isCloseTag) {
+                if (! $isCloseTag) {
                     $attrSet = $this->filterAttr($attrSet);
                     $preTag .= '<' . $tagName;
 
@@ -283,7 +283,7 @@ class InputFilter
         // process attributes
         for ($i = 0; $i < count($attrSet); $i++) {
             // skip blank spaces in tag
-            if (!$attrSet[$i])
+            if (! $attrSet[$i])
                 continue;
 
             // split into attr name and value
@@ -298,7 +298,7 @@ class InputFilter
                 unset($attrSubSet[count($attrSubSet) - 1]);
 
             // removes all "non-regular" attr names AND also attr blacklisted
-            if ((!mb_eregi('^[a-z]*$', $attrSubSet[0])) || (($this->xssAuto) && ((in_array(mb_strtolower($attrSubSet[0]), $this->attrBlacklist)) || (mb_substr($attrSubSet[0], 0, 2) == 'on'))))
+            if ((! mb_eregi('^[a-z]*$', $attrSubSet[0])) || (($this->xssAuto) && ((in_array(mb_strtolower($attrSubSet[0]), $this->attrBlacklist)) || (mb_substr($attrSubSet[0], 0, 2) == 'on'))))
                 continue;
 
             // xss attr value filtering
@@ -334,7 +334,7 @@ class InputFilter
             $attrFound = in_array(mb_strtolower($attrSubSet[0]), $this->attrArray);
 
             // keep this attr on condition
-            if ((!$attrFound && $this->attrMethod) || ($attrFound && !$this->attrMethod)) {
+            if ((! $attrFound && $this->attrMethod) || ($attrFound && ! $this->attrMethod)) {
                 // attr has value
                 if (isset($attrSubSet[1])) {
                     $newSet[] = $attrSubSet[0] . '="' . $attrSubSet[1] . '"';

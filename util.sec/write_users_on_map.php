@@ -3,7 +3,7 @@
 use src\Utils\Database\XDb;
 
 //include template handling
-require_once(__DIR__.'/../lib/common.inc.php');
+require_once(__DIR__ . '/../lib/common.inc.php');
 
 $rs = XDb::xSql('SELECT latitude, longitude, date_created FROM user ORDER BY `date_created`');
 $im = imagecreatefromjpeg('mapa.jpg');

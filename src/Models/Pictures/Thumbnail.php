@@ -22,18 +22,18 @@ use src\Utils\Img\OcImage;
 class Thumbnail extends BaseObject
 {
     // Error paceholders
-    const PHD_ERROR_404     = 'thumb404.gif';     // file not found
-    const PHD_ERROR_INTERN  = 'thumbintern.gif';  // internal error
-    const PHD_ERROR_FORMAT  = 'thumbunknown.gif'; // unknown file format
-    const PHD_EXTERN        = 'thumbextern.gif';  // external image, no thumb available
-    const PHD_SPOILER       = 'thumbspoiler.gif'; // spoiler image
+    const PHD_ERROR_404 = 'thumb404.gif';     // file not found
+    const PHD_ERROR_INTERN = 'thumbintern.gif';  // internal error
+    const PHD_ERROR_FORMAT = 'thumbunknown.gif'; // unknown file format
+    const PHD_EXTERN = 'thumbextern.gif';  // external image, no thumb available
+    const PHD_SPOILER = 'thumbspoiler.gif'; // spoiler image
 
-    const THUMBS_DIR     = '/thumbnails';
-    const SPOILER_DIR       = '/spoilers';
-    const NON_SPOILER_DIR   = '/non_spoilers';
+    const THUMBS_DIR = '/thumbnails';
+    const SPOILER_DIR = '/spoilers';
+    const NON_SPOILER_DIR = '/non_spoilers';
 
-    const SIZE_SMALL        = '/sizeSmall';
-    const SIZE_MEDIUM       = '/sizeMedium';
+    const SIZE_SMALL = '/sizeSmall';
+    const SIZE_MEDIUM = '/sizeMedium';
 
     /**
      * Returns the uri to the thumbnail placeholder (like spoiler or error) in the current lang.
@@ -43,9 +43,9 @@ class Thumbnail extends BaseObject
      */
     public static function placeholderUri($placeholder)
     {
-        $path = '/images/thumb/'.I18n::getCurrentLang().'/'.$placeholder;
-        if (!file_exists($path)) {
-            $path = '/images/thumb/en/'.$placeholder;
+        $path = '/images/thumb/' . I18n::getCurrentLang() . '/' . $placeholder;
+        if (! file_exists($path)) {
+            $path = '/images/thumb/en/' . $placeholder;
         }
         return $path;
     }
@@ -115,10 +115,10 @@ class Thumbnail extends BaseObject
 
         $path = self::buildPath($uuid, $spoiler, $thumbSize);
 
-        $outPath = OcConfig::getPicUploadFolder().$path;
+        $outPath = OcConfig::getPicUploadFolder() . $path;
 
         // be sure that $outPath exists
-        if(!is_dir($outPath)){
+        if(! is_dir($outPath)){
             mkdir($outPath, 0750, true);
         }
 
@@ -130,7 +130,7 @@ class Thumbnail extends BaseObject
             return null;
         }
 
-        return OcConfig::getPicBaseUrl().$path.'/'.basename($outPath);
+        return OcConfig::getPicBaseUrl() . $path . '/' . basename($outPath);
     }
 
     /**
@@ -149,7 +149,7 @@ class Thumbnail extends BaseObject
 
                 $path = self::buildPath($uuid, $spoiler, $size);
                 if ($result = glob("$basePath$path/$uuid.*")) {
-                    if (!empty($result) || !is_array($result)) {
+                    if (! empty($result) || ! is_array($result)) {
                         // thumbnail found
                         foreach ($result as $thumb) {
                             unlink ($thumb);
@@ -177,9 +177,9 @@ class Thumbnail extends BaseObject
         $path = self::buildPath($uuid, $spoiler, $size);
 
         if ($result = glob("$basePath$path/$uuid.*")) {
-            if (!empty($result)) {
+            if (! empty($result)) {
                 // thumbnail found
-                return $baseUrl.$path.'/'.basename($result[0]);
+                return $baseUrl . $path . '/' . basename($result[0]);
             }
         }
         // no such file located in given path

@@ -36,13 +36,13 @@ class PictureController extends BaseController
         $this->checkUserLoggedAjax();
 
         // check parent object and access rights
-        if (!is_numeric($parentId) || !is_numeric($parentType)) {
+        if (! is_numeric($parentId) || ! is_numeric($parentType)) {
             $this->ajaxErrorResponse ('Icorrect parentId');
         }
 
         // create parent object
         $parentObj = OcPicture::getParentObj($parentType, $parentId);
-        if (!$parentObj) {
+        if (! $parentObj) {
             $this->ajaxErrorResponse('Improper parent type/id');
         }
 
@@ -68,7 +68,7 @@ class PictureController extends BaseController
             // create OcPicture object for each new pic and save the records in DB
             $pic = OcPicture::getNewPicPlaceholder($parentType, $parentObj);
 
-            if (!$pic->isUserAllowedToModifyIt($this->loggedUser)) {
+            if (! $pic->isUserAllowedToModifyIt($this->loggedUser)) {
                 // ups.. someone try to hack something here
                 // remove the file
                 FileManager::removeFile($path);
@@ -102,18 +102,18 @@ class PictureController extends BaseController
         $this->checkUserLoggedAjax();
 
         $uuids = $_POST['uuidsOrder'] ?? null;
-        if (is_null($uuids) || !is_array($uuids) || empty($uuids)) {
+        if (is_null($uuids) || ! is_array($uuids) || empty($uuids)) {
             $this->ajaxErrorResponse('Wrong uuids array');
         }
 
         $pics = [];
         $orderIdx = 0;
         foreach($uuids as $uuid) {
-            if (!Uuid::isValidUuid($uuid)) {
+            if (! Uuid::isValidUuid($uuid)) {
                 $this->ajaxErrorResponse('Invalid UUID');
             }
             $pic = OcPicture::fromUuidFactory($uuid);
-            if (!$pic) {
+            if (! $pic) {
                 $this->ajaxErrorResponse('Unknown UUID');
             }
             // check if this pic is assigned to the same parent
@@ -122,7 +122,7 @@ class PictureController extends BaseController
             }
 
             // check user rights
-            if (!$pic->isUserAllowedToModifyIt($this->loggedUser)) {
+            if (! $pic->isUserAllowedToModifyIt($this->loggedUser)) {
                 $this->ajaxErrorResponse('User is not allowed to modify pic');
             }
 
@@ -158,17 +158,17 @@ class PictureController extends BaseController
             $title = '-';
         }
 
-        if (!Uuid::isValidUuid($uuid)) {
+        if (! Uuid::isValidUuid($uuid)) {
             $this->ajaxErrorResponse('Invalid UUID');
         }
 
         $pic = OcPicture::fromUuidFactory($uuid);
-        if (!$pic) {
+        if (! $pic) {
             $this->ajaxErrorResponse('Unknown UUID');
         }
 
         // check user rights
-        if (!$pic->isUserAllowedToModifyIt($this->loggedUser)) {
+        if (! $pic->isUserAllowedToModifyIt($this->loggedUser)) {
             $this->ajaxErrorResponse('User is not allowed to modify pic');
         }
 
@@ -229,16 +229,16 @@ class PictureController extends BaseController
         // only logged users can test
         $this->checkUserLoggedAjax();
 
-        if (!Uuid::isValidUuid($uuid)) {
+        if (! Uuid::isValidUuid($uuid)) {
             $this->ajaxErrorResponse('Invalid UUID');
         }
         $pic = OcPicture::fromUuidFactory($uuid);
-        if (!$pic) {
+        if (! $pic) {
             $this->ajaxErrorResponse('Unknown UUID');
         }
 
         // check user rights
-        if (!$pic->isUserAllowedToModifyIt($this->loggedUser)) {
+        if (! $pic->isUserAllowedToModifyIt($this->loggedUser)) {
             $this->ajaxErrorResponse('User is not allowed to modify pic');
         }
 
@@ -272,20 +272,20 @@ class PictureController extends BaseController
         $this->redirectNotLoggedUsers();
 
         // check the UUID param
-        if(!Uuid::isValidUuid($uuid)) {
+        if(! Uuid::isValidUuid($uuid)) {
             $this->displayCommonErrorPageAndExit('Improper UUID!');
         }
 
         $picture = OcPicture::fromUuidFactory($uuid);
-        if (!$picture ) {
+        if (! $picture ) {
             $this->displayCommonErrorPageAndExit('No such picture?!');
         }
 
-        if (!$picture->isUserAllowedToModifyIt($this->loggedUser)) {
+        if (! $picture->isUserAllowedToModifyIt($this->loggedUser)) {
             $this->displayCommonErrorPageAndExit("You don't have permissions to remove this picture");
         }
 
-        if (!$picture->remove($this->loggedUser)) {
+        if (! $picture->remove($this->loggedUser)) {
             $this->displayCommonErrorPageAndExit('Internal error on picture remove!');
         }
 
@@ -320,14 +320,14 @@ class PictureController extends BaseController
         return $this->thumb($uuid, $showSpoiler, Thumbnail::SIZE_MEDIUM);
     }
 
-    private function thumb($uuid, $showSpoiler=false, $size = null)
+    private function thumb($uuid, $showSpoiler = false, $size = null)
     {
         // check the UUID param
-        if(!Uuid::isValidUuid($uuid)) {
+        if(! Uuid::isValidUuid($uuid)) {
             $this->view->redirectAndExit(Thumbnail::placeholderUri(Thumbnail::PHD_ERROR_404));
         }
 
-        if (!$size) {
+        if (! $size) {
             $size = Thumbnail::SIZE_MEDIUM;
         }
 

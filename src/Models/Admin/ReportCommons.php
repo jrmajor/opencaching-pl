@@ -39,10 +39,10 @@ class ReportCommons extends BaseObject
     const STATUS_LOOK_HERE = 3;
 
     // Virtual status - all of above
-    const STATUS_ALL = - 1;
+    const STATUS_ALL = -1;
 
     // Virtual status - all statuses but not STATUS_CLOSED
-    const STATUS_OPEN = - 2;
+    const STATUS_OPEN = -2;
 
     /*
      * "Virtual" types of leaders.
@@ -52,13 +52,13 @@ class ReportCommons extends BaseObject
     const USER_NOBODY = 0;
 
     // All users + not assigned
-    const USER_ALL = - 1;
+    const USER_ALL = -1;
 
     // Current logged user
-    const USER_YOU = - 2;
+    const USER_YOU = -2;
 
     // Current logged user + not assigned
-    const USER_YOU2 = - 3;
+    const USER_YOU2 = -3;
 
     /*
      * Types of objects reported
@@ -106,7 +106,7 @@ class ReportCommons extends BaseObject
     const TYPE_OTHER = 4;
 
     // "Virtual" type ALL for search <select>
-    const TYPE_ALL = - 1;
+    const TYPE_ALL = -1;
 
     /**
      * Returns URI of the report (maybe we will use routing in future?)
@@ -403,7 +403,7 @@ class ReportCommons extends BaseObject
      */
     public static function getStatusesArray($includeVirtual = false)
     {
-        $statuses =  [
+        $statuses = [
             self::STATUS_NEW,
             self::STATUS_IN_PROGRESS,
             self::STATUS_LOOK_HERE,

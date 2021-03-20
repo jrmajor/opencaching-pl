@@ -21,14 +21,14 @@ class CacheStats extends BaseObject
      */
     public static function getChartDataCacheTypes()
     {
-        return OcMemCache::getOrCreate(__METHOD__, 24*60*60, function() {
+        return OcMemCache::getOrCreate(__METHOD__, 24 * 60 * 60, function() {
             return self::generateChartDataCacheTypes();
         });
     }
 
     private static function generateChartDataCacheTypes()
     {
-        $query =  'SELECT COUNT(`type`) `count`, `type`
+        $query = 'SELECT COUNT(`type`) `count`, `type`
             FROM `caches`
             WHERE `status` = :1
             GROUP BY `type`
@@ -37,7 +37,7 @@ class CacheStats extends BaseObject
 
         $rows = [];
         $table = [];
-        $table['cols'] =  [
+        $table['cols'] = [
             ['label' => tr('cache_type'), 'type' => 'string'],
             ['label' => tr('number_of_caches'), 'type' => 'number'],
         ];
@@ -62,7 +62,7 @@ class CacheStats extends BaseObject
      */
     public static function getChartDataCachesFound()
     {
-        return OcMemCache::getOrCreate(__METHOD__, 24*60*60, function() {
+        return OcMemCache::getOrCreate(__METHOD__, 24 * 60 * 60, function() {
             return self::generateChartDataCachesFound();
         });
     }
@@ -86,7 +86,7 @@ class CacheStats extends BaseObject
         $finds = 0;
         $rows = [];
         $table = [];
-        $table['cols'] =  [
+        $table['cols'] = [
             ['label' => tr('graph_statistics_04'), 'type' => 'date'],
             ['label' => tr('graph_statistics_02'), 'type' => 'number'],
             ['label' => tr('graph_statistics_03'), 'type' => 'number'],

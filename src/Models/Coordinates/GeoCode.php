@@ -24,7 +24,7 @@ class GeoCode
      *
      */
     public static function isGeocodeServiceAvailable() {
-        return !(empty(OcConfig::getMapKey('OpenRouteService')));
+        return ! (empty(OcConfig::getMapKey('OpenRouteService')));
     }
 
     /**
@@ -44,7 +44,7 @@ class GeoCode
         $url = "https://api.openrouteservice.org/geocode/search?api_key=$ors_key&text=$input";
         $data = @file_get_contents($url);
 
-        if (!$data) {
+        if (! $data) {
             Debug::errorLog('Problem with fetching data from ' . $url);
             throw new Exception('Problem with fetching data from OpenRouteService');
             return;
@@ -167,16 +167,16 @@ class GeoCode
         $lat = $coords->getLatitude();
         $lon = $coords->getLongitude();
 
-        $url="https://www.mapquestapi.com/geocoding/v1/reverse?key=$key".
+        $url = "https://www.mapquestapi.com/geocoding/v1/reverse?key=$key" .
         "&location=$lat%2C$lon&outFormat=json&thumbMaps=false";
 
         $data = @file_get_contents($url);
         $resp = json_decode($data);
 
         $instance = new self();
-        if(is_array($resp->results) && !empty($resp->results)){
+        if(is_array($resp->results) && ! empty($resp->results)){
             $data = $resp->results[0];
-            if(is_array($data->locations) && !empty($data->locations)){
+            if(is_array($data->locations) && ! empty($data->locations)){
                 $data = $data->locations[0];
                 $instance->countryCode = $data->adminArea1;
                 $instance->admCode = $data->adminArea3;
@@ -205,7 +205,7 @@ class GeoCode
         return $this->admName;
     }
 
-    public function getDescription($separator='-'){
+    public function getDescription($separator = '-'){
         if($this->countryName){
             $country = $this->countryName;
         }else{
@@ -218,7 +218,7 @@ class GeoCode
             $adm = '?';
         }
 
-        return $country.$separator.$adm;
+        return $country . $separator . $adm;
 
     }
 }

@@ -27,7 +27,7 @@ class Uri {
         $paramArr[$paramName] = $paramValue;
 
         //rebuild the uri
-        return strtok($uri, '?') . '?'.http_build_query($paramArr);
+        return strtok($uri, '?') . '?' . http_build_query($paramArr);
 
     }
 
@@ -39,7 +39,7 @@ class Uri {
 
         [$uriWithoutHash] = explode('#', $uri);
 
-        return $uriWithoutHash.'#' . $anchorName;
+        return $uriWithoutHash . '#' . $anchorName;
 
     }
 
@@ -64,8 +64,8 @@ class Uri {
 
             //rebuild the uri
             $uri = strtok($uri, '?');
-            if (!empty($paramArr)) {
-                $uri .= '?'.http_build_query($paramArr);
+            if (! empty($paramArr)) {
+                $uri .= '?' . http_build_query($paramArr);
             }
         }
 
@@ -87,23 +87,23 @@ class Uri {
      */
     public static function getLinkWithModificationTime($rootPath)
     {
-        $ROOT = __DIR__.'/../../..';
+        $ROOT = __DIR__ . '/../../..';
 
         // be sure that the path has preceding slash
         $rootPath = self::addPrecedingSlashIfNecessary($rootPath);
 
-        $realPath = $ROOT.$rootPath;
-        if (!file_exists($realPath)) {
+        $realPath = $ROOT . $rootPath;
+        if (! file_exists($realPath)) {
             // there is no such file!
-            if (file_exists($ROOT.'/public'.$rootPath)) {
+            if (file_exists($ROOT . '/public' . $rootPath)) {
                 // there is such file in '/public'
-                $realPath = $ROOT.'/public'.$rootPath;
+                $realPath = $ROOT . '/public' . $rootPath;
             } else {
                 throw new Exception("No such file: $rootPath");
             }
         }
 
-        return $rootPath.'?' . filemtime($realPath);
+        return $rootPath . '?' . filemtime($realPath);
     }
 
     /**
@@ -127,19 +127,19 @@ class Uri {
      */
     public static function getCurrentDomain($verifyDomain = true)
     {
-        if (!isset($_SERVER['HTTP_HOST'])) {
+        if (! isset($_SERVER['HTTP_HOST'])) {
             // HOST not set in request - just ignore the domain
             return null;
         }
 
         $domain = $_SERVER['HTTP_HOST'];
 
-        if (!$verifyDomain) {
+        if (! $verifyDomain) {
             return $domain;
         }
 
         // main domain or any its subdomain
-        $domainRegex = "/([a-z0-9|-]+\.)*".OcConfig::getSiteMainDomain().'$/';
+        $domainRegex = "/([a-z0-9|-]+\.)*" . OcConfig::getSiteMainDomain() . '$/';
         if(preg_match($domainRegex, $domain)){
             return $domain;
         } else {
@@ -236,7 +236,7 @@ class Uri {
     public static function getAbsServerPath($pageRootPath)
     {
         $rootPath = self::getPageRootPathOnServer();
-        return $rootPath.$pageRootPath;
+        return $rootPath . $pageRootPath;
     }
 
     /**

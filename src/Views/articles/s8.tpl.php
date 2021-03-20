@@ -39,7 +39,7 @@ function ()
         'SELECT COUNT(*) `count`, `cache_location`.`adm3` region, `cache_location`.`code3` code_region
         FROM `cache_location`
             INNER JOIN cache_logs ON cache_location.cache_id=cache_logs.cache_id
-        WHERE `cache_location`.`code1` IN ('.implode(',', $countriesQuoted) .")
+        WHERE `cache_location`.`code1` IN (' . implode(',', $countriesQuoted) . ")
             AND (cache_logs.type='1' OR cache_logs.type='2')
             AND cache_logs.deleted='0'
         GROUP BY `cache_location`.`code3`

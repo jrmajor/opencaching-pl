@@ -107,7 +107,7 @@ class RepairCacheScores
                 echo "founds=$founds notfounds=$notfounds ";
                 echo "notes=$notes watchers=$watchers ";
                 echo "ignorers=$ignorers last_found=$last_found<br>";
-                $total_touched ++;
+                $total_touched++;
             }
         }
         set_time_limit(60);

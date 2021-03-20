@@ -87,7 +87,7 @@ class UploadModel {
   public function addUrlBaseToNewFilesArray(array &$newFiles){
       array_walk(
           $newFiles,
-          function(&$file, $key, $urlBase) { $file = $urlBase.'/'.$file; },
+          function(&$file, $key, $urlBase) { $file = $urlBase . '/' . $file; },
           $this->getBaseUrl());
   }
 
@@ -103,7 +103,7 @@ class UploadModel {
 
   public function getBaseUrl()
   {
-      if(!$this->urlBase){
+      if(! $this->urlBase){
         throw new Exception('Trying to use unset baseUrl for uploaded file!');
       }
       return $this->urlBase;
@@ -117,7 +117,7 @@ class UploadModel {
    * @param string $dirInDirBasePath - directory related to "dynamicBasePath"
    * @param string $urlPath - optional url path under which file can be accessed
    */
-  protected function setDirs($dirInDirBasePath, $urlPath=null)
+  protected function setDirs($dirInDirBasePath, $urlPath = null)
   {
       if($dirInDirBasePath == self::DEFAULT_TMP_DIR) {
           $this->urlBase = null; // files are not accessible in TMP dir - it will be moved in separate code
@@ -125,15 +125,15 @@ class UploadModel {
           return;
       }
 
-      if(!$urlPath) {
+      if(! $urlPath) {
           $this->urlBase = $dirInDirBasePath;
       } else {
           $this->urlBase = $urlPath;
       }
 
-      $this->dirAtServer = OcConfig::getDynFilesPath(true).$dirInDirBasePath;
+      $this->dirAtServer = OcConfig::getDynFilesPath(true) . $dirInDirBasePath;
 
-      if (!is_dir($this->dirAtServer)) {
+      if (! is_dir($this->dirAtServer)) {
           throw(new Exception("Improper path to save uploaded files! ({$this->dirAtServer})"));
       }
   }

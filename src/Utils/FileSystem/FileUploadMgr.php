@@ -31,18 +31,18 @@ class FileUploadMgr
 
     private static function checkDir($dir)
     {
-        if(!file_exists($dir)){
+        if(! file_exists($dir)){
             // no such dir - try to create one
-            if(!mkdir($dir, 0755, true)){
+            if(! mkdir($dir, 0755, true)){
                 throw new RuntimeException("Can't save uploaded files - wrong path.");
             }
         }
 
-        if(!is_dir($dir)){
+        if(! is_dir($dir)){
             throw new RuntimeException("Can't save uploaded files - wrong dir.");
         }
 
-        if(!is_writable($dir)){
+        if(! is_writable($dir)){
             throw new RuntimeException("Can't save uploaded files - no permissions");
         }
 
@@ -91,7 +91,7 @@ class FileUploadMgr
     private static function checkFileMimeType(UploadModel $model)
     {
         foreach($_FILES[$model->formVarName]['type'] as $type){
-            if(!self::compareMimeType($type, $model->allowedTypesRegex)){
+            if(! self::compareMimeType($type, $model->allowedTypesRegex)){
                 throw new RuntimeException("Not allowed mime type: $type != {$model->allowedTypesRegex}");
             }
         }
@@ -166,7 +166,7 @@ class FileUploadMgr
     {
         $formVarName = $model->formVarName;
 
-        if ( !isset($_FILES[$formVarName], $_FILES[$formVarName]['error'])) {
+        if ( ! isset($_FILES[$formVarName], $_FILES[$formVarName]['error'])) {
             /*
              * if upload fails here check error.log and php.ini for at least:
              *  - upload_max_filesize

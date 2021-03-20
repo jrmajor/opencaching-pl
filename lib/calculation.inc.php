@@ -29,17 +29,17 @@ function getSqlDistanceFormulaForModCoords($lonFrom, $latFrom, $maxDistance,
     $maxDistance = $maxDistance + 0;
     $distanceMultiplier = $distanceMultiplier + 0;
 
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $lonField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $lonField))
         exit('Fatal Error: invalid lonField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $latField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $latField))
         exit('Fatal Error: invalid latField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $tableName))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $tableName))
         exit('Fatal Error: invalid tableName');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modLonField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modLonField))
         exit('Fatal Error: invalid modLonField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modLatField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modLatField))
         exit('Fatal Error: invalid modLatField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modTableName))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $modTableName))
         exit('Fatal Error: invalid modTableName');
 
     $b1_rad = sprintf('%01.5F', (90 - $latFrom) * 3.14159 / 180);
@@ -68,11 +68,11 @@ function getSqlDistanceFormula($lonFrom, $latFrom, $maxDistance, $distanceMultip
     $maxDistance = $maxDistance + 0;
     $distanceMultiplier = $distanceMultiplier + 0;
 
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $lonField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $lonField))
         exit('Fatal Error: invalid lonField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $latField))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $latField))
         exit('Fatal Error: invalid latField');
-    if (!mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $tableName))
+    if (! mb_ereg_match('^[a-zA-Z][a-zA-Z0-9_]{0,59}$', $tableName))
         exit('Fatal Error: invalid tableName');
 
     $b1_rad = sprintf('%01.5F', (90 - $latFrom) * 3.14159 / 180);

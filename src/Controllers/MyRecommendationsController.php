@@ -34,7 +34,7 @@ class MyRecommendationsController extends BaseController
     }
 
     public function recommendations($userId = null) {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
             exit;
         }
@@ -141,13 +141,13 @@ class MyRecommendationsController extends BaseController
      */
     public function removeRecommendation($cacheId)
     {
-        if(!$this->isUserLogged()) {
+        if(! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
         //check cacheId
-        if(!is_numeric($cacheId)) {
+        if(! is_numeric($cacheId)) {
             $this->ajaxErrorResponse('Invalid param', 400);
             exit;
         }
@@ -157,7 +157,7 @@ class MyRecommendationsController extends BaseController
 
     }
 
-    private function completeDataRows($userId, $limit=null, $offset=null) {
+    private function completeDataRows($userId, $limit = null, $offset = null) {
         $results = CacheRecommendation::getCachesRecommendedByUser($userId, $limit, $offset);
 
         // find cache status for user (found/not-found)

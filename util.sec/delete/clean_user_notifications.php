@@ -25,7 +25,7 @@ $db = OcDb::instance();
 // inline options
 $shortopts = 'u:';
 $shortopts .= 'h';
-$longopts  = [
+$longopts = [
     'userId:',           // No value
 ];
 $options = getopt($shortopts, $longopts);
@@ -37,19 +37,19 @@ if( isset($options['h']) ){
 
 
 $userName = isset($options['u']) ?            $options['u']     : null;
-$userId =   isset($options['userId']) ? (int) $options['userId']: null;
+$userId = isset($options['userId']) ? (int) $options['userId']: null;
 
 if( is_null($userId) && is_null($userName) ){
     echo "Error: No param given?!\n\n";
     printUsageAndExit();
 }
 
-if(!is_null($userId) && !is_integer($userId)){
+if(! is_null($userId) && ! is_integer($userId)){
     echo "Error: userId param has to be integer value!\n\n";
     printUsageAndExit();
 }
 
-if(!is_null($userId) && !is_null($userName)){
+if(! is_null($userId) && ! is_null($userName)){
     echo "Warning: Both username and userId params given - username will be skipped!\n\n";
     $userName = null;
 }

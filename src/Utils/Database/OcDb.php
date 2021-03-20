@@ -79,7 +79,7 @@ class OcDb extends OcPdo
      */
     public function dbResultFetch(PDOStatement $stmt = null, $fetchStyle = null)
     {
-        if (!is_null($stmt)) {
+        if (! is_null($stmt)) {
             if (is_null($fetchStyle)) {
                 return $stmt->fetch();
             } else {
@@ -98,7 +98,7 @@ class OcDb extends OcPdo
      */
     public function dbResultFetchOneRowOnly(PDOStatement $stmt = null)
     {
-        if (!is_null($stmt)) {
+        if (! is_null($stmt)) {
             $result = $stmt->fetch();
             $stmt->closeCursor();
 
@@ -152,7 +152,7 @@ class OcDb extends OcPdo
         PDOStatement $stmt = null,
         $fetchStyle = null
     ) {
-        if (!is_null($stmt)) {
+        if (! is_null($stmt)) {
             if (is_null($fetchStyle)) {
                 $result = $stmt->fetchAll();
             } else {
@@ -196,12 +196,12 @@ class OcDb extends OcPdo
     public function dbFetchAsKeyValArray(PDOStatement $stmt, $keyCol, $valCol, $caseSensitiveKey = true)
     {
         $result = [];
-        if (!is_null($stmt)) {
-            if (!$caseSensitiveKey) {
+        if (! is_null($stmt)) {
+            if (! $caseSensitiveKey) {
                 $keyCol = strtolower($keyCol);
             }
             while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
-                if (!$caseSensitiveKey) {
+                if (! $caseSensitiveKey) {
                     $row = array_change_key_case($row, CASE_LOWER);
                 }
                 $result[$row[$keyCol]] = $row[$valCol];
@@ -223,12 +223,12 @@ class OcDb extends OcPdo
     public function dbFetchOneColumnArray(PDOStatement $stmt, $keyCol, $caseSensitiveKey = true)
     {
         $result = [];
-        if (!is_null($stmt)) {
-            if (!$caseSensitiveKey) {
+        if (! is_null($stmt)) {
+            if (! $caseSensitiveKey) {
                 $keyCol = strtolower($keyCol);
             }
             while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
-                if (!$caseSensitiveKey) {
+                if (! $caseSensitiveKey) {
                     $row = array_change_key_case($row, CASE_LOWER);
                 }
                 $result[] = $row[$keyCol];
@@ -273,7 +273,7 @@ class OcDb extends OcPdo
      */
     public function rowCount(PDOStatement $stmt = null)
     {
-        if (!is_null($stmt)) {
+        if (! is_null($stmt)) {
             return $stmt->rowCount();
         }
 
@@ -297,11 +297,11 @@ class OcDb extends OcPdo
 
         } catch (PDOException $e) {
 
-            $this->error('Query: '.$query, $e);
+            $this->error('Query: ' . $query, $e);
         }
 
         if ($this->debug) {
-            self::debugOut(__METHOD__.":\n\nQuery: ".$query);
+            self::debugOut(__METHOD__ . ":\n\nQuery: " . $query);
         }
 
         return $stmt;
@@ -326,7 +326,7 @@ class OcDb extends OcPdo
         }
         foreach (explode($delimiter, $queries) as $query) {
             $query = trim($query);
-            if (!empty($query) && strcasecmp(substr($query, 0, 9), 'DELIMITER') != 0) {
+            if (! empty($query) && strcasecmp(substr($query, 0, 9), 'DELIMITER') != 0) {
                 $this->simpleQuery($query);
             }
         }
@@ -415,10 +415,10 @@ class OcDb extends OcPdo
 
         } catch (PDOException $e) {
 
-            $this->error("Query:\n$query\n\nParams:\n".implode(' | ', $params), $e);
+            $this->error("Query:\n$query\n\nParams:\n" . implode(' | ', $params), $e);
         }
         if ($this->debug) {
-            self::debugOut(__METHOD__.":\n\nQuery:\n$query\n\nParams:\n".implode(' | ', $params));
+            self::debugOut(__METHOD__ . ":\n\nQuery:\n$query\n\nParams:\n" . implode(' | ', $params));
         }
 
         return $stmt;
@@ -475,17 +475,17 @@ class OcDb extends OcPdo
 
             $i = 1;
             foreach ($argList as $param) {
-                $stmt->bindValue(self::BIND_CHAR.$i++, $param);
+                $stmt->bindValue(self::BIND_CHAR . $i++, $param);
             }
             $stmt->setFetchMode(self::FETCH_ASSOC);
             $stmt->execute();
         } catch (PDOException $e) {
-            $message = 'Query|Params: '.$query.' | '.implode(' | ', $argList);
+            $message = 'Query|Params: ' . $query . ' | ' . implode(' | ', $argList);
             $this->error($message, $e);
         }
 
         if ($this->debug) {
-            self::debugOut(__METHOD__.":\n\nQuery|Params: $query | ".implode(' | ', $argList));
+            self::debugOut(__METHOD__ . ":\n\nQuery|Params: $query | " . implode(' | ', $argList));
         }
 
         return $stmt;
@@ -510,7 +510,7 @@ class OcDb extends OcPdo
         if ($numArgs <= 2) {
 
             //only query + default value=> use simpleQuery
-            $this->error('Improper use of '.__METHOD__.': Too few arguments. Use simpleQueryValue() instead.');
+            $this->error('Improper use of ' . __METHOD__ . ': Too few arguments. Use simpleQueryValue() instead.');
 
         } else {
             // check if params are passed as array
@@ -673,7 +673,7 @@ class OcDb extends OcPdo
         self::validateEntityName($this->dbName);
 
         return $this->multiVariableQueryValue(
-            'SHOW TABLES FROM `'.$this->dbName.'` LIKE :1',
+            'SHOW TABLES FROM `' . $this->dbName . '` LIKE :1',
             null,
             $table
         ) !== null;
@@ -685,7 +685,7 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         return $this->multiVariableQueryValue(
-            'SHOW COLUMNS FROM `'.$table.'` LIKE :1',
+            'SHOW COLUMNS FROM `' . $table . '` LIKE :1',
             null,
             $column
         ) !== null;
@@ -701,17 +701,17 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         $row = $this->dbResultFetchOneRowOnly($this->multiVariableQuery(
-            'SHOW COLUMNS FROM `'.$table.'` LIKE :1',
+            'SHOW COLUMNS FROM `' . $table . '` LIKE :1',
             $column
         ));
-        if (!$row) {
-            $this->error("Column not found: '".$table.'.'.$column."'");
+        if (! $row) {
+            $this->error("Column not found: '" . $table . '.' . $column . "'");
         }
         $row = array_change_key_case($row, CASE_LOWER);
 
         $type = strtolower($row['type']);
         $isNullable = (strtoupper($row['null']) == 'YES');
-        if (!$isNullable) {
+        if (! $isNullable) {
             $type .= ' NOT NULL';
         }
         if ($row['default'] !== null) {
@@ -733,10 +733,10 @@ class OcDb extends OcPdo
         self::validateEntityName($column);
 
         $row = $this->dbResultFetchOneRowOnly($this->multiVariableQuery(
-            'SHOW FULL COLUMNS FROM `'.$table.'` LIKE :1',
+            'SHOW FULL COLUMNS FROM `' . $table . '` LIKE :1',
             $column
         ));
-        if (!$row) {
+        if (! $row) {
             return '';
         }
         $row = array_change_key_case($row, CASE_LOWER);
@@ -750,7 +750,7 @@ class OcDb extends OcPdo
         self::validateEntityName($index);
 
         return $this->multiVariableQueryValue(
-            'SHOW INDEX FROM `'.$table.'` WHERE key_name = :1',
+            'SHOW INDEX FROM `' . $table . '` WHERE key_name = :1',
             null,
             $index
         ) !== null;
@@ -759,8 +759,8 @@ class OcDb extends OcPdo
     public function foreignKeyExists($table, $column, $refTable)
     {
         // For consistency, we require also for this method that the $table exists:
-        if (!$this->tableExists($table)) {
-            $this->error("Table not found: '".$table."'");
+        if (! $this->tableExists($table)) {
+            $this->error("Table not found: '" . $table . "'");
         }
         self::validateEntityName($column);
         self::validateEntityName($refTable);
@@ -811,22 +811,22 @@ class OcDb extends OcPdo
               $p .= ' ' . $key . '=' . $value;
           }
           $this->multiVariableQuery(
-              'CREATE TABLE IF NOT EXISTS`'.$table.'` (' .
+              'CREATE TABLE IF NOT EXISTS`' . $table . '` (' .
               implode(', ', $fieldDefs) . ')' . $p
           );
     }
 
-    public function addColumnIfNotExists($table, $column, $type, $comment='', $after='')
+    public function addColumnIfNotExists($table, $column, $type, $comment = '', $after = '')
     {
         // $type is not validated.
 
-        if (!$this->columnExists($table, $column)) {
+        if (! $this->columnExists($table, $column)) {
             if ($after) {
                 self::validateEntityName($after);
-                $after = 'AFTER `'.$after.'`';
+                $after = 'AFTER `' . $after . '`';
             }
             $this->multiVariableQuery(
-                'ALTER TABLE `'.$table.'` ADD COLUMN `'.$column.'` '.$type.' COMMENT :1 '.$after,
+                'ALTER TABLE `' . $table . '` ADD COLUMN `' . $column . '` ' . $type . ' COMMENT :1 ' . $after,
                 $comment
             );
         }
@@ -842,7 +842,7 @@ class OcDb extends OcPdo
             // use slightly differrent syntaxes. But it's just an optimization.
 
             $this->multiVariableQuery(
-                'ALTER TABLE `'.$table.'` MODIFY COLUMN `'.$column.'` '.$newType.' COMMENT :1',
+                'ALTER TABLE `' . $table . '` MODIFY COLUMN `' . $column . '` ' . $newType . ' COMMENT :1',
                 $this->getColumnComment($table, $column)
             );
         }
@@ -853,7 +853,7 @@ class OcDb extends OcPdo
         if ($this->getColumnComment($table, $column) !== $newComment) {
             $type = $this->getFullColumnType($table, $column);
             $this->multiVariableQuery(
-                'ALTER TABLE `'.$table.'` MODIFY COLUMN `'.$column.'` '.$type.' COMMENT :1',
+                'ALTER TABLE `' . $table . '` MODIFY COLUMN `' . $column . '` ' . $type . ' COMMENT :1',
                 $newComment
             );
         }
@@ -863,16 +863,16 @@ class OcDb extends OcPdo
     {
         if ($this->columnExists($table, $column)) {
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` DROP COLUMN `'.$column.'`'
+                'ALTER TABLE `' . $table . '` DROP COLUMN `' . $column . '`'
             );
         }
     }
 
     public function addPrimaryKeyIfNotExists($table, $column)
     {
-        if (!$this->indexExists($table, 'PRIMARY')) {
+        if (! $this->indexExists($table, 'PRIMARY')) {
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` ADD PRIMARY KEY (`'.$column.'`)'
+                'ALTER TABLE `' . $table . '` ADD PRIMARY KEY (`' . $column . '`)'
             );
         }
     }
@@ -899,14 +899,14 @@ class OcDb extends OcPdo
     {
         // $type is not validated
 
-        if (!$this->indexExists($table, $index)) {
+        if (! $this->indexExists($table, $index)) {
             if ($columns) {
                 self::validateEntityName($columns);
             } else {
                 $columns = [$index];
             }
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` ADD '.$type.' `'.$index.'` (`'.implode('`,`', $columns).'`)'
+                'ALTER TABLE `' . $table . '` ADD ' . $type . ' `' . $index . '` (`' . implode('`,`', $columns) . '`)'
             );
         }
     }
@@ -915,7 +915,7 @@ class OcDb extends OcPdo
     {
         if ($this->indexExists($table, $index)) {
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` DROP INDEX `'.$index.'`'
+                'ALTER TABLE `' . $table . '` DROP INDEX `' . $index . '`'
             );
         }
     }
@@ -923,14 +923,14 @@ class OcDb extends OcPdo
     public function addForeignKeyIfNotExists(
         $table, $column, $refTable, $refColumn, $refOptions = ''
     ) {
-        if (!$this->foreignKeyExists($table, $column, $refTable)) {
+        if (! $this->foreignKeyExists($table, $column, $refTable)) {
 
             self::validateEntityName($refColumn);
             self::validateSqlKeywords($refOptions);
 
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` ADD FOREIGN KEY (`'.$column.'`) ' .
-                'REFERENCES `'.$refTable.'` (`'.$refColumn.'`) '.$refOptions
+                'ALTER TABLE `' . $table . '` ADD FOREIGN KEY (`' . $column . '`) ' .
+                'REFERENCES `' . $refTable . '` (`' . $refColumn . '`) ' . $refOptions
             );
         }
     }
@@ -948,7 +948,7 @@ class OcDb extends OcPdo
                 $refTable
             );
             $this->simpleQuery(
-                'ALTER TABLE `'.$table.'` DROP FOREIGN KEY `'.$constraint.'`'
+                'ALTER TABLE `' . $table . '` DROP FOREIGN KEY `' . $constraint . '`'
             );
         }
     }
@@ -956,7 +956,7 @@ class OcDb extends OcPdo
     public function dropTableIfExists($table)
     {
         self::validateEntityName($table);
-        $this->simpleQuery('DROP TABLE IF EXISTS `'.$table.'`');
+        $this->simpleQuery('DROP TABLE IF EXISTS `' . $table . '`');
     }
 
     public function createOrReplaceTrigger($trigger, $definition)
@@ -966,7 +966,7 @@ class OcDb extends OcPdo
 
         $this->dropTriggerIfExists($trigger);
         $this->simpleQuery(
-            'CREATE TRIGGER `'.$trigger.'` '.$definition
+            'CREATE TRIGGER `' . $trigger . '` ' . $definition
         );
     }
 
@@ -977,7 +977,7 @@ class OcDb extends OcPdo
 
         $this->dropProcedureIfExists($proc);
         $this->simpleQuery(
-            'CREATE PROCEDURE `'.$proc.'` (' . implode(', ', $params) . ")\n" .$body
+            'CREATE PROCEDURE `' . $proc . '` (' . implode(', ', $params) . ")\n" . $body
         );
     }
 
@@ -997,7 +997,7 @@ class OcDb extends OcPdo
 
         $this->dropFunctionIfExists($func);
         $this->simpleQuery(
-            'CREATE FUNCTION `'.$func.'` (' . implode(', ', $params) . ")\n" .
+            'CREATE FUNCTION `' . $func . '` (' . implode(', ', $params) . ")\n" .
             'RETURNS ' . $returns . "\n" .
             $type . "\n" .
             $body
@@ -1007,19 +1007,19 @@ class OcDb extends OcPdo
     public function dropTriggerIfExists($trigger)
     {
         self::validateEntityName($trigger);
-        $this->simpleQuery('DROP TRIGGER IF EXISTS `'.$trigger.'`');
+        $this->simpleQuery('DROP TRIGGER IF EXISTS `' . $trigger . '`');
     }
 
     public function dropProcedureIfExists($proc)
     {
         self::validateEntityName($proc);
-        $this->simpleQuery('DROP PROCEDURE IF EXISTS `'.$proc.'`');
+        $this->simpleQuery('DROP PROCEDURE IF EXISTS `' . $proc . '`');
     }
 
     public function dropFunctionIfExists($func)
     {
         self::validateEntityName($func);
-        $this->simpleQuery('DROP FUNCTION IF EXISTS `'.$func.'`');
+        $this->simpleQuery('DROP FUNCTION IF EXISTS `' . $func . '`');
     }
 
     /**
@@ -1032,8 +1032,8 @@ class OcDb extends OcPdo
             foreach ($name as $entity) {
                 self::validateEntityName($entity);
             }
-        } elseif (!preg_match('/^[A-Za-z_][A-Za-z_0-9]*$/', $name)) {
-            $this->error("Invalid entity name: '".$name."'");
+        } elseif (! preg_match('/^[A-Za-z_][A-Za-z_0-9]*$/', $name)) {
+            $this->error("Invalid entity name: '" . $name . "'");
         }
     }
 
@@ -1043,8 +1043,8 @@ class OcDb extends OcPdo
      */
     public function validateSqlKeywords($keywords)
     {
-        if (!preg_match('/^[A-Za-z ]*$/', $keywords)) {
-            $this->error("Invalid SQL keyword(s): '".$keywords."'");
+        if (! preg_match('/^[A-Za-z ]*$/', $keywords)) {
+            $this->error("Invalid SQL keyword(s): '" . $keywords . "'");
         }
     }
 

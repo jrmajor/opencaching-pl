@@ -54,7 +54,7 @@ class Gis
         // number of points in the polygon
         $n = count($polygon);
         $poly1 = $polygon[0];
-        for ($i = 1; $i <= $n; $i ++) {
+        for ($i = 1; $i <= $n; $i++) {
             $poly1XY = explode(' ', $poly1);
             $poly1x = $poly1XY[0];
             $poly1y = $poly1XY[1];
@@ -69,7 +69,7 @@ class Gis
                         if ($poly1y != $poly2y) {
                             $xinters = ($py - $poly1y) * ($poly2x - $poly1x) / ($poly2y - $poly1y) + $poly1x;
                             if ($poly1x == $poly2x || $px <= $xinters) {
-                                $counter ++;
+                                $counter++;
                             }
                         }
                     }
@@ -220,7 +220,7 @@ class Gis
 
        $marker_X = round($offset + $offset * $marker->getLongitude() / 180);
        $mapCenter_X = round($offset + $offset * $mapCenter->getLongitude() / 180);
-       $left = $marker_X - $mapCenter_X + ($mapImgWidth/2);
+       $left = $marker_X - $mapCenter_X + ($mapImgWidth / 2);
 
        $marker_Y = round($offset - $radius * log(
            (1 + sin($marker->getLatitude() * self::PI / 180)) /
@@ -230,7 +230,7 @@ class Gis
            (1 + sin($mapCenter->getLatitude() * self::PI / 180)) /
            (1 - sin($mapCenter->getLatitude() * self::PI / 180))) / 2);
 
-       $top = $marker_Y - $mapCenter_Y + ($mapImgHeight/2);
+       $top = $marker_Y - $mapCenter_Y + ($mapImgHeight / 2);
 
        return [$left, $top];
     }

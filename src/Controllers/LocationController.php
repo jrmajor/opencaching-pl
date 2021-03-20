@@ -30,7 +30,7 @@ class LocationController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if(!Countries::isKnownCountryCode($countryCode)){
+        if(! Countries::isKnownCountryCode($countryCode)){
             $this->ajaxErrorResponse('Unknown country code.');
         }
 
@@ -43,7 +43,7 @@ class LocationController extends BaseController
     {
         $this->checkUserLoggedAjax();
         $coords = Coordinates::FromCoordsFactory($lat, $lon);
-        if (!$coords) {
+        if (! $coords) {
             $this->ajaxErrorResponse('Improper coords!');
         }
 

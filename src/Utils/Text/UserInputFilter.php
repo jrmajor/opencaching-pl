@@ -30,7 +30,7 @@ class UserInputFilter
         // since the web server needs write permission there
         $cacheSerializerPath = OcConfig::instance()->getDynamicFilesPath() . 'lib/htmlpurifier';
 
-        if (!file_exists($cacheSerializerPath)) {
+        if (! file_exists($cacheSerializerPath)) {
             mkdir($cacheSerializerPath, 0777, true);
         }
 
@@ -110,7 +110,7 @@ class UserInputFilter
         $purifier = new HTMLPurifier($config);
         $cleanHtml = $purifier->purify($dirtyHtml);
         if (($config->get('Core.CollectErrors')) && ($context !== null)) {
-            $context['errors'] = & $purifier->context->get('ErrorCollector');
+            $context['errors'] = &$purifier->context->get('ErrorCollector');
         }
         return $cleanHtml;
 

@@ -200,7 +200,7 @@ class CacheLocation extends BaseObject
             $location->cacheId = $row['cache_id'];
 
             $coords = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
-            if (!$coords) {
+            if (! $coords) {
                 // improper coords!
                 d('WRONG COORDS!');
                 $notFixed++;

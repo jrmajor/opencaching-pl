@@ -31,7 +31,7 @@ class UserUtilsController extends BaseController
     {
         global $config; //TODO: remove it from here
 
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
             exit;
         }
@@ -46,7 +46,7 @@ class UserUtilsController extends BaseController
 
         $qrCodesDir = $this->ocConfig->getDynamicFilesPath() . $qrCodesDirName;
 
-        if (!file_exists($qrCodesDir)){
+        if (! file_exists($qrCodesDir)){
             mkdir($qrCodesDir);
         }
 
@@ -60,10 +60,10 @@ class UserUtilsController extends BaseController
         }
 
         // remove images older then 1 hour
-        FileManager::removeFilesOlderThan($qrCodesDir, '*.png', 60*60);
+        FileManager::removeFilesOlderThan($qrCodesDir, '*.png', 60 * 60);
 
-        $labelFileName = TextGen::randomText(12).'.png';
-        $qrCodeFileName = 'qrCode_'.$labelFileName;
+        $labelFileName = TextGen::randomText(12) . '.png';
+        $qrCodeFileName = 'qrCode_' . $labelFileName;
 
         $qrCodeFile = $qrCodesDir . $qrCodeFileName;
         $labelFile = $qrCodesDir . $labelFileName;
@@ -85,7 +85,7 @@ class UserUtilsController extends BaseController
         $xd = 86 - ($qrCodeWidth / 2);
         $yd = 142 - ($qrCodeWidth / 2);
 
-        $ocBackgroundImg = imagecreatefromjpeg(__DIR__.'/../../public/images/qrCodeGen/' . $config['qrCodeLogo']);
+        $ocBackgroundImg = imagecreatefromjpeg(__DIR__ . '/../../public/images/qrCodeGen/' . $config['qrCodeLogo']);
 
         // merge both images
         imagecopymerge($ocBackgroundImg, $qrCodeImg, $xd, $yd, 0, 0, $qrCodeWidth, $qrCodeWidth, 100);
@@ -96,8 +96,8 @@ class UserUtilsController extends BaseController
         imagedestroy($qrCodeImg);
         imagedestroy($ocBackgroundImg);
 
-        $this->view->setVar('ocLabelImgUrl', '/'.$qrCodesDirName.$labelFileName);
-        $this->view->setVar('qrCodeImgUrl', '/'.$qrCodesDirName.$qrCodeFileName);
+        $this->view->setVar('ocLabelImgUrl', '/' . $qrCodesDirName . $labelFileName);
+        $this->view->setVar('qrCodeImgUrl', '/' . $qrCodesDirName . $qrCodeFileName);
 
 
         $this->view->buildView();

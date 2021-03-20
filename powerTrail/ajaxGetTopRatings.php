@@ -1,9 +1,9 @@
 <?php
 use src\Utils\Database\OcDb;
 
-if (!isset($_REQUEST['u'])) exit;
+if (! isset($_REQUEST['u'])) exit;
 
-require_once __DIR__.'/../lib/ClassPathDictionary.php';
+require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 
 $db = OcDb::instance();
 $q = 'SELECT SUM(`topratings`) AS s FROM `caches` WHERE `user_id` =:1';

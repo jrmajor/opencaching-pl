@@ -78,8 +78,8 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         $_SESSION['geoPathCacheList'][] = $geocache->getCacheId();
         $totalFounds += $geocache->getFounds();
         $totalTopRatings += $geocache->getRecommendations();
-        $cachetypes[$geocache->getCacheType()] ++;
-        $cacheSize[$geocache->getSizeId()] ++;
+        $cachetypes[$geocache->getCacheType()]++;
+        $cacheSize[$geocache->getSizeId()]++;
         // powerTrailController::debug($cache); exit;
         if ($bgcolor == '#eeeeff') {
             $bgcolor = '#ffffff';
@@ -109,13 +109,13 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
             $iconSrc = GeoCacheCommons::CacheIconByType(
                 $geocache->getCacheType(), GeoCacheCommons::STATUS_READY);
         }
-        $cacheRows .= '<td align="center"><img src="'.$iconSrc.'" /></td>';
+        $cacheRows .= '<td align="center"><img src="' . $iconSrc . '" /></td>';
 
         //cachename, username
-        $cacheRows .= '<td><b>'.
-                           '<a href="' . $geocache->getWaypointId() . '">'.
-                                $fontColor . $geocache->getCacheName().
-                           '</a></b> ('.$geocache->getOwner()->getUserName().') ';
+        $cacheRows .= '<td><b>' .
+                           '<a href="' . $geocache->getWaypointId() . '">' .
+                                $fontColor . $geocache->getCacheName() .
+                           '</a></b> (' . $geocache->getOwner()->getUserName() . ') ';
 
         if ($geocache->isIsPowerTrailFinalGeocache()) {
             $cacheRows .= '<span class="finalCache">' . tr('pt148') . '</span>';
@@ -131,7 +131,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
             }
             $cacheRows .= '<td>
                                 <span class="ownerFinalChoice">
-                                    <input type="checkbox" id="fcCheckbox'.$geocache->getCacheId().'"
+                                    <input type="checkbox" id="fcCheckbox' . $geocache->getCacheId() . '"
                                            onclick="setFinalCache(' . $geocache->getCacheId() . ')" ' . $checked . ' />
                                 </span>
                            </td>';
@@ -169,7 +169,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
             if($cachetypes[$type] > 0) {
                 // there is at least one cache of such type
                 $typesNumberList[] = $cachetypes[$type];
-                $typesLabelsList[] = tr(GeoCache::CacheTypeTranslationKey($type)).' ('.round(($cachetypes[$type]*100)/$countCaches).'%)';
+                $typesLabelsList[] = tr(GeoCache::CacheTypeTranslationKey($type)) . ' (' . round(($cachetypes[$type] * 100) / $countCaches) . '%)';
             }
         }
 
@@ -181,7 +181,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         if ($restOfTypes > 0) {
             // there is at least one cache of such type
             $typesNumberList[] = $restOfTypes;
-            $typesLabelsList[] = tr('pt112').' ('.round(($restOfTypes*100)/$countCaches).'%)';
+            $typesLabelsList[] = tr('pt112') . ' (' . round(($restOfTypes * 100) / $countCaches) . '%)';
         }
 
         // same for sizes
@@ -201,29 +201,29 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
             if($cacheSize[$size] > 0) {
                 // there is at least one cache of such type
                 $sizesNumberList[] = $cacheSize[$size];
-                $sizesLabelsList[] = tr(GeoCache::CacheSizeTranslationKey($size)).' ('.round(($cacheSize[$size]*100)/$countCaches).'%)';
+                $sizesLabelsList[] = tr(GeoCache::CacheSizeTranslationKey($size)) . ' (' . round(($cacheSize[$size] * 100) / $countCaches) . '%)';
             }
         }
 
         echo '<table align="center">
                     <tr>
-                        <td align=center width="50%">'.
-                            tr('pt107').'<br />
-                            <img src="https://chart.googleapis.com/chart?chs=370x120'.
-                                        '&chd=t:'. implode(',', $typesNumberList).
-                                        '&cht=p3'.
-                                        '&chl='. implode('|', $typesNumberList).
-                                        '&chco=00aa00|FFEB0D|0000cc|cccccc|eeeeee&'.
-                                        'chdl='.rawurlencode(implode('|',$typesLabelsList)).'" />
+                        <td align=center width="50%">' .
+                            tr('pt107') . '<br />
+                            <img src="https://chart.googleapis.com/chart?chs=370x120' .
+                                        '&chd=t:' . implode(',', $typesNumberList) .
+                                        '&cht=p3' .
+                                        '&chl=' . implode('|', $typesNumberList) .
+                                        '&chco=00aa00|FFEB0D|0000cc|cccccc|eeeeee&' .
+                                        'chdl=' . rawurlencode(implode('|',$typesLabelsList)) . '" />
                         </td>
-                        <td align=center width="50%">'.
-                            tr('pt106').'<br />
-                            <img src="https://chart.googleapis.com/chart?chs=370x120'.
-                            '&chd=t:'.implode(',', $sizesNumberList).
-                                '&cht=p3'.
-                                '&chl='.implode('|', $sizesNumberList).
-                                '&chco=FFEB0D|0000aa|00aa00|aa0000|aaaa00|00aaaa|cccccc'.
-                                '&chdl='.rawurlencode(implode('|', $sizesLabelsList)).'" />
+                        <td align=center width="50%">' .
+                            tr('pt106') . '<br />
+                            <img src="https://chart.googleapis.com/chart?chs=370x120' .
+                            '&chd=t:' . implode(',', $sizesNumberList) .
+                                '&cht=p3' .
+                                '&chl=' . implode('|', $sizesNumberList) .
+                                '&chco=FFEB0D|0000aa|00aa00|aa0000|aaaa00|00aaaa|cccccc' .
+                                '&chdl=' . rawurlencode(implode('|', $sizesLabelsList)) . '" />
                         </td>
                     </tr>
                 </table><br /><br />';

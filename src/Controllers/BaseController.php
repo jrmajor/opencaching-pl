@@ -8,7 +8,7 @@ use src\Models\User\User;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 
-require_once(__DIR__.'/../../lib/common.inc.php');
+require_once(__DIR__ . '/../../lib/common.inc.php');
 
 abstract class BaseController
 {
@@ -69,10 +69,10 @@ abstract class BaseController
 
     protected function isUserLogged()
     {
-        return !is_null($this->loggedUser);
+        return ! is_null($this->loggedUser);
     }
 
-    protected function ajaxJsonResponse($response, $statusCode=null)
+    protected function ajaxJsonResponse($response, $statusCode = null)
     {
         if(is_null($statusCode)){
             $statusCode = self::HTTP_STATUS_OK;
@@ -83,12 +83,12 @@ abstract class BaseController
         exit;
     }
 
-    protected function ajaxSuccessResponse($message=null, array $additionalResponseData=null){
+    protected function ajaxSuccessResponse($message = null, array $additionalResponseData = null){
         $response = [
             'status' => 'OK',
         ];
 
-        if(!is_null($message)){
+        if(! is_null($message)){
             $response['message'] = $message;
         }
 
@@ -99,11 +99,11 @@ abstract class BaseController
         $this->ajaxJsonResponse($response);
     }
 
-    protected function ajaxErrorResponse($message=null, $statusCode=null, array $additionalResponseData=null){
+    protected function ajaxErrorResponse($message = null, $statusCode = null, array $additionalResponseData = null){
         $response = [
             'status' => 'ERROR',
         ];
-        if(!is_null($message)){
+        if(! is_null($message)){
             $response['message'] = $message;
         }
         if(is_null($statusCode)){

@@ -257,7 +257,7 @@ class MultiCacheStats extends BaseObject
         return OcMemCache::getOrCreate(__CLASS__ . ':getLatestNationalCaches', 60 * 60, function () {
             $countriesStr = '';
             foreach (OcConfig::getSitePrimaryCountriesList() as $item) {
-                $countriesStr .= "'". self::db()->quoteString($item) ."', ";
+                $countriesStr .= "'" . self::db()->quoteString($item) . "', ";
             }
             $countriesStr = rtrim($countriesStr, ', ');
             $stmt = self::db()->multiVariableQuery('
@@ -267,7 +267,7 @@ class MultiCacheStats extends BaseObject
                 AND `date_published` IS NOT NULL
                 AND `date_published` > NOW() - INTERVAL 365 DAY
                 AND `type` != :2
-                AND `country` IN ('. $countriesStr.')
+                AND `country` IN (' . $countriesStr . ')
             ORDER BY
                 `date_published` DESC,
                 `cache_id` DESC',
@@ -308,7 +308,7 @@ class MultiCacheStats extends BaseObject
         while ($index < $cachesCount && $index < $offset + $limit) {
             $cache = GeoCache::fromCacheIdFactory($cachesId[$index]);
             // Remove ignored caches
-            if (!is_null($user) && $cache->isIgnoredByUser($user)) {
+            if (! is_null($user) && $cache->isIgnoredByUser($user)) {
                 unset($cache);
                 $index++;
                 continue;
@@ -339,7 +339,7 @@ class MultiCacheStats extends BaseObject
         foreach ($cachesList as $cache) {
             $cacheObj = GeoCache::fromCacheIdFactory($cache);
             // Remove ignored caches
-            if (!is_null($user) && $cacheObj->isIgnoredByUser($user)) {
+            if (! is_null($user) && $cacheObj->isIgnoredByUser($user)) {
                 unset($cacheObj);
                 continue;
             }
@@ -347,7 +347,7 @@ class MultiCacheStats extends BaseObject
             unset($cacheObj);
         }
 
-        if (!empty($cachesList)) {
+        if (! empty($cachesList)) {
             ksort($cachesList);
         }
 
@@ -370,7 +370,7 @@ class MultiCacheStats extends BaseObject
         $cachesList = OcMemCache::getOrCreate(__CLASS__ . ':getLatestForeignCaches', 60 * 60, function () {
             $countriesStr = '';
             foreach (OcConfig::getSitePrimaryCountriesList() as $item) {
-                $countriesStr .= "'". self::db()->quoteString($item) ."', ";
+                $countriesStr .= "'" . self::db()->quoteString($item) . "', ";
             }
             $countriesStr = rtrim($countriesStr, ', ');
             $stmt = self::db()->multiVariableQuery('
@@ -379,7 +379,7 @@ class MultiCacheStats extends BaseObject
             WHERE `status` = :1
                 AND `date_published` IS NOT NULL
                 AND `date_published` > NOW() - INTERVAL 365 DAY
-                AND `country` NOT IN ('.$countriesStr.')
+                AND `country` NOT IN (' . $countriesStr . ')
             ORDER BY
                 `date_published` DESC,
                 `cache_id` DESC
@@ -392,7 +392,7 @@ class MultiCacheStats extends BaseObject
         foreach ($cachesList as $cache) {
             $cacheObj = GeoCache::fromCacheIdFactory($cache['cache_id']);
             // Remove ignored caches
-            if (!is_null($user) && $cacheObj->isIgnoredByUser($user)) {
+            if (! is_null($user) && $cacheObj->isIgnoredByUser($user)) {
                 unset($cacheObj);
                 continue;
             }
@@ -400,7 +400,7 @@ class MultiCacheStats extends BaseObject
             unset($cacheObj);
         }
 
-        if (!empty($cachesList)) {
+        if (! empty($cachesList)) {
             ksort($cachesList);
         }
 
@@ -438,7 +438,7 @@ class MultiCacheStats extends BaseObject
         foreach ($eventList as $event) {
             $eventObj = GeoCache::fromCacheIdFactory($event['cache_id']);
             // Remove ignored events
-            if (!is_null($user) && $eventObj->isIgnoredByUser($user)) {
+            if (! is_null($user) && $eventObj->isIgnoredByUser($user)) {
                 unset($eventObj);
                 continue;
             }
@@ -446,7 +446,7 @@ class MultiCacheStats extends BaseObject
             unset($eventObj);
         }
 
-        if (!empty($eventList)) {
+        if (! empty($eventList)) {
             ksort($eventList);
         }
 

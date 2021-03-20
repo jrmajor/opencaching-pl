@@ -81,7 +81,7 @@ class ElectionResult extends BaseObject
 
     public function getOptVotesCount(ChoiceOption $opt): int
     {
-        if (!isset($this->votes[$opt->getOptionId()])) {
+        if (! isset($this->votes[$opt->getOptionId()])) {
             return 0;
         }
         return count($this->votes[$opt->getOptionId()]);

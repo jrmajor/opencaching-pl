@@ -23,14 +23,14 @@ class CacheMarkerModel extends AbstractMarkerModelBase
      * @param User $user
      * @return CacheMarkerModel
      */
-    public static function fromGeocacheFactory(GeoCache $c, User $user=null)
+    public static function fromGeocacheFactory(GeoCache $c, User $user = null)
     {
         $marker = new self();
         $marker->importDataFromGeoCache( $c, $user);
         return $marker;
     }
 
-    protected function importDataFromGeoCache(GeoCache $c, User $user=null)
+    protected function importDataFromGeoCache(GeoCache $c, User $user = null)
     {
         // Abstract-Marker data
         $this->icon = $c->getCacheIcon($user);

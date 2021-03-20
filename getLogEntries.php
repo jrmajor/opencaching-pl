@@ -13,10 +13,10 @@ use src\Utils\Text\TextConverter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 
-require_once (__DIR__.'/lib/common.inc.php');
-require(__DIR__.'/src/Views/lib/icons.inc.php');
-require(__DIR__.'/src/Views/viewcache.inc.php');
-require(__DIR__.'/src/Views/viewlogs.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
+require(__DIR__ . '/src/Views/lib/icons.inc.php');
+require(__DIR__ . '/src/Views/viewcache.inc.php');
+require(__DIR__ . '/src/Views/viewlogs.inc.php');
 
 if(isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != ''){
     $geocacheId = $_REQUEST['geocacheId'];
@@ -31,8 +31,8 @@ $owner_id = $cache->getOwnerId();
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 if (
-    !($loggedUser && ($loggedUser->hasOcTeamRole() || $owner_id == $loggedUser->getUserId()))
-    && !in_array(
+    ! ($loggedUser && ($loggedUser->hasOcTeamRole() || $owner_id == $loggedUser->getUserId()))
+    && ! in_array(
         $cache->getStatus(),
         [
             GeoCache::STATUS_READY,
@@ -55,7 +55,7 @@ if(isset($_REQUEST['limit']) && $_REQUEST['limit'] != ''){
 }
 
 global $hide_coords;
-if (!$loggedUser && $hide_coords) {
+if (! $loggedUser && $hide_coords) {
     $disable_spoiler_view = true; //hide any kind of spoiler if usr not logged in
 } else {
     $disable_spoiler_view = false;
@@ -72,7 +72,7 @@ $logEntries = $logEntryController->loadLogsFromDb($geocacheId, $includeDeletedLo
 $result = '';
 
 $logfilterConfig = OcConfig::instance()->getLogfilterConfig();
-$tmpSrcLog = file_get_contents(__DIR__.'/src/Views/viewcache_log.tpl.php');
+$tmpSrcLog = file_get_contents(__DIR__ . '/src/Views/viewcache_log.tpl.php');
 
 foreach ($logEntries as $record) {
     $record['text_listing'] = ucfirst(tr('logType' . $record['type'])); //add new attrib 'text_listing based on translation (instead of query as before)'
@@ -88,7 +88,7 @@ foreach ($logEntries as $record) {
                 $processed_text .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
             }
             if (isset($record['last_deleted'])) {
-                $processed_text .=' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
+                $processed_text .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                     $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
             }
             $processed_text .= ']';
@@ -97,7 +97,7 @@ foreach ($logEntries as $record) {
             // for 'Needs maintenance', 'Ready to search' and 'Temporarly unavailable' log types
             if ($record['type'] == 5 || $record['type'] == 10 || $record['type'] == 11) {
                 // hide if user is not logged in
-                if (!$loggedUser) {
+                if (! $loggedUser) {
                     continue;
                 }
                 // hide if user is neither a geocache owner nor log author
@@ -114,19 +114,19 @@ foreach ($logEntries as $record) {
                     if (($record['del_by_username'] == $record['username']) && ($record['type'] != 12)) { // show username in case maker and deleter are same and comment is not Commnent by COG
                         $delByCOG = false;
                     } else {
-                        $comm_replace.=' ' . tr('vl_by_COG');
+                        $comm_replace .= ' ' . tr('vl_by_COG');
                         $delByCOG = true;
                     }
                 }
-                if (!isset($byCOG) || $delByCOG == false) {
-                    $comm_replace.=' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
+                if (! isset($byCOG) || $delByCOG == false) {
+                    $comm_replace .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                 }
             }
             if (isset($record['last_deleted'])) {
-                $comm_replace.=' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
+                $comm_replace .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                     $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
             }
-            $comm_replace.='.';
+            $comm_replace .= '.';
             $processed_text = $comm_replace;
         }
     } else {
@@ -142,22 +142,22 @@ foreach ($logEntries as $record) {
             strftime(
                 $GLOBALS['config']['datetimeformat'], strtotime($record['last_modified'])), ENT_COMPAT, 'UTF-8'));
 
-        if (!($loggedUser && $loggedUser->hasOcTeamRole()) &&
+        if (! ($loggedUser && $loggedUser->hasOcTeamRole()) &&
             $record['edit_by_admin'] == true && $record['type'] == 12) {
 
-            $edit_footer.=' ' . tr('vl_by_COG');
+            $edit_footer .= ' ' . tr('vl_by_COG');
         } else {
-            $edit_footer.=' ' . tr('vl_by_user') . ' ' . $record['edit_by_username'];
+            $edit_footer .= ' ' . tr('vl_by_user') . ' ' . $record['edit_by_username'];
         }
         if ($record_date_create > date_create('2005-01-01 00:00')) { //check if record created after implementation date (to avoid false readings for record changed before) - actually nor in use
-            $edit_footer.=' - ' . tr('vl_totally_modified') . ' ' . $record['edit_count'] . ' ';
+            $edit_footer .= ' - ' . tr('vl_totally_modified') . ' ' . $record['edit_count'] . ' ';
             if ($record['edit_count'] > 1) {
-                $edit_footer.=tr('vl_count_plural');
+                $edit_footer .= tr('vl_count_plural');
             } else {
-                $edit_footer.=tr('vl_count_singular');
+                $edit_footer .= tr('vl_count_singular');
             }
         }
-        $edit_footer.='.</small></div>';
+        $edit_footer .= '.</small></div>';
     } else {
         $edit_footer = '';
     }
@@ -179,7 +179,7 @@ foreach ($logEntries as $record) {
     }
 
     // hide nick of athor of COG(OC Team) for user
-    if ($record['type'] == 12 && !($loggedUser && $loggedUser->hasOcTeamRole())) {
+    if ($record['type'] == 12 && ! ($loggedUser && $loggedUser->hasOcTeamRole())) {
         $record['userid'] = '0';
         $tmplog_username_aktywnosc = '';
         $tmplog_username = tr('cog_user_name');
@@ -205,13 +205,13 @@ foreach ($logEntries as $record) {
 
     $tmplog_text = $processed_text . $edit_footer;
 
-    $logClasses = (!empty($logfilterConfig['mark_currentuser_logs'])&&
+    $logClasses = (! empty($logfilterConfig['mark_currentuser_logs']) &&
                     $loggedUser && $record['userid'] == $loggedUser->getUserId()) ? ' currentuser-log' : '';
 
     $tmplog = mb_ereg_replace('{log_classes}', $logClasses, $tmplog);
 
     $filterable = '';
-    if (!empty($logfilterConfig['enable_logs_filtering'])) {
+    if (! empty($logfilterConfig['enable_logs_filtering'])) {
         $filterable = ':' . $record['type'] . ':';
         if ($record['userid'] == 0) {
             $filterable .= 'octeam';
@@ -245,7 +245,7 @@ foreach ($logEntries as $record) {
     $tmpremove = mb_ereg_replace('{logid}', $record['logid'], $remove_log);
     $tmpRevert = mb_ereg_replace('{logid}', $record['logid'], $revertLog);
     $tmpnewpic = mb_ereg_replace('{logid}', $record['logid'], $upload_picture);
-    if (!isset($record['deleted'])){
+    if (! isset($record['deleted'])){
         $record['deleted'] = false;
     }
     if ($record['deleted'] != 1) {
@@ -310,7 +310,7 @@ foreach ($logEntries as $record) {
                 $thisfunctions = '<span class="removepic">
                                     <img src="/images/log/16x16-trash.png" class="icon16" alt="Trash icon">
                                     &nbsp;
-                                    <a class="links" href="'.SimpleRouter::getLink(PictureController::class, 'remove', [$pic_record['uuid']]).'">'
+                                    <a class="links" href="' . SimpleRouter::getLink(PictureController::class, 'remove', [$pic_record['uuid']]) . '">'
                                         . tr('delete') .
                                     '</a>
                                   </span> ';

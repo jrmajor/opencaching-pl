@@ -31,27 +31,27 @@ class PowerTrailController
 
     public static function getEntryTypes(){
         return  [
-            Log::TYPE_COMMENT =>  [ //comment
+            Log::TYPE_COMMENT => [ //comment
                 'translate' => 'pt056',
                 'color' => '#000000',
             ],
-            Log::TYPE_CONQUESTED =>  [ // conquested
+            Log::TYPE_CONQUESTED => [ // conquested
                 'translate' => 'cs_gainedCount',
                 'color' => '#00CC00',
             ],
-            Log::TYPE_OPENING =>  [ // geoPath Publishing
+            Log::TYPE_OPENING => [ // geoPath Publishing
                 'translate' => 'pt214',
                 'color' => '#0000CC',
             ],
-            Log::TYPE_DISABLING =>  [ // geoPath temp. closed
+            Log::TYPE_DISABLING => [ // geoPath temp. closed
                 'translate' => 'pt216',
                 'color' => '#CC0000',
             ],
-            Log::TYPE_CLOSING =>  [ // geoPath Closure (permanent)
+            Log::TYPE_CLOSING => [ // geoPath Closure (permanent)
                 'translate' => 'pt213',
                 'color' => '#CC0000',
             ],
-            Log::TYPE_ADD_WARNING =>  [ // oc team comment (permanent)
+            Log::TYPE_ADD_WARNING => [ // oc team comment (permanent)
                 'translate' => 'pt237',
                 'color' => '#CC0000',
             ],
@@ -135,16 +135,16 @@ class PowerTrailController
      */
     public static function getPowerTrailStatus(){
         return  [
-            1 =>  [ // public
+            1 => [ // public
                 'translate' => 'cs_statusPublic',
             ],
-            2 =>  [ // not yet available
+            2 => [ // not yet available
                 'translate' => 'cs_statusNotYetAvailable',
             ],
-            4 =>  [ // service
+            4 => [ // service
                 'translate' => 'cs_statusInService',
             ],
-            3 =>  [ // archived
+            3 => [ // archived
                 'translate' => 'cs_statusClosed',
             ],
         ];

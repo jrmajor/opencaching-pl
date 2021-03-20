@@ -56,7 +56,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             // pre-define TRK
             $tmpDate = $v['timestamp'] - 4 * 60 * 60; // -4 godziny do daty.
             $td = date('Ymd', $tmpDate);
-            if (!isset($tempList[$td])) { // zaloz dla daty:
+            if (! isset($tempList[$td])) { // zaloz dla daty:
                 $tempList[$td]['name'] = 'OC-PL ' . date('Y-m-d', $tmpDate);
                 $tempList[$td]['pts'] = [];
             }
@@ -92,12 +92,12 @@ if (isset($_POST['submitDownloadGpx'])) {
     }
 }
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 $no_tpl_build = false;
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_multi_data']))) {
+if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cache_multi_data']))) {
     tpl_redirect('log_cache_multi_send.php');
     exit;
 }
@@ -130,7 +130,7 @@ if (!$loggedUser || (!isset($_FILES['userfile']) && !isset($_SESSION['log_cache_
         }
 
         // czy ktos cos nie kombinuje?
-        if (!is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+        if (! is_uploaded_file($_FILES['userfile']['tmp_name'])) {
             exit('Cos nie tak z wysylaniem pliku, sprobuj ponownie...');
         }
 

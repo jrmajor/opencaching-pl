@@ -20,7 +20,7 @@ class ViewBadgeShowPositionsController extends BaseController{
 
     public function index()
     {
-        if( $this->loggedUser->getUserId()== null ){
+        if( $this->loggedUser->getUserId() == null ){
             self::redirectToLoginPage();
             exit;
         }
@@ -47,11 +47,11 @@ class ViewBadgeShowPositionsController extends BaseController{
     }
 
     private function prepareCode(){
-        $this->sCode = file_get_contents(__DIR__.'/../../src/Views/badge_show_positions.tpl.php');
+        $this->sCode = file_get_contents(__DIR__ . '/../../src/Views/badge_show_positions.tpl.php');
         $this->sCode = tpl_do_translate($this->sCode);
     }
 
     private function setVar($name, $value){
-        $this->sCode= mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
+        $this->sCode = mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
     }
 }

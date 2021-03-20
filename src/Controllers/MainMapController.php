@@ -113,7 +113,7 @@ class MainMapController extends BaseController
         if (isset($_GET['userid'])) {
             $user = User::fromUserIdFactory($_GET['userid']);
         }
-        if (!$user) {
+        if (! $user) {
             $user = $this->loggedUser;
         }
 
@@ -135,7 +135,7 @@ class MainMapController extends BaseController
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
-            if(!$mapCenter) {
+            if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
                 $zoom = intval($_GET['zoom']);
@@ -148,7 +148,7 @@ class MainMapController extends BaseController
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
-            if(!$mapCenter) {
+            if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
                 $zoom = 14;
@@ -159,7 +159,7 @@ class MainMapController extends BaseController
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
-            if(!$mapCenter) {
+            if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
                 $zoom = 17;
@@ -172,8 +172,8 @@ class MainMapController extends BaseController
         } else if( isset($_GET['searchdata'], $_GET['bbox']) ) {
 
             // searchData + bbox mode
-            if(!preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
-               !preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox']) ){
+            if(! preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
+               ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox']) ){
                 // searchData error!
                    $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             } else {
@@ -196,7 +196,7 @@ class MainMapController extends BaseController
 
             $this->view->setVar('cacheSet', $geoPath);
 
-            if(!$geoPath){
+            if(! $geoPath){
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
                 $this->mapJsParams->cacheSetId = $geoPath->getId();

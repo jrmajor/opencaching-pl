@@ -39,7 +39,7 @@ class C001Test extends UpdateScript
         $this->db->dropTableIfExists(self::TABLE);
         $this->assertTrue(
             'dropTableIfExists', 1,
-            !$this->db->tableExists(self::TABLE)
+            ! $this->db->tableExists(self::TABLE)
         );
 
         // run everything twice, to test both cases of "IfNotExists".
@@ -88,7 +88,7 @@ class C001Test extends UpdateScript
                 $this->db->tableExists(self::TABLE)
             );
             $this->assertTrue('tableExists', 3,
-                !$this->db->tableExists(self::TABLE.self::TABLE)
+                ! $this->db->tableExists(self::TABLE . self::TABLE)
             );
 
             $this->assertTrue(
@@ -97,7 +97,7 @@ class C001Test extends UpdateScript
             );
             $this->assertTrue(
                 'columnExists', 12,
-                !$this->db->columnExists(self::TABLE, 'noid')
+                ! $this->db->columnExists(self::TABLE, 'noid')
             );
 
             $this->assertStrMatch(
@@ -175,7 +175,7 @@ class C001Test extends UpdateScript
                 );
                 $this->assertTrue(
                     'indexExists', 40 + $n,
-                    !$this->db->indexExists(self::TABLE, 'created')
+                    ! $this->db->indexExists(self::TABLE, 'created')
                 );
 
                 $this->db->dropForeignKeyIfExists(
@@ -183,7 +183,7 @@ class C001Test extends UpdateScript
                 );
                 $this->assertTrue(
                     'foreignKeyExists', 42 + $n,
-                    !$this->db->foreignKeyExists(self::TABLE, 'id', 'caches')
+                    ! $this->db->foreignKeyExists(self::TABLE, 'id', 'caches')
                 );
             }
         }
@@ -195,19 +195,19 @@ class C001Test extends UpdateScript
         $function = 'db_update_test_func';
 
         $this->db->createOrReplaceTrigger(
-            $trigger, 'BEFORE UPDATE ON '.self::TABLE.' FOR EACH ROW BEGIN SET @A=1; END'
+            $trigger, 'BEFORE UPDATE ON ' . self::TABLE . ' FOR EACH ROW BEGIN SET @A=1; END'
         );
         $this->assertTrue(
             'triggerExists', 50,
             $this->db->triggerExists($trigger)
         );
         $this->db->createOrReplaceTrigger(
-            $trigger, 'BEFORE UPDATE ON '.self::TABLE.' FOR EACH ROW BEGIN SET @A=1; END'
+            $trigger, 'BEFORE UPDATE ON ' . self::TABLE . ' FOR EACH ROW BEGIN SET @A=1; END'
         );
         $this->db->dropTriggerIfExists($trigger);
         $this->assertTrue(
             'triggerExists', 51,
-            !$this->db->triggerExists($trigger)
+            ! $this->db->triggerExists($trigger)
         );
         $this->db->dropTriggerIfExists($trigger);
 
@@ -224,7 +224,7 @@ class C001Test extends UpdateScript
         $this->db->dropProcedureIfExists($procedure);
         $this->assertTrue(
             'procedureExists', 53,
-            !$this->db->procedureExists($procedure)
+            ! $this->db->procedureExists($procedure)
         );
         $this->db->dropProcedureIfExists($procedure);
 
@@ -241,7 +241,7 @@ class C001Test extends UpdateScript
         $this->db->dropFunctionIfExists($function);
         $this->assertTrue(
             'functionExists', 55,
-            !$this->db->functionExists($function)
+            ! $this->db->functionExists($function)
         );
         $this->db->dropFunctionIfExists($function);
 
@@ -250,41 +250,41 @@ class C001Test extends UpdateScript
         $this->runNo = 0;
 
         $this->db->simpleQuery(
-            'INSERT INTO '.self::TABLE." (uuid, id, created)
+            'INSERT INTO ' . self::TABLE . " (uuid, id, created)
             VALUES ('uuid1', 1, NOW())"
         );
         $this->assertTrue(
             'simpleQueryValue', 30,
-            $this->db->simpleQueryValue('SELECT id FROM '.self::TABLE, 0) == 1
+            $this->db->simpleQueryValue('SELECT id FROM ' . self::TABLE, 0) == 1
         );
 
         $this->db->multiVariableQuery(
-            'INSERT INTO '.self::TABLE. ' (uuid, id, created)
+            'INSERT INTO ' . self::TABLE . ' (uuid, id, created)
             VALUES (:1, :2, :3)',
             'uuid2', 2, '2018-01-01'
         );
         $this->assertTrue(
             'simpleQueryValue', 31,
             $this->db->multiVariableQueryValue(
-                'SELECT uuid FROM '.self::TABLE.' WHERE id = :1',
+                'SELECT uuid FROM ' . self::TABLE . ' WHERE id = :1',
                 '',
                 2
             ) == 'uuid2'
         );
 
         $row = $this->db->dbResultFetchOneRowOnly(
-            $this->db->simpleQuery('SELECT * FROM '.self::TABLE.' LIMIT 1')
+            $this->db->simpleQuery('SELECT * FROM ' . self::TABLE . ' LIMIT 1')
         );
         $this->assertTrue('dbResultFetchOneRowOnly', 32, $row['uuid'] == 'uuid1');
 
         $col = $this->db->dbFetchOneColumnArray(
-            $this->db->simpleQuery('SELECT id FROM '.self::TABLE),
+            $this->db->simpleQuery('SELECT id FROM ' . self::TABLE),
             'id'
         );
         $this->assertTrue('dbFetchOneColumnArray', 33, $col[0] == 1);
 
         $dict = $this->db->dbResultFetchAllAsDict(
-            $this->db->simpleQuery('SELECT id, uuid, created FROM '.self::TABLE)
+            $this->db->simpleQuery('SELECT id, uuid, created FROM ' . self::TABLE)
         );
         $this->assertTrue('dbResultFetchAllAsDict', 34, $dict[2]['uuid'] == 'uuid2');
 
@@ -298,7 +298,7 @@ class C001Test extends UpdateScript
         $this->db->dropTableIfExists(self::TABLE);
         $this->assertTrue(
             'dropTableIfExists', 0,
-            !$this->db->tableExists(self::TABLE)
+            ! $this->db->tableExists(self::TABLE)
         );
         $this->db->dropTableIfExists(self::TABLE);
 
@@ -307,8 +307,8 @@ class C001Test extends UpdateScript
 
     private function assertTrue($methodName, $testNo, $ok, $comment = '')
     {
-        if (!$ok) {
-            echo $methodName . ' ' . $testNo.'.'.$this->runNo . ' failed' . $comment ."\n";
+        if (! $ok) {
+            echo $methodName . ' ' . $testNo . '.' . $this->runNo . ' failed' . $comment . "\n";
         }
     }
 
@@ -316,8 +316,8 @@ class C001Test extends UpdateScript
     {
         $this->assertTrue(
             $methodName, $testNo,
-            preg_match('/^'.$regex.'$/i', $str),
-            ': expected '.$regex.', got '.$str
+            preg_match('/^' . $regex . '$/i', $str),
+            ': expected ' . $regex . ', got ' . $str
         );
     }
 }

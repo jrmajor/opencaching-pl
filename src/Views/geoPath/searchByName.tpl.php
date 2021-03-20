@@ -20,7 +20,7 @@ use src\Utils\Uri\SimpleRouter;
         <th><?=tr('cs_gainedCount')?></th>
       </tr>
     </thead>
-    <?php if (!empty($view->geoPaths)) {?>
+    <?php if (! empty($view->geoPaths)) {?>
     <tbody>
       <?php foreach ($view->geoPaths as $geoPath) {?>
       <tr>

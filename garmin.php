@@ -64,7 +64,7 @@ function convert($str)
     return $str;
 }
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 $tplname = 'garmin';
 
@@ -77,14 +77,14 @@ tpl_set_var('bodyMod', ' onload="load()"');
 $garminKeyStr = '';
 if (isset($config['garmin-key'])){
     foreach($config['garmin-key'] as $k => $v){
-        $garminKeyStr .= '"'.$k.'", "'.$v.'", ';
+        $garminKeyStr .= '"' . $k . '", "' . $v . '", ';
     }
     $garminKeyStr = rtrim($garminKeyStr, ', ');
 }
 tpl_set_var('garminKeyStr', $garminKeyStr);
 
 global $hide_coords;
-if (!ApplicationContainer::GetAuthorizedUser() && $hide_coords) {
+if (! ApplicationContainer::GetAuthorizedUser() && $hide_coords) {
     tpl_errorMsg($tplname, tr('login_message_09'));
     exit;
 }

@@ -169,11 +169,11 @@ abstract class Lock
         $lockConfig = OcConfig::instance()->getLockConfig();
         $result = null;
         if (
-            !empty($lockConfig['type']) &&
-            !empty($lockConfig[$lockConfig['type']])
+            ! empty($lockConfig['type']) &&
+            ! empty($lockConfig[$lockConfig['type']])
         ) {
             $settings = $lockConfig[$lockConfig['type']];
-            if (!empty($settings['class'])) {
+            if (! empty($settings['class'])) {
                 $result = new $settings['class']($settings);
             }
         }

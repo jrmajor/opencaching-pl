@@ -5,7 +5,7 @@ require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
 
-    if (isset($_GET['id']) && !empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
+    if (isset($_GET['id']) && ! empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
 
 
 
@@ -17,7 +17,7 @@ if (isset($_SESSION['user_id'])) {
 
         $user_id2 = $wiersz['user_id'];
 
-        if (!empty($user_id2) && ($user_id2 == $_SESSION['user_id'])) {
+        if (! empty($user_id2) && ($user_id2 == $_SESSION['user_id'])) {
             $query = "select wp_oc from caches where cache_id = '" . $wiersz['cache_id'] . "'";
             $wynik = XDb::xSql($query);
             $wiersz2 = XDb::xFetchArray($wynik);

@@ -25,7 +25,7 @@ use src\Utils\Text\TextConverter;
 
 ob_start();
 
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
 set_time_limit(1800);
 global $content, $bUseZip, $hide_coords, $dbcSearch;
@@ -64,7 +64,7 @@ if ($loggedUser || ! $hide_coords) {
     if (isset($lat_rad, $lon_rad)  ) {
         $query .= getSqlDistanceFormula($lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
-        if (!$loggedUser) {
+        if (! $loggedUser) {
             $query .= '0 distance, ';
         } else {
             // get the users home coords
@@ -91,7 +91,7 @@ if ($loggedUser || ! $hide_coords) {
                                                                     WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {
@@ -135,7 +135,7 @@ if ($loggedUser || ! $hide_coords) {
     $bUseZip = false;
     if ($bUseZip == true) {
         $content = '';
-        require_once (__DIR__.'/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -205,7 +205,7 @@ function cs2cs_core2($lat, $lon, $to) {
     ];
 
     if (mb_eregi('^[a-z0-9_ ,.\+\-=]*$', $to) == 0) {
-        exit('invalid arguments in command: ' . $to ."\n");
+        exit('invalid arguments in command: ' . $to . "\n");
     }
 
     $command = 'cs2cs' . ' +proj=latlong +ellps=WGS84 +to ' . $to;

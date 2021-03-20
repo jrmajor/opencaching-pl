@@ -17,19 +17,19 @@ use src\Utils\View\View;
  */
 
 abstract class AbstractColumn {
-    const COLUMN_CHUNK_DIR = __DIR__.'/../../../../srv/Views/chunks/listOfCaches/';
+    const COLUMN_CHUNK_DIR = __DIR__ . '/../../../../srv/Views/chunks/listOfCaches/';
     private $dataExtractor = null;
     private $header = '';
     private $additionalClass = '';
     private $chunkFunction = null;
 
-    public final function __construct($header, callable $dataFromRowExtractor=null, $additionalClass=null){
-        if(!is_null($dataFromRowExtractor)){
+    public final function __construct($header, callable $dataFromRowExtractor = null, $additionalClass = null){
+        if(! is_null($dataFromRowExtractor)){
             $this->dataExtractor = $dataFromRowExtractor;
         }
 
-        if(!empty($additionalClass)){
-            $this->additionalClass = ' '.$additionalClass;
+        if(! empty($additionalClass)){
+            $this->additionalClass = ' ' . $additionalClass;
         }
 
         $this->header = $header;
@@ -41,17 +41,17 @@ abstract class AbstractColumn {
         if (property_exists($this, $method) && is_callable($this->$method)) {
             return call_user_func_array($this->$method, $args);
         }else{
-            Debug::errorLog(__METHOD__."Trying to call non-existed method: $method");
+            Debug::errorLog(__METHOD__ . "Trying to call non-existed method: $method");
         }
     }
 
     public final function callColumnChunk($row){
 
-        if(!$this->chunkFunction){
+        if(! $this->chunkFunction){
             $this->chunkFunction = View::getChunkFunc($this->getChunkName());
         }
 
-        if(!is_null($this->dataExtractor)){
+        if(! is_null($this->dataExtractor)){
             $this->chunkFunction($this->dataExtractor($row), $this);
         }else{
             $this->chunkFunction($row, $this);

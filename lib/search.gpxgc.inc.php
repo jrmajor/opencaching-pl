@@ -13,14 +13,14 @@ use src\Utils\Text\Validator;
 
 global $hide_coords, $dbcSearch, $queryFilter;
 
-require_once(__DIR__.'/format.gpx.inc.php');
-require_once(__DIR__.'/calculation.inc.php');
+require_once(__DIR__ . '/format.gpx.inc.php');
+require_once(__DIR__ . '/calculation.inc.php');
 
 set_time_limit(1800);
 
 $user = ApplicationContainer::GetAuthorizedUser();
 
-if (!$user && $hide_coords) {
+if (! $user && $hide_coords) {
   // user not logged + coords hidden for not logged
   exit;
 }
@@ -37,7 +37,7 @@ if (isset($lat_rad, $lon_rad, $multiplier[$distance_unit])) {
         is_object($user), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 
 } else {
-    if (!$user || !$homeCoords = $user->getHomeCoordinates()) {
+    if (! $user || ! $homeCoords = $user->getHomeCoordinates()) {
         $query .= '0 distance, ';
     } else {
         // TODO: load from the users-profile
@@ -66,7 +66,7 @@ $query .= '`caches`.`cache_id` `cache_id`, `caches`.`wp_oc` `cache_wp`,
 
 $sortby = $options['sort'];
 
-if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } else {
     if ($sortby == 'bycreated') {
@@ -239,7 +239,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
     if ($user) {
         $cacheNote = CacheNote::getNote($user->getUserId(), $r['cacheid']);
 
-        if (!empty($cacheNote)) {
+        if (! empty($cacheNote)) {
             $thisline = str_replace('{personal_cache_note}',
                 cleanup_text('<br/><br/>-- ' . cleanup_text(tr('search_gpxgc_02')) .
                     ': -- <br/> ' . $cacheNote . '<br/>'), $thisline);
@@ -325,7 +325,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
             WHERE `cache_npa_areas`.`cache_id`= ? AND `cache_npa_areas`.`parki_id`!='0'", $r['cacheid']);
 
     if (XDb::xNumRows($rsArea) != 0) {
-        $thisextra .= '' .cleanup_text( tr('search_gpxgc_07')) . ': ';
+        $thisextra .= '' . cleanup_text( tr('search_gpxgc_07')) . ': ';
         while ($npa = XDb::xFetchArray($rsArea)) {
             $thisextra .= $npa['npaname'] . '  ';
         }
@@ -433,7 +433,7 @@ while ( $r = XDb::xFetchArray($stmt) ) {
 
     $other_codes = [];
     foreach (['gc', 'tc', 'nc', 'ge'] as $platform) {
-        $code = Validator::xxWaypoint($platform, $r['wp_'.$platform]);
+        $code = Validator::xxWaypoint($platform, $r['wp_' . $platform]);
         if ($code) {
             $other_codes[] = mb_ereg_replace('{code}', $code, $gpxOcOtherCode);
         }

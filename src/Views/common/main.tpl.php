@@ -209,7 +209,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                 <!-- Navigation - horizontal menu bar -->
                 <div id="nav2">
                     <ul class="rythm_nav2">
-                        <?php foreach($view->_menuBar as $key=>$url) { ?>
+                        <?php foreach($view->_menuBar as $key => $url) { ?>
                           <?php if(is_array($url)) { //array="open in new window" ?>
                             <li><a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                           <?php } else { ?>
@@ -226,7 +226,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                 <!-- Navigation Left menu -->
 
                 <div id="nav3">
-                    <?php if(!$view->_isUserLogged) { ?>
+                    <?php if(! $view->_isUserLogged) { ?>
                     <!-- non-authorized user menu -->
                     <ul class="rythm_nav3MainMenu">
                       <li class="title"><?=tr('main_menu')?></li>
@@ -318,7 +318,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
             <p>
               <span class="txt-black">{{online_users}}:</span>
               <span class="txt-white">
-                <?php foreach($view->_onlineUsers as $userId=>$username){ ?>
+                <?php foreach($view->_onlineUsers as $userId => $username){ ?>
                     <a class="links-onlusers" href="/viewprofile.php?userid=<?=$userId?>"><?=$username?></a>&nbsp;
                 <?php } //foreach ?>
               </span>
@@ -328,7 +328,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
         <?php } // user-logged && displayOnlineUsers ?>
 
         <p>
-          <?php foreach($view->_footerMenu as $key=>$url){ ?>
+          <?php foreach($view->_footerMenu as $key => $url){ ?>
               <?php if(is_array($url)) { //array="open in new window" ?>
                   <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a> &nbsp;
               <?php } else { // !is_array($url) ?>
@@ -340,7 +340,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
         <div class="bottom-page-container">
           <?=$view->licenseHtml?>
 
-          <?php if (!$view->_crowdinInContextEnabled) { ?>
+          <?php if (! $view->_crowdinInContextEnabled) { ?>
               <span class="bottom-flags">
                 <?php foreach($view->_languageFlags as $langFlag){ ?>
                   <a rel="nofollow" href="<?=$langFlag['link']?>">

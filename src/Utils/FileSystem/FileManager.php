@@ -12,7 +12,7 @@ class FileManager
      * @param $timeout - time period in seconds
      */
     public static function removeFilesOlderThan($dir, $filePattern, $timeout){
-        $files = glob($dir.$filePattern);
+        $files = glob($dir . $filePattern);
         $now = time();
 
         foreach ($files as $file) {

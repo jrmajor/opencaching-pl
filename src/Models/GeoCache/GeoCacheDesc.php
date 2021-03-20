@@ -17,9 +17,9 @@ class GeoCacheDesc extends BaseObject
 
     private $id;
     private $cacheId;
-    private $language='';
-    private $desc='';
-    private $desc_html=0;
+    private $language = '';
+    private $desc = '';
+    private $desc_html = 0;
     private $desc_htmledit;
     private $hint = '';
     private $short_desc = '';
@@ -27,7 +27,7 @@ class GeoCacheDesc extends BaseObject
     private $last_modified;
     private $uuid;
     private $node;
-    private $rr_comment='';
+    private $rr_comment = '';
 
     public function __construct(){
 
@@ -46,7 +46,7 @@ class GeoCacheDesc extends BaseObject
         }
     }
 
-    public static function getEmptyDesc($cacheId=null)
+    public static function getEmptyDesc($cacheId = null)
     {
         $obj = new self();
         $obj->cacheId = $cacheId;
@@ -142,8 +142,8 @@ class GeoCacheDesc extends BaseObject
         $comment = UserInputFilter::purifyHtmlString(nl2br($comment));
         $date = Formatter::dateTime(); //current formated date+time
 
-        $formattedComment = '<span class="ocTeamCommentHeader">'.tr('date').": $date, ".tr('add_by')." $userName:</span>" .
-                            '<span class="ocTeamComment">'.$comment.'</span>';
+        $formattedComment = '<span class="ocTeamCommentHeader">' . tr('date') . ": $date, " . tr('add_by') . " $userName:</span>" .
+                            '<span class="ocTeamComment">' . $comment . '</span>';
 
         self::db()->multiVariableQuery(
             'UPDATE cache_desc SET

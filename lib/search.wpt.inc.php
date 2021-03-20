@@ -12,7 +12,7 @@ global $content, $bUseZip, $hide_coords, $dbcSearch;
 
 set_time_limit(1800);
 
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
@@ -36,7 +36,7 @@ $wptType[8] = 'Moving Cache';
 $wptType[9] = 'Podcast';
 $wptType[10] = 'Own Cache';
 
-if( $loggedUser || !$hide_coords ) {
+if( $loggedUser || ! $hide_coords ) {
     //prepare the output
     $caches_per_page = 20;
 
@@ -44,7 +44,7 @@ if( $loggedUser || !$hide_coords ) {
 
     if (isset($lat_rad, $lon_rad)  ) {
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
-    } elseif (!$loggedUser) {
+    } elseif (! $loggedUser) {
         $query .= '0 distance, ';
     } else {
         //get the users home coords
@@ -71,7 +71,7 @@ if( $loggedUser || !$hide_coords ) {
 
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`,
         `caches`.`user_id` `user_id`, ';
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
     } else {
         $query .= ' IFNULL(`cache_mod_cords`.`longitude`, `caches`.`longitude`) `longitude`, IFNULL(`cache_mod_cords`.`latitude`,
@@ -82,7 +82,7 @@ if( $loggedUser || !$hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
         $query .= ' ORDER BY date_created DESC';
@@ -143,13 +143,13 @@ if( $loggedUser || !$hide_coords ) {
     $bUseZip = false;
     if ($bUseZip == true) {
         $content = '';
-        require_once(__DIR__.'/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('',6);
     }
 
     $stmt = XDb::xSql(
         'SELECT `wptcontent`.`cache_id` `cacheid`, IF(wptcontent.cache_id IN
-                (SELECT cache_id FROM cache_logs WHERE deleted=0 AND user_id='.$loggedUser->getUserId().' AND (type=1 OR type=8)),1,0)
+                (SELECT cache_id FROM cache_logs WHERE deleted=0 AND user_id=' . $loggedUser->getUserId() . ' AND (type=1 OR type=8)),1,0)
                 as found, `wptcontent`.`longitude` `longitude`, `wptcontent`.`latitude` `latitude`, `wptcontent`.cache_mod_cords_id,
                 `caches`.`date_hidden` `date_hidden`, `caches`.`name` `name`, `caches`.`wp_oc` `wp_oc`, `cache_type`.`short` `typedesc`,
                 `wptcontent`.`size` `size`,`caches`.`terrain` `terrain`, `caches`.`difficulty` `difficulty`, `user`.`username` `username` ,
@@ -169,12 +169,12 @@ if( $loggedUser || !$hide_coords ) {
 
         //modified coords
         if ($r['cache_mod_cords_id'] > 0) {  //check if we have user coords
-            $r['mod_suffix']= '[F]';
+            $r['mod_suffix'] = '[F]';
         } else {
-            $r['mod_suffix']= '';
+            $r['mod_suffix'] = '';
         }
 
-        $name = convert_string(str_replace(',','',$r['mod_suffix'].$r['name']));
+        $name = convert_string(str_replace(',','',$r['mod_suffix'] . $r['name']));
         $username = convert_string(str_replace(',','',$r['username']));
         $type = $wptType[$r['type']];
         $size = $wptSize[$r['size']];
@@ -196,13 +196,13 @@ if( $loggedUser || !$hide_coords ) {
         if ($r['found']) {
             $kolor = 65535;
         }
-        $sss=
+        $sss =
 
-        $r['ozi_filips']= XDb::xMultiVariableQueryValue(
+        $r['ozi_filips'] = XDb::xMultiVariableQueryValue(
             'SELECT ozi_filips FROM user WHERE user_id= :1 LIMIT 1', null, $loggedUser->getUserId());
 
-        if($r['ozi_filips']!=''||$r['ozi_filips']!=null) {
-            $attach = $r['ozi_filips'].'\\op\\'.$r['wp_oc'][2].'\\'.$r['wp_oc'][3].'\\'.$r['wp_oc'][4].$r['wp_oc'][5].'.html';
+        if($r['ozi_filips'] != '' || $r['ozi_filips'] != null) {
+            $attach = $r['ozi_filips'] . '\\op\\' . $r['wp_oc'][2] . '\\' . $r['wp_oc'][3] . '\\' . $r['wp_oc'][4] . $r['wp_oc'][5] . '.html';
         } else {
             $attach = '';
         }
@@ -210,7 +210,7 @@ if( $loggedUser || !$hide_coords ) {
         $attach = str_replace('\\\\', '\\', $attach);
         $line = "$cacheid / D:$difficulty / T:$terrain / Size:$size";
 
-        $record  = "-1,$name,$lat,$lon,,117,1,4,0,$kolor,$line,0,0,0, -777,8,0,17,0,10.0,2,$attach,,\r\n";
+        $record = "-1,$name,$lat,$lon,,117,1,4,0,$kolor,$line,0,0,0, -777,8,0,17,0,10.0,2,$attach,,\r\n";
 
         echo $record;
         // DO NOT USE HERE:

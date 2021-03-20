@@ -6,7 +6,7 @@ use src\Utils\I18n\I18n;
 
 require_once('./lib/common.inc.php');
 
-if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
+if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
 
 
 
@@ -55,7 +55,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         $user = XDb::xFetchArray($wynik);
 
         $query = "select cache_desc.desc,hint,short_desc from cache_desc where cache_id ='" . $caches['cache_id'] . '\'';
-        $query.=' order by field(`language`, \'pl\', \'en\', \'de\', \'nl\') ASC;';
+        $query .= ' order by field(`language`, \'pl\', \'en\', \'de\', \'nl\') ASC;';
 
         $wynik = XDb::xSql($query);
 
@@ -68,14 +68,14 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         while ($rekord = XDb::xFetchArray($wynik)) {
 
             if ($i > 0)
-                $cache_desc['desc'].='<br/><br/>';
-            $cache_desc['desc'].=$rekord['desc'];
+                $cache_desc['desc'] .= '<br/><br/>';
+            $cache_desc['desc'] .= $rekord['desc'];
             if ($i > 0)
-                $cache_desc['short_desc'].='<br/>';
-            $cache_desc['short_desc'].=$rekord['short_desc'];
+                $cache_desc['short_desc'] .= '<br/>';
+            $cache_desc['short_desc'] .= $rekord['short_desc'];
             if ($i > 0)
-                $cache_desc['hint'].='\\n\\n';
-            $cache_desc['hint'].=$rekord['hint'];
+                $cache_desc['hint'] .= '\\n\\n';
+            $cache_desc['hint'] .= $rekord['hint'];
 
             $i++;
         }
@@ -119,7 +119,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
             $wynik3 = XDb::xSql($query3);
             $watched = XDb::xFetchArray($wynik3);
             $watched = $watched[0];
-            if ($watched>0)
+            if ($watched > 0)
                 $cache_info['watched'] = $watched;
             else
                 $cache_info['watched'] = -1;
@@ -166,7 +166,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
             $tpl->assign('photos_list', $photos);
         }
 
-        if (!empty($cache_attributes)) {
+        if (! empty($cache_attributes)) {
 
             $attr_text = '';
 
@@ -189,7 +189,7 @@ if (isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         //print XDb::xNumRows($wynik);
         while ($rekord = XDb::xFetchArray($wynik)) {
             //print $rekord['name'];
-            $gk.=$rekord['name'] . ' - ' . $rekord['distancetravelled'] . ' km\\n\\n';
+            $gk .= $rekord['name'] . ' - ' . $rekord['distancetravelled'] . ' km\\n\\n';
         }
 
         $tpl->assign('gk', $gk);

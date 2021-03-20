@@ -5,10 +5,10 @@ use src\Models\PowerTrail\PowerTrail;
 use src\Utils\Database\OcDb;
 use src\Utils\Generators\Uuid;
 
-require_once __DIR__.'/../lib/common.inc.php';
+require_once __DIR__ . '/../lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if(!$loggedUser){
+if(! $loggedUser){
     echo 'User not authorized!';
     exit;
 }
@@ -29,26 +29,26 @@ if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId)
     switch ($newStatus) {
         case PowerTrail::STATUS_OPEN: // publish
             $commentType = 3;
-            if(!$commentText) {
-                $commentText = tr('pt215').'!';
+            if(! $commentText) {
+                $commentText = tr('pt215') . '!';
             }
             break;
         case PowerTrail::STATUS_INSERVICE: // in service
             $commentType = 4;
-            if(!$commentText) {
-                $commentText = tr('pt217').'!';
+            if(! $commentText) {
+                $commentText = tr('pt217') . '!';
             }
             break;
         case PowerTrail::STATUS_CLOSED: // permannet Closure
             $commentType = 5;
-            if(!$commentText) {
-                $commentText = tr('pt218').'!';
+            if(! $commentText) {
+                $commentText = tr('pt218') . '!';
             }
             break;
         default:
             $commentType = 1;
-            if(!$commentText) {
-                $commentText = tr('pt056').'!';
+            if(! $commentText) {
+                $commentText = tr('pt056') . '!';
             }
             break;
     }
@@ -61,7 +61,7 @@ if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId)
         $query = 'INSERT INTO `PowerTrail_comments`
                   (`userId`, `PowerTrailId`, `commentType`, `commentText`,
                    `logDateTime`, `dbInsertDateTime`, `deleted`, uuid)
-                  VALUES (:1, :2, :3, :4, NOW(), NOW(), 0, '.Uuid::getSqlForUpperCaseUuid().' )';
+                  VALUES (:1, :2, :3, :4, NOW(), NOW(), 0, ' . Uuid::getSqlForUpperCaseUuid() . ' )';
 
         $db->multiVariableQuery($query, $loggedUser->getUserId(), $powerTrailId, $commentType,  $commentText );
         // add action log
@@ -71,7 +71,7 @@ if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId)
         $db->multiVariableQuery($logQuery, $powerTrailId, $loggedUser->getUserId(), $ptAPI->logActionTypes[6]['type'], 0);
     }
 } else {
-    $updateStatusResult =  [
+    $updateStatusResult = [
         'updateStatusResult' => false,
         'message' => tr('pt241'),
     ];

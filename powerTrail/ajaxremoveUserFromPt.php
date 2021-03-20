@@ -1,11 +1,11 @@
 <?php
 use src\Utils\Database\OcDb;
 session_start();
-if(!isset($_SESSION['user_id'])){
+if(! isset($_SESSION['user_id'])){
     echo 'no hacking please!';
     exit;
 }
-require_once __DIR__.'/../lib/ClassPathDictionary.php';
+require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 $ptAPI = new powerTrailBase;
 $db = OcDb::instance();
 
@@ -19,7 +19,7 @@ if(count(powerTrailBase::getPtOwners($projectId)) > 1 && $ptAPI::checkIfUserIsPo
     $db->multiVariableQuery($addQuery, $userId, $projectId);
 
     $logQuery = 'INSERT INTO `PowerTrail_actionsLog`(`PowerTrailId`, `userId`, `actionDateTime`, `actionType`, `description`, `cacheId`) VALUES (:1,:2,NOW(),5,:3,:4)';
-    $db->multiVariableQuery($logQuery, $projectId, $_SESSION['user_id'] ,$ptAPI->logActionTypes[5]['type'].' removed owner is: '.$userId, $userId);
+    $db->multiVariableQuery($logQuery, $projectId, $_SESSION['user_id'] ,$ptAPI->logActionTypes[5]['type'] . ' removed owner is: ' . $userId, $userId);
 }
 $ptOwners = displayPtOwnerList(powerTrailBase::getPtOwners($projectId));
 
@@ -31,9 +31,9 @@ function displayPtOwnerList($ptOwners)
 {
     $ownerList = '';
     foreach ($ptOwners as $userId => $user) {
-        $ownerList .= '<a href="viewprofile.php?userid='.$userId.'">'.$user['username'].'</a>';
+        $ownerList .= '<a href="viewprofile.php?userid=' . $userId . '">' . $user['username'] . '</a>';
         if($userId != $_SESSION['user_id']) {
-            $ownerList .= '<span style="display: none" class="removeUserIcon"><img onclick="ajaxRemoveUserFromPt('.$userId.');" src="images/free_icons/cross.png" width=10 /></span>, ';
+            $ownerList .= '<span style="display: none" class="removeUserIcon"><img onclick="ajaxRemoveUserFromPt(' . $userId . ');" src="images/free_icons/cross.png" width=10 /></span>, ';
         } else {
             $ownerList .= ', ';
         }

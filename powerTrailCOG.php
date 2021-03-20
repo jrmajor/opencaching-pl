@@ -55,7 +55,7 @@ if (isset($_REQUEST['ptSelector'])) {
         $view->setVar('allPtsText', 'Display only published geopaths');
     } else {
         $pts = powerTrailBase::getAllPt('AND status != 2');
-        $view->setVar('allPtsUrl', Uri::addParamsToUri(Uri::getCurrentUri(true), ['allPts'=>null]));
+        $view->setVar('allPtsUrl', Uri::addParamsToUri(Uri::getCurrentUri(true), ['allPts' => null]));
         $view->setVar('allPtsText', 'Display all geopaths (also not published)');
     }
     tpl_set_var('ptSelector', makePtSelector($pts, 'ptSelector'));

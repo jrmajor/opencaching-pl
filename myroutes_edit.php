@@ -6,11 +6,11 @@ use src\Utils\I18n\I18n;
 
 global $googlemap_key;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -81,7 +81,7 @@ if (!$loggedUser) {
 
                 $upload_filename = $_FILES['file']['tmp_name'];
                 // Read file KML with route
-                if (!$error) {
+                if (! $error) {
                     exec('/usr/bin/gpsbabel -i kml -f ' . $upload_filename . ' -x interpolate,distance=0.25k -o kml -F ' . $upload_filename . '');
                     $xml = simplexml_load_file($upload_filename);
 
@@ -118,7 +118,7 @@ if (!$loggedUser) {
                 // end of read
 //we get the point data in to an array called $points:
 
-                if (!$error) {
+                if (! $error) {
                     for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
                         $points[] = ['lon' => $coords[$i], 'lat' => $coords[$i + 1]];
                         if (($coords[$i] + 0 == 0) or ( $coords[$i + 1] + 0 == 0)) {

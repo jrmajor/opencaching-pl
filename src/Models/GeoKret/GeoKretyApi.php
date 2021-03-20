@@ -39,7 +39,7 @@ class GeoKretyApi extends BaseObject
      */
     private function TakeUserGeokrets()
     {
-        $url = self::GEOKRETY_URL."/export2.php?secid=$this->secId&inventory=1";
+        $url = self::GEOKRETY_URL . "/export2.php?secid=$this->secId&inventory=1";
         $xml = $this->connect($url, self::OPERATION_TAKE_USER_GEOKRETS);
         libxml_use_internal_errors(true);
         if ($xml) {
@@ -62,7 +62,7 @@ class GeoKretyApi extends BaseObject
      */
     private function TakeGeoKretsInCache()
     {
-        $url = self::GEOKRETY_URL."/export2.php?wpt=$this->cacheWpt";
+        $url = self::GEOKRETY_URL . "/export2.php?wpt=$this->cacheWpt";
         $xml = $this->connect($url, self::OPERATION_TAKE_GEOKRETS_IN_CACHE);
 
         if ($xml) {
@@ -101,7 +101,7 @@ class GeoKretyApi extends BaseObject
             $MaxNr++;
             $selector .= '<tr class="form-group-sm geoKretLog">
                             <td>
-                              <a href="'.self::GEOKRETY_URL.'/konkret.php?id=' . $kret->attributes()->id . '" class="links">' . $kret . '</a>
+                              <a href="' . self::GEOKRETY_URL . '/konkret.php?id=' . $kret->attributes()->id . '" class="links">' . $kret . '</a>
                             </td>
                             <td>
                               <select id="GeoKretSelector' . $MaxNr . '" name="GeoKretIDAction' . $MaxNr . '[action]" onchange="GkActionMoved(' . $MaxNr . ')" class="form-control input200"><option value="-1">' . tr('GKApi13') . '</option><option value="0">' . tr('GKApi12') . '</option><option value="5">' . tr('GKApi14') . '</option></select>
@@ -133,7 +133,7 @@ class GeoKretyApi extends BaseObject
             $MaxNr++;
             $selector .= '<tr class="form-group-sm">
                             <td>
-                              <a href="'.self::GEOKRETY_URL.'/konkret.php?id=' . $kret->attributes()->id . '" class="links">' . $kret . '</a>
+                              <a href="' . self::GEOKRETY_URL . '/konkret.php?id=' . $kret->attributes()->id . '" class="links">' . $kret . '</a>
                             </td>
                             <td>
                               <select id="GeoKretSelector' . $MaxNr . '" name="GeoKretIDAction' . $MaxNr . '[action]" onchange="GkActionMoved(' . $MaxNr . ')" class="form-control input120"><option value="-1">' . tr('GKApi13') . '</option><option value="1">' . tr('GKApi15') . '</option><option value="2">' . tr('GKApi16') . '</option><option value="3">' . tr('GKApi17') . '</option></select>

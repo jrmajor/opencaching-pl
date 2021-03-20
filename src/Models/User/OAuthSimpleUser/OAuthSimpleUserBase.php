@@ -40,7 +40,7 @@ abstract class OAuthSimpleUserBase
      *
      * @return string - url at which user shoud start auth process
      */
-    public static abstract function getOAuthStartUrl($redirect, $urlForHtml=true);
+    public static abstract function getOAuthStartUrl($redirect, $urlForHtml = true);
 
     /**
      * This method should be called from oAuth callback called by external service
@@ -125,8 +125,8 @@ abstract class OAuthSimpleUserBase
     {
         self::checkSession();
 
-        if( !isset($_SESSION[static::SESSION_VAR]) ||
-            !is_array($_SESSION[static::SESSION_VAR])){
+        if( ! isset($_SESSION[static::SESSION_VAR]) ||
+            ! is_array($_SESSION[static::SESSION_VAR])){
 
                 $_SESSION[static::SESSION_VAR] = [];
         }

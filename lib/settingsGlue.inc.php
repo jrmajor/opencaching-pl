@@ -9,7 +9,7 @@
  *
  ************************************************************************** */
 
- require __DIR__.'/settings.inc.php';
+ require __DIR__ . '/settings.inc.php';
 
 /*
  * This file acts as an intermediary between old settings used in

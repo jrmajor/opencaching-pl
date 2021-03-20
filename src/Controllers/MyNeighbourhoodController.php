@@ -345,7 +345,7 @@ class MyNeighbourhoodController extends BaseController
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
 
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
-        if ($selectedNbh != - 1 && ! array_key_exists($selectedNbh, $neighbourhoodsList)) {
+        if ($selectedNbh != -1 && ! array_key_exists($selectedNbh, $neighbourhoodsList)) {
             $selectedNbh = 0;
         }
         if (array_key_exists($selectedNbh, $neighbourhoodsList)) {
@@ -424,7 +424,7 @@ class MyNeighbourhoodController extends BaseController
             $error = tr('myn_coords_error');
         }
         // Store user preferences
-        if ($nbhSeq == 0 && isset($_POST['caches-perpage'], $_POST['style'])   && ($_POST['style'] == 'full' || $_POST['style'] == 'min')) {
+        if ($nbhSeq == 0 && isset($_POST['caches-perpage'], $_POST['style']) && ($_POST['style'] == 'full' || $_POST['style'] == 'min')) {
             $cachesPerpage = (int) $_POST['caches-perpage'];
             if ($cachesPerpage > self::CACHES_PER_PAGE_MAX) {
                 $cachesPerpage = self::CACHES_PER_PAGE_MAX;

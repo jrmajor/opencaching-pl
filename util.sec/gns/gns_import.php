@@ -111,7 +111,7 @@ function importGns($filename)
     }
     echo "Importing '$filename'...\n";
     $file = fopen($filename, 'r');
-    if (!$file) {
+    if (! $file) {
         return;
     }
     $columns = mb_split("[\t ,]", 'RC,UFI,UNI,LAT,LON,DMS_LAT,DMS_LONG,MGRS,JOG,FC,DSG,PC,CC1,ADM1,POP,ELEV,CC2,NT,LC,SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE,MODIFY_DATE,DISPLAY,NAME_RANK,NAME_LINK,TRANSL_CD,NM_MODIFY_DATE');
@@ -141,7 +141,7 @@ function importGns($filename)
             }
         }
 
-        if (!$resp = sql($sql)) {
+        if (! $resp = sql($sql)) {
             echo mysql_error();
             echo "\n";
         } else {

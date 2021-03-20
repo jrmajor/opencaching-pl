@@ -7,10 +7,10 @@ use src\Utils\Generators\Uuid;
 
 global $titled_cache_nr_found, $titled_cache_period_prefix;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 
-if ( !isset( $_REQUEST[ 'CRON' ] ) )
+if ( ! isset( $_REQUEST[ 'CRON' ] ) )
     exit;
 
 
@@ -26,7 +26,7 @@ $start_date_alg = date('Y-m-d');
 $date_alg = $start_date_alg;
 
 $dStart = new DateTime($dataMax);
-$dEnd  = new DateTime($date_alg);
+$dEnd = new DateTime($date_alg);
 
 $dDiff = $dStart->diff($dEnd);
 
@@ -40,7 +40,7 @@ if ( $dDiff->days < $securityPeriod )
     exit;
 
 
-    $queryS ='
+    $queryS = '
     select
     top.cacheId, top.cacheName, top.userName,
     top.cacheRegion, ifnull( nrT.nrTinR, 0) nrTinR,
@@ -140,7 +140,7 @@ if ( $dDiff->days < $securityPeriod )
 
     $SystemUser = -1;
     $LogType = 12; //OCTeam
-    $ntitled_cache = $titled_cache_period_prefix.'_titled_cache_congratulations';
+    $ntitled_cache = $titled_cache_period_prefix . '_titled_cache_congratulations';
     $msgText = str_replace('{ownerName}', htmlspecialchars($rec['userName']), tr($ntitled_cache));
     $LogUuid = Uuid::create();
 
@@ -156,6 +156,6 @@ if ( $dDiff->days < $securityPeriod )
             '0', $date_alg, '0', OcConfig::getSiteNodeId() );
 
     $ctrlMeritBadge = new MeritBadgeController;
-    $titledIds= $ctrlMeritBadge->updateTriggerByNewTitledCache($rec[ 'cacheId' ]);
+    $titledIds = $ctrlMeritBadge->updateTriggerByNewTitledCache($rec[ 'cacheId' ]);
 
 unset($dbc);

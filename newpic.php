@@ -6,11 +6,11 @@ use src\Utils\Database\XDb;
 use src\Utils\Generators\Uuid;
 use src\Utils\Img\OcImage;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -52,9 +52,9 @@ if (!$loggedUser) {
         $title = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
 
         $allok = true;
-        if (!is_numeric($objectid))
+        if (! is_numeric($objectid))
             $allok = false;
-        if (!is_numeric($type))
+        if (! is_numeric($type))
             $allok = false;
 
         if ($allok == true) {
@@ -69,7 +69,7 @@ if (!$loggedUser) {
                         $allok = false;
                     else {
 
-                        if ($r['user_id'] != $loggedUser->getUserId() && !$loggedUser->hasOcTeamRole()) {
+                        if ($r['user_id'] != $loggedUser->getUserId() && ! $loggedUser->hasOcTeamRole()) {
                             $allok = false;
                         }
 
@@ -102,7 +102,7 @@ if (!$loggedUser) {
                         tpl_set_var('cacheid', $r['cache_id']);
                         tpl_set_var('pictypedesc', $pictypedesc_cache);
 
-                        if ($r['user_id'] != $loggedUser->getUserId() && !$loggedUser->hasOcTeamRole()) {
+                        if ($r['user_id'] != $loggedUser->getUserId() && ! $loggedUser->hasOcTeamRole()) {
                             $allok = false;
                         }
                     }
@@ -148,7 +148,7 @@ if (!$loggedUser) {
                         $fna = mb_split('\\.', $_FILES['file']['name']);
                         $extension = mb_strtolower($fna[count($fna) - 1]);
 
-                        if (!in_array($extension, explode(',',OcConfig::getPicAllowedExtensions()))) {
+                        if (! in_array($extension, explode(',',OcConfig::getPicAllowedExtensions()))) {
                             $tplname = 'message';
                             tpl_set_var('messagetitle', $message_title_wrongext);
                             tpl_set_var('message_start', '');
@@ -193,7 +193,7 @@ if (!$loggedUser) {
                                  `local`,`spoiler`,`display`,`node`,`seq`)
                             VALUES (?, ?, NOW(), ?, '', 0, NOW(), NOW(),?, ?,
                                     ?, 1, ?, ?, ?, ?)",
-                            $uuid, OcConfig::getPicBaseUrl().'/'.basename($filePath), $title, $objectid, $type, $loggedUser->getUserId(),
+                            $uuid, OcConfig::getPicBaseUrl() . '/' . basename($filePath), $title, $objectid, $type, $loggedUser->getUserId(),
                             ($bSpoiler == 1) ? '1' : '0', ($bNoDisplay == 1) ? '0' : '1', OcConfig::getSiteNodeId(), $def_seq);
 
                         switch ($type) {

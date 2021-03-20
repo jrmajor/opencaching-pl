@@ -28,7 +28,7 @@ return base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $text, MCRYPT_MOD
 
 function decrypt($text, $key)
 {
-if(!$text)
+if(! $text)
 return '';
 $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
 $iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
@@ -37,10 +37,10 @@ return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($text), MCR
 
 function validate_msg($cookietext)
 {
-if(!ereg('[0-9]+ This is a secret message', $cookietext))
+if(! ereg('[0-9]+ This is a secret message', $cookietext))
 return false;
 
-$num=0;
+$num = 0;
 sscanf($cookietext, '%d', $num);
 return $num;
 }

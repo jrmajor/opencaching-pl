@@ -149,7 +149,7 @@ class RssFeed {
      * @return FeedReader
      */
     private function getReader() {
-        if (!$this->reader) {
+        if (! $this->reader) {
             $xml = $this->getXML();
             if (RSSReader::canRead($xml)) {
                 $this->reader = new RSSReader($xml);
@@ -293,7 +293,7 @@ class AtomReader implements FeedReader {
     public function item($index) {
         $node = $this->root->entry[$index];
 
-        if (!$node) {
+        if (! $node) {
             return null;
         }
 
@@ -343,7 +343,7 @@ class RSSReader implements FeedReader {
     public function item($index) {
         $node = $this->root->channel->item[$index];
 
-        if (!$node) {
+        if (! $node) {
             return null;
         }
         $dc = $node->children('http://purl.org/dc/elements/1.1/');

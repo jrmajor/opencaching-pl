@@ -71,7 +71,7 @@ class OcSpamDomain {
                 break;
 
             default:
-                trigger_error(__METHOD__.': Unknown ocSpam domain: '.$domain, E_USER_WARNING);
+                trigger_error(__METHOD__ . ': Unknown ocSpam domain: ' . $domain, E_USER_WARNING);
                 return 1800; //one-per-hour
         }
     }
@@ -100,7 +100,7 @@ class OcSpamDomain {
             // Add another domain config here
             default:
                 //no such domain - trigger warning
-                trigger_error(__METHOD__.': Unknown ocSpam domain: '.$domain, E_USER_WARNING);
+                trigger_error(__METHOD__ . ': Unknown ocSpam domain: ' . $domain, E_USER_WARNING);
                 return null;
         }
 

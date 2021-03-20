@@ -29,7 +29,7 @@ class SimpleRouter
     const ERROR_ACTION = 'displayCommonErrorPageAndExit';
 
     const CTRL_BASE_CLASS = '\src\Controllers\BaseController';
-    const ROOT_DIR = __DIR__.'/../../..';
+    const ROOT_DIR = __DIR__ . '/../../..';
 
     // GET (url) var used to transfer route
     const ROUTE_GET_VAR = 'r';
@@ -43,7 +43,7 @@ class SimpleRouter
      * @param string|array $params - param as string or array of params
      * @return string - link to use
      */
-    public static function getLink($ctrl, $action=null, $params=null)
+    public static function getLink($ctrl, $action = null, $params = null)
     {
         $ctrl = self::checkControllerName($ctrl);
 
@@ -52,12 +52,12 @@ class SimpleRouter
 
         $link = "/$ctrl";
 
-        if(!is_null($action)) {
+        if(! is_null($action)) {
             $link .= "/$action";
         } else {
-            if(!is_null($params)) {
+            if(! is_null($params)) {
                 // set default action only if $params are present
-                $link .= '/'.self::DEFAULT_ACTION;
+                $link .= '/' . self::DEFAULT_ACTION;
             }
         }
 
@@ -65,14 +65,14 @@ class SimpleRouter
          * TODO: There is still a problem of slashes in arg. content
          *  - default apache config prevents %2F in non-query part of URI
          */
-        if(!is_null($params)){
+        if(! is_null($params)){
             if(is_array($params)){
                 array_walk($params, function (&$val, $x){
                     $val = urlencode($val);
                 });
-                $link .= '/'.implode('/',$params);
+                $link .= '/' . implode('/',$params);
             } else {
-                $link .= '/'.urlencode($params);
+                $link .= '/' . urlencode($params);
             }
         }
 
@@ -87,11 +87,11 @@ class SimpleRouter
      * @param string|array $params - param as string or array of params
      * @return string
      */
-    public static function getAbsLink($ctrl, $action=null, $params=null)
+    public static function getAbsLink($ctrl, $action = null, $params = null)
     {
         $link = self::getLink($ctrl, $action, $params);
 
-        return Uri::getCurrentUriBase().$link;
+        return Uri::getCurrentUriBase() . $link;
     }
 
     /**
@@ -104,7 +104,7 @@ class SimpleRouter
         [$ctrlName, $actionName, $params] = self::parse();
 
         // first check the class filename
-        if(!file_exists(self::getClassFilePath($ctrlName))) {
+        if(! file_exists(self::getClassFilePath($ctrlName))) {
             self::displayErrorAndExit("No such file: $ctrlName", 403);
         }
 
@@ -121,13 +121,13 @@ class SimpleRouter
         }
 
         // check if this is the subclass of BaseController
-        if(!$ctrlReflection->isSubclassOf(self::CTRL_BASE_CLASS)){
+        if(! $ctrlReflection->isSubclassOf(self::CTRL_BASE_CLASS)){
             self::displayErrorAndExit('Not instance of BaseController', 403);
         }
 
         // check if action can be called
         $ctrl = $ctrlReflection->newInstance($actionName);
-        if (!$ctrl->isCallableFromRouter($actionName)) {
+        if (! $ctrl->isCallableFromRouter($actionName)) {
             self::displayErrorAndExit('Not callable from router', 403);
         }
 
@@ -137,13 +137,13 @@ class SimpleRouter
             self::displayErrorAndExit('Wrong action', 403);
         }
 
-        if (!$actionReflection->isPublic()){
+        if (! $actionReflection->isPublic()){
             self::displayErrorAndExit('Calling non-public method', 403);
         }
 
         // check if the given params number is enough for this action
         $numOfReqParams = $actionReflection->getNumberOfRequiredParameters();
-        if ($numOfReqParams != 0 && (!is_array($params) || $numOfReqParams > count($params)) ) {
+        if ($numOfReqParams != 0 && (! is_array($params) || $numOfReqParams > count($params)) ) {
             self::displayErrorAndExit('Not enough params', 403);
         }
 
@@ -158,12 +158,12 @@ class SimpleRouter
      * @param string $uri
      * @param bool $absoluteUri - if set means that uri is absolute (contains protocol and host etc.)
      */
-    public static function redirect($uri, $absoluteUri=null)
+    public static function redirect($uri, $absoluteUri = null)
     {
         if (is_null($absoluteUri)) {
             // if the first char of $uri is not a slash - add slash
             if (substr($uri, 0, 1) !== '/') {
-                $uri = '/'.$uri;
+                $uri = '/' . $uri;
             }
             $uri = '//' . $_SERVER['HTTP_HOST'] . $uri;
         }
@@ -183,7 +183,7 @@ class SimpleRouter
         //be sure the first letter of controller (class) is uppper letter
         $ctrl = ucfirst($ctrl);
 
-        return '\\src\\Controllers\\'.str_replace('.', '\\', $ctrl).'Controller';
+        return '\\src\\Controllers\\' . str_replace('.', '\\', $ctrl) . 'Controller';
     }
 
     /**
@@ -194,7 +194,7 @@ class SimpleRouter
      */
     private static function getClassFilePath($classNamespace)
     {
-        return self::ROOT_DIR.str_replace('\\', '/', $classNamespace).'.php';
+        return self::ROOT_DIR . str_replace('\\', '/', $classNamespace) . '.php';
     }
 
     /**
@@ -205,7 +205,7 @@ class SimpleRouter
      */
     private static function parse()
     {
-        if (!isset($_GET[self::ROUTE_GET_VAR])) {
+        if (! isset($_GET[self::ROUTE_GET_VAR])) {
             $routeParts = [];
         } else {
             $routeParts = explode('/', $_GET[self::ROUTE_GET_VAR]);
@@ -229,7 +229,7 @@ class SimpleRouter
         $ctrl = self::getControllerWithNamespace($routeParts[0]);
 
         // ctrl found, check the action
-        if( !isset($routeParts[1]) || empty($routeParts[1]) ){
+        if( ! isset($routeParts[1]) || empty($routeParts[1]) ){
             $action = self::DEFAULT_ACTION;
         } else {
             $action = $routeParts[1];
@@ -249,7 +249,7 @@ class SimpleRouter
         // normalize slashes - replace backslashes
         $ctrl = str_replace('\\', '/', $ctrl);
         $parts = explode('/', $ctrl);
-        if(count($parts)==1){
+        if(count($parts) == 1){
             return $parts[0]; // there is only ctrl name
         }else{
             return implode('.',$parts);

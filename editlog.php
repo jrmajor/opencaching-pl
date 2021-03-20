@@ -16,7 +16,7 @@ use src\Utils\Text\InputFilter;
 use src\Utils\Text\UserInputFilter;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 global $config;
 
 //logid
@@ -27,7 +27,7 @@ if (isset($_REQUEST['logid'])) {
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -46,8 +46,8 @@ if (!$loggedUser) {
         $log_record = XDb::xFetchArray($log_rs);
         if ($log_record) {
 
-            require(__DIR__.'/src/Views/editlog.inc.php');
-            require(__DIR__.'/src/Views/rating.inc.php');
+            require(__DIR__ . '/src/Views/editlog.inc.php');
+            require(__DIR__ . '/src/Views/rating.inc.php');
 
             if ($log_record['node'] != OcConfig::getSiteNodeId()) {
                 tpl_errorMsg('editlog', $error_wrong_node);
@@ -108,7 +108,7 @@ if (!$loggedUser) {
                         $rating_msg = mb_ereg_replace('{curr}', $user_tops, $rating_msg);
                     } else {
                         $top_cache = 0;
-                        $recommendationsNr = ((1+$user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO ) - $user_founds;
+                        $recommendationsNr = ((1 + $user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO ) - $user_founds;
                         $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
 
                         $rating_msg .= '<br />' . $rating_maxreached;
@@ -131,7 +131,7 @@ if (!$loggedUser) {
                 }
 
                 // fuer alte Versionen von OCProp
-                if (isset($_POST['submit']) && !isset($_POST['version2'])) {
+                if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
                     $_POST['submitform'] = $_POST['submit'];
                 }
 
@@ -139,7 +139,7 @@ if (!$loggedUser) {
                 $log_text = isset($_POST['logtext']) ? ($_POST['logtext']) : ($log_record['text']);
 
                 // fuer alte Versionen von OCProp
-                if (isset($_POST['submit']) && !isset($_POST['version2'])) {
+                if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
                     $log_text = iconv('ISO-8859-1', 'UTF-8', $log_text);
                 }
 
@@ -265,7 +265,7 @@ if (!$loggedUser) {
 
 
                         if ($log_record['logtype'] == 1) {
-                            $user_record['founds_count'] --;
+                            $user_record['founds_count']--;
 
                             // recalc scores for this cache
                             XDb::xSql('DELETE FROM `scores` WHERE `user_id` = ? AND `cache_id` = ?',
@@ -288,9 +288,9 @@ if (!$loggedUser) {
                                 $liczba, $srednia, $log_record['cache_id']);
 
                         } elseif ($log_record['logtype'] == 2) {
-                            $user_record['notfounds_count'] --;
+                            $user_record['notfounds_count']--;
                         } elseif ($log_record['logtype'] == 3) {
-                            $user_record['log_notes_count'] --;
+                            $user_record['log_notes_count']--;
                         }
 
                         // for the case that one of the fields is NULL
@@ -299,14 +299,14 @@ if (!$loggedUser) {
                         $user_record['log_notes_count'] = $user_record['log_notes_count'] + 0;
 
                         if ($log_type == 1) {
-                            $user_record['founds_count'] ++;
+                            $user_record['founds_count']++;
                         } elseif ($log_type == 2) {
-                            $user_record['notfounds_count'] ++;
+                            $user_record['notfounds_count']++;
                             if ($founds <= 1)
                                 $top_cache = 0;
                         }
                         elseif ($log_type == 3) {
-                            $user_record['log_notes_count'] ++;
+                            $user_record['log_notes_count']++;
                             if ($founds <= 1)
                                 $top_cache = 0;
                         }
@@ -333,11 +333,11 @@ if (!$loggedUser) {
 
                     if ($log_record['logtype'] != $log_type) {
                         if ($log_record['logtype'] == 1 || $log_record['logtype'] == 7) {
-                            $cache_record['founds'] --;
+                            $cache_record['founds']--;
                         } elseif ($log_record['logtype'] == 2 || $log_record['logtype'] == 8) {
-                            $cache_record['notfounds'] --;
+                            $cache_record['notfounds']--;
                         } elseif ($log_record['logtype'] == 3) {
-                            $cache_record['notes'] --;
+                            $cache_record['notes']--;
                         }
 
                         // for the case that one of the fields is NULL
@@ -346,11 +346,11 @@ if (!$loggedUser) {
                         $cache_record['notes'] = $cache_record['notes'] + 0;
 
                         if ($log_type == 1 || $log_type == 7) {
-                            $cache_record['founds'] ++;
+                            $cache_record['founds']++;
                         } elseif ($log_type == 2 || $log_type == 8) {
-                            $cache_record['notfounds'] ++;
+                            $cache_record['notfounds']++;
                         } elseif ($log_type == 3) {
-                            $cache_record['notes'] ++;
+                            $cache_record['notes']++;
                         }
                     }
 
@@ -393,9 +393,9 @@ if (!$loggedUser) {
                             $ctrlMeritBadge = new MeritBadgeController;
 
                             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($cache_id, $loggedUser->getUserId());
-                            $titledIds= $ctrlMeritBadge->updateTriggerTitledCache($cache_id, $loggedUser->getUserId());
+                            $titledIds = $ctrlMeritBadge->updateTriggerTitledCache($cache_id, $loggedUser->getUserId());
 
-                            if ( $changedLevelBadgesIds != '' && $titledIds!= '')
+                            if ( $changedLevelBadgesIds != '' && $titledIds != '')
                                 $changedLevelBadgesIds .= ',';
 
                             $changedLevelBadgesIds .= $titledIds;
@@ -446,12 +446,12 @@ if (!$loggedUser) {
                     ];
 
                     if (in_array($type,$allowedOnlyForOwner) &&
-                        $log_record['user_id'] != $cache_user_id && !$loggedUser->hasOcTeamRole()) {
+                        $log_record['user_id'] != $cache_user_id && ! $loggedUser->hasOcTeamRole()) {
                         continue;
                     }
 
                     // Only COG can write or edit COG comment
-                    if ($type == GeoCacheLogCommons::LOGTYPE_ADMINNOTE && !$loggedUser->hasOcTeamRole()) {
+                    if ($type == GeoCacheLogCommons::LOGTYPE_ADMINNOTE && ! $loggedUser->hasOcTeamRole()) {
                         continue;
                     }
 
@@ -470,51 +470,51 @@ if (!$loggedUser) {
                     }
 
                     if ($already_found_in_other_comment) {
-                        if ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT        ||
-                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND     ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED       ||
-                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED   ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED       ||
-                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH  ||
+                        if ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT ||
+                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH ||
                             $type == GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE) {
                             continue;
                         }
                     }
 
                     if ($cache_type == GeoCache::TYPE_EVENT) {
-                        if ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT            ||
-                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND         ||
-                            $type == GeoCacheLogCommons::LOGTYPE_MOVED              ||
-                            $type == GeoCacheLogCommons::LOGTYPE_NEEDMAINTENANCE    ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED           ||
-                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH      ||
+                        if ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT ||
+                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND ||
+                            $type == GeoCacheLogCommons::LOGTYPE_MOVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_NEEDMAINTENANCE ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH ||
                             $type == GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE) {
                             continue;
                         }
                     } else if ($cache_type == GeoCache::TYPE_MOVING) {
-                        if ($type == GeoCacheLogCommons::LOGTYPE_ATTENDED       ||
-                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED   ||
+                        if ($type == GeoCacheLogCommons::LOGTYPE_ATTENDED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED ||
                             $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED) {
                             continue;
                         }
                     } else {
 
                         if ($log_record['user_id'] == $cache_user_id && // is owner
-                           ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT            ||
-                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND         ||
-                            $type == GeoCacheLogCommons::LOGTYPE_MOVED              ||
-                            $type == GeoCacheLogCommons::LOGTYPE_NEEDMAINTENANCE    ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED           ||
+                           ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT ||
+                            $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND ||
+                            $type == GeoCacheLogCommons::LOGTYPE_MOVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_NEEDMAINTENANCE ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED ||
                             $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED)) {
                             continue;
                         }
 
                         if ($log_record['user_id'] != $cache_user_id &&
-                           ($type == GeoCacheLogCommons::LOGTYPE_MOVED         ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED       ||
-                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED   ||
-                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED       ||
-                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH  ||
+                           ($type == GeoCacheLogCommons::LOGTYPE_MOVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ATTENDED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED ||
+                            $type == GeoCacheLogCommons::LOGTYPE_READYTOSEARCH ||
                             $type == GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE)) {
                             continue;
                         }

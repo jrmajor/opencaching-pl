@@ -18,12 +18,12 @@ function findColumn($name, $type = 'C')
 {
     global $colNameSearch;
 
-    for ($i = 0; $i < 20; $i ++) {
+    for ($i = 0; $i < 20; $i++) {
         if ($colNameSearch[$i][$type] == $name)
             return $i;
     }
 
-    return - 1;
+    return -1;
 }
 
 function fHideColumn($nr, $set)
@@ -71,8 +71,8 @@ function fHideColumn($nr, $set)
 }
 
 global $dbcSearch, $hide_coords, $NrColSortSearch, $OrderSortSearch, $SearchWithSort, $TestStartTime, $queryFilter;
-require_once (__DIR__.'/../src/Views/lib/icons.inc.php');
-require_once (__DIR__.'/calculation.inc.php');
+require_once (__DIR__ . '/../src/Views/lib/icons.inc.php');
+require_once (__DIR__ . '/calculation.inc.php');
 
 set_time_limit(1800);
 
@@ -228,16 +228,16 @@ $resultcount = $r['count'];
 
 tpl_set_var('results_count', $resultcount);
 
-if ($resultcount <= 5000 && $NrColSortSearch != - 1) {
+if ($resultcount <= 5000 && $NrColSortSearch != -1) {
     $SearchWithSort = true;
     $tplname = 'search.result.caches'; // prepare the output
     $caches_per_page = 999999;
-    $cache_line = tpl_do_translate(file_get_contents(__DIR__.'/../src/Views/search.result.caches.row.tpl.php')); // build lines
+    $cache_line = tpl_do_translate(file_get_contents(__DIR__ . '/../src/Views/search.result.caches.row.tpl.php')); // build lines
 } else {
     $SearchWithSort = false;
     $tplname = 'search.result.caches'; // without sort
     $caches_per_page = 20;
-    $cache_line = tpl_do_translate(file_get_contents(__DIR__.'/../src/Views/search.result.caches.row.tpl.php')); // build lines
+    $cache_line = tpl_do_translate(file_get_contents(__DIR__ . '/../src/Views/search.result.caches.row.tpl.php')); // build lines
 }
 
 if ($resultcount)
@@ -279,7 +279,7 @@ if (isset($lat_rad, $lon_rad)  ) {
     if ($CalcDistance)
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         if ($CalcDistance)
             $query .= '0 distance, ';
     } elseif ($CalcDistance) {
@@ -308,7 +308,7 @@ $query .= '   `caches`.`name` `name`, `caches`.`status` `status`, `caches`.`wp_o
                 `user`.`username` `username`, `user`.`user_id` `user_id`,
                 `cache_type`.`icon_large` `icon_large`,
                 `caches`.`founds` `founds`, `caches`.`topratings` `toprating`, cache_desc.short_desc short_desc ';
-if (!$loggedUser) {
+if (! $loggedUser) {
     if ($CalcCoordinates)
         $query .= ', `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id ';
 
@@ -335,7 +335,7 @@ $sortby = $options['sort'];
 
 if (! $SearchWithSort) // without interactive sort
 {
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {
@@ -365,7 +365,7 @@ $tr_Coord_have_been_modified = tr('srch_Coord_have_been_modified');
 $tr_Recommended = tr('srch_Recommended');
 $tr_Send_to_GPS = tr('srch_Send_to_GPS');
 
-for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
+for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
     $caches_record = $dbcSearch->dbResultFetch($s);
 
     // modified coords
@@ -395,7 +395,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i ++) {
     $tmpline = str_replace('{toprating}', $ratingA, $tmpline);
     $tmpline = str_replace('{ratpic}', $ratingimg, $tmpline);
 
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $tmpline = str_replace('{long}', tr('please_login'), $tmpline);
         $tmpline = str_replace('{lat}', tr('to_see_coords'), $tmpline);
     } else {
@@ -598,7 +598,7 @@ if ($topage > $maxpage)
     $topage = $maxpage;
 
 if ($topage > 1) {
-    for ($i = $frompage; $i <= $topage; $i ++) {
+    for ($i = $frompage; $i <= $topage; $i++) {
         if (($startat / $caches_per_page + 1) == $i) {
             $pages .= ' <b>' . $i . '</b>';
         } else {
@@ -630,7 +630,7 @@ $lhideColumns = 'search.php?queryid=' . $options['queryid'] . '&amp;startat=0';
 tpl_set_var('lhideColumns', $lhideColumns);
 
 // save-link
-if (!$loggedUser)
+if (! $loggedUser)
     tpl_set_var('safelink', '');
 else
     tpl_set_var('safelink', str_replace('{queryid}', $options['queryid'], $safelink));

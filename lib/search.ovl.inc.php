@@ -13,12 +13,12 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
 $ovlLine = "[Symbol {symbolnr1}]\r\nTyp=6\r\nGroup=1\r\nWidth=20\r\nHeight=20\r\nDir=100\r\nArt=1\r\nCol=3\r\nZoom=1\r\nSize=103\r\nArea=2\r\nXKoord={lon}\r\nYKoord={lat}\r\n[Symbol {symbolnr2}]\r\nTyp=2\r\nGroup=1\r\nCol=3\r\nArea=1\r\nZoom=1\r\nSize=130\r\nFont=1\r\nDir=100\r\nXKoord={lonname}\r\nYKoord={latname}\r\nText={mod_suffix}{cachename}\r\n";
 $ovlFoot = "[Overlay]\r\nSymbols={symbolscount}\r\n";
 
-if( $loggedUser || !$hide_coords ) {
+if( $loggedUser || ! $hide_coords ) {
     //prepare the output
     $caches_per_page = 20;
 
@@ -27,7 +27,7 @@ if( $loggedUser || !$hide_coords ) {
     if (isset($lat_rad, $lon_rad)  ) {
         $query .= getSqlDistanceFormula($lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
-        if (!$loggedUser) {
+        if (! $loggedUser) {
             $query .= '0 distance, ';
         } else {
             //get the users home coords
@@ -50,7 +50,7 @@ if( $loggedUser || !$hide_coords ) {
             XDb::xFreeResults($rs_coords);
         }
     }
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= ' `caches`.`cache_id`, `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id, `caches`.`type` `type`
                 FROM `caches` ';
     } else {
@@ -62,7 +62,7 @@ if( $loggedUser || !$hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else if ($sortby == 'bycreated') {
         $query .= ' ORDER BY date_created DESC';

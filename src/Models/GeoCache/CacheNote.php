@@ -87,7 +87,7 @@ class CacheNote extends BaseObject
      * @return array
      */
     public static function getCachesIdsForNotesAndModCoords(
-        $userId, $limit=null, $offset=null)
+        $userId, $limit = null, $offset = null)
     {
         $db = self::db();
 

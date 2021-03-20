@@ -10,7 +10,7 @@ global $absolute_server_URI;
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $user = ApplicationContainer::GetAuthorizedUser();
-if (!$user) {
+if (! $user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
 }
@@ -39,7 +39,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
     $email_exists = false;
     $new_email_not_ok = false;
 
-    if (!Validator::isValidEmail($new_email)) {
+    if (! Validator::isValidEmail($new_email)) {
         $new_email_not_ok = true;
         tpl_set_var('email_message', $error_email_not_ok);
     } else {
@@ -52,7 +52,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
         }
     }
 
-    if ((!$email_exists) && (!$new_email_not_ok)) {
+    if ((! $email_exists) && (! $new_email_not_ok)) {
         if (isset($_POST['submit_getcode'])) {
             //send the secure code via email and store the new email in the database
             $secure_code = uniqid('');

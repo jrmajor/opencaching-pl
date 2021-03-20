@@ -174,7 +174,7 @@ class Validator
             case 'GE': return self::geWaypoint($code);
             case 'NC': return self::ncWaypoint($code);
             case 'QC': return $code;  // obsolete
-            default:   throw new Exception('Invalid waypoint code type: '.$code);
+            default:   throw new Exception('Invalid waypoint code type: ' . $code);
         }
     }
 }

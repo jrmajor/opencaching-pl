@@ -1,11 +1,11 @@
 <?php
 use src\Utils\Database\OcDb;
 session_start();
-if(!isset($_SESSION['user_id'])){
+if(! isset($_SESSION['user_id'])){
     echo 'no hacking please!';
     exit;
 }
-require_once __DIR__.'/../lib/ClassPathDictionary.php';
+require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 $ptAPI = new powerTrailBase;
 
 $powerTrailId = $_REQUEST['projectId'];

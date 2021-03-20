@@ -5,11 +5,11 @@ use src\Utils\Database\OcDb;
 use src\Utils\Database\XDb;
 use src\Utils\Text\TextConverter;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -18,7 +18,7 @@ if (!$loggedUser) {
 
         $tplname = 'searchuser';
         $options['username'] = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
-        if (!isset($options['username'])) {
+        if (! isset($options['username'])) {
             $options['username'] = '';
         }
         if ($options['username'] != '') {

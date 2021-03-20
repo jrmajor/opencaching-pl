@@ -42,21 +42,21 @@ use src\Utils\I18n\I18n;
 <?php
 global $hide_coords, $colNameSearch, $NrColSortSearch, $OrderSortSearch, $SearchWithSort, $selectList, $NrColVisable;
 
-if ( !$SearchWithSort )
+if ( ! $SearchWithSort )
 {
-    if ( $NrColSortSearch != -1 && !isset($_REQUEST['startat']) )
+    if ( $NrColSortSearch != -1 && ! isset($_REQUEST['startat']) )
     {
         echo "<script>
-            alert( '".tr('MaxSearchRec')."' );
+            alert( '" . tr('MaxSearchRec') . "' );
             </script>; ";
     }
 }
 
 echo '<script>';
-echo " gctLoadTable( '". I18n::getCurrentLang() ."' );";
+echo " gctLoadTable( '" . I18n::getCurrentLang() . "' );";
 echo '</script>';
 
-$NrColSortToSet = $NrColSortSearch-1;
+$NrColSortToSet = $NrColSortSearch - 1;
 
 if ( $NrColSortToSet < 0 )
     $NrColSortSearch = 0;
@@ -64,7 +64,7 @@ if ( $NrColSortToSet < 0 )
 if ( $NrColSortToSet > 18 )
     $NrColSortSearch = 0;
 
-if ( !$SearchWithSort &&  $NrColSortSearch != -1 )
+if ( ! $SearchWithSort && $NrColSortSearch != -1 )
     $NrColSortSearch = -1;
 ?>
 
@@ -152,9 +152,9 @@ function searchCB(){
 
 <div id='idGTC' align = "left" ></div>
 
-<?php if (!$SearchWithSort) echo "<div class='content-title-noshade'><p align='left'>"; ?>
+<?php if (! $SearchWithSort) echo "<div class='content-title-noshade'><p align='left'>"; ?>
 {pages}
-<?php if (!$SearchWithSort) { echo '</p></div>'; }
+<?php if (! $SearchWithSort) { echo '</p></div>'; }
     else {
         echo "<span style='font-size:10px;'>{{pagination_page}}: </span><span id='pageNumber' style='font-size:11px; color:green; font-weight:bold'>1</span>"; }
 ?>
@@ -166,12 +166,12 @@ function searchCB(){
 $selectList = '';
 $descCol = tr('Disable');
 if ( $NrColSortSearch != -1)
-    $selectList.="<option style='color:red' value=-1>$descCol</option>";
+    $selectList .= "<option style='color:red' value=-1>$descCol</option>";
 else
-    $selectList.="<option style='color:red' selected='selected' value=-1>$descCol</option>";
+    $selectList .= "<option style='color:red' selected='selected' value=-1>$descCol</option>";
 
 $descCol = tr('Enable');
-$selectList.="<optgroup style='color:green' label='".$descCol."'>";
+$selectList .= "<optgroup style='color:green' label='" . $descCol . "'>";
 
 $NrColVisable = 0;
 
@@ -252,7 +252,7 @@ echo "<div class='GCT-div' style='font-size:12px'>
              <tr><td colspan=\"2\">&nbsp;</td></tr>
               <tr>
                      <td width=\"270\">
-                    ".tr('listing_from_to').":
+                    " . tr('listing_from_to') . ":
                      </td>
                             <td><span class='content-title-noshade' style='color:green'>{{format_other}}</span>:<br/>
                 <a class=\"links\" href=\"ocpl"; ?>{queryid}<?php echo '.loc?startat=1&amp;count=max&amp;zip=1" title="Waypoint .loc">LOC</a> |

@@ -9,7 +9,7 @@ use src\Utils\Uri\SimpleRouter;
         {{admin_dbupdate_title}}
     </div>
 
-<?php if (!empty($view->messages)) { ?>
+<?php if (! empty($view->messages)) { ?>
     <div style="color:brown; padding:0.5em 0 0.5em 0">
         <p><?= nl2br($view->messages) ?></p>
     </div>
@@ -89,7 +89,7 @@ use src\Utils\Uri\SimpleRouter;
 
     <?php foreach ($view->updates as $update) { ?>
         <tr>
-            <td <?php if (!$update->isInGitMasterBranch()) { ?>style="font-style:oblique"<?php } ?> >
+            <td <?php if (! $update->isInGitMasterBranch()) { ?>style="font-style:oblique"<?php } ?> >
                 <a href="<?= SimpleRouter::getLink('Admin.DbUpdate', 'viewScript', $update->getUuid()) ?>"><?= $update->getName() ?></a>
             </td>
             <td><?= tr('admin_dbupdate_' . $update->getRuntype()) ?></td>

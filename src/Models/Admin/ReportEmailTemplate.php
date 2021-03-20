@@ -196,7 +196,7 @@ class ReportEmailTemplate extends BaseObject
         $content = '';
         $templates = self::generateTemplateArray($recipient, $objectType);
         foreach ($templates as $template) {
-            $content .= '<option value="' . $template['id'] . '">' . $template['shortdesc']. '</option>';
+            $content .= '<option value="' . $template['id'] . '">' . $template['shortdesc'] . '</option>';
         }
         return $content;
     }

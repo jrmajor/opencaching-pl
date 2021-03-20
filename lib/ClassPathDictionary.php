@@ -1,7 +1,7 @@
 <?php
 
 // include composer autoloader
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 /**
  * All classes should be automatically loaded by Composer autoloader.
@@ -18,17 +18,17 @@ class ClassPathDictionary
             return null;
         }
 
-        $fileName = array_pop($classPathArr).'.php';
-        $classPath = __DIR__.'/../'.implode('/', $classPathArr);
+        $fileName = array_pop($classPathArr) . '.php';
+        $classPath = __DIR__ . '/../' . implode('/', $classPathArr);
 
-        $fileToInclude = $classPath.'/'.$fileName;
+        $fileToInclude = $classPath . '/' . $fileName;
 
         if (file_exists($fileToInclude)) {
             return $fileToInclude;
         }
 
         // If there is no such a file, try to find a file with lowercase filename.
-        $fileToInclude = $classPath.'/'.lcfirst($fileName);
+        $fileToInclude = $classPath . '/' . lcfirst($fileName);
 
         if (file_exists($fileToInclude)) {
             return $fileToInclude;

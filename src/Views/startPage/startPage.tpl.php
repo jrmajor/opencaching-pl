@@ -1,7 +1,7 @@
 
 <div class="content2-container">
 
-    <?php if(!$view->isUserLogged) { ?>
+    <?php if(! $view->isUserLogged) { ?>
       <!-- intro -->
       <div id="intro">
         <?=$view->introText?>
@@ -11,7 +11,7 @@
     use src\Controllers\CacheController; ?>
 
 
-    <?php if(!empty($view->newsList)){ ?>
+    <?php if(! empty($view->newsList)){ ?>
     <!-- news -->
     <div id="newsDiv">
         <div class="content-title-noshade-size3">
@@ -42,7 +42,7 @@
     <?php } //if-!empty($view->newsList) ?>
 
 
-    <?php if(!$view->isUserLogged) { ?>
+    <?php if(! $view->isUserLogged) { ?>
     <!-- total Stats -->
       <?=$view->callSubTpl('/startPage/totalStatsSlider')?>
     <!-- /total Stats -->
@@ -151,16 +151,16 @@
           <?php foreach($view->lastCacheSets as $cs){ ?>
             <li>
                 <a href="<?=$cs->getUrl()?>" class="links highlite"
-                    onmouseover="highliteStaticMapMarker('<?='cs_'.$cs->getId()?>')"
-                    onmouseout="highliteStaticMapMarker('<?='cs_'.$cs->getId()?>')">
+                    onmouseover="highliteStaticMapMarker('<?='cs_' . $cs->getId()?>')"
+                    onmouseout="highliteStaticMapMarker('<?='cs_' . $cs->getId()?>')">
                   <div class="csImgBox">
                     <img src="<?=$cs->getImage()?>" alt="Geopath image" />
                   </div>
                 </a>
                 <div class="csNameBox">
                   <a href="<?=$cs->getUrl()?>" class="links highlite"
-                    onmouseover="highliteStaticMapMarker('<?='cs_'.$cs->getId()?>')"
-                    onmouseout="highliteStaticMapMarker('<?='cs_'.$cs->getId()?>')">
+                    onmouseover="highliteStaticMapMarker('<?='cs_' . $cs->getId()?>')"
+                    onmouseout="highliteStaticMapMarker('<?='cs_' . $cs->getId()?>')">
                     <?=$cs->getName()?>
                   </a>
                   <?=tr('hidden_by')?>

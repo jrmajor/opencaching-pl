@@ -6,14 +6,14 @@ use src\Models\Pictures\Thumbnail;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 global $hide_coords;
 
 $view = tpl_getView();
 $app = ApplicationContainer::Instance();
 
-if (!isset($_REQUEST['cacheid']) || ($cache = GeoCache::fromCacheIdFactory($_REQUEST['cacheid'])) === null) {
+if (! isset($_REQUEST['cacheid']) || ($cache = GeoCache::fromCacheIdFactory($_REQUEST['cacheid'])) === null) {
     $view->redirect('/');
     exit();
 }

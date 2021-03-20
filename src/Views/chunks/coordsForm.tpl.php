@@ -16,13 +16,13 @@ use src\Models\Coordinates\Coordinates;
  *
  */
 
-return function (Coordinates $initCoords = null, $inputPrefix='') {
+return function (Coordinates $initCoords = null, $inputPrefix = '') {
 
-    $prefix=(empty($inputPrefix))?'coordsChunk_':$inputPrefix;
+    $prefix = (empty($inputPrefix))?'coordsChunk_':$inputPrefix;
 
-    $finalLatId = $inputPrefix.'FinalLatitude';
-    $finalLonId = $inputPrefix.'FinalLongitude';
-    $finalCoordsReadyId =  $inputPrefix.'FinalCoordsReady';
+    $finalLatId = $inputPrefix . 'FinalLatitude';
+    $finalLonId = $inputPrefix . 'FinalLongitude';
+    $finalCoordsReadyId = $inputPrefix . 'FinalCoordsReady';
 
 
     //TODO: read it from config...

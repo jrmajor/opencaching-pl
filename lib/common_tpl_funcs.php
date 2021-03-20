@@ -127,7 +127,7 @@ function tpl_getView()
 {
 
     global $view;
-    if (!$view) {
+    if (! $view) {
         $view = new View();
     }
 
@@ -177,7 +177,7 @@ function tpl_BuildTemplate($minitpl = false, $noCommonTemplate = false)
     $view->setVar('backgroundSeason', $view->getSeasonCssName());
 
     //does template exist?
-    if (!file_exists(__DIR__ . '/../src/Views/' . $tplname . '.tpl.php')) {
+    if (! file_exists(__DIR__ . '/../src/Views/' . $tplname . '.tpl.php')) {
         //set up the error template
         tpl_set_var('error_msg', tr('page_not_found'));
         tpl_set_var('tplname', $tplname);

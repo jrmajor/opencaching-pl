@@ -4,10 +4,10 @@ use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Utils\Database\OcDb;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -32,7 +32,7 @@ if (!$loggedUser) {
         if ($dbResult == 0) {
             $content .= '<p>&nbsp;</p><p style="background-color: #FFFFFF; margin: 0px; padding: 0px; color: rgb(88,144,168); font-weight: bold; font-size: 14px;">' . $cachename . '<br /> <br />nie ma jeszcze statystyki</b></p>';
         } else {
-            $content .='<center><p style="background-color: #FFFFFF; margin: 0px; padding: 0px; color: rgb(88,144,168); font-weight: bold; font-size: 14px;">' . tr('stat_geocache') . ': ' . $cachename . '<br /></p>';
+            $content .= '<center><p style="background-color: #FFFFFF; margin: 0px; padding: 0px; color: rgb(88,144,168); font-weight: bold; font-size: 14px;">' . tr('stat_geocache') . ': ' . $cachename . '<br /></p>';
             $content .= '<p style="background-color: #FFFFFF; "><img src="graphs/PieGraphcstat.php?cacheid=' . $cache_id . '"  border="0" alt="Statystyka skrzynki" width="400" height="200" /><br /><br />';
             $year = date('Y');
             $content .= '<img src="graphs/BarGraphcstatM.php?cacheid=' . $cache_id . '&amp;t=csm' . $year . '"  border="0" alt="" width="400" height="200" /><br /><br />';

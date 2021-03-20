@@ -10,30 +10,30 @@ class powerTrailMenu
     function __construct($user) {
 
         if ($user) {
-            $this->menu =  [
-                1 =>  [
+            $this->menu = [
+                1 => [
                     'name' => tr('pt012'),
-                    'action'=> 'showAllSeries',
+                    'action' => 'showAllSeries',
                     'script' => 'powerTrail.php',
                 ],
-                2 =>  [
+                2 => [
                     'name' => tr('pt003'),
-                    'action'=> 'createNewSerie',
+                    'action' => 'createNewSerie',
                     'script' => 'powerTrail.php',
                 ],
-                3 =>  [
+                3 => [
                     'name' => tr('pt013'),
-                    'action'=> 'selectCaches',
+                    'action' => 'selectCaches',
                     'script' => 'powerTrail.php',
                 ],
-                4 =>  [
+                4 => [
                     'name' => tr('pt062'),
-                    'action'=> 'mySeries',
+                    'action' => 'mySeries',
                     'script' => 'powerTrail.php',
                 ],
 
             ];
-        } else $this->menu =  [];
+        } else $this->menu = [];
     }
 
     public function getPowerTrailsMenu()

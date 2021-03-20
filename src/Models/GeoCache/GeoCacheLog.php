@@ -587,7 +587,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             ->setDelByUserId($row['del_by_user_id'])
             ->setEditByUserId($row['edit_by_user_id'])
             ->setEditCount($row['edit_count']);
-        if (!empty($row['last_deleted'])) {
+        if (! empty($row['last_deleted'])) {
             $this->setLastDeleted(new DateTime($row['last_deleted']));
         } else {
             $this->setLastDeleted(null);
@@ -637,7 +637,7 @@ class GeoCacheLog extends GeoCacheLogCommons
      */
     public function canBeReverted(): bool
     {
-        if (!$this->getDeleted()) {
+        if (! $this->getDeleted()) {
             return false; //log is NOT deleted
         }
         if (in_array($this->getType(), [
@@ -646,7 +646,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             GeoCacheLog::LOGTYPE_WILLATTENDED,
         ])) {
             // There can be only one log "found", "attended", "will attend"
-            return (!$this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType()));
+            return (! $this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType()));
         }
         return true;
     }
@@ -727,7 +727,7 @@ class GeoCacheLog extends GeoCacheLogCommons
         // check if current user is allowed to remove the log
         if ($this->getUserId() != $this->getCurrentUser()->getUserId() &&
             $this->getGeoCache()->getOwnerId() != $this->getCurrentUser()->getUserId() &&
-            !$this->getCurrentUser()->hasOcTeamRole()) {
+            ! $this->getCurrentUser()->hasOcTeamRole()) {
 
             // logged user is not an author of the log && not the owner of cache and not OCTeam
             throw new Exception('User not authorized to remove this log');
@@ -790,11 +790,11 @@ class GeoCacheLog extends GeoCacheLogCommons
      */
     public function revertLog()
     {
-        if (!$this->getCurrentUser()->hasOcTeamRole()) {
+        if (! $this->getCurrentUser()->hasOcTeamRole()) {
             throw new Exception('User is not authorized to revert log');
         }
 
-        if (!$this->canBeReverted()) {
+        if (! $this->canBeReverted()) {
             throw new Exception('This log cannot be reverted');
         }
 

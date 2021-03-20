@@ -21,7 +21,7 @@ use src\Utils\Text\Formatter;
 
 return function (array $data, Column_CacheLog $model = null) {
 
-    if (!isset($data['logId']) || is_null($data['logId'])) {
+    if (! isset($data['logId']) || is_null($data['logId'])) {
         // there is no log data - exit;
         $nolog = true;
     } else {
@@ -41,7 +41,7 @@ return function (array $data, Column_CacheLog $model = null) {
 
     }
     ?>
-    <?php if (!$nolog) { ?>
+    <?php if (! $nolog) { ?>
 
         <?php if ($showFullLog) { ?>
 

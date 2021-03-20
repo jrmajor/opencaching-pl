@@ -11,7 +11,7 @@ return function (StaticMapMarker $mx){
 
   <?php if($mx->markerType == StaticMapMarker::TYPE_CSS_MARKER) { ?>
     <div id="<?=$mx->id?>" class="cssStaticMapMarker lightTipped cssStaticMapMarkerAbs"
-         style="left:<?=($mx->left-7)?>px; top:<?=($mx->top-24)?>px;">
+         style="left:<?=($mx->left - 7)?>px; top:<?=($mx->top - 24)?>px;">
 
       <?php if($mx->link){ ?>
         <a href="<?=$mx->link?>">
@@ -50,7 +50,7 @@ return function (StaticMapMarker $mx){
 
 
   <?php if($mx->tooltip) { ?>
-    <div class="lightTip" style="left:<?=($mx->left+20)?>px; top:<?=$mx->top?>px">
+    <div class="lightTip" style="left:<?=($mx->left + 20)?>px; top:<?=$mx->top?>px">
       <b><?=$mx->tooltip?></b>
     </div>
   <?php } //if-tooltip ?>

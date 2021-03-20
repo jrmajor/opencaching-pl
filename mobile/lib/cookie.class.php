@@ -20,7 +20,7 @@ class cookie
             if ($decoded !== false) {
                 $this->values = @json_decode($decoded, true, 2);
 
-                if (!is_array($this->values))
+                if (! is_array($this->values))
                     $this->values = [];
             } else
                 $this->values = [];
@@ -29,7 +29,7 @@ class cookie
 
     function set($name, $value)
     {
-        if (!isset($this->values[$name]) || $this->values[$name] != $value) {
+        if (! isset($this->values[$name]) || $this->values[$name] != $value) {
             $this->values[$name] = $value;
             $this->changed = true;
         }
@@ -75,9 +75,9 @@ class cookie
             $domain = $config['cookie']['domain'];
             if (preg_match('/^(.+?)?open(.+?)$/', $domain, $matches)) {
                 if ($matches[1] == 'www.') {
-                    $domain = 'm.open'.$matches[2];
+                    $domain = 'm.open' . $matches[2];
                 } else {
-                    $domain = $matches[1].'m.open'.$matches[2];
+                    $domain = $matches[1] . 'm.open' . $matches[2];
                 }
             }
 

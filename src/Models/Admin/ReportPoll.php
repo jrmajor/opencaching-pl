@@ -449,7 +449,7 @@ class ReportPoll extends BaseObject
     public static function generatePollIntervalSelect()
     {
         $result = '';
-        for ($i = self::POLL_INTERVAL_MIN; $i <= self::POLL_INTERVAL_MAX; $i ++) {
+        for ($i = self::POLL_INTERVAL_MIN; $i <= self::POLL_INTERVAL_MAX; $i++) {
             $result .= '<option value="' . $i . '">' . $i . '</option>';
         }
         return $result;

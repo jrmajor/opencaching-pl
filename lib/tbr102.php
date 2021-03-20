@@ -1,7 +1,7 @@
 <?php
 use src\Utils\Database\OcDb;
 
-require_once(__DIR__.'/common.inc.php');
+require_once(__DIR__ . '/common.inc.php');
 
 ?>
 <html>
@@ -68,7 +68,7 @@ require_once(__DIR__.'/common.inc.php');
         $asUserID = explode(',', $sUserIDLine);
 
 
-        if (!strlen($sUserIDLine))
+        if (! strlen($sUserIDLine))
             $sEND = tr('SelectUsers');
 
         if (count($asUserID) > 30)

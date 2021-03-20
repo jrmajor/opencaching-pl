@@ -66,7 +66,7 @@ class Coordinates
         $coords = new Coordinates();
         $coords->setLatitude($lat);
         $coords->setLongitude($lon);
-        if (!$coords->areCordsReasonable()) {
+        if (! $coords->areCordsReasonable()) {
             return null;
         }
 
@@ -116,11 +116,11 @@ class Coordinates
      */
     public function getLatitudeString($format = self::COORDINATES_FORMAT_DEFAULT): string
     {
-        if (!$this->latitude) {
+        if (! $this->latitude) {
             return '';
         }
 
-        if (!$format) {
+        if (! $format) {
             $format = self::COORDINATES_FORMAT_DEFAULT;
         }
 
@@ -155,11 +155,11 @@ class Coordinates
      */
     public function getLongitudeString($format = self::COORDINATES_FORMAT_DEFAULT): string
     {
-        if (!$this->longitude) {
+        if (! $this->longitude) {
             return '';
         }
 
-        if (!$format) {
+        if (! $format) {
             $format = self::COORDINATES_FORMAT_DEFAULT;
         }
 

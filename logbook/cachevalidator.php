@@ -2,8 +2,8 @@
 $secret = 'dupa231';
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
-echo '<?xml version="1.0" encoding="utf-8"?'.">\n";
-echo '<?xml-stylesheet type="text/css" href="style.css"?'.">\n";
+echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
+echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
 
 if (get_magic_quotes_gpc()) {
 function stripslashes_deep($value)
@@ -93,7 +93,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             }
 
 
-            $tidy =  tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, 'UTF-8'), $options);
+            $tidy = tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, 'UTF-8'), $options);
             tidy_clean_repair($tidy);
 
 
@@ -102,20 +102,20 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             {
             $removed = [];
 
-            echo '<br />Iterating over ' .  $node->tagName ."\n";
+            echo '<br />Iterating over ' . $node->tagName . "\n";
 
             if($node->tagName == 'span') {
             echo "deleting\n";
             array_push($removed, $node);
             }
-            if(!$node)
+            if(! $node)
             return;
 
             if($node->hasAttributes()) {
             $attributes = $node->attributes;
-            if(!is_null($attributes))
-            foreach ($attributes as $index=>$attr)
-            echo $attr->name .' = ' . htmlspecialchars($attr->value) . "\n";
+            if(! is_null($attributes))
+            foreach ($attributes as $index => $attr)
+            echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
             }
             if($node->hasChildNodes()) {
             $children = $node->childNodes;
@@ -154,7 +154,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             $str = (string) $tidy;
             if($str) {
             //  $str = str_replace("&amp;", "&", $str);
-            $doc = DOMDocument::loadXML('<cache_description>'.$str.'</cache_description>');
+            $doc = DOMDocument::loadXML('<cache_description>' . $str . '</cache_description>');
             $doc->encoding = 'utf-8';
             $main = $doc->documentElement;
 
@@ -168,7 +168,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             }
 
             $str = $doc->saveXML();
-            $str = str_replace('<?xml version="1.0" encoding="utf-8"?>'."\n", '', $str);
+            $str = str_replace('<?xml version="1.0" encoding="utf-8"?>' . "\n", '', $str);
             $str = str_replace('<cache_description>', '', $str);
                 $str = str_replace('</cache_description>', '', $str);
             }

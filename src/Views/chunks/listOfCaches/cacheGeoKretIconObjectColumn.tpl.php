@@ -13,7 +13,7 @@ return function (GeoCache $cache) {
     $statusTitle = tr($cache->getCacheTypeTranslationKey());
     $statusTitle .= ', ' . tr($cache->getStatusTranslationKey());
 
-    if (!empty($cache->getGeokretsHosted())) {
+    if (! empty($cache->getGeokretsHosted())) {
         ?>
         <img src="/images/gk.png" class="icon16" alt="<?= tr('geokret') ?>" title="<?= tr('geokret') ?>">
         <?php

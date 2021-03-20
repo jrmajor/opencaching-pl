@@ -213,7 +213,7 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
                 </button>
-                  <?php foreach($view->_menuBar as $key=>$url) { ?>
+                  <?php foreach($view->_menuBar as $key => $url) { ?>
                     <li class="nav-item">
                       <?php if(is_array($url)) { //array="open in new window" ?>
                           <a class="nav-link" href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
@@ -232,7 +232,7 @@
           <div class="row">
             <div class="col-lg-2 d-none d-lg-block sidebar">
 
-                <?php if(!$view->_isUserLogged) { ?>
+                <?php if(! $view->_isUserLogged) { ?>
                     <!-- non-authorized user menu -->
                     <div class="nav nav-pills flex-column">
                       <?php foreach($view->_nonAuthUserMenu as $key => $url){ ?>
@@ -294,7 +294,7 @@
                 <?php } //if-_isUserLogged ?>
             </div>
             <div class="col-lg-10 content">
-              <?php $view-> _callTemplate(); ?>
+              <?php $view->_callTemplate(); ?>
             </div>
           </div> <!-- row-mainArea -->
 
@@ -308,7 +308,7 @@
                 <?=count($view->_onlineUsers)?>
 
                 <?=$tr('online_users_info')?>:
-                <?php foreach($view->_onlineUsers as $userId=>$username){ ?>
+                <?php foreach($view->_onlineUsers as $userId => $username){ ?>
                 <a href="/viewprofile.php?userid=<?=$userId?>"><?=$username?></a>
                 <?php } //foreach ?>
                 </h6>

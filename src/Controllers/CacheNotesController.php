@@ -37,7 +37,7 @@ class CacheNotesController extends BaseController
     public function index()
     {
 
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
             exit;
         }
@@ -86,11 +86,11 @@ class CacheNotesController extends BaseController
                 function($row){
                     if(isset($row['llog_id'])){
                         return [
-                            'logId'         => $row['llog_id'],
-                            'logType'       => $row['llog_type'],
-                            'logText'       => $row['llog_text'],
-                            'logUserName'   => $row['llog_userName'],
-                            'logDate'       => $row['llog_date'],
+                            'logId' => $row['llog_id'],
+                            'logType' => $row['llog_type'],
+                            'logText' => $row['llog_text'],
+                            'logUserName' => $row['llog_userName'],
+                            'logDate' => $row['llog_date'],
                         ];
                     }else{
                         return [];
@@ -159,13 +159,13 @@ class CacheNotesController extends BaseController
      */
     public function removeCoords($cacheId)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
         //check cacheId
-        if(!is_numeric($cacheId)){
+        if(! is_numeric($cacheId)){
             $this->ajaxErrorResponse('Invalid param', 400);
             exit;
         }
@@ -180,13 +180,13 @@ class CacheNotesController extends BaseController
      */
     public function removeNote($cacheId)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
 
         //check cacheId
-        if(!is_numeric($cacheId)){
+        if(! is_numeric($cacheId)){
             $this->ajaxErrorResponse('Invalid param', 400);
             exit;
         }
@@ -196,7 +196,7 @@ class CacheNotesController extends BaseController
 
     }
 
-    private function completeDataRows($userId, $limit=null, $offset=null)
+    private function completeDataRows($userId, $limit = null, $offset = null)
     {
         $cacheIds = CacheNote::getCachesIdsForNotesAndModCoords($userId, $limit, $offset);
 
@@ -227,7 +227,7 @@ class CacheNotesController extends BaseController
         $logFields = ['id', 'text', 'type', 'user_id', 'date'];
         foreach( MultiLogStats::getLastLogForEachCache($cacheIds) as $log) {
             foreach($logFields as $col){
-                $result[ $log['cache_id'] ]['llog_'.$col] = $log[$col];
+                $result[ $log['cache_id'] ]['llog_' . $col] = $log[$col];
             }
         }
 

@@ -6,11 +6,11 @@ use src\Utils\Database\OcDb;
 use src\Utils\Database\XDb;
 use src\Utils\Generators\Uuid;
 
-require(__DIR__.'/lib/common.inc.php');
+require(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit();
@@ -201,7 +201,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
             'SELECT `id`, `name` FROM `queries` WHERE `user_id`= ? ORDER BY `name` ASC',
             $loggedUser->getUserId());
 
-        if (!$r = XDb::xFetchArray($rs)) {
+        if (! $r = XDb::xFetchArray($rs)) {
             tpl_set_var('selecttext', $nosaveastext);
             tpl_set_var('oldqueries', '');
         } else {

@@ -6,7 +6,7 @@ use src\Utils\Uri\Uri;
  * This chunk is purpose is to display info/error bar at the top of the page
  */
 
-return function ($reloadUrl=null, $infoMsg=null, $errorMsg=null) {
+return function ($reloadUrl = null, $infoMsg = null, $errorMsg = null) {
 
     $chunkCSS = Uri::getLinkWithModificationTime('/views/chunks/infoBar.css');
 
@@ -32,7 +32,7 @@ return function ($reloadUrl=null, $infoMsg=null, $errorMsg=null) {
         }
     </script>
 
-    <?php if(!empty($infoMsg)) { ?>
+    <?php if(! empty($infoMsg)) { ?>
         <div class="infoBar-message infoBar-messageInfo">
           <div class="infoBar-messageText">
               <?=$infoMsg?>
@@ -47,7 +47,7 @@ return function ($reloadUrl=null, $infoMsg=null, $errorMsg=null) {
         </div>
     <?php } ?>
 
-    <?php if(!empty($errorMsg)) { ?>
+    <?php if(! empty($errorMsg)) { ?>
         <div class="infoBar-message infoBar-messageErr">
           <div class="infoBar-messageText">
             <?=$errorMsg?>

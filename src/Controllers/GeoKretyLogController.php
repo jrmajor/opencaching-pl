@@ -25,7 +25,7 @@ class GeoKretyLogController extends BaseController
     public function __construct()
     {
         parent::__construct();
-        $this->lockFileName = $this->ocConfig->getDynamicFilesPath().'/tmp/geoKretyLogProcessing.lock';
+        $this->lockFileName = $this->ocConfig->getDynamicFilesPath() . '/tmp/geoKretyLogProcessing.lock';
     }
 
     public function __destruct()
@@ -52,9 +52,9 @@ class GeoKretyLogController extends BaseController
      */
     public function runQueueProcessing($runFrom)
     {
-        if(!$this->tryLock()){
+        if(! $this->tryLock()){
             $this->debug("Fatal error: Can't lock queue processing! Another instance is running?!");
-            Debug::errorLog("GK-queue-processing ERROR: can't lock queue! Source: ".$runFrom);
+            Debug::errorLog("GK-queue-processing ERROR: can't lock queue! Source: " . $runFrom);
             return;
         }
 
@@ -144,13 +144,13 @@ class GeoKretyLogController extends BaseController
 
         $responseXML = simplexml_load_string($responseData);
 
-        if(!$responseXML){
-            $this->debug($gkLogDesc.'ERROR: Empty response from GK API XML!');
+        if(! $responseXML){
+            $this->debug($gkLogDesc . 'ERROR: Empty response from GK API XML!');
             return false;
         }
 
         if( empty($responseXML->errors->error) ){
-            $this->debug($gkLogDesc.'...OK');
+            $this->debug($gkLogDesc . '...OK');
             return true;
         }
 
@@ -164,7 +164,7 @@ class GeoKretyLogController extends BaseController
                     return true;
                 }
 
-                $this->debug($gkLogDesc.'ERROR: '.$errorMsg);
+                $this->debug($gkLogDesc . 'ERROR: ' . $errorMsg);
             }
         }
 
@@ -200,7 +200,7 @@ class GeoKretyLogController extends BaseController
             ];
 
             $context = stream_context_create($opts);
-            $result = file_get_contents(GeoKretyApi::GEOKRETY_URL.'/ruchy.php', false, $context);
+            $result = file_get_contents(GeoKretyApi::GEOKRETY_URL . '/ruchy.php', false, $context);
 
             if($result !== false){
                 // connection OK, return results
@@ -227,7 +227,7 @@ class GeoKretyLogController extends BaseController
 
     private function debug($msg){
         if($this->printDebugMsgs){
-            echo $msg."<br/>\n";
+            echo $msg . "<br/>\n";
         }
     }
 }

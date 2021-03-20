@@ -8,10 +8,10 @@ require_once('../lib/ClassPathDictionary.php');
 
 global $action;
 
-if (isset($_GET['nazwa']) && !empty($_GET['nazwa']) ||
-        isset($_GET['wp']) && !empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
-        isset($_GET['owner']) && !empty($_GET['owner']) ||
-        isset($_GET['finder']) && !empty($_GET['finder'])) {
+if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
+        isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
+        isset($_GET['owner']) && ! empty($_GET['owner']) ||
+        isset($_GET['finder']) && ! empty($_GET['finder'])) {
 
 
 

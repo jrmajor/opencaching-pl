@@ -37,7 +37,7 @@ class MultiUserQueries extends BaseObject
             ) AS activeUsers", 0);
     }
 
-    public static function getCountOfNewUsers($year, $activeOnly=false)
+    public static function getCountOfNewUsers($year, $activeOnly = false)
     {
         $db = self::db();
 
@@ -116,7 +116,7 @@ class MultiUserQueries extends BaseObject
                  AND (
                      user_id IN (
                          SELECT DISTINCT user_id FROM cache_logs
-                         WHERE type = '.GeoCacheLogCommons::LOGTYPE_FOUNDIT."
+                         WHERE type = ' . GeoCacheLogCommons::LOGTYPE_FOUNDIT . "
                              AND date_created > DATE_ADD(NOW(), INTERVAL -$guideActivePeriod DAY)
                      )
                      OR
@@ -142,7 +142,7 @@ class MultiUserQueries extends BaseObject
             "SELECT user_id, SUM(topratings) AS recos
             FROM caches
             WHERE user_id IN ($userIds)
-                AND type <> ".GeoCache::TYPE_EVENT."
+                AND type <> " . GeoCache::TYPE_EVENT . "
             AND status IN ($cacheActiveStatusList)
             GROUP BY user_id
             HAVING recos >= $guideGotRecommendations");
@@ -162,7 +162,7 @@ class MultiUserQueries extends BaseObject
         $query = '
             SELECT user_id, username
             FROM user
-            WHERE role & '.User::ROLE_OC_TEAM.'>0 AND is_active_flag = 1
+            WHERE role & ' . User::ROLE_OC_TEAM . '>0 AND is_active_flag = 1
             ORDER BY username';
         $stmt = self::db()->simpleQuery($query);
         return self::db()->dbResultFetchAll($stmt);

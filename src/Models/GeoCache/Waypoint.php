@@ -46,14 +46,14 @@ class Waypoint extends WaypointCommons
 
     private function loadFromDbRow($row)
     {
-        $this->id           = $row['wp_id'];
-        $this->cacheId      = $row['cache_id'];
-        $this->type         = $row['type'];
-        $this->coordinates  = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
-        $this->description  = $row['desc'];
-        $this->status       = $row['status'];
-        $this->stage        = $row['stage'];
-        $this->openChecker  = $row['opensprawdzacz'];
+        $this->id = $row['wp_id'];
+        $this->cacheId = $row['cache_id'];
+        $this->type = $row['type'];
+        $this->coordinates = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
+        $this->description = $row['desc'];
+        $this->status = $row['status'];
+        $this->stage = $row['stage'];
+        $this->openChecker = $row['opensprawdzacz'];
     }
 
     public function getId()
@@ -152,7 +152,7 @@ class Waypoint extends WaypointCommons
 
     public function getTypeTranslationKey()
     {
-        return 'wayPointType'.$this->getType();
+        return 'wayPointType' . $this->getType();
     }
 
     public function getDesc4Html()
@@ -160,7 +160,7 @@ class Waypoint extends WaypointCommons
         return nl2br($this->description);
     }
 
-    public static function GetWaypointsForCacheId(GeoCache $geoCache, $skipHiddenWps=true){
+    public static function GetWaypointsForCacheId(GeoCache $geoCache, $skipHiddenWps = true){
 
 
         if($geoCache->getCacheType() == GeoCache::TYPE_MOVING){
@@ -178,7 +178,7 @@ class Waypoint extends WaypointCommons
         $results = [];
         while($row = XDb::xFetchArray($s)){
             $wp = Waypoint::FromDbRow($row);
-            if( !$wp->isHidden() || !$skipHiddenWps ){
+            if( ! $wp->isHidden() || ! $skipHiddenWps ){
                 $results[] = $wp;
             }
         }

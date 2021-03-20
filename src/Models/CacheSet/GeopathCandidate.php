@@ -48,7 +48,7 @@ class GeopathCandidate extends BaseObject
              WHERE id = :1 LIMIT 1', $this->id);
 
         $data = $this->db->dbResultFetchOneRowOnly($stmt);
-        if(!$data) {
+        if(! $data) {
             return false;
         }
         $this->loadFromDbRow($data);
@@ -95,7 +95,7 @@ class GeopathCandidate extends BaseObject
      */
     public function getGeoCache(){
 
-        if(!$this->cache) {
+        if(! $this->cache) {
             $this->cache = GeoCache::fromCacheIdFactory($this->cacheId);
         }
         return $this->cache;
@@ -116,7 +116,7 @@ class GeopathCandidate extends BaseObject
      */
     public function getGeopath()
     {
-        if(!$this->geopath){
+        if(! $this->geopath){
             $this->geopath = CacheSet::fromCacheSetIdFactory($this->geopathId);
         }
         return $this->geopath;

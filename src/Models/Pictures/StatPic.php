@@ -21,7 +21,7 @@ class StatPic extends BaseObject
 
     public static function getStatPicUrl($userId)
     {
-        return '/images/statpics/statpic'.$userId.'.jpg';
+        return '/images/statpics/statpic' . $userId . '.jpg';
     }
 
     private static function getStatPicPath($userId)
@@ -87,7 +87,7 @@ class StatPic extends BaseObject
             $statPicTpl = self::getDefaultTpl();
         }
 
-        $im = imagecreatefromgif (Uri::getAbsServerPath('/'.$statPicTpl->tplPath));
+        $im = imagecreatefromgif (Uri::getAbsServerPath('/' . $statPicTpl->tplPath));
         $maxTxtWidth = $statPicTpl->maxtextwidth;
 
         $clrBlack = imagecolorallocate($im, 0, 0, 0);

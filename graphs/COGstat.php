@@ -3,10 +3,10 @@
 use src\Libs\JpGraph\JpGraphLoader;
 use src\Utils\Database\XDb;
 
-require(__DIR__.'/../lib/common.inc.php');
+require(__DIR__ . '/../lib/common.inc.php');
 
 // jpgraph package doesn't contains fonts
-define('TTF_DIR',__DIR__.'/../resources/fonts/');
+define('TTF_DIR',__DIR__ . '/../resources/fonts/');
 
 JpGraphLoader::load();
 JpGraphLoader::module('bar');
@@ -254,7 +254,7 @@ if (count($x4) == 0) {
 // Show (English) message, if no data available.
 // TODO: dynamically create an image with translated message.
 
-if (!$graph && !$graph2 && !$graph3 && !$graph4) {
+if (! $graph && ! $graph2 && ! $graph3 && ! $graph4) {
     header('Content-type: image/png');
     exit(file_get_contents(__DIR__ . '/../public/images/misc/nodata.png'));
 }

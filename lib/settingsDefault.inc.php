@@ -79,7 +79,7 @@ $config = [
     'nature2000link' => '<a style="color:blue;" target="_blank" href="http://obszary.natura2000.org.pl/index.php?s=obszar&amp;id={linkid}">{sitename}&nbsp;&nbsp;-&nbsp;&nbsp;{sitecode}</a>',
     /** customization of cache-attribute icons */
     'search-attr-icons' => [
-        'password' =>  [
+        'password' => [
             // has attribute
             'images/attributes/password.png',
             // does not have attribute

@@ -92,7 +92,7 @@ class View
 
         $method = $chunkName . 'Chunk';
 
-        if (!property_exists($this, $method)) {
+        if (! property_exists($this, $method)) {
             $func = self::getChunkFunc($chunkName);
             $this->$method = $func;
         }
@@ -132,7 +132,7 @@ class View
     {
         $subTplFile = self::TPL_DIR . $subTplPath . '.tpl.php';
 
-        if (!is_file($subTplFile)) {
+        if (! is_file($subTplFile)) {
             $this->errorLog("Trying to call unknown sub-template: $subTplFile");
             return '';
         }
@@ -145,7 +145,7 @@ class View
 
     public function handleCrowdinInContextMode()
     {
-        if (!CrowdinInContextMode::enabled()) {
+        if (! CrowdinInContextMode::enabled()) {
             // crowdin-in-context mode is not enabled
             return;
         }
@@ -476,7 +476,7 @@ class View
 
     public static function showPlainText($text)
     {
-        if (!headers_sent()) {
+        if (! headers_sent()) {
             header('Content-type: text/plain');
         }
         exit($text);

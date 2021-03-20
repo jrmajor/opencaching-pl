@@ -3,7 +3,7 @@ use src\Models\PowerTrail\PowerTrail;
 use src\Utils\Database\OcDb;
 
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (! isset($_SESSION['user_id'])) {
     echo 'no hacking please!';
     exit;
 }

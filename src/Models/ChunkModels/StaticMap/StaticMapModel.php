@@ -35,7 +35,7 @@ class StaticMapModel
     }
 
     public static function fixedZoomMapFactory(Coordinates $mapCenter, $mapZoom,
-        array $imgDimensions, $mapType=null)
+        array $imgDimensions, $mapType = null)
     {
 
         $map = new self();
@@ -75,7 +75,7 @@ class StaticMapModel
     }
 
     public function createMarker($id, Coordinates $coords, $color,
-        $tooltip=null, $link=null){
+        $tooltip = null, $link = null){
 
         [$left, $top] = Gis::positionAtMapImg(
             $coords, $this->mapCenter, $this->mapZoom, $this->imgWidth, $this->imgHeight);

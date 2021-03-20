@@ -9,7 +9,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -146,7 +146,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         //coords
         $lon_not_ok = false;
 
-        if (!mb_ereg_match('^[0-9]{1,3}$', $coords_lon_h)) {
+        if (! mb_ereg_match('^[0-9]{1,3}$', $coords_lon_h)) {
             $lon_not_ok = true;
         } else {
             $lon_not_ok = (($coords_lon_h >= 0) && ($coords_lon_h < 180)) ? false : true;
@@ -162,7 +162,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         //same with lat
         $lat_not_ok = false;
 
-        if (!mb_ereg_match('^[0-9]{1,3}$', $coords_lat_h)) {
+        if (! mb_ereg_match('^[0-9]{1,3}$', $coords_lat_h)) {
             $lat_not_ok = true;
         } else {
             $lat_not_ok = (($coords_lat_h >= 0) && ($coords_lat_h < 180)) ? false : true;
@@ -212,7 +212,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             //check the entered data
             if ($wp_type == '4' || $wp_type == '5' || $wp_type == '6')
                 $wp_stage = '0';
-            if (!($lat_not_ok || $lon_not_ok || $descwp_not_ok)) {
+            if (! ($lat_not_ok || $lon_not_ok || $descwp_not_ok)) {
                 $wp_lat = $coords_lat_h + $coords_lat_min / 60;
                 if ($coords_latNS == 'S')
                     $wp_lat = -$wp_lat;

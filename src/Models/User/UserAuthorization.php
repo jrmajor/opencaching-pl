@@ -65,11 +65,11 @@ class UserAuthorization extends BaseObject
         }
 
         // there is proper session - find the user
-        if(!$user = User::fromUserIdFactory($userId)){
+        if(! $user = User::fromUserIdFactory($userId)){
             //strange: session presents but there is no such user?!
             self::clearContextVars();
             self::destroyAuthCookie();
-            Debug::errorLog(__METHOD__.'Session present in cookie and DB '.
+            Debug::errorLog(__METHOD__ . 'Session present in cookie and DB ' .
                 'but there is nosuch user!');
 
             return null;
@@ -192,7 +192,7 @@ class UserAuthorization extends BaseObject
         // set obsolete user_is in session
         unset($_SESSION['user_id']);
 
-        if(!session_id()){
+        if(! session_id()){
             // there is initialized session - destroy it!
             session_destroy();
         }
@@ -200,7 +200,7 @@ class UserAuthorization extends BaseObject
 
     private static function getAuthCookieName(){
         global $config;
-        return $config['cookie']['name'].'_auth';
+        return $config['cookie']['name'] . '_auth';
     }
 
     private static function initAuthCookie($sessionId){
@@ -210,8 +210,8 @@ class UserAuthorization extends BaseObject
         $result = CookieBase::setCookie(self::getAuthCookieName(), $sessionId, $cookieExpiry, '/',
             false, true, CookieBase::SAME_SITE_RESTRICTION_LAX);
 
-        if(!$result){
-            Debug::errorLog(__METHOD__.": Can't set AUTH cookie");
+        if(! $result){
+            Debug::errorLog(__METHOD__ . ": Can't set AUTH cookie");
         }
     }
 
@@ -228,8 +228,8 @@ class UserAuthorization extends BaseObject
         unset($_COOKIE[self::getAuthCookieName()]);
 
         $result = CookieBase::deleteCookie(self::getAuthCookieName());
-        if(!$result){
-            Debug::errorLog(__METHOD__.": Can't delete AUTH cookie");
+        if(! $result){
+            Debug::errorLog(__METHOD__ . ": Can't delete AUTH cookie");
         }
     }
 
@@ -246,7 +246,7 @@ class UserAuthorization extends BaseObject
     }
 
     private static function setLoggedUserSessionId($sessionId){
-        if(!is_null($sessionId)){
+        if(! is_null($sessionId)){
             $_SESSION[self::SESSION_ID_KEY] = $sessionId;
         }else{
             unset($_SESSION[self::SESSION_ID_KEY]);
@@ -295,7 +295,7 @@ class UserAuthorization extends BaseObject
             }
 
             // touch last_login from time-to-time
-            if( $row['lastTouch'] > self::LOGIN_TIMEOUT/10){
+            if( $row['lastTouch'] > self::LOGIN_TIMEOUT / 10){
                 $db->multiVariableQuery(
                     'UPDATE sys_sessions SET last_login=NOW() WHERE uuid = :1', $sessionId);
 

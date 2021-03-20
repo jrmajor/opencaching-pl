@@ -150,7 +150,7 @@ class CacheAdoptionController extends BaseController
         $message = str_replace('{cacheName}', $cacheObj->getCacheName(), $message);
         $this->infoMsg = $message;
 
-        EmailSender::sendAdoptionSuccessMessage(__DIR__.'/../../resources/email/adoption.email.html',
+        EmailSender::sendAdoptionSuccessMessage(__DIR__ . '/../../resources/email/adoption.email.html',
             $cacheObj->getCacheName(), $this->loggedUser->getUserName(), $oldOwner->getUserName(), $oldOwner->getEmail());
 
 
@@ -170,7 +170,7 @@ class CacheAdoptionController extends BaseController
         }
 
         // first check if this offer can be refused by this user
-        if (!$this->checkOffer($cacheObj, $this->loggedUser)) {
+        if (! $this->checkOffer($cacheObj, $this->loggedUser)) {
             // it shouldn't happens - someone try to hack smth?!
 
             // redirect to main script
@@ -183,10 +183,10 @@ class CacheAdoptionController extends BaseController
             'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId());
 
         $oldOwner = User::fromUserIdFactory($cacheObj->getOwnerId());
-        if (!is_null($oldOwner)) {
+        if (! is_null($oldOwner)) {
 
             $this->infoMsg = tr('adopt_27');
-            EmailSender::sendAdoptionRefusedMessage(__DIR__.'/../../resources/email/adoption.email.html',
+            EmailSender::sendAdoptionRefusedMessage(__DIR__ . '/../../resources/email/adoption.email.html',
                 $cacheObj->getCacheName(), $this->loggedUser->getUserName(), $oldOwner->getUserName(), $oldOwner->getEmail());
         }
 
@@ -232,7 +232,7 @@ class CacheAdoptionController extends BaseController
             exit;
         }
 
-        if( !isset( $_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']) ) ) {
+        if( ! isset( $_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']) ) ) {
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
             exit;
@@ -256,7 +256,7 @@ class CacheAdoptionController extends BaseController
             // user exists and is not current owner of this cache
 
             //check if user is able to adopt caches
-            if (!$newUserObj->isAdoptionApplicable()) {
+            if (! $newUserObj->isAdoptionApplicable()) {
                 $this->errorMsg = tr('adopt_34');
                 $this->index();
                 exit;
@@ -274,7 +274,7 @@ class CacheAdoptionController extends BaseController
                 $cacheObj->getCacheId(), $newUserObj->getUserId());
 
             if ($this->db->rowCount($stmt) > 0) {
-                EmailSender::sendAdoptionOffer(__DIR__.'/../../resources/email/adoption.email.html', $cacheObj->getCacheName(),
+                EmailSender::sendAdoptionOffer(__DIR__ . '/../../resources/email/adoption.email.html', $cacheObj->getCacheName(),
                     $newUserObj->getUserName(), $this->loggedUser->getUserName(), $newUserObj->getEmail());
                 $this->infoMsg = tr('adopt_24');
             } else {
@@ -325,7 +325,7 @@ class CacheAdoptionController extends BaseController
                 'SELECT COUNT(*) FROM chowner WHERE cache_id = :1 AND user_id = :2 LIMIT 1',
                 0, $cacheObj->getCacheId(), $userObj->getUserId() );
         }
-        return ( $offers> 0 ) ? true : false;
+        return ( $offers > 0 ) ? true : false;
     }
 
     private function getUserCaches()

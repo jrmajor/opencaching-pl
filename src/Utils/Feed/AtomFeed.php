@@ -305,7 +305,7 @@ class AtomFeed
             $result .= '<link type="application/atom+xml" rel="self" href="' . $this->getLink() . '" />' . PHP_EOL;
         }
         if (! empty(($this->getIcon()))) {
-            $result .= '<icon>' . $this->getIcon() .'</icon>' . PHP_EOL;
+            $result .= '<icon>' . $this->getIcon() . '</icon>' . PHP_EOL;
         }
         if (! empty(($this->getLogo()))) {
             $result .= '<logo>' . $this->getLogo() . '</logo>' . PHP_EOL;

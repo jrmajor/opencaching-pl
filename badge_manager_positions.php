@@ -2,11 +2,11 @@
 
 use src\Models\ApplicationContainer;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -26,7 +26,7 @@ if ( isset($_REQUEST['showNotGained']))
     $show .= 'N';
 
 if ( isset($_REQUEST['showGained']))
-    $show .='Y';
+    $show .= 'Y';
 
 
 if ($sel_pos == 'l' ) //list

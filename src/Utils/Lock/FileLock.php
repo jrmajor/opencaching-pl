@@ -25,10 +25,10 @@ final class FileLock extends RealLock
     protected function internalConstruct($settings)
     {
         $lockDir = null;
-        if (!empty($settings['dir'])) {
+        if (! empty($settings['dir'])) {
             $lockDir = OcConfig::instance()->getDynamicFilesPath() . $settings['dir'];
         }
-        if ($lockDir != null && !is_dir($lockDir)) {
+        if ($lockDir != null && ! is_dir($lockDir)) {
             mkdir($lockDir, 0755, true);
         }
         $this->lockDir = $lockDir;
@@ -67,7 +67,7 @@ final class FileLock extends RealLock
             $result = fopen($this->getPathFromId($identifier), 'w+');
         }
         if ($result) {
-            if (!flock($result, $lockMode)) {
+            if (! flock($result, $lockMode)) {
                 fclose($result);
                 $result = null;
             }

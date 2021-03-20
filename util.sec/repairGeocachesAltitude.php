@@ -15,7 +15,7 @@ if (php_sapi_name() != 'cli') {
     exit(1);
 }
 
-if (!isset($argv[1]) || !isset($argv[2])) {
+if (! isset($argv[1]) || ! isset($argv[2])) {
     echo "Usage: php repairGeocacheAltitude <cacheId-to-begin> <number-of-caches-to-repair>\n";
     exit(1);
 }
@@ -47,9 +47,9 @@ foreach($cacheIds as $cacheId){
 
     $geocache = GeoCache::fromCacheIdFactory($cacheId);
 
-    echo ' - repair for geocache id='.$geocache->getCacheId().' old='.$geocache->getAltitude();
+    echo ' - repair for geocache id=' . $geocache->getCacheId() . ' old=' . $geocache->getAltitude();
     $geocache->updateAltitude();
-    echo ' new='.$geocache->getAltitude()."</br/>\n";
+    echo ' new=' . $geocache->getAltitude() . "</br/>\n";
 }
 
 echo "Done!\n";

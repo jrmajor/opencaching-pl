@@ -63,11 +63,11 @@ $el = $v->election;
             </thead>
             <tbody>
             <?php foreach ($v->optionsArr as $opt) { ?>
-                <?php $optStr = 'opt_'.$opt->getOptionId() ?>
+                <?php $optStr = 'opt_' . $opt->getOptionId() ?>
                 <tr>
                 <td>
                     <input class="" id="<?=$optStr?>" type="checkbox" name="votes[]" value="<?=$opt->getOptionId()?>"
-                           <?=!isset($v->enableVoting)?'disabled':''?>>
+                           <?=! isset($v->enableVoting)?'disabled':''?>>
                 </td>
                 <td>
                     <label for="<?=$optStr?>">

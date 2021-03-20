@@ -43,19 +43,19 @@ $view->setVar('logId', $logid);
 $start = 0;
 if (isset($_REQUEST['start'])) {
     $start = $_REQUEST['start'];
-    if (!is_numeric($start)) {
+    if (! is_numeric($start)) {
         $start = 0;
     }
 }
 $count = 99999;
 if (isset($_REQUEST['count'])) {
     $count = $_REQUEST['count'];
-    if (!is_numeric($count)) {
+    if (! is_numeric($count)) {
         $count = 999999;
     }
 }
 
-if (!$loggedUser && $hide_coords) {
+if (! $loggedUser && $hide_coords) {
     $disable_spoiler_view = true; //hide any kind of spoiler if usr not logged in
 } else {
     $disable_spoiler_view = false;
@@ -74,7 +74,7 @@ if ($cache_id != 0) {
         $cache_record = $dbc->dbResultFetchOneRowOnly($s);
         // check if the cache is published, if not only the owner is allowed to view the log
         if (($cache_record['status'] == 4 || $cache_record['status'] == 5 || $cache_record['status'] == 6) &&
-            ($loggedUser && $cache_record['user_id'] != $loggedUser->getUserId() && !$loggedUser->hasOcTeamRole())) {
+            ($loggedUser && $cache_record['user_id'] != $loggedUser->getUserId() && ! $loggedUser->hasOcTeamRole())) {
             $cache_id = 0;
         }
     }
@@ -96,7 +96,7 @@ if ($cache_id != 0) {
         $cache_record = $dbc->dbResultFetchOneRowOnly($s);
         // check if the cache is published, if not only the owner is allowed to view the log
         if (($cache_record['status'] == 4 || $cache_record['status'] == 5 || $cache_record['status'] == 6) &&
-            ($loggedUser && $cache_record['user_id'] != $loggedUser->getUserId() && !$loggedUser->hasOcTeamRole())) {
+            ($loggedUser && $cache_record['user_id'] != $loggedUser->getUserId() && ! $loggedUser->hasOcTeamRole())) {
             $cache_id = 0;
         } else {
             $cache_id = $cache_record['cache_id'];
@@ -108,7 +108,7 @@ if ($cache_id != 0) {
 
     // detailed cache access logging
     if (@$enable_cache_access_logs) {
-        if (!isset($dbc)) {
+        if (! isset($dbc)) {
             $dbc = OcDb::instance();
         }
         $user_id = $loggedUser ? $loggedUser->getUserId() : null;
@@ -191,7 +191,7 @@ if ($cache_id != 0) {
 
     isset($showDel) && $showDel == 'y' ? $HideDeleted = false : $HideDeleted = true;
     $includeDeletedLogs = true;
-    if (($HideDeleted && !$logid && !($loggedUser && $loggedUser->hasOcTeamRole()))) {
+    if (($HideDeleted && ! $logid && ! ($loggedUser && $loggedUser->hasOcTeamRole()))) {
         //hide deletions if (hide_deletions opotions is on and this is single_log call=not and user is not COG)
         $includeDeletedLogs = false;
     }
@@ -208,7 +208,7 @@ if ($cache_id != 0) {
     $logfilterConfig = OcConfig::instance()->getLogfilterConfig();
     $view->setVar(
         'enableLogsFiltering',
-        !empty($logfilterConfig['enable_logs_filtering'])
+        ! empty($logfilterConfig['enable_logs_filtering'])
     );
     $tmpSrcLog = file_get_contents(__DIR__ . '/src/Views/viewcache_log.tpl.php');
 
@@ -235,11 +235,11 @@ if ($cache_id != 0) {
                 // for 'Needs maintenance', 'Ready to search' and 'Temporarly unavailable' log types
                 if ($record['type'] == 5 || $record['type'] == 10 || $record['type'] == 11) {
                     // hide if user is not logged in
-                    if (!$loggedUser) {
+                    if (! $loggedUser) {
                         continue;
                     }
                     // hide if user is neither a geocache owner nor log author
-                    if (!$loggedUser || ($owner_id != $loggedUser->getUserId() && $record['userid'] != $loggedUser->getUserId())) {
+                    if (! $loggedUser || ($owner_id != $loggedUser->getUserId() && $record['userid'] != $loggedUser->getUserId())) {
                         continue;
                     }
                 }
@@ -256,7 +256,7 @@ if ($cache_id != 0) {
                             $delByCOG = true;
                         }
                     }
-                    if (!isset($delByCOG) || $delByCOG == false) {
+                    if (! isset($delByCOG) || $delByCOG == false) {
                         $comm_replace .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                     }
                 }
@@ -278,7 +278,7 @@ if ($cache_id != 0) {
             //check if editted at all
             $edit_footer = '<div><small>' . tr('vl_Recently_modified_on') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(
                     strftime($GLOBALS['config']['datetimeformat'], strtotime($record['last_modified'])), ENT_COMPAT, 'UTF-8'));
-            if (!($loggedUser && $loggedUser->hasOcTeamRole()) &&
+            if (! ($loggedUser && $loggedUser->hasOcTeamRole()) &&
                 $record['edit_by_admin'] == true && $record['type'] == 12) {
 
                 $edit_footer .= ' ' . tr('vl_by_COG');
@@ -316,7 +316,7 @@ if ($cache_id != 0) {
         }
 
         // hide nick of athor of COG(OC Team) for user
-        if ($record['type'] == 12 && !($loggedUser && $loggedUser->hasOcTeamRole())) {
+        if ($record['type'] == 12 && ! ($loggedUser && $loggedUser->hasOcTeamRole())) {
             $record['userid'] = '0';
             $tmplog_username_aktywnosc = '';
             $tmplog_username = tr('cog_user_name');
@@ -325,7 +325,7 @@ if ($cache_id != 0) {
         $tmplog = mb_ereg_replace('{username_aktywnosc}', $tmplog_username_aktywnosc, $tmplog);
 
         // mobile caches
-        if (($record['type'] == 4) && ($record['mobile_latitude'] != 0) && !$disable_spoiler_view) {
+        if (($record['type'] == 4) && ($record['mobile_latitude'] != 0) && ! $disable_spoiler_view) {
             $tmplog_kordy_mobilnej = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($record['mobile_latitude']), ENT_COMPAT, 'UTF-8')) . '&nbsp;' . mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($record['mobile_longitude']), ENT_COMPAT, 'UTF-8'));
             $tmplog = mb_ereg_replace('{kordy_mobilniaka}', $record['km'] . ' km [<img src="/images/blue/arrow_mobile.png" title="' . tr('viewlog_kordy') . '" />' . $tmplog_kordy_mobilnej . ']', $tmplog);
         } else
@@ -341,13 +341,13 @@ if ($cache_id != 0) {
 
         $tmplog_text = $processed_text . $edit_footer;
 
-        $logClasses = (!empty($logfilterConfig['mark_currentuser_logs']) && $loggedUser &&
+        $logClasses = (! empty($logfilterConfig['mark_currentuser_logs']) && $loggedUser &&
             $record['userid'] == $loggedUser->getUserId()) ? ' currentuser-log' : '';
 
         $tmplog = mb_ereg_replace('{log_classes}', $logClasses, $tmplog);
 
         $filterable = '';
-        if (!empty($logfilterConfig['enable_logs_filtering'])) {
+        if (! empty($logfilterConfig['enable_logs_filtering'])) {
             $filterable = ':' . $record['type'] . ':';
             if ($record['userid'] == 0) {
                 $filterable .= 'octeam';
@@ -381,7 +381,7 @@ if ($cache_id != 0) {
         $tmpremove = mb_ereg_replace('{logid}', $record['logid'], $remove_log);
         $tmpRevert = mb_ereg_replace('{logid}', $record['logid'], $revertLog);
         $tmpnewpic = mb_ereg_replace('{logid}', $record['logid'], $upload_picture);
-        if (!isset($record['deleted'])) {
+        if (! isset($record['deleted'])) {
             $record['deleted'] = false;
         }
         if ($record['deleted'] != 1) {
@@ -409,13 +409,13 @@ if ($cache_id != 0) {
             // show pictures if (any added) and ((not deleted) or (user is admin))
 
             $logpicturelines = '';
-            if (!isset($dbc)) {
+            if (! isset($dbc)) {
                 $dbc = OcDb::instance();
             }
             $thatquery = 'SELECT `url`, `title`, `uuid`, `user_id`, `spoiler` FROM `pictures` WHERE `object_id`=:1 AND `object_type`=1';
             $s = $dbc->multiVariableQuery($thatquery, $record['logid']);
             $pic_count = $dbc->rowCount($s);
-            if (!isset($showspoiler)) {
+            if (! isset($showspoiler)) {
                 $showspoiler = '';
             }
             $pictures = 0;

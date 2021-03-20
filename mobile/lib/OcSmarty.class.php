@@ -3,7 +3,7 @@
 use src\Models\OcConfig\OcConfig;
 use src\Utils\I18n\I18n;
 
-require_once(__DIR__.'/smarty/Smarty.class.php');
+require_once(__DIR__ . '/smarty/Smarty.class.php');
 
 class OcSmarty extends Smarty
 {

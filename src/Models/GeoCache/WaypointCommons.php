@@ -28,10 +28,10 @@ class WaypointCommons extends BaseObject {
 
     public static function typeTranslationKey($type)
     {
-        return 'wayPointType'.$type;
+        return 'wayPointType' . $type;
     }
 
-    public static function getTypesArray($forCacheType=null)
+    public static function getTypesArray($forCacheType = null)
     {
         $cacheTypesWithSimpleWps = [
             GeoCacheCommons::TYPE_TRADITIONAL, GeoCacheCommons::TYPE_VIRTUAL,

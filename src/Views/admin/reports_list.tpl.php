@@ -49,7 +49,7 @@ use src\Models\Admin\ReportCommons;
                 <?php
                 break; }?>
         <?=$report->getId()?></a><br>
-        <img src="/images/misc/eye.svg" class="report-watch-img" alt="{{admin_reports_watch_on}}" title="{{admin_reports_watch_on}} | {{admin_reports_watch_info}}" onclick="watchOff(<?=$report->getId()?>)" id="img-on-<?=$report->getId()?>" <?php if (!$report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
+        <img src="/images/misc/eye.svg" class="report-watch-img" alt="{{admin_reports_watch_on}}" title="{{admin_reports_watch_on}} | {{admin_reports_watch_info}}" onclick="watchOff(<?=$report->getId()?>)" id="img-on-<?=$report->getId()?>" <?php if (! $report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
         <img src="/images/misc/eye-off.svg" class="report-watch-img" alt="{{admin_reports_watch_off}}" title="{{admin_reports_watch_off}} | {{admin_reports_watch_info}}" onclick="watchOn(<?=$report->getId()?>)" id="img-off-<?=$report->getId()?>" <?php if ($report->isReportWatched($view->user->getUserId())) {?>style="display: none;"<?php }?>>
       </td>
       <td>

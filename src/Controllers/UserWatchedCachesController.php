@@ -41,7 +41,7 @@ class UserWatchedCachesController extends BaseController
 
     public function mapOfWatches()
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
         }
         $this->view->setTemplate('userWatchedCaches/mapOfWatched');
@@ -62,10 +62,10 @@ class UserWatchedCachesController extends BaseController
                 $iconFile = GeoCacheCommons::CacheIconByType(
                     $row['type'], $row['status'], $row['user_sts']);
 
-                $logIconFile = !empty($row['llog_type'])?
+                $logIconFile = ! empty($row['llog_type'])?
                     GeoCacheLogCommons::GetIconForType($row['llog_type']):null;
 
-                $logTypeName = !empty($row['llog_type'])?
+                $logTypeName = ! empty($row['llog_type'])?
                     tr(GeoCacheLogCommons::typeTranslationKey($row['llog_type'])):null;
 
                 $m = new CacheWithLogMarkerModel();
@@ -98,7 +98,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function listOfWatches()
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
         }
 
@@ -132,11 +132,11 @@ class UserWatchedCachesController extends BaseController
             $model->addColumn(new Column_CacheLog(tr('usrWatch_lastLog'),
                 function($row){
                     return [
-                        'logId'         => $row['llog_id'],
-                        'logType'       => $row['llog_type'],
-                        'logText'       => $row['llog_text'],
-                        'logUserName'   => $row['llog_username'],
-                        'logDate'       => $row['llog_date'],
+                        'logId' => $row['llog_id'],
+                        'logType' => $row['llog_type'],
+                        'logText' => $row['llog_text'],
+                        'logUserName' => $row['llog_username'],
+                        'logDate' => $row['llog_date'],
                     ];
                 }
             ));
@@ -145,7 +145,7 @@ class UserWatchedCachesController extends BaseController
                 function($row){
                     return [
                         'icon' => '/images/log/16x16-trash.png',
-                        'onClick' => "removeFromWatched(this, '".$row['wp_oc']."')",
+                        'onClick' => "removeFromWatched(this, '" . $row['wp_oc'] . "')",
                         'title' => tr('usrWatch_removeWatched'),
                     ];
                 }
@@ -177,7 +177,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function removeFromWatchesAjax($cacheWp)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }
@@ -201,7 +201,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function addToWatchesAjax($cacheWp)
     {
-        if(!$this->isUserLogged()){
+        if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
             return;
         }

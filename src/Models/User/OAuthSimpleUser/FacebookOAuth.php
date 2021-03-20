@@ -49,7 +49,7 @@ class FacebookOAuth  extends OAuthSimpleUserBase
      * @param boolean $urlForHtml
      * @return string
      */
-    public static function getOAuthStartUrl($redirectUrl, $urlForHtml=true)
+    public static function getOAuthStartUrl($redirectUrl, $urlForHtml = true)
     {
         // generate and set in session random string used to identify request
         $stateStr = Uuid::create();
@@ -57,7 +57,7 @@ class FacebookOAuth  extends OAuthSimpleUserBase
 
         $redirectUrl = urldecode($redirectUrl);
 
-        $url = 'https://www.facebook.com/'.self::SDK_VER.'/dialog/oauth?' .
+        $url = 'https://www.facebook.com/' . self::SDK_VER . '/dialog/oauth?' .
             'client_id=' . self::getAppId() .
             "&redirect_uri=$redirectUrl" .
             '&scope=email' .
@@ -79,16 +79,16 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         $instance = new self();
 
         // STAGE III: check if user is authorized by FB
-        if( !$instance->isUserAuthorizedByFb() ){
+        if( ! $instance->isUserAuthorizedByFb() ){
             return $instance;
         }
 
         // STAGE IV: retrive access-token from FB
-        if( !$instance->isAccessTokenRetrived() ){
+        if( ! $instance->isAccessTokenRetrived() ){
             return $instance;
         }
         // STAGE V: retrive user data from FB
-        if( !$instance->isUserDataReady() ){
+        if( ! $instance->isUserDataReady() ){
             return $instance;
         }
 
@@ -115,18 +115,18 @@ class FacebookOAuth  extends OAuthSimpleUserBase
             return false;
         }
 
-        if( !isset($_GET['code']) ){
+        if( ! isset($_GET['code']) ){
             $this->error = self::ERROR_NO_CODE;
             return false;
         }
 
-        if(!isset($_GET['state']) ){
+        if(! isset($_GET['state']) ){
             $this->error = self::ERROR_NO_STATE;
             return false;
         }
 
         // check state string
-        if(!self::checkStateSessionVar($_GET['state'])){
+        if(! self::checkStateSessionVar($_GET['state'])){
             $this->error = self::ERROR_STATE_INVALID;
             return false;
         }
@@ -143,7 +143,7 @@ class FacebookOAuth  extends OAuthSimpleUserBase
         $redirect = urlencode(Uri::getCurrentRequestUri());
         $code = $_GET['code'];
 
-        $url = 'https://graph.facebook.com/'.self::SDK_VER.'/oauth/access_token?'.
+        $url = 'https://graph.facebook.com/' . self::SDK_VER . '/oauth/access_token?' .
                'client_id=' . self::getAppId() .
                "&redirect_uri=$redirect" .
                '&client_secret=' . self::getAppSecret() .
@@ -183,8 +183,8 @@ class FacebookOAuth  extends OAuthSimpleUserBase
 
         $respObj = json_decode($response);
 
-        if(is_null($respObj) || !isset($respObj->name) ||
-            !isset($respObj->id) || !isset($respObj->email)
+        if(is_null($respObj) || ! isset($respObj->name) ||
+            ! isset($respObj->id) || ! isset($respObj->email)
         ){
             $this->error = self::ERROR_INVALID_USER_DATA_JSON;
             return false;

@@ -19,7 +19,7 @@ $links['geokrety'] = 'https://geokrety.org';
  * This is local base for wiki links
  * (former $wiki_url in /lib/setting.inc.php)
  */
-$_wiki  = 'https://wiki.opencaching.us';
+$_wiki = 'https://wiki.opencaching.us';
 
 $links['wiki']['main'] = $_wiki;
 

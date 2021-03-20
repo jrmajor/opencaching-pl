@@ -185,7 +185,7 @@ class Neighbourhood extends BaseObject
         $result['radius'] = null;
 
         if ($seq == 0) {
-            if (!empty($user->getHomeCoordinates())) {
+            if (! empty($user->getHomeCoordinates())) {
                 $result['coords'] = $user->getHomeCoordinates();
                 $result['radius'] = $user->getNotifyRadius();
             }

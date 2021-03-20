@@ -9,7 +9,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 $view = tpl_getView();
 $user = ApplicationContainer::Instance()->getLoggedUser();
 
-if (empty($user) || !$user->hasOcTeamRole()) {
+if (empty($user) || ! $user->hasOcTeamRole()) {
     $view->redirect('/');
 }
 
@@ -68,7 +68,7 @@ if (isset($_REQUEST['show_duplicated'])) {
 if (isset($_REQUEST['regionSel'])) {
     $region = $_REQUEST['regionSel'];
 
-    if (!isset($GLOBALS['regions'][$region])) {
+    if (! isset($GLOBALS['regions'][$region])) {
         $region = 'PL12'; //TODO: mazowieckie by default ?
     }
 

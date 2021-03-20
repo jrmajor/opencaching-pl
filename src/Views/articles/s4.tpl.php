@@ -32,11 +32,11 @@ while ($result = XDb::xFetchArray($results)) {
         } else {
             echo '</td></tr><tr>';
         }
-        echo '<td class="align-center">' . $position . '</td><td class="align-center">' .  $result['count'] . '</td><td>';
+        echo '<td class="align-center">' . $position . '</td><td class="align-center">' . $result['count'] . '</td><td>';
     } else {
         echo ' | ';
     }
-    echo '<a href="/viewcache.php?cacheid=' . $result['cache_id'] . '" class="links">' . $result['name'] . '</a> (<a href="/viewprofile.php?userid='. $result['user_id'] .'" class="links">' . $result['username'] . '</a>)';
+    echo '<a href="/viewcache.php?cacheid=' . $result['cache_id'] . '" class="links">' . $result['name'] . '</a> (<a href="/viewprofile.php?userid=' . $result['user_id'] . '" class="links">' . $result['username'] . '</a>)';
 }
 ?>
       </td>

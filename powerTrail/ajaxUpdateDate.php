@@ -1,10 +1,10 @@
 <?php
 use src\Utils\Database\OcDb;
 session_start();
-if(!isset($_SESSION['user_id'])){
+if(! isset($_SESSION['user_id'])){
     exit(json_encode(['resultSuccess' => false, 'error' => 'User is not logged in']));
 }
-require_once __DIR__.'/../lib/ClassPathDictionary.php';
+require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 $ptAPI = new powerTrailBase;
 
 $powerTrailId = $_REQUEST['projectId'];

@@ -155,7 +155,7 @@ class WatchlistController extends BaseController
                 || sizeof($watcher->getWatchLogs()) > 0)
                 && UserNotify::getUserLogsNotify($watcher->getUserId())
             ) {
-                if (!Email::isValidEmailAddr($watcher->getEmail())) {
+                if (! Email::isValidEmailAddr($watcher->getEmail())) {
                     // Only users with valid addresses will receive notifications.
                     $sendStatus = true;
                 } else {
@@ -206,7 +206,7 @@ class WatchlistController extends BaseController
                 $watcher->getWatchmailMode() ==
                     UserNotify::SEND_NOTIFICATION_DAILY
             ) {
-                $result = $now ->
+                $result = $now->
                     setDate(
                         $now->format('Y'),
                         $now->format('n'),
@@ -222,7 +222,7 @@ class WatchlistController extends BaseController
                     $weekday = 7;
                 }
                 $weekAdjust = ($weekday >= $watcher->getWatchmailDay() ? 0 : 7);
-                $result = $now ->
+                $result = $now->
                     setDate(
                         $now->format('Y'),
                         $now->format('n'),

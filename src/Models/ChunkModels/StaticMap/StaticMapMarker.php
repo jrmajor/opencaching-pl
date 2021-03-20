@@ -5,9 +5,9 @@ namespace src\Models\ChunkModels\StaticMap;
 
 class StaticMapMarker
 {
-    const TYPE_IMG_MARKER=0;        // marker with the image
-    const TYPE_CSS_MARKER=1;        // marker generated dynamicaly in css
-    const TYPE_CSS_LEGEND_MARKER=2; // same as CSS_MARKER but to display in legend
+    const TYPE_IMG_MARKER = 0;        // marker with the image
+    const TYPE_CSS_MARKER = 1;        // marker generated dynamicaly in css
+    const TYPE_CSS_LEGEND_MARKER = 2; // same as CSS_MARKER but to display in legend
 
     // default colors for markers
     const COLOR_TITLED_CACHE = '#FF4500';
@@ -30,14 +30,14 @@ class StaticMapMarker
         $cssClasses = [];
 
         if($this->tooltip){
-            $cssClasses[]='lightTipped';
+            $cssClasses[] = 'lightTipped';
         }
 
         return implode(' ', $cssClasses);
     }
 
     public static function createWithImgPosition($id, $top, $left, $color,
-        $tooltip=null, $link=null)
+        $tooltip = null, $link = null)
     {
         $marker = new self();
         $marker->id = $id;

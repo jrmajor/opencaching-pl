@@ -3,12 +3,12 @@
 use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -48,7 +48,7 @@ if (!$loggedUser) {
                 0, $name, $desc, $user_id);
 
             // Read file KML with route, load in the KML file through the my_routes page, and run that KML file through GPSBABEL which has a tool interpolate data points in the route.
-            if (!$error) {
+            if (! $error) {
                 exec('/usr/bin/gpsbabel -i kml -f ' . $upload_filename . ' -x interpolate,distance=0.25k -o kml -F ' . $upload_filename . '');
                 $xml = simplexml_load_file($upload_filename);
 
@@ -84,7 +84,7 @@ if (!$loggedUser) {
             // end of read
             //we get the point data in to an array called $points:
 
-            if (!$error && isset($coords)) {
+            if (! $error && isset($coords)) {
 
                 for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
                     $points[] = ['lon' => $coords[$i], 'lat' => $coords[$i + 1]];

@@ -23,7 +23,7 @@ class ViewBadgeHeadController extends BaseController{
     public function index()
     {
 
-        if( $this->loggedUser->getUserId()== null ){
+        if( $this->loggedUser->getUserId() == null ){
               self::redirectToLoginPage();
               exit;
         }
@@ -74,11 +74,11 @@ class ViewBadgeHeadController extends BaseController{
     }
 
     private function setVar($name, $value){
-        $this->sCode= mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
+        $this->sCode = mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
     }
 
     private function preapareCode(){
-        $this->sCode = file_get_contents(__DIR__.'/../../src/Views/badge_head.tpl.php');
+        $this->sCode = file_get_contents(__DIR__ . '/../../src/Views/badge_head.tpl.php');
         $this->sCode = tpl_do_translate($this->sCode);
     }
 }

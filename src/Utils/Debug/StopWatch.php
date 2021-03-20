@@ -52,7 +52,7 @@ class StopWatch {
                 $start = $ms;
                 $fromStart = 0;
             }else{
-                $fromStart = number_format($ms-$start, 4);
+                $fromStart = number_format($ms - $start, 4);
             }
 
             if( is_null($last) ){

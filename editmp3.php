@@ -39,10 +39,10 @@ if (empty($user)) {
 
 
     $uuid = isset($_REQUEST['uuid']) ? $_REQUEST['uuid'] : 0;
-    if (!$uuid)
+    if (! $uuid)
         $message = $message_mp3_not_found;
 
-    if (!$message) {
+    if (! $message) {
         // read from database and check owner
 
         $stmt = XDb::xSql(
@@ -51,18 +51,18 @@ if (empty($user)) {
                 WHERE `caches`.`cache_id`=`mp3`.`object_id` AND `mp3`.`uuid`= ? AND `mp3`.`user_id`=? LIMIT 1',
             $uuid, $user->getUserId());
 
-        if (!$stmt) {
+        if (! $stmt) {
             //query returns error
             $message = $message_title_internal;
         } else {
-            if (!$row = XDb::xFetchArray($stmt)) {
+            if (! $row = XDb::xFetchArray($stmt)) {
                 //no records
                 $message = $message_mp3_not_found;
             }
         }
     }
 
-    if (!$message) {
+    if (! $message) {
         if (isset($_POST['submit'])) {
             if ($_FILES['file']['name'] != '') {
                 // check of the file was uploaded successfully
@@ -145,7 +145,7 @@ if (empty($user)) {
         }
     }
 
-    if (!$message) {
+    if (! $message) {
         // display
         $view->setTemplate('editmp3');
         $view->setSubtitle(htmlspecialchars($row['name'], ENT_COMPAT, 'UTF-8') . ' - ');

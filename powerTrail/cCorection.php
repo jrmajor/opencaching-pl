@@ -145,7 +145,7 @@ final class UserCollection
 
     private function __construct()
     {
-        include __DIR__.'/../lib/settingsGlue.inc.php';
+        include __DIR__ . '/../lib/settingsGlue.inc.php';
         if(isset($userCollection)) {
             $this->userArray = $userCollection;
         }

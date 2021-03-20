@@ -38,7 +38,7 @@ return function (PaginationModel $pagination){
 </script>
 
 <div>
-  <?php if(!$pagination->error()) { ?>
+  <?php if(! $pagination->error()) { ?>
     <ul class="pagination">
       <?php foreach($pagination->getPagesList() as $page) { ?>
 

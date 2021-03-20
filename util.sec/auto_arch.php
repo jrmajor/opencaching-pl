@@ -11,7 +11,7 @@ use src\Utils\Debug\Debug;
 use src\Utils\Generators\Uuid;
 use src\Utils\Log\Log;
 
-require_once(__DIR__.'/../lib/common.inc.php');
+require_once(__DIR__ . '/../lib/common.inc.php');
 
 class AutoArch
 {
@@ -76,13 +76,13 @@ class AutoArch
         $cache = new GeoCache(['cacheId' => (int) $cacheid]);
         switch ($step) {
             case $this->step['START']:
-                $email_content = file_get_contents(__DIR__.'/../resources/email/arch1.email');
+                $email_content = file_get_contents(__DIR__ . '/../resources/email/arch1.email');
                 break;
             case $this->step['AFTER_FIRST_MAIL_SENT']:
-                $email_content = file_get_contents(__DIR__.'/../resources/email/arch2.email');
+                $email_content = file_get_contents(__DIR__ . '/../resources/email/arch2.email');
                 break;
             case $this->step['AFTER_SECOND_MAIL_SENT']:
-                $email_content = file_get_contents(__DIR__.'/../resources/email/arch3.email');
+                $email_content = file_get_contents(__DIR__ . '/../resources/email/arch3.email');
                 break;
         }
         $email_content = mb_ereg_replace('{server}', $this->ocConfig->getAbsolute_server_URI(), $email_content);
@@ -104,8 +104,8 @@ class AutoArch
         $emailheaders .= "From: $siteName <$octeamEmailAddress>\r\n";
         $emailheaders .= "Reply-To: $siteName <$octeamEmailAddress>";
         $status = mb_send_mail($cache->getOwner()->getEmail(), tr('autoArchive_11'), $email_content, $emailheaders);
-        if(!$status){
-            Debug::errorLog('Mail sending failure: to:'.$cache->getOwner()->getEmail());
+        if(! $status){
+            Debug::errorLog('Mail sending failure: to:' . $cache->getOwner()->getEmail());
         }
         Log::logentry(Log::EVENT_AUTOARCHIVE, $cache->getOwner()->getUserId(), $cache->getCacheId(), 0, 'Sending mail to ' . $cache->getOwner()->getEmail(), ['status' => $status]);
     }

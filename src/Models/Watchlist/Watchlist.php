@@ -93,7 +93,7 @@ class Watchlist extends BaseObject
         $itemText,
         $useLogentries
     ) {
-        if (!empty($itemText)) {
+        if (! empty($itemText)) {
             $this->updateWatchesWaiting($log, $itemText);
             if ($this->updateCacheLogsStmt == null) {
                 $this->updateCacheLogsStmt = $this->db->prepare(
@@ -179,11 +179,11 @@ class Watchlist extends BaseObject
                  . self::WATCHTYPE_OWNER . ', ' . self::WATCHTYPE_WATCH . ')
              WHERE
                  (
-                   (u.watchmail_mode = '. UserNotify::SEND_NOTIFICATION_HOURLY.' AND ww.id IS NOT NULL)
+                   (u.watchmail_mode = ' . UserNotify::SEND_NOTIFICATION_HOURLY . ' AND ww.id IS NOT NULL)
                    OR
                    (u.watchmail_mode IN (
-                            '.UserNotify::SEND_NOTIFICATION_DAILY.',
-                            '.UserNotify::SEND_NOTIFICATION_WEEKLY.'
+                            ' . UserNotify::SEND_NOTIFICATION_DAILY . ',
+                            ' . UserNotify::SEND_NOTIFICATION_WEEKLY . '
                             )
                      AND u.watchmail_nextmail < NOW()
                    )
@@ -199,7 +199,7 @@ class Watchlist extends BaseObject
                     $result[] = $currentWatcher;
                 }
                 $nextmail = $row['watchmail_nextmail'];
-                $currentWatcher =  new WatchlistWatcher(
+                $currentWatcher = new WatchlistWatcher(
                     $row['user_id'],
                     $row['username'],
                     $row['email'],

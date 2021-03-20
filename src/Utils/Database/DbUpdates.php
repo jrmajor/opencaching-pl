@@ -72,7 +72,7 @@ class DbUpdates
     public function delete($uuid)
     {
         $update = self::get($uuid);
-        if (!$update) {
+        if (! $update) {
             return true;
         }
         $path = $update->getFilePath();
@@ -84,7 +84,7 @@ class DbUpdates
             // Looks like the file was not staged/committed to Git yet.
             unlink($path);
         }
-        if (!file_exists($path)) {
+        if (! file_exists($path)) {
             if (self::$updates !== null) {
                 unset(self::$updates[$uuid]);
             }
@@ -134,7 +134,7 @@ class DbUpdates
 
         foreach ($scriptPaths as $scriptPath) {
             if (preg_match(
-                '~/('.DbUpdate::REGEX_VALID_UPDATE_NAME.')\.php$~',
+                '~/(' . DbUpdate::REGEX_VALID_UPDATE_NAME . ')\.php$~',
                 $scriptPath,
                 $matches
             )) {
@@ -146,7 +146,7 @@ class DbUpdates
                 if (isset(self::$updates[$uuid])) {
                     throw new Exception(
                         'Duplicate UUID in ' . self::$updates[$uuid]->getFileName() .
-                        ' and ' . $name.'.php'
+                        ' and ' . $name . '.php'
                     );
                 }
 
@@ -160,7 +160,7 @@ class DbUpdates
             } elseif (preg_match(
                 '~/([0-9][^/]+\.php)$~', $scriptPath, $matches
             )) {
-                throw new Exception("Invalid db-update filename: '" . $matches[1] ."'");
+                throw new Exception("Invalid db-update filename: '" . $matches[1] . "'");
             }
         }
 
@@ -197,7 +197,7 @@ class DbUpdates
         $messages = '';
 
         foreach ($routines as $fileName => $lastRun) {
-            if (!$lastRun ||
+            if (! $lastRun ||
                 $lastRun['fileTime'] != self::routineFileModified($fileName)
             ) {
                 $messages .= self::runRoutines($fileName);
@@ -210,17 +210,17 @@ class DbUpdates
     {
         $queries = self::getRoutineContents($fileName);
         if (substr($queries, 0, 10) != 'DELIMITER ') {
-            throw new Exception('DELIMITER statement is missing in '.$fileName);
+            throw new Exception('DELIMITER statement is missing in ' . $fileName);
         }
         OcDb::instance(OcDb::ADMIN_ACCESS)->simpleQueries($queries);
 
         Facade::cache_set(
-            'run '.$fileName,
+            'run ' . $fileName,
             ['fileTime' => self::routineFileModified($fileName), 'runTime' => time()],
             365 * 24 * 3600
               // At least once a year, all routines are re-installed.
         );
-        return 'run '.$fileName."\n";
+        return 'run ' . $fileName . "\n";
     }
 
     /**
@@ -233,7 +233,7 @@ class DbUpdates
 
         foreach ($routineFilePaths as $filePath) {
             $fileName = basename($filePath);
-            $routines[$fileName] = Facade::cache_get('run '.$fileName);
+            $routines[$fileName] = Facade::cache_get('run ' . $fileName);
         }
         return $routines;
     }

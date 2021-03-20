@@ -6,14 +6,14 @@ use src\Models\ApplicationContainer;
 use src\Models\MeritBadge\MeritBadge;
 use src\Utils\Text\Formatter;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 
 global $content_table, $config;
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -29,7 +29,7 @@ if (isset($_REQUEST['user_id'])) {
 
 $badge_id = $_REQUEST['badge_id'];
 
-$head= (new ViewBadgeHeadController())->index();
+$head = (new ViewBadgeHeadController())->index();
 $meritBadgeCtrl = new \src\Controllers\MeritBadgeController;
 $userMeritBadge = $meritBadgeCtrl->buildUserBadge($userid, $badge_id);
 
@@ -67,7 +67,7 @@ foreach( $levelsMeritBadge as $oneLevel ){
 
 
     $color = MeritBadge::getColor($pure_level, $noLevels );
-    $level = "<b style=\'color:$color\'> ".intval($pure_level+1).'</b>';
+    $level = "<b style=\'color:$color\'> " . intval($pure_level + 1) . '</b>';
 
     $name = $oneLevel->getLevelName();
     $name = "<b style=\'color:$color\'>$name</b>";
@@ -106,7 +106,7 @@ foreach( $usersMeritBadge as $oneUserBadge ){
 
     if ( $level_id != $oneUserBadge->getLevelId()){
 
-        if ($level_id!= '' ) $contentUsr .= '}
+        if ($level_id != '' ) $contentUsr .= '}
                 ';
 
         $level_id = $oneUserBadge->getLevelId();

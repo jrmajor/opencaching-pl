@@ -19,37 +19,37 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-require_once (__DIR__.'/../lib/calculation.inc.php');
+require_once (__DIR__ . '/../lib/calculation.inc.php');
 
-    $txtLine = chr(239) . chr(187) . chr(191) .tr('search_text_01').' {mod_suffix}{cachename} '.tr('search_text_02').' {owner}
-'.tr('search_text_03').' {lat} {lon}
-'.tr('search_text_04').' {status}
+    $txtLine = chr(239) . chr(187) . chr(191) . tr('search_text_01') . ' {mod_suffix}{cachename} ' . tr('search_text_02') . ' {owner}
+' . tr('search_text_03') . ' {lat} {lon}
+' . tr('search_text_04') . ' {status}
 
-'.tr('search_text_05').' {{time}}
-'.tr('search_text_06').' {{waypoint}}
-'.tr('search_text_07').' {country}
-'.tr('search_text_08').' {type}
-'.tr('search_text_09').' {container}
+' . tr('search_text_05') . ' {{time}}
+' . tr('search_text_06') . ' {{waypoint}}
+' . tr('search_text_07') . ' {country}
+' . tr('search_text_08') . ' {type}
+' . tr('search_text_09') . ' {container}
 Z/T: {difficulty}/{terrain}
-Online: '.$absolute_server_URI.'viewcache.php?wp={{waypoint}}
+Online: ' . $absolute_server_URI . 'viewcache.php?wp={{waypoint}}
 
-'.tr('search_text_10').' {shortdesc}
+' . tr('search_text_10') . ' {shortdesc}
 
-'.tr('search_text_11').' {htmlwarn}:
+' . tr('search_text_11') . ' {htmlwarn}:
 <===================>
 {desc}
 {rr_comment}
 {personal_cache_note}
 <===================>
 
-'.tr('search_text_12').'
+' . tr('search_text_12') . '
 <===================>
 {hints}
 <===================>
 A|B|C|D|E|F|G|H|I|J|K|L|M
 N|O|P|Q|R|S|T|U|V|W|X|Y|Z
 
-'.tr('search_text_13').'
+' . tr('search_text_13') . '
 {logs}
 ';
 
@@ -59,7 +59,7 @@ N|O|P|Q|R|S|T|U|V|W|X|Y|Z
 {{text}}
 ';
 
-if( $loggedUser || !$hide_coords ) {
+if( $loggedUser || ! $hide_coords ) {
     //prepare the output
     $caches_per_page = 20;
 
@@ -70,7 +70,7 @@ if( $loggedUser || !$hide_coords ) {
             is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159,
             0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
-        if (!$loggedUser) {
+        if (! $loggedUser) {
             $query .= '0 distance, ';
         } else {
             //get the users home coords
@@ -90,7 +90,7 @@ if( $loggedUser || !$hide_coords ) {
         }
     }
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
-    if (!$loggedUser) {
+    if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id
                 FROM `caches` ';
     } else {
@@ -102,7 +102,7 @@ if( $loggedUser || !$hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
-    if (isset($lat_rad, $lon_rad)   && ($sortby == 'bydistance')) {
+    if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
        $query .= ' ORDER BY date_created DESC';
@@ -163,7 +163,7 @@ if( $loggedUser || !$hide_coords ) {
     $bUseZip = false;
     if ($bUseZip == true) {
         $content = '';
-        require_once(__DIR__.'/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('',6);
     }
 
@@ -176,10 +176,10 @@ if( $loggedUser || !$hide_coords ) {
 
             $cache_id = $r['cacheid'];
             $user_id = $loggedUser->getUserId();
-            $access_log = @$_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id];
+            $access_log = @$_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id];
             if ($access_log === null) {
-                $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id] = [];
-                $access_log = $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id];
+                $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id] = [];
+                $access_log = $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id];
             }
             if (@$access_log[$cache_id] !== true) {
                 $dbc->multiVariableQuery(
@@ -192,7 +192,7 @@ if( $loggedUser || !$hide_coords ) {
                     ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
                     );
                 $access_log[$cache_id] = true;
-                $_SESSION['CACHE_ACCESS_LOG_TXT_'.$user_id] = $access_log;
+                $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id] = $access_log;
             }
         }
 
@@ -224,25 +224,25 @@ if( $loggedUser || !$hide_coords ) {
             $thisline = str_replace('{hints}', Rot13::withoutHtml(strip_tags($r['hint'])), $thisline);
         }
 
-        $logpw = ($r['logpw']==''?'':''.tr('search_text_14').' <br/>');
+        $logpw = ($r['logpw'] == ''?'':'' . tr('search_text_14') . ' <br/>');
 
         $thisline = str_replace('{shortdesc}', $r['short_desc'], $thisline);
 
         if ($r['html'] == 0) {
             $thisline = str_replace('{htmlwarn}', '', $thisline);
-            $thisline = str_replace('{desc}', strip_tags($logpw.$r['desc']), $thisline);
+            $thisline = str_replace('{desc}', strip_tags($logpw . $r['desc']), $thisline);
         } else {
-            $thisline = str_replace('{htmlwarn}', ''.tr('search_text_15').'', $thisline);
-            $thisline = str_replace('{desc}', html2txt($logpw.$r['desc']), $thisline);
+            $thisline = str_replace('{htmlwarn}', '' . tr('search_text_15') . '', $thisline);
+            $thisline = str_replace('{desc}', html2txt($logpw . $r['desc']), $thisline);
         }
 
         if ($loggedUser) {
 
             $cacheNote = CacheNote::getNote($loggedUser->getUserId(), $r['cacheid']);
 
-            if ( !empty($cacheNote) ) {
+            if ( ! empty($cacheNote) ) {
                 $thisline = str_replace('{personal_cache_note}',
-                    html2txt('<br/><br/>-- '.tr('search_text_16').' --<br/> '.
+                    html2txt('<br/><br/>-- ' . tr('search_text_16') . ' --<br/> ' .
                         $cacheNote . '<br/>'), $thisline);
             } else {
                 $thisline = str_replace('{personal_cache_note}', '', $thisline);
@@ -254,7 +254,7 @@ if( $loggedUser || !$hide_coords ) {
         if( $r['rr_comment'] == '' ) {
             $thisline = str_replace('{rr_comment}', '', $thisline);
         } else {
-            $thisline = str_replace('{rr_comment}', html2txt('<br /><br />--------<br />'.$r['rr_comment']), $thisline);
+            $thisline = str_replace('{rr_comment}', html2txt('<br /><br />--------<br />' . $r['rr_comment']), $thisline);
         }
         $thisline = str_replace('{type}', tr(GeoCacheCommons::CacheTypeTranslationKey($r['type_id'])), $thisline);
         $thisline = str_replace('{container}', tr(GeoCacheCommons::CacheSizeTranslationKey($r['size'])), $thisline);
@@ -284,7 +284,7 @@ if( $loggedUser || !$hide_coords ) {
             $thislog = str_replace('{date}', date('d.m.Y', strtotime($rLog['date'])), $thislog);
             $thislog = str_replace('{username}', $rLog['username'], $thislog);
 
-            $logtype = tr('logType'.$rLog['type']);
+            $logtype = tr('logType' . $rLog['type']);
 
             $thislog = str_replace('{type}', $logtype, $thislog);
             if ($rLog['text_html'] == 0) {

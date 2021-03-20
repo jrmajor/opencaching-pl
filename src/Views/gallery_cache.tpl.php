@@ -12,7 +12,7 @@
   <div class="content2-container">
     <p class="content-title-noshade-size1">{{images_cache}}</p>
     <?php foreach ($view->cachepictures as $picture) {
-        if (!($picture->spoiler && $view->hidespoilers)) {?>
+        if (! ($picture->spoiler && $view->hidespoilers)) {?>
         <div class="viewcache-pictureblock">
           <div class="img-shadow">
             <a href="<?=$picture->url ?>" data-fancybox="picture-cache" data-caption="<?=$picture->title ?>">
@@ -30,7 +30,7 @@
   <div class="content2-container">
     <p class="content-title-noshade-size1">{{images_logs}}</p>
     <?php foreach ($view->logpictures as $picture) {
-        if (!($picture['spoiler'] == '1' && $view->hidespoilers)) {?>
+        if (! ($picture['spoiler'] == '1' && $view->hidespoilers)) {?>
         <div class="viewcache-pictureblock">
           <div class="img-shadow">
             <a href="<?=$picture['url'] ?>" data-fancybox="picture-logs" data-caption="<?=$picture['title'] ?>">

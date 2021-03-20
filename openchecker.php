@@ -30,10 +30,10 @@ use src\Utils\Database\XDb;
 use src\Utils\View\View;
 
 //prepare the templates and include all neccessary
-require_once (__DIR__.'/lib/common.inc.php');
+require_once (__DIR__ . '/lib/common.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     // not logged in, go to login page
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
@@ -95,7 +95,7 @@ tpl_set_var('section_3_stop', '-->');
 tpl_set_var('section_4_start', '<!--');
 tpl_set_var('section_4_stop', '-->');
 
-if (!$record = Xdb::xFetchArray($rs)) {
+if (! $record = Xdb::xFetchArray($rs)) {
     tpl_set_var('openchecker_wrong_cache', tr('openchecker_wrong_cache'));
     tpl_set_var('section_2_start', '<!--');
     tpl_set_var('section_2_stop', '-->');

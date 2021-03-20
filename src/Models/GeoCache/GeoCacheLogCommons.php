@@ -78,7 +78,7 @@ class GeoCacheLogCommons extends BaseObject
 
         }
 
-        if (!$fileNameOnly) {
+        if (! $fileNameOnly) {
             $icon = self::ICON_PATH . $icon;
         }
 

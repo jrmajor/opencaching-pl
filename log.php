@@ -24,7 +24,7 @@ use src\Utils\Text\InputFilter;
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $user = ApplicationContainer::Instance()->getLoggedUser();
-if (!$user) {
+if (! $user) {
     // user not authorized
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
@@ -38,7 +38,7 @@ $view->loadJquery();
 
 require(__DIR__ . '/src/Views/rating.inc.php');
 
-if (!isset($_REQUEST['cacheid'])) {
+if (! isset($_REQUEST['cacheid'])) {
     tpl_errorMsg('log_cache', 'No cacheid param!');
     exit;
 }
@@ -51,12 +51,12 @@ if (
     (
         ($geoCache->getStatus() == GeoCache::STATUS_NOTYETAVAILABLE ||
             $geoCache->getStatus() == GeoCache::STATUS_BLOCKED) &&
-        $user->getUserId() != $geoCache->getOwnerId() && !$user->hasOcTeamRole()
+        $user->getUserId() != $geoCache->getOwnerId() && ! $user->hasOcTeamRole()
     ) ||
 
     (
         $geoCache->getStatus() == GeoCache::STATUS_WAITAPPROVERS &&
-        !$user->hasOcTeamRole() && !$user->isGuide() &&
+        ! $user->hasOcTeamRole() && ! $user->isGuide() &&
         $user->getUserId() != $geoCache->getOwnerId()
     )
 ) {
@@ -71,7 +71,7 @@ $all_ok = false;
 //set default date for log form
 if (isset($_SESSION['lastLogSendTime'], $_SESSION['lastLogDateTime'])  ) {
 
-    if (!compareTime($_SESSION['lastLogSendTime'], 'PT1H')) { //if last logging time is greater than one hour from now
+    if (! compareTime($_SESSION['lastLogSendTime'], 'PT1H')) { //if last logging time is greater than one hour from now
         $proposedDateTime = new DateTime('now'); // lastLogDateTime is overdue
     } else {
         $proposedDateTime = $_SESSION['lastLogDateTime'];
@@ -273,7 +273,7 @@ if ($databaseResponse = $dbConWpt->dbResultFetchOneRowOnly($s)) {
 }
 
 
-if (isset($_POST['submit']) && !isset($_POST['version2'])) {
+if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
     $_POST['submitform'] = $_POST['submit'];
     $log_text = iconv('ISO-8859-1', 'UTF-8', $log_text);
 }
@@ -343,7 +343,7 @@ if ($log_type == GeoCacheLog::LOGTYPE_MOVED) {
     $coords_not_ok = false;
 }
 
-if (!$geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_FOUNDIT)) {
+if (! $geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_FOUNDIT)) {
     if ($log_type != GeoCacheLog::LOGTYPE_FOUNDIT &&
         $log_type != GeoCacheLog::LOGTYPE_ATTENDED) {
 
@@ -377,7 +377,7 @@ if (
         $log_type == GeoCacheLogCommons::LOGTYPE_ATTENDED)
 ) {
 
-    if (!isset($_POST['r'])) {
+    if (! isset($_POST['r'])) {
         $_POST['r'] = -15;
     }
 
@@ -433,7 +433,7 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
     $log_uuid = Uuid::create();
 
     $logDateTime = new DateTime($log_date);
-    if (!compareTime($logDateTime, 'PT1H')) { //if logging time is older then now-one_hour
+    if (! compareTime($logDateTime, 'PT1H')) { //if logging time is older then now-one_hour
         $_SESSION['lastLogDateTime'] = $logDateTime; //we store the time
         $_SESSION['lastLogSendTime'] = new DateTime('now');
     } else {
@@ -926,7 +926,7 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
     //check coordinates
     $error = false;
     if ($lat_h != '' || $lat_min != '') {
-        if (!mb_ereg_match('^[0-9]{1,2}$', $lat_h)) {
+        if (! mb_ereg_match('^[0-9]{1,2}$', $lat_h)) {
             tpl_set_var('lat_message', tr('error_coords_not_ok'));
             $error = true;
             $lat_h_not_ok = true;
@@ -971,7 +971,7 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
     }
 
     if ($lon_h != '' || $lon_min != '') {
-        if (!mb_ereg_match('^[0-9]{1,3}$', $lon_h)) {
+        if (! mb_ereg_match('^[0-9]{1,3}$', $lon_h)) {
             tpl_set_var('lon_message', tr('error_coords_not_ok'));
             $error = true;
             $lon_h_not_ok = true;

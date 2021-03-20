@@ -24,12 +24,12 @@ class StatsController extends BaseController
     public function index()
     {}
 
-    public function internalStats($year=null)
+    public function internalStats($year = null)
     {
         // only for logged users
         $this->redirectNotLoggedUsers();
 
-        if (!$this->loggedUser->hasAdvUserRole()) {
+        if (! $this->loggedUser->hasAdvUserRole()) {
             $this->index();
             exit;
         }
@@ -73,11 +73,11 @@ class StatsController extends BaseController
      */
     public function statPic($userId)
     {
-        if (!is_numeric($userId)) {
+        if (! is_numeric($userId)) {
             $this->displayCommonErrorPageAndExit('improper userId');
         }
 
-        if (1 || !StatPic::isStatPicPresent ($userId)) { //XXXY
+        if (1 || ! StatPic::isStatPicPresent ($userId)) { //XXXY
             $user = User::fromUserIdFactory($userId);
             if (is_null($user)) {
                 $this->displayCommonErrorPageAndExit('Unknown user');

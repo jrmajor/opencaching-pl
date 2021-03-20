@@ -21,7 +21,7 @@ class sendEmail
 
         $headers = 'MIME-Version: 1.0' . "\r\n";
         $headers .= 'Content-type: text/html; charset=UTF-8 ' . "\r\n";
-        $headers .= 'From: '.OcConfig::getSiteName().' <' . OcConfig::getEmailAddrNoReply() . ">\r\n";
+        $headers .= 'From: ' . OcConfig::getSiteName() . ' <' . OcConfig::getEmailAddrNoReply() . ">\r\n";
         $headers .= 'Reply-To: ' . OcConfig::getEmailAddrNoReply() . "\r\n";
 
         $mailbody = file_get_contents(dirname(__FILE__) . '/commentEmail.html');
@@ -94,18 +94,18 @@ class sendEmail
             if($owner['power_trail_email'] == 1){
                 //TODO: Email class should be used here in future...
                 if(! mb_send_mail($to, $subject, $mailbody, $headers)){
-                    Debug::errorLog('Mail sending failure: to:'.$to);
+                    Debug::errorLog('Mail sending failure: to:' . $to);
                 }
             }
             if ($commentOwnerId && $commentOwnerId == $owner['user_id']) {
                 $doNotSendEmailToCommentAuthor = true;
             }
         }
-        if ($commentOwnerId && !$doNotSendEmailToCommentAuthor) {
+        if ($commentOwnerId && ! $doNotSendEmailToCommentAuthor) {
             $userDetails = powerTrailBase::getUserDetails($commentOwnerId);
             if($userDetails['power_trail_email']) {
                 if(! mb_send_mail($userDetails['email'], $subject, $mailbody, $headers)){
-                    Debug::errorLog('Mail sending failure: to:'.$userDetails['email']);
+                    Debug::errorLog('Mail sending failure: to:' . $userDetails['email']);
                 }
             }
         }

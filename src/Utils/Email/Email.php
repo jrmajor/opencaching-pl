@@ -47,8 +47,8 @@ class Email
         if (empty($this->fromAddr)) {
             throw new RuntimeException('Missing email sender.');
         }
-        if (!self::isValidEmailAddr($this->toAddr) ||
-            !self::isValidEmailAddr($this->fromAddr)
+        if (! self::isValidEmailAddr($this->toAddr) ||
+            ! self::isValidEmailAddr($this->fromAddr)
         ) {
             // We cannot decide here how to handle that. Caller must evaluate
             // the return values of setFromAddr() and addToAddr() if handling
@@ -71,13 +71,13 @@ class Email
         }
 
         // optional addresses
-        if (!empty($this->ccAddr)) {
+        if (! empty($this->ccAddr)) {
             $headers[] = 'Cc: ' . implode(',', $this->ccAddr);
         }
-        if (!empty($this->bccAddr)) {
+        if (! empty($this->bccAddr)) {
             $headers[] = 'Bcc: ' . implode(',', $this->bccAddr);
         }
-        if (!empty($this->replyToAddr)) {
+        if (! empty($this->replyToAddr)) {
             $headers[] = 'Reply-To: ' . $this->replyToAddr;
         }
 
@@ -147,7 +147,7 @@ class Email
 
     public function addSubjectPrefix($newPrefix)
     {
-        if (!empty($newPrefix)) { // because somebody may want to turn off the global prefix in config
+        if (! empty($newPrefix)) { // because somebody may want to turn off the global prefix in config
 
             $this->subjectPrefix = $this->subjectPrefix . '[' . $newPrefix . ']';
         }
@@ -173,7 +173,7 @@ class Email
     {
         if (is_array($emailAddress)) {
             foreach ($emailAddress as $addr) {
-                if (!self::isValidEmailAddr($addr)) {
+                if (! self::isValidEmailAddr($addr)) {
                     return false;
                 }
             }

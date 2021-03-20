@@ -14,7 +14,7 @@ class TestUserPref extends UserPreferencesBaseData
     public function getDefaults()
     {
         return [
-            'fooVar' =>'defaultFoo',
+            'fooVar' => 'defaultFoo',
             'booVar' => 'defaultBoo',
         ];
     }

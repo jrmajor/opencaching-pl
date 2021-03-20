@@ -59,7 +59,7 @@ use src\Utils\Uri\SimpleRouter;
   </div>
   <?php
     [$latNS, $lat_h, $lat_min] = $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLatitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
-    [$lonEW, $lon_h, $lon_min] =  $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
+    [$lonEW, $lon_h, $lon_min] = $view->neighbourhoodsList[$view->selectedNbh]->getCoords()->getLongitudeParts(Coordinates::COORDINATES_FORMAT_DEG_MIN);
   ?>
   <div class="buffer"></div>
   <div class="align-center">

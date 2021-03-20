@@ -9,14 +9,14 @@
  */
 use src\Utils\Database\XDb;
 
-require_once(__DIR__.'/../../../lib/common.inc.php');
+require_once(__DIR__ . '/../../../lib/common.inc.php');
 
 $rsCache = XDb::xSql(
     'SELECT `cache_id`, `latitude`, `longitude` FROM `caches` WHERE `need_npa_recalc`=1');
 
 while ($rCache = XDb::xFetchArray($rsCache)) {
 
-    if( !is_numeric($rCache['longitude']) || !is_numeric($rCache['latitude']) ){
+    if( ! is_numeric($rCache['longitude']) || ! is_numeric($rCache['latitude']) ){
         continue;
     }
 

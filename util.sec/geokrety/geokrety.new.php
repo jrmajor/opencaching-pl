@@ -21,7 +21,7 @@ use src\Utils\Database\XDb;
 
  * ************************************************************************* */
 
-require_once(__DIR__.'/../../lib/ClassPathDictionary.php');
+require_once(__DIR__ . '/../../lib/ClassPathDictionary.php');
 
 /* last synchro check */
 $last_updated = XDb::xSimpleQueryValue(
@@ -29,7 +29,7 @@ $last_updated = XDb::xSimpleQueryValue(
 $modifiedsince = strtotime($last_updated);
 
 /* new OC dedicated geokrety XML export */
-$url = GeoKretyApi::GEOKRETY_URL.'/export_oc.php?modifiedsince=' . date('YmdHis', $modifiedsince - 1);
+$url = GeoKretyApi::GEOKRETY_URL . '/export_oc.php?modifiedsince=' . date('YmdHis', $modifiedsince - 1);
 
 
 $xmlString = file_get_contents($url);
@@ -37,7 +37,7 @@ $gkxml = @simplexml_load_string($xmlString);
 
 
 //    $gkxml=@simplexml_load_file($url);
-if (!$gkxml) {
+if (! $gkxml) {
     echo $xmlString;
     exit('Geokrety export error! Failed to load XML file [simplexml_load_file()]: ' . $url);
 }

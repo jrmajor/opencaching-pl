@@ -304,7 +304,7 @@ class UserAdminController extends BaseController
     {
         $this->viewedUser = User::fromUserIdFactory($userId);
 
-        if (!$this->viewedUser) {
+        if (! $this->viewedUser) {
             $this->view->redirect('/');
         }
     }

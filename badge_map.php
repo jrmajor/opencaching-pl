@@ -7,10 +7,10 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\OcDb;
 use src\Utils\Uri\SimpleRouter;
 
-require_once(__DIR__.'/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -44,7 +44,7 @@ MIN(caches.longitude) AS minlongitude, MIN(caches.latitude) AS minlatitude
 FROM $tmp_badge_map
 join caches on caches.cache_id = tmp_badge_map.cache_id";
 
-$stmt= $db->simpleQuery($borderQuery);
+$stmt = $db->simpleQuery($borderQuery);
 $r = $db->dbResultFetchOneRowOnly($stmt);
 $minlat = $r['minlatitude'];
 $minlon = $r['minlongitude'];
@@ -85,19 +85,19 @@ function addCachesToTmpTable( $db, $tmp_badge_map, $show, $gainedList, $belongin
     //N - not gained
     //Y - gained
 
-    if ( !(strpos($show, 'N') === false) ){ //not gained
-        if(!empty($belongingList)){
+    if ( ! (strpos($show, 'N') === false) ){ //not gained
+        if(! empty($belongingList)){
             $db->simpleQuery($insQuery . $belongingList);
         }
     }
 
     if ( strpos($show, 'Y') === false ){ //only not gained
-        if(!empty($gainedList)){
-            $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList. ')');
+        if(! empty($gainedList)){
+            $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList . ')');
         }
 
     } else { //gained
-        if(!empty($gainedList)){
+        if(! empty($gainedList)){
             $db->simpleQuery($insQuery . $gainedList);
         }
     }

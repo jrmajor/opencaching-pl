@@ -9,7 +9,7 @@
 /**
  * Site name for the node
  */
-$site['siteName']= 'Opencaching.ro';
+$site['siteName'] = 'Opencaching.ro';
 
 /**
  * Page title (to display on the browser titlebar)

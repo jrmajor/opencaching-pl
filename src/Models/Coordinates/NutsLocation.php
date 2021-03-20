@@ -105,14 +105,14 @@ class NutsLocation extends BaseObject
     {
         // try to detect region name in order 2-1-3 (NUTS-levels)
         // (smaller countries has e.g. only 3-level names)
-        if (!empty($this->codes[self::LEVEL_2])) {
+        if (! empty($this->codes[self::LEVEL_2])) {
             $region = $this->names[self::LEVEL_2];
 
-        } elseif (!empty($this->codes[self::LEVEL_1])) {
+        } elseif (! empty($this->codes[self::LEVEL_1])) {
             $region = $this->names[self::LEVEL_1];
 
         } else {
-            if (!empty($this->codes[self::LEVEL_3])) {
+            if (! empty($this->codes[self::LEVEL_3])) {
                 $region = $this->names[self::LEVEL_3];
             } else {
                 $region = '?';
@@ -130,7 +130,7 @@ class NutsLocation extends BaseObject
     public function getDescription($separator = '-')
     {
 
-        if (!isset($this->codes[self::LEVEL_COUNTRY])) {
+        if (! isset($this->codes[self::LEVEL_COUNTRY])) {
             // location is unknown
             return "? $separator ?";
         }
@@ -183,7 +183,7 @@ class NutsLocation extends BaseObject
     public function isAnyDataFound()
     {
         foreach ($this->codes as $code) {
-            if (!is_null($code)) {
+            if (! is_null($code)) {
                 return true;
             }
         }

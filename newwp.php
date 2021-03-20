@@ -10,7 +10,7 @@ $no_tpl_build = false;
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
-if (!$loggedUser) {
+if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
     exit;
@@ -205,7 +205,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                 $wp_stage = 0;
             //check coordinates
             if ($lat_h != '' || $lat_min != '') {
-                if (!mb_ereg_match('^[0-9]{1,2}$', $lat_h)) {
+                if (! mb_ereg_match('^[0-9]{1,2}$', $lat_h)) {
                     tpl_set_var('lat_message', $error_coords_not_ok);
                     $error = true;
                     $lat_h_not_ok = true;
@@ -249,7 +249,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             }
 
             if ($lon_h != '' || $lon_min != '') {
-                if (!mb_ereg_match('^[0-9]{1,3}$', $lon_h)) {
+                if (! mb_ereg_match('^[0-9]{1,3}$', $lon_h)) {
                     tpl_set_var('lon_message', $error_coords_not_ok);
                     $error = true;
                     $lon_h_not_ok = true;
@@ -323,7 +323,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             }
 
             //no errors?
-            if (!($descwp_not_ok || $lon_not_ok || $lat_not_ok || $type_not_ok)) {
+            if (! ($descwp_not_ok || $lon_not_ok || $lat_not_ok || $type_not_ok)) {
                 //add record
 
                 XDb::xSql('INSERT INTO `waypoints` (

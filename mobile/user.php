@@ -7,7 +7,7 @@ if (isset($_SESSION['user_id'])) {
 
 
 
-    if (isset($_POST['username_find']) && !empty($_POST['username_find'])) {
+    if (isset($_POST['username_find']) && ! empty($_POST['username_find'])) {
 
         $username_find = XDb::xEscape($_POST['username_find']);
         $query = "select user_id from user where username = '" . $username_find . "'";
@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
             $adres = './user.php?id=' . $wiersz['user_id'];
             header('Location: ' . $adres);
         }
-    } elseif (isset($_GET['id']) && !empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
+    } elseif (isset($_GET['id']) && ! empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
 
         $id = XDb::xEscape($_GET['id']);
         $query = "select username,country,date_created,hidden_count,log_notes_count,notfounds_count  from user where user_id = '" . $id . "'";

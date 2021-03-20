@@ -15,9 +15,9 @@ use src\Utils\Uri\Uri;
 
 class PaginationModel {
 
-    const DEFAULT_PAGE_PARAM_NAME   = '_page';
-    const DEFAULT_STEP_VALUE        = 10;
-    const DEFAULT_PAGES_LIST_SIZE   = 10;
+    const DEFAULT_PAGE_PARAM_NAME = '_page';
+    const DEFAULT_STEP_VALUE = 10;
+    const DEFAULT_PAGES_LIST_SIZE = 10;
 
     private $pageParamName = self::DEFAULT_PAGE_PARAM_NAME;
 
@@ -30,11 +30,11 @@ class PaginationModel {
     private $errorOccured = false;          // if error occured
     private $errorMsg;                      // error message to display
 
-    public function __construct($recordsPerPage=null){
+    public function __construct($recordsPerPage = null){
 
         $this->loadPaginationUrlParams();
 
-        if(!is_null($recordsPerPage)){
+        if(! is_null($recordsPerPage)){
             $this->recordsPerPage = $recordsPerPage;
         }else{
             $this->recordsPerPage = self::DEFAULT_STEP_VALUE;
@@ -61,7 +61,7 @@ class PaginationModel {
         }
 
         //calculate current Limit
-        return ($this->currentPage - 1)*($this->recordsPerPage);
+        return ($this->currentPage - 1) * ($this->recordsPerPage);
 
     }
 
@@ -131,15 +131,15 @@ class PaginationModel {
 
 
         //calculate the range of the list
-        $leftPage = $this->currentPage - floor($this->pagesListSize/2);
-        $rightPage = $this->currentPage + floor($this->pagesListSize/2);
+        $leftPage = $this->currentPage - floor($this->pagesListSize / 2);
+        $rightPage = $this->currentPage + floor($this->pagesListSize / 2);
 
         $lastPage = null;
-        if(!is_null($this->recordsCount)){
+        if(! is_null($this->recordsCount)){
             $lastPage = ceil($this->recordsCount / $this->recordsPerPage);
         }
 
-        if($this->pagesListSize % 2==0){
+        if($this->pagesListSize % 2 == 0){
             // take one element from left
             $leftPage++;
         }
@@ -154,8 +154,8 @@ class PaginationModel {
         if($leftPage > 1){
 
             $destPage = $this->currentPage - 1;
-            if($destPage<=0){
-                $destPage=1;
+            if($destPage <= 0){
+                $destPage = 1;
             }
             // "<<" mark
             $result[] =
@@ -168,19 +168,19 @@ class PaginationModel {
 
         // generate pages marks
         for($i = $leftPage; $i <= $rightPage; $i++){
-            if( !is_null($lastPage) && $i > $lastPage ){
+            if( ! is_null($lastPage) && $i > $lastPage ){
                 // last page found
                 break;
             }
             $page = new PageModel(
-                $i, ($i==$this->currentPage),
-                $this->getLink($i), tr('pagination_page')." $i.");
+                $i, ($i == $this->currentPage),
+                $this->getLink($i), tr('pagination_page') . " $i.");
             $result[] = $page;
         }
 
         // calculate page number under '>' marker
         $destPage = $this->currentPage + 1;
-        if( !is_null($lastPage) ){
+        if( ! is_null($lastPage) ){
 
             if($lastPage > $rightPage){
 
@@ -224,7 +224,7 @@ class PaginationModel {
             $this->currentPage = $_GET[$this->pageParamName];
 
             // check if currentPage has proper integer value
-            if(!is_numeric($this->currentPage) || $this->currentPage < 1){
+            if(! is_numeric($this->currentPage) || $this->currentPage < 1){
                 $this->errorOccured = true;
                 $this->errorMsg = 'Improper page param value!';
             }else{

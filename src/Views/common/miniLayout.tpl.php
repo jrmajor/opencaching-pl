@@ -54,7 +54,7 @@
 
 <body>
 
-    <?php $view-> _callTemplate(); ?>
+    <?php $view->_callTemplate(); ?>
 
 </body>
 </html>

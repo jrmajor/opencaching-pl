@@ -11,7 +11,7 @@ use src\Utils\Uri\Uri;
 return function () {
 
   $chunkCss = Uri::getLinkWithModificationTime('/views/chunks/upload/upload.css');
-  $chunkJs  = Uri::getLinkWithModificationTime('/views/chunks/upload/upload.js');
+  $chunkJs = Uri::getLinkWithModificationTime('/views/chunks/upload/upload.js');
 
 ?>
 
@@ -21,14 +21,14 @@ return function () {
 <script id="upload_chunkDialogTpl" type="text/x-handlebars-template">
   <?php
   // template for upload dialog popup
-  require(__DIR__.'/uploadDialog.tpl.php');
+  require(__DIR__ . '/uploadDialog.tpl.php');
   ?>
 </script>
 
 <script id="upload_filePreviewTpl" type="text/x-handlebars-template">
   <?php
   // template for upload preview entry
-  require(__DIR__.'/uploadedFilePreviewTpl.tpl.php');
+  require(__DIR__ . '/uploadedFilePreviewTpl.tpl.php');
   ?>
 </script>
 

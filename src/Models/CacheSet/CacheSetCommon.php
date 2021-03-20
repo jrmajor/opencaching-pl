@@ -52,10 +52,10 @@ class CacheSetCommon extends BaseObject
         $iconPath = '/images/blue/';
 
         switch($type){
-            case self::TYPE_GEODRAW:    return $iconPath.'footprintRed.png';
-            case self::TYPE_TOURING:    return $iconPath.'footprintBlue.png';
-            case self::TYPE_NATURE:     return $iconPath.'footprintGreen.png';
-            case self::TYPE_THEMATIC:   return $iconPath.'footprintYellow.png';
+            case self::TYPE_GEODRAW:    return $iconPath . 'footprintRed.png';
+            case self::TYPE_TOURING:    return $iconPath . 'footprintBlue.png';
+            case self::TYPE_NATURE:     return $iconPath . 'footprintGreen.png';
+            case self::TYPE_THEMATIC:   return $iconPath . 'footprintYellow.png';
 
             default:
                 Debug::errorLog("Unknown type: $type");
@@ -78,7 +78,7 @@ class CacheSetCommon extends BaseObject
     }
 
     public static function getCacheSetUrlById($id){
-        return self::CACHESET_URL_BASE.$id;
+        return self::CACHESET_URL_BASE . $id;
     }
 
     /**
@@ -96,7 +96,7 @@ class CacheSetCommon extends BaseObject
             GeoCache::TYPE_WEBCAM,
         ];
 
-        return !in_array($cache->getCacheType(), $forbiddenTypes);
+        return ! in_array($cache->getCacheType(), $forbiddenTypes);
     }
 
     /**
@@ -113,7 +113,7 @@ class CacheSetCommon extends BaseObject
             GeoCache::STATUS_WAITAPPROVERS,
         ];
 
-        return !in_array($cache->getStatus(), $forbiddenStatuses);
+        return ! in_array($cache->getStatus(), $forbiddenStatuses);
     }
 
     public function getCachePoints(GeoCache $cache)

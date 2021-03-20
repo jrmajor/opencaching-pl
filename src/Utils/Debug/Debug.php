@@ -23,7 +23,7 @@ class Debug {
             $class = isset($trace['class']) ? $trace['class'] . '::' : '';
 
             $traceStr .= "\n  #$i: $file:$line [$class$func()]";
-            $i ++;
+            $i++;
         }
         return $traceStr . "\n";
     }

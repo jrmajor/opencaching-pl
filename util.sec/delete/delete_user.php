@@ -33,7 +33,7 @@ function remove_watch($cache_id, $user_id) {
 
 }
 
-if (!isset($argv[1])) {
+if (! isset($argv[1])) {
     echo "Usage: php delete_user.php <username>\n";
     exit(1);
 }
