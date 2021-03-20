@@ -11,7 +11,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  *   $row['name'] => '',
  * ]
  */
-class Column_CacheSetNameAndIcon extends AbstractColumn {
+class Column_CacheSetNameAndIcon extends AbstractColumn
+{
     protected function getChunkName()
     {
         return 'listOfCaches/cacheSetNameAndIconColumn';

@@ -4,7 +4,8 @@ namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
 
-class WaypointCommons extends BaseObject {
+class WaypointCommons extends BaseObject
+{
     const TYPE_PHYSICAL = 1;
     const TYPE_VIRTUAL = 2;
     const TYPE_FINAL = 3;

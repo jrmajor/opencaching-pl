@@ -226,7 +226,8 @@ class GeoCode
     }
 }
 
-class GeoCodeServiceResult {
+class GeoCodeServiceResult
+{
     public $name;
     public $layer;
     public $countryCode;

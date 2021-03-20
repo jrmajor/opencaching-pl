@@ -8,7 +8,8 @@ namespace src\Utils\Email;
 
 use src\Models\OcConfig\OcConfig;
 
-class OcSpamDomain {
+class OcSpamDomain
+{
     //domains - different error-trigger errors can have different domians
     //TODO: it should be rewrite to some kind of enum
     const GENERIC_ERRORS = 'genericError';

@@ -11,7 +11,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  * - cacheStatus - status of the geocache
  *
  */
-class Column_CacheName extends AbstractColumn {
+class Column_CacheName extends AbstractColumn
+{
     protected function getChunkName()
     {
         return 'listOfCaches/cacheNameColumn';

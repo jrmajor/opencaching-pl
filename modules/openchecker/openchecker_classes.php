@@ -9,7 +9,8 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\Waypoint;
 use src\Utils\Database\XDb;
 
-class OpenCheckerSetup {
+class OpenCheckerSetup
+{
 /**
  * initial setup - setting default values used in OpenChecker
  */
@@ -40,7 +41,8 @@ class OpenCheckerSetup {
 
 // end of init OpenChecker setup.
 
-class convertLongLat {
+class convertLongLat
+{
     var $CoordsDecimal;
 
     function __construct($degree, $minutes) {
@@ -48,7 +50,8 @@ class convertLongLat {
     }
 }
 
-class OpenCheckerCore {
+class OpenCheckerCore
+{
     public function BruteForceCheck($OpenCheckerSetup) {
         tpl_set_var('section_3_start', '');
         tpl_set_var('section_3_stop', '');

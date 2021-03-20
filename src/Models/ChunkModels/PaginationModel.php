@@ -14,7 +14,8 @@ namespace src\Models\ChunkModels;
 use src\Utils\Debug\Debug;
 use src\Utils\Uri\Uri;
 
-class PaginationModel {
+class PaginationModel
+{
     const DEFAULT_PAGE_PARAM_NAME = '_page';
     const DEFAULT_STEP_VALUE = 10;
     const DEFAULT_PAGES_LIST_SIZE = 10;
@@ -231,7 +232,8 @@ class PaginationModel {
  * This class is a model of single pagination mark
  * This is for pagination chunk internal use only.
  */
-class PageModel{
+class PageModel
+{
     public $text;
     public $isActive;
     public $link;

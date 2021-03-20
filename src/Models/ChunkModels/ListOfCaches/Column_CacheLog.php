@@ -15,7 +15,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  *
  * ADD THIS: $this->view->addLocalCss('/css/lightTooltip.css');
  */
-class Column_CacheLog extends AbstractColumn {
+class Column_CacheLog extends AbstractColumn
+{
     private $isFullLogTextPresented = false;
 
     protected function getChunkName()

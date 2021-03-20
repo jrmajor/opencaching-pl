@@ -2,7 +2,8 @@
 
 namespace src\Controllers;
 
-class ViewBadgeShowPositionsController extends BaseController{
+class ViewBadgeShowPositionsController extends BaseController
+{
     private $sCode = '';
 
     public function __construct()

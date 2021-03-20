@@ -10,7 +10,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  * - status - status of the cache (for example temp-unavailable or archived
  * - user_sts - status for current user - for example found or not found etc.
  */
-class Column_CacheTypeIcon extends AbstractColumn {
+class Column_CacheTypeIcon extends AbstractColumn
+{
     protected function getChunkName()
     {
         return 'listOfCaches/cacheTypeIconColumn';

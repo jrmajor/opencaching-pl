@@ -7,7 +7,8 @@
 
 namespace src\Models\ChunkModels;
 
-class ListOfCaches{
+class ListOfCaches
+{
     private $listOfCaches = [];
     private $recomendationColumn = false;
     private $logTooltipEnabled = false;
@@ -45,7 +46,8 @@ class ListOfCaches{
     }
 }
 
-class ListOfCachesCacheModel{
+class ListOfCachesCacheModel
+{
     public $icon = '';
     public $date = '';
     public $cacheName = '';

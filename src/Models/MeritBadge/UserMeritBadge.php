@@ -2,7 +2,8 @@
 
 namespace src\Models\MeritBadge;
 
-class UserMeritBadge{
+class UserMeritBadge
+{
     private $id;
     private $user_id;
     private $user_name;

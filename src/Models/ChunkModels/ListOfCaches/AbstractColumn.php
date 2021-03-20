@@ -16,7 +16,8 @@ use src\Utils\View\View;
  * See the ListOfCachesModel for details of usage.
  */
 
-abstract class AbstractColumn {
+abstract class AbstractColumn
+{
     const COLUMN_CHUNK_DIR = __DIR__ . '/../../../../srv/Views/chunks/listOfCaches/';
     private $dataExtractor = null;
     private $header = '';

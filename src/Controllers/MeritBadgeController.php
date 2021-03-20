@@ -7,7 +7,8 @@ use src\Models\GeoCache\GeoCache;
 use src\Models\MeritBadge\MeritBadge;
 use src\Utils\Database\OcDb;
 
-class MeritBadgeController{
+class MeritBadgeController
+{
     private $db;
 
     const TRIGGER_NONE = 0;

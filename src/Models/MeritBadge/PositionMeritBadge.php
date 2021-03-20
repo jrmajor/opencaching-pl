@@ -2,7 +2,8 @@
 
 namespace src\Models\MeritBadge;
 
-class PositionMeritBadge{
+class PositionMeritBadge
+{
     private $id; //cache
     private $name; //cache
     private $type; //cache

@@ -10,7 +10,8 @@ use src\Utils\Debug\Debug;
  *
  */
 
-class GeoCacheCommons extends BaseObject {
+class GeoCacheCommons extends BaseObject
+{
     const TYPE_OTHERTYPE = 1;
     const TYPE_TRADITIONAL = 2;
     const TYPE_MULTICACHE = 3;

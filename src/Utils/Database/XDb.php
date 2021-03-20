@@ -11,7 +11,8 @@ namespace src\Utils\Database;
 use PDOException;
 use PDOStatement;
 
-class XDb extends OcDb {
+class XDb extends OcDb
+{
     /**
      * This is replacement for mysql_query()
      * Oryginal mysql_query has params: sql-string, optional $link, optional params to sql-query

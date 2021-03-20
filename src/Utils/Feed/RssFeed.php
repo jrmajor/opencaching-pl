@@ -46,7 +46,8 @@ use stdClass;
  *     echo $feed->count();                 // int(10)
  */
 
-class RssFeed {
+class RssFeed
+{
     private $url;
     private $reader;
     private $current;
@@ -231,7 +232,8 @@ class RssFeed {
 /**
  * Interface for reading items from feed.
  */
-interface FeedReader {
+interface FeedReader
+{
     /**
      * Create reader from SimpleXMLElement.
      *
@@ -265,7 +267,8 @@ interface FeedReader {
 /**
  * Concrete implementation of FeedReader that will never return an item.
  */
-class NullReader implements FeedReader {
+class NullReader implements FeedReader
+{
     public function __construct(SimpleXMLElement $root) {
         //Nothing
     }
@@ -286,7 +289,8 @@ class NullReader implements FeedReader {
 /**
  * Concrete implementation of FeedReader that will read an Atom feed.
  */
-class AtomReader implements FeedReader {
+class AtomReader implements FeedReader
+{
     private $root;
 
     public function __construct(SimpleXMLElement $root) {
@@ -336,7 +340,8 @@ class AtomReader implements FeedReader {
 /**
  * Concrete implementation of FeedReader that will read an RSS feed.
  */
-class RSSReader implements FeedReader {
+class RSSReader implements FeedReader
+{
     private $root;
 
     public function __construct(SimpleXMLElement $root) {

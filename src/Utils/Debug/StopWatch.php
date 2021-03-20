@@ -12,7 +12,8 @@ namespace src\Utils\Debug;
  *  - be sure that request has set SWICH_VAR value (for example in GET)
  */
 
-class StopWatch {
+class StopWatch
+{
     const SWICH_VAR = 'StopWatch'; //this var needs to be set in request (in GET/POST etc)
 
     private $stages;

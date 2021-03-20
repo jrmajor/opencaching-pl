@@ -21,7 +21,7 @@ namespace src\Models\User\OAuthSimpleUser;
 use src\Utils\Generators\Uuid;
 use src\Utils\Uri\Uri;
 
-class FacebookOAuth  extends OAuthSimpleUserBase
+class FacebookOAuth extends OAuthSimpleUserBase
 {
     private $accessToken;   // FB token value
 

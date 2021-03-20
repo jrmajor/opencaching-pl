@@ -10,7 +10,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  *   'userName' => user nickname
  * ]
  */
-class Column_UserName extends AbstractColumn {
+class Column_UserName extends AbstractColumn
+{
     protected function getChunkName()
     {
         return 'listOfCaches/userNameColumn';

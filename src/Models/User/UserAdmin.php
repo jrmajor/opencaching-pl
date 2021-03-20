@@ -4,7 +4,8 @@ namespace src\Models\User;
 
 use src\Models\BaseObject;
 
-class UserAdmin extends BaseObject {
+class UserAdmin extends BaseObject
+{
     /**
      * (Un)bans $user
      * Sets is_active_flag to $state for $user in the user table

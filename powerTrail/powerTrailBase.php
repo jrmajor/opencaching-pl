@@ -4,7 +4,8 @@ use src\Utils\Database\OcDb;
 /**
  *
  */
-class powerTrailBase{
+class powerTrailBase
+{
     /**
      * declare types and id of types of geoPaths:
      */

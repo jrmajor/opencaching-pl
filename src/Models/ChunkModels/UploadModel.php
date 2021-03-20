@@ -13,7 +13,8 @@ use src\Utils\Text\TextConverter;
  *
  * See /test/upload for example of useage of it.
  */
-class UploadModel {
+class UploadModel
+{
   const MIME_IMAGE = 'image/*';
   const MIME_IMAGE_WITH_GD_SUPPORT = 'image/gif|image/jpeg|image/png'; // OcImage supported formats
   const MIME_AUDIO = 'audio/*';

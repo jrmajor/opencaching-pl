@@ -2,7 +2,8 @@
 
 namespace src\Models\User\UserPreferences;
 
-abstract class UserPreferencesBaseData {
+abstract class UserPreferencesBaseData
+{
     private $key;
     private $values;
 

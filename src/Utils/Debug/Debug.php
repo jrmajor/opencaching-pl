@@ -4,7 +4,8 @@ namespace src\Utils\Debug;
 
 use Throwable;
 
-class Debug {
+class Debug
+{
     /**
      * Returns backtrace in simple form:
      * file:line | file:line | ...

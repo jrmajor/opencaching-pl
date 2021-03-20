@@ -5,7 +5,8 @@ namespace src\Utils\Uri;
 use Exception;
 use src\Models\OcConfig\OcConfig;
 
-class Uri {
+class Uri
+{
     /**
      * Returns url with set given param to given value
      * + remove old value of given param if neccessary

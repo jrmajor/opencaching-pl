@@ -11,7 +11,8 @@ use src\Utils\Uri\Uri;
  * It should probably be improved.
  *
  */
-class PrintList {
+class PrintList
+{
     public static function HandleRequest($cacheId)
     {
         if (isset($_REQUEST['print_list']) && $_REQUEST['print_list'] == 'y') {

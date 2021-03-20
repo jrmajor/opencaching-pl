@@ -11,7 +11,8 @@ namespace src\Models\ChunkModels\ListOfCaches;
  * - title - title value for title html param of the icon
  */
 
-class Column_OnClickActionIcon extends AbstractColumn {
+class Column_OnClickActionIcon extends AbstractColumn
+{
     protected function getChunkName()
     {
         return 'listOfCaches/onClickActionIconColumn';

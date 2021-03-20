@@ -4,7 +4,8 @@ namespace src\Controllers;
 
 use src\Models\MeritBadge\MeritBadge; //for static functions
 
-class ViewBadgeHeadController extends BaseController{
+class ViewBadgeHeadController extends BaseController
+{
     private $sCode = '';
 
     public function __construct()
