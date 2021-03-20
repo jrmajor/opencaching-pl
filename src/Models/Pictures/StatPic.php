@@ -30,7 +30,7 @@ class StatPic extends BaseObject
         return OcConfig::getDynFilesPath(true) . self::getStatPicUrl($userId);
     }
 
-    public static function isStatPicPresent ($userId)
+    public static function isStatPicPresent($userId)
     {
         return file_exists(self::getStatPicPath($userId));
     }
@@ -62,7 +62,7 @@ class StatPic extends BaseObject
         return self::fromTplIdFactory(1);
     }
 
-    public static function getAllTpls ()
+    public static function getAllTpls()
     {
         $db = self::db();
 
@@ -198,7 +198,7 @@ class StatPic extends BaseObject
         $this->maxtextwidth = $row['maxtextwidth'];
     }
 
-    public function getId ()
+    public function getId()
     {
         return $this->id;
     }
@@ -208,7 +208,7 @@ class StatPic extends BaseObject
         return $this->description;
     }
 
-    public function getPreviewPath ()
+    public function getPreviewPath()
     {
         return $this->previewPath;
     }

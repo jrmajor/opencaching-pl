@@ -187,7 +187,7 @@ class Election extends BaseObject
         return $this->voterCriteria->validateUser($user, $this);
     }
 
-    public function isDone (): bool
+    public function isDone(): bool
     {
         return OcDateTime::isBefore($this->getEndDate());
     }
@@ -195,7 +195,7 @@ class Election extends BaseObject
     /**
      * Returns max number of votes or null if max number of votes doesn't matter
      */
-    public function getMaxAllowedNumOfVotes ()
+    public function getMaxAllowedNumOfVotes()
     {
         return  $this->electionRules->votesPerUser;
     }
@@ -204,7 +204,7 @@ class Election extends BaseObject
      * Returns false if user can send vote without any option selected
      * @return bool
      */
-    public function isEmptyVoteDisallowed (): bool
+    public function isEmptyVoteDisallowed(): bool
     {
         return $this->electionRules->disallowNoVotes ?? false;
     }
@@ -213,7 +213,7 @@ class Election extends BaseObject
      * Returns TRUE if user must select maximum allowed number of votes
      * @return bool
      */
-    public function isPartialVoteDisallowed (): bool
+    public function isPartialVoteDisallowed(): bool
     {
         return $this->electionRules->disallowLessVotes ?? false;
     }
@@ -295,7 +295,7 @@ class ElectionRules
     public $disallowLessVotes = null;
     public $disallowNoVotes = null;
 
-    public function __construct ($jsonStr)
+    public function __construct($jsonStr)
     {
         $arr = json_decode($jsonStr, true);
 
@@ -363,7 +363,7 @@ class VoterCriteria
     public $founds = null;          // if user has at least this number of founds
     public $daysWithOc = null;      // if user signed up at least this number days before
 
-    public function __construct ($jsonStr)
+    public function __construct($jsonStr)
     {
         $arr = json_decode($jsonStr, true);
 
@@ -390,7 +390,7 @@ class VoterCriteria
      * @param Election $election
      * @return bool
      */
-    public function validateUser (User $user, Election $election): bool
+    public function validateUser(User $user, Election $election): bool
     {
         // validate founds
         if ($this->founds) {

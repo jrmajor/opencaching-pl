@@ -181,7 +181,7 @@ class DbUpdates
     public function sort()
     {
         if (self::$updates !== null) {
-            uasort(self::$updates, function($a, $b) {
+            uasort(self::$updates, function ($a, $b) {
                 return strcasecmp($a->getFileName(), $b->getFileName());
             });
         }

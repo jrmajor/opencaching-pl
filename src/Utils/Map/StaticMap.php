@@ -93,7 +93,7 @@ class StaticMap
     protected $zoom, $lat, $lon, $width, $height, $markers, $image, $maptype;
     protected $centerX, $centerY, $offsetX, $offsetY;
 
-    public static function displayPureMap (Coordinates $center, $zoom, array $size, $mapType)
+    public static function displayPureMap(Coordinates $center, $zoom, array $size, $mapType)
     {
         $map = new self();
         $map->lat = $center->getLatitude();

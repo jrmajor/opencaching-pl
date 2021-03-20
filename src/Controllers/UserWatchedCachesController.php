@@ -57,7 +57,7 @@ class UserWatchedCachesController extends BaseController
         $mapModel->addMarkersWithExtractor(
             CacheWithLogMarkerModel::class,
             UserWatchedCache::getWatchedCachesWithLastLogs($this->loggedUser->getUserId()),
-            function($row) {
+            function ($row) {
                 $iconFile = GeoCacheCommons::CacheIconByType(
                     $row['type'], $row['status'], $row['user_sts']);
 
@@ -122,7 +122,7 @@ class UserWatchedCachesController extends BaseController
 
             $model->addColumn(new Column_CacheTypeIcon(tr('usrWatch_status')));
             $model->addColumn(new Column_CacheName(tr('usrWatch_watchedCache'),
-                function($row) {
+                function ($row) {
                     return [
                         'cacheWp' => $row['wp_oc'],
                         'cacheName' => $row['name'],
@@ -130,7 +130,7 @@ class UserWatchedCachesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheLog(tr('usrWatch_lastLog'),
-                function($row) {
+                function ($row) {
                     return [
                         'logId' => $row['llog_id'],
                         'logType' => $row['llog_type'],
@@ -142,7 +142,7 @@ class UserWatchedCachesController extends BaseController
             ));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('usrWatch_actionRemove'),
-                function($row) {
+                function ($row) {
                     return [
                         'icon' => '/images/log/16x16-trash.png',
                         'onClick' => "removeFromWatched(this, '" . $row['wp_oc'] . "')",

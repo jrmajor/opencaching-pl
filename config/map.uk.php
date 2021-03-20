@@ -45,7 +45,7 @@ $map['keys']['BingMap'] = 'NEEDS-TO-BE-SET-IN-LOCAL-CONFIG-FILE';
  * @param array Complete configuration merged from default + node + local configs
  * @return true on success
  */
-$map['keyInjectionCallback'] = function(array &$mapConfig) {
+$map['keyInjectionCallback'] = function (array &$mapConfig) {
     // change string {Key-BingMap} to proper key value
     $mapConfig['jsConfig'] = str_replace(
         '{Key-BingMap}',

@@ -52,7 +52,7 @@ class CacheSetsListController extends BaseController
         $listModel->addColumn(
             new Column_CacheSetNameAndIcon(tr('cacheSet_name'),
                 /** @var CacheSet  $row*/
-                function($row) {
+                function ($row) {
                     return [
                         'id' => $row->getId(),
                         'type' => $row->getType(),
@@ -70,7 +70,7 @@ class CacheSetsListController extends BaseController
 
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $allCacheSets,
-            function(CacheSet $cs) {
+            function (CacheSet $cs) {
                 if (is_null($cs->getCoordinates())) {
                     // skip cachesets without coords
                     return null;

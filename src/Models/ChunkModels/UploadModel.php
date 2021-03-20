@@ -88,7 +88,7 @@ class UploadModel
     {
         array_walk(
             $newFiles,
-            function(&$file, $key, $urlBase) {
+            function (&$file, $key, $urlBase) {
                 $file = $urlBase . '/' . $file;
             },
             $this->getBaseUrl()
@@ -144,7 +144,7 @@ class UploadModel
         }
     }
 
-    public function setMaxFileSize ($maxSizeInMB)
+    public function setMaxFileSize($maxSizeInMB)
     {
         $this->maxFileSize = $maxSizeInMB * 1024 * 1024;
         $phpMaxFilesize = TextConverter::bytesNumberWithUnitToBytes(ini_get('upload_max_filesize'));
@@ -154,7 +154,7 @@ class UploadModel
         }
     }
 
-    public function setMaxFileNumber ($maxNumberOfFiles)
+    public function setMaxFileNumber($maxNumberOfFiles)
     {
         $this->maxFilesNumber = $maxNumberOfFiles;
     }

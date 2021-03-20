@@ -74,7 +74,7 @@ class MultiGeopathsStats extends BaseObject
         return $result;
     }
 
-    public static function getDuplicatedCachesList ()
+    public static function getDuplicatedCachesList()
     {
         $db = self::db();
 

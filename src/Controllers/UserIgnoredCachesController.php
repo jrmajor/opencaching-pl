@@ -57,7 +57,7 @@ class UserIgnoredCachesController extends BaseController
 
             $model->addColumn(new Column_CacheTypeIcon(tr('usrIgnore_statusColumn')));
             $model->addColumn(new Column_CacheName(tr('usrIgnore_ignoredCache'),
-                function($row) {
+                function ($row) {
                     return [
                         'cacheWp' => $row['wp_oc'],
                         'cacheName' => $row['name'],
@@ -65,7 +65,7 @@ class UserIgnoredCachesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheLog(tr('usrIgnore_lastLogColumn'),
-                function($row) {
+                function ($row) {
                     return [
                         'logId' => $row['llog_id'],
                         'logType' => $row['llog_type'],
@@ -77,7 +77,7 @@ class UserIgnoredCachesController extends BaseController
             ));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('usrIgnore_actionRemoveColumn'),
-                function($row) {
+                function ($row) {
                     return [
                         'icon' => 'images/log/16x16-trash.png',
                         'onClick' => "removeFromIgnored(this, '" . $row['wp_oc'] . "')",

@@ -32,7 +32,7 @@ class PictureController extends BaseController
      * Please note this file is stored in tmp folder and notthing is save in DB here
      * (this is only a part of picture editing process)
      */
-    public function uploadPicsAjax ($parentType, $parentId)
+    public function uploadPicsAjax($parentType, $parentId)
     {
         // only logged users can test
         $this->checkUserLoggedAjax();

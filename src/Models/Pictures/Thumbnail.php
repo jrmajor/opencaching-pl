@@ -142,7 +142,7 @@ class Thumbnail extends BaseObject
      * Remove all thumbnails under given uuid
      * @param string $uuid
      */
-    public static function remove ($uuid)
+    public static function remove($uuid)
     {
         $basePath = OcConfig::getPicUploadFolder();
 

@@ -132,7 +132,7 @@ class OcPicture extends BaseObject
         $this->updateParentPicturesCountInDb(1);
     }
 
-    public function updateOrderInDb ()
+    public function updateOrderInDb()
     {
         $this->db->multiVariableQuery(
             'UPDATE pictures SET seq = :1, last_modified = NOW() WHERE uuid = :2 LIMIT 1',
@@ -192,7 +192,7 @@ class OcPicture extends BaseObject
         }
     }
 
-    public function getThumbnail ($size, $showSpoilers)
+    public function getThumbnail($size, $showSpoilers)
     {
         return self::getThumbUrl($this->uuid, $showSpoilers, $size);
     }
@@ -353,7 +353,7 @@ class OcPicture extends BaseObject
         }
     }
 
-    public function getLastOrderIndexforParent ()
+    public function getLastOrderIndexforParent()
     {
         $highestOrderIndex = $this->db->multiVariableQueryValue(
             'SELECT MAX(seq) FROM pictures WHERE object_id = :1 AND object_type = :2',

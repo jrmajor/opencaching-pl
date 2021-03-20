@@ -235,7 +235,7 @@ class TestController extends BaseController
 
         //...and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheSetMarkerModel::class, $csToArchive, function($row) {
+            CacheSetMarkerModel::class, $csToArchive, function ($row) {
                 $markerModel = new CacheSetMarkerModel();
 
                 $markerModel->lat = $row['centerLatitude'];
@@ -252,7 +252,7 @@ class TestController extends BaseController
         $cachesToShow = MultiCacheStats::getLatestCaches(5);
         // ..and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheMarkerModel::class, $cachesToShow, function($row) {
+            CacheMarkerModel::class, $cachesToShow, function ($row) {
                 $markerModel = new CacheMarkerModel();
 
                 $markerModel->lat = $row['latitude'];
@@ -292,7 +292,7 @@ class TestController extends BaseController
 
         // ...and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheWithLogMarkerModel::class, $caches, function($row) {
+            CacheWithLogMarkerModel::class, $caches, function ($row) {
                 $markerModel = new CacheWithLogMarkerModel();
 
                 $markerModel->lon = $row['longitude'];

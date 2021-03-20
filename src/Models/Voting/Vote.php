@@ -17,7 +17,7 @@ class Vote extends BaseObject
         parent::__construct();
     }
 
-    public static function saveToDb (Election $election, User $user, array $votes)
+    public static function saveToDb(Election $election, User $user, array $votes)
     {
         if (empty($votes)) {
             // there is nothing to save

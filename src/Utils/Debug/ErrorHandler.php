@@ -17,7 +17,7 @@ class ErrorHandler
      * Install error and exception handlers; must be called once upon startup,
      * as early as possible.
      */
-    public static function install ()
+    public static function install()
     {
         register_shutdown_function([__CLASS__, 'handleFatalError']);
         set_exception_handler([__CLASS__, 'handleException']);

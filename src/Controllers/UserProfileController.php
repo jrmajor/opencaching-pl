@@ -169,7 +169,7 @@ class UserProfileController extends BaseController
         $this->ajaxErrorResponse();
     }
 
-    public function getUserFtfsAjax ($userId)
+    public function getUserFtfsAjax($userId)
     {
         $this->ajaxJsonResponse(MultiLogStats::getUserFtfs($userId));
     }

@@ -37,7 +37,7 @@ $rs = $db->multiVariableQuery(
         AND altitude = 0
     LIMIT $limit", $cacheIdToStart);
 
-$cacheIds = $db->dbFetchAllAsObjects($rs, function($row) {
+$cacheIds = $db->dbFetchAllAsObjects($rs, function ($row) {
     return $row['cache_id'];
 });
 

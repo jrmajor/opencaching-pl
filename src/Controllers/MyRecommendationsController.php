@@ -29,7 +29,7 @@ class MyRecommendationsController extends BaseController
         return true;
     }
 
-    public function index ()
+    public function index()
     {
         $this->recommendations();
     }
@@ -89,7 +89,7 @@ class MyRecommendationsController extends BaseController
             $model = new ListOfCachesModel();
 
             $model->addColumn(new Column_CacheTypeIcon(tr('myRecommendations_status'),
-                function($row) {
+                function ($row) {
                     return [
                         'type' => $row['type'],
                         'status' => $row['status'],
@@ -97,7 +97,7 @@ class MyRecommendationsController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheName(tr('myRecommendations_cacheName'),
-                function($row) {
+                function ($row) {
                     return [
                         'cacheWp' => $row['wp_oc'],
                         'cacheName' => $row['name'],
@@ -107,7 +107,7 @@ class MyRecommendationsController extends BaseController
                 }));
 
             $model->addColumn(new Column_UserName(tr('myRecommendations_cacheOwner'),
-                function($row) {
+                function ($row) {
                     return [
                         'userId' => $row['user_id'],
                         'userName' => $row['username'],

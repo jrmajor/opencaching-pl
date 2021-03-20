@@ -253,7 +253,7 @@ class GeoPathController extends BaseController
      *
      * @param integer $geoPathId
      */
-    public function refreshCachesNumberAjax ($geoPathId)
+    public function refreshCachesNumberAjax($geoPathId)
     {
         $this->checkUserLoggedAjax();
 
@@ -436,11 +436,11 @@ class GeoPathController extends BaseController
 
         $listModel->addDataRows(GeopathCandidate::getCacheCandidates($geopath));
 
-        $listModel->addColumn(new Column_SimpleText(tr('gpCandidates_submitedDate'), function(GeopathCandidate $candidate) {
+        $listModel->addColumn(new Column_SimpleText(tr('gpCandidates_submitedDate'), function (GeopathCandidate $candidate) {
             return Formatter::date($candidate->getSubmitedDate());
         }, 'width15'));
 
-        $listModel->addColumn(new Column_CacheTypeIcon('', function(GeopathCandidate $candidate) {
+        $listModel->addColumn(new Column_CacheTypeIcon('', function (GeopathCandidate $candidate) {
             $cache = $candidate->getGeoCache();
 
             return [
@@ -450,7 +450,7 @@ class GeoPathController extends BaseController
             ];
         }, 'width5'));
 
-        $listModel->addColumn(new Column_CacheName(tr('gpCandidates_cacheName'), function(GeopathCandidate $candidate) {
+        $listModel->addColumn(new Column_CacheName(tr('gpCandidates_cacheName'), function (GeopathCandidate $candidate) {
             $cache = $candidate->getGeoCache();
 
             return [
@@ -461,7 +461,7 @@ class GeoPathController extends BaseController
             ];
         }));
 
-        $listModel->addColumn(new Column_UserName(tr('gpCandidates_cacheOwner'), function(GeopathCandidate $candidate) use ($userDict) {
+        $listModel->addColumn(new Column_UserName(tr('gpCandidates_cacheOwner'), function (GeopathCandidate $candidate) use ($userDict) {
             $userId = $candidate->getGeoCache()->getOwnerId();
 
             return [
@@ -470,7 +470,7 @@ class GeoPathController extends BaseController
             ];
         }));
 
-        $listModel->addColumn(new Column_OnClickActionIcon(tr('gpCandidates_action'), function(GeopathCandidate $candidate) {
+        $listModel->addColumn(new Column_OnClickActionIcon(tr('gpCandidates_action'), function (GeopathCandidate $candidate) {
             return [
                 'icon' => '/images/log/16x16-trash.png',
                 'onClick' => 'cancelCandidateOffer(this, ' . $candidate->getId() . ')',
@@ -499,7 +499,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_SimpleText(
             tr('gpMyCandidates_submitedDate'),
-            function(GeopathCandidate $candidate) {
+            function (GeopathCandidate $candidate) {
                 return Formatter::date($candidate->getSubmitedDate());
             },
             'width15'
@@ -507,7 +507,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheSetNameAndIcon(
             tr('gpMyCandidates_geopathName'),
-            function(GeopathCandidate $candidate) {
+            function (GeopathCandidate $candidate) {
                 $gp = $candidate->getGeopath();
 
                 return [
@@ -520,7 +520,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheTypeIcon(
             '',
-            function(GeopathCandidate $candidate) {
+            function (GeopathCandidate $candidate) {
                 $cache = $candidate->getGeoCache();
 
                 return [
@@ -534,7 +534,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheName(
             tr('gpMyCandidates_cacheName'),
-            function(GeopathCandidate $candidate) {
+            function (GeopathCandidate $candidate) {
                 $cache = $candidate->getGeoCache();
 
                 return [
@@ -548,7 +548,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_ActionButtons(
             tr('gpMyCandidates_actions'),
-            function(GeopathCandidate $candidate) {
+            function (GeopathCandidate $candidate) {
                 return [
                     [
                         'btnClasses' => 'btn-primary',

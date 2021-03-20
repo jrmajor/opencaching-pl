@@ -56,7 +56,7 @@ class OcDb extends OcPdo
      * {@inheritDoc}
      * @see OcPdo::commit()
      */
-    function commit ()
+    function commit()
     {
         parent::commit();
         $this->hasActiveTransaction = false;
@@ -68,7 +68,7 @@ class OcDb extends OcPdo
      * {@inheritDoc}
      * @see OcPdo::commit()
      */
-    function rollback ()
+    function rollback()
     {
         parent::rollback();
         $this->hasActiveTransaction = false;

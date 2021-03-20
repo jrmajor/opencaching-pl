@@ -263,7 +263,7 @@ class MultiLogStats extends BaseObject
         });
     }
 
-    public static function getUserFtfs ($userId)
+    public static function getUserFtfs($userId)
     {
         $db = self::db();
 

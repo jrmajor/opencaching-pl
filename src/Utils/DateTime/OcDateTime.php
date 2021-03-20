@@ -17,7 +17,7 @@ class OcDateTime
      * @param DateTime $checkedDate   date to check
      * @param DateTime $baseDate      base date to comepare (or now if not given)
      */
-    public static function isBefore (DateTime $checkedDate, DateTime $baseDate = null)
+    public static function isBefore(DateTime $checkedDate, DateTime $baseDate = null)
     {
         if (! $baseDate) {
             $baseDate = self::now();
@@ -32,7 +32,7 @@ class OcDateTime
      * @param DateTime $checkedDate   date to check
      * @param DateTime $baseDate      base date to comepare (or now if not given)
      */
-    public static function isAfter (DateTime $checkedDate, DateTime $baseDate = null)
+    public static function isAfter(DateTime $checkedDate, DateTime $baseDate = null)
     {
         if (! $baseDate) {
             $baseDate = self::now();
@@ -46,7 +46,7 @@ class OcDateTime
      *
      * @param DateTime $checkedDate   date to check
      */
-    public static function isFuture (DateTime $checkedDate): bool
+    public static function isFuture(DateTime $checkedDate): bool
     {
         return self::isAfter($checkedDate);
     }
@@ -56,7 +56,7 @@ class OcDateTime
      *
      * @param DateTime $checkedDate   date to check
      */
-    public static function isPast (DateTime $checkedDate): bool
+    public static function isPast(DateTime $checkedDate): bool
     {
         return self::isBefore($checkedDate);
     }

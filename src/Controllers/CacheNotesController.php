@@ -65,7 +65,7 @@ class CacheNotesController extends BaseController
             $model = new ListOfCachesModel();
 
             $model->addColumn(new Column_CacheTypeIcon(tr('myNotes_status'),
-                function($row) {
+                function ($row) {
                     return [
                         'type' => $row['type'],
                         'status' => $row['status'],
@@ -73,7 +73,7 @@ class CacheNotesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheName(tr('myNotes_cacheName'),
-                function($row) {
+                function ($row) {
                     return [
                         'cacheWp' => $row['wp_oc'],
                         'cacheName' => $row['name'],
@@ -81,7 +81,7 @@ class CacheNotesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheLog(tr('myNotes_lastLogEntry'),
-                function($row) {
+                function ($row) {
                     if (isset($row['llog_id'])) {
                         return [
                             'logId' => $row['llog_id'],
@@ -97,7 +97,7 @@ class CacheNotesController extends BaseController
             ));
 
             // column with notes (+id of this col.)
-            $model->addColumn(new Column_EllipsedText(tr('myNotes_note'),function($row) {
+            $model->addColumn(new Column_EllipsedText(tr('myNotes_note'),function ($row) {
                 return [
                     'text' => isset($row['noteTxt'])?$row['noteTxt']:'-',
                     'maxChars' => 10,
@@ -107,7 +107,7 @@ class CacheNotesController extends BaseController
             }));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('myNotes_removeNote'),
-                function($row) {
+                function ($row) {
                     return [
                         'icon' => isset($row['noteTxt'])?'/images/log/16x16-trash.png':null,
                         'onClick' => "removeNote(this, {$row['cache_id']})",
@@ -117,7 +117,7 @@ class CacheNotesController extends BaseController
             ));
 
             $model->addColumn(new Column_SimpleText(tr('myNotes_modCacheCoords'),
-                function($row) {
+                function ($row) {
                     if (isset($row['coords']) && $row['coords']) {
                         return $row['coords']->getAsText();
                     } else {
@@ -127,7 +127,7 @@ class CacheNotesController extends BaseController
             ));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('myNotes_removeCoords'),
-                function($row) {
+                function ($row) {
                     return [
                         'icon' => isset($row['coords'])?'/images/log/16x16-trash.png':null,
                         'onClick' => "removeCoords(this, {$row['cache_id']})",

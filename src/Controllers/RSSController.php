@@ -56,7 +56,7 @@ class RSSController extends BaseController
         $logs = OcMemCache::getOrCreate(
             __CLASS__ . '::newLogs',
             1 * 60 * 60,
-            function() {
+            function () {
                 return self::newLogsDataPrepare();
             });
 
@@ -132,7 +132,7 @@ class RSSController extends BaseController
         $caches = OcMemCache::getOrCreate(
             __CLASS__ . '::newCaches',
             1 * 60 * 60,
-            function() {
+            function () {
                 return self::newCachesDataPrepare(I18n::getCurrentLang());
             });
 
@@ -209,7 +209,7 @@ class RSSController extends BaseController
         $allNews = OcMemCache::getOrCreate(
             __CLASS__ . '::newNews',
             1 * 60 * 60,
-            function() {
+            function () {
                 return self::newNewsDataPrepare();
             });
 

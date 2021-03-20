@@ -329,7 +329,7 @@ class MainLayoutController extends BaseController
             return null;
         }
 
-        return OcMemCache::getOrCreate(__METHOD__, 5 * 60, function() {
+        return OcMemCache::getOrCreate(__METHOD__, 5 * 60, function () {
             $obj = new stdClass();
             $obj->listOfUsers = UserAuthorization::getOnlineUsersFromDb();
             $obj->validAt = time();

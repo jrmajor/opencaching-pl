@@ -1253,7 +1253,7 @@ class GeoCache extends GeoCacheCommons
             AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
     }
 
-    public static function updateLastModified ($cacheId)
+    public static function updateLastModified($cacheId)
     {
         self::db()->multiVariableQuery(
             'UPDATE caches SET last_modified=NOW() WHERE cache_id= :1 ', $cacheId);
@@ -1531,13 +1531,13 @@ class GeoCache extends GeoCacheCommons
             $result = $this->picturesList;
         } else {
             // filter out non-spoilers
-            $result = array_filter($this->picturesList, function($pic) {
+            $result = array_filter($this->picturesList, function ($pic) {
                 return $pic->spoiler;
             });
         }
 
         if ($changeUrlForSpoilers) {
-            array_walk($result, function($pic) {
+            array_walk($result, function ($pic) {
                 if ($pic->spoiler) {
                     $pic->url = Thumbnail::placeholderUri(Thumbnail::PHD_SPOILER);
                 }
@@ -1545,7 +1545,7 @@ class GeoCache extends GeoCacheCommons
         }
 
         if ($displayThumbsForSpoilers) {
-            array_walk($result, function($pic) {
+            array_walk($result, function ($pic) {
                 if ($pic->spoiler) {
                     $pic->thumbUrl = $pic->thumbUrl . '&amp;showspoiler=1';
                 }
