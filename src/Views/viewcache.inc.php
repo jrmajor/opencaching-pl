@@ -11,10 +11,10 @@ if (isset($_REQUEST['print'])) {
     if (isset($_REQUEST['showlogsall'])) {
         $logs_to_display = 999;
         $linkargs .= '&amp;showlogsall=y';
-    } else if (isset($_REQUEST['showlogs'])) {
+    } elseif (isset($_REQUEST['showlogs'])) {
         $logs_to_display = intval($_REQUEST['showlogs']);
         $linkargs .= '&amp;showlogs=' . htmlspecialchars($logs_to_display, ENT_COMPAT, 'UTF-8');
-    } else if (isset($_REQUEST['logbook']) && $_REQUEST['logbook'] == 'no') {
+    } elseif (isset($_REQUEST['logbook']) && $_REQUEST['logbook'] == 'no') {
         $logs_to_display = 0;
         $linkargs .= '&amp;logbook=no';
     } else

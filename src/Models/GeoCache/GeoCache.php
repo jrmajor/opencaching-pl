@@ -714,7 +714,7 @@ class GeoCache extends GeoCacheCommons
 
             if (isset($logsCount[GeoCacheLog::LOGTYPE_FOUNDIT]) && $logsCount[GeoCacheLog::LOGTYPE_FOUNDIT] > 0) {
                 $logStatus = GeoCacheLog::LOGTYPE_FOUNDIT;
-            } else if (isset($logsCount[GeoCacheLog::LOGTYPE_DIDNOTFIND]) && $logsCount[GeoCacheLog::LOGTYPE_DIDNOTFIND] > 0) {
+            } elseif (isset($logsCount[GeoCacheLog::LOGTYPE_DIDNOTFIND]) && $logsCount[GeoCacheLog::LOGTYPE_DIDNOTFIND] > 0) {
                 $logStatus = GeoCacheLog::LOGTYPE_DIDNOTFIND;
             }
             $isOwner = ($this->getOwnerId() == $forUser->getUserId());

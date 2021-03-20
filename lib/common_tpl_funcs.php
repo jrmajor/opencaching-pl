@@ -158,11 +158,11 @@ function tpl_BuildTemplate($minitpl = false, $noCommonTemplate = false)
     //load main template
     if ($minitpl) {
         $sCode = file_get_contents(__DIR__ . '/../src/Views/common/mini.tpl.php');
-    } else if ($noCommonTemplate) {
+    } elseif ($noCommonTemplate) {
         $sCode = '{template}';
-    } else if (isset($_REQUEST['print']) && $_REQUEST['print'] == 'y') {
+    } elseif (isset($_REQUEST['print']) && $_REQUEST['print'] == 'y') {
         $sCode = file_get_contents(__DIR__ . '/../src/Views/common/main_print.tpl.php');
-    } else if (isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'y') {
+    } elseif (isset($_REQUEST['popup']) && $_REQUEST['popup'] == 'y') {
         $sCode = file_get_contents(__DIR__ . '/../src/Views/common/popup.tpl.php');
     } else {
         $sCode = file_get_contents(__DIR__ . '/../src/Views/common/main.tpl.php');

@@ -71,7 +71,7 @@ if ($num_caches < OcConfig::getNeedApproveLimit()) {
     tpl_set_var('hide_publish_start', '<!--');
     tpl_set_var('hide_publish_end', '-->');
     tpl_set_var('approvement_note', '<div class="notice errormsg">' . tr('first_cache_approvement') . '</div>');
-} else if ($user->getVerifyAll()) {
+} elseif ($user->getVerifyAll()) {
     $needs_approvement = true;
     tpl_set_var('hide_publish_start', '<!--');
     tpl_set_var('hide_publish_end', '-->');

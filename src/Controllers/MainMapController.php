@@ -146,7 +146,7 @@ class MainMapController extends BaseController
             }
 
         // set map center based on requested coords and open popup at center (used to show geocache)
-        } else if(isset($_GET['openPopup'], $_GET['lat'], $_GET['lon'])) {
+        } elseif(isset($_GET['openPopup'], $_GET['lat'], $_GET['lon'])) {
             // opened popup
             $this->mapJsParams->openPopupAtCenter = true;
 
@@ -158,7 +158,7 @@ class MainMapController extends BaseController
             }else{
                 $zoom = 14;
             }
-        } else if(isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
+        } elseif(isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
             // 150m-circle at coords
 
             $mapCenter = Coordinates::FromCoordsFactory(
@@ -174,7 +174,7 @@ class MainMapController extends BaseController
 
                 $mapModel->setInfoMessage(tr('map_circle150mMode'));
             }
-        } else if(isset($_GET['searchdata'], $_GET['bbox'])) {
+        } elseif(isset($_GET['searchdata'], $_GET['bbox'])) {
             // searchData + bbox mode
             if(! preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
                ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox'])){
@@ -193,7 +193,7 @@ class MainMapController extends BaseController
 
                 $mapModel->setStartExtent($swCoord, $neCoord);
             }
-        } else if(isset($_GET['cs'])){
+        } elseif(isset($_GET['cs'])){
             // only given geopath
             $geoPath = CacheSet::fromCacheSetIdFactory($_GET['cs']);
 

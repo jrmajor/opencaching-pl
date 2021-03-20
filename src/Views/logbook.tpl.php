@@ -236,7 +236,7 @@ AIM = {
     if($_GET['logbook_type'] == 0) {
     echo '{{logbook_06}}.';
     }
-    else if($_GET['logbook_type'] == 1) {
+    elseif($_GET['logbook_type'] == 1) {
     echo
     '<span class="note">{{logbook_07}}.</span>
     <form id="logbookopts" action="logbook/remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
@@ -265,7 +265,7 @@ AIM = {
     </form>
     ';
     }
-    else if($_GET['logbook_type'] == 2) {
+    elseif($_GET['logbook_type'] == 2) {
     echo
     '<span class="note">{{logbook_07}}.</span>
     <form id="logbookopts" action="logbook/remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">

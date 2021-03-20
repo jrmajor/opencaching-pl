@@ -74,7 +74,7 @@ $pages = '';
 
 if($logbook_type == 1)
 $imax = 6;
-else if($logbook_type == 2)
+elseif($logbook_type == 2)
 $imax = 4;
 
 $extra = 0;
@@ -89,7 +89,7 @@ else
 $noftf = '';
 exec("cp Logbook-A6-_dwustronny_by_rushcore_page$page$noftf.svg work/$shortname.svg");
 }
-else if($logbook_type == 2) {
+elseif($logbook_type == 2) {
 if($_POST['noftf'] && $i == 4)
 $noftf = '_noftf';
 else

@@ -341,13 +341,11 @@ if (! $SearchWithSort) // without interactive sort
 {
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
-    } else
-        if ($sortby == 'bycreated') {
-            $query .= ' ORDER BY date_created DESC';
-        } else // by name
-{
-            $query .= ' ORDER BY name ASC';
-        }
+    } elseif ($sortby == 'bycreated') {
+        $query .= ' ORDER BY date_created DESC';
+    } else { // by name
+        $query .= ' ORDER BY name ASC';
+    }
 }
 
 if (isset($_REQUEST['startat'])) {
@@ -653,7 +651,7 @@ else
     // compatibility!
     if ($distance_unit == 'sm')
         tpl_set_var('distanceunit', 'mi');
-    else if ($distance_unit == 'nm')
+    elseif ($distance_unit == 'nm')
         tpl_set_var('distanceunit', 'sm');
     else
         tpl_set_var('distanceunit', $distance_unit);

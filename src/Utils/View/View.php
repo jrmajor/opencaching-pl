@@ -448,7 +448,7 @@ class View
         if (is_null($layoutTemplate)) {
             $layoutTemplate = MainLayoutController::MAIN_TEMPLATE;
             MainLayoutController::init(); // init vars for main-layout
-        } else if ($layoutTemplate = MainLayoutController::MINI_TEMPLATE) {
+        } elseif ($layoutTemplate = MainLayoutController::MINI_TEMPLATE) {
             MainLayoutController::init();
         }
 

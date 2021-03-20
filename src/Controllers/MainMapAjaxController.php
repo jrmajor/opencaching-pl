@@ -265,7 +265,7 @@ class MainMapAjaxController extends BaseController
             } else {
                 $this->searchParams['not_found_by'] = $userUuid;
             }
-        } else if (isset($_GET['exNoYetFound'])) {
+        } elseif (isset($_GET['exNoYetFound'])) {
             $this->searchParams['found_by'] = $userUuid;
         }
 

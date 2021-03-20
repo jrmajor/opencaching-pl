@@ -645,7 +645,7 @@ if (! $loggedUser) {
                             exit;
                         }
                     }
-                    else if ($options['searchtype'] == 'byort')
+                    elseif ($options['searchtype'] == 'byort')
                     {
                         if ($locid == 0)
                         {
@@ -925,14 +925,12 @@ if (! $loggedUser) {
                     if (isset($_REQUEST['SearchCacheID']))
                     {
                         $cache_bylist = $_REQUEST['SearchCacheID'];
-                    } else
-                    if (isset($options['cache_ids'])){
+                    } elseif (isset($options['cache_ids'])){
                         foreach($options['cache_ids'] as $key => $val){
                             $options['cache_ids'][$key] = XDb::xEscape($val);
                         }
                         $cache_bylist = implode(',', $options['cache_ids']);
-                    } else
-                    if (empty(PrintList::GetContent())) {
+                    } elseif (empty(PrintList::GetContent())) {
                         $cache_bylist = -1;
                     } else {
                         $cache_bylist = implode(',', PrintList::GetContent());
@@ -1177,7 +1175,7 @@ if (! $loggedUser) {
                 if((($options['cachevote_1'] != '') && ($options['cachevote_2'] != '')) && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6')) && ((! isset($options['cachenovote'])) || ($options['cachenovote'] != '1')))
                 {
                     $sql_where[] = '`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3';
-                } else if (($options['cachevote_1'] != '') && ($options['cachevote_2'] != '') && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6')) && isset($options['cachenovote']) && ($options['cachenovote'] == '1'))  {
+                } elseif (($options['cachevote_1'] != '') && ($options['cachevote_2'] != '') && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6')) && isset($options['cachenovote']) && ($options['cachenovote'] == '1'))  {
                     $sql_where[] = '((`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3) OR (`caches`.`votes` < 4))';
                 }
 
@@ -1501,13 +1499,13 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('sel_sm', '');
         tpl_set_var('sel_nm', '');
     }
-    else if ($options['unit'] == 'sm')
+    elseif ($options['unit'] == 'sm')
     {
         tpl_set_var('sel_km', '');
         tpl_set_var('sel_sm', 'selected="selected"');
         tpl_set_var('sel_nm', '');
     }
-    else if ($options['unit'] == 'nm')
+    elseif ($options['unit'] == 'nm')
     {
         tpl_set_var('sel_km', '');
         tpl_set_var('sel_sm', '');
@@ -1756,11 +1754,11 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
 
     if (isset($options['error_plz']))
         tpl_set_var('ortserror', $error_plz);
-    else if (isset($options['error_ort']))
+    elseif (isset($options['error_ort']))
         tpl_set_var('ortserror', $error_ort);
-    else if (isset($options['error_locidnocoords']))
+    elseif (isset($options['error_locidnocoords']))
         tpl_set_var('ortserror', $error_locidnocoords);
-    else if (isset($options['error_noort']))
+    elseif (isset($options['error_noort']))
         tpl_set_var('ortserror', $error_noort);
 
     tpl_set_var('fulltexterror', isset($options['error_nofulltext']) ? $error_nofulltext : '');

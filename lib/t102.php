@@ -146,7 +146,7 @@ if ($sNameOfStat == 'MaintenanceOfCaches') {
             . $sDateCondition .
             'GROUP BY u.user_id
         ORDER BY count DESC, u.username ASC';
-}else if ($sNameOfStat == 'NumberOfFinds') {
+}elseif ($sNameOfStat == 'NumberOfFinds') {
     if ($sDateCondition != '')
         $sDateCondition = ' WHERE ' . $sDateCondition;
 

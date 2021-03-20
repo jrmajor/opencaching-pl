@@ -76,7 +76,7 @@ if (isset($_REQUEST['regionSel'])) {
         //polish caches with no-region set
         $regionCondition = 'AND loc.code3 = NULL';
         $countryCondition = "AND loc.code1 = 'PL'";
-    } else if ($region === 'NON_PL') {
+    } elseif ($region === 'NON_PL') {
         $regionCondition = '';
         $countryCondition = "AND loc.code1 <> 'PL'";
     } else {

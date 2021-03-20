@@ -177,7 +177,7 @@ if ($cache_id != 0) {
 
     if (isset($_REQUEST['showdel'])) {
         $showDel = $_REQUEST['showdel'];
-    } else if (isset($_SESSION['showdel'])) {
+    } elseif (isset($_SESSION['showdel'])) {
         $showDel = $_SESSION['showdel'];
     }
 
@@ -374,9 +374,9 @@ if ($cache_id != 0) {
 
             if ($record['userid'] == 0) {
                 $filterable .= 'octeam';
-            } else if ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
+            } elseif ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
                 $filterable .= 'current';
-            } else if ($record['userid'] == $owner_id) {
+            } elseif ($record['userid'] == $owner_id) {
                 $filterable .= 'owner';
             }
             $filterable .= ':';
@@ -421,7 +421,7 @@ if ($cache_id != 0) {
                 // Active admin can remove any log. But not edit or add photos.
                 $logfunctions = $functions_start . $tmpremove . $functions_end;
             }
-        } else if ($loggedUser && $loggedUser->hasOcTeamRole()) {
+        } elseif ($loggedUser && $loggedUser->hasOcTeamRole()) {
             $logfunctions = $functions_start . $tmpRevert . $functions_end;
         }
 

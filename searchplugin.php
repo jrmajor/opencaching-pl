@@ -108,13 +108,13 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                         $targeturl = 'viewcache.php?cacheid=' . $record['cache_id'];
                         unset($record);
                     }
-                    else if ($count == 0) {
+                    elseif ($count == 0) {
                         $tplname = 'searchplugin';
                         tpl_set_var('error_msg', mb_ereg_replace('{wp}', $searchfor, $errmsg_no_cache_found));
                         tpl_BuildTemplate();
 
                         exit;
-                    } else if ($count > 1) {
+                    } elseif ($count > 1) {
                         $tplname = 'searchplugin';
                         tpl_set_var('error_msg', mb_ereg_replace('{wp}', $searchfor, $errmsg_many_caches_found));
                         tpl_BuildTemplate();

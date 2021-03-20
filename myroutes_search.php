@@ -498,7 +498,7 @@ if (
     && (! isset($options['cachenovote']) || $options['cachenovote'] != '1')
 ) {
     $q_where[] = '`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3';
-} else if (
+} elseif (
     ($options['cachevote_1'] != '') && ($options['cachevote_2'] != '')
     && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6'))
     && isset($options['cachenovote']) && ($options['cachenovote'] == '1')

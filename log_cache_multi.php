@@ -290,7 +290,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         // wczytanie wartosci filtrow, a jesli nie ma to odpowiednio min i max wartosc z pliku tak by wszystkie byly.
         if (isset($_POST['filter_from']) && false !== strtotime($_POST['filter_from'])) {
             $filter_from = strtotime($_POST['filter_from']);
-        } else if (isset($_SESSION['filter_from'])) {
+        } elseif (isset($_SESSION['filter_from'])) {
             $filter_from = $_SESSION['filter_from'];
         } else {
             $filter_from = $minTimeStamp;
@@ -303,7 +303,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
 
         if (isset($_POST['filter_to']) && false !== strtotime($_POST['filter_to'])) {
             $filter_to = strtotime($_POST['filter_to']);
-        } else if (isset($_SESSION['filter_to'])) {
+        } elseif (isset($_SESSION['filter_to'])) {
             $filter_to = $_SESSION['filter_to'];
         } else {
             $filter_to = $maxTimeStamp;
@@ -383,12 +383,12 @@ function utf16_to_utf8($str)
     if ($c0 == 0xFE && $c1 == 0xFF) {
         $str = substr($str, 2);
         $be = true;
-    } else if ($c0 == 0xFF && $c1 == 0xFE) {
+    } elseif ($c0 == 0xFF && $c1 == 0xFE) {
         $str = substr($str, 2);
         $be = false;
-    } else if ($c0 != 0x00 && $c1 == 0x00) {
+    } elseif ($c0 != 0x00 && $c1 == 0x00) {
         $be = false;
-    } else if ($c0 == 0x00 && $c1 != 0x00) {
+    } elseif ($c0 == 0x00 && $c1 != 0x00) {
         $be = true;
     } else {
         return $str;
@@ -402,9 +402,9 @@ function utf16_to_utf8($str)
 
         if ($c == 0xFEFF) {
             // Blad w GeoBeagle - wstawia BOM w srodku pliku - trzeba go ignorowac
-        } else if ($c >= 0x0001 && $c <= 0x007F) {
+        } elseif ($c >= 0x0001 && $c <= 0x007F) {
             $dec .= chr($c);
-        } else if ($c > 0x07FF) {
+        } elseif ($c > 0x07FF) {
             $dec .= chr(0xE0 | (($c >> 12) & 0x0F));
             $dec .= chr(0x80 | (($c >> 6) & 0x3F));
             $dec .= chr(0x80 | (($c >> 0) & 0x3F));

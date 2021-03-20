@@ -94,12 +94,11 @@ if ($loggedUser || ! $hide_coords) {
 
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
-    } else
-        if ($sortby == 'bycreated') {
-            $query .= ' ORDER BY date_created DESC';
-        } else { // by name
-            $query .= ' ORDER BY name ASC';
-        }
+    } elseif ($sortby == 'bycreated') {
+        $query .= ' ORDER BY date_created DESC';
+    } else { // by name
+        $query .= ' ORDER BY name ASC';
+    }
 
     if (isset($_REQUEST['startat'])) {
         $startat = XDb::quoteOffset($_REQUEST['startat']);

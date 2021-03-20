@@ -229,7 +229,7 @@ if (isset($_GET['cacheid'])) {
                 } else {
                     $confirm = '<p> ' . tr('viewPending_10') . '.</p>';
                 }
-            } else if (isset($_GET['confirm'], $_GET['user_id']) && $_GET['confirm'] == 2) {
+            } elseif (isset($_GET['confirm'], $_GET['user_id']) && $_GET['confirm'] == 2) {
                 // declined - change status to archived and notify the owner now
                 if (declineCache($_GET['cacheid'])) {
                     assignUserToCase($user->getUserId(), $_GET['cacheid']);
@@ -239,12 +239,12 @@ if (isset($_GET['cacheid'])) {
                 } else {
                     $confirm = '<p> ' . tr('viewPending_12') . '.</p>';
                 }
-            } else if ($_GET['action'] == 1 && isset($_GET['user_id'])) {
+            } elseif ($_GET['action'] == 1 && isset($_GET['user_id'])) {
                 // require confirmation
                 $confirm = '<p> ' . tr('viewPending_13') . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . '</a>" ' . tr('viewPending_14') . ' ' . getCacheOwnername($_GET['cacheid']) . '. ' . tr('viewPending_15') . '.</p>';
                 $confirm .= "<p><a class='btn btn-success' href='viewpendings.php?user_id=" . $_GET['user_id'] . '&amp;cacheid=' . $_GET['cacheid'] . "&amp;confirm=1'>" . tr('viewPending_16') . "</a>
                         <a class='btn btn-default' href='viewpendings.php'>" . tr('viewPending_17') . '</a></p>';
-            } else if ($_GET['action'] == 2 && isset($_GET['user_id'])) {
+            } elseif ($_GET['action'] == 2 && isset($_GET['user_id'])) {
                 // require confirmation
                 $confirm = '<p> ' . tr('viewPending_18') . " \"<a href='viewcache.php?cacheid=" . $_GET['cacheid'] . "'>" . getCachename($_GET['cacheid']) . '</a>" ' . tr('viewPending_14') . ' ' . getCacheOwnername($_GET['cacheid']) . '. ' . tr('viewPending_19') . '.</p>';
                 $confirm .= "<p><a class='btn btn-danger' href='viewpendings.php?user_id=" . $_GET['user_id'] . '&amp;cacheid=' . $_GET['cacheid'] . "&amp;confirm=2'>" . tr('viewPending_20') . "</a>
@@ -291,7 +291,7 @@ while ($report = XDb::xFetchArray($stmt)) {
     if (! $assignedUserId && new DateTime($report['date_created']) < new DateTime('5 days ago')) {
         //set alert for forgotten cache
         $trstyle = 'alert';
-    } else if ($user->getUserId() == $assignedUserId) {
+    } elseif ($user->getUserId() == $assignedUserId) {
         //highlight caches assigned to current user
         $trstyle = 'highlighted';
     } else {

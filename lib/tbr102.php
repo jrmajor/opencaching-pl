@@ -42,7 +42,7 @@ require_once(__DIR__ . '/common.inc.php');
         if ($nDayInterval < 65) {
             $sGranulate = ' (week( cl.date) + 1) period ';
             $sPeriodName = tr('.week');
-        } else if ($nDayInterval < 367) {
+        } elseif ($nDayInterval < 367) {
             $sGranulate = ' month( cl.date) period ';
             $sPeriodName = tr('.month');
         } else {

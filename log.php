@@ -1110,13 +1110,13 @@ function isGeokretInCache($cacheid)
 
     if ($cache_record['wp_oc'] != '') {
         $cache_wp = $cache_record['wp_oc'];
-    } else if ($cache_record['wp_gc'] != '') {
+    } elseif ($cache_record['wp_gc'] != '') {
         $cache_wp = $cache_record['wp_gc'];
-    } else if ($cache_record['wp_nc'] != '') {
+    } elseif ($cache_record['wp_nc'] != '') {
         $cache_wp = $cache_record['wp_nc'];
-    } else if ($cache_record['wp_ge'] != '') {
+    } elseif ($cache_record['wp_ge'] != '') {
         $cache_wp = $cache_record['wp_ge'];
-    } else if ($cache_record['wp_tc'] != '') {
+    } elseif ($cache_record['wp_tc'] != '') {
         $cache_wp = $cache_record['wp_tc'];
     }
 

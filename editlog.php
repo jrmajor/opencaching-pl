@@ -494,7 +494,7 @@ if (! $loggedUser) {
                             $type == GeoCacheLogCommons::LOGTYPE_TEMPORARYUNAVAILABLE) {
                             continue;
                         }
-                    } else if ($cache_type == GeoCache::TYPE_MOVING) {
+                    } elseif ($cache_type == GeoCache::TYPE_MOVING) {
                         if ($type == GeoCacheLogCommons::LOGTYPE_ATTENDED ||
                             $type == GeoCacheLogCommons::LOGTYPE_WILLATTENDED ||
                             $type == GeoCacheLogCommons::LOGTYPE_ARCHIVED) {

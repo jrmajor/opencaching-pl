@@ -70,13 +70,11 @@ $sortby = $options['sort'];
 
 if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
-} else
-    if ($sortby == 'bycreated') {
-        $query .= ' ORDER BY date_created DESC';
-    } else // by name
-{
-        $query .= ' ORDER BY name ASC';
-    }
+} elseif ($sortby == 'bycreated') {
+    $query .= ' ORDER BY date_created DESC';
+} else { // by name
+    $query .= ' ORDER BY name ASC';
+}
 
 $rs = $dbcSearch->simpleQuery(
     'SELECT MAX(`caches`.`longitude`) AS maxlongitude, MAX(`caches`.`latitude`) AS maxlatitude,

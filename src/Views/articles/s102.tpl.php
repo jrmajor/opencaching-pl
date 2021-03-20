@@ -27,7 +27,7 @@ if (isset($_REQUEST['stat'])) {
 
 if ($sNameOfStat == 'NumberOfFinds')
     $sTitleOfStat = ' {{ranking_by_number_of_finds_new}} ';
-else if ($sNameOfStat == 'MaintenanceOfCaches')
+elseif ($sNameOfStat == 'MaintenanceOfCaches')
     $sTitleOfStat = ' {{ranking_by_maintenace}} ';
 else
     $sTitleOfStat = ' Ranking ';

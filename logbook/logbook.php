@@ -134,7 +134,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 if($_GET['logbook_type'] == 0) {
                 echo 'Proszę wybrać typ logbooku.';
                 }
-                else if($_GET['logbook_type'] == 1) {
+                elseif($_GET['logbook_type'] == 1) {
                 echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
@@ -163,7 +163,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 </form>
                 ';
                 }
-                else if($_GET['logbook_type'] == 2) {
+                elseif($_GET['logbook_type'] == 2) {
                 echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">

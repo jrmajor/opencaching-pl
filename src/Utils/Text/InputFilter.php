@@ -94,7 +94,7 @@ class InputFilter
 
             // clean this string
         }
-        else if (is_string($source)) {
+        elseif (is_string($source)) {
             // filter source for XSS and other 'bad' code etc.
             return $this->remove($this->decode($source));
 

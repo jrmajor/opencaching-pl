@@ -143,7 +143,7 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
             $lon2 = deg2rad($lon2);
 
             if (($ilat1 == $ilat2) && ($ilon1 == $ilon2)) {
-            } else if ($ilon1 == $ilon2) {
+            } elseif ($ilon1 == $ilon2) {
                 if ($ilat1 > $ilat2)
                     $result = 180.0;
             }else {
@@ -152,11 +152,11 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
                 $result = rad2deg($A);
 
                 if (($ilat2 > $ilat1) && ($ilon2 > $ilon1)) {
-                } else if (($ilat2 < $ilat1) && ($ilon2 < $ilon1)) {
+                } elseif (($ilat2 < $ilat1) && ($ilon2 < $ilon1)) {
                     $result = 180.0 - $result;
-                } else if (($ilat2 < $ilat1) && ($ilon2 > $ilon1)) {
+                } elseif (($ilat2 < $ilat1) && ($ilon2 > $ilon1)) {
                     $result = 180.0 - $result;
-                } else if (($ilat2 > $ilat1) && ($ilon2 < $ilon1)) {
+                } elseif (($ilat2 > $ilat1) && ($ilon2 < $ilon1)) {
                     $result += 360.0;
                 }
             }

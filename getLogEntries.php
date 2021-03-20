@@ -232,9 +232,9 @@ foreach ($logEntries as $record) {
 
         if ($record['userid'] == 0) {
             $filterable .= 'octeam';
-        } else if ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
+        } elseif ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
             $filterable .= 'current';
-        } else if ($record['userid'] == $owner_id) {
+        } elseif ($record['userid'] == $owner_id) {
             $filterable .= 'owner';
         }
         $filterable .= ':';
@@ -279,7 +279,7 @@ foreach ($logEntries as $record) {
             // Active admin can remove any log. But not edit or add photos.
             $logfunctions = $functions_start . $tmpremove . $functions_end;
         }
-    } else if ($loggedUser && $loggedUser->hasOcTeamRole()) {
+    } elseif ($loggedUser && $loggedUser->hasOcTeamRole()) {
         $logfunctions = $functions_start . $tmpRevert . $functions_end;
     }
 

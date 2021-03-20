@@ -128,7 +128,7 @@ class MainLayoutController extends BaseController
             $logo = $config['headerLogo'];
             $logoTitle = 'discoCaching';
             $logoSubtitle = 'The first discoCaching site!';
-        } else if (Year::isChristmassTime()) {
+        } elseif (Year::isChristmassTime()) {
             $logo = $config['headerLogoWinter'];
             $logoTitle = tr('oc_on_all_pages_top_' . $config['ocNode']);
             $logoSubtitle = tr('oc_subtitle_on_all_pages_' . $config['ocNode']);

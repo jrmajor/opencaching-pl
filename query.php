@@ -54,14 +54,14 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
         $submit = isset($_REQUEST['submit']) ? ($_REQUEST['submit'] == '1') : false;
 
         savequery($queryid, $queryname, false, $submit, 0, $loggedUser);
-    } else if ($action == 'saveas') {
+    } elseif ($action == 'saveas') {
         $queryid = isset($_REQUEST['queryid']) ? $_REQUEST['queryid'] : 0;
         $queryname = isset($_REQUEST['queryname']) ? $_REQUEST['queryname'] : '';
         $submit = isset($_REQUEST['submit']) ? ($_REQUEST['submit'] == '1') : false;
         $oldqueryid = isset($_REQUEST['oldqueryid']) ? $_REQUEST['oldqueryid'] : 0;
 
         savequery($queryid, $queryname, true, $submit, $oldqueryid, $loggedUser);
-    } else if ($action == 'delete') {
+    } elseif ($action == 'delete') {
         $queryid = isset($_REQUEST['queryid']) ? $_REQUEST['queryid'] : 0;
         deletequery($queryid, $loggedUser);
     } else { // default: view
@@ -191,7 +191,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
 
         if ($error_no_name == true)
             tpl_set_var('nameerror', $error_empty_name);
-        else if ($error_duplicate_name == true)
+        elseif ($error_duplicate_name == true)
             tpl_set_var('nameerror', $error_queryname_exists);
         else
             tpl_set_var('nameerror', '');

@@ -159,7 +159,7 @@ class RssFeed
 
             if (RSSReader::canRead($xml)) {
                 $this->reader = new RSSReader($xml);
-            } else if (AtomReader::canRead($xml)) {
+            } elseif (AtomReader::canRead($xml)) {
                 $this->reader = new AtomReader($xml);
             } else {
                 $this->reader = new NullReader($xml);
@@ -177,7 +177,7 @@ class RssFeed
     private function getXML() {
         if ($xml = $this->getCacheXML()) {
             return $xml;
-        } else if ($xml = $this->getURLXML()) {
+        } elseif ($xml = $this->getURLXML()) {
             return $xml;
         } else {
             return new SimpleXMLElement('<empty>ThereIsNoData</empty>');

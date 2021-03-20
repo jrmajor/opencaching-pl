@@ -85,7 +85,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
             mb_send_mail($new_email, $email_subject, $email_content, $emailheaders);
 
             tpl_set_var('message', $email_send);
-        } else if (isset($_POST['submit_changeemail'])) {
+        } elseif (isset($_POST['submit_changeemail'])) {
             $secure_code = $_POST['code'];
 
             $rs = XDb::xSql(
@@ -105,10 +105,10 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
             if ($new_email == '') {
                 //no new email was entered
                 tpl_set_var('message', $error_no_new_email);
-            } else if ($new_email_code != $secure_code) {
+            } elseif ($new_email_code != $secure_code) {
                 //wrong code
                 tpl_set_var('code_message', $error_wrong_code);
-            } else if (time() - $new_email_date > 259200) {
+            } elseif (time() - $new_email_date > 259200) {
                 //code timed out
                 tpl_set_var('code_message', $error_code_timed_out);
             } else {
