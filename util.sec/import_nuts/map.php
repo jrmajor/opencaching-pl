@@ -25,6 +25,7 @@ imagefilledrectangle($img, 0, 0, $nWidth, $nHeight, $cWhite);
 $nLabel = 1;
 echo 'xxx';
 $rsBez = sql("SELECT GID, x1, y1, x2, y2, f_NUTS_ID AS f_name FROM nuts_rg_03m_2006 WHERE LENGTH(f_NUTS_ID)=4 AND f_CNTR_CODE='PL' ORDER BY y1 DESC, x1");
+
 while ($rBez = mysql_fetch_assoc($rsBez)) {
     echo 'test';
     $x1 = $nWidth - $nWidth * ($nXMax - $rBez['x1']) / ($nXMax - $nXMin);
@@ -39,6 +40,7 @@ while ($rBez = mysql_fetch_assoc($rsBez)) {
     $nLabel++;
 
     $rsRects = sql("SELECT x1, y1, x2, y2, seq FROM nuts_rg_03m_2006_num WHERE GID='&1' ORDER BY GID, eseq, seq", $rBez['gid']);
+
     while ($r = mysql_fetch_assoc($rsRects)) {
         $x1 = $nWidth - $nWidth * ($nXMax - $r['x1']) / ($nXMax - $nXMin);
         $x2 = $nWidth - $nWidth * ($nXMax - $r['x2']) / ($nXMax - $nXMin);

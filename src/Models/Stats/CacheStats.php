@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Stats;
 
 use src\Models\BaseObject;

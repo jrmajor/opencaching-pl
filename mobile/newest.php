@@ -1,9 +1,9 @@
 <?php
+
 use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
+
 require_once('./lib/common.inc.php');
-
-
 
 $query = "select date_hidden, name,  latitude, longitude, wp_oc, user_id, type from caches where status='1' and date_hidden<now() order by date_hidden desc limit 10";
 $wynik = XDb::xSql($query);
@@ -15,7 +15,6 @@ $lista = [];
 $tpl->assign('address', 'viewcache');
 
 while ($rekord = XDb::xFetchArray($wynik)) {
-
     $query = 'select username from user where user_id = ' . $rekord['user_id'] . ';';
     $wynik2 = XDb::xSql($query);
     $wiersz = XDb::xFetchArray($wynik2);
@@ -31,7 +30,7 @@ while ($rekord = XDb::xFetchArray($wynik)) {
     $rekord['typetext'] = $wiersz2[0];
 
     $lista[] = $rekord['wp_oc'];
-    $znalezione [] = $rekord;
+    $znalezione[] = $rekord;
 }
 
 $tpl->assign('lista', $lista);

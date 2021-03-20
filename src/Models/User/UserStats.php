@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User;
 
 use ArrayObject;
@@ -40,6 +41,7 @@ class UserStats extends BaseObject
                 'dbRow' => $row,
             ]));
         }
+
         return $geoPathsCompleted;
     }
 
@@ -62,9 +64,11 @@ class UserStats extends BaseObject
                 $userId);
 
             $list = self::db()->dbResultFetchAll($stmt);
+
             foreach ($list as $row) {
                 $geoPathsOwned->append(new PowerTrail(['dbRow' => $row]));
             }
+
         return $geoPathsOwned;
     }
 

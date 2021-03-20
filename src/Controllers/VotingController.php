@@ -2,6 +2,7 @@
 /**
  * Simple voting for OC. OCPL is going to use this to elect OCTEAM.
  */
+
 namespace src\Controllers;
 
 use src\Models\Voting\ChoiceOption;
@@ -42,6 +43,7 @@ class VotingController extends BaseController
     {
         // check election
         $election = Election::fromElectionIdFactory($electionId);
+
         if (! $election) {
             $this->displayCommonErrorPageAndExit('No such election');
         }
@@ -51,6 +53,7 @@ class VotingController extends BaseController
         // check if we are after the voting
         if (OcDateTime::isPast($election->getEndDate())) {
             $this->displayResults($election);
+
             exit;
         }
 
@@ -90,6 +93,7 @@ class VotingController extends BaseController
     public function saveVote(int $electionId)
     {
         $election = Election::fromElectionIdFactory($electionId);
+
         if (! $election) {
             $this->ajaxErrorResponse(tr('vote_saveResultInternalError') . '. [No such election]');
         }
@@ -104,6 +108,7 @@ class VotingController extends BaseController
         }
 
         $errorMsg = '';
+
         if (! $election->saveVotes($this->loggedUser, $votes, $errorMsg)) {
             $this->ajaxErrorResponse($errorMsg);
         }
@@ -123,6 +128,7 @@ class VotingController extends BaseController
         $results = OcMemCache::getOrCreate(__METHOD__ . "($electionId)", 3600, function () use ($election) {
             $elResults = new ElectionResult($election);
             $elResults->prepareForSerialization();
+
             return $elResults;
         });
 

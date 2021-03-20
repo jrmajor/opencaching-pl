@@ -10,8 +10,8 @@ $rscp = XDb::xSql('SELECT `lat` ,`lon`
                     WHERE `route_id`= ? ', $route_id);
 $p = [];
 $points = [];
-for ($i = 0; false != ($record = XDb::xFetchArray($rscp)); $i++) {
 
+for ($i = 0; false != ($record = XDb::xFetchArray($rscp)); $i++) {
     $y = $record['lon'];
     $x = $record['lat'];
 

@@ -12,7 +12,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class View
 {
-
     const TPL_DIR = __DIR__ . '/../../../src/Views';
     const CHUNK_DIR = self::TPL_DIR . '/chunks/';
 
@@ -40,7 +39,6 @@ class View
 
     public function __construct()
     {
-
         // load google analytics key from the config
         $this->_googleAnalyticsKey = isset($GLOBALS['googleAnalytics_key']) ?
             $GLOBALS['googleAnalytics_key'] : '';
@@ -60,6 +58,7 @@ class View
     {
         if (property_exists($this, $varName)) {
             $this->error("Can't set View variable with name: " . $varName);
+
             return $this;
         }
 
@@ -89,7 +88,6 @@ class View
 
     public function callChunk($chunkName, ...$args)
     {
-
         $method = $chunkName . 'Chunk';
 
         if (! property_exists($this, $method)) {
@@ -134,12 +132,15 @@ class View
 
         if (! is_file($subTplFile)) {
             $this->errorLog("Trying to call unknown sub-template: $subTplFile");
+
             return '';
         }
 
         ob_start();
         $view = $this; //context for sub-template
+
         include $subTplFile;
+
         return ob_get_clean();
     }
 
@@ -246,12 +247,14 @@ class View
     public function redirect($uri)
     {
         SimpleRouter::redirect($uri);
+
         exit;
     }
 
     public function redirectAndExit($uri)
     {
         $this->redirect($uri);
+
         exit;
     }
 
@@ -280,6 +283,7 @@ class View
     {
         $state = boolval($state);
         $this->_showGdprPage = $state;
+
         if ($state) {
             $this->_googleAnalyticsKey = '';
             $this->_loadJQuery = false;
@@ -299,9 +303,11 @@ class View
         if (self::mobile()) {
             return false;
         }
+
         if (is_null(ApplicationContainer::Instance()->getLoggedUser())) {
             return true;
         }
+
         return $this->_showVideoBannerState;
     }
 
@@ -333,6 +339,7 @@ class View
     public function setRedirectToMainPageAfterLogin($state)
     {
         $this->_redirectToMainPageAfterLogin = boolval($state);
+
         return $this;
     }
 
@@ -438,7 +445,6 @@ class View
      */
     public function display($layoutTemplate = null)
     {
-
         if (is_null($layoutTemplate)) {
             $layoutTemplate = MainLayoutController::MAIN_TEMPLATE;
             MainLayoutController::init(); // init vars for main-layout
@@ -450,7 +456,6 @@ class View
 
         // nothing is called after this!
         exit;
-
     }
 
     /**
@@ -471,7 +476,6 @@ class View
         };
 
         require_once(self::TPL_DIR . '/' . $template . '.tpl.php');
-
     }
 
     public static function showPlainText($text)
@@ -479,6 +483,7 @@ class View
         if (! headers_sent()) {
             header('Content-type: text/plain');
         }
+
         exit($text);
     }
 
@@ -499,6 +504,7 @@ class View
     public function setSubtitle($subtitle)
     {
         $this->_subtitle = $subtitle;
+
         return $this;
     }
 

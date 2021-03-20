@@ -2,6 +2,7 @@
 /**
  * Contains \src\Models\Watchlist\WatchlistItem class definition
  */
+
 namespace src\Models\Watchlist;
 
 use src\Models\GeoCache\GeoCache;
@@ -75,6 +76,7 @@ class WatchlistItem
         $text = preg_replace("/<img[^>]+\>/i", '', $log->getLogText());
 
         $logTypeParams = $this->getLogTypeParams($log->getLogType());
+
         if (isset($logTypeParams['username'])) {
             $user = $logTypeParams['username'];
         } else {
@@ -129,6 +131,7 @@ class WatchlistItem
             $text,
             $watchlistItemText
         );
+
         return $watchlistItemText;
     }
 
@@ -144,14 +147,17 @@ class WatchlistItem
         $logTypeParams['logtype'] = tr(
             GeoCacheLogCommons::typeTranslationKey($logType)
         );
+
         if (array_key_exists($logType, self::LOGTYPE_COLORS)) {
             $logTypeParams['logtypeColor'] = self::LOGTYPE_COLORS[$logType];
         } else {
             $logTypeParams['logtypeColor'] = self::LOGTYPE_COLOR_DEFAULT;
         }
+
         if ($logType == GeoCacheLogCommons::LOGTYPE_ADMINNOTE) {
             $logTypeParams['username'] = $this->cogUsername;
         }
+
         return $logTypeParams;
     }
 }

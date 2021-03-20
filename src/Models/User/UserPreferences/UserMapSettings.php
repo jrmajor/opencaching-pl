@@ -1,6 +1,6 @@
 <?php
-namespace src\Models\User\UserPreferences;
 
+namespace src\Models\User\UserPreferences;
 
 class UserMapSettings extends UserPreferencesBaseData
 {

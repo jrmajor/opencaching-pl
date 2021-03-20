@@ -18,7 +18,6 @@ if (isset($_REQUEST['page']) &&
 if (! file_exists(__DIR__ . '/src/Views/articles/' . $article . '.tpl.php')) {
     // article doesn't exists
     tpl_errorMsg('Article "' . $article . '"', tr('page_not_found'));
-
 } else {
     // set article inside the articles-directory
     switch ($_REQUEST['page']) {
@@ -32,6 +31,7 @@ if (! file_exists(__DIR__ . '/src/Views/articles/' . $article . '.tpl.php')) {
         default:
             break;
     }
+
     if (file_exists(__DIR__ . '/src/Views/articles/' . $article . '.inc.php')) {
         require_once __DIR__ . '/src/Views/articles/' . $article . '.inc.php';
     }

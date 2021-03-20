@@ -21,8 +21,11 @@ $view->loadFancyBox();
 $view->setTemplate('viewlogs');
 
 tpl_set_var('viewcache_js', Uri::getLinkWithModificationTime('/views/viewcache/viewcache.js'));
+
 require(__DIR__ . '/src/Views/lib/icons.inc.php');
+
 require(__DIR__ . '/src/Views/viewcache.inc.php');
+
 require(__DIR__ . '/src/Views/viewlogs.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -30,9 +33,11 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 $view->setVar('isUserAuthorized', is_object($loggedUser));
 
 $cache_id = 0;
+
 if (isset($_REQUEST['cacheid'])) {
     $cache_id = (int) $_REQUEST['cacheid'];
 }
+
 if (isset($_REQUEST['logid'])) {
     $logid = (int) $_REQUEST['logid'];
 } else {
@@ -41,15 +46,19 @@ if (isset($_REQUEST['logid'])) {
 $view->setVar('logId', $logid);
 
 $start = 0;
+
 if (isset($_REQUEST['start'])) {
     $start = $_REQUEST['start'];
+
     if (! is_numeric($start)) {
         $start = 0;
     }
 }
 $count = 99999;
+
 if (isset($_REQUEST['count'])) {
     $count = $_REQUEST['count'];
+
     if (! is_numeric($count)) {
         $count = 999999;
     }
@@ -61,6 +70,7 @@ if (! $loggedUser && $hide_coords) {
     $disable_spoiler_view = false;
 }
 $dbc = OcDb::instance();
+
 if ($cache_id != 0) {
     //get cache record
 
@@ -79,7 +89,6 @@ if ($cache_id != 0) {
         }
     }
 } else {
-
     //get cache record
 
     $s = $dbc->multiVariableQuery(
@@ -105,7 +114,6 @@ if ($cache_id != 0) {
 }
 
 if ($cache_id != 0) {
-
     // detailed cache access logging
     if (@$enable_cache_access_logs) {
         if (! isset($dbc)) {
@@ -113,10 +121,12 @@ if ($cache_id != 0) {
         }
         $user_id = $loggedUser ? $loggedUser->getUserId() : null;
         $access_log = @$_SESSION['CACHE_ACCESS_LOG_VL_' . $user_id];
+
         if ($access_log === null) {
             $_SESSION['CACHE_ACCESS_LOG_VL_' . $user_id] = [];
             $access_log = $_SESSION['CACHE_ACCESS_LOG_VL_' . $user_id];
         }
+
         if (@$access_log[$cache_id] !== true) {
             $dbc->multiVariableQuery(
                 'INSERT INTO CACHE_ACCESS_LOGS
@@ -170,10 +180,12 @@ if ($cache_id != 0) {
     } else if (isset($_SESSION['showdel'])) {
         $showDel = $_SESSION['showdel'];
     }
+
     if (($loggedUser && $loggedUser->hasOcTeamRole()) || $logid) {
         $showhidedel_link = ''; //no need to hide/show deletion icon for COG (they always see deletions) or this is single log call
     } else {
         $del_count = $dbc->multiVariableQueryValue('SELECT count(*) number FROM `cache_logs` WHERE `deleted`=1 and `cache_id`=:1', 0, $cache_id);
+
         if ($del_count == 0) {
             $showhidedel_link = ''; //don't show link if no deletion '
         } else {
@@ -191,6 +203,7 @@ if ($cache_id != 0) {
 
     isset($showDel) && $showDel == 'y' ? $HideDeleted = false : $HideDeleted = true;
     $includeDeletedLogs = true;
+
     if (($HideDeleted && ! $logid && ! ($loggedUser && $loggedUser->hasOcTeamRole()))) {
         //hide deletions if (hide_deletions opotions is on and this is single_log call=not and user is not COG)
         $includeDeletedLogs = false;
@@ -199,6 +212,7 @@ if ($cache_id != 0) {
     $logs = '';
 
     $logEntryController = new LogEntryController();
+
     if ($logid) { /* load and display one log only */
         $logEneries = $logEntryController->loadLogsFromDb($cache_id, $includeDeletedLogs, 0, 1, $logid);
     } else {
@@ -217,14 +231,17 @@ if ($cache_id != 0) {
 
         $show_deleted = '';
         $processed_text = '';
+
         if (isset($record['deleted']) && $record['deleted']) {
             if ($loggedUser && $loggedUser->hasOcTeamRole()) {
                 $show_deleted = 'show_deleted';
                 $processed_text = $record['text'];
                 $processed_text .= '[' . tr('vl_Record_deleted');
+
                 if (isset($record['del_by_username']) && $record['del_by_username']) {
                     $processed_text .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                 }
+
                 if (isset($record['last_deleted'])) {
                     $processed_text .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                             $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
@@ -247,6 +264,7 @@ if ($cache_id != 0) {
                 $record['icon_small'] = 'log/16x16-trash.png'; //replace record icon with trash icon
                 $comm_replace = tr('vl_Record_of_type') . ' [' . $record['text_listing'] . '] ' . tr('vl_deleted');
                 $record['text_listing'] = tr('vl_Record_deleted'); ////replace type of record
+
                 if (isset($record['del_by_username']) && $record['del_by_username']) {
                     if ($record['del_by_admin'] == 1) { //if deleted by Admin
                         if (($record['del_by_username'] == $record['username']) && ($record['type'] != 12)) { // show username in case maker and deleter are same and comment is not Commnent by COG
@@ -256,10 +274,12 @@ if ($cache_id != 0) {
                             $delByCOG = true;
                         }
                     }
+
                     if (! isset($delByCOG) || $delByCOG == false) {
                         $comm_replace .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                     }
                 }
+
                 if (isset($record['last_deleted'])) {
                     $comm_replace .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                             $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
@@ -278,9 +298,9 @@ if ($cache_id != 0) {
             //check if editted at all
             $edit_footer = '<div><small>' . tr('vl_Recently_modified_on') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(
                     strftime($GLOBALS['config']['datetimeformat'], strtotime($record['last_modified'])), ENT_COMPAT, 'UTF-8'));
+
             if (! ($loggedUser && $loggedUser->hasOcTeamRole()) &&
                 $record['edit_by_admin'] == true && $record['type'] == 12) {
-
                 $edit_footer .= ' ' . tr('vl_by_COG');
             } else {
                 $edit_footer .= ' ' . tr('vl_by_user') . ' ' . $record['edit_by_username'];
@@ -288,6 +308,7 @@ if ($cache_id != 0) {
 
             if ($record_date_create > date_create('2005-01-01 00:00')) { //check if record created after implementation date (to avoid false readings for record changed before) - actually nor in use
                 $edit_footer .= ' - ' . tr('vl_totally_modified') . ' ' . $record['edit_count'] . ' ';
+
                 if ($record['edit_count'] > 1) {
                     $edit_footer .= tr('vl_count_plural');
                 } else {
@@ -347,8 +368,10 @@ if ($cache_id != 0) {
         $tmplog = mb_ereg_replace('{log_classes}', $logClasses, $tmplog);
 
         $filterable = '';
+
         if (! empty($logfilterConfig['enable_logs_filtering'])) {
             $filterable = ':' . $record['type'] . ':';
+
             if ($record['userid'] == 0) {
                 $filterable .= 'octeam';
             } else if ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
@@ -381,13 +404,14 @@ if ($cache_id != 0) {
         $tmpremove = mb_ereg_replace('{logid}', $record['logid'], $remove_log);
         $tmpRevert = mb_ereg_replace('{logid}', $record['logid'], $revertLog);
         $tmpnewpic = mb_ereg_replace('{logid}', $record['logid'], $upload_picture);
+
         if (! isset($record['deleted'])) {
             $record['deleted'] = false;
         }
+
         if ($record['deleted'] != 1) {
             if ($loggedUser && $record['user_id'] == $loggedUser->getUserId() && ($record['type'] != 12 ||
                 ($loggedUser && $loggedUser->hasOcTeamRole()))) {
-
                 // User is author of log. Can edit, remove and add pictures. If it is OC Team log - user MUST be ACTIVE admin AND owner of this log
                 $logfunctions = $functions_start . $tmpedit . $functions_middle . $tmpremove . $functions_middle . $tmpnewpic . $functions_end;
             } elseif ($loggedUser && $owner_id == $loggedUser->getUserId() && $record['type'] != 12) {
@@ -409,18 +433,20 @@ if ($cache_id != 0) {
             // show pictures if (any added) and ((not deleted) or (user is admin))
 
             $logpicturelines = '';
+
             if (! isset($dbc)) {
                 $dbc = OcDb::instance();
             }
             $thatquery = 'SELECT `url`, `title`, `uuid`, `user_id`, `spoiler` FROM `pictures` WHERE `object_id`=:1 AND `object_type`=1';
             $s = $dbc->multiVariableQuery($thatquery, $record['logid']);
             $pic_count = $dbc->rowCount($s);
+
             if (! isset($showspoiler)) {
                 $showspoiler = '';
             }
             $pictures = 0;
-            while ($pic_record = $dbc->dbResultFetch($s)) {
 
+            while ($pic_record = $dbc->dbResultFetch($s)) {
                 if (++$pictures > 4) {
                     $logpicturelines .= '<div style="clear:both"></div>';
                     $pictures -= 4;
@@ -444,7 +470,6 @@ if ($cache_id != 0) {
                 $thisline = mb_ereg_replace('{title}', htmlspecialchars($pic_record['title'], ENT_COMPAT, 'UTF-8'), $thisline);
 
                 if ($loggedUser && ($pic_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole())) {
-
                     $thisfunctions =
                         '<span class="removepic">
                                 <img src="/images/log/16x16-trash.png" class="icon16" alt="Trash icon">

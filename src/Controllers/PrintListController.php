@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\ChunkModels\ListOfCaches\Column_CacheName;
@@ -8,7 +9,6 @@ use src\Models\ChunkModels\ListOfCaches\ListOfCachesModel;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\GeoCache\PrintList;
-
 
 class PrintListController extends BaseController
 {
@@ -36,8 +36,8 @@ class PrintListController extends BaseController
         if ($cachesCount > 0) {
             $geocaches = MultiCacheStats::getGeocachesById($printList);
 
-            $model = new ListOfCachesModel ();
-            $model->addColumn (new Column_CacheTypeIcon ('',
+            $model = new ListOfCachesModel();
+            $model->addColumn(new Column_CacheTypeIcon('',
                 function (GeoCache $cache) {
                     return [
                         'type' => $cache->getCacheType(),
@@ -65,7 +65,7 @@ class PrintListController extends BaseController
                 }
                 ));
 
-            $model->addDataRows ($geocaches);
+            $model->addDataRows($geocaches);
             $this->view->setVar('listCacheModel', $model);
         }
 
@@ -75,13 +75,13 @@ class PrintListController extends BaseController
     public function removeFromListAjax($cacheId)
     {
         $geocache = GeoCache::fromCacheIdFactory($cacheId);
+
         if (! $geocache) {
             $this->ajaxErrorResponse('No such geocache');
         }
 
         PrintList::RemoveCache($cacheId);
         $this->ajaxSuccessResponse();
-
     }
 
     public function clearListAjax()

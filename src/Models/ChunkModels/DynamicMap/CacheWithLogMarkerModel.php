@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\ChunkModels\DynamicMap;
 
 use src\Models\GeoCache\GeoCacheLog;
@@ -22,6 +23,7 @@ class CacheWithLogMarkerModel extends CacheMarkerModel
     {
         $marker = new self();
         $marker->importDataFromGeoCacheLog($log, $user);
+
         return $marker;
     }
 
@@ -32,6 +34,7 @@ class CacheWithLogMarkerModel extends CacheMarkerModel
         $this->log_link = $log->getLogUrl();
         $text = strip_tags($log->getText(),'<br><p>');
         $textLen = mb_strlen($text);
+
         if ($textLen > 200) {
             $text = mb_strcut($text, 0, 200);
             $text .= '...';

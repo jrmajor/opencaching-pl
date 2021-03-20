@@ -2,7 +2,6 @@
 
 use src\Models\ChunkModels\StaticMap\StaticMapMarker;
 
-
 /**
  * This chunk represents css generated marekr for staticMap
  */

@@ -1,4 +1,5 @@
 <?php
+
 use src\Utils\Database\OcDb;
 
 require_once __DIR__ . '/../lib/ClassPathDictionary.php';
@@ -11,6 +12,7 @@ class RepairCacheScores
 
         $sql = 'SELECT cache_id, type FROM caches';
         $params = [];
+
         if (isset($_GET['cache_id'])) {
             $sql .= ' WHERE cache_id=:cache_id';
             $params['cache_id']['value'] = intval($_GET['cache_id']);
@@ -22,6 +24,7 @@ class RepairCacheScores
 
         set_time_limit(3600);
         $total_touched = 0;
+
         foreach ($caches as $cache) {
             $cache_id = $cache['cache_id'];
 
@@ -33,11 +36,13 @@ class RepairCacheScores
             $s = $db->multiVariableQuery('
                 SELECT AVG(score) AS avg_score, COUNT(score) AS votes FROM scores WHERE cache_id = :1', $cache_id);
             $row = $db->dbResultFetch($s);
+
             if ($row == false) {
                 $votes = 0;
                 $average = 0;
             } else {
                 $votes = $row['votes'];
+
                 if ($votes > 0) {
                     $average = round($row['avg_score'], 4);
                 } else {
@@ -101,6 +106,7 @@ class RepairCacheScores
             $params['cache_id']['value'] = intval($cache_id);
             $params['cache_id']['data_type'] = 'integer';
             $s = $db->paramQuery($sql, $params);
+
             if ($db->rowCount($s) > 0) {
                 echo "<b>cache_id=$cache_id</b> ";
                 echo "ratings=$votes rating=$average ";

@@ -36,6 +36,7 @@ class MyRecommendationsController extends BaseController
     public function recommendations($userId = null) {
         if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
+
             exit;
         }
 
@@ -127,7 +128,6 @@ class MyRecommendationsController extends BaseController
             [$queryLimit, $queryOffset] = $pagination->getQueryLimitAndOffset();
             $model->setPaginationModel($pagination);
 
-
             $model->addDataRows(self::completeDataRows($userId, $queryLimit, $queryOffset));
             $this->view->setVar('listCacheModel', $model);
         }
@@ -143,26 +143,27 @@ class MyRecommendationsController extends BaseController
     {
         if(! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
         //check cacheId
         if(! is_numeric($cacheId)) {
             $this->ajaxErrorResponse('Invalid param', 400);
+
             exit;
         }
 
-        CacheRecommendation::deleteRecommendation( $this->loggedUser->getUserId(), $cacheId);
+        CacheRecommendation::deleteRecommendation($this->loggedUser->getUserId(), $cacheId);
         $this->ajaxSuccessResponse();
-
     }
 
     private function completeDataRows($userId, $limit = null, $offset = null) {
         $results = CacheRecommendation::getCachesRecommendedByUser($userId, $limit, $offset);
 
         // find cache status for user (found/not-found)
-        foreach ( MultiLogStats::getStatusForUser($userId, array_keys($results)) as $s) {
-            $results[ $s['cache_id']] ['user_sts'] = $s['type'];
+        foreach (MultiLogStats::getStatusForUser($userId, array_keys($results)) as $s) {
+            $results[$s['cache_id']]['user_sts'] = $s['type'];
         }
 
         return $results;

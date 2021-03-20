@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Stats;
 
 use src\Models\BaseObject;
@@ -57,9 +58,11 @@ class TotalStats extends BaseObject
         $basicStats->latestRecomendations = Formatter::number(MultiLogStats::getLastRecommendationsCount($periodDays));
 
         $basicStats->createdAt = time();
+
         return $basicStats;
     }
 }
+
 namespace src\Models\Stats\TotalStats;
 
 /**
@@ -67,7 +70,6 @@ namespace src\Models\Stats\TotalStats;
  */
 class BasicStats
 {
-
     const KEY = __CLASS__;
 
     const TTL = 6 * 60 * 60;

@@ -2,11 +2,7 @@
 
 namespace src\Models\MeritBadge;
 
-
-
-
 class UserMeritBadge{
-
     private $id;
     private $user_id;
     private $user_name;
@@ -21,7 +17,6 @@ class UserMeritBadge{
     private $oBadge;
     private $oLevel;
     private $oCategory;
-
 
     //////////////////////////////////////////////////////////////////////
     // build functions
@@ -85,7 +80,7 @@ class UserMeritBadge{
     }
 
     public function getPicture(){
-        if ( $this->getOLevel()->getPicture() != '' )
+        if ($this->getOLevel()->getPicture() != '')
             return $this->getOLevel()->getPicture();
 
         return $this->getOBadge()->getPicture();
@@ -110,8 +105,7 @@ class UserMeritBadge{
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow( $rec ){
-
+    public function setFromRow($rec){
         if (isset($rec['badge_user_id']))
             $this->id = $rec['badge_user_id'];
 

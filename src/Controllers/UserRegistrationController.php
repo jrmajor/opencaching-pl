@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use DateTime;
@@ -26,6 +27,7 @@ class UserRegistrationController extends BaseController
     {
         if ($this->isUserLogged()) {
             $this->view->redirect('/');
+
             exit();
         }
         $this->showRegisterForm();
@@ -39,6 +41,7 @@ class UserRegistrationController extends BaseController
     {
         if ($this->isUserLogged()) {
             $this->view->redirect('/');
+
             exit();
         }
 
@@ -51,6 +54,7 @@ class UserRegistrationController extends BaseController
         if (! Validator::isValidUsername($username)) {
             $this->showRegisterForm($username, $email, tr('error_username_not_ok'));
         }
+
         if ($usertmp = User::fromUsernameFactory($username) !== null) {
             unset($usertmp);
             $this->showRegisterForm($username, $email, tr('error_username_exists'));
@@ -61,6 +65,7 @@ class UserRegistrationController extends BaseController
         if (! Validator::isValidEmail($email)) {
             $this->showRegisterForm($username, $email, tr('error_email_not_ok'));
         }
+
         if ($usertmp = User::fromEmailFactory($email) !== null) {
             unset($usertmp);
             $this->showRegisterForm($username, $email, tr('error_email_exists'));
@@ -79,6 +84,7 @@ class UserRegistrationController extends BaseController
 
         // Check password
         $password = (isset($_POST['password'])) ? $_POST['password'] : '';
+
         if (! Validator::checkStrength($password)) {
             $this->showRegisterForm($username, $email, tr('password_weak'));
         }
@@ -97,6 +103,7 @@ class UserRegistrationController extends BaseController
         UserEmailSender::sendActivationMessage($username);
 
         $this->showSuccessMessage(tr('register_confirm'), tr('register_pageTitle'));
+
         exit();
     }
 
@@ -111,6 +118,7 @@ class UserRegistrationController extends BaseController
         $this->view->addLocalJs(Uri::getLinkWithModificationTime('/views/userAuth/newPassword.js'), true, true);
         $this->view->loadJQuery();
         $this->view->buildView();
+
         exit();
     }
 
@@ -159,6 +167,7 @@ class UserRegistrationController extends BaseController
         $this->view->setVar('message', $message);
         $this->view->setVar('header', (is_null($header)) ? tr('errtpl04') : $header);
         $this->view->buildView();
+
         exit();
     }
 
@@ -175,6 +184,7 @@ class UserRegistrationController extends BaseController
         $this->view->setVar('message', $message);
         $this->view->setVar('header', $header);
         $this->view->buildView();
+
         exit();
     }
 }

@@ -6,7 +6,7 @@ use src\Utils\Uri\SimpleRouter;
 <div class="content2-pagetitle"><?=tr('loginForm_title')?></div>
 
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', null, null, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', null, null, $view->errorMsg); ?>
   <div class="buffer"></div>
   <form action="<?=SimpleRouter::getLink('UserAuthorization', 'login')?>" method="post" name="login_form">
     <div class="input-group input-group-md">

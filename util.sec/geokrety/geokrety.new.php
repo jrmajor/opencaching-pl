@@ -4,7 +4,6 @@ use okapi\Facade;
 use src\Models\GeoKret\GeoKretyApi;
 use src\Utils\Database\XDb;
 
-
 /* * *************************************************************************
   ./util.sec/geokrety/geokrety.new.php
   --------------------
@@ -31,14 +30,13 @@ $modifiedsince = strtotime($last_updated);
 /* new OC dedicated geokrety XML export */
 $url = GeoKretyApi::GEOKRETY_URL . '/export_oc.php?modifiedsince=' . date('YmdHis', $modifiedsince - 1);
 
-
 $xmlString = file_get_contents($url);
 $gkxml = @simplexml_load_string($xmlString);
-
 
 //    $gkxml=@simplexml_load_file($url);
 if (! $gkxml) {
     echo $xmlString;
+
     exit('Geokrety export error! Failed to load XML file [simplexml_load_file()]: ' . $url);
 }
 
@@ -65,16 +63,18 @@ foreach ($gkxml->geokret as $geokret) {
         "SELECT distinct wp FROM gk_item_waypoint
         WHERE id='" . XDb::xEscape($id) . "'");
     $cache_codes = [];
+
     while ($row = XDb::xFetchArray($rs))
         $cache_codes[] = $row[0];
     Facade::schedule_geocache_check($cache_codes);
 
     /* waypoints update */
     XDb::xSql('DELETE FROM gk_item_waypoint WHERE id= ?', $id);
+
     foreach ($geokret->waypoints as $waypoint) {
         $wp = XDb::xEscape($waypoint->waypoint);
-        if ($wp != '') {
 
+        if ($wp != '') {
             XDb::xSql(
                 "INSERT INTO gk_item_waypoint (id, wp)
                 VALUES ('" . $id . "', '" . $wp . "')
@@ -88,6 +88,7 @@ foreach ($gkxml->geokret as $geokret) {
 /* Notify OKAPI. https://github.com/opencaching/okapi/issues/179 */
 $rs = XDb::xSql('SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)');
 $cache_codes = [];
+
 while ($row = XDb::xFetchArray($rs)){
     $cache_codes[] = $row[0];
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models;
 
 use okapi\Facade;
@@ -40,7 +41,6 @@ abstract class BaseObject
     }
 
     protected static function callOkapi($service, $params){
-
         /** @var \src\Models\User\User */
         $user = self::getCurrentUser();
 

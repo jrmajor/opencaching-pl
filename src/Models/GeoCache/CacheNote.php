@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
@@ -112,7 +113,7 @@ class CacheNote extends BaseObject
         }
         $db = self::db();
 
-        $cacheIdsStr = $db->quoteString( implode(',', $cacheIds) );
+        $cacheIdsStr = $db->quoteString(implode(',', $cacheIds));
 
         $rs = $db->multiVariableQuery(
                 "SELECT * FROM cache_notes

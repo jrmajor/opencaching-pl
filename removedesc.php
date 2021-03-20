@@ -7,42 +7,44 @@ use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 use src\Utils\I18n\Languages;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //cacheid
 $cache_id = 0;
+
 if (isset($_REQUEST['cacheid'])) {
     $cache_id = $_REQUEST['cacheid'];
 }
 $desclang = '';
+
 if (isset($_REQUEST['desclang'])) {
     $desclang = $_REQUEST['desclang'];
 }
 $remove_commit = 0;
+
 if (isset($_REQUEST['commit'])) {
     $remove_commit = $_REQUEST['commit'];
 }
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
         $cache_rs = XDb::xSql(
             'SELECT `user_id`, `name` FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
 
-        if ( $cache_record = XDb::xFetchArray($cache_rs)) {
-
+        if ($cache_record = XDb::xFetchArray($cache_rs)) {
             if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
-
                 $desc_rs = XDb::xSql(
                     'SELECT `id`, `uuid` FROM `cache_desc` WHERE `cache_id`= ? AND `language`= ? LIMIT 1', $cache_id, $desclang);
-                if ($desc_record = XDb::xFetchArray($desc_rs)) {
 
+                if ($desc_record = XDb::xFetchArray($desc_rs)) {
                     XDb::xFreeResults($desc_rs);
 
                     if ($remove_commit == 1) {
@@ -60,6 +62,7 @@ if (! $loggedUser) {
                         GeoCache::setCacheDefaultDescLang($cache_id);
 
                         tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
+
                         exit;
                     } else {
                         //commit the removement
@@ -81,7 +84,6 @@ if (! $loggedUser) {
         } else {
             //TODO: cache not exist
         }
-
 
 //make the template and send it out
 tpl_BuildTemplate();

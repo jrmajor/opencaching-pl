@@ -8,34 +8,31 @@ require_once('./lib/common.inc.php');
 
 function check_wp($wpts)
 {
-
     foreach ($wpts as &$wp) {
         if (! preg_match("/^O((\d)|([A-Z])){5}$/", $wp))
             return false;
     }
+
     return true;
 }
 
 if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! empty($_GET['output'])) {
     if (! $show_coords) {
         header('Location: ./viewcache.php?wp=' . $_GET['wp']);
+
         exit;
     }
-
-
 
     $wpts = explode('|', XDb::xEscape($_GET['wp']));
     $output = XDb::xEscape($_GET['output']);
 
     if (preg_match('/^((gpx)|(gpxgc)|(loc)|(wpt)|(uam)){1}$/', $output)) {
         if (check_wp($wpts)) {
-
             $znalezione = [];
 
             $i = 0;
 
             foreach ($wpts as &$wp) {
-
                 $query = "select difficulty,terrain,size,status,user_id,type,cache_id,date_hidden,name,latitude,longitude from caches where wp_oc='" . $wp . "'"; //print $query;
                 $wynik = XDb::xSql($query);
                 $wiersz = XDb::xFetchArray($wynik);
@@ -62,8 +59,8 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! em
                 $wynik = XDb::xSql($query);
 
                 $attr_text = '';
-                while ($rekord = XDb::xFetchArray($wynik)) {
 
+                while ($rekord = XDb::xFetchArray($wynik)) {
                     $query = "select text_long from cache_attrib where id ='" . $rekord['attrib_id'] . "' and language = '" . I18n::getCurrentLang() . "';";
                     $wynik2 = XDb::xSql($query);
                     $attr = XDb::xFetchArray($wynik2);
@@ -76,7 +73,6 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! em
                 $wynik = XDb::xSql($query);
 
                 while ($rekord = XDb::xFetchArray($wynik)) {
-
                     $rekord2['id'] = $rekord['id'];
                     $rekord2['date'] = date('Y-m-d', strtotime($rekord['date']));
                     $rekord2['time'] = date('H:i:s', strtotime($rekord['date']));
@@ -92,7 +88,6 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! em
                 $wynik = XDb::xSql($query);
 
                 while ($rekord = XDb::xFetchArray($wynik)) {
-
                     $rekord2['name'] = gpxhelper($rekord['name']);
                     $geokrets[] = $rekord2;
                 }

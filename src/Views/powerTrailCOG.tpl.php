@@ -1,6 +1,5 @@
 <?php
 
-
 $view->callChunk('tinyMCE', false);
 ?>
 

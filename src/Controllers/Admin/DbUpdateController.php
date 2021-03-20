@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Admin;
 
 use Exception;
@@ -64,7 +65,6 @@ class DbUpdateController extends BaseController
                 $actions['run'] = 'run';
             } else {
                 if ($update->getRuntype() == 'always' || $specialPurpose) {
-
                     # For tests an special-purpose updates, it can make sense to
                     # re-run them even on production sites, and to roll them back.
 
@@ -82,14 +82,12 @@ class DbUpdateController extends BaseController
                 $actions['run'] = 'run';
 
                 if ($update->hasRollback()) {
-
                     # There may be cases when a developer wants to test
                     # the behaviour of a rollback method even without having
                     # run the update.
 
                     $actions['rollback'] = 'try rollback';
                 }
-
             } else {
                 # It can make sense to repeat an update, e.g. if there is no
                 # rollback method and the developer did a manual rollback.
@@ -97,7 +95,6 @@ class DbUpdateController extends BaseController
                 $actions['run'] = 'run again';
 
                 if ($update->hasRollback() && (! $update->isInGitMasterBranch() || $specialPurpose)) {
-
                     # The workflow for rolling back an already deployed
                     # update is to create a new rollback-update and run that.
                     # To enforce this workflow, we disable direct rollback
@@ -108,7 +105,6 @@ class DbUpdateController extends BaseController
             }
 
             if (! $update->isInGitMasterBranch()) {
-
                 if (! ($wasRun && $update->hasRollback())) {
                     $actions['askDelete'] = 'delete';
                 } else {
@@ -169,7 +165,6 @@ class DbUpdateController extends BaseController
                 if (! isset($this->getAvailableActions($update)['run'])
                     && empty($_REQUEST['override'])
                 ) {
-
                     # This can happen on page reload on a production site:
                     # Update was allowed to run, but must not re-run.
 
@@ -202,7 +197,6 @@ class DbUpdateController extends BaseController
         if (! isset($this->getAvailableActions($update)['rollback'])
             && empty($_REQUEST['override'])
         ) {
-
             # This can happen on page reload on a production site:
             # Update was allowed to roll back, but only once.
 
@@ -231,8 +225,8 @@ class DbUpdateController extends BaseController
     public function rename($uuid)
     {
         $this->securityCheck();
-        if (isset($_REQUEST['newName'])) {
 
+        if (isset($_REQUEST['newName'])) {
             // auto-convert some non-allowed spacers
             $newName = preg_replace('/[ \-]/', '_', $_REQUEST['newName']);
 
@@ -275,6 +269,7 @@ class DbUpdateController extends BaseController
         // was deployed to the site.
 
         $text = '';
+
         foreach (DbUpdates::getAll() as $update) {
             if ($r = $update->wasRunAt()) {
                 $text .= $update->getUuid() . ' ' . $r . "\n";
@@ -286,6 +281,7 @@ class DbUpdateController extends BaseController
     private function getUpdateFromUuid($uuid)
     {
         $update = DbUpdates::get($uuid);
+
         if ($update) {
             return $update;
         }
@@ -298,6 +294,7 @@ class DbUpdateController extends BaseController
         $this->view->setVar('mysqlVersion', OcDb::instance()->getServerVersion());
         $this->view->setTemplate('sysAdmin/dbUpdate');
         $this->view->buildView();
+
         exit();
     }
 
@@ -307,6 +304,7 @@ class DbUpdateController extends BaseController
             ($onlyDevelopers && ! $this->ocConfig->inDebugMode())
         ) {
             $this->view->redirect('/');
+
             exit();
         }
     }

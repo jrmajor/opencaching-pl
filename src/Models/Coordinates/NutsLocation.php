@@ -25,7 +25,6 @@ class NutsLocation extends BaseObject
     public function __construct()
     {
         parent::__construct();
-
     }
 
     /**
@@ -35,7 +34,6 @@ class NutsLocation extends BaseObject
      */
     private function loadFromCoords(Coordinates $coords)
     {
-
         $rs = $this->db->multiVariableQuery(
             'SELECT `level`, code, AsText(shape) AS geometry
             FROM nuts_layer
@@ -48,7 +46,6 @@ class NutsLocation extends BaseObject
         }
 
         $this->loadNamesForCodes();
-
     }
 
     /**
@@ -65,6 +62,7 @@ class NutsLocation extends BaseObject
             LIMIT $limit");
 
         $nutsNames = [];
+
         while ($row = $this->db->dbResultFetch($rs)) {
             $nutsNames[$row['code']] = $row['name'];
         }
@@ -82,6 +80,7 @@ class NutsLocation extends BaseObject
     {
         $obj = new self();
         $obj->loadFromCoords($coords);
+
         return $obj;
     }
 
@@ -107,10 +106,8 @@ class NutsLocation extends BaseObject
         // (smaller countries has e.g. only 3-level names)
         if (! empty($this->codes[self::LEVEL_2])) {
             $region = $this->names[self::LEVEL_2];
-
         } elseif (! empty($this->codes[self::LEVEL_1])) {
             $region = $this->names[self::LEVEL_1];
-
         } else {
             if (! empty($this->codes[self::LEVEL_3])) {
                 $region = $this->names[self::LEVEL_3];
@@ -120,6 +117,7 @@ class NutsLocation extends BaseObject
                 //Debug::errorLog("NUTS data error? No code for ".$this->codes[self::LEVEL_COUNTRY]);
             }
         }
+
         return $region;
     }
 
@@ -129,7 +127,6 @@ class NutsLocation extends BaseObject
      */
     public function getDescription($separator = '-')
     {
-
         if (! isset($this->codes[self::LEVEL_COUNTRY])) {
             // location is unknown
             return "? $separator ?";
@@ -199,7 +196,6 @@ class NutsLocation extends BaseObject
      */
     public static function checkProvinceCode($code)
     {
-
         return (0 < self::db()->multiVariableQueryValue(
                 'SELECT COUNT(*) FROM nuts_codes WHERE code= :1 LIMIT 1', 0, $code)
         );
@@ -225,6 +221,7 @@ class NutsLocation extends BaseObject
     {
         $countryCode .= '__'; // add sql wildcard (two letters)
         $db = self::db();
+
         return $db->dbResultFetchAll($db->multiVariableQuery(
             'SELECT code, name FROM nuts_codes
              WHERE code LIKE :1

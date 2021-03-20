@@ -37,8 +37,8 @@ if (empty($user)) {
 
     $message_mp3_not_found = tr('editmp3_15');
 
-
     $uuid = isset($_REQUEST['uuid']) ? $_REQUEST['uuid'] : 0;
+
     if (! $uuid)
         $message = $message_mp3_not_found;
 
@@ -74,6 +74,7 @@ if (empty($user)) {
                     tpl_set_var('message_end', '');
                     tpl_set_var('message', $message_internal);
                     $view->buildView();
+
                     exit;
                 } else {
                     // file extension ok?
@@ -87,6 +88,7 @@ if (empty($user)) {
                         tpl_set_var('message_end', '');
                         tpl_set_var('message', $message_wrongext);
                         $view->buildView();
+
                         exit;
                     }
 
@@ -98,6 +100,7 @@ if (empty($user)) {
                         tpl_set_var('message_end', '');
                         tpl_set_var('message', $message_toobig);
                         $view->buildView();
+
                         exit;
                     }
 
@@ -107,10 +110,10 @@ if (empty($user)) {
                 }
             }
 
-
             // store
 
             $row['display'] = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
+
             if ($row['display'] == 0)
                 $row['display'] = 1;
             else
@@ -131,7 +134,6 @@ if (empty($user)) {
                             'UPDATE `cache_logs` SET `last_modified`=NOW() WHERE `id`= ?',
                             $row['object_id']);
                         break;
-
                     // cache
                     case 2:
                         XDb::xSql(
@@ -152,6 +154,7 @@ if (empty($user)) {
         tpl_set_var('cacheid', htmlspecialchars($row['cache_id'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachename', htmlspecialchars($row['name'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('title', htmlspecialchars($row['title'], ENT_COMPAT, 'UTF-8'));
+
         if ($row['title'] <= '')
             tpl_set_var('errnotitledesc', $errnotitledesc);
         else

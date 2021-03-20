@@ -13,12 +13,12 @@ JpGraphLoader::module('bar');
 JpGraphLoader::module('date');
 JpGraphLoader::module('mgraph');
 
-
 # Setup begining of stat for OC Team. Start time 01 June every year
 $year = date('Y');
 $year_old = $year - 1;
 $year_new = $year + 1;
 $count_days = date('z');
+
 if ($count_days < 181) {
     $start_time = $year_old . '-07-1 00:00:00';
     $title3 = iconv('UTF-8', 'ASCII//TRANSLIT', tr('number_month')) . ' ' . $year_old . '/' . $year;
@@ -26,7 +26,6 @@ if ($count_days < 181) {
     $start_time = $year . '-07-1 00:00:00';
     $title3 = iconv('UTF-8', 'ASCII//TRANSLIT', tr('number_month')) . ' ' . $year . '/' . $year_new;
 }
-
 
 $y = [];
 $x = [];
@@ -61,20 +60,23 @@ $rscachesM = XDb::xSql(
     GROUP BY MONTH(`date_approval`) , YEAR(`date_approval`)
     ORDER BY YEAR(`date_approval`) ASC, MONTH(`date_approval`) ASC', $start_time);
 
-
 $xtitle = '';
+
 while ($ry = XDb::xFetchArray($rsreports)) {
     $y[] = $ry['count'];
     $x[] = $ry['username'];
 }
+
 while ($ry2 = XDb::xFetchArray($rscaches)) {
     $y2[] = $ry2['count'];
     $x2[] = $ry2['username'];
 }
+
 while ($ry3 = XDb::xFetchArray($rsreportsM)) {
     $y3[] = $ry3['count'];
     $x3[] = $ry3['month'];
 }
+
 while ($ry4 = XDb::xFetchArray($rscachesM)) {
     $y4[] = $ry4['count'];
     $x4[] = $ry4['month'];
@@ -174,7 +176,6 @@ if (count($x2) == 0) {
 if (count($x3) == 0) {
     $graph3 = null;
 } else {
-
     // Create the graph. These two calls are always required
     $graph3 = new Graph(740, 200, 'auto');
     $graph3->SetScale('textint', 0, max($y3) + (max($y3) * 0.2), 0, 0);
@@ -256,6 +257,7 @@ if (count($x4) == 0) {
 
 if (! $graph && ! $graph2 && ! $graph3 && ! $graph4) {
     header('Content-type: image/png');
+
     exit(file_get_contents(__DIR__ . '/../public/images/misc/nodata.png'));
 }
 
@@ -265,15 +267,19 @@ if (! $graph && ! $graph2 && ! $graph3 && ! $graph4) {
 $mgraph = new MGraph();
 $mgraph->SetMargin(10, 10, 10, 10);
 $mgraph->SetFrame(true, 'darkgray', 2);
+
 if ($graph) {
     $mgraph->Add($graph);
 }
+
 if ($graph3) {
     $mgraph->Add($graph3, 0, 270);
 }
+
 if ($graph2) {
     $mgraph->Add($graph2, 0, 490);
 }
+
 if ($graph4) {
     $mgraph->Add($graph4, 0, 760);
 }

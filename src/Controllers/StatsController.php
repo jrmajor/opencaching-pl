@@ -2,7 +2,6 @@
 
 namespace src\Controllers;
 
-
 use src\Models\GeoCache\MultiCacheStats;
 use src\Models\Pictures\StatPic;
 use src\Models\User\MultiUserQueries;
@@ -31,6 +30,7 @@ class StatsController extends BaseController
 
         if (! $this->loggedUser->hasAdvUserRole()) {
             $this->index();
+
             exit;
         }
 
@@ -43,6 +43,7 @@ class StatsController extends BaseController
 
         $allUsers = MultiUserQueries::getCountOfNewUsers($year);
         $allUsers['sum'] = 0;
+
         foreach ($allUsers as $value) {
             $allUsers['sum'] += $value;
         }
@@ -50,6 +51,7 @@ class StatsController extends BaseController
 
         $allUsers = MultiUserQueries::getCountOfNewUsers($year, true);
         $allUsers['sum'] = 0;
+
         foreach ($allUsers as $value) {
             $allUsers['sum'] += $value;
         }
@@ -57,6 +59,7 @@ class StatsController extends BaseController
 
         $allCaches = MultiCacheStats::getNewCachesCountMonthly($year);
         $allCaches['sum'] = 0;
+
         foreach ($allCaches as $value) {
             $allCaches['sum'] += $value;
         }
@@ -77,8 +80,9 @@ class StatsController extends BaseController
             $this->displayCommonErrorPageAndExit('improper userId');
         }
 
-        if (1 || ! StatPic::isStatPicPresent ($userId)) { //XXXY
+        if (1 || ! StatPic::isStatPicPresent($userId)) { //XXXY
             $user = User::fromUserIdFactory($userId);
+
             if (is_null($user)) {
                 $this->displayCommonErrorPageAndExit('Unknown user');
             }

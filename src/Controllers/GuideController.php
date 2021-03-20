@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\ChunkModels\DynamicMap\DynamicMapModel;
@@ -43,6 +44,7 @@ class GuideController extends BaseController
 
         $mapModel = new DynamicMapModel();
         $coords = $this->loggedUser->getHomeCoordinates();
+
         if (
             $coords
             && $coords->getLatitude() != null
@@ -68,18 +70,17 @@ class GuideController extends BaseController
                     self::MAX_DSCR_LEN
                 );
                 $marker->recCount = $row['recomendations'];
+
                 return $marker;
             }
         );
 
         $this->view->setVar('mapModel', $mapModel);
 
-
         $guideConfig = $this->ocConfig->getGuidesConfig();
         $this->view->setVar('requiredRecomCount', $guideConfig['guideGotRecommendations']);
         $this->view->setVar('requiredActivity', $guideConfig['guideActivePeriod']);
 
         $this->view->buildView();
-
     }
 }

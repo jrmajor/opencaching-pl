@@ -27,7 +27,7 @@ class sendEmail
         $mailbody = file_get_contents(dirname(__FILE__) . '/commentEmail.html');
 
         switch ($action) {
-            case 'delComment' :
+            case 'delComment':
                 $actionDesc = sprintf(tr('pt131'), $ptDbRow['name']);
                 $subject = $actionDesc;
                 $mailbody = mb_ereg_replace('{commentAction}', tr('pt132'), $mailbody);
@@ -35,8 +35,7 @@ class sendEmail
                 $mailbody = mb_ereg_replace('{delReason}', $delReason, $mailbody);
                 $mailbody = mb_ereg_replace('{pt153}', tr('pt153'), $mailbody);
                 break;
-
-            case 'restoreComment' :
+            case 'restoreComment':
                 $actionDesc = sprintf(tr('pt136'), $ptDbRow['name']);
                 $subject = $actionDesc;
                 $mailbody = mb_ereg_replace('{commentAction}', tr('pt137'), $mailbody);
@@ -44,16 +43,14 @@ class sendEmail
                 $mailbody = mb_ereg_replace('{delReason}', '', $mailbody);
                 $mailbody = mb_ereg_replace('{pt153}', '', $mailbody);
                 break;
-
-            case 'newComment' :
+            case 'newComment':
                 $subject = tr('pt128') . ' ' . $ptDbRow['name'];
                 $mailbody = mb_ereg_replace('{commentAction}', tr('pt127'), $mailbody);
                 $mailbody = mb_ereg_replace('{actionDesc}', tr('pt128'), $mailbody);
                 $mailbody = mb_ereg_replace('{delReason}', '', $mailbody);
                 $mailbody = mb_ereg_replace('{pt153}', '', $mailbody);
                 break;
-
-            case 'editComment' :
+            case 'editComment':
                 $subject = tr('pt146') . ' ' . $ptDbRow['name'];
                 $mailbody = mb_ereg_replace('{commentAction}', tr('pt147'), $mailbody);
                 $mailbody = mb_ereg_replace('{actionDesc}', tr('pt146'), $mailbody);
@@ -63,6 +60,7 @@ class sendEmail
         }
 
         $user = ApplicationContainer::GetAuthorizedUser();
+
         if ($user) {
             $userId = $user->getUserId();
             $username = $user->getUserName();
@@ -77,6 +75,7 @@ class sendEmail
         $mailbody = mb_ereg_replace('{userId}', $userId, $mailbody);
         $mailbody = mb_ereg_replace('{userName}', $username, $mailbody);
         $mailbody = mb_ereg_replace('{absolute_server_URI}', $absolute_server_URI, $mailbody);
+
         if (isset($commentTypes[$commentType]['translate']))
             $mailbody = mb_ereg_replace('{commentType}', tr($commentTypes[$commentType]['translate']), $mailbody);
         else
@@ -89,20 +88,25 @@ class sendEmail
         $mailbody = mb_ereg_replace('{addingCommentDateTime}', date($siteDateTimeFormat), $mailbody);
 
         $doNotSendEmailToCommentAuthor = false;
+
         foreach ($owners as $owner) {
             $to = $owner['email'];
+
             if($owner['power_trail_email'] == 1){
                 //TODO: Email class should be used here in future...
                 if(! mb_send_mail($to, $subject, $mailbody, $headers)){
                     Debug::errorLog('Mail sending failure: to:' . $to);
                 }
             }
+
             if ($commentOwnerId && $commentOwnerId == $owner['user_id']) {
                 $doNotSendEmailToCommentAuthor = true;
             }
         }
+
         if ($commentOwnerId && ! $doNotSendEmailToCommentAuthor) {
             $userDetails = powerTrailBase::getUserDetails($commentOwnerId);
+
             if($userDetails['power_trail_email']) {
                 if(! mb_send_mail($userDetails['email'], $subject, $mailbody, $headers)){
                     Debug::errorLog('Mail sending failure: to:' . $userDetails['email']);

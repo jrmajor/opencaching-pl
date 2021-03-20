@@ -11,8 +11,8 @@ $blue = imagecolorallocate($im, 0, 0, 255);
 $green = imagecolorallocate($im, 0, 255, 0);
 $l = 0;
 $no_users = XDb::xNumRows($rs);
-for ($i = 0; $i < $no_users; $i++) {
 
+for ($i = 0; $i < $no_users; $i++) {
     $record = XDb::xFetchArray($rs);
     $long = $record['longitude'];
     $lat = $record['latitude'];
@@ -45,9 +45,9 @@ function latlon_to_pix($lat, $lon)
     $lat_max = 55;
 
     $x = $x_min + ($x_max - $x_min) *
-            ( 1 - ($lon - $lon_min) / ($lon_max - $lon_min) );
+            (1 - ($lon - $lon_min) / ($lon_max - $lon_min));
     $y = $y_max - ($y_max - $y_min) *
-            ( ($lat - $lat_min) / ($lat_max - $lat_min) );
+            (($lat - $lat_min) / ($lat_max - $lat_min));
 //  return array(intval($x),intval($y));
     return ['x' => round($x), 'y' => round($y)];
 }

@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Avant de pouvoir publier votre première cache sur {site_name} , vous devez trouver au moins {NEED_FIND_LIMIT} caches, pour acquérir de l’expérience.',
     'postActivation_mail_cacheguides' => 'Geocaching Guides / Gurus',
 
-
     'password_confirm' => 'Confirmer le mot de passe',
     'register_msg1' => 'Pour créer un compte sur {site_name}, vous devez entrer un nom d’utilisateur et une adresse e-mail valide. <br/>Un e-mail avec un lien d’activation vous sera envoyé à l’adresse que vous avez fourni. Un seul compte peut être créé par adresse de messagerie.',
     'register_msg2' => 'Les champs identifiés par un * sont obligatoires',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Your cache is already added to geopath.',
     'gp_cacheRemovedFromGeopath' => 'Cache is already removed from geopath.',
 
-
     'statpic_found' => 'Trouvées :',
     'statpic_hidden' => 'Placées :',
     'statpic_html_link' => '- Statistiques pour',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Recommandation',
     'search_gpxgc_07' => 'Parc national',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Dogs not allowed',
     'attribute_2' => 'Access or parking fee',
     'attribute_3' => 'Climbing gear requried',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'Suitable to hold trackables',
     'attribute_220' => 'Officially designated historical monument',
     'attribute_999' => 'Log password',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Météo',
     'vl_Recently_modified_on' => 'Modifié récemment sur',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'Cannot cancel this offer - error occurred',
     'gpCandidates_cancelOfferInProgress' => 'Cancelation in progress',
 
-
     'gpMyCandidates_title' => 'Candidates to geopaths for user',
     'gpMyCandidates_submitedDate' => 'Date',
     'gpMyCandidates_geopathName' => 'Geopath',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'Problem with update pics order occured',
     'editCache_orderPicsSaveSuccess' => 'Pics order has been changed',
 
-
     'vote_criteriaNotPassed' => 'Currently logged user account doesn\'t pass criteria of participation in voting',
     'vote_electionOpenUntil' => 'This election is open until',
     'vote_electionWillBeOpen' => 'This election will be open',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'Description',
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
-//  '' => '',
+    //  '' => '',
 ];

@@ -21,15 +21,18 @@ global $config;
 
 //logid
 $log_id = 0;
+
 if (isset($_REQUEST['logid'])) {
     $log_id = $_REQUEST['logid'];
 }
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -44,20 +47,21 @@ if (! $loggedUser) {
             WHERE `id`= ? AND `deleted` = ? LIMIT 1', $log_id, 0);
 
         $log_record = XDb::xFetchArray($log_rs);
-        if ($log_record) {
 
+        if ($log_record) {
             require(__DIR__ . '/src/Views/editlog.inc.php');
+
             require(__DIR__ . '/src/Views/rating.inc.php');
 
             if ($log_record['node'] != OcConfig::getSiteNodeId()) {
                 tpl_errorMsg('editlog', $error_wrong_node);
+
                 exit;
             }
 
             //is this log from this user?
             if (($log_record['user_id'] == $loggedUser->getUserId() &&
                 ($loggedUser->hasOcTeamRole() || ($log_record['cachestatus'] != 4 && $log_record['cachestatus'] != 6)))) {
-
                 $tplname = 'editlog';
                 $view->loadJquery();
 
@@ -75,6 +79,7 @@ if (! $loggedUser) {
 
                 $log_pw = '';
                 $use_log_pw = (($log_record['logpw'] == null) || ($log_record['logpw'] == '')) ? false : true;
+
                 if (($use_log_pw) && $log_record['logtype'] == 1)
                     $use_log_pw = false;
 
@@ -97,7 +102,6 @@ if (! $loggedUser) {
                         $top_cache = 0;
                         $recommendationsNr = 100 / GeoCacheCommons::RECOMENDATION_RATIO - $user_founds;
                         $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
-
                     } elseif ($user_tops < floor($user_founds * GeoCacheCommons::RECOMENDATION_RATIO / 100)) {
                         if ($cache_user_id != $loggedUser->getUserId()) {
                             $rating_msg = mb_ereg_replace('{chk_sel}', '', $rating_allowed . '<br />' . $rating_stat);
@@ -108,7 +112,7 @@ if (! $loggedUser) {
                         $rating_msg = mb_ereg_replace('{curr}', $user_tops, $rating_msg);
                     } else {
                         $top_cache = 0;
-                        $recommendationsNr = ((1 + $user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO ) - $user_founds;
+                        $recommendationsNr = ((1 + $user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO) - $user_founds;
                         $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
 
                         $rating_msg .= '<br />' . $rating_maxreached;
@@ -148,6 +152,7 @@ if (! $loggedUser) {
 
                 //validate date
                 $date_not_ok = true;
+
                 if (is_numeric($log_date_day) && is_numeric($log_date_month) && is_numeric($log_date_year) && is_numeric($log_date_hour) && is_numeric($log_date_min)) {
                     $date_not_ok = (checkdate($log_date_month, $log_date_day, $log_date_year) == false || $log_date_hour < 0 || $log_date_hour > 23 || $log_date_min < 0 || $log_date_min > 60);
 
@@ -198,6 +203,7 @@ if (! $loggedUser) {
                     }
 
                 $pw_not_ok = false;
+
                 if (($use_log_pw) && $log_type == 1) {
                     if (isset($_POST['log_pw'])) {
                         if (mb_strtolower($log_pw) != mb_strtolower($_POST['log_pw'])) {
@@ -211,7 +217,6 @@ if (! $loggedUser) {
                 }
 
                 if (isset($_POST['submitform']) && $log_type == GeoCacheLog::LOGTYPE_MOVED) {
-
                     $newDate = date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year));
                     $logObj = GeoCacheLog::fromLogIdFactory($log_id);
                     MobileCacheMove::updateDateOnLogEdit($logObj, $newDate);
@@ -263,7 +268,6 @@ if (! $loggedUser) {
                         $user_record = XDb::xFetchArray($user_rs);
                         XDb::xFreeResults($user_rs);
 
-
                         if ($log_record['logtype'] == 1) {
                             $user_record['founds_count']--;
 
@@ -286,7 +290,6 @@ if (! $loggedUser) {
 
                             XDb::xSql('UPDATE caches SET votes= ?, score= ? WHERE cache_id= ? ',
                                 $liczba, $srednia, $log_record['cache_id']);
-
                         } elseif ($log_record['logtype'] == 2) {
                             $user_record['notfounds_count']--;
                         } elseif ($log_record['logtype'] == 3) {
@@ -302,11 +305,13 @@ if (! $loggedUser) {
                             $user_record['founds_count']++;
                         } elseif ($log_type == 2) {
                             $user_record['notfounds_count']++;
+
                             if ($founds <= 1)
                                 $top_cache = 0;
                         }
                         elseif ($log_type == 3) {
                             $user_record['log_notes_count']++;
+
                             if ($founds <= 1)
                                 $top_cache = 0;
                         }
@@ -382,25 +387,24 @@ if (! $loggedUser) {
                         $lastFoundDate, $cache_record['founds'], $cache_record['notfounds'],
                         $cache_record['notes'], $log_record['cache_id']);
 
-
                     $badgetParam = '';
+
                     if ($config['meritBadges']){
-
                         $cache_id = $log_record['cache_id'];
-                        if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT ||
-                            $log_type == GeoCacheLog::LOGTYPE_ATTENDED ){
 
+                        if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT ||
+                            $log_type == GeoCacheLog::LOGTYPE_ATTENDED){
                             $ctrlMeritBadge = new MeritBadgeController;
 
                             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($cache_id, $loggedUser->getUserId());
                             $titledIds = $ctrlMeritBadge->updateTriggerTitledCache($cache_id, $loggedUser->getUserId());
 
-                            if ( $changedLevelBadgesIds != '' && $titledIds != '')
+                            if ($changedLevelBadgesIds != '' && $titledIds != '')
                                 $changedLevelBadgesIds .= ',';
 
                             $changedLevelBadgesIds .= $titledIds;
 
-                            if ( $changedLevelBadgesIds != '' )
+                            if ($changedLevelBadgesIds != '')
                                 $badgetParam = '&badgesPopupFor=' . $changedLevelBadgesIds;
 
                             $ctrlMeritBadge->updateTriggerCacheAuthor($cache_id);
@@ -411,6 +415,7 @@ if (! $loggedUser) {
 
                     //display cache page
                     tpl_redirect('viewcache.php?cacheid=' . urlencode($log_record['cache_id']) . $badgetParam);
+
                     exit;
                 }
 
@@ -420,14 +425,13 @@ if (! $loggedUser) {
                 $founds2 = XDb::xMultiVariableQueryValue(
                     "SELECT count(*) as founds FROM `cache_logs`
                     WHERE user_id= :1 AND cache_id= :2 AND type='1' AND deleted=0",
-                    0, $loggedUser->getUserId(), $log_record['cache_id'] );
+                    0, $loggedUser->getUserId(), $log_record['cache_id']);
 
                 if ($founds2 > 0) {
-
                     $founds3 = XDb::xMultiVariableQueryValue(
                         'SELECT count(*) as founds FROM `cache_logs`
                         WHERE id= :1 AND type=1 AND deleted=0',
-                        0, $log_id );
+                        0, $log_id);
 
                     if ($founds3 == 0){
                         $already_found_in_other_comment = 1;
@@ -436,8 +440,8 @@ if (! $loggedUser) {
 
                 //build logtypeoptions
                 $logtypeoptions = '';
-                foreach (GeoCacheLogCommons::logTypesArray() as $type) {
 
+                foreach (GeoCacheLogCommons::logTypesArray() as $type) {
                     // skip types allowed only for cacheOwner (9,10,11)
                     $allowedOnlyForOwner = [
                         GeoCacheLogCommons::LOGTYPE_READYTOSEARCH,
@@ -465,7 +469,6 @@ if (! $loggedUser) {
                         $log_record['user_id'] == $cache_user_id &&                       // is owner
                         $type != GeoCacheLogCommons::LOGTYPE_COMMENT &&
                         $type != GeoCacheLogCommons::LOGTYPE_MADEMAINTENANCE) {
-
                             continue;
                     }
 
@@ -498,7 +501,6 @@ if (! $loggedUser) {
                             continue;
                         }
                     } else {
-
                         if ($log_record['user_id'] == $cache_user_id && // is owner
                            ($type == GeoCacheLogCommons::LOGTYPE_FOUNDIT ||
                             $type == GeoCacheLogCommons::LOGTYPE_DIDNOTFIND ||
@@ -555,17 +557,15 @@ if (! $loggedUser) {
                 } else {
                     tpl_set_var('log_pw_field', '');
                 }
-
-
             } else {
                 header('Location: viewcache.php?cacheid=' . $log_record['cache_id']);
             }
         } else {
             // no such log or log marked as deleted
             echo 'no_such_log...?!';
+
             exit();
         }
-
 
 //make the template and send it out
 tpl_set_var('language4js', I18n::getCurrentLang());

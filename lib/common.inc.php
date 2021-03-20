@@ -8,7 +8,7 @@ use src\Utils\Debug\ErrorHandler;
 use src\Utils\I18n\I18n;
 use src\Utils\View\View;
 
-ErrorHandler::install ();
+ErrorHandler::install();
 
 session_start();
 
@@ -28,7 +28,6 @@ mb_regex_encoding('UTF-8');
 mb_language('uni');
 
 if (php_sapi_name() != 'cli') { // this is not neccesarry for command-line scripts...
-
     //detecting errors
     //TODO: this is never set and should be removed but it needs to touch hungreds of files...
     $error = false;
@@ -37,11 +36,9 @@ if (php_sapi_name() != 'cli') { // this is not neccesarry for command-line scrip
 
     initTemplateSystem();
     I18n::init();
-
 }
 
 function initTemplateSystem(){
-
     // create global view variable (used in templates)
     // TODO: it should be moved to context..
     if (! isset($GLOBALS['view'])) {
@@ -53,11 +50,9 @@ function initTemplateSystem(){
         $GLOBALS['tplname'] = 'start';
     }
 
-
     // load vars from settings...
     tpl_set_var('site_name', OcConfig::getSiteName());
     tpl_set_var('contact_mail', OcConfig::getEmailAddrOcTeam(true));
-
 
     // set wikiLinks used in translations
     foreach(OcConfig::getWikiLinks() as $key => $value){
@@ -68,7 +63,6 @@ function initTemplateSystem(){
     tpl_set_var('bodyMod', '');
     tpl_set_var('cachemap_header', '');
     tpl_set_var('htmlheaders', '');
-
 
     $GLOBALS['tpl_subtitle'] = '';
 }

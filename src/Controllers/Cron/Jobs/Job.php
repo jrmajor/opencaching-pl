@@ -60,10 +60,12 @@ abstract class Job
     {
         $jobName = get_class($this);
         $schedule = $this->ocConfig->getCronjobSchedule($jobName);
+
         if ($schedule == 'disabled') {
             return false;
         }
         $lastRun = $this->getLastRun();
+
         if ($lastRun === null) {
             $lastRun = 'xxxx-xx-xx xx:xx:xx';
         }
@@ -102,6 +104,7 @@ abstract class Job
                 strtolower($matches[1]),
                 ['mon', 'tues', 'wednes', 'thurs', 'fri', 'satur', 'sun']
             );
+
             if ($dow === false) {
                 exit('Invalid day of week (' . $matches[1] . 'day) for ' . $jobName . "\n");
             }
@@ -114,6 +117,7 @@ abstract class Job
             // run once a month
         } elseif (preg_match('/^monthly on day (\d+) at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[3]);
+
             if ($matches[1] > 28) {
                 exit(
                     'Invalid day of month (' . $matches[1] . ') for ' . $jobName .
@@ -125,7 +129,6 @@ abstract class Job
                 date('d') == $matches[1] &&
                 date('Y-m') != substr($lastRun, 0, 7) &&
                 date('H:i') >= sprintf('%02d:%02d', $matches[2], $matches[3]);
-
         } else {
             exit("Invalid schedule '" . $schedule . "' for " . $jobName);
         }

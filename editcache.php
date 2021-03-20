@@ -38,9 +38,9 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
                 break;
         }
 
-
         $ret = '<label title="' . $drop_label_tit . '"><select class="form-control input40" onchange="document.getElementById(\'' . $drop_type . '_seq_changed' . $item_row . '\').value=\'yes\'; yes_change(); " id="' . $drop_type . '_seq_select' . $item_row . '" name="' . $drop_type . '_seq_select' . $item_row . '">
         ';
+
         for ($i = 1; $i <= $max_drop + 1; $i++) { //add extra row so spacer can be added
             if ($i == $selected_seq) {
                 $sel = ' selected="true" ';
@@ -57,24 +57,27 @@ function build_drop_seq($item_row, $selected_seq, $max_drop, $thisid, $drop_type
         '; //instert picture/mp3 id into hidden fields - item_row is current order based on current seq values
         $ret .= '<input type="hidden" id="' . $drop_type . '_seq_changed' . $item_row . '" name="' . $drop_type . '_seq_changed' . $item_row . '" value="no">
         '; // set hidden field - to be changed by javascript to yes - in such case it will trigger SQL update
+
         return $ret;
     }
 }
 
 //cacheid
 $cache_id = 0;
+
 if (isset($_REQUEST['cacheid'])) {
     $cache_id = (int) $_REQUEST['cacheid'];
 }
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
-
 
         $dbc = OcDb::instance();
         $thatquery =
@@ -92,9 +95,7 @@ if (! $loggedUser) {
         unset($params);
 
         if ($cache_record = $dbc->dbResultFetch($s)) {
-
             if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
-
                 // from deleted editcache.inc.php:
                 $submit = 'Zapisz';
                 $remove = tr('delete');
@@ -142,8 +143,8 @@ if (! $loggedUser) {
                 //here we read all used information from the form if submitted, otherwise from DB
                 // wihout virtuals and webcams
                 if (isset($_POST['type'])) {
-                    if (( ($_POST['type'] == GeoCache::TYPE_VIRTUAL && $cache_record['type'] != GeoCache::TYPE_VIRTUAL ) ||
-                            ($_POST['type'] == GeoCache::TYPE_WEBCAM && $cache_record['type'] != GeoCache::TYPE_WEBCAM ) ) &&
+                    if ((($_POST['type'] == GeoCache::TYPE_VIRTUAL && $cache_record['type'] != GeoCache::TYPE_VIRTUAL) ||
+                            ($_POST['type'] == GeoCache::TYPE_WEBCAM && $cache_record['type'] != GeoCache::TYPE_WEBCAM)) &&
                             ! $loggedUser->hasOcTeamRole()) {
                         $_POST['type'] = $cache_record['type'];
                     }
@@ -153,15 +154,17 @@ if (! $loggedUser) {
                 $cache_type = isset($_POST['type']) ? $_POST['type'] : $cache_record['type'];
 
                 $pic_count_check = $cache_record['picturescount'];
+
                 if ($pic_count_check > 0) {
                     if (isset($_POST['pic_seq_select1'])) { // check if in POST mode and in case any picture is attached (re-)update sequence value, providing it was changed - value of pic_seq_change_X)
                         for ($i = 1; $i <= $pic_count_check; $i++) {
-                            if (! isset ($_POST['pic_seq_select' . $i], $_POST['pic_seq_id' . $i])) {
+                            if (! isset($_POST['pic_seq_select' . $i], $_POST['pic_seq_id' . $i])) {
                                 continue;
                             }
                             $this_seq = $_POST['pic_seq_select' . $i]; //get new seqence
                             $this_pic_id = $_POST['pic_seq_id' . $i]; //get picutre ID the new seq is applicable to
                             $this_pic_changed = $_POST['pic_seq_changed' . $i]; //get changed status ("yes" or "no")
+
                             if (isset($this_seq, $this_pic_id) && $this_pic_changed == 'yes') {
                                 $thatquery = 'UPDATE `pictures` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
@@ -176,13 +179,14 @@ if (! $loggedUser) {
                 }
                 // mp3 update start
                 $mp3_count_check = $cache_record['mp3count'];
+
                 if ($mp3_count_check > 0) {
                     if (isset($_POST['mp3_seq_select1'])) { // check if in POST mode and in case any mp3 is attached (re-)update sequence value, providing it was changed - value of mp3_seq_change_X)
-
                         for ($i = 1; $i <= $mp3_count_check; $i++) {
                             $this_seq = $_POST['mp3_seq_select' . $i]; //get new seqence
                             $this_mp3_id = $_POST['mp3_seq_id' . $i]; //get mp3 ID the new seq is applicable to
                             $this_mp3_changed = $_POST['mp3_seq_changed' . $i]; //get changed status ("yes" or "no")
+
                             if (isset($this_seq, $this_mp3_id) && $this_mp3_changed == 'yes') {
                                 $thatquery = 'UPDATE `mp3` SET `last_modified`=NOW(), `seq` = :v1 WHERE `id` = :v2';
                                 $params['v1']['value'] = (int) $this_seq;
@@ -206,6 +210,7 @@ if (! $loggedUser) {
                     }
                 } else {
                     $sel_size = isset($_POST['size']) ? $_POST['size'] : $cache_record['size'];
+
                     if ($cache_type == GeoCache::TYPE_VIRTUAL || $cache_type == GeoCache::TYPE_WEBCAM || $cache_type == GeoCache::TYPE_EVENT) {
                         $sel_size = GeoCache::SIZE_NONE;
                     }
@@ -213,6 +218,7 @@ if (! $loggedUser) {
                 $cache_hidden_day = isset($_POST['hidden_day']) ? $_POST['hidden_day'] : date('d', strtotime($cache_record['date_hidden']));
                 $cache_hidden_month = isset($_POST['hidden_month']) ? $_POST['hidden_month'] : date('m', strtotime($cache_record['date_hidden']));
                 $cache_hidden_year = isset($_POST['hidden_year']) ? $_POST['hidden_year'] : date('Y', strtotime($cache_record['date_hidden']));
+
                 if (is_null($cache_record['date_activate']) || $cache_record['date_activate'] == 0) {
                     $cache_activate_day = isset($_POST['activate_day']) ? $_POST['activate_day'] : date('d');
                     $cache_activate_month = isset($_POST['activate_month']) ? $_POST['activate_month'] : date('m');
@@ -239,6 +245,7 @@ if (! $loggedUser) {
                         $status == GeoCache::STATUS_NOTYETAVAILABLE) {
                     if (isset($_POST['publish'])) {
                         $publish = $_POST['publish'];
+
                         if (! ($publish == 'now' || $publish == 'later' || $publish == 'notnow')) {
                             // somebody messed up the POST-data, so we do not publish the cache, since he isn't published right now (status=5)
                             $publish = 'notnow';
@@ -252,6 +259,7 @@ if (! $loggedUser) {
                     }
                 } else {
                     $publish = isset($_POST['publish']) ? $_POST['publish'] : 'now';
+
                     if (! ($publish == 'now' || $publish == 'later' || $publish == 'notnow')) {
                         // somebody messed up the POST-data, so the cache has to be published (status<5)
                         $publish = 'now';
@@ -274,6 +282,7 @@ if (! $loggedUser) {
 
                 // if cache has been placed after 18.06.2010, do not allow passwords in traditional caches.
                 $allow_pw = ($cache_type == 2 && 1276884198 < (strtotime($cache_record['date_created']))) ? 0 : 1;
+
                 if ($allow_pw) {
                     $log_pw = isset($_POST['log_pw']) ? mb_substr($_POST['log_pw'], 0, 20) : $cache_record['logpw'];
                     // don't display log password for admins
@@ -292,6 +301,7 @@ if (! $loggedUser) {
 
                 // name
                 $name_not_ok = false;
+
                 if (isset($_POST['name'])) {
                     if ($_POST['name'] == '')
                         $name_not_ok = true;
@@ -367,25 +377,29 @@ if (! $loggedUser) {
                 //check effort
                 $time_not_ok = true;
                 tpl_set_var('effort_message', '');
+
                 if (is_numeric($search_time) || ($search_time == '')) {
                     $time_not_ok = false;
                 }
+
                 if ($time_not_ok) {
                     tpl_set_var('effort_message', $time_not_ok_message);
                     $error = true;
                 }
                 $way_length_not_ok = true;
+
                 if (is_numeric($way_length) || ($way_length == '')) {
                     $way_length_not_ok = false;
                 }
+
                 if ($way_length_not_ok) {
                     tpl_set_var('effort_message', $way_length_not_ok_message);
                     $error = true;
                 }
 
-
                 //check hidden_since
                 $hidden_date_not_ok = true;
+
                 if (is_numeric($cache_hidden_day) && is_numeric($cache_hidden_month) && is_numeric($cache_hidden_year)) {
                     $hidden_date_not_ok = (checkdate($cache_hidden_month, $cache_hidden_day, $cache_hidden_year) == false);
                 }
@@ -393,6 +407,7 @@ if (! $loggedUser) {
                 //check date_activate
                 if ($status == 5) {
                     $activate_date_not_ok = true;
+
                     if (is_numeric($cache_activate_day) && is_numeric($cache_activate_month) && is_numeric($cache_activate_year) && is_numeric($cache_activate_hour)) {
                         $activate_date_not_ok = ((checkdate($cache_activate_month, $cache_activate_day, $cache_activate_year) == false) || $cache_activate_hour < 0 || $cache_activate_hour > 23);
                     }
@@ -412,18 +427,18 @@ if (! $loggedUser) {
 
                 //check cache size
                 $size_not_ok = false;
+
                 if ($sel_size != GeoCache::SIZE_NONE &&
-                        ( $cache_type == GeoCache::TYPE_VIRTUAL ||
+                        ($cache_type == GeoCache::TYPE_VIRTUAL ||
                         $cache_type == GeoCache::TYPE_WEBCAM ||
-                        $cache_type == GeoCache::TYPE_EVENT )) {
+                        $cache_type == GeoCache::TYPE_EVENT)) {
                     $error = true;
                     $size_not_ok = true;
                 }
 
-
                 // check if the user haven't changed type to 'without container'
                 if (isset($_POST['type'])) {
-                    if ((($_POST['type'] == GeoCache::TYPE_OTHERTYPE && $cache_record['type'] != GeoCache::TYPE_OTHERTYPE ) || ($_POST['type'] == GeoCache::TYPE_TRADITIONAL ) || ($_POST['type'] == GeoCache::TYPE_MULTICACHE ) || ($_POST['type'] == GeoCache::TYPE_QUIZ ) || ($_POST['type'] == GeoCache::TYPE_MOVING ) ) && $sel_size == GeoCache::SIZE_NONE) {
+                    if ((($_POST['type'] == GeoCache::TYPE_OTHERTYPE && $cache_record['type'] != GeoCache::TYPE_OTHERTYPE) || ($_POST['type'] == GeoCache::TYPE_TRADITIONAL) || ($_POST['type'] == GeoCache::TYPE_MULTICACHE) || ($_POST['type'] == GeoCache::TYPE_QUIZ) || ($_POST['type'] == GeoCache::TYPE_MOVING)) && $sel_size == GeoCache::SIZE_NONE) {
                         $error = true;
                         $size_not_ok = true;
                     }
@@ -444,15 +459,18 @@ if (! $loggedUser) {
                     $wpMessageVar = 'wp_' . $wpType . '_message';
 
                     ${$wpVar} = isset($_POST[$wpVar]) ? $_POST[$wpVar] : $cache_record[$wpVar];
+
                     if (${$wpVar} == '') {
                         $wpOk = true;
                     } else {
                         $validatedCode = Validator::xxWaypoint($wpType, ${$wpVar});
                         $wpOk = ($validatedCode !== false);
+
                         if ($wpOk) {
                             ${$wpVar} = $validatedCode;
                         }
                     }
+
                     if ($wpOk) {
                         tpl_set_var($wpMessageVar,'');
                     } else {
@@ -465,8 +483,6 @@ if (! $loggedUser) {
                     }
                 }
                 unset($wpVar, $wpMessageVar, $wpOk);
-
-
 
                 // cache-attributes
                 if (isset($_POST['cache_attribs'])) {
@@ -485,6 +501,7 @@ if (! $loggedUser) {
                         $cache_attribs_all = $dbc->dbResultFetchAll($s);
 
                         unset($cache_attribs);
+
                         for ($i = 0; $i < $cache_attribs_count; $i++) {
                             $record = $cache_attribs_all[$i];
                             $cache_attribs[] = $record['attrib_id'];
@@ -506,21 +523,22 @@ if (! $loggedUser) {
                     if ($status_old == GeoCache::STATUS_ARCHIVED &&
                         ! $loggedUser->hasOcTeamRole() &&
                         $status != GeoCache::STATUS_ARCHIVED) {
-
                         $status_not_ok = true;
                     }
                     //all validations ok?
                     if (! $errors_occured) {
-
                         $cache_lat = $coords_lat_h + round($coords_lat_min, 3) / 60;
+
                         if ($coords_latNS == 'S'){
                             $cache_lat = -$cache_lat;
                         }
 
                         $cache_lon = $coords_lon_h + round($coords_lon_min, 3) / 60;
+
                         if ($coords_lonEW == 'W'){
                             $cache_lon = -$cache_lon;
                         }
+
                         if ($publish == 'now') {
                             $activation_date = 'NULL';
                         } elseif ($publish == 'later') {
@@ -548,7 +566,6 @@ if (! $loggedUser) {
                              $cache_country, $sel_size, $cache_difficulty, $cache_terrain, $status,
                              $search_time, $way_length, $log_pw, $wp_gc, $wp_nc, $wp_ge, $wp_tc, $cache_id);
 
-
                         if(I18n::isTranslationAvailable($cache_country)){
                             $adm1 = tr($cache_country);
                         } else {
@@ -562,6 +579,7 @@ if (! $loggedUser) {
                         if ($cache_region == -1) {
                             $cache_region = '0';
                         }
+
                         if ($cache_region != '0') {
                             $code3 = $cache_region;
                             $adm3 = XDb::xMultiVariableQueryValue(
@@ -606,9 +624,9 @@ if (! $loggedUser) {
                         }
 
                         //generate automatic logs
-                        if (( $status_old == GeoCache::STATUS_READY ||
+                        if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_ARCHIVED ||
-                            $status_old == GeoCache::STATUS_BLOCKED ) && $status == GeoCache::STATUS_UNAVAILABLE) {
+                            $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_UNAVAILABLE) {
                                 // generate automatic log about status cache
                                 GeoCacheLog::newLog(
                                     $cache->getCacheId(),
@@ -616,9 +634,10 @@ if (! $loggedUser) {
                                     GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE,
                                     tr(GeoCacheLog::translationKey4CacheStatus(GeoCache::STATUS_UNAVAILABLE)));
                         }
-                        if (( $status_old == GeoCache::STATUS_READY ||
+
+                        if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_UNAVAILABLE ||
-                            $status_old == GeoCache::STATUS_BLOCKED ) && $status == GeoCache::STATUS_ARCHIVED) {
+                            $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_ARCHIVED) {
                                 // generate automatic log about status cache
                                 GeoCacheLog::newLog(
                                     $cache->getCacheId(),
@@ -626,9 +645,10 @@ if (! $loggedUser) {
                                     GeoCacheLog::LOGTYPE_ARCHIVED,
                                     tr(GeoCacheLog::translationKey4CacheStatus(GeoCache::STATUS_ARCHIVED)));
                         }
-                        if (( $status_old == GeoCache::STATUS_UNAVAILABLE ||
+
+                        if (($status_old == GeoCache::STATUS_UNAVAILABLE ||
                             $status_old == GeoCache::STATUS_ARCHIVED ||
-                            $status_old == GeoCache::STATUS_BLOCKED ) && $status == GeoCache::STATUS_READY) {
+                            $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_READY) {
                                 // generate automatic log about status cache
                                 GeoCacheLog::newLog(
                                     $cache->getCacheId(),
@@ -636,9 +656,10 @@ if (! $loggedUser) {
                                     GeoCacheLog::LOGTYPE_READYTOSEARCH,
                                     tr(GeoCacheLog::translationKey4CacheStatus(GeoCache::STATUS_READY)));
                         }
-                        if (( $status_old == GeoCache::STATUS_READY ||
+
+                        if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_UNAVAILABLE ||
-                            $status_old == GeoCache::STATUS_ARCHIVED ) && $status == GeoCache::STATUS_BLOCKED) {
+                            $status_old == GeoCache::STATUS_ARCHIVED) && $status == GeoCache::STATUS_BLOCKED) {
                                 // generate automatic log about status cache
                                 GeoCacheLog::newLog(
                                     $cache->getCacheId(),
@@ -649,6 +670,7 @@ if (! $loggedUser) {
 
                         //display cache-page
                         tpl_redirect(ltrim($cache->getCacheUrl(), '/'));
+
                         exit;
                     }
                 } elseif (isset($_POST['show_all_countries_submit'])) {
@@ -685,10 +707,12 @@ if (! $loggedUser) {
 
                 $rs = XDb::xSql('SELECT `id`, `text_long`, `icon_undef`, `icon_large` FROM `cache_attrib`
                                  WHERE `language`= ? ORDER BY `category`, `id`', I18n::getCurrentLang());
+
                 while ($record = XDb::xFetchArray($rs)) {
                     $line = $cache_attrib_pic;
                     $line = mb_ereg_replace('{attrib_id}', $record['id'], $line);
                     $line = mb_ereg_replace('{attrib_text}', $record['text_long'], $line);
+
                     if (in_array($record['id'], $cache_attribs)) {
                         $line = mb_ereg_replace('{attrib_pic}', $record['icon_large'], $line);
                     } else {
@@ -698,6 +722,7 @@ if (! $loggedUser) {
 
                     $line = $cache_attrib_js;
                     $line = mb_ereg_replace('{id}', $record['id'], $line);
+
                     if (in_array($record['id'], $cache_attribs)) {
                         $line = mb_ereg_replace('{selected}', 1, $line);
                     } else {
@@ -705,6 +730,7 @@ if (! $loggedUser) {
                     }
                     $line = mb_ereg_replace('{img_undef}', $record['icon_undef'], $line);
                     $line = mb_ereg_replace('{img_large}', $record['icon_large'], $line);
+
                     if ($cache_attrib_array != ''){
                         $cache_attrib_array .= ',';
                     }
@@ -723,6 +749,7 @@ if (! $loggedUser) {
 
                 //difficulty
                 $difficulty_options = '';
+
                 for ($i = 2; $i <= 10; $i++) {
                     if ($cache_difficulty == $i) {
                         $difficulty_options .= '<option value="' . $i . '" selected="selected">' . $i / 2 . '</option>';
@@ -735,6 +762,7 @@ if (! $loggedUser) {
 
                 //build terrain options
                 $terrain_options = '';
+
                 for ($i = 2; $i <= 10; $i++) {
                     if ($cache_terrain == $i) {
                         $terrain_options .= '<option value="' . $i . '" selected="selected">' . $i / 2 . '</option>';
@@ -749,18 +777,20 @@ if (! $loggedUser) {
 
                 //build typeoptions
                 $types = '';
-                foreach (GeoCacheCommons::CacheTypesArray() as $type) {
 
+                foreach (GeoCacheCommons::CacheTypesArray() as $type) {
                     // blockforbidden cache types
                     if (($type != $cache_type) && in_array($type, OcConfig::getNoNewCacheOfTypesArray()) &&
                         ! $loggedUser->hasOcTeamRole()) {
                         continue;
                     }
+
                     if (isset($config['cacheLimitByTypePerUser'][$cache_type]) &&
                         $cacheLimitByTypePerUser[$cache_type] >= $config['cacheLimitByTypePerUser'][$cache_type] &&
                         ! $loggedUser->hasOcTeamRole()) {
                         continue;
                     }
+
                     if (
                         isset($cacheLimitByTypePerUser[$type], $config['cacheLimitByTypePerUser'][$type])
                         && $cacheLimitByTypePerUser[$type] >= $config['cacheLimitByTypePerUser'][$type]
@@ -771,27 +801,29 @@ if (! $loggedUser) {
 
                     if ($type == $cache_type) {
                         $types .= '<option value="' . $type . '" selected="selected">' .
-                            htmlspecialchars( tr(GeoCacheCommons::CacheTypeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
+                            htmlspecialchars(tr(GeoCacheCommons::CacheTypeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
                     } else {
                         $types .= '<option value="' . $type . '">' .
-                            htmlspecialchars( tr( GeoCacheCommons::CacheTypeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
+                            htmlspecialchars(tr(GeoCacheCommons::CacheTypeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
                     }
                 }
                 tpl_set_var('typeoptions', $types);
 
                 //build sizeoptions
                 $sizes = '';
-                foreach (GeoCache::CacheSizesArray() as $size) {
 
+                foreach (GeoCache::CacheSizesArray() as $size) {
                     // blockforbidden cache sizes
                     if ($size != $sel_size
                         && ! in_array($size, OcConfig::getEnabledCacheSizesArray())
                     ) {
                         continue;
                     }
+
                     if ($size == GeoCache::SIZE_NONE && $sel_size != GeoCache::SIZE_NONE) {
                         continue;
                     }
+
                     if ($size == $sel_size) {
                         $sizes .= '<option value="' . $size . '" selected="selected">' . tr(GeoCache::CacheSizeTranslationKey($size)) . '</option>';
                     } else {
@@ -803,8 +835,8 @@ if (! $loggedUser) {
                 // Display cache descriptions list
                 $descList = GeoCache::getDescriptions($cache_id);
                 $cache_descs = '';
-                foreach ($descList as $descId => $descLang) {
 
+                foreach ($descList as $descId => $descLang) {
                     if (count($descList) > 1) {
                         $remove_url = 'removedesc.php?cacheid=' . urlencode($cache_id) . '&desclang=' . urlencode($descLang);
                         $removedesc = '&nbsp;&nbsp;<img src="images/log/16x16-trash.png" border="0" align="middle" class="icon16" alt="">' .
@@ -829,9 +861,9 @@ if (! $loggedUser) {
 
                 //Status
                 $statusoptions = '';
-                if (( ( $status_old == GeoCache::STATUS_ARCHIVED || $status_old == GeoCache::STATUS_BLOCKED ) &&
-                    ! $loggedUser->hasOcTeamRole() ) || $status_old == GeoCache::STATUS_WAITAPPROVERS) {
 
+                if ((($status_old == GeoCache::STATUS_ARCHIVED || $status_old == GeoCache::STATUS_BLOCKED) &&
+                    ! $loggedUser->hasOcTeamRole()) || $status_old == GeoCache::STATUS_WAITAPPROVERS) {
                     $disablestatusoption = ' disabled';
                 } else {
                     $disablestatusoption = '';
@@ -840,10 +872,9 @@ if (! $loggedUser) {
 
                 foreach (GeoCache::CacheStatusArray() as $tmpstatus) {
                     //hide id 4 => hidden by approvers, hide id 5 if it is not the current status
-                    if (( $tmpstatus != GeoCache::STATUS_WAITAPPROVERS || $status_old == GeoCache::STATUS_WAITAPPROVERS ) &&
-                        ( $tmpstatus != GeoCache::STATUS_NOTYETAVAILABLE || $status_old == GeoCache::STATUS_NOTYETAVAILABLE ) &&
-                        ( $tmpstatus != GeoCache::STATUS_BLOCKED || $loggedUser->hasOcTeamRole())) {
-
+                    if (($tmpstatus != GeoCache::STATUS_WAITAPPROVERS || $status_old == GeoCache::STATUS_WAITAPPROVERS) &&
+                        ($tmpstatus != GeoCache::STATUS_NOTYETAVAILABLE || $status_old == GeoCache::STATUS_NOTYETAVAILABLE) &&
+                        ($tmpstatus != GeoCache::STATUS_BLOCKED || $loggedUser->hasOcTeamRole())) {
                         if ($tmpstatus == $status) {
                             $statusoptions .= '<option value="' . $tmpstatus . '" selected="selected">' . tr(GeoCache::CacheStatusTranslationKey($tmpstatus)) . '</option>';
                         } else {
@@ -863,6 +894,7 @@ if (! $loggedUser) {
                     $tmp = mb_ereg_replace('{publish_later_checked}', ($publish == 'later') ? 'checked' : '', $tmp);
                     $tmp = mb_ereg_replace('{publish_notnow_checked}', ($publish == 'notnow') ? 'checked' : '', $tmp);
                     $activation_hours = '';
+
                     for ($i = 0; $i <= 23; $i++) {
                         if ($cache_activate_hour == $i) {
                             $activation_hours .= '<option value="' . $i . '" selected="selected">' . $i . '</options>';
@@ -915,11 +947,13 @@ if (! $loggedUser) {
                         $max_seq_record = $dbc->dbResultFetch($s);
                         unset($params);  //clear to avoid overlaping on next paramQuery (if any))
 
-                        $max_seq_number = (isset($max_seq_record ['seq']) ? $max_seq_record ['seq'] : 0);
+                        $max_seq_number = (isset($max_seq_record['seq']) ? $max_seq_record['seq'] : 0);
+
                         if ($max_seq_number < $mp3_count) {
                             $max_seq_number = $mp3_count;
                         }
                         tpl_set_var('def_seq_m', $max_seq_number + 1); // set default seq for mp3 to be added (if link is click) - this line updated link to newmp3.php)  )
+
                         for ($i = 0; $i < $mp3_count; $i++) {
                             $tmpline1 = $mp3line;
                             $mp3_record = $mp3_all[$i];
@@ -950,6 +984,7 @@ if (! $loggedUser) {
                 $lang_db = I18n::getLangForDbTranslations('waypoint_type');
 
                 $cache_type = $cache_record['type'];
+
                 if ($cache_type != GeoCache::TYPE_MOVING) {
                     tpl_set_var('waypoints_start', '');
                     tpl_set_var('waypoints_end', '');
@@ -963,6 +998,7 @@ if (! $loggedUser) {
                     if (XDb::xNumRows($wp_rs) != 0) {
                         $waypoints = '<table id="gradient" cellpadding="5" width="97%" border="1" style="border-collapse: collapse; font-size: 11px; line-height: 1.6em; color: #000000; ">';
                         $waypoints .= '<tr>';
+
                         if ($cache_type == GeoCache::TYPE_OTHERTYPE ||
                                 $cache_type == GeoCache::TYPE_MULTICACHE ||
                                 $cache_type == GeoCache::TYPE_QUIZ) {
@@ -983,6 +1019,7 @@ if (! $loggedUser) {
                             $tmpline1 = mb_ereg_replace('{lat}', $coords_lat, $tmpline1);
                             $tmpline1 = mb_ereg_replace('{desc}', nl2br($wp_record['desc']), $tmpline1);
                             $tmpline1 = mb_ereg_replace('{wpid}', $wp_record['wp_id'], $tmpline1);
+
                             if ($cache_type == GeoCache::TYPE_OTHERTYPE ||
                                     $cache_type == GeoCache::TYPE_MULTICACHE ||
                                     $cache_type == GeoCache::TYPE_QUIZ) {
@@ -1002,9 +1039,11 @@ if (! $loggedUser) {
                             if ($wp_record['status'] == GeoCache::STATUS_READY) {
                                 $status_icon = 'images/free_icons/accept.png';
                             }
+
                             if ($wp_record['status'] == GeoCache::STATUS_UNAVAILABLE) {
                                 $status_icon = 'images/free_icons/error.png';
                             }
+
                             if ($wp_record['status'] == GeoCache::STATUS_ARCHIVED) {
                                 $status_icon = 'images/free_icons/stop.png';
                             }
@@ -1080,14 +1119,12 @@ $view->loadJQuery();
 tpl_set_tplname('editcache');
 tpl_BuildTemplate();
 
-
 /**
  * if coordinates were changed, update altitude
  * @param array $oldCacheRecord
  * @param integer $cacheId
  */
 function updateAltitudeIfNeeded($oldCacheRecord, $cacheId){
-
     $geoCache = GeoCache::fromCacheIdFactory($cacheId);
     $oldCoords = Coordinates::FromCoordsFactory($oldCacheRecord['latitude'], $oldCacheRecord['longitude']);
     $newCoords = $geoCache->getCoordinates();

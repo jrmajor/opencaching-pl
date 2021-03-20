@@ -40,6 +40,7 @@ $in_count = 0;
 $out_count = 0;
 
 $rs = sql("SELECT `uni`, `full_name_nd` FROM `gns_locations` WHERE `dsg` LIKE 'PPL%'");
+
 while ($r = sql_fetch_array($rs)) {
     $in_count++;
     $simpletexts = search_text2sort($r['full_name_nd']);
@@ -54,6 +55,7 @@ while ($r = sql_fetch_array($rs)) {
 
             sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $simpletext, sprintf('%u', crc32($simpletext)));
             $out_count++;
+
             if (isset($doubleindex[$text])) {
                 sql("INSERT INTO `gns_search` (`uni_id`, `sort`, `simple`, `simplehash`) VALUES ('&1', '&2', '&3', '&4')", $r['uni'], $text, $doubleindex[$text], sprintf('%u', crc32($doubleindex[$text])));
                 $out_count++;

@@ -27,8 +27,10 @@ $linie = XDb::xSql(
 echo '<tr><td class="bgcolor2" align="right"><b>' . tr('Stats_t3_02') . '</b>&nbsp;&nbsp;</td><td class="bgcolor2" align="center"><b>' . tr('Stats_t3_03') . '</b>&nbsp;&nbsp;</td><td class="bgcolor2" align="center"><b>' . tr('Stats_t3_04') . '</b>&nbsp;&nbsp;</td></tr><tr><td>';
 $l2 = '';
 $licznik = 0;
+
 while ($linia = XDb::xFetchArray($linie)) {
     $l1 = $linia['count'];
+
     if ($l2 != $l1) {
         $licznik++;
         echo "</td></tr><tr><td class=\"bgcolor2\" align=\"right\">&nbsp;&nbsp;<b>$licznik</b>&nbsp;&nbsp;</td><td class=\"bgcolor2\" align=\"right\">&nbsp;&nbsp;<b>$l1</b>&nbsp;&nbsp;</td>";

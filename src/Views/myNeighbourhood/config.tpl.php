@@ -15,6 +15,7 @@ use src\Utils\Uri\SimpleRouter;
     <?php if ($view->selectedNbh == -1) { ?>
     <a class="btn btn-md btn-primary" href="<?=SimpleRouter::getLink('MyNeighbourhood', 'config', '-1')?>">?</a>
     <?php } // end if selectedNbh = -1
+
       if (count($view->neighbourhoodsList) <= $view->maxnbh) { ?>
     <a class="btn btn-md btn-success" href="<?=SimpleRouter::getLink('MyNeighbourhood', 'config', '-1')?>" title="<?=tr('myn_addarea_info')?>"><img src="/images/misc/plus-sign.svg" class="icon16" alt="<?=tr('new')?>">&nbsp;<?=tr('new')?></a>
     <?php } // end if ?>

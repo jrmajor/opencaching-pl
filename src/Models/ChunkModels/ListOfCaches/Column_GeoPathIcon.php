@@ -1,6 +1,7 @@
 <?php
 
 namespace src\Models\ChunkModels\ListOfCaches;
+
 /**
  * Geopatch icon for the cache.
  * $date needs to contain:

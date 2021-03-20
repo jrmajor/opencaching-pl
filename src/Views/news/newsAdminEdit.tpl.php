@@ -28,6 +28,7 @@ $view->callChunk('tinyMCE');
     <img src="/images/blue/newspaper.png" class="icon22" alt="Newspaper icon">
     <?php if ($view->news->getId() == 0) { echo tr('news_hdr_add'); } else {
       echo tr('news_hdr_edit');
+
       if (! empty($view->news->getTitle())) { echo ' "' . $view->news->getTitle() . '"'; }}?>
   </div>
   <div class="buffer"></div>

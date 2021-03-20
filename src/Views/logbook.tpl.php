@@ -225,6 +225,7 @@ AIM = {
         <select name="logbook_type" id="logbook_type" onchange="parentNode.submit();">
             <?php
             $_GET['logbook_type'] = (int) $_GET['logbook_type'];
+
             if(! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) print '<option value="0" selected="selected">{{logbook_03}}</option>'; ?>
             <option value="1" <?php if($_GET['logbook_type'] == 1) print 'selected="selected"'; ?>>{{logbook_04}}</option>
             <option value="2" <?php if($_GET['logbook_type'] == 2) print 'selected="selected"'; ?>>{{logbook_05}}</option>

@@ -19,7 +19,7 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
     $txtLine = chr(239) . chr(187) . chr(191) . tr('search_text_01') . ' {mod_suffix}{cachename} ' . tr('search_text_02') . ' {owner}
 ' . tr('search_text_03') . ' {lat} {lon}
@@ -59,13 +59,13 @@ N|O|P|Q|R|S|T|U|V|W|X|Y|Z
 {{text}}
 ';
 
-if( $loggedUser || ! $hide_coords ) {
+if($loggedUser || ! $hide_coords) {
     //prepare the output
     $caches_per_page = 20;
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getCalcDistanceSqlFormula(
             is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159,
             0, $multiplier[$distance_unit]) . ' `distance`, ';
@@ -75,6 +75,7 @@ if( $loggedUser || ! $hide_coords ) {
         } else {
             //get the users home coords
             $homeCoords = $loggedUser->getHomeCoordinates();
+
             if ($homeCoords->getLatitude() == null || $homeCoords->getLongitude() == null) {
                 $query .= '0 distance, ';
             } else {
@@ -90,6 +91,7 @@ if( $loggedUser || ! $hide_coords ) {
         }
     }
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
+
     if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id
                 FROM `caches` ';
@@ -102,6 +104,7 @@ if( $loggedUser || ! $hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
@@ -149,6 +152,7 @@ if( $loggedUser || ! $hide_coords ) {
 
             $rName = XDb::xFetchArray($rsName);
             XDb::xFreeResults($rsName);
+
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim($rName['name']);
                 $sFilebasename = str_replace(' ', '_', $sFilebasename);
@@ -161,26 +165,29 @@ if( $loggedUser || ! $hide_coords ) {
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
+
         require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('',6);
     }
 
     $stmt = XDb::xSql('SELECT `txtcontent`.`cache_id` `cacheid`, `txtcontent`.`longitude` `longitude`, `txtcontent`.`latitude` `latitude`, `txtcontent`.cache_mod_cords_id, `caches`.`wp_oc` `waypoint`, `caches`.`date_hidden` `date_hidden`, `caches`.`name` `name`, `caches`.`country` `country`, `caches`.`terrain` `terrain`, `caches`.`difficulty` `difficulty`, `caches`.`desc_languages` `desc_languages`, `caches`.`size` `size`, `caches`.`type` `type_id`, `caches`.`status` `status`, `user`.`username` `username`, `cache_desc`.`desc` `desc`, `cache_desc`.`short_desc` `short_desc`, `cache_desc`.`hint` `hint`, `cache_desc`.`desc_html` `html`, `cache_desc`.`rr_comment`, `caches`.`logpw` FROM `txtcontent`, `caches`, `user`, `cache_desc` WHERE `txtcontent`.`cache_id`=`caches`.`cache_id` AND `caches`.`cache_id`=`cache_desc`.`cache_id` AND `caches`.`default_desclang`=`cache_desc`.`language` AND `txtcontent`.`user_id`=`user`.`user_id`');
 
-    while($r = XDb::xFetchArray($stmt) ) {
+    while($r = XDb::xFetchArray($stmt)) {
         if (@$enable_cache_access_logs) {
-
             $dbc = OcDb::instance();
 
             $cache_id = $r['cacheid'];
             $user_id = $loggedUser->getUserId();
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id];
+
             if ($access_log === null) {
                 $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id];
             }
+
             if (@$access_log[$cache_id] !== true) {
                 $dbc->multiVariableQuery(
                     'INSERT INTO CACHE_ACCESS_LOGS
@@ -189,7 +196,7 @@ if( $loggedUser || ! $hide_coords ) {
                     (NOW(), :1, :2, \'B\', \'download_txt\', :3, :4, :5)',
                     $cache_id, $user_id,
                     $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                    ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
+                    (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
                     );
                 $access_log[$cache_id] = true;
                 $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id] = $access_log;
@@ -237,10 +244,9 @@ if( $loggedUser || ! $hide_coords ) {
         }
 
         if ($loggedUser) {
-
             $cacheNote = CacheNote::getNote($loggedUser->getUserId(), $r['cacheid']);
 
-            if ( ! empty($cacheNote) ) {
+            if (! empty($cacheNote)) {
                 $thisline = str_replace('{personal_cache_note}',
                     html2txt('<br/><br/>-- ' . tr('search_text_16') . ' --<br/> ' .
                         $cacheNote . '<br/>'), $thisline);
@@ -251,7 +257,7 @@ if( $loggedUser || ! $hide_coords ) {
             $thisline = str_replace('{personal_cache_note}', '', $thisline);
         }
 
-        if( $r['rr_comment'] == '' ) {
+        if($r['rr_comment'] == '') {
             $thisline = str_replace('{rr_comment}', '', $thisline);
         } else {
             $thisline = str_replace('{rr_comment}', html2txt('<br /><br />--------<br />' . $r['rr_comment']), $thisline);
@@ -267,7 +273,6 @@ if( $loggedUser || ! $hide_coords ) {
         $thisline = str_replace('{terrain}', $terrain, $thisline);
 
         $thisline = str_replace('{owner}', $r['username'], $thisline);
-
 
         $logentries = '';
         $rsLogs = XDb::xSql(
@@ -287,6 +292,7 @@ if( $loggedUser || ! $hide_coords ) {
             $logtype = tr('logType' . $rLog['type']);
 
             $thislog = str_replace('{type}', $logtype, $thislog);
+
             if ($rLog['text_html'] == 0) {
                 $thislog = str_replace('{{text}}', $rLog['text'], $thislog);
             } else {
@@ -321,4 +327,5 @@ if( $loggedUser || ! $hide_coords ) {
         ob_end_flush();
     }
 }
+
 exit;

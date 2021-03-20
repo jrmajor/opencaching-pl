@@ -16,10 +16,9 @@ use src\Models\ChunkModels\PaginationModel;
 use src\Utils\Uri\Uri;
 
 return function (PaginationModel $pagination){
-
 // begining of chunk
 
-    if( count($pagination->getPagesList()) < 2 ){
+    if(count($pagination->getPagesList()) < 2){
         // there is only one page - so hide pagination
         return;
     }

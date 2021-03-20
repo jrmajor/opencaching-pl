@@ -17,19 +17,15 @@ if (isset($_REQUEST['choseFinalCaches'])) {
 
 displayAllCachesOfPowerTrail($powerTrail, $choseFinalCaches);
 
-
-
-
-
 function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 {
     $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : -9999;
     $powerTrailCachesUserLogsByCache = $powerTrail->getFoundCachsByUser($userId);
     $geocacheFoundArr = [];
+
     foreach ($powerTrailCachesUserLogsByCache as $geocache) {
         $geocacheFoundArr[$geocache['geocacheId']] = $geocache;
     }
-
 
     if ($powerTrail->getCacheCount() == 0) {
         return '<br /><br />' . tr('pt082');
@@ -54,6 +50,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
     $cacheRows = '<table class="ptCacheTable" align="center" width="90%"><tr>
         <th>' . tr('pt075') . '</th>
         <th>' . tr('pt076') . '</th>';
+
     if ($choseFinalCaches) {
         $cacheRows .= '<th></th>';
     }
@@ -74,7 +71,6 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 
     /* @var $geocache GeoCache */
     foreach ($powerTrail->getGeocaches() as $geocache) {
-
         $_SESSION['geoPathCacheList'][] = $geocache->getCacheId();
         $totalFounds += $geocache->getFounds();
         $totalTopRatings += $geocache->getRecommendations();
@@ -86,6 +82,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         } else {
             $bgcolor = '#eeeeff';
         }
+
         if ($geocache->isIsPowerTrailFinalGeocache()) {
             $bgcolor = '#000000';
             $fontColor = '<font color ="#ffffff">';
@@ -99,7 +96,6 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
                 $geocache->getCacheType(),
                 GeoCacheCommons::STATUS_READY,
                 GeoCacheLog::LOGTYPE_FOUNDIT);
-
         } elseif ($geocache->getOwner()->getUserId() == $userId) {
             $iconSrc = GeoCacheCommons::CacheIconByType(
                 $geocache->getCacheType(),
@@ -160,11 +156,11 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
     $countCaches = $powerTrail->getCacheCount();
 
     if($countCaches > 0) {
-
         // filter-out absent types and sizes
         $typesToShow = [GeoCache::TYPE_TRADITIONAL, GeoCache::TYPE_MULTICACHE, GeoCache::TYPE_QUIZ, GeoCache::TYPE_OTHERTYPE];
         $typesNumberList = [];
         $typesLabelsList = [];
+
         foreach($typesToShow as $type) {
             if($cachetypes[$type] > 0) {
                 // there is at least one cache of such type
@@ -175,9 +171,11 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 
         // count the rest of types
         $restOfTypes = 0;
+
         foreach (array_diff(GeoCache::CacheTypesArray(), $typesToShow) as $type) {
             $restOfTypes += $cachetypes[$type];
         }
+
         if ($restOfTypes > 0) {
             // there is at least one cache of such type
             $typesNumberList[] = $restOfTypes;
@@ -197,6 +195,7 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 
         $sizesNumberList = [];
         $sizesLabelsList = [];
+
         foreach($sizesToShow as $size) {
             if($cacheSize[$size] > 0) {
                 // there is at least one cache of such type
@@ -238,7 +237,6 @@ function ratings($score, $votes)
         return '<span style="color: gray">' . tr('pt083') . '</span>';
     }
     $scoreNum = GeoCacheCommons::ScoreAsRatingNum($score);
-
 
     switch ($scoreNum) {
         case 1: return '<span style="color: #790000">' . tr('pt074') . '</span>';

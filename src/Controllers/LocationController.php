@@ -10,7 +10,6 @@ use src\Utils\Gis\Countries;
  * This controller is a helper which provides data around location, Gis etc.
  */
 
-
 class LocationController extends BaseController
 {
     public function __construct()
@@ -43,6 +42,7 @@ class LocationController extends BaseController
     {
         $this->checkUserLoggedAjax();
         $coords = Coordinates::FromCoordsFactory($lat, $lon);
+
         if (! $coords) {
             $this->ajaxErrorResponse('Improper coords!');
         }
@@ -51,6 +51,5 @@ class LocationController extends BaseController
 
         $this->ajaxSuccessResponse('Location based on coords.',
             ['locationTable' => $nutsLocation->getDataTable()]);
-
     }
 }

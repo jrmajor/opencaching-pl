@@ -12,7 +12,6 @@ use src\Utils\Text\UserInputFilter;
 
 class GeoCacheDesc extends BaseObject
 {
-
     const HTML_SAFE = 2;
 
     private $id;
@@ -30,9 +29,7 @@ class GeoCacheDesc extends BaseObject
     private $rr_comment = '';
 
     public function __construct(){
-
         parent::__construct();
-
     }
 
     public static function fromCacheIdFactory($cacheId, $descLang)
@@ -40,6 +37,7 @@ class GeoCacheDesc extends BaseObject
         try{
             $obj = new self();
             $obj->loadByCacheId($cacheId, $descLang);
+
             return $obj;
         }catch (Exception $e){
             return null;
@@ -50,6 +48,7 @@ class GeoCacheDesc extends BaseObject
     {
         $obj = new self();
         $obj->cacheId = $cacheId;
+
         return $obj;
     }
 
@@ -103,11 +102,9 @@ class GeoCacheDesc extends BaseObject
         $desc = $this->desc;
 
         if ($this->desc_html != self::HTML_SAFE) {
-
             // unsafe HTML, needs purifying
             $desc = htmlspecialchars_decode($desc);
             $desc = UserInputFilter::purifyHtmlString($desc);
-
         } else {
             // safe HTML - pass as is
         }
@@ -137,7 +134,6 @@ class GeoCacheDesc extends BaseObject
     }
 
     public static function UpdateAdminComment(GeoCache $geoCache, $comment, User $author){
-
         $userName = $author->getUserName();
         $comment = UserInputFilter::purifyHtmlString(nl2br($comment));
         $date = Formatter::dateTime(); //current formated date+time
@@ -151,9 +147,7 @@ class GeoCacheDesc extends BaseObject
                 last_modified = NOW()
             WHERE cache_id= :2 ', $formattedComment, $geoCache->getCacheId());
 
-
         EmailSender::sendNotifyOfOcTeamCommentToCache($geoCache, $author, $comment);
-
     }
 
     public static function RemoveAdminComment(GeoCache $geoCache){

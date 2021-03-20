@@ -4,10 +4,10 @@
  * Check myProvince.php for example of use it.
  *
  */
+
 namespace src\Models\ChunkModels;
 
 class ListOfCaches{
-
     private $listOfCaches = [];
     private $recomendationColumn = false;
     private $logTooltipEnabled = false;
@@ -46,7 +46,6 @@ class ListOfCaches{
 }
 
 class ListOfCachesCacheModel{
-
     public $icon = '';
     public $date = '';
     public $cacheName = '';

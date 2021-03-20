@@ -27,14 +27,11 @@ require_once(__DIR__ . '/common.inc.php');
         $sDateTo = $_REQUEST['DT'];
         $sNameOfStat = $_REQUEST['stat'];
 
-
-
         if ($sDateFrom != '')
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
 
         if ($sDateTo != '')
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
-
 
         if ($sNameOfStat == 'NumberOfFinds')
             $sTypeCondition = ' and  cl.type=1 ';
@@ -42,9 +39,7 @@ require_once(__DIR__ . '/common.inc.php');
         if ($sNameOfStat == 'MaintenanceOfCaches')
             $sTypeCondition = ' and  cl.type=6 ';
 
-
         $asUserID = explode(',', $sUserIDLine);
-
 
         if (! strlen($sUserIDLine))
             $sEND = tr('SelectUsers');
@@ -53,12 +48,12 @@ require_once(__DIR__ . '/common.inc.php');
             $sEND = tr('more10');
 
         echo '<script>';
+
         if ($sEND != '') {
             echo "alert( '$sEND' );";
             $asUserID = explode(',', '');
         }
         echo '</script>';
-
 
         $sCondition = '';
 
@@ -94,11 +89,10 @@ require_once(__DIR__ . '/common.inc.php');
 
 ////////////////////
 
-
-
         echo '<script>';
 
         $i = 0;
+
         foreach ($asUserID as $sID) {
             $sName = $aUserName[$sID];
             $sName = str_replace("'", '`', $sName);
@@ -107,14 +101,12 @@ require_once(__DIR__ . '/common.inc.php');
             $i++;
         }
 
-
 //echo "gcl.addChartOption('vAxis', { title: 'Ilość keszy' } );";
         echo ' var chartOpt = gcl.getChartOption();';
         echo " chartOpt.vAxis.title= '" . tr('NrCaches') . "';";
         echo '</script>';
 
 ////////////////////////////
-
 
         $dbc = OcDb::instance();
 
@@ -154,12 +146,10 @@ require_once(__DIR__ . '/common.inc.php');
 
             $anCount[$nUserId] += $record['count'];
 
-
             echo "
             gcl.addEmptyRow();
             gcl.addToLastRow( 0, $sNewDate );
         ";
-
 
             $nrCol = $aNrColumn[$nUserId];
             $val = $anCount[$nUserId];

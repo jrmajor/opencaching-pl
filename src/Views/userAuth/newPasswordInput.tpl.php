@@ -2,7 +2,7 @@
   <?=tr('newpw_title')?> - <?=tr('step2')?>
 </div>
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', null, null, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', null, null, $view->errorMsg); ?>
   <div class="callout callout-info">
     <?=tr('password_requirements')?>
     <div class="buffer"></div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\EventHandler;
 
 use src\Models\GeoCache\GeoCache;

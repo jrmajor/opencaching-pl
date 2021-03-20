@@ -89,6 +89,7 @@ class UserInputFilter
                     $cfg->getHTMLDefinition();
                     $cfg->getCSSDefinition();
                     $cfg->getURIDefinition();
+
                     return $cfg;
                 }
             );
@@ -109,9 +110,11 @@ class UserInputFilter
         $config = self::getConfig();
         $purifier = new HTMLPurifier($config);
         $cleanHtml = $purifier->purify($dirtyHtml);
+
         if (($config->get('Core.CollectErrors')) && ($context !== null)) {
             $context['errors'] = &$purifier->context->get('ErrorCollector');
         }
+
         return $cleanHtml;
 
         // 1. SVG się nie osadza -> done
@@ -130,7 +133,6 @@ class UserInputFilter
      */
     public static function purifyHtmlStringAndDecodeHtmlSpecialChars($dirtyHtml, $htmlMode)
     {
-
         // current working implementation - the old way
         if ($htmlMode < 2) {
             // see https://github.com/opencaching/opencaching-pl/issues/1218
@@ -184,7 +186,6 @@ class OC_HTMLSafeObject extends HTMLPurifier_HTMLModule_SafeObject
 
 class OC_HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform_SafeParam
 {
-
     protected $allowScriptAccess;
     protected $allowNetworking;
 
@@ -200,12 +201,15 @@ class OC_HTMLPurifier_AttrTransform_SafeParam extends HTMLPurifier_AttrTransform
         switch ($attr['name']) {
             case 'allowScriptAccess':
                 $attr['value'] = $this->allowScriptAccess->validate($attr['value'], $config, $context);
+
                 return $attr;
             case 'allowNetworking':
                 $attr['value'] = $this->allowNetworking->validate($attr['value'], $config, $context);
+
                 return $attr;
         }
         $attr = parent::transform($attr, $config, $context);
+
         return $attr;
     }
 }
@@ -215,7 +219,7 @@ class OC_HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector_SafeObje
     public function __construct()
     {
         unset($this->addParam['allowScriptAccess'], $this->addParam['allowNetworking']);
-        
+
         $this->allowedParam['allowScriptAccess'] = true;
         $this->allowedParam['allowNetworking'] = true;
     }

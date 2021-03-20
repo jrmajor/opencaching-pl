@@ -72,8 +72,7 @@ XDb::xSql(
         INNER JOIN `caches` ON `topFounds`.`cache_id`=`caches`.`cache_id`
     ORDER BY `idx` DESC');
 
-if ( 10 < XDb::xSimpleQueryValue('SELECT COUNT(*) FROM `topResult`', 0) ) {
-
+if (10 < XDb::xSimpleQueryValue('SELECT COUNT(*) FROM `topResult`', 0)) {
     $min_idx = XDb::xSimpleQueryValue(
         'SELECT `idx` FROM `topResult` ORDER BY `idx` DESC LIMIT 99999, 1', 0);
 
@@ -95,8 +94,8 @@ $rsCaches = XDb::xSql(
     ORDER BY `idx` DESC');
 
 $items = [];
-while ( $rCaches = XDb::xFetchArray($rsCaches) ) {
 
+while ($rCaches = XDb::xFetchArray($rsCaches)) {
     $widthB = round(100 * ($rCaches['idx'] / 200) / 1, 0);
 
     $line = '<tr><td><span class="content-title-noshade txt-blue08" >{index}</span></td><td><span class="content-title-noshade txt-green10">{rating}</span></td><td><span class="content-title-noshade txt-green10">{fbr}</span></td><td><a class="links" href="viewcache.php?cacheid={cacheid}" target="_blank">{name}</a></td><td><a class="links" href="viewprofile.php?userid={userid}" target="_blank">{username}</a></td></tr>';

@@ -1,9 +1,9 @@
 <?php
+
 namespace src\Models\ChunkModels\ListOfCaches;
 
 use src\Utils\Debug\Debug;
 use src\Utils\View\View;
-
 
 /**
  * This is an abstract column for listOfCaches chunk.
@@ -46,7 +46,6 @@ abstract class AbstractColumn {
     }
 
     public final function callColumnChunk($row){
-
         if(! $this->chunkFunction){
             $this->chunkFunction = View::getChunkFunc($this->getChunkName());
         }

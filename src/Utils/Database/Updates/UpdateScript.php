@@ -33,7 +33,6 @@ class UpdateScript
     public function updateTranslations($lang)
     {
         foreach (I18n::getTranslationTables() as $table) {
-
             $existingLangs = $this->db->dbFetchOneColumnArray(
                 $this->db->simpleQuery(
                     'SHOW COLUMNS FROM `' . $table . "` WHERE field LIKE '__'"
@@ -59,17 +58,18 @@ class UpdateScript
                 ),
                 $idColumn
             );
+
             foreach ($ids as $id) {
                 $key = I18n::getTranslationKey($table, $id);
 
                 if ($translation = I18n::translatePhrase($key, $lang, false, true)) {
-
                     $oldText = $this->db->multiVariableQueryValue(
                         'SELECT `' . $lang . '` FROM `' . $table . '`
                         WHERE `' . $idColumn . '` = :1',
                         '',
                         $id
                     );
+
                     if ($translation != $oldText && ($oldText == '' || $table != 'log_types')) {
                         // TODO: log_types; see issue #1794
 
@@ -120,6 +120,7 @@ class UpdateScript
     protected static function finishTest()
     {
         $warnings = ob_get_clean();
+
         if ($warnings) {
             echo $warnings;
         } else {

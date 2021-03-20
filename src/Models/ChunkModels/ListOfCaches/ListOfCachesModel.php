@@ -26,7 +26,6 @@ use src\Utils\View\View;
  */
 class ListOfCachesModel
 {
-
     private $columns = [];
     private $rows = [];
     private $paginationModel = null;
@@ -118,6 +117,7 @@ class ListOfCachesModel
         if ($this->emptyListMessage) {
             return $this->emptyListMessage;
         }
+
         return tr('listOfCaches_defaultNoRowsMessage');
     }
 }

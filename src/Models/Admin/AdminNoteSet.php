@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use src\Models\BaseObject;
@@ -6,7 +7,6 @@ use src\Models\User\User;
 
 class AdminNoteSet extends BaseObject
 {
-
     /**
      * Default admin notes count to display
      *
@@ -57,6 +57,7 @@ class AdminNoteSet extends BaseObject
             SELECT COUNT(*)
             FROM `admin_user_notes`
             WHERE `user_id` = :1';
+
         return self::db()->multiVariableQueryValue($query, 0, $user->getUserId());
     }
 }

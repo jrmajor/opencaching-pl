@@ -1,18 +1,24 @@
 <?php
+
 use src\Utils\Database\OcDb;
 // ajaxUpdateDemandPercent.php
 session_start();
+
 if(! isset($_SESSION['user_id'])){
     echo 'no hacking please!';
+
     exit;
 }
+
 require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 $ptAPI = new powerTrailBase;
 
 $powerTrailId = (int) $_REQUEST['projectId'];
 $newPercent = (int) $_REQUEST['newPercent'];
+
 if($newPercent < \src\Controllers\PowerTrailController::MINIMUM_PERCENT_REQUIRED || $newPercent > 100) {
     echo 'error';
+
     exit;
 }
 

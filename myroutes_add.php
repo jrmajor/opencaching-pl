@@ -3,14 +3,15 @@
 use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -28,11 +29,11 @@ if (! $loggedUser) {
 
         if (isset($_POST['back'])) {
             tpl_redirect('myroutes.php');
+
             exit;
         }
         // start submit
         if (isset($_POST['submitform'])) {
-
             // insert route name
             XDb::xSql(
                 "INSERT INTO `routes` ( `route_id`, `user_id`, `name`, `description`, `radius` )
@@ -63,12 +64,12 @@ if (! $loggedUser) {
                     }
                 }
 
-
                 foreach ($xml->Document->Folder as $xmlelement) {
                     foreach ($xmlelement->Folder as $folder) {
                         foreach ($folder->Placemark->LineString->coordinates as $coordinates) {
                             if ($coordinates) {
                                 $coords_raw = explode(' ', trim($coordinates));
+
                                 foreach ($coords_raw as $coords_raw_part) {
                                     if ($coords_raw_part) {
                                         $coords_raw_parts = explode(',', $coords_raw_part);
@@ -85,10 +86,10 @@ if (! $loggedUser) {
             //we get the point data in to an array called $points:
 
             if (! $error && isset($coords)) {
-
                 for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
                     $points[] = ['lon' => $coords[$i], 'lat' => $coords[$i + 1]];
-                    if (($coords[$i] + 0 == 0) or ( $coords[$i + 1] + 0 == 0)) {
+
+                    if (($coords[$i] + 0 == 0) or ($coords[$i + 1] + 0 == 0)) {
                         $error .= "Invalid Co-ords found in import file.<br>\n";
                         break;
                     }
@@ -96,6 +97,7 @@ if (! $loggedUser) {
             }
             // add it to the route_points database:
             $point_num = 0;
+
             if(isset($points)){
                 foreach ($points as $point) {
                     $point_num++;
@@ -106,6 +108,7 @@ if (! $loggedUser) {
                 }
             }
             tpl_redirect('myroutes.php');
+
             exit;
         } //end submit
 

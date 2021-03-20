@@ -18,10 +18,12 @@ $rs = $dbcSearch->simpleQuery('
     where cache_id in (' . $queryFilter . ')
 ');
 $result = [];
+
 foreach ($dbcSearch->dbResultFetchAll($rs) as &$row_ref) {
     $result[] = $row_ref['wp_oc'];
 }
 
 header('Content-type: application/json; charset=utf-8');
 echo json_encode($result);
+
 exit;

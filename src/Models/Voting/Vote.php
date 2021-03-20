@@ -31,6 +31,7 @@ class Vote extends BaseObject
 
         $query = 'INSERT INTO vote_votes (electionId, optionId, date, hash) VALUES ';
         $values = [];
+
         foreach ($votes as $optionId) {
             $values[] = "($electionId, $optionId, FROM_UNIXTIME($date), '$hash')";
         }
@@ -55,6 +56,7 @@ class Vote extends BaseObject
             $vote = new self();
             $vote->optId = $row['optionId'];
             $vote->date = new DateTime($row['date']);
+
             return $vote;
         });
     }

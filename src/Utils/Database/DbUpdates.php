@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Database;
 
 use Exception;
@@ -32,6 +33,7 @@ class DbUpdates
             }
             // Numbers 900+ are reserved for always-run-last updates.
         }
+
         return sprintf('%03d', substr($lastRegularUpdate, 0, 3) + 1);
     }
 
@@ -72,6 +74,7 @@ class DbUpdates
     public function delete($uuid)
     {
         $update = self::get($uuid);
+
         if (! $update) {
             return true;
         }
@@ -84,6 +87,7 @@ class DbUpdates
             // Looks like the file was not staged/committed to Git yet.
             unlink($path);
         }
+
         if (! file_exists($path)) {
             if (self::$updates !== null) {
                 unset(self::$updates[$uuid]);
@@ -97,6 +101,7 @@ class DbUpdates
 
             return true;
         }
+
         return false;
     }
 
@@ -106,9 +111,11 @@ class DbUpdates
     public static function get($uuid)
     {
         $updates = self::getAll();
+
         if (isset($updates[$uuid])) {
             return $updates[$uuid];
         }
+
         return null;
     }
 
@@ -120,6 +127,7 @@ class DbUpdates
         if (self::$updates === null) {
             self::makeUpdatesDict();
         }
+
         return self::$updates;
     }
 
@@ -156,7 +164,6 @@ class DbUpdates
                 if (DbUpdateHistory::contains($uuid)) {
                     DbUpdateHistory::rename($uuid, $name);
                 }
-
             } elseif (preg_match(
                 '~/([0-9][^/]+\.php)$~', $scriptPath, $matches
             )) {
@@ -203,12 +210,14 @@ class DbUpdates
                 $messages .= self::runRoutines($fileName);
             }
         }
+
         return $messages;
     }
 
     public static function runRoutines($fileName)
     {
         $queries = self::getRoutineContents($fileName);
+
         if (substr($queries, 0, 10) != 'DELIMITER ') {
             throw new Exception('DELIMITER statement is missing in ' . $fileName);
         }
@@ -220,6 +229,7 @@ class DbUpdates
             365 * 24 * 3600
               // At least once a year, all routines are re-installed.
         );
+
         return 'run ' . $fileName . "\n";
     }
 
@@ -235,6 +245,7 @@ class DbUpdates
             $fileName = basename($filePath);
             $routines[$fileName] = Facade::cache_get('run ' . $fileName);
         }
+
         return $routines;
     }
 

@@ -13,18 +13,18 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 $ovlLine = "[Symbol {symbolnr1}]\r\nTyp=6\r\nGroup=1\r\nWidth=20\r\nHeight=20\r\nDir=100\r\nArt=1\r\nCol=3\r\nZoom=1\r\nSize=103\r\nArea=2\r\nXKoord={lon}\r\nYKoord={lat}\r\n[Symbol {symbolnr2}]\r\nTyp=2\r\nGroup=1\r\nCol=3\r\nArea=1\r\nZoom=1\r\nSize=130\r\nFont=1\r\nDir=100\r\nXKoord={lonname}\r\nYKoord={latname}\r\nText={mod_suffix}{cachename}\r\n";
 $ovlFoot = "[Overlay]\r\nSymbols={symbolscount}\r\n";
 
-if( $loggedUser || ! $hide_coords ) {
+if($loggedUser || ! $hide_coords) {
     //prepare the output
     $caches_per_page = 20;
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getSqlDistanceFormula($lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
         if (! $loggedUser) {
@@ -50,6 +50,7 @@ if( $loggedUser || ! $hide_coords ) {
             XDb::xFreeResults($rs_coords);
         }
     }
+
     if (! $loggedUser) {
         $query .= ' `caches`.`cache_id`, `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id, `caches`.`type` `type`
                 FROM `caches` ';
@@ -62,6 +63,7 @@ if( $loggedUser || ! $hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else if ($sortby == 'bycreated') {
@@ -84,9 +86,9 @@ if( $loggedUser || ! $hide_coords ) {
 
     $queryLimit = ' LIMIT ' . $startat . ', ' . $count;
 
-    $dbcSearch->simpleQuery( 'CREATE TEMPORARY TABLE `ovlcontent` ' . $query . $queryLimit);
+    $dbcSearch->simpleQuery('CREATE TEMPORARY TABLE `ovlcontent` ' . $query . $queryLimit);
 
-    $s = $dbcSearch->simpleQuery( 'SELECT COUNT(*) AS `count` FROM `ovlcontent`');
+    $s = $dbcSearch->simpleQuery('SELECT COUNT(*) AS `count` FROM `ovlcontent`');
     $rCount = $dbcSearch->dbResultFetchOneRowOnly($s);
 
     if ($rCount['count'] == 1) {
@@ -94,7 +96,6 @@ if( $loggedUser || ! $hide_coords ) {
             'SELECT `caches`.`wp_oc` `wp_oc` FROM `ovlcontent`, `caches`
             WHERE `ovlcontent`.`cache_id`=`caches`.`cache_id` LIMIT 1');
         $rName = $rCount = $dbcSearch->dbResultFetchOneRowOnly($s);
-
 
         $sFilebasename = $rName['wp_oc'];
     } else {
@@ -108,6 +109,7 @@ if( $loggedUser || ! $hide_coords ) {
 
             $rName = XDb::xFetchArray($rsName);
             XDb::xFreeResults($rsName);
+
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim(convert_string($rName['name']));
                 $sFilebasename = str_replace(' ', '_', $sFilebasename);
@@ -123,6 +125,7 @@ if( $loggedUser || ! $hide_coords ) {
                 `ovlcontent`.`latitude` `latitude`, `ovlcontent`.cache_mod_cords_id,
                 `caches`.`name` `name`, `ovlcontent`.`type` `type` FROM `ovlcontent`, `caches`
         WHERE `ovlcontent`.`cache_id`=`caches`.`cache_id`');
+
     while($r = $dbcSearch->dbResultFetch($s)) {
         $thisline = $ovlLine;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\ChunkModels\StaticMap;
 
 use src\Controllers\StartPageController;
@@ -37,7 +38,6 @@ class StaticMapModel
     public static function fixedZoomMapFactory(Coordinates $mapCenter, $mapZoom,
         array $imgDimensions, $mapType = null)
     {
-
         $map = new self();
         $map->mapCenter = $mapCenter;
         $map->mapZoom = $mapZoom;
@@ -76,7 +76,6 @@ class StaticMapModel
 
     public function createMarker($id, Coordinates $coords, $color,
         $tooltip = null, $link = null){
-
         [$left, $top] = Gis::positionAtMapImg(
             $coords, $this->mapCenter, $this->mapZoom, $this->imgWidth, $this->imgHeight);
 

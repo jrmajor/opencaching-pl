@@ -1,4 +1,5 @@
 <?php
+
 require_once __DIR__ . '/../../lib/ClassPathDictionary.php';
 
 use src\Controllers\GeoKretyLogController;

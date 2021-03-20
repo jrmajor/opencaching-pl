@@ -1,5 +1,6 @@
 <?php
 $secret = 'dupa231';
+
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
@@ -20,7 +21,6 @@ $_GET = array_map('stripslashes_deep', $_GET);
 $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
 $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
-
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -81,22 +81,20 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             //$text = mb_convert_encoding( $text, "utf-8", "HTML-ENTITIES" );
 
             //decode decimal HTML entities added by web browser
-            $text = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $text );
+            $text = preg_replace('/&#\d{2,5};/ue', "utf8_entity_decode('$0')", $text);
             //decode hex HTML entities added by web browser
-            $text = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $text );
+            $text = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $text);
 
             //callback function for the regex
             function utf8_entity_decode($entity){
             $convmap = [0x0, 0x10000, 0, 0xfffff];
+
             return 'ż';
             // return mb_decode_numericentity($entity, $convmap, 'UTF-8');
             }
 
-
             $tidy = tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, 'UTF-8'), $options);
             tidy_clean_repair($tidy);
-
-
 
             function iterate_over($node)
             {
@@ -108,21 +106,26 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             echo "deleting\n";
             array_push($removed, $node);
             }
+
             if(! $node)
             return;
 
             if($node->hasAttributes()) {
             $attributes = $node->attributes;
+
             if(! is_null($attributes))
             foreach ($attributes as $index => $attr)
             echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
             }
+
             if($node->hasChildNodes()) {
             $children = $node->childNodes;
+
             foreach($children as $child) {
             $removed = array_merge($removed, iterate_over($child, $array));
             }
             }
+
             return $removed;
             }
 
@@ -142,16 +145,18 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             if($domElement->hasChildNodes()) {
             $children = $domElement->childNodes;
             $toAppend = [];
+
             foreach($children as $child)
             array_unshift($toAppend, $child);
+
             foreach($toAppend as $child)
             appendSibling($child, $domElement);
             }
             //  $domElement->parentNode->removeChild($domElement);
             }
 
-
             $str = (string) $tidy;
+
             if($str) {
             //  $str = str_replace("&amp;", "&", $str);
             $doc = DOMDocument::loadXML('<cache_description>' . $str . '</cache_description>');
@@ -160,6 +165,7 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             if($main) {
             $for_removal = iterate_over($main);
+
             foreach($for_removal as $domElement) {
             echo "<br/>removing ..\n";
             remove_node($domElement);
@@ -187,9 +193,6 @@ echo htmlspecialchars($str, ENT_NOQUOTES, 'UTF-8');
         <div id="textpreview">
             <?php
             echo $str;
-
-
-
 
             ?>
         </div>

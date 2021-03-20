@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Admin;
 
 use src\Controllers\BaseController;
@@ -31,7 +32,6 @@ class CacheSetAdminController extends BaseController
             exit;
         }
         */
-
     }
 
     public function isCallableFromRouter($actionName)
@@ -42,7 +42,6 @@ class CacheSetAdminController extends BaseController
 
     public function index()
     {
-
     }
 
     /**
@@ -60,9 +59,10 @@ class CacheSetAdminController extends BaseController
 
         $csToArchive = CacheSet::getCacheSetsToArchive();
 
-        if( empty($csToArchive)){
+        if(empty($csToArchive)){
             $this->view->setVar('noCsToArchive', true);
             $this->view->buildView();
+
             exit;
         } else {
             $this->view->setVar('noCsToArchive', false);
@@ -71,7 +71,7 @@ class CacheSetAdminController extends BaseController
         // prepare model for list of watched caches
         $listModel = new ListOfCachesModel();
         $listModel->addColumn(
-            new Column_CacheSetNameAndIcon( tr('admCs_cacheSet'),
+            new Column_CacheSetNameAndIcon(tr('admCs_cacheSet'),
                 function($row){
                     return [
                         'id' => $row['id'],
@@ -80,28 +80,26 @@ class CacheSetAdminController extends BaseController
                     ];
                 }));
         $listModel->addColumn(
-            new Column_SimpleText( tr('admCs_currentRatio'), function($row){
+            new Column_SimpleText(tr('admCs_currentRatio'), function($row){
                 return $row['activeCaches'] . ' ( ' . round($row['currentRatio']) . '% ) ';
             }));
 
         $listModel->addColumn(
-            new Column_SimpleText( tr('admCs_requiredRatio'), function($row){
+            new Column_SimpleText(tr('admCs_requiredRatio'), function($row){
                 // find number of required caches
                 $requiredCachesNum = ceil($row['cacheCount'] * $row['ratioRequired'] / 100);
+
                 return $requiredCachesNum . ' ( ' . round($row['ratioRequired']) . '% )';
             }));
 
         $listModel->addDataRows($csToArchive);
         $this->view->setVar('listOfCssToArchiveModel', $listModel);
 
-
-
         // init map-chunk model
         $this->view->addHeaderChunk('openLayers5');
 
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $csToArchive, function($row){
-
             $ratioTxt = round($row['currentRatio']) . '/' . $row['ratioRequired'] . '%';
 
             $marker = new CacheSetMarkerModel();
@@ -112,13 +110,13 @@ class CacheSetAdminController extends BaseController
 
             $marker->link = CacheSet::getCacheSetUrlById($row['id']);
             $marker->name = $row['name'] . " ($ratioTxt)";
+
             return $marker;
         });
 
         $this->view->setVar('mapModel', $mapModel);
 
         $this->view->buildView();
-
     }
 
     public function showDuplicatesInGeopaths()
@@ -138,21 +136,21 @@ class CacheSetAdminController extends BaseController
         $this->view->setVar('caches', $caches);
 
         $pts = [];
+
         foreach ($cacheIds as $cacheid) {
             $ptArr = PowerTrail::CheckForPowerTrailByCache($cacheid, true);
             $pts[$cacheid] = [];
+
             foreach ($ptArr as $ptRow) {
                 $pts[$cacheid][] = new PowerTrail(['dbRow' => $ptRow]);
             }
         }
         $this->view->setVar('pts', $pts);
 
-
         $this->view->buildView();
     }
 
     public function removeDuplicatedCachesAjax($gpId, $cacheId) {
-
         $this->checkUserLoggedAjax();
 
         if (! is_numeric($gpId) || ! is_numeric($cacheId)) {
@@ -160,6 +158,7 @@ class CacheSetAdminController extends BaseController
         }
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
+
         if (! $cache) {
             $this->ajaxErrorResponse("No such geocache: $cacheId");
         }
@@ -179,6 +178,7 @@ class CacheSetAdminController extends BaseController
         }
 
         $gp = CacheSet::fromCacheSetIdFactory($gpId);
+
         if (! $gp) {
             $this->ajaxErrorResponse('No such GP');
         }

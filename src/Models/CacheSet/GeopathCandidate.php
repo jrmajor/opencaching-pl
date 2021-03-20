@@ -8,7 +8,6 @@ use src\Models\GeoCache\MultiCacheStats;
 use src\Models\User\User;
 use src\Utils\Debug\Debug;
 
-
 class GeopathCandidate extends BaseObject
 {
     private $id;
@@ -25,7 +24,7 @@ class GeopathCandidate extends BaseObject
         $candidate = new self();
         $candidate->id = $candidateId;
 
-        if( $candidate->loadDataFromDb() ){
+        if($candidate->loadDataFromDb()){
             return $candidate;
         }
 
@@ -48,10 +47,12 @@ class GeopathCandidate extends BaseObject
              WHERE id = :1 LIMIT 1', $this->id);
 
         $data = $this->db->dbResultFetchOneRowOnly($stmt);
+
         if(! $data) {
             return false;
         }
         $this->loadFromDbRow($data);
+
         return true;
     }
 
@@ -94,10 +95,10 @@ class GeopathCandidate extends BaseObject
      * @return GeoCache
      */
     public function getGeoCache(){
-
         if(! $this->cache) {
             $this->cache = GeoCache::fromCacheIdFactory($this->cacheId);
         }
+
         return $this->cache;
     }
 
@@ -119,6 +120,7 @@ class GeopathCandidate extends BaseObject
         if(! $this->geopath){
             $this->geopath = CacheSet::fromCacheSetIdFactory($this->geopathId);
         }
+
         return $this->geopath;
     }
 
@@ -136,6 +138,7 @@ class GeopathCandidate extends BaseObject
 
         $result = [];
         $cacheIds = [];
+
         while($row = $db->dbResultFetch($rs)){
             $candidate = new self();
             $candidate->id = $row['id'];
@@ -151,6 +154,7 @@ class GeopathCandidate extends BaseObject
         foreach(MultiCacheStats::getGeocachesById($cacheIds) as $geoCache){
             $result[$geoCache->getCacheId()]->cache = $geoCache;
         }
+
         return $result;
     }
 
@@ -168,6 +172,7 @@ class GeopathCandidate extends BaseObject
         $result = [];
         $cacheIds = [];
         $geopathIds = [];
+
         while($row = $db->dbResultFetch($rs)){
             $candidate = new self();
             $candidate->id = $row['id'];
@@ -238,7 +243,6 @@ class GeopathCandidate extends BaseObject
      * Accept this offer of assigning cache to the geopath
      */
     public function acceptOffer() {
-
         $geoPath = $this->getGeopath();
         $geoPath->addCache($this->getGeoCache());
         $this->cancelOffer();

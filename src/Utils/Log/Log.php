@@ -3,6 +3,7 @@
  * This is only a stub for util class used to log debug info...
  * TBD.
  */
+
 namespace src\Utils\Log;
 
 use src\Models\User\User;
@@ -10,7 +11,6 @@ use src\Utils\Database\OcDb;
 
 class Log
 {
-
     const EVENT_OWNERNOTIFY = 1;
 
     const EVENT_MAILWATCHLIST = 2;

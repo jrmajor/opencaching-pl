@@ -22,6 +22,7 @@ function call_okapi(User $user, $waypoints, $language, $file_base_name, $zip_par
     ]);
     // Modifying OKAPI's default HTTP Response headers.
     $okapi_response->content_disposition = 'attachment; filename=' . $file_base_name . (($zip_part != 0) ? '-' . $zip_part : '') . '.ggz';
+
     return $okapi_response;
 }
 
@@ -29,6 +30,7 @@ function generate_link_content($queryid, $file_base_name, $zip_part)
 {
     $zipname = 'ocpl' . $queryid . '.ggz?startat=0&count=max&zippart=' . $zip_part . (isset($_GET['okapidebug']) ? '&okapidebug' : '');
     $link_content = '<li><a class="links" href="' . $zipname . '" title="Garmin GGZ file (part ' . $zip_part . ')">' . $file_base_name . '-' . $zip_part . '.ggz</a></li>';
+
     return $link_content;
 }
 

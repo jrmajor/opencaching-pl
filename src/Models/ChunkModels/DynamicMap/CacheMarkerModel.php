@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\ChunkModels\DynamicMap;
 
 use src\Models\GeoCache\GeoCache;
@@ -26,7 +27,8 @@ class CacheMarkerModel extends AbstractMarkerModelBase
     public static function fromGeocacheFactory(GeoCache $c, User $user = null)
     {
         $marker = new self();
-        $marker->importDataFromGeoCache( $c, $user);
+        $marker->importDataFromGeoCache($c, $user);
+
         return $marker;
     }
 

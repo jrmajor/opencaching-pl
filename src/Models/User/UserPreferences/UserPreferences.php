@@ -17,7 +17,6 @@ use src\Utils\Debug\Debug;
  */
 class UserPreferences extends BaseObject
 {
-
     /**
      * This const array should contain all keys defined anywhere in the code in format:
      * <key-name-in-db> => <class-derrived-from-UserPreferencesBaseData>
@@ -54,7 +53,6 @@ class UserPreferences extends BaseObject
      * @return UserPreferences
      */
     public static function getUserPrefsByKeys(array $keys){
-
         if(empty($keys)){
             return null;
         }
@@ -63,6 +61,7 @@ class UserPreferences extends BaseObject
         foreach ($keys as $key){
             if(! self::isKeyAllowed($key)){
                 Debug::errorLog("Unknown UserPreferences key = $key");
+
                 return null;
             }
         }
@@ -70,6 +69,7 @@ class UserPreferences extends BaseObject
         //create instance and load keys
         $obj = new self();
         $obj->loadByKeys($keys);
+
         return $obj;
     }
 
@@ -80,9 +80,9 @@ class UserPreferences extends BaseObject
      * @return true on success
      */
     public static function savePreferencesJson($key, $json){
-
-        if( ! self::isKeyAllowed($key) ){
+        if(! self::isKeyAllowed($key)){
             Debug::errorLog(__METHOD__ . ": Unknown key $key");
+
             return false;
         }
 
@@ -91,6 +91,7 @@ class UserPreferences extends BaseObject
 
         // find current userId
         $user = self::getCurrentUser();
+
         if(is_null($user)){
             // user not logged!?
             return false;
@@ -102,7 +103,6 @@ class UserPreferences extends BaseObject
              VALUES (:1, :2, :3)
                 ON DUPLICATE KEY UPDATE value = VALUES(value)',
             $userId, $key, $prefsObj->getJsonValues());
-
     }
 
     /**
@@ -120,12 +120,13 @@ class UserPreferences extends BaseObject
      * @return UserPreferencesBaseData object
      */
     private static function getUserPrefObjForKey($key){
-
         if (array_key_exists($key, self::ALLOWED_KEYS)) {
             $className = self::ALLOWED_KEYS[$key];
+
             return new $className($key);
         } else {
             Debug::errorLog(__METHOD__ . ": Unknown class for key: $key");
+
             return null;
         }
     }
@@ -135,13 +136,13 @@ class UserPreferences extends BaseObject
     }
 
     private function loadByKeys($keys){
-
         if(empty($keys)){
             return;
         }
 
         /** @var User */
         $user = self::getCurrentUser();
+
         if(is_null($user)){
             return;
         }
@@ -151,6 +152,7 @@ class UserPreferences extends BaseObject
         $db = self::db();
 
         $quotedKeys = [];
+
         foreach($keys as $k){
             $quotedKeys[] = $db->quote($k);
         }

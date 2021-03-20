@@ -66,17 +66,18 @@ if (isset($opt['db']['password']))
 
 /* *** END sample code **************************************************** */
 
-
 if (isset($onlineusers)){
     $config['mainLayout']['displayOnlineUsers'] = ($onlineusers == 1);
 }
 
-if ( isset($opt['cookie']['name']) ){
+if (isset($opt['cookie']['name'])){
     $config['cookie']['name'] = $opt['cookie']['name'];
 }
-if ( isset($opt['cookie']['path']) ){
+
+if (isset($opt['cookie']['path'])){
     $config['cookie']['path'] = $opt['cookie']['path'];
 }
-if ( isset($opt['cookie']['domain']) ){
+
+if (isset($opt['cookie']['domain'])){
     $config['cookie']['domain'] = $opt['cookie']['domain'];
 }

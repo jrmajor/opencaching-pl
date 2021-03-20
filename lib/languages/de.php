@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Bevor du deinen ersten Cache auf {site_name} veröffentlichen kannst, solltest du mindestens {NEED_FIND_LIMIT} Caches gefunden haben, um Erfahrungen zu sammeln.',
     'postActivation_mail_cacheguides' => 'Geocaching-Guides / Gurus',
 
-
     'password_confirm' => 'Passwort bestätigen',
     'register_msg1' => 'Um ein Benutzerkonto auf {site_name} zu erstellen, musst du eine gültige E-Mail-Addresse und einen Benutzername eingeben. Du erhältst dann per E-Mail einen Aktivierungscode. Pro E-Mail-Adresse kann nur ein Konto angelegt werden.',
     'register_msg2' => '* Pflichtangaben',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Dein Cache wurde dem Geopfad zugewiesen.',
     'gp_cacheRemovedFromGeopath' => 'Der Cache wurde bereits von dem Geopfad entfernt.',
 
-
     'statpic_found' => 'Gefunden:',
     'statpic_hidden' => 'Versteckt:',
     'statpic_html_link' => '– Statistik für',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Empfehlung',
     'search_gpxgc_07' => 'Nationalpark',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Hunde verboten',
     'attribute_2' => 'Zugangs- oder Parkentgelt',
     'attribute_3' => 'Kletterausrüstung erforderlich',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'geeignet um Reisende abzulegen',
     'attribute_220' => 'offiziell ausgewiesenes historisches Monument',
     'attribute_999' => 'Logkennwort',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Wetter',
     'vl_Recently_modified_on' => 'Zuletzt geändert am',
@@ -3014,7 +3012,6 @@ Verwaltet die Opencaching-Website, kümmert sich um das Wiki, prüft neue Caches
     'gpCandidates_errorOnCancel' => 'Beim Ablehnen des Angebots ist ein Fehler aufgetreten.',
     'gpCandidates_cancelOfferInProgress' => 'wird abgebrochen',
 
-
     'gpMyCandidates_title' => 'Geopfad-Kandidaten für Benutzer',
     'gpMyCandidates_submitedDate' => 'Datum',
     'gpMyCandidates_geopathName' => 'Geopfad',
@@ -3066,7 +3063,6 @@ Verwaltet die Opencaching-Website, kümmert sich um das Wiki, prüft neue Caches
     'editCache_orderPicsSaveErr' => 'Problem with update pics order occured',
     'editCache_orderPicsSaveSuccess' => 'Pics order has been changed',
 
-
     'vote_criteriaNotPassed' => 'Currently logged user account doesn\'t pass criteria of participation in voting',
     'vote_electionOpenUntil' => 'This election is open until',
     'vote_electionWillBeOpen' => 'This election will be open',
@@ -3100,5 +3096,5 @@ Verwaltet die Opencaching-Website, kümmert sich um das Wiki, prüft neue Caches
     'vote_elListThDesc' => 'Description',
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
-//  '' => '',
+    //  '' => '',
 ];

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\CacheSet;
 
 use src\Models\ChunkModels\UploadModel;
@@ -28,6 +29,7 @@ class GeopathLogoUploadModel extends UploadModel
 
         // logo is always resized to given size - so oryginal img. is not important
         $obj->setDirs(self::DEFAULT_TMP_DIR);
+
         return $obj;
     }
 }

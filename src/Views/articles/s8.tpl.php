@@ -24,7 +24,6 @@ function ()
     $fCt['count'] = XDb::xSimpleQueryValue(
         'SELECT COUNT(*) `count` FROM `cache_logs` WHERE (`type`=1 OR `type`=2 OR `type`=7) AND `deleted`=0', 0);
 
-
     $r['users'] = XDb::xSimpleQueryValue(
         'SELECT COUNT(*) AS `users`
         FROM (
@@ -61,7 +60,7 @@ function ()
         </td>
     </tr><tr><td height="2"></td></tr>';
 
-    while ( $line = XDb::xFetchArray($rsfCR) ) {
+    while ($line = XDb::xFetchArray($rsfCR)) {
         echo '<tr class="bgcolor2">
                 <td align="right">
                     &nbsp;&nbsp;<b>' . $line['count'] . '</b>&nbsp;&nbsp;

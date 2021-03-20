@@ -50,6 +50,7 @@ use src\Utils\Uri\SimpleRouter;
   <?php
       unset($cacheTitled);
   } //end foreach
+
   if (count($view->latestTitled) == $view->preferences['style']['caches-count']) { ?>
     <a class="btn btn-sm btn-default" href="<?=SimpleRouter::getLink('MyNeighbourhood', 'titledCaches', $view->selectedNbh)?>" title="<?=tr('myn_hlp_more')?>"><?=tr('more')?></a>
   <?php } // end if

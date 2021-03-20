@@ -13,9 +13,12 @@ use src\Utils\Text\TextConverter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
+
 require(__DIR__ . '/src/Views/lib/icons.inc.php');
+
 require(__DIR__ . '/src/Views/viewcache.inc.php');
+
 require(__DIR__ . '/src/Views/viewlogs.inc.php');
 
 if(isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != ''){
@@ -24,12 +27,14 @@ if(isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != ''){
     exit('error');
 }
 $cache = GeoCache::fromCacheIdFactory($geocacheId);
+
 if ($cache == null) {
     exit('error - cache is not available');
 }
 $owner_id = $cache->getOwnerId();
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (
     ! ($loggedUser && ($loggedUser->hasOcTeamRole() || $owner_id == $loggedUser->getUserId()))
     && ! in_array(
@@ -41,13 +46,15 @@ if (
         ]
     )
 ) {
-    exit( 'error - cache is not available');
+    exit('error - cache is not available');
 }
+
 if(isset($_REQUEST['offset']) && $_REQUEST['offset'] != ''){
     $offset = (int) $_REQUEST['offset'];
 } else {
     $offset = 0;
 }
+
 if(isset($_REQUEST['limit']) && $_REQUEST['limit'] != ''){
     $limit = (int) $_REQUEST['limit'];
 } else {
@@ -55,6 +62,7 @@ if(isset($_REQUEST['limit']) && $_REQUEST['limit'] != ''){
 }
 
 global $hide_coords;
+
 if (! $loggedUser && $hide_coords) {
     $disable_spoiler_view = true; //hide any kind of spoiler if usr not logged in
 } else {
@@ -79,14 +87,17 @@ foreach ($logEntries as $record) {
 
     $show_deleted = '';
     $processed_text = '';
+
     if (isset($record['deleted']) && $record['deleted']) {
         if ($loggedUser && $loggedUser->hasOcTeamRole()) {
             $show_deleted = 'show_deleted';
             $processed_text = $record['text'];
             $processed_text .= '[' . tr('vl_Record_deleted');
+
             if (isset($record['del_by_username']) && $record['del_by_username']) {
                 $processed_text .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
             }
+
             if (isset($record['last_deleted'])) {
                 $processed_text .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                     $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
@@ -109,6 +120,7 @@ foreach ($logEntries as $record) {
             $record['icon_small'] = 'log/16x16-trash.png'; //replace record icon with trash icon
             $comm_replace = tr('vl_Record_of_type') . ' [' . $record['text_listing'] . '] ' . tr('vl_deleted');
             $record['text_listing'] = tr('vl_Record_deleted'); ////replace type of record
+
             if (isset($record['del_by_username']) && $record['del_by_username']) {
                 if ($record['del_by_admin'] == 1) { //if deleted by Admin
                     if (($record['del_by_username'] == $record['username']) && ($record['type'] != 12)) { // show username in case maker and deleter are same and comment is not Commnent by COG
@@ -118,10 +130,12 @@ foreach ($logEntries as $record) {
                         $delByCOG = true;
                     }
                 }
+
                 if (! isset($byCOG) || $delByCOG == false) {
                     $comm_replace .= ' ' . tr('vl_by_user') . ' ' . $record['del_by_username'];
                 }
             }
+
             if (isset($record['last_deleted'])) {
                 $comm_replace .= ' ' . tr('vl_on_date') . ' ' . TextConverter::fixPlMonth(htmlspecialchars(strftime(
                     $GLOBALS['config']['dateformat'], strtotime($record['last_deleted'])), ENT_COMPAT, 'UTF-8'));
@@ -144,13 +158,14 @@ foreach ($logEntries as $record) {
 
         if (! ($loggedUser && $loggedUser->hasOcTeamRole()) &&
             $record['edit_by_admin'] == true && $record['type'] == 12) {
-
             $edit_footer .= ' ' . tr('vl_by_COG');
         } else {
             $edit_footer .= ' ' . tr('vl_by_user') . ' ' . $record['edit_by_username'];
         }
+
         if ($record_date_create > date_create('2005-01-01 00:00')) { //check if record created after implementation date (to avoid false readings for record changed before) - actually nor in use
             $edit_footer .= ' - ' . tr('vl_totally_modified') . ' ' . $record['edit_count'] . ' ';
+
             if ($record['edit_count'] > 1) {
                 $edit_footer .= tr('vl_count_plural');
             } else {
@@ -211,8 +226,10 @@ foreach ($logEntries as $record) {
     $tmplog = mb_ereg_replace('{log_classes}', $logClasses, $tmplog);
 
     $filterable = '';
+
     if (! empty($logfilterConfig['enable_logs_filtering'])) {
         $filterable = ':' . $record['type'] . ':';
+
         if ($record['userid'] == 0) {
             $filterable .= 'octeam';
         } else if ($loggedUser && $record['userid'] == $loggedUser->getUserId()) {
@@ -245,13 +262,14 @@ foreach ($logEntries as $record) {
     $tmpremove = mb_ereg_replace('{logid}', $record['logid'], $remove_log);
     $tmpRevert = mb_ereg_replace('{logid}', $record['logid'], $revertLog);
     $tmpnewpic = mb_ereg_replace('{logid}', $record['logid'], $upload_picture);
+
     if (! isset($record['deleted'])){
         $record['deleted'] = false;
     }
+
     if ($record['deleted'] != 1) {
         if ($loggedUser && $record['user_id'] == $loggedUser->getUserId() && ($record['type'] != 12 ||
             ($loggedUser && $loggedUser->hasOcTeamRole()))) {
-
             // User is author of log. Can edit, remove and add pictures. If it is OC Team log - user MUST be ACTIVE admin AND owner of this log
             $logfunctions = $functions_start . $tmpedit . $functions_middle . $tmpremove . $functions_middle . $tmpnewpic . $functions_end;
         } elseif ($loggedUser && $owner_id == $loggedUser->getUserId() && $record['type'] != 12) {
@@ -281,8 +299,8 @@ foreach ($logEntries as $record) {
         $s = $dbc->multiVariableQuery($thatquery, $record['logid']);
 
         $pictures = 0;
-        while ($pic_record = $dbc->dbResultFetch($s)) {
 
+        while ($pic_record = $dbc->dbResultFetch($s)) {
             if (++$pictures > 4) {
                 $logpicturelines .= '<div style="clear:both"></div>';
                 $pictures -= 4;
@@ -305,8 +323,7 @@ foreach ($logEntries as $record) {
 
             $thisline = mb_ereg_replace('{title}', htmlspecialchars($pic_record['title'], ENT_COMPAT, 'UTF-8'), $thisline);
 
-
-            if ($loggedUser && ( $pic_record['user_id'] == $loggedUser || $loggedUser->hasOcTeamRole())) {
+            if ($loggedUser && ($pic_record['user_id'] == $loggedUser || $loggedUser->hasOcTeamRole())) {
                 $thisfunctions = '<span class="removepic">
                                     <img src="/images/log/16x16-trash.png" class="icon16" alt="Trash icon">
                                     &nbsp;

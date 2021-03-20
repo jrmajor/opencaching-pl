@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Uri;
 
 /**
@@ -12,7 +13,6 @@ namespace src\Utils\Uri;
  */
 class CookieBase
 {
-
     const HEADER_PREFIX = 'Set-Cookie: ';
 
     const SAME_SITE_RESTRICTION_LAX = 'Lax';
@@ -27,6 +27,7 @@ class CookieBase
     public static function deleteCookie($name)
     {
         $cookieDomain = self::normalizeDomain(Uri::getCurrentDomain());
+
         return setcookie($name, '', 0, '/', $cookieDomain);
     }
 
@@ -53,7 +54,6 @@ class CookieBase
         $path = null, $secureOnly = false,
         $httpOnly = false, $sameSiteRestriction = null)
     {
-
         $domain = self::normalizeDomain(Uri::getCurrentDomain());
 
         return self::addHttpHeader(
@@ -66,7 +66,6 @@ class CookieBase
         $name, $value = null, $expiryTime = 0, $path = null, $domain = null,
         $secureOnly = false, $httpOnly = false, $sameSiteRestriction = null
     ){
-
         if (self::isNameValid($name)) {
             $name = (string) $name;
         } else {

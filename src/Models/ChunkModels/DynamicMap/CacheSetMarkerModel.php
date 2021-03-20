@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\ChunkModels\DynamicMap;
 
 use src\Models\CacheSet\CacheSet;

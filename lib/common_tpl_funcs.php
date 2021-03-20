@@ -11,7 +11,6 @@ function tpl_set_tplname($local_tpl_name)
     $tplname = $local_tpl_name;
 }
 
-
 //set a template replacement
 //set no_eval true to prevent this contents from php-parsing.
 //Important when replacing something that the user has posted
@@ -35,7 +34,6 @@ function tpl_get_var($name)
     }
 }
 
-
 //redirect to another site to display, i.e. to view a cache after logging
 function tpl_redirect($page)
 {
@@ -45,6 +43,7 @@ function tpl_redirect($page)
     http_write_no_cache();
 
     header('Location: ' . $absolute_server_URI . $page);
+
     exit;
 }
 
@@ -62,6 +61,7 @@ function tpl_redirect_absolute($absolute_server_URI)
     http_write_no_cache();
 
     header('Location: ' . $absolute_server_URI);
+
     exit;
 }
 
@@ -84,7 +84,6 @@ function tpl_do_replace($str, $noeval = false)
 {
     global $vars, $no_eval_vars;
 
-
     if (is_array($vars)) {
         foreach ($vars as $varname => $varvalue) {
             if ($no_eval_vars[$varname] == false || $noeval) {
@@ -101,7 +100,6 @@ function tpl_do_replace($str, $noeval = false)
         }
     }
 
-
     return $str;
 }
 
@@ -114,9 +112,9 @@ function tpl_errorMsg($tplnameError, $msg)
     tpl_set_var('tplname', $tplnameError);
 
     tpl_BuildTemplate();
+
     exit;
 }
-
 
 //TODO: this is temporary solution for backward compatibility
 // $view will be a context variable in further implementation
@@ -125,8 +123,8 @@ function tpl_errorMsg($tplnameError, $msg)
  */
 function tpl_getView()
 {
-
     global $view;
+
     if (! $view) {
         $view = new View();
     }
@@ -137,7 +135,6 @@ function tpl_getView()
 // TODO: set PHP var which can be accessed inside tpl file
 function setViewVar($name, $value)
 {
-
     global $view;
     $view->setVar($name, $value);
 }
@@ -187,7 +184,6 @@ function tpl_BuildTemplate($minitpl = false, $noCommonTemplate = false)
     //read the template
     $sTemplate = file_get_contents(__DIR__ . '/../src/Views/' . $tplname . '.tpl.php');
     $sCode = mb_ereg_replace('{template}', $sTemplate, $sCode);
-
 
     //process the template replacements
     $sCode = tpl_do_replace($sCode);

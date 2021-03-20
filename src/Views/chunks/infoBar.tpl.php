@@ -7,7 +7,6 @@ use src\Utils\Uri\Uri;
  */
 
 return function ($reloadUrl = null, $infoMsg = null, $errorMsg = null) {
-
     $chunkCSS = Uri::getLinkWithModificationTime('/views/chunks/infoBar.css');
 
 // begining of chunk

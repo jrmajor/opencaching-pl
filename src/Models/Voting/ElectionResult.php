@@ -34,6 +34,7 @@ class ElectionResult extends BaseObject
 
         // prepare colors for charts
         $colorSet = ColorGenerator::niceSetLightBg(count($this->options));
+
         foreach ($this->options as $optId => $opt) {
             $this->optionsColors[$optId] = array_pop($colorSet);
          }
@@ -51,18 +52,20 @@ class ElectionResult extends BaseObject
             // this is automatically binding into closure
             $votesOnA = $this->getOptVotesCount($optA);
             $votesOnB = $this->getOptVotesCount($optB);
+
             if ($votesOnA == $votesOnB) {
                 return 0;
             }
+
             return ($votesOnA > $votesOnB) ? -1 : 1;
         });
-
     }
 
     public function prepareForSerialization()
     {
         parent::prepareForSerialization();
         $this->election->prepareForSerialization();
+
         foreach ($this->votes as $votesOnOpt) {
             foreach ($votesOnOpt as $vote) {
                 $vote->prepareForSerialization();
@@ -84,6 +87,7 @@ class ElectionResult extends BaseObject
         if (! isset($this->votes[$opt->getOptionId()])) {
             return 0;
         }
+
         return count($this->votes[$opt->getOptionId()]);
     }
 
@@ -92,6 +96,7 @@ class ElectionResult extends BaseObject
         if ($this->getVotesNum() == 0) {
             return 0;
         }
+
         return $this->getOptVotesCount($opt) / $this->getVotesNum() * 100;
     }
 
@@ -143,6 +148,7 @@ class ElectionResult extends BaseObject
             $ts = $vote->getDate()->getTimestamp();
             $result[] = ['x' => "$ts", 'y' => $currentVotes];
         }
+
         return json_encode(array_values($result));
     }
 

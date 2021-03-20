@@ -42,9 +42,9 @@ use src\Utils\I18n\I18n;
 <?php
 global $hide_coords, $colNameSearch, $NrColSortSearch, $OrderSortSearch, $SearchWithSort, $selectList, $NrColVisable;
 
-if ( ! $SearchWithSort )
+if (! $SearchWithSort)
 {
-    if ( $NrColSortSearch != -1 && ! isset($_REQUEST['startat']) )
+    if ($NrColSortSearch != -1 && ! isset($_REQUEST['startat']))
     {
         echo "<script>
             alert( '" . tr('MaxSearchRec') . "' );
@@ -58,13 +58,13 @@ echo '</script>';
 
 $NrColSortToSet = $NrColSortSearch - 1;
 
-if ( $NrColSortToSet < 0 )
+if ($NrColSortToSet < 0)
     $NrColSortSearch = 0;
 
-if ( $NrColSortToSet > 18 )
+if ($NrColSortToSet > 18)
     $NrColSortSearch = 0;
 
-if ( ! $SearchWithSort && $NrColSortSearch != -1 )
+if (! $SearchWithSort && $NrColSortSearch != -1)
     $NrColSortSearch = -1;
 ?>
 
@@ -126,6 +126,7 @@ function searchCB(){
 <?php
     echo '<script>';
     echo 'function turnOnOProperOptions(){';
+
     if ($SearchWithSort)
     {
         echo "gct.addOption('sortColumn', $NrColSortToSet );";
@@ -165,7 +166,8 @@ function searchCB(){
 <?php
 $selectList = '';
 $descCol = tr('Disable');
-if ( $NrColSortSearch != -1)
+
+if ($NrColSortSearch != -1)
     $selectList .= "<option style='color:red' value=-1>$descCol</option>";
 else
     $selectList .= "<option style='color:red' selected='selected' value=-1>$descCol</option>";
@@ -177,24 +179,24 @@ $NrColVisable = 0;
 
 echo '<script>';
 echo 'function hideProperColumns(){';
-$C1 = fHideColumn( 1, true );
-$C2 = fHideColumn( 2, true );
-$C3 = fHideColumn( 3, true );
-$C4 = fHideColumn( 4, true );
-$C5 = fHideColumn( 5, true );
-$C6 = fHideColumn( 6, true );
-$C7 = fHideColumn( 7, true );
-$C8 = fHideColumn( 8, true );
-$C9 = fHideColumn( 9, true );
-$C10 = fHideColumn( 10, true );
-$C11 = fHideColumn( 11, true );
-$C12 = fHideColumn( 12, true );
-$C13 = fHideColumn( 13, true );
-$C14 = fHideColumn( 14, true );
-$C15 = fHideColumn( 15, true );
-$C16 = fHideColumn( 16, true );
-$C17 = fHideColumn( 17, true );
-$C18 = fHideColumn( 18, true );
+$C1 = fHideColumn(1, true);
+$C2 = fHideColumn(2, true);
+$C3 = fHideColumn(3, true);
+$C4 = fHideColumn(4, true);
+$C5 = fHideColumn(5, true);
+$C6 = fHideColumn(6, true);
+$C7 = fHideColumn(7, true);
+$C8 = fHideColumn(8, true);
+$C9 = fHideColumn(9, true);
+$C10 = fHideColumn(10, true);
+$C11 = fHideColumn(11, true);
+$C12 = fHideColumn(12, true);
+$C13 = fHideColumn(13, true);
+$C14 = fHideColumn(14, true);
+$C15 = fHideColumn(15, true);
+$C16 = fHideColumn(16, true);
+$C17 = fHideColumn(17, true);
+$C18 = fHideColumn(18, true);
 echo '}';
 echo '</script>';
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\ChunkModels\DynamicMap;
 
 use \ReflectionClass;
@@ -14,6 +15,7 @@ abstract class AbstractMarkerModelBase
 
     public function getMarkerTypeName(){
         $str = (new ReflectionClass(static::class))->getShortName();
+
         return preg_replace('/Model$/', '', lcfirst($str));
     }
 

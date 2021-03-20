@@ -1,11 +1,11 @@
 <?php
+
 namespace src\Utils\Text;
 
 use Exception;
 
 class Validator
 {
-
     const MAX_EMAIL_LENGTH = 60;
 
     const MIN_USERNAME_LENGTH = 3;
@@ -27,6 +27,7 @@ class Validator
         if (strlen($email) > self::MAX_EMAIL_LENGTH) {
             return false;
         }
+
         return (false !== filter_var($email, FILTER_VALIDATE_EMAIL));
     }
 
@@ -42,6 +43,7 @@ class Validator
         if (strlen($username) > self::MAX_USERNAME_LENGTH || strlen($username) < self::MIN_USERNAME_LENGTH) {
             return false;
         }
+
         return (mb_ereg_match(self::REGEX_USERNAME, $username));
     }
 
@@ -56,18 +58,23 @@ class Validator
     public static function checkStrength($password)
     {
         $diff = 0;
+
         if (preg_match('/[a-z]/', $password)) {
             $diff++;
         }
+
         if (preg_match('/[A-Z]/', $password)) {
             $diff++;
         }
+
         if (preg_match('/[0-9]/', $password)) {
             $diff++;
         }
+
         if (preg_match('/[!%&@#$^*?_~]/', $password)) {
             $diff++;
         }
+
         if (mb_strlen($password) >= self::MIN_PASSWORD_LENGTH && $diff > 1) {
             return true;
         } else {

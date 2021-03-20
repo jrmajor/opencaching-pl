@@ -10,12 +10,13 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
-
 
     if (isset($_REQUEST['userid'])) {
         $user_id = $_REQUEST['userid'];
@@ -26,6 +27,7 @@ if (! $loggedUser) {
 
     //get the news
     $tplname = 'mycaches_logs';
+
     require(__DIR__ . '/src/Views/newlogs.inc.php');
 
     $user_record['username'] = XDb::xMultiVariableQueryValue(
@@ -63,16 +65,20 @@ if (! $loggedUser) {
     } else {
         $pages .= '{first_img_inactive}';
     }
+
     for ($i = max(1, $startat); $i < $startat + $PAGES_LISTED; $i++) {
         $page_number = ($i - 1) * $LOGS_PER_PAGE;
+
         if ($page_number == $start) {
             $pages .= '<b>';
         }
         $pages .= '<a href="mycaches_logs.php?userid=' . $user_id . '&amp;start=' . $page_number . '">' . $i . '</a> ';
+
         if ($page_number == $start) {
             $pages .= '</b>';
         }
     }
+
     if ($total_pages > $PAGES_LISTED) {
         $pages .= '<a href="mycaches_logs.php?userid=' . $user_id . '&amp;start=' . (($i - 1) * $LOGS_PER_PAGE) . '">{last_img}</a> ';
     } else {
@@ -93,6 +99,7 @@ if (! $loggedUser) {
         $user_id);
 
     $log_ids = [];
+
     while ($record = XDb::xFetchArray($rs)) {
         $log_ids[] = $record['id'];
     }
@@ -126,8 +133,8 @@ if (! $loggedUser) {
             $user_id);
 
         $file_content = '';
-        while ($log_record = XDb::xFetchArray($rs)) {
 
+        while ($log_record = XDb::xFetchArray($rs)) {
             $file_content .= '<tr>';
             $file_content .= '<td style="width: 70px;">' . htmlspecialchars(
                 Formatter::date($log_record['log_date']), ENT_COMPAT, 'UTF-8'
@@ -164,7 +171,6 @@ if (! $loggedUser) {
                     ENT_COMPAT, 'UTF-8') . '">' . htmlspecialchars($log_record['user_name'], ENT_COMPAT,
                     'UTF-8') . '</a></b></td>';
             $file_content .= '</tr>';
-
         }//while
     }
     $pages = mb_ereg_replace('{last_img}', $last_img, $pages);
@@ -175,7 +181,6 @@ if (! $loggedUser) {
 
     tpl_set_var('file_content', $file_content);
     tpl_set_var('pages', $pages);
-
 
 //make the template and send it out
 tpl_BuildTemplate();

@@ -10,7 +10,6 @@ use src\Models\GeoCache\Waypoint;
 use src\Utils\Database\XDb;
 
 class OpenCheckerSetup {
-
 /**
  * initial setup - setting default values used in OpenChecker
  */
@@ -23,6 +22,7 @@ class OpenCheckerSetup {
 
     function __construct() {
         $this->scriptname = 'openchecker.php';
+
         include __DIR__ . '/../../lib/settingsGlue.inc.php';
 
         // Limit number of checks
@@ -41,7 +41,6 @@ class OpenCheckerSetup {
 // end of init OpenChecker setup.
 
 class convertLongLat {
-
     var $CoordsDecimal;
 
     function __construct($degree, $minutes) {
@@ -65,11 +64,13 @@ class OpenCheckerCore {
          *   (anti brute force)
          */
         $now = date('U');
+
         if (isset($_SESSION['openchecker_counter'])) {
             // Too many attempts?
             if ($_SESSION['openchecker_counter'] >= $OpenCheckerSetup->count_limit) {
                 $last_attempt = $_SESSION['openchecker_time'];
                 $elapsed_time = $now - $last_attempt;
+
                 if ($elapsed_time > $OpenCheckerSetup->time_limit * 60) {
                     // time expired, reset
                     $_SESSION['openchecker_counter'] = 1;
@@ -95,6 +96,7 @@ class OpenCheckerCore {
                 tpl_set_var('section_4_stop', '-->');
                 $last_attempt = isset($_SESSION['openchecker_time'])?$_SESSION['openchecker_time']:0;
                 $elapsed_time = $now - $last_attempt;
+
                 if ($elapsed_time > $OpenCheckerSetup->time_limit * 60) {
                     // time expired, reset count
                     $_SESSION['openchecker_counter'] = 1;
@@ -117,7 +119,6 @@ class OpenCheckerCore {
     }
 
     public function CoordsComparing($OpenCheckerSetup) {
-
         // get data from post.
         $lat = $_POST['guessedCoordsFinalLatitude'];
         $lon = $_POST['guessedCoordsFinalLongitude'];
@@ -193,6 +194,7 @@ class OpenCheckerCore {
                 $updateCounters = $pdo->exec('UPDATE `opensprawdzacz` SET `proby`=' . $attempts_counter . ',`sukcesy`=' . $hits_counter . '  WHERE `cache_id` = ' . $cache_id);
             } catch (PDOException $e) {
                 echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
+
                 exit;
             }
 
@@ -217,6 +219,7 @@ class OpenCheckerCore {
             tpl_set_var('result_title', tr('openchecker_success'));
             tpl_set_var('image_yesno', '<image src="/images/blue/openchecker_yes.png" />');
             tpl_set_var('save_mod_coord', $post_viewcache_form);
+
             if ($OpenCheckerSetup->show_wpt_desc) {
                 $desc = '
     <p>&nbsp;</p>
@@ -229,7 +232,6 @@ class OpenCheckerCore {
             } else {
                 tpl_set_var('waypoint_desc','');
             }
-
         } else {
             //puzzle not solved - wrong result
 
@@ -241,6 +243,7 @@ class OpenCheckerCore {
                     WHERE `cache_id` = $cache_id");
             } catch (PDOException $e) {
                 echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
+
                 exit;
             }
             tpl_set_var('result_title', tr('openchecker_fail'));
@@ -249,6 +252,7 @@ class OpenCheckerCore {
             tpl_set_var('waypoint_desc','');
         }
         tpl_set_var('score', '');
+
         if ($guessCorrds !== null) {
             tpl_set_var('result_text', tr('openchecker_your_coordinates') .
                 ': <b>' . $guessCorrds->getAsText(Coordinates::COORDINATES_FORMAT_DEG_MIN) . '</b>');
@@ -292,6 +296,7 @@ class OpenCheckerCore {
 
             if (isset($_GET['sort'])) {
                 $sort_tmp = XDb::xEscape($_GET['sort']);
+
                 switch ($sort_tmp) {
                     case 'owner':
                         $sort_column = '`user`.`username`';
@@ -308,14 +313,12 @@ class OpenCheckerCore {
                     case 'hits':
                         $sort_column = '`opensprawdzacz`.`sukcesy`';
                         break;
-
                     default:
                         $sort_column = '`caches`.`name`';
                         break;
                 }
             } else
                 $sort_column = '`caches`.`name`';
-
 
             $openchecker_query = '
         SELECT `waypoints`.`cache_id`,
@@ -371,6 +374,7 @@ class OpenCheckerCore {
             $result = $pag->fetchResult();
 
             $pagination = ' ';
+
             if (isset($_GET['sort']))
                 $sort = '&sort=' . $_GET['sort'];
             else
@@ -380,14 +384,17 @@ class OpenCheckerCore {
                 $tPage = XDb::xEscape($_GET['page']);
             else
                 $tPage = 1;
+
             if ($tPage > 1)
                 $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . ($tPage - 1) . $sort . '">[&lt; ' . tr('openchecker_page_prev') . ']</a> ';
+
             foreach ($numbers as $num) {
                 if ($num == $tPage)
                     $pagination .= '<b>[' . $num . ']</b>';
                 else
                     $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . $num . $sort . '">[' . $num . ']</a> ';
             }
+
             if ($tPage < count($numbers))
                 $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . ($tPage + 1) . $sort . '">[' . tr('openchecker_page_next') . ' &gt;]</a> ';
 
@@ -460,13 +467,13 @@ class OpenCheckerCore {
 
     public function Finalize() {
         tpl_BuildTemplate();
+
         exit;
     }
 }
 
 class Pagination
 {
-
     var $data;
 
     function Paginate($values, $per_page)
@@ -483,9 +490,11 @@ class Pagination
         $this->data = array_slice($values, $param1, $per_page);
 
         $numbers = [];
+
         for ($x = 1; $x <= $counts; $x++) {
             $numbers[] = $x;
         }
+
         return $numbers;
     }
 
@@ -494,4 +503,3 @@ class Pagination
         return $this->data;
     }
 }
-

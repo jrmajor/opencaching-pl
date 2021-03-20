@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Notify;
 
 use src\Models\GeoCache\GeoCache;
@@ -12,7 +13,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class NotifyEmailSender
 {
-
     const EMAIL_TEMPLATE_PATH = __DIR__ . '/../../../resources/email/';
 
     /**
@@ -31,6 +31,7 @@ class NotifyEmailSender
 
         $serverUri = rtrim(OcConfig::getAbsolute_server_URI(), '/');
         $content = '';
+
         foreach ($notifiesList as $item) {
             $line = file_get_contents(self::EMAIL_TEMPLATE_PATH . 'newcache_notify_item.html');
             $line = mb_ereg_replace('{absolute_server_URI}', $serverUri, $line);

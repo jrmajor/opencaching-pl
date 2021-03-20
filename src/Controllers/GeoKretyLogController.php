@@ -13,7 +13,6 @@ use src\Utils\Debug\Debug;
  */
 class GeoKretyLogController extends BaseController
 {
-
     const CONNECTION_TIMEOUT = 30;
 
     private $lockFile;
@@ -55,36 +54,35 @@ class GeoKretyLogController extends BaseController
         if(! $this->tryLock()){
             $this->debug("Fatal error: Can't lock queue processing! Another instance is running?!");
             Debug::errorLog("GK-queue-processing ERROR: can't lock queue! Source: " . $runFrom);
+
             return;
         }
 
         $this->lockAqquired = true;
         $this->debug('Lock has been aqquired.');
 
-
         $logsProcessed = 0;
         $queueLen = GeoKretLog::GetDbQueueLength();
 
         $this->debug(" GK logs in queue: $queueLen");
 
-        while( $logsProcessed < $queueLen &&
-            0 < count( $geoKretyLogs = GeoKretLog::GetLast50LogsFromDb() )) {
-
+        while($logsProcessed < $queueLen &&
+            0 < count($geoKretyLogs = GeoKretLog::GetLast50LogsFromDb())) {
             $idsToRemove = [];
             $idsToUpdate = [];
 
             foreach ($geoKretyLogs as $gkl) {
-
                 $responseData = $this->sendLog($gkl);
 
                 if($responseData === false){
                     // connection error!
                     $this->debug("Can't connect to GK API - give up for now!");
                     $this->updateDbQueue($idsToRemove, $idsToUpdate);
+
                     return;
                 }
 
-                if( $this->isResponseOK($responseData, $gkl) ) {
+                if($this->isResponseOK($responseData, $gkl)) {
                     $idsToRemove[] = $gkl->getId();
                 } else {
                     $idsToUpdate[] = $gkl->getId();
@@ -101,7 +99,6 @@ class GeoKretyLogController extends BaseController
     }
 
     private function updateDbQueue(array $idsToRemove, array $idsToUpdate){
-
         //remove processed entries and update date of last try for others
         GeoKretLog::RemoveFromQueueByIds($idsToRemove);
         GeoKretLog::UpdateLastTryForIds($idsToUpdate);
@@ -136,7 +133,6 @@ class GeoKretyLogController extends BaseController
      */
     private function isResponseOK($responseData, GeoKretLog $gkLog)
     {
-
         $gkLogDesc = $gkLog->getDescription();
 
         // geoKrety returns invalid xml - fix it.
@@ -146,19 +142,20 @@ class GeoKretyLogController extends BaseController
 
         if(! $responseXML){
             $this->debug($gkLogDesc . 'ERROR: Empty response from GK API XML!');
+
             return false;
         }
 
-        if( empty($responseXML->errors->error) ){
+        if(empty($responseXML->errors->error)){
             $this->debug($gkLogDesc . '...OK');
+
             return true;
         }
 
         foreach ($responseXML->errors->error as $error) {
-
             $errorMsg = $error->__toString();
 
-            if(! empty($errorMsg) ){
+            if(! empty($errorMsg)){
                 if($this->isItDuplicatedLogError($errorMsg)){
                     // this is duplicated log - skip processing of this entry
                     return true;
@@ -189,15 +186,14 @@ class GeoKretyLogController extends BaseController
     private function sendLog(GeoKretLog $geoKretyLog)
     {
         $tries = 0;
-        while( $tries++ <= 5 ){
 
+        while($tries++ <= 5){
             $opts = ['http' => [
-                    'method' => 'POST',
-                    'header' => 'Content-type: application/x-www-form-urlencoded',
-                    'content' => http_build_query($this->buildPostParams($geoKretyLog)),
-                    'timeout' => self::CONNECTION_TIMEOUT,
-                ],
-            ];
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => http_build_query($this->buildPostParams($geoKretyLog)),
+                'timeout' => self::CONNECTION_TIMEOUT,
+            ]];
 
             $context = stream_context_create($opts);
             $result = file_get_contents(GeoKretyApi::GEOKRETY_URL . '/ruchy.php', false, $context);
@@ -216,6 +212,7 @@ class GeoKretyLogController extends BaseController
     private function tryLock()
     {
         $this->lockFile = fopen($this->lockFileName, 'w');
+
         return flock($this->lockFile, LOCK_EX | LOCK_NB);
     }
 

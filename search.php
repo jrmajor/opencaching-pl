@@ -12,12 +12,13 @@ use src\Utils\I18n\I18n;
 use src\Utils\Text\TextConverter;
 use src\Utils\Uri\OcCookie;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-require_once (__DIR__ . '/lib/export.inc.php');
-require_once (__DIR__ . '/lib/calculation.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
+
+require_once(__DIR__ . '/lib/export.inc.php');
+
+require_once(__DIR__ . '/lib/calculation.inc.php');
 
 global $dbcSearch, $TestStartTime;
-
 
 /**
  * add slashes to each element of $array.
@@ -34,7 +35,6 @@ function sanitize(&$array)
     }
 }
 
-
 //4test
 $TestStartTime = new DateTime('now');
 
@@ -42,9 +42,11 @@ $dbcSearch = OcDb::instance();
 $dbc = OcDb::instance();
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -99,6 +101,7 @@ if (! $loggedUser) {
         $multiplier['km'] = 1;
         $multiplier['sm'] = 0.62137;
         $multiplier['nm'] = 0.53996;
+
         if (isset($_REQUEST['queryid']) || isset($_REQUEST['showresult']))
         {
             $bCookieQueryid = false;
@@ -108,6 +111,7 @@ if (! $loggedUser) {
         {
             $bCookieQueryid = true;
             $queryid = (isset($_REQUEST['resetqueryid'])) ? false : OcCookie::getOrDefault('lastqueryid', false);
+
             if ($queryid == false) $queryid = 0;
 
             if ($queryid != 0)
@@ -119,7 +123,6 @@ if (! $loggedUser) {
 
                 if ($rCount['count'] == 0)
                     $queryid = 0;
-
             }
 
             if ($queryid == 0)
@@ -127,6 +130,7 @@ if (! $loggedUser) {
                 // initialize the search form (no presets exist)
                 $_REQUEST['cache_attribs'] = '';
                 $rs = XDb::xSql('SELECT `id` FROM `cache_attrib` WHERE `default`=1');
+
                 while ($r = XDb::xFetchArray($rs))
                 {
                     if ($_REQUEST['cache_attribs'] != '') $_REQUEST['cache_attribs'] .= ';';
@@ -136,6 +140,7 @@ if (! $loggedUser) {
 
                 $_REQUEST['cache_attribs_not'] = '';
                 $rs = XDb::xSql('SELECT `id` FROM `cache_attrib` WHERE `default`=2');
+
                 while ($r = XDb::xFetchArray($rs))
                 {
                     if ($_REQUEST['cache_attribs_not'] != '') $_REQUEST['cache_attribs_not'] .= ';';
@@ -158,6 +163,7 @@ if (! $loggedUser) {
                 tpl_set_var('tplname', 'search.php');
                 tpl_set_var('error_msg', $error_query_not_found);
                 tpl_BuildTemplate();
+
                 exit;
             }
             else
@@ -165,13 +171,14 @@ if (! $loggedUser) {
                 $record = $dbc->dbResultFetch($s);
 
                 $options = unserialize($record['options']);
+
                 if ($record['user_id'] != 0)
                     $options['userid'] = $record['user_id'];
 
                 $options['queryid'] = $queryid;
 
                 $sqlstr = 'UPDATE `queries` SET `last_queried`=NOW() WHERE `id`= :1';
-                $s = $dbc->multiVariableQuery($sqlstr, $queryid );
+                $s = $dbc->multiVariableQuery($sqlstr, $queryid);
 
                 // overwrite changeable values
                 if (isset($_REQUEST['output']))
@@ -191,10 +198,11 @@ if (! $loggedUser) {
 
                 // get finder from finderid
                 $options['finderid'] = isset($options['finderid']) ? $options['finderid'] + 0 : 0;
+
                 if(isset($options['finder']) && $options['finderid'] > 0)
                 {
                     $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
-                    $s = $dbc->multiVariableQuery($sqlstr, $options['finderid'] );
+                    $s = $dbc->multiVariableQuery($sqlstr, $options['finderid']);
 
                     if($dbc->rowCount($s) == 1)
                     {
@@ -206,10 +214,11 @@ if (! $loggedUser) {
 
                 // get owner from ownerid
                 $options['ownerid'] = isset($options['ownerid']) ? $options['ownerid'] + 0 : 0;
+
                 if(isset($options['owner']) && $options['ownerid'] > 0)
                 {
                     $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
-                    $s = $dbc->multiVariableQuery($sqlstr, $options['ownerid'] );
+                    $s = $dbc->multiVariableQuery($sqlstr, $options['ownerid']);
 
                     if($dbc->rowCount($s) == 1)
                     {
@@ -251,6 +260,7 @@ if (! $loggedUser) {
             $options['showresult'] = isset($_REQUEST['showresult']) ? $_REQUEST['showresult'] : 0;
             $options['output'] = isset($_REQUEST['output']) ? $_REQUEST['output'] : 'HTML';
             $options['gpxLogLimit'] = isset($_REQUEST['gpxLogLimit']) ? (int) $_REQUEST['gpxLogLimit'] : false;
+
             if(isset($_REQUEST['showonmap'])) {
                 $_REQUEST['output'] = 'MAP';
                 $options['output'] = 'MAP';
@@ -361,6 +371,7 @@ if (! $loggedUser) {
             {
                 $options['searchtype'] = 'bycacheid';
                 $options['cacheid'] = isset($_REQUEST['cacheid']) ? $_REQUEST['cacheid'] : 0;
+
                 if (! is_numeric($options['cacheid'])) $options['cacheid'] = 0;
             }
             elseif (isset($_REQUEST['searchbywaypoint']) or isset($_REQUEST['searchbywaypointname']))
@@ -379,20 +390,21 @@ if (! $loggedUser) {
                 $options['waypoint'] = TextConverter::mb_trim($options['waypoint']);
                 $options['waypointtype'] = mb_strtolower(mb_substr($options['waypoint'], 0, 2));
                 $ocWP = strtolower($GLOBALS['oc_waypoint']);
-                if ( mb_ereg_match('(oc|' . $ocWP . '[a-z0-9]{4})$', mb_strtolower($options['waypoint'])) ) //O?xxxx
+
+                if (mb_ereg_match('(oc|' . $ocWP . '[a-z0-9]{4})$', mb_strtolower($options['waypoint']))) //O?xxxx
                 {
                     $options['waypointtype'] = 'oc';
                 }
-                elseif ( mb_ereg_match('(n[a-f0-9]{5})$', mb_strtolower($options['waypoint'])) ) //Navicache.com
+                elseif (mb_ereg_match('(n[a-f0-9]{5})$', mb_strtolower($options['waypoint']))) //Navicache.com
                 {
                     $options['waypointtype'] = 'nc';
                 }
-                elseif ( mb_ereg_match('([a-zA-Z0-9]{4})$', $options['waypoint']) ) //xxxxx -> O?xxxxx
+                elseif (mb_ereg_match('([a-zA-Z0-9]{4})$', $options['waypoint'])) //xxxxx -> O?xxxxx
                 {
                     $options['waypointtype'] = 'oc';
                     $options['waypoint'] = $ocWP . $options['waypoint'];
                 }
-                elseif ( ! mb_ereg_match('(gc[a-z0-9]{4,5})$', mb_strtolower($options['waypoint'])) ) //GC and others - test
+                elseif (! mb_ereg_match('(gc[a-z0-9]{4,5})$', mb_strtolower($options['waypoint']))) //GC and others - test
                 {
                     $options['waypoint'] = '';
                 }
@@ -452,7 +464,7 @@ if (! $loggedUser) {
                 {
                     if ($options['userid'] != 0){
                         $sqlstr = 'UPDATE `queries` SET `options`= :1, `last_queried`=NOW() WHERE `id`= :2 AND `user_id`= :3';
-                        $dbc->multiVariableQuery($sqlstr, serialize($options), $options['queryid'], $options['userid'] );
+                        $dbc->multiVariableQuery($sqlstr, serialize($options), $options['queryid'], $options['userid']);
                     }
                 }
                 else
@@ -475,14 +487,15 @@ if (! $loggedUser) {
         //remove old queries (after 1 hour without use)
         $removedate = date('Y-m-d H:i:s', time() - 3600);
         $sqlstr = 'DELETE FROM `queries` WHERE `last_queried` < :1 AND `user_id`=0';
-        $dbc->multiVariableQuery($sqlstr, $removedate );
+        $dbc->multiVariableQuery($sqlstr, $removedate);
 
         //prepare output
         if(! isset($options['showresult'])) $options['showresult'] = '0';
+
         if ($options['showresult'] == 1)
         {
-
             if(! isset($options['output'])) $options['output'] = '';
+
             if ((mb_strpos($options['output'], '.') !== false) ||
                 (mb_strpos($options['output'], '/') !== false) ||
                 (mb_strpos($options['output'], '\\') !== false)
@@ -493,6 +506,7 @@ if (! $loggedUser) {
 
             //make a list of cache-ids that are in the result
             if(! isset($options['expert'])) $options['expert'] = '';
+
             if ($options['expert'] == 0)
             {
                 $sql_select = [];
@@ -505,14 +519,15 @@ if (! $loggedUser) {
                 // show only published caches
                 $sql_where[] = '(`caches`.`status` != 4 OR `caches`.`user_id`=' . XDb::xEscape($loggedUser->getUserId()) . ')';
                 $sql_where[] = '(`caches`.`status` != 5 OR `caches`.`user_id`=' . XDb::xEscape($loggedUser->getUserId()) . ')';
+
                 if (! $loggedUser->hasOcTeamRole())
                 {
                     $sql_where[] = '`caches`.`status` != 6';
                 }
 
-
                 //check the entered data and build SQL
                 if(! isset($options['searchtype'])) $options['searchtype'] = '';
+
                 if ($options['searchtype'] == 'byname')
                 {
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
@@ -546,11 +561,13 @@ if (! $loggedUser) {
                             $plz = $options['plz'];
 
                             $sqlstr = 'SELECT `loc_id` FROM `geodb_textdata` WHERE `text_type`=500300000 AND `text_val`= :1 LIMIT 1';
-                            $s = $dbc->multiVariableQuery($sqlstr, XDb::xEscape($plz) );
+                            $s = $dbc->multiVariableQuery($sqlstr, XDb::xEscape($plz));
+
                             if ($dbc->rowCount($s) == 0)
                             {
                                 $options['error_plz'] = true;
                                 outputSearchForm($options, $loggedUser);
+
                                 exit;
                             }
                             elseif ($dbc->rowCount($s) == 1)
@@ -562,6 +579,7 @@ if (! $loggedUser) {
                             {
                                 // ok, many locations ... list them all ...
                                 outputLocidSelectionForm($sqlstr, $options);
+
                                 exit;
                             }
                         }
@@ -570,10 +588,9 @@ if (! $loggedUser) {
                         $locid = $locid + 0;
 
                         $sqlstr = 'SELECT `lon`, `lat` FROM `geodb_coordinates` WHERE `loc_id`= :1 AND coord_type=200100000 LIMIT 1';
-                        $s = $dbc->multiVariableQuery($sqlstr, $locid );
+                        $s = $dbc->multiVariableQuery($sqlstr, $locid);
 
-                        if ( $dbc->rowCount($s) ){
-
+                        if ($dbc->rowCount($s)){
                             // ok ... we have coordinates
                             $r = $dbc->dbResultFetch($s);
 
@@ -590,7 +607,7 @@ if (! $loggedUser) {
 
                             //all target caches are between lon - max_lon_diff and lon + max_lon_diff
                             //TODO: check!!!
-                            $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180 )) * 6378 * $multiplier[$distance_unit] * 3.14159);
+                            $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180)) * 6378 * $multiplier[$distance_unit] * 3.14159);
 
                             $lon_rad = $lon * 3.14159 / 180;
                             $lat_rad = $lat * 3.14159 / 180;
@@ -608,18 +625,16 @@ if (! $loggedUser) {
                                     AND IFNULL(cache_mod_cords.latitude, `caches`.`latitude`) < :5
                                 HAVING `distance` < :6';
 
-
                             $dbcSearch->multiVariableQuery(
                                 $sqlstr, $loggedUser->getUserId(), ($lon - $max_lon_diff), ($lon + $max_lon_diff),
-                                ($lat - $max_lat_diff), ($lat + $max_lat_diff), $distance );
+                                ($lat - $max_lat_diff), ($lat + $max_lat_diff), $distance);
 
                             $sqlstr = 'ALTER TABLE result_caches ADD PRIMARY KEY ( `cache_id` )';
-                            $dbcSearch->simpleQuery( $sqlstr );
+                            $dbcSearch->simpleQuery($sqlstr);
 
                             $sql_select[] = '`result_caches`.`cache_id`';
                             $sql_from[] = '`result_caches`, `caches`';
                             $sql_where[] = '`caches`.`cache_id`=`result_caches`.`cache_id`';
-
                         }
                         else
                         {
@@ -643,6 +658,7 @@ if (! $loggedUser) {
 
                             $sqlhashes = '';
                             $wordscount = 0;
+
                             foreach ($simpletextsarray as $text)
                             {
                                 if ($text != '')
@@ -690,12 +706,14 @@ if (! $loggedUser) {
                             XDb::xSql('DROP TABLE tmpuniidsRemove');
 
                             $rs = XDb::xSql('SELECT `uni_id` FROM tmpuniids');
+
                             if (XDb::xNumRows($rs) == 0)
                             {
                                 XDb::xFreeResults($rs);
 
                                 $options['error_ort'] = true;
                                 outputSearchForm($options, $loggedUser);
+
                                 exit;
                             }
                             elseif (XDb::xNumRows($rs) == 1)
@@ -706,7 +724,7 @@ if (! $loggedUser) {
                                 // wenn keine 100%ige Ăźbereinstimmung nochmals anzeigen
                                 $locid = $r['uni_id'] + 0;
                                 $sqlstr = 'SELECT `full_name` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1';
-                                $s = $dbc->multiVariableQuery($sqlstr, $locid );
+                                $s = $dbc->multiVariableQuery($sqlstr, $locid);
                                 $rCmp = $dbc->dbResultFetchOneRowOnly($s);
 
                                 if (mb_strtolower($rCmp['full_name']) != mb_strtolower($ort))
@@ -718,18 +736,17 @@ if (! $loggedUser) {
                             {
                                 XDb::xFreeResults($rs);
                                 outputUniidSelectionForm('SELECT `uni_id`, `olduni` FROM `tmpuniids`', $options);
+
                                 exit;
                             }
                         }
 
-
                         // ok, we have a location ... determin coordinates
                         $locid = $locid + 0;
                         $sqlstr = 'SELECT `lon`, `lat` FROM `gns_locations` WHERE `uni`= :1 LIMIT 1';
-                        $s = $dbc->multiVariableQuery($sqlstr, $locid );
+                        $s = $dbc->multiVariableQuery($sqlstr, $locid);
 
-                        if ( $r = $dbc->dbResultFetchOneRowOnly($s) ){
-
+                        if ($r = $dbc->dbResultFetchOneRowOnly($s)){
                             // ok ... we have coordinates ...
 
                             $lat = $r['lat'] + 0;
@@ -751,7 +768,7 @@ if (! $loggedUser) {
 
                             //all target caches are between lon - max_lon_diff and lon + max_lon_diff
                             //TODO: check!!!
-                            $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180 )) * 6378 * $multiplier[$distance_unit] * 3.14159);
+                            $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180)) * 6378 * $multiplier[$distance_unit] * 3.14159);
 
                             $sqlstr = 'CREATE TEMPORARY TABLE result_caches ENGINE=MEMORY
                                 SELECT
@@ -766,12 +783,12 @@ if (! $loggedUser) {
                                     AND IFNULL(cache_mod_cords.latitude, `caches`.`latitude`) < :5
                                 HAVING `distance` < :6';
 
-                            $dbcSearch->multiVariableQuery( $sqlstr, $loggedUser->getUserId(),
+                            $dbcSearch->multiVariableQuery($sqlstr, $loggedUser->getUserId(),
                                 ($lon - $max_lon_diff), ($lon + $max_lon_diff), ($lat - $max_lat_diff),
-                                ($lat + $max_lat_diff), $distance );
+                                ($lat + $max_lat_diff), $distance);
 
                             $sqlstr = 'ALTER TABLE result_caches ADD PRIMARY KEY ( `cache_id` )';
-                            $dbcSearch->simpleQuery( $sqlstr );
+                            $dbcSearch->simpleQuery($sqlstr);
 
                             $sql_select[] = '`result_caches`.`cache_id`';
                             $sql_from[] = '`result_caches`, `caches`';
@@ -781,6 +798,7 @@ if (! $loggedUser) {
                         {
                             $options['error_locidnocoords'] = true;
                             outputSearchForm($options, $loggedUser);
+
                             exit;
                         }
                     }
@@ -795,7 +813,7 @@ if (! $loggedUser) {
                     {
                         //get the userid
                         $sqlstr = 'SELECT `user_id` FROM `user` WHERE `username`= :1 LIMIT 1';
-                        $s = $dbc->multiVariableQuery($sqlstr, $options['finder'] );
+                        $s = $dbc->multiVariableQuery($sqlstr, $options['finder']);
                         $finder_record = $dbc->dbResultFetchOneRowOnly($s);
                         $finder_id = $finder_record['user_id'];
                     }
@@ -805,11 +823,11 @@ if (! $loggedUser) {
                     $sql_where[] = '`caches`.`cache_id`=`cache_logs`.`cache_id`';
                     $sql_where[] = '`cache_logs`.`user_id`=\'' . XDb::xEscape($finder_id) . '\'';
                     $sql_where[] = '`cache_logs`.`deleted`=0';
-                    if( $options['logtype'] == '' )
+
+                    if($options['logtype'] == '')
                         $sql_where[] = '(`cache_logs`.`type`=1 OR `cache_logs`.`type`=7)'; // found und attended
                     else
                         $sql_where[] = '(`cache_logs`.`type`=' . intval($options['logtype']) . ')'; // found und attended
-
                 }
                 elseif ($options['searchtype'] == 'bydistance')
                 {
@@ -830,6 +848,7 @@ if (! $loggedUser) {
                         if (($lon_h >= 0) && ($lon_h < 180) && ($lon_min >= 0) && ($lon_min < 60))
                         {
                             $lon = $lon_h + $lon_min / 60;
+
                             if ($lonEW == 'W') $lon = -$lon;
                         }
                     }
@@ -839,6 +858,7 @@ if (! $loggedUser) {
                         if (($lat_h >= 0) && ($lat_h < 90) && ($lat_min >= 0) && ($lat_min < 60))
                         {
                             $lat = $lat_h + $lat_min / 60;
+
                             if ($latNS == 'S') $lat = -$lat;
                         }
                     }
@@ -858,7 +878,7 @@ if (! $loggedUser) {
 
                     //all target caches are between lon - max_lon_diff and lon + max_lon_diff
                     //TODO: check!!!
-                    $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180 )) * 6378 * $multiplier[$distance_unit] * 3.14159);
+                    $max_lon_diff = $distance * 180 / (abs(sin((90 - $lat) * 3.14159 / 180)) * 6378 * $multiplier[$distance_unit] * 3.14159);
 
                     $lon_rad = $lon * 3.14159 / 180;
                     $lat_rad = $lat * 3.14159 / 180;
@@ -876,12 +896,12 @@ if (! $loggedUser) {
                         AND IFNULL(cache_mod_cords.latitude, `caches`.`latitude`) < :5
                     HAVING `distance` < :6';
 
-                    $dbcSearch->multiVariableQuery( $sqlstr, $loggedUser->getUserId(),
+                    $dbcSearch->multiVariableQuery($sqlstr, $loggedUser->getUserId(),
                         ($lon - $max_lon_diff), ($lon + $max_lon_diff),
-                        ($lat - $max_lat_diff), ($lat + $max_lat_diff), $distance );
+                        ($lat - $max_lat_diff), ($lat + $max_lat_diff), $distance);
 
                     $sqlstr = 'ALTER TABLE result_caches ADD PRIMARY KEY ( `cache_id` )';
-                    $dbcSearch->simpleQuery( $sqlstr );
+                    $dbcSearch->simpleQuery($sqlstr);
 
                     $sql_select[] = '`result_caches`.`cache_id`';
                     $sql_from[] = '`result_caches`, `caches`';
@@ -907,7 +927,7 @@ if (! $loggedUser) {
                         $cache_bylist = $_REQUEST['SearchCacheID'];
                     } else
                     if (isset($options['cache_ids'])){
-                        foreach($options['cache_ids'] as $key => $val ){
+                        foreach($options['cache_ids'] as $key => $val){
                             $options['cache_ids'][$key] = XDb::xEscape($val);
                         }
                         $cache_bylist = implode(',', $options['cache_ids']);
@@ -950,6 +970,7 @@ if (! $loggedUser) {
                 {
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
                     $sql_from[] = '`caches`';
+
                     if ($options['waypoint'] == '')
                     {
                         $sql_where[] = '`caches`.`name` LIKE \'%' . XDb::xEscape($options['cachename']) . '%\'';
@@ -973,20 +994,26 @@ if (! $loggedUser) {
                     }
 
                     $ft_types = [];
+
                     if (isset($options['ft_name']) && $options['ft_name'])
                         $ft_types[] = 2;
+
                     if (isset($options['ft_logs']) && $options['ft_logs'])
                         $ft_types[] = 1;
+
                     if (isset($options['ft_desc']) && $options['ft_desc'])
                         $ft_types[] = 3;
+
                     if (isset($options['ft_pictures']) && $options['ft_pictures'])
                         $ft_types[] = 6;
+
                     if (count($ft_types) == 0)
                         $ft_types[] = 0;
 
                     $sql_select[] = '`caches`.`cache_id` `cache_id`';
 
                     $n = 1;
+
                     foreach ($hashes as $k => $h)
                     {
                         $sql_from[] = '`search_index` `s' . $n . '`';
@@ -1025,9 +1052,11 @@ if (! $loggedUser) {
 
                 // additional options
                 if(! isset($options['f_userowner'])) $options['f_userowner'] = '0';
+
                 if($options['f_userowner'] != 0) { $sql_where[] = '`caches`.`user_id`!=\'' . $loggedUser->getUserId() . '\''; }
 
                 if(! isset($options['f_userfound'])) $options['f_userfound'] = '0';
+
                 if($options['f_userfound'] != 0)
                 {
                     $sql_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_logs`.`cache_id` FROM `cache_logs`
@@ -1040,30 +1069,34 @@ if (! $loggedUser) {
                 //if($options['f_geokret'] != 0) { $sql_where[] = '`caches`.`user_id`!=\'' . $loggedUser->getUserId() .'\''; }
 
                 if(! isset($options['f_inactive'])) $options['f_inactive'] = '0';
+
                 if($options['f_inactive'] != 0)  $sql_where[] = '`caches`.`status`=1';
 
-
                 if(! isset($options['f_ignored'])) $options['f_ignored'] = '0';
+
                 if($options['f_ignored'] != 0)
                 {
                     $sql_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_ignore`.`cache_id`
                         FROM `cache_ignore` WHERE `cache_ignore`.`user_id`=\'' . XDb::xEscape($loggedUser->getUserId()) . '\')';
                 }
+
                 if(! isset($options['f_watched'])) $options['f_watched'] = '0';
+
                 if($options['f_watched'] != 0)
                 {
                     $sql_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_watches`.`cache_id` FROM `cache_watches`
                         WHERE `cache_watches`.`user_id`=\'' . XDb::xEscape($loggedUser->getUserId()) . '\')';
                 }
 
-
                 if(! isset($options['country'])) $options['country'] = '';
+
                 if($options['country'] != '')
                 {
                     $sql_where[] = '`caches`.`country`=\'' . XDb::xEscape($options['country']) . '\'';
                 }
 
                 if(! isset($options['region'])) $options['region'] = '';
+
                 if($options['region'] != '')
                 {
                     $sql_where[] = '`caches`.`cache_id` IN (SELECT `cache_location`.`cache_id` FROM `cache_location` WHERE `cache_location`.`code3`=\'' . XDb::xEscape($options['region']) . '\')';
@@ -1077,6 +1110,7 @@ if (! $loggedUser) {
                 if($pos !== false)
                 {
                     $c_type = [];
+
                     for ($i = 0; $i < strlen($options['cachetype']); $i++){
                         if ($options['cachetype'][$i] == '1') {
                             $c_type[] = $i + 1;
@@ -1087,6 +1121,7 @@ if (! $loggedUser) {
                         $sql_where[] = '`caches`.`type` IN (' . XDb::xEscape(implode(',', $c_type)) . ')';
                     }
                 }
+
                 if(isset($options['cache_attribs']) && count($options['cache_attribs']) > 0)
                 {
                     for($i = 0; $i < count($options['cache_attribs']); $i++)
@@ -1115,12 +1150,19 @@ if (! $loggedUser) {
                 $cachesize = [];
 
                 if (isset($options['cachesize_1']) && ($options['cachesize_1'] == '1')) { $cachesize[] = '1'; }
+
                 if (isset($options['cachesize_2']) && ($options['cachesize_2'] == '1')) { $cachesize[] = '2'; }
+
                 if (isset($options['cachesize_3']) && ($options['cachesize_3'] == '1')) { $cachesize[] = '3'; }
+
                 if (isset($options['cachesize_4']) && ($options['cachesize_4'] == '1')) { $cachesize[] = '4'; }
+
                 if (isset($options['cachesize_5']) && ($options['cachesize_5'] == '1')) { $cachesize[] = '5'; }
+
                 if (isset($options['cachesize_6']) && ($options['cachesize_6'] == '1')) { $cachesize[] = '6'; }
+
                 if (isset($options['cachesize_7']) && ($options['cachesize_7'] == '1')) { $cachesize[] = '7'; }
+
                 if (isset($options['cachesize_8']) && ($options['cachesize_8'] == '1')) { $cachesize[] = '8'; }
 
                 if ((sizeof($cachesize) > 0) && (sizeof($cachesize) < 8)) {
@@ -1131,10 +1173,11 @@ if (! $loggedUser) {
                     $options['cachevote_1'] = '';
                     $options['cachevote_2'] = '';
                 }
-                if( ( ($options['cachevote_1'] != '') && ($options['cachevote_2'] != '') ) && ( ($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6') ) && ( (! isset($options['cachenovote'])) || ($options['cachenovote'] != '1') ) )
+
+                if((($options['cachevote_1'] != '') && ($options['cachevote_2'] != '')) && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6')) && ((! isset($options['cachenovote'])) || ($options['cachenovote'] != '1')))
                 {
                     $sql_where[] = '`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3';
-                } else if ( ($options['cachevote_1'] != '') && ($options['cachevote_2'] != '') && ( ($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6') ) && isset($options['cachenovote']) && ($options['cachenovote'] == '1') )  {
+                } else if (($options['cachevote_1'] != '') && ($options['cachevote_2'] != '') && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6')) && isset($options['cachenovote']) && ($options['cachenovote'] == '1'))  {
                     $sql_where[] = '((`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3) OR (`caches`.`votes` < 4))';
                 }
 
@@ -1142,6 +1185,7 @@ if (! $loggedUser) {
                     $options['cachedifficulty_1'] = '';
                     $options['cachedifficulty_2'] = '';
                 }
+
                 if((($options['cachedifficulty_1'] != '') && ($options['cachedifficulty_2'] != '')) && (($options['cachedifficulty_1'] != '1') || ($options['cachedifficulty_2'] != '5')))
                 {
                     $sql_where[] = '`caches`.`difficulty` BETWEEN \'' . XDb::xEscape($options['cachedifficulty_1'] * 2) . '\' AND \'' . XDb::xEscape($options['cachedifficulty_2'] * 2) . '\'';
@@ -1172,7 +1216,6 @@ if (! $loggedUser) {
                         ' WHERE ' . implode(' AND ', $sql_where) .
                         $group .
                         $having;
-
             }
             else
             {
@@ -1189,6 +1232,7 @@ if (! $loggedUser) {
             {
                 //process and output the search result
                 require(__DIR__ . '/lib/search.' . mb_strtolower($options['output']) . '.inc.php');
+
                 exit;
             }
         }
@@ -1210,12 +1254,12 @@ if (! $loggedUser) {
             else
             {
                 outputSearchForm($options, $loggedUser);
+
                 exit;
             }
         }
 
     unset($dbc, $dbcSearch);
-
 
     /*
     //user logged in?
@@ -1328,7 +1372,7 @@ function outputSearchForm($options, User $loggedUser)
         }
     }
 
-    if (isset($options['cachevote_1'], $options['cachevote_2'])  )
+    if (isset($options['cachevote_1'], $options['cachevote_2']))
     {
         tpl_set_var('cachevote_1', htmlspecialchars($options['cachevote_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachevote_2', htmlspecialchars($options['cachevote_2'], ENT_COMPAT, 'UTF-8'));
@@ -1348,7 +1392,7 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('cachenovote', '');
     }
 
-    if (isset($options['cachedifficulty_1'], $options['cachedifficulty_2'])  )
+    if (isset($options['cachedifficulty_1'], $options['cachedifficulty_2']))
     {
         tpl_set_var('cachedifficulty_1', htmlspecialchars($options['cachedifficulty_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cachedifficulty_2', htmlspecialchars($options['cachedifficulty_2'], ENT_COMPAT, 'UTF-8'));
@@ -1359,7 +1403,7 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('cachedifficulty_2', '');
     }
 
-    if (isset($options['cacheterrain_1'], $options['cacheterrain_2'])  )
+    if (isset($options['cacheterrain_1'], $options['cacheterrain_2']))
     {
         tpl_set_var('cacheterrain_1', htmlspecialchars($options['cacheterrain_1'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('cacheterrain_2', htmlspecialchars($options['cacheterrain_2'], ENT_COMPAT, 'UTF-8'));
@@ -1376,7 +1420,6 @@ function outputSearchForm($options, User $loggedUser)
     // koordinaten
     if (! isset($options['lat_h']))
     {
-
             $rs = XDb::xSql('SELECT `latitude`, `longitude` FROM `user`
                             WHERE `user_id`=\'' . XDb::xEscape($loggedUser->getUserId()) . '\'');
 
@@ -1418,7 +1461,6 @@ function outputSearchForm($options, User $loggedUser)
             tpl_set_var('lon_h', $lon_h);
             tpl_set_var('lat_min', sprintf('%02.3f', $lat_min));
             tpl_set_var('lon_min', sprintf('%02.3f', $lon_min));
-
     }
     else
     {
@@ -1452,6 +1494,7 @@ function outputSearchForm($options, User $loggedUser)
     tpl_set_var('distance', isset($options['distance']) ? $options['distance'] : 20);
 
     if (! isset($options['unit'])) $options['unit'] = 'km';
+
     if ($options['unit'] == 'km')
     {
         tpl_set_var('sel_km', 'selected="selected"');
@@ -1508,19 +1551,18 @@ function outputSearchForm($options, User $loggedUser)
 
     tpl_set_var('regionoptions', '<option value="" selected="selected">' . tr('all_regions') . '</option>');
 
-
     // Typ skrzynki
     $cachetype_options = '';
 
     $lang_db = I18n::getLangForDbTranslations('cache_type');
 
     $rs = XDb::xSql("SELECT `id`, `$lang_db`, `icon_large` FROM `cache_type` ORDER BY `sort`");
+
     for ($i = 0; $i < XDb::xNumRows($rs); $i++)
     {
         $record = XDb::xFetchArray($rs);
 
         //$default_lang = I18n::getCurrentLang();
-
 
         /*
         if ($record['id'] == $options['cachetype'])
@@ -1545,7 +1587,6 @@ function outputSearchForm($options, User $loggedUser)
         $cachetype_icon = str_replace('.gif', '-i.png',    $cachetype_icon);
         $cachetype_icon_bw = str_replace('.gif', '-i-bw.png', $cachetype_icon_bw);
 
-
         $hidden_css = 'position: absolute; visibility: hidden;'; // css required to hide an image
 
         // this marks saved user preference for searching, if 1, the cache is by default searched
@@ -1558,10 +1599,10 @@ function outputSearchForm($options, User $loggedUser)
             $icon_bw_hidden = '';
         }
 
-
         $hidden_css = 'position: absolute; visibility: hidden;';
         $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '"    src="' . htmlspecialchars('/images/' . $cachetype_icon   , ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;' . $icon_hidden . '" />';
         $cachetype_options .= '<img id="cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '_bw" src="' . htmlspecialchars('/images/' . $cachetype_icon_bw, ENT_COMPAT, 'UTF-8') . '" title="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" alt="' . htmlspecialchars($record[$lang_db], ENT_COMPAT, 'UTF-8') . '" onmousedown="javascript:switchCacheType(\'cachetype_' . htmlspecialchars($record['id'], ENT_COMPAT, 'UTF-8') . '\')" style="cursor: pointer;' . $icon_bw_hidden . '" />';
+
         if ($i == 2) { $cachetype_options .= '&nbsp;&nbsp;&nbsp;'; }
         $cachetype_options .= "\n";
     }
@@ -1572,6 +1613,7 @@ function outputSearchForm($options, User $loggedUser)
     // Use order from GeoCache::CacheSizesArray().
 
     $cachesize_options = '';
+
     foreach (array_intersect(GeoCache::CacheSizesArray(), GeoCache::getSizesInUse()) as $sizeId)
     {
         $cachesize_options .= '<span style="white-space:nowrap">';
@@ -1587,7 +1629,6 @@ function outputSearchForm($options, User $loggedUser)
     // gpxlogLimit
     if ($options['gpxLogLimit'] == false) tpl_set_var('gpxLogLimitUserChoice', 5);
     else tpl_set_var('gpxLogLimitUserChoice', $options['gpxLogLimit']);
-
 
 function attr_jsline($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconundef, $category)
 {
@@ -1630,6 +1671,7 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
     }
     else
         $line = mb_ereg_replace('{icon}', $iconlarge, $line);
+
     return $line;
 }
 
@@ -1637,7 +1679,6 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
     $attributes_jsarray = '';
     $attributes_img = '';
     $attributesCat2_img = '';
-
 
     // select attributes depend on specified language.
     $database = OcDb::instance();
@@ -1659,7 +1700,6 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
         $attributes_jsarray .= $line;
 
         $line = attr_image($cache_attrib_img_line, $options, $record['id'], $record['text_long'], $record['icon_large'], $record['icon_no'], $record['icon_undef'], $record['category']);
-
 
         if ($record['category'] != 1)
             $attributesCat2_img .= $line;
@@ -1713,6 +1753,7 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
 
     // error messages
     tpl_set_var('ortserror', '');
+
     if (isset($options['error_plz']))
         tpl_set_var('ortserror', $error_plz);
     else if (isset($options['error_ort']))
@@ -1725,6 +1766,7 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
     tpl_set_var('fulltexterror', isset($options['error_nofulltext']) ? $error_nofulltext : '');
 
     tpl_BuildTemplate();
+
     exit;
 }
 
@@ -1746,12 +1788,14 @@ function outputUniidSelectionForm($uniSql, $urlparams)
 
     // build urlparams
     $urlparamString = '';
+
     foreach ($urlparams as $name => $param)
     {
         // workaround for attribs
         if (is_array($param))
         {
             $pnew = '';
+
             foreach ($param as $p)
                 if ($pnew != '')
                     $pnew .= ';' . $p;
@@ -1773,6 +1817,7 @@ function outputUniidSelectionForm($uniSql, $urlparams)
 
     // locidsite
     $locidsite = isset($_REQUEST['locidsite']) ? $_REQUEST['locidsite'] : 0;
+
     if (! is_numeric($locidsite)) $locidsite = 0;
 
     $rsCount = XDb::xSql('SELECT COUNT(*) `count` FROM `uniids`');
@@ -1791,9 +1836,11 @@ function outputUniidSelectionForm($uniSql, $urlparams)
         $pages .= '{first_img_inactive} {prev_img_inactive} ';
 
     $frompage = $locidsite - 3;
+
     if ($frompage < 1) $frompage = 1;
 
     $topage = $frompage + 8;
+
     if ($topage > $maxsite) $topage = $maxsite + 1;
 
     for ($i = $frompage; $i <= $topage; $i++)
@@ -1830,17 +1877,20 @@ function outputUniidSelectionForm($uniSql, $urlparams)
 
     $nr = $locidsite * 20 + 1;
     $locations = '';
+
     while ($r = XDb::xFetchArray($rs))
     {
         $thislocation = $locline;
 
         // build location thing
         $locString = '';
+
         if ($r['admtxt1'] != '')
         {
             if ($locString != '') $locString .= ' &gt; ';
             $locString .= htmlspecialchars($r['admtxt1'], ENT_COMPAT, 'UTF-8');
         }
+
         if ($r['admtxt2'] != '')
         {
             if ($locString != '') $locString .= ' &gt; ';
@@ -1897,6 +1947,7 @@ function outputUniidSelectionForm($uniSql, $urlparams)
     tpl_set_var('locations', $locations);
 
     tpl_BuildTemplate();
+
     exit;
 }
 
@@ -1915,12 +1966,14 @@ function outputLocidSelectionForm($locSql, $urlparams)
 
     // build urlparams
     $urlparamString = '';
+
     foreach ($urlparams as $name => $param)
     {
         // workaround for attribs
         if (is_array($param))
         {
             $pnew = '';
+
             foreach ($param as $p)
                 if ($pnew != '')
                     $pnew .= ';' . $p;
@@ -1944,6 +1997,7 @@ function outputLocidSelectionForm($locSql, $urlparams)
 
     $nr = 1;
     $locations = '';
+
     while ($r = XDb::xFetchArray($rs))
     {
         $thislocation = $locline;
@@ -1951,12 +2005,15 @@ function outputLocidSelectionForm($locSql, $urlparams)
         // build location thing
         $locString = '';
         $land = landFromLocid($r['loc_id']);
+
         if ($land != '') $locString .= htmlspecialchars($land, ENT_COMPAT, 'UTF-8');
 
         $rb = regierungsbezirkFromLocid($r['loc_id']);
+
         if ($rb != '') $locString .= ' &gt; ' . htmlspecialchars($rb, ENT_COMPAT, 'UTF-8');
 
         $lk = landkreisFromLocid($r['loc_id']);
+
         if ($lk != '') $locString .= ' &gt; ' . htmlspecialchars($lk, ENT_COMPAT, 'UTF-8');
 
         $thislocation = mb_ereg_replace('{parentlocations}', $locString, $thislocation);
@@ -1964,6 +2021,7 @@ function outputLocidSelectionForm($locSql, $urlparams)
         // determine coordinates
         $r['loc_id'] = $r['loc_id'] + 0;
         $rsCoords = XDb::xSql('SELECT `lon`, `lat` FROM `geodb_coordinates` WHERE loc_id=' . $r['loc_id'] . ' LIMIT 1');
+
         if ($rCoords = XDb::xFetchArray($rsCoords))
             $coordString = Coordinates::donNotUse_latToDegreeStr($rCoords['lat']) . ' ' . Coordinates::donNotUse_lonToDegreeStr($rCoords['lon']);
         else
@@ -1989,5 +2047,6 @@ function outputLocidSelectionForm($locSql, $urlparams)
     tpl_set_var('resultscount', XDb::xNumRows($rs));
     tpl_set_var('pages', $first_img_inactive . ' ' . $prev_img_inactive . ' 1 ' . $next_img_inactive . ' ' . $last_img_inactive);
     tpl_BuildTemplate();
+
     exit;
 }

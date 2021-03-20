@@ -37,7 +37,7 @@
                 <td valign="top">{{editmp3_04}}:</td>
                 <td>
                     <div class="form-inline">
-                    <?php $view->callChunk('fileUpload','file', 'audio/*', $view->maxmp3size ); ?>
+                    <?php $view->callChunk('fileUpload','file', 'audio/*', $view->maxmp3size); ?>
                     </div>
                 </td>
             </tr>

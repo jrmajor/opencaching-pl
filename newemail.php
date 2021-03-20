@@ -10,11 +10,11 @@ global $absolute_server_URI;
 require_once(__DIR__ . '/lib/common.inc.php');
 
 $user = ApplicationContainer::GetAuthorizedUser();
+
 if (! $user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
 }
-
 
 //set here the template to process
 $tplname = 'newemail';
@@ -46,6 +46,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
         //prüfen, ob email schon in der Datenbank vorhanden
         $rs = XDb::xSql(
             'SELECT `username` FROM `user` WHERE `email`= ? ', $new_email);
+
         if (false !== XDb::xFetchArray($rs)) {
             $email_exists = true;
             tpl_set_var('email_message', $error_email_exists);
@@ -81,7 +82,6 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
             $emailheaders .= "Content-Transfer-Encoding: 8bit\r\n";
             $emailheaders .= 'From: "' . OcConfig::getEmailAddrNoReply() . '" <' . OcConfig::getEmailAddrNoReply() . '>';
 
-
             mb_send_mail($new_email, $email_subject, $email_content, $emailheaders);
 
             tpl_set_var('message', $email_send);
@@ -115,6 +115,7 @@ if (isset($_POST['submit_getcode']) || isset($_POST['submit_changeemail'])) {
                 //check if email exists
                 $rs = XDb::xSql(
                     'SELECT `username` FROM `user` WHERE `email`= ? ', $new_email);
+
                 if (false !== XDb::xFetchArray($rs)) {
                     tpl_set_var('message', $error_email_exists);
                 } else {

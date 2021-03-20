@@ -8,7 +8,6 @@ use src\Utils\Text\Formatter;
 
 require_once(__DIR__ . '/lib/common.inc.php');
 
-
 global $content_table, $config;
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -16,6 +15,7 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -46,27 +46,24 @@ $contentLvl = '';
 $is_user_level = false;
 $prevThreshold = 1;
 
-
-foreach( $levelsMeritBadge as $oneLevel ){
+foreach($levelsMeritBadge as $oneLevel){
     $is_user_level = false;
-
 
     $pure_level = $oneLevel->getLevel();
 
-    if ( $currUserLevel == $pure_level )
+    if ($currUserLevel == $pure_level)
         $is_user_level = true;
 
     if ($is_user_level){
-        $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold, $currUserThreshold, $cfg_period_threshold );
+        $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold, $currUserThreshold, $cfg_period_threshold);
         $prevThreshold = $currUserThreshold;
     }
     else{
-        $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold,  $oneLevel->getThreshold(), $cfg_period_threshold );
+        $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold,  $oneLevel->getThreshold(), $cfg_period_threshold);
         $prevThreshold = $oneLevel->getThreshold();
     }
 
-
-    $color = MeritBadge::getColor($pure_level, $noLevels );
+    $color = MeritBadge::getColor($pure_level, $noLevels);
     $level = "<b style=\'color:$color\'> " . intval($pure_level + 1) . '</b>';
 
     $name = $oneLevel->getLevelName();
@@ -74,7 +71,6 @@ foreach( $levelsMeritBadge as $oneLevel ){
 
     $gain = $oneLevel->getGainCounter();
     $max_date = $oneLevel->getGainLastDate() ? Formatter::date($oneLevel->getGainLastDate()) : '';
-
 
     if ($is_user_level){
         $threshold = setAsSelectedBold($threshold);
@@ -93,20 +89,14 @@ foreach( $levelsMeritBadge as $oneLevel ){
             gct.addToLastRow( 5, \"$max_date\" ); ";
 }
 
-
-
-
 $usersMeritBadge = $meritBadgeCtrl->buildArrayUsers($badge_id);
 
 $contentUsr = '';
 $level_id = '';
 
-foreach( $usersMeritBadge as $oneUserBadge ){
-
-
-    if ( $level_id != $oneUserBadge->getLevelId()){
-
-        if ($level_id != '' ) $contentUsr .= '}
+foreach($usersMeritBadge as $oneUserBadge){
+    if ($level_id != $oneUserBadge->getLevelId()){
+        if ($level_id != '') $contentUsr .= '}
                 ';
 
         $level_id = $oneUserBadge->getLevelId();
@@ -115,7 +105,7 @@ foreach( $usersMeritBadge as $oneUserBadge ){
 
     $user_id = $oneUserBadge->getUserId();
 
-    $pure_user_name = str_replace( '"' , '' ,$oneUserBadge->getUserName() );
+    $pure_user_name = str_replace('"' , '' ,$oneUserBadge->getUserName());
     $user_name = $pure_user_name;
 
     $pure_curr_val = $oneUserBadge->getCurrVal();
@@ -124,9 +114,8 @@ foreach( $usersMeritBadge as $oneUserBadge ){
     $pure_ts = $oneUserBadge->getLevelDateTS();
     $curr_level_date = $oneUserBadge->getLevelDateTS() ? Formatter::date($oneUserBadge->getLevelDate()) : '';
 
-
-    if ($user_id == $userid ){
-        $user_name = setAsSelected( $user_name );
+    if ($user_id == $userid){
+        $user_name = setAsSelected($user_name);
     }
 
     $pure_user_name = strtoupper($pure_user_name);
@@ -143,35 +132,33 @@ foreach( $usersMeritBadge as $oneUserBadge ){
 
 $contentUsr .= '}';
 
-tpl_set_var( 'desc_cont', MeritBadge::sqlTextTransform($description) );
-tpl_set_var( 'who_prepared', $whoPrepared);
-tpl_set_var( 'userLevel', $currUserLevel );
+tpl_set_var('desc_cont', MeritBadge::sqlTextTransform($description));
+tpl_set_var('who_prepared', $whoPrepared);
+tpl_set_var('userLevel', $currUserLevel);
 
-tpl_set_var( 'user_id', $userid );
-tpl_set_var( 'badge_id', $badge_id );
+tpl_set_var('user_id', $userid);
+tpl_set_var('badge_id', $badge_id);
 
+tpl_set_var('head', $head);
+tpl_set_var('showPositions', (new ViewBadgeShowPositionsController())->index());
 
-tpl_set_var( 'head', $head );
-tpl_set_var( 'showPositions', (new ViewBadgeShowPositionsController())->index());
-
-tpl_set_var( 'contentLvl', $contentLvl );
-tpl_set_var( 'contentUsr', $contentUsr );
+tpl_set_var('contentLvl', $contentLvl);
+tpl_set_var('contentUsr', $contentUsr);
 
 tpl_BuildTemplate();
 
-
-
-
-function setAsSelectedBold( $value ){
+function setAsSelectedBold($value){
     $value = '<b>' . $value . '</b>';
+
     return $value;
 }
 
-function setAsSelectedColor( $value ){
+function setAsSelectedColor($value){
     $value = "<span class='GCT-color-darkred'>" . $value . '</span>';
+
     return $value;
 }
 
-function setAsSelected( $value ){
-    return setAsSelectedColor( setAsSelectedBold( $value ) );
+function setAsSelected($value){
+    return setAsSelectedColor(setAsSelectedBold($value));
 }

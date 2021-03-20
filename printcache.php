@@ -15,11 +15,14 @@ if (isset($_POST['flush_print_list'])) {
 }
 
 $cache_id = isset($_GET['cacheid']) ? $_GET['cacheid'] + 0 : 0;
+
 if (! $cache_id) {
     $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
     if (! $loggedUser ||
         (empty(PrintList::GetContent()) && (isset($_GET['source']) && $_GET['source'] != 'mywatches'))) {
         header('Location:index.php');
+
         exit();
     }
 }
@@ -27,12 +30,15 @@ if (! $cache_id) {
 if (! isset($_POST['showpictures'])) {
     $_POST['showpictures'] = '';
 }
+
 if (! isset($_POST['spoiler_only'])) {
     $_POST['spoiler_only'] = '';
 }
+
 if (! isset($_POST['showlogs'])) {
     $_POST['showlogs'] = '';
 }
+
 if (! isset($_POST['nocrypt'])) {
     $_POST['nocrypt'] = '';
 }
@@ -55,12 +61,14 @@ if ($cache_id) {
         $spoiler_only = '';
     }
 }
-if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
 
+if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
     $rs = XDb::xSql('SELECT `cache_watches`.`cache_id` AS `cache_id`
                          FROM `cache_watches` WHERE `cache_watches`.`user_id`= ? ', $loggedUser->getUserId());
+
     if (XDb::xNumRows($rs) > 0) {
         $caches_list = [];
+
         for ($i = 0; $i < XDb::xNumRows($rs); $i++) {
             $record = XDb::xFetchArray($rs);
             $caches_list[] = $record['cache_id'];
@@ -78,6 +86,7 @@ if ((isset($_GET['source'])) && ($_GET['source'] == 'mywatches')) {
 if (! isset($include_caches)) {
     $include_caches = '';
 }
+
 if (! isset($include_caches_list)) {
     $include_caches_list = '';
 }
@@ -100,15 +109,19 @@ $checked_8 = '';
 if (isset($_POST['shownologbook']) && $_POST['shownologbook'] == '&logbook=no') {
     $checked_0 = 'checked';
 }
+
 if (! isset($_POST['showlogs'])) {
     $_POST['showlogs'] = '';
 }
+
 if ($_POST['showlogs'] == '') {
     $checked_1 = 'checked';
 }
+
 if ($_POST['showlogs'] == '&showlogs=4') {
     $checked_2 = 'checked';
 }
+
 if ($_POST['showlogs'] == '&showlogsall=y') {
     $checked_3 = 'checked';
 }
@@ -116,9 +129,11 @@ if ($_POST['showlogs'] == '&showlogsall=y') {
 if ($_POST['showpictures'] == '&pictures=no' || ! isset($_POST['showpictures'])) {
     $checked_4 = 'checked';
 }
+
 if ($_POST['showpictures'] == '&pictures=small') {
     $checked_5 = 'checked';
 }
+
 if ($_POST['showpictures'] == '&pictures=big') {
     $checked_6 = 'checked';
 }

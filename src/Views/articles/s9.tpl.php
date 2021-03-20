@@ -43,7 +43,7 @@ if (isset($_REQUEST['region'])) {
             echo '<tr class="bgcolor2"><td align="right">&nbsp;&nbsp;<b>' . tr('ranking') . '</b>&nbsp;&nbsp;</td><td align="center">&nbsp;&nbsp;<b>' . tr('number_of_caches') . '</b>&nbsp;&nbsp;</td><td align="center">&nbsp;&nbsp;<b>' . tr('username') . '</b>&nbsp;&nbsp;</td></tr>';
             echo '<tr><td height="2"></td></tr>';
 
-            while ( $wynik = XDb::xFetchArray($wyniki) ) {
+            while ($wynik = XDb::xFetchArray($wyniki)) {
                 if ($wartosc == 0) {
                     $wartosc = $wynik['count'];
                     $licznik = 1;

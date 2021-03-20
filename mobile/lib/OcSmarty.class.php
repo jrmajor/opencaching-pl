@@ -37,6 +37,7 @@ class OcSmarty extends Smarty
 
         // We can provide only those languages, which are available in both flavors.
         $availableTranslations = [];
+
         foreach ($availableDesktopTranslations as $langCode => $langData) {
             if (in_array($langCode, $availableMobileTranslations)) {
                 $availableTranslations[$langCode] = $langData;

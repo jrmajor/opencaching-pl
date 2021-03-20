@@ -2,6 +2,7 @@
 /**
  * Contains \src\Models\Watchlist\WatchlistWatcher class definition
  */
+
 namespace src\Models\Watchlist;
 
 use DateTime;

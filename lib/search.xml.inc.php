@@ -1,4 +1,5 @@
 <?php
+
 use src\Models\ApplicationContainer;
 use src\Models\Coordinates\Coordinates;
 use src\Models\GeoCache\GeoCacheCommons;
@@ -11,7 +12,7 @@ use src\Utils\I18n\I18n;
 
 global $content, $bUseZip, $dbcSearch;
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
@@ -46,7 +47,7 @@ $caches_per_page = 20;
 
 $query = 'SELECT ';
 
-if (isset($lat_rad, $lon_rad)  ) {
+if (isset($lat_rad, $lon_rad)) {
     $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
     if (! $loggedUser) {
@@ -68,12 +69,12 @@ if (isset($lat_rad, $lon_rad)  ) {
                 is_object($loggedUser), $record_coords['longitude'], $record_coords['latitude'],
                 0, $multiplier[$distance_unit]) . ' `distance`, ';
         }
-
     }
 }
 
 $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`,
         `caches`.`user_id` `user_id`, ';
+
 if (! $loggedUser) {
     $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
 } else {
@@ -91,6 +92,7 @@ if(! empty($queryFilter)){
 }
 
 $sortby = $options['sort'];
+
 if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } elseif ($sortby == 'bycreated') {
@@ -110,6 +112,7 @@ if (isset($_REQUEST['count'])) {
 } else {
     $count = $caches_per_page;
 }
+
 if ($count > 500) {
     $count = 500;
 }
@@ -139,7 +142,6 @@ if ($rCount['count'] == 1) {
     }
 }
 
-
 header('Content-type: application/xml; charset=' . $encoding);
 header('Content-Disposition: attachment; filename=' . $sFilebasename . '.xml');
 
@@ -167,18 +169,19 @@ $stmt = XDb::xSql(
         AND `xmlcontent`.`user_id`=`user`.`user_id` AND `caches`.`type`=`cache_type`.`id`
         AND `caches`.`status`=`cache_status`.`id`');
 
-while($r = XDb::xFetchArray($stmt) ) {
+while($r = XDb::xFetchArray($stmt)) {
     if (@$enable_cache_access_logs) {
-
         $dbc = OcDb::instance();
 
         $cache_id = $r['cacheid'];
         $user_id = $loggedUser ? $loggedUser->getUserId() : null;
         $access_log = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
+
         if ($access_log === null) {
             $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = [];
             $access_log = $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
         }
+
         if (@$access_log[$cache_id] !== true) {
             $dbc->multiVariableQuery(
                 'INSERT INTO CACHE_ACCESS_LOGS
@@ -187,7 +190,7 @@ while($r = XDb::xFetchArray($stmt) ) {
                     (NOW(), :1, :2, \'B\', \'download_xml\', :3, :4, :5)',
                     $cache_id, $user_id,
                     $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                    ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
+                    (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
                     );
             $access_log[$cache_id] = true;
             $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = $access_log;
@@ -274,5 +277,6 @@ function filterevilchars($str)
     $str = mb_ereg_replace('/&([a-zA-Z]{1})caron;/', '\\1', $str);
     $str = mb_ereg_replace('/&([a-zA-Z]{1})acute;/', '\\1', $str);
     $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
+
     return $str;
 }

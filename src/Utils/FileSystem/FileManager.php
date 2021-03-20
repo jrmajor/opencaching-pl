@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\FileSystem;
 
+namespace src\Utils\FileSystem;
 
 class FileManager
 {

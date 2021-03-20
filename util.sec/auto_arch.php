@@ -48,8 +48,8 @@ class AutoArch
             'SELECT cache_id, last_modified FROM caches WHERE status = 2 AND last_modified < now() - interval 4 month');
 
         $chachesToProcess = $db->dbResultFetchAll($s);
-        foreach ($chachesToProcess as $rs) {
 
+        foreach ($chachesToProcess as $rs) {
             $s = $db->multiVariableQuery(
                 'SELECT step FROM cache_arch WHERE cache_id = :1 LIMIT 1', (int) $rs['cache_id']);
             $step_array = $db->dbResultFetchOneRowOnly($s);
@@ -59,6 +59,7 @@ class AutoArch
             } else {
                 $step = $this->step['START'];
             }
+
             if (strtotime($rs['last_modified']) < time() - 6 * 31 * 24 * 60 * 60 && $step == $this->step['AFTER_SECOND_MAIL_SENT']) {
                 $this->archiveGeocache($rs);
             } elseif (strtotime($rs['last_modified']) < time() - 5 * 31 * 24 * 60 * 60 && $step == $this->step['AFTER_FIRST_MAIL_SENT']) {
@@ -74,6 +75,7 @@ class AutoArch
         $octeamEmailAddress = OcConfig::getEmailAddrOcTeam();
         $siteName = $this->ocConfig->getSiteName();
         $cache = new GeoCache(['cacheId' => (int) $cacheid]);
+
         switch ($step) {
             case $this->step['START']:
                 $email_content = file_get_contents(__DIR__ . '/../resources/email/arch1.email');
@@ -104,6 +106,7 @@ class AutoArch
         $emailheaders .= "From: $siteName <$octeamEmailAddress>\r\n";
         $emailheaders .= "Reply-To: $siteName <$octeamEmailAddress>";
         $status = mb_send_mail($cache->getOwner()->getEmail(), tr('autoArchive_11'), $email_content, $emailheaders);
+
         if(! $status){
             Debug::errorLog('Mail sending failure: to:' . $cache->getOwner()->getEmail());
         }
@@ -121,6 +124,7 @@ class AutoArch
                 AND (caches.cache_id = cache_arch.cache_id)
                 AND (caches.user_id = user.user_id)
             ORDER BY step ASC');
+
         return $db->dbResultFetchAll($s);
     }
 
@@ -136,6 +140,7 @@ class AutoArch
             WHERE cache_arch.cache_id = caches.cache_id
                 AND last_modified >= now() - interval 4 month ');
         $cachesToRm = $db->dbResultFetchAll($s);
+
         foreach ($cachesToRm as $cacheToRm) {
             $delSqlQuery = 'DELETE FROM cache_arch WHERE cache_id = :1 LIMIT 1';
             $db->multiVariableQuery($delSqlQuery, (int) $cacheToRm['cacheId']);
@@ -208,7 +213,6 @@ class AutoArch
             WHERE status<>3 AND type = 6 AND date_hidden < now() - interval 2 month');
     }
 }
-
 
 $autoArch = new AutoArch();
 $autoArch->run();

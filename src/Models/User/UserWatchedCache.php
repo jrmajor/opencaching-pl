@@ -21,20 +21,18 @@ class UserWatchedCache extends BaseObject
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);
 
-        return (isset($okapiResp['success']) && $okapiResp['success'] == true );
+        return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
     public static function removeFromWatched($userId, $cacheWp){
-
         $params = [
-           'cache_code' => $cacheWp,
-           'watched' => 'false', // false need to be a string!!!
+            'cache_code' => $cacheWp,
+            'watched' => 'false', // false need to be a string!!!
         ];
 
         $okapiResp = self::callOkapi('services/caches/mark', $params);
 
-        return (isset($okapiResp['success']) && $okapiResp['success'] == true );
-
+        return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
     public static function getWatchedCachesCount($userId){
@@ -91,7 +89,7 @@ class UserWatchedCache extends BaseObject
                 ) sts ON sts.cache_id = cw.cache_id
                 WHERE cw.user_id = :1
                 ORDER BY c.name
-                LIMIT $limit OFFSET $offset", $userId );
+                LIMIT $limit OFFSET $offset", $userId);
 
         return $db->dbResultFetchAll($stmt);
     }

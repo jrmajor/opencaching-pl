@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\Text;
 
+namespace src\Utils\Text;
 
 class Rot13
 {
@@ -20,6 +20,7 @@ class Rot13
         while (mb_strlen($retval) < mb_strlen($str)) {
             $nNextStart = false;
             $sNextEndChar = '';
+
             foreach ($delimiter as $del) {
                 $nThisStart = mb_strpos($str, $del[0], mb_strlen($retval));
 

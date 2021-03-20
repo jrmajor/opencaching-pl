@@ -10,9 +10,11 @@ require(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit();
 }
 
@@ -66,7 +68,6 @@ $action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
         viewqueries($loggedUser);
     }
 
-
 function deletequery($queryid, User $loggedUser)
 {
     global $tplname;
@@ -77,7 +78,6 @@ function deletequery($queryid, User $loggedUser)
     $s = $dbc->multiVariableQuery($query, $queryid, $loggedUser->getUserId());
 
     if ($dbc->rowCount($s) == 1) {
-
         $query = 'DELETE FROM `queries` WHERE `id`=:1 LIMIT 1';
         $dbc->multiVariableQuery($query, $queryid);
     }
@@ -85,6 +85,7 @@ function deletequery($queryid, User $loggedUser)
     unset($dbc);
 
     tpl_redirect('query.php?action=view');
+
     exit;
 }
 
@@ -125,6 +126,7 @@ function viewqueries(User $loggedUser)
     unset($dbc);
     tpl_set_var('queries', $content);
     tpl_BuildTemplate();
+
     exit;
 }
 
@@ -137,7 +139,6 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
     $error_no_name = false;
     $error_duplicate_name = false;
 
-
     // ok ... verify that it our query and then save
     $rs = XDb::xSql(
         'SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )',
@@ -145,6 +146,7 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
 
     if (false == XDb::xFetchArray($rs)) {
         echo 'fatal error: query not found or permission denied';
+
         exit;
     }
     XDb::xFreeResults($rs);
@@ -173,8 +175,10 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
             $rs = XDb::xSql(
                 'SELECT `user_id` FROM `queries` WHERE `id`= ? AND (`user_id`=0 OR `user_id`= ? )',
                 $saveas_queryid, $loggedUser->getUserId());
+
             if (false === XDb::xFetchArray($rs)) {
                 echo 'fatal error: saveas_query not found or permission denied';
+
                 exit;
             }
             XDb::xFreeResults($rs);
@@ -206,17 +210,19 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
             tpl_set_var('oldqueries', '');
         } else {
             tpl_set_var('selecttext', $saveastext);
+
             do{
                 if ($r['id'] == $queryid)
                     $options .= '<option value="' . $r['id'] . '" selected="selected">' . htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
                 else
                     $options .= '<option value="' . $r['id'] . '">' . htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
-            }while( $r = XDb::xFetchArray($rs) );
+            }while($r = XDb::xFetchArray($rs));
             XDb::xFreeResults($rs);
             tpl_set_var('oldqueries', $options);
         }
 
         tpl_BuildTemplate();
+
         exit;
     }
 

@@ -36,13 +36,12 @@ class CacheSetsListController extends BaseController
      */
     public function showAll()
     {
-
         $allowedStatuses = [CacheSetCommon::STATUS_OPEN];
 
         // prepare pagination for cacheSets list
         $paginationModel = new PaginationModel(50);
         $paginationModel->setRecordsCount(
-            CacheSet::GetAllCacheSetsCount($allowedStatuses) );
+            CacheSet::GetAllCacheSetsCount($allowedStatuses));
 
         [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
 
@@ -51,7 +50,7 @@ class CacheSetsListController extends BaseController
         // init model for list of watched geopaths
         $listModel = new ListOfCachesModel();
         $listModel->addColumn(
-            new Column_CacheSetNameAndIcon( tr('cacheSet_name'),
+            new Column_CacheSetNameAndIcon(tr('cacheSet_name'),
                 /** @var CacheSet  $row*/
                 function($row){
                     return [
@@ -66,18 +65,17 @@ class CacheSetsListController extends BaseController
         $listModel->addDataRows($allCacheSets);
         $this->view->setVar('listCacheModel', $listModel);
 
-
         // init map-chunk model
         $this->view->addHeaderChunk('openLayers5');
 
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $allCacheSets,
             function(CacheSet $cs){
-
             if(is_null($cs->getCoordinates())){
                 // skip cachesets without coords
                 return null;
             }
+
             return CacheSetMarkerModel::fromCacheSetFactory($cs);
         });
 
@@ -91,7 +89,6 @@ class CacheSetsListController extends BaseController
      */
     public function showMyOwn()
     {
-
     }
 
     private function showList()

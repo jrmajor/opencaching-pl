@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Înainte de a publica prima geocutie pe {site_name} trebuie ca mai întâi să găseşti cel puţin {NEED_FIND_LIMIT} geocutii de următoarele tipuri: tradiţională, multiplă, puzzle sau alte tipuri (mai puţin evenimente).',
     'postActivation_mail_cacheguides' => 'Geocaching Guides / Gurus',
 
-
     'password_confirm' => 'Confirmare parolă',
     'register_msg1' => 'Pentru a crea un cont pe {site_name} este nevoie de o adresă de E-Mail valabilă şi un nume de utilizatoran. <br/>La adresa de E-Mail pe care o furnizezi vei primi un mesaj cu un cod de activare. Se poate crea un singur cont pentru o adresa de E-Mail.',
     'register_msg2' => 'Câmpurile marcate cu * sunt obligatorii',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Your cache is already added to geopath.',
     'gp_cacheRemovedFromGeopath' => 'Cache is already removed from geopath.',
 
-
     'statpic_found' => 'Găsite:',
     'statpic_hidden' => 'Ascunse:',
     'statpic_html_link' => '- Statistici pentru',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Recomandări',
     'search_gpxgc_07' => 'National Park',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Dogs not allowed',
     'attribute_2' => 'Access or parking fee',
     'attribute_3' => 'Climbing gear requried',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'Suitable to hold trackables',
     'attribute_220' => 'Officially designated historical monument',
     'attribute_999' => 'Log password',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Vremea',
     'vl_Recently_modified_on' => 'Modificate recent pe',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'Cannot cancel this offer - error occurred',
     'gpCandidates_cancelOfferInProgress' => 'Cancelation in progress',
 
-
     'gpMyCandidates_title' => 'Candidates to geopaths for user',
     'gpMyCandidates_submitedDate' => 'Date',
     'gpMyCandidates_geopathName' => 'Geopath',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'Problem with update pics order occured',
     'editCache_orderPicsSaveSuccess' => 'Pics order has been changed',
 
-
     'vote_criteriaNotPassed' => 'Currently logged user account doesn\'t pass criteria of participation in voting',
     'vote_electionOpenUntil' => 'This election is open until',
     'vote_electionWillBeOpen' => 'This election will be open',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'Description',
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
-//  '' => '',
+    //  '' => '',
 ];

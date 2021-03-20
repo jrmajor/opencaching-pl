@@ -11,7 +11,6 @@ use src\Utils\Text\Formatter;
  */
 
 return function (GeoCache $cache) {
-
     $log = $cache->getLastLog();
 
     if (empty($log)) {

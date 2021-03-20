@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Database;
 
 use Exception;
@@ -85,10 +86,12 @@ class DbUpdate
                 'git ls-tree master --name-only -r ' . DbUpdates::getUpdatesDir(),
                 $scriptsInMaster
             );
+
             foreach ($scriptsInMaster as &$script) {
                 $script = pathinfo($script)['filename'];
             }
         }
+
         return in_array($this->name, $scriptsInMaster);
     }
 
@@ -102,9 +105,11 @@ class DbUpdate
         if ($this->getRuntype() == 'auto' && ! $this->wasRunAt()) {
             return true;
         }
+
         if ($this->getRuntype() == 'always') {
             return true;
         }
+
         return false;
     }
 
@@ -180,12 +185,12 @@ class DbUpdate
     {
         $oldPath = $this->getFilePath();
         $newPath = dirname($oldPath) . '/' . $newName . '.php';
+
         if (file_exists($newPath)) {
             return false;
         }
 
         if (preg_match('/^' . self::REGEX_VALID_UPDATE_NAME . '$/', $newName)) {
-
             // try to move via git
             exec('git mv ' . $oldPath . ' ' . $newPath);
 
@@ -193,12 +198,15 @@ class DbUpdate
                 // Looks like the file was not staged/committed to Git yet.
                 rename($oldPath, $newPath);
             }
+
             if (! file_exists($oldPath)) {
                 $this->name = $newName;
+
                 if (DbUpdateHistory::contains($this->uuid)) {
                     DbUpdateHistory::rename($this->uuid, $newName);
                 }
                 DbUpdates::sort();
+
                 return true;
             }
         }

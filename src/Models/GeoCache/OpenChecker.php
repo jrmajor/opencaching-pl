@@ -2,7 +2,6 @@
 
 namespace src\Models\GeoCache;
 
-
 use Exception;
 use src\Utils\Database\XDb;
 
@@ -27,11 +26,9 @@ class OpenChecker
         }else{
             throw new Exception();
         }
-
     }
 
     public static function ForCacheIdFactory($cacheId){
-
         try{
           return new OpenChecker($cacheId);
         } catch(Exception $e){
@@ -40,7 +37,6 @@ class OpenChecker
     }
 
     private function loadFromDbRow(array $row){
-
         //TODO: this method is used in viewcache only now and probably needs to be extended...
 
         $this->hits = $row['hits'];
@@ -63,6 +59,7 @@ class OpenChecker
      */
     public static function isEnabledInConfig(){
         global $config;
+
         if($config['module']['openchecker']['enabled']) return true;
         else return false;
     }

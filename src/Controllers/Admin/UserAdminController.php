@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Admin;
 
 use src\Controllers\BaseController;
@@ -16,7 +17,6 @@ use src\Utils\Uri\Uri;
 
 class UserAdminController extends BaseController
 {
-
     private $infoMsg = null;
 
     private $errorMsg = null;
@@ -37,7 +37,6 @@ class UserAdminController extends BaseController
         if (! $this->loggedUser->hasOcTeamRole()) {
             $this->view->redirect('/');
         }
-
     }
 
     public function isCallableFromRouter($actionName)
@@ -75,7 +74,6 @@ class UserAdminController extends BaseController
                 strpos($userName, '@')
                 && ! is_null($user = User::fromEmailFactory($userName))
                 ) {
-
                 $this->view->redirect(SimpleRouter::getLink(
                     'Admin.UserAdmin',
                     'index',

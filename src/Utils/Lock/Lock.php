@@ -34,6 +34,7 @@
  * class and add corresponding settings to Config files
  * (f.ex. Config/lock.default.php).
  */
+
 namespace src\Utils\Lock;
 
 use src\Models\OcConfig\OcConfig;
@@ -89,6 +90,7 @@ abstract class Lock
         array $options = null
     ) {
         $result = null;
+
         if (self::useExistingFile($identifier, $options)) {
             $result = (new FileLock(null))->internalTryLock(
                 $identifier,
@@ -102,6 +104,7 @@ abstract class Lock
                 $options
             );
         }
+
         return $result;
     }
 
@@ -120,11 +123,13 @@ abstract class Lock
     final public static function unlock($handle, array $options = null)
     {
         $result = false;
+
         if (self::useExistingFile($handle, $options)) {
             $result = (new FileLock(null))->internalUnlock($handle);
         } else {
             $result = self::getRealLock()->internalUnlock($handle);
         }
+
         return $result;
     }
 
@@ -146,6 +151,7 @@ abstract class Lock
     final public static function forceUnlock($identifier, array $options = null)
     {
         $result = false;
+
         if (self::useExistingFile($identifier, $options)) {
             $result = (new FileLock(null))->internalForceUnlock(
                 $identifier,
@@ -154,6 +160,7 @@ abstract class Lock
         } else {
             $result = self::getRealLock()->internalForceUnlock($identifier);
         }
+
         return $result;
     }
 
@@ -168,15 +175,18 @@ abstract class Lock
     {
         $lockConfig = OcConfig::instance()->getLockConfig();
         $result = null;
+
         if (
             ! empty($lockConfig['type']) &&
             ! empty($lockConfig[$lockConfig['type']])
         ) {
             $settings = $lockConfig[$lockConfig['type']];
+
             if (! empty($settings['class'])) {
                 $result = new $settings['class']($settings);
             }
         }
+
         return $result;
     }
 
@@ -195,6 +205,7 @@ abstract class Lock
         $options = null
     ) {
         $result = false;
+
         if (
             $options != null
             && in_array(self::OPTION_USE_EXISTING_FILE, $options)
@@ -215,6 +226,7 @@ abstract class Lock
                 );
             }
         }
+
         return $result;
     }
 }

@@ -1,4 +1,6 @@
-<?php /** @noinspection PhpUnused */
+<?php
+
+/** @noinspection PhpUnused */
 
 namespace src\Models\GeoCache;
 
@@ -14,7 +16,6 @@ use src\Utils\Text\Formatter;
 
 class GeoCacheLog extends GeoCacheLogCommons
 {
-
     /** @var int */
     private $id;
 
@@ -314,6 +315,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             WHERE `cache_id` = :cacheid
               AND `user_id` = :userid
         ';
+
         return (bool) $this->db->paramQueryValue($query, false, $params);
     }
 
@@ -372,6 +374,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     {
         $this->user = $user;
         $this->userId = $user->getUserId();
+
         return $this;
     }
 
@@ -382,6 +385,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setType(int $type): GeoCacheLog
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -392,6 +396,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setDate(DateTime $date): GeoCacheLog
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -402,6 +407,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setText(?string $text): GeoCacheLog
     {
         $this->text = ($text != null) ? $text : '';
+
         return $this;
     }
 
@@ -412,6 +418,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setTextHtml(bool $textHtml): GeoCacheLog
     {
         $this->textHtml = $textHtml;
+
         return $this;
     }
 
@@ -422,6 +429,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setLastModified(DateTime $lastModified): GeoCacheLog
     {
         $this->lastModified = $lastModified;
+
         return $this;
     }
 
@@ -432,6 +440,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setOkapiSyncbase(DateTime $okapiSyncbase): GeoCacheLog
     {
         $this->okapiSyncbase = $okapiSyncbase;
+
         return $this;
     }
 
@@ -442,6 +451,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setUuid(string $uuid): GeoCacheLog
     {
         $this->uuid = $uuid;
+
         return $this;
     }
 
@@ -452,6 +462,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setPicturesCount(int $picturesCount): GeoCacheLog
     {
         $this->picturesCount = $picturesCount;
+
         return $this;
     }
 
@@ -462,6 +473,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setMp3count(int $mp3count): GeoCacheLog
     {
         $this->mp3count = $mp3count;
+
         return $this;
     }
 
@@ -472,6 +484,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setDateCreated(DateTime $dateCreated): GeoCacheLog
     {
         $this->dateCreated = $dateCreated;
+
         return $this;
     }
 
@@ -482,6 +495,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setOwnerNotified(bool $ownerNotified): GeoCacheLog
     {
         $this->ownerNotified = $ownerNotified;
+
         return $this;
     }
 
@@ -492,6 +506,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setNode(int $node): GeoCacheLog
     {
         $this->node = $node;
+
         return $this;
     }
 
@@ -502,6 +517,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setDeleted(bool $deleted): GeoCacheLog
     {
         $this->deleted = $deleted;
+
         return $this;
     }
 
@@ -512,6 +528,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setDelByUserId(?int $delByUserId): GeoCacheLog
     {
         $this->delByUserId = $delByUserId;
+
         return $this;
     }
 
@@ -522,6 +539,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setEditByUserId(?int $editByUserId): GeoCacheLog
     {
         $this->editByUserId = $editByUserId;
+
         return $this;
     }
 
@@ -532,6 +550,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setEditCount(int $editCount): GeoCacheLog
     {
         $this->editCount = $editCount;
+
         return $this;
     }
 
@@ -542,6 +561,7 @@ class GeoCacheLog extends GeoCacheLogCommons
     public function setLastDeleted(?DateTime $lastDeleted): GeoCacheLog
     {
         $this->lastDeleted = $lastDeleted;
+
         return $this;
     }
 
@@ -551,7 +571,6 @@ class GeoCacheLog extends GeoCacheLogCommons
      */
     private function loadByLogId(int $logId)
     {
-
         //find log by Id
         $s = $this->db->multiVariableQuery(
             'SELECT * FROM cache_logs WHERE id = :1 LIMIT 1', $logId);
@@ -587,6 +606,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             ->setDelByUserId($row['del_by_user_id'])
             ->setEditByUserId($row['edit_by_user_id'])
             ->setEditCount($row['edit_count']);
+
         if (! empty($row['last_deleted'])) {
             $this->setLastDeleted(new DateTime($row['last_deleted']));
         } else {
@@ -603,8 +623,10 @@ class GeoCacheLog extends GeoCacheLogCommons
     public static function fromLogIdFactory(int $logId): ?GeoCacheLog
     {
         $obj = new self();
+
         try {
             $obj->loadByLogId($logId);
+
             return $obj;
         } catch (Exception $e) {
             return null;
@@ -618,8 +640,10 @@ class GeoCacheLog extends GeoCacheLogCommons
     public static function fromDbRowFactory(array $row): ?GeoCacheLog
     {
         $obj = new self();
+
         try {
             $obj->loadFromDbRow($row);
+
             return $obj;
         } catch (Exception $e) {
             return null;
@@ -640,6 +664,7 @@ class GeoCacheLog extends GeoCacheLogCommons
         if (! $this->getDeleted()) {
             return false; //log is NOT deleted
         }
+
         if (in_array($this->getType(), [
             GeoCacheLog::LOGTYPE_FOUNDIT,
             GeoCacheLog::LOGTYPE_ATTENDED,
@@ -648,6 +673,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             // There can be only one log "found", "attended", "will attend"
             return (! $this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType()));
         }
+
         return true;
     }
 
@@ -695,8 +721,10 @@ class GeoCacheLog extends GeoCacheLogCommons
     ): array
     {
         $params = [$cacheId, $userId];
+
         if ($types != null) {
             $typesInString = '';
+
             foreach ($types as $type) {
                 if (strlen($typesInString) > 0) {
                     $typesInString .= ',';
@@ -713,6 +741,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             . ($limit != null ? ' LIMIT ' . $this->db()->quoteLimit($limit) : ''),
             $params
         );
+
         return $this->db->dbFetchAllAsObjects($stmt, function ($row) {
             return self::fromDbRowFactory($row);
         });
@@ -728,7 +757,6 @@ class GeoCacheLog extends GeoCacheLogCommons
         if ($this->getUserId() != $this->getCurrentUser()->getUserId() &&
             $this->getGeoCache()->getOwnerId() != $this->getCurrentUser()->getUserId() &&
             ! $this->getCurrentUser()->hasOcTeamRole()) {
-
             // logged user is not an author of the log && not the owner of cache and not OCTeam
             throw new Exception('User not authorized to remove this log');
         }
@@ -745,7 +773,6 @@ class GeoCacheLog extends GeoCacheLogCommons
             $this->getDelByUserId(), Formatter::dateTimeForSql($this->getLastModified()),
             Formatter::dateTimeForSql($this->getLastDeleted()), $this->getId());
 
-
         if ($this->getType() == self::LOGTYPE_MOVED) {
             MobileCacheMove::updateMovesOnLogRemove($this);
         }
@@ -754,7 +781,6 @@ class GeoCacheLog extends GeoCacheLogCommons
 
         if ($this->getType() == self::LOGTYPE_FOUNDIT ||
             $this->getType() == self::LOGTYPE_ATTENDED) {
-
             // remove cache from users top caches, because the found log was deleted for some reason
             $this->db->multiVariableQuery(
                 'DELETE FROM cache_rating WHERE user_id=:1 AND cache_id=:2',
@@ -810,7 +836,6 @@ class GeoCacheLog extends GeoCacheLogCommons
 
         // trigger log-author statpic update
         $this->getUser()->deleteUserStatpic();
-
     }
 
     /**

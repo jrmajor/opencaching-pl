@@ -26,6 +26,7 @@ $linie = XDb::xSql(
 echo '<tr><td class="bgcolor2" align="right"><b>' . tr('Stats_t5_07') . '</b>&nbsp;&nbsp;</td><td class="bgcolor2" align="center" style="white-space: nowrap"><img src="images/rating-star.png" border="0" alt="Recommendations" />&nbsp;<b>' . tr('Stats_t5_08') . '</b>&nbsp;&nbsp;</td><td class="bgcolor2" align="center"><b>' . tr('Stats_t5_09') . '</b>&nbsp;&nbsp;</td></tr><tr><td>';
 $l2 = '';
 $licznik = 0;
+
 while ($linia = XDb::xFetchArray($linie)) {
     $l1 = $linia['count'];
     $x = XDb::xMultiVariableQueryValue(
@@ -40,6 +41,7 @@ while ($linia = XDb::xFetchArray($linie)) {
             AND status <> 4 AND status <> 5
             AND status <> 6 AND type <> 6',
         0, $linia['user_id']);
+
     if($y != 0)
         $xy = sprintf('%.u', ($x / $y) * 100);
     else

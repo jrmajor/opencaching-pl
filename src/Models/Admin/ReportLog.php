@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateTime;
@@ -10,7 +11,6 @@ use src\Utils\Debug\Debug;
 
 class ReportLog extends BaseObject
 {
-
     /**
      * Log types
      */
@@ -107,6 +107,7 @@ class ReportLog extends BaseObject
     public function __construct(array $params = [])
     {
         parent::__construct();
+
         if (isset($params['logId'])) {
             $this->loadById($params['logId']);
         }
@@ -125,8 +126,9 @@ class ReportLog extends BaseObject
     public function getReport()
     {
         if ($this->report == null && $this->dataLoaded) {
-            $this->report = new Report( ['reportId' => $this->reportId]);
+            $this->report = new Report(['reportId' => $this->reportId]);
         }
+
         return $this->report;
     }
 
@@ -148,8 +150,9 @@ class ReportLog extends BaseObject
     public function getUser()
     {
         if ($this->user == null && $this->dataLoaded) {
-            $this->user = new User( ['userId' => $this->userId]);
+            $this->user = new User(['userId' => $this->userId]);
         }
+
         return $this->user;
     }
 
@@ -161,8 +164,9 @@ class ReportLog extends BaseObject
     public function getPoll()
     {
         if ($this->poll == null && $this->dataLoaded) {
-            $this->poll = new ReportPoll( ['pollId' => $this->pollId]);
+            $this->poll = new ReportPoll(['pollId' => $this->pollId]);
         }
+
         return $this->poll;
     }
 
@@ -210,6 +214,7 @@ class ReportLog extends BaseObject
         }
         $content = '';
         $header = '';
+
         switch ($this->type) {
             case self::TYPE_NOTE:
                 $header = tr('admin_reports_tpl_note') . ':';
@@ -237,10 +242,12 @@ class ReportLog extends BaseObject
                 $header = tr('admin_reports_tpl_poll');
                 $header .= ' (' . $this->getPoll()->getDateStart()->format(OcConfig::instance()->getDatetimeFormat());
                 $header .= ' - ' . $this->getPoll()->getDateEnd()->format(OcConfig::instance()->getDatetimeFormat()) . ')';
+
                 if ($this->getPoll()->isPollActive()) { // Poll is active, hide some data
                     $content = tr('admin_reports_lbl_question') . ': <em>' . $this->getPoll()->getQuestion() . '</em><br>';
                     $content .= tr('admin_reports_lbl_ans') . ' 1: <i>' . $this->getPoll()->getAns1() . '</i><br>';
                     $content .= tr('admin_reports_lbl_ans') . ' 2: <i>' . $this->getPoll()->getAns2() . '</i><br>';
+
                     if ($this->getPoll()->getAns3() != null) {
                         $content .= tr('admin_reports_lbl_ans') . ' 3: <i>' . $this->getPoll()->getAns3() . '</i><br>';
                     }
@@ -252,6 +259,7 @@ class ReportLog extends BaseObject
                         $content = tr('admin_reports_lbl_question') . ': <em>' . $this->getPoll()->getQuestion() . '</em><br>';
                         $content .= tr('admin_reports_lbl_ans') . ' 1: <i>' . $this->getPoll()->getAns1() . '</i><br>';
                         $content .= tr('admin_reports_lbl_ans') . ' 2: <i>' . $this->getPoll()->getAns2() . '</i><br>';
+
                         if ($this->getPoll()->getAns3() != null) {
                             $content .= tr('admin_reports_lbl_ans') . ' 3: <i>' . $this->getPoll()->getAns3() . '</i><br>';
                         }
@@ -266,6 +274,7 @@ class ReportLog extends BaseObject
                 $content = tr('admin_reports_lbl_question') . ': <em>' . $this->getPoll()->getQuestion() . '</em><br>';
                 $content .= tr('admin_reports_lbl_ans') . ' 1: <i>' . $this->getPoll()->getAns1() . '</i><br>';
                 $content .= tr('admin_reports_lbl_ans') . ' 2: <i>' . $this->getPoll()->getAns2() . '</i><br>';
+
                 if ($this->getPoll()->getAns3() != null) {
                     $content .= tr('admin_reports_lbl_ans') . ' 3: <i>' . $this->getPoll()->getAns3() . '</i><br>';
                 }
@@ -281,10 +290,12 @@ class ReportLog extends BaseObject
         $header = mb_ereg_replace('{user}', $this->getUser()->getUserName(), $header);
         $output = '[' . $this->dateCreated->format(OcConfig::instance()->getDatetimeFormat()) . '] ';
         $output .= '<strong>' . $header . '</strong>';
+
         if ($content != null || $content != '') {
             $output .= '<br>' . $content;
         }
         $output .= '<br>';
+
         return $output;
     }
 
@@ -298,6 +309,7 @@ class ReportLog extends BaseObject
         $log = new ReportLog(['logId' => $logId]);
         $output = $log->getFormattedLog();
         unset($log);
+
         return $output;
     }
 
@@ -345,6 +357,7 @@ class ReportLog extends BaseObject
         $newlog->setPollId($pollId);
         $id = $newlog->insertToDb();
         unset($newlog);
+
         return $id;
     }
 
@@ -415,6 +428,7 @@ class ReportLog extends BaseObject
         $params['id']['data_type'] = 'integer';
         $stmt = self::db()->paramQuery($query, $params);
         $dbRow = self::db()->dbResultFetch($stmt);
+
         if (is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
@@ -426,6 +440,7 @@ class ReportLog extends BaseObject
     {
         $n = new self();
         $n->loadFromDbRow($dbRow);
+
         return $n;
     }
 
@@ -453,6 +468,7 @@ class ReportLog extends BaseObject
         $params['poll_id']['data_type'] = ($this->pollId == null) ? 'null' : 'integer';
         self::db()->paramQuery($query, $params);
         $this->id = self::db()->lastInsertId();
+
         return $this->id;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\GeoCache\GeoCache;
@@ -12,7 +13,6 @@ use src\Utils\Uri\Uri;
 
 class CacheAdoptionController extends BaseController
 {
-
     // common error and info message displayed as an actions results
     private $infoMsg = '';
     private $errorMsg = '';
@@ -41,13 +41,10 @@ class CacheAdoptionController extends BaseController
      */
     public function index()
     {
-
         // print list of caches which are offered for current user
-        if ( $this->loggedUser->isAdoptionApplicable() ) {
-
+        if ($this->loggedUser->isAdoptionApplicable()) {
             // there are caches which are waiting for this user adoption decision
-            $this->view->setVar('adoptionOffers', $this->getAdoptionOffers() );
-
+            $this->view->setVar('adoptionOffers', $this->getAdoptionOffers());
         } else {
             // there are caches which are waiting for this user adoption decision
             $this->view->setVar('adoptionOffers',  null);
@@ -69,11 +66,11 @@ class CacheAdoptionController extends BaseController
     /**
      * accept geocache
      */
-    public function accept( $cacheId )
+    public function accept($cacheId)
     {
-
-        if( is_null($cacheObj = GeoCache::fromCacheIdFactory( $cacheId )) ){
+        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
             $this->index();
+
             return;
         }
 
@@ -85,6 +82,7 @@ class CacheAdoptionController extends BaseController
 
                 // redirect to main script
                 $this->view->redirect(SimpleRouter::getLink(self::class));
+
                 exit;
         }
 
@@ -97,9 +95,11 @@ class CacheAdoptionController extends BaseController
 
         // update owner and org_user_id fields for the cache
         $oldOwner = User::fromUserIdFactory($cacheObj->getOwnerId());
+
         if (is_null($oldOwner)) {
             //no such user?!
             $this->errorMsg = 'Old owner not found!';
+
             return;
         }
 
@@ -136,8 +136,7 @@ class CacheAdoptionController extends BaseController
                             last_modified = NOW(),
                             uuid = :3,
                             node = :4',
-
-            $cacheObj->getCacheId(), $logMessage, Uuid::create(), OcConfig::getSiteNodeId() );
+            $cacheObj->getCacheId(), $logMessage, Uuid::create(), OcConfig::getSiteNodeId());
 
         $this->db->multiVariableQuery(
             'UPDATE `caches` SET
@@ -153,9 +152,7 @@ class CacheAdoptionController extends BaseController
         EmailSender::sendAdoptionSuccessMessage(__DIR__ . '/../../resources/email/adoption.email.html',
             $cacheObj->getCacheName(), $this->loggedUser->getUserName(), $oldOwner->getUserName(), $oldOwner->getEmail());
 
-
         $this->index();
-
     }
 
     /**
@@ -163,9 +160,10 @@ class CacheAdoptionController extends BaseController
      */
     public function refuse($cacheId)
     {
-        if( is_null($cacheObj = GeoCache::fromCacheIdFactory( $cacheId )) ){
+        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
+
             exit;
         }
 
@@ -175,6 +173,7 @@ class CacheAdoptionController extends BaseController
 
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
+
             exit;
         }
 
@@ -183,8 +182,8 @@ class CacheAdoptionController extends BaseController
             'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId());
 
         $oldOwner = User::fromUserIdFactory($cacheObj->getOwnerId());
-        if (! is_null($oldOwner)) {
 
+        if (! is_null($oldOwner)) {
             $this->infoMsg = tr('adopt_27');
             EmailSender::sendAdoptionRefusedMessage(__DIR__ . '/../../resources/email/adoption.email.html',
                 $cacheObj->getCacheName(), $this->loggedUser->getUserName(), $oldOwner->getUserName(), $oldOwner->getEmail());
@@ -198,18 +197,18 @@ class CacheAdoptionController extends BaseController
      */
     public function abort($cacheId)
     {
-        if( is_null($cacheObj = GeoCache::fromCacheIdFactory( $cacheId )) ){
+        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
+
             exit;
         }
 
         // check if current user is an owner of selected cache
-        if ($this->loggedUser->getUserId() == $cacheObj->getOwnerId() ) {
-
+        if ($this->loggedUser->getUserId() == $cacheObj->getOwnerId()) {
             // old owner of the cache cancel adoption offer
             $this->db->multiVariableQuery(
-                'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId() );
+                'DELETE FROM chowner WHERE cache_id = :1', $cacheObj->getCacheId());
 
             $this->infoMsg = tr('adopt_16');
         } else {
@@ -218,6 +217,7 @@ class CacheAdoptionController extends BaseController
 
         // redirect to main script
         $this->view->redirect(SimpleRouter::getLink(self::class));
+
         exit;
     }
 
@@ -227,45 +227,49 @@ class CacheAdoptionController extends BaseController
     public function addAdoptionOffer($cacheId)
     {
         $cacheObj = GeoCache::fromCacheIdFactory($cacheId);
+
         if(is_null($cacheObj)){
             $this->index();
+
             exit;
         }
 
-        if( ! isset( $_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']) ) ) {
+        if(! isset($_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']))) {
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
+
             exit;
         }
 
         //first check if current user is an owner of cache for adoption
-        if ($this->loggedUser->getUserId() != $cacheObj->getOwnerId() ) {
+        if ($this->loggedUser->getUserId() != $cacheObj->getOwnerId()) {
             //it shouldn't happens - someone hack us?!
 
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
+
             exit;
         }
 
         // check if the new owner is not the old owner :)
-        if ($newUserObj->getUserId() == $cacheObj->getOwnerId() ) {
+        if ($newUserObj->getUserId() == $cacheObj->getOwnerId()) {
             $this->errorMsg = tr('adopt_33');
-
         } else {
-
             // user exists and is not current owner of this cache
 
             //check if user is able to adopt caches
             if (! $newUserObj->isAdoptionApplicable()) {
                 $this->errorMsg = tr('adopt_34');
                 $this->index();
+
                 exit;
             }
 
             //check if there is no such offer
-            if ($this->checkOffer( $cacheObj )) {
+            if ($this->checkOffer($cacheObj)) {
                 $this->errorMsg = 'There is such adoption offer already!';
                 $this->index();
+
                 exit;
             }
 
@@ -292,8 +296,10 @@ class CacheAdoptionController extends BaseController
     public function selectUser($cacheId)
     {
         $cacheObj = GeoCache::fromCacheIdFactory($cacheId);
+
         if(is_null($cacheObj)){
             $this->index();
+
             exit;
         }
 
@@ -304,6 +310,7 @@ class CacheAdoptionController extends BaseController
         $this->view->setVar('cacheObj', $cacheObj);
 
         $this->view->buildView();
+
         exit;
     }
 
@@ -319,13 +326,14 @@ class CacheAdoptionController extends BaseController
         if ($userObj == null) {
             $offers = $this->db->multiVariableQueryValue(
                 'SELECT COUNT(*) FROM chowner WHERE cache_id = :1 LIMIT 1',
-                0, $cacheObj->getCacheId() );
+                0, $cacheObj->getCacheId());
         } else {
             $offers = $this->db->multiVariableQueryValue(
                 'SELECT COUNT(*) FROM chowner WHERE cache_id = :1 AND user_id = :2 LIMIT 1',
-                0, $cacheObj->getCacheId(), $userObj->getUserId() );
+                0, $cacheObj->getCacheId(), $userObj->getUserId());
         }
-        return ( $offers > 0 ) ? true : false;
+
+        return ($offers > 0) ? true : false;
     }
 
     private function getUserCaches()
@@ -340,7 +348,7 @@ class CacheAdoptionController extends BaseController
              WHERE c.user_id= :1
                 AND status <> 4
              ORDER BY name',
-            $this->loggedUser->getUserId() ));
+            $this->loggedUser->getUserId()));
     }
 
     private function getAdoptionOffers()

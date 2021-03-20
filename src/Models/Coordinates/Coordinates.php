@@ -10,7 +10,6 @@ namespace src\Models\Coordinates;
  */
 class Coordinates
 {
-
     /**
      * coordinates in casual decimal format (DD.DDDDDDDD)
      *
@@ -66,6 +65,7 @@ class Coordinates
         $coords = new Coordinates();
         $coords->setLatitude($lat);
         $coords->setLongitude($lon);
+
         if (! $coords->areCordsReasonable()) {
             return null;
         }
@@ -125,6 +125,7 @@ class Coordinates
         }
 
         $prefix = $this->getLatitudeHemisphereSymbol() . '&nbsp;';
+
         switch ($format) {
             case self::COORDINATES_FORMAT_DECIMAL:
                 return $prefix . $this->convertToDecString(abs($this->latitude));
@@ -164,6 +165,7 @@ class Coordinates
         }
 
         $prefix = $this->getLongitudeHemisphereSymbol() . '&nbsp;';
+
         switch ($format) {
             case self::COORDINATES_FORMAT_DECIMAL:
                 return $prefix . $this->convertToDecString(abs($this->longitude));
@@ -212,7 +214,6 @@ class Coordinates
         [$deg, $min, $sec] = $this->getParts($this->latitude);
 
         return $this->getFormattedPartsArray($format, $prefix, $deg, $min, $sec);
-
     }
 
     private function getFormattedPartsArray($format, $prefix, $deg, $min, $sec)
@@ -248,6 +249,7 @@ class Coordinates
     public function setLatitude($latitude)
     {
         $this->latitude = $latitude;
+
         return $this;
     }
 
@@ -259,6 +261,7 @@ class Coordinates
     public function setLongitude($longitude)
     {
         $this->longitude = $longitude;
+
         return $this;
     }
 
@@ -285,9 +288,9 @@ class Coordinates
      */
     public function areSameAs(Coordinates $coords)
     {
-
         $latA = $this->getLatitudeParts();
         $latB = $coords->getLatitudeParts();
+
         foreach ($latA as $key => $part) {
             if ($latA[$key] != $latB[$key]) {
                 return false;
@@ -296,6 +299,7 @@ class Coordinates
 
         $lotA = $this->getLongitudeParts();
         $lotB = $coords->getLongitudeParts();
+
         foreach ($lotA as $key => $part) {
             if ($lotA[$key] != $lotB[$key]) {
                 return false;
@@ -310,6 +314,7 @@ class Coordinates
         $deg = abs($coordinate);
         $min = 60 * ($deg - floor($deg));
         $sec = 3600 * ($deg - floor($deg)) - 60 * floor($min);
+
         return [$deg, $min, $sec];
     }
 
@@ -318,6 +323,7 @@ class Coordinates
         $degMinCoordinate = sprintf('%02d', floor($decimalCoordinate)) . '°&nbsp;';
         $coordinate = $decimalCoordinate - floor($decimalCoordinate);
         $degMinCoordinate .= sprintf('%06.3f', round($coordinate * 60, 3)) . '\'';
+
         return $degMinCoordinate;
     }
 
@@ -329,6 +335,7 @@ class Coordinates
         $degMinSecCoordinate .= sprintf('%02d', floor($coordinate)) . '\'&nbsp;';
         $latmin = $coordinate - floor($coordinate);
         $degMinSecCoordinate .= sprintf('%02.02f', $latmin * 60) . '\'\'';
+
         return $degMinSecCoordinate;
     }
 
@@ -403,6 +410,7 @@ class Coordinates
         $retval = $retval . sprintf('%02d', floor($lat)) . '° ';
         $lat = $lat - floor($lat);
         $retval = $retval . sprintf('%06.3f', round($lat * 60, 3)) . '\'';
+
         return $retval;
     }
 }

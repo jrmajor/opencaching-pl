@@ -64,6 +64,7 @@ abstract class BaseController
     {
         $this->view->redirect(
             Uri::setOrReplaceParamValue('target', Uri::getCurrentUri(), '/login.php'));
+
         exit();
     }
 
@@ -79,7 +80,8 @@ abstract class BaseController
         }
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=UTF-8');
-        echo (json_encode($response));
+        echo(json_encode($response));
+
         exit;
     }
 
@@ -103,12 +105,15 @@ abstract class BaseController
         $response = [
             'status' => 'ERROR',
         ];
+
         if(! is_null($message)){
             $response['message'] = $message;
         }
+
         if(is_null($statusCode)){
             $statusCode = self::HTTP_STATUS_BAD_REQUEST;
         }
+
         if(is_array($additionalResponseData)){
             $response = array_merge($additionalResponseData, $response);
         }
@@ -124,6 +129,7 @@ abstract class BaseController
     public function displayCommonErrorPageAndExit($message = null, $httpStatusCode = null)
     {
         $this->view->setTemplate('error/commonFatalError');
+
         if ($httpStatusCode) {
             switch ($httpStatusCode) {
                 case 404:
@@ -139,6 +145,7 @@ abstract class BaseController
 
         $this->view->setVar('message', $message);
         $this->view->buildOnlySelectedTpl();
+
         exit();
     }
 
@@ -149,6 +156,7 @@ abstract class BaseController
     {
         if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
+
             exit();
         }
     }
@@ -160,6 +168,7 @@ abstract class BaseController
     {
         if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
+
             exit();
         }
     }

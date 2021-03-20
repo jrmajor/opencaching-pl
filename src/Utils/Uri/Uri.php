@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Uri;
 
 use Exception;
@@ -17,18 +18,16 @@ class Uri {
     public static function setOrReplaceParamValue(
         $paramName, $paramValue, $uri = null)
     {
-
         if (is_null($uri)) {
             $uri = self::getCurrentUri(true);
         }
 
         $paramArr = [];
-        parse_str( parse_url($uri, PHP_URL_QUERY), $paramArr);
+        parse_str(parse_url($uri, PHP_URL_QUERY), $paramArr);
         $paramArr[$paramName] = $paramValue;
 
         //rebuild the uri
         return strtok($uri, '?') . '?' . http_build_query($paramArr);
-
     }
 
     public static function addAnchorName($anchorName, $uri = null)
@@ -40,7 +39,6 @@ class Uri {
         [$uriWithoutHash] = explode('#', $uri);
 
         return $uriWithoutHash . '#' . $anchorName;
-
     }
 
     /**
@@ -57,13 +55,14 @@ class Uri {
         }
 
         $paramArr = [];
-        parse_str( parse_url($uri, PHP_URL_QUERY), $paramArr);
+        parse_str(parse_url($uri, PHP_URL_QUERY), $paramArr);
 
-        if ( isset($paramArr[$paramName]) ) {
+        if (isset($paramArr[$paramName])) {
             unset($paramArr[$paramName]);
 
             //rebuild the uri
             $uri = strtok($uri, '?');
+
             if (! empty($paramArr)) {
                 $uri .= '?' . http_build_query($paramArr);
             }
@@ -93,6 +92,7 @@ class Uri {
         $rootPath = self::addPrecedingSlashIfNecessary($rootPath);
 
         $realPath = $ROOT . $rootPath;
+
         if (! file_exists($realPath)) {
             // there is no such file!
             if (file_exists($ROOT . '/public' . $rootPath)) {
@@ -140,6 +140,7 @@ class Uri {
 
         // main domain or any its subdomain
         $domainRegex = "/([a-z0-9|-]+\.)*" . OcConfig::getSiteMainDomain() . '$/';
+
         if(preg_match($domainRegex, $domain)){
             return $domain;
         } else {
@@ -224,6 +225,7 @@ class Uri {
             }
             $delimiter = '&';
         }
+
         return $uri;
     }
 
@@ -236,6 +238,7 @@ class Uri {
     public static function getAbsServerPath($pageRootPath)
     {
         $rootPath = self::getPageRootPathOnServer();
+
         return $rootPath . $pageRootPath;
     }
 

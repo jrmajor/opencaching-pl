@@ -2,12 +2,11 @@
 
 namespace src\Utils\Text;
 
-
 class SmilesInText
 {
     // TODO: UTF-8 compatible str_replace (with arrays)
     public static function process($text){
-        return str_replace( self::$smileytext, self::getSmileyImages(), $text);
+        return str_replace(self::$smileytext, self::getSmileyImages(), $text);
     }
 
     private static function getSmileyImages()
@@ -36,7 +35,6 @@ class SmilesInText
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-undecided.gif" alt=":/" title=":/" width="18px" height="18px" />',
             '<img src="' . $absolute_server_URI . 'lib/tinymce4/plugins/emoticons/img/smiley-yell.gif" alt="XO" title="XO" width="18px" height="18px" />',
         ];
-
     }
 
     private static $smileytext = [
@@ -61,5 +59,4 @@ class SmilesInText
         ' :/ ',
         ' XO ',
     ];
-
 }

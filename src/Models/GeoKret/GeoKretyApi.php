@@ -42,16 +42,19 @@ class GeoKretyApi extends BaseObject
         $url = self::GEOKRETY_URL . "/export2.php?secid=$this->secId&inventory=1";
         $xml = $this->connect($url, self::OPERATION_TAKE_USER_GEOKRETS);
         libxml_use_internal_errors(true);
+
         if ($xml) {
             try {
                 $result = simplexml_load_string($xml);
             } catch (Exception $e) {
                 $this->storeErrorsInDb(self::OPERATION_TAKE_USER_GEOKRETS, $url);
+
                 return [];
             }
         } else {
             $result = [];
         }
+
         return $result;
     }
 
@@ -67,6 +70,7 @@ class GeoKretyApi extends BaseObject
 
         if ($xml) {
             libxml_use_internal_errors(true);
+
             try {
                 $result = simplexml_load_string($xml);
             } catch (Exception $e) {
@@ -91,12 +95,14 @@ class GeoKretyApi extends BaseObject
     public function MakeGeokretSelector($cacheName)
     {
         $krety = $this->TakeUserGeokrets();
+
         if (empty($krety)) {
             return tr('GKApi28');
         }
         $selector = '<table class="table">';
         $MaxNr = 0;
         $jsclear = 'onclick="this.value=\'\'" onblur="formDefault(this)"';
+
         foreach ($krety->geokrety->geokret as $kret) {
             $MaxNr++;
             $selector .= '<tr class="form-group-sm geoKretLog">
@@ -114,21 +120,25 @@ class GeoKretyApi extends BaseObject
         $selector .= '</table>';
         $selector .= '<input type="hidden" name=MaxNr value="' . $MaxNr . '">';
         $this->maxID = $MaxNr; //value set for use in MakeGeokretInCacheSelector method.
+
         return $selector;
     }
 
     public function MakeGeokretInCacheSelector($cachename)
     {
         $krety = $this->TakeGeoKretsInCache();
+
         if (empty($krety)) {
             return tr('GKApi28');
         }
+
         if (count($krety->geokrety->geokret) == 0) {
             return tr('GKApi29');
         }
         $selector = '<table class="table">';
         $MaxNr = $this->maxID;
         $jsclear = 'onclick="this.value=\'\'" onblur="formDefault(this)"';
+
         foreach ($krety->geokrety->geokret as $kret) {
             $MaxNr++;
             $selector .= '<tr class="form-group-sm">
@@ -145,6 +155,7 @@ class GeoKretyApi extends BaseObject
         }
         $selector .= '</table>';
         $selector .= '<input type="hidden" name=MaxNr value="' . $MaxNr . '">';
+
         return $selector;
     }
 
@@ -157,12 +168,14 @@ class GeoKretyApi extends BaseObject
 
         $context = stream_context_create($opts);
         @$response = file_get_contents($url, false, $context);
+
         if ($response) {
             $result = $response;
         } else {
             $this->storeErrorsInDb($operationType, $url);
             $result = false;
         }
+
         return $result;
     }
 

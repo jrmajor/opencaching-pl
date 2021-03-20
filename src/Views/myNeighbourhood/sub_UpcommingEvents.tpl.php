@@ -35,6 +35,7 @@ use src\Utils\Text\Formatter;
     </a>
   </div>
   <?php } //end foreach
+
   if (count($view->upcomingEvents) == $view->preferences['style']['caches-count']) { ?>
     <div class="align-right">
       <a class="btn btn-sm btn-default" href="<?SimpleRouter::getLink('MyNeighnourhood','upcommingEvents', $view->selectedNbh)?>" title="<?=tr('myn_hlp_more')?>"><?=tr('more')?></a>

@@ -16,7 +16,6 @@ $content_table = '
 
 <br>';
 
-
 $content_element = '
 <div class="Badge-div-element">
             <span class="Badge-level-user">' . tr('merit_badge_level') . ': {level_name} </span><br>

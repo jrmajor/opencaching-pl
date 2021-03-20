@@ -1,4 +1,5 @@
 <?php
+
 use src\Utils\Database\OcDb;
 
 if (! isset($_REQUEST['u'])) exit;

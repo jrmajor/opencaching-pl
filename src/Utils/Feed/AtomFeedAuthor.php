@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Feed;
 
 /**
@@ -7,7 +8,6 @@ namespace src\Utils\Feed;
  */
 class AtomFeedAuthor
 {
-
     /** @var string */
     private $name;
 
@@ -59,6 +59,7 @@ class AtomFeedAuthor
     public function setName($name)
     {
         $this->name = $name;
+
         return $this->getName();
     }
 
@@ -71,6 +72,7 @@ class AtomFeedAuthor
     public function setUri($uri)
     {
         $this->uri = $uri;
+
         return $this->getUri();
     }
 
@@ -83,6 +85,7 @@ class AtomFeedAuthor
     public function setEmail($email)
     {
         $this->email = $email;
+
         return $this->getEmail();
     }
 
@@ -99,9 +102,11 @@ class AtomFeedAuthor
         }
         $result = '<author>' . PHP_EOL;
         $result .= '<name>' . htmlspecialchars($this->getName()) . '</name>' . PHP_EOL;
+
         if (! empty($this->getUri())) {
             $result .= '<uri>' . $this->getUri() . '</uri>' . PHP_EOL;
         }
+
         if (! empty($this->getEmail())) {
             $result .= '<email>' . $this->getEmail() . '</email>' . PHP_EOL;
         }
@@ -121,6 +126,7 @@ class AtomFeedAuthor
         if (empty($this->getName())) {
             return false;
         }
+
         return true;
     }
 }

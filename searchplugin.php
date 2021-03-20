@@ -37,6 +37,7 @@ if (($sourceid == 'waypoint-search') && ($userinput != '')) {
 
 if (($sourceid == 'mozilla-search') && ($userinput != '')) {
     $params = mb_split(':', $userinput);
+
     if ($params !== false) {
         if (count($params) == 1) {
             $searchto = 'name';
@@ -56,6 +57,7 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
         }
 
         $targeturl = 'search.php?showresult=1&expert=0&output=HTML&f_userowner=0&f_userfound=0';
+
         switch ($searchto) {
             case $keyword_name:
                 $targeturl .= '&sort=byname&searchbyname=1&f_inactive=1&cachename=' . $searchfor;
@@ -79,13 +81,16 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                 $targeturl = 'index.php';
                 $searchfor = TextConverter::mb_trim($searchfor);
                 $target = mb_strtolower(mb_substr($searchfor, 0, 2));
+
                 if (mb_substr($target, 0, 1) == 'n') {
                     $target = 'nc';
                 }
+
                 if (mb_ereg_match('([a-f0-9]){4,4}$', mb_strtolower($searchfor))) {
                     $target = $ocWP;
                     $searchfor = $target . '' . $searchfor;
                 }
+
                 if ((($target == 'oc') || ($target == $ocWP) || ($target == 'nc') || ($target == 'gc')) &&
                         mb_ereg_match('((' . $ocWP . '|oc)([a-z0-9]){4,4}|gc([a-z0-9]){4,5}|n([a-f0-9]){5,5})$', mb_strtolower($searchfor))) {
                     // get cache_id from DB
@@ -97,6 +102,7 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                         WHERE `wp_' . XDb::xEscape($target) . '`= ? ', $searchfor);
 
                     $count = XDb::xNumRows($rs);
+
                     if ($count == 1) {
                         $record = XDb::xFetchArray($rs);
                         $targeturl = 'viewcache.php?cacheid=' . $record['cache_id'];
@@ -106,11 +112,13 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                         $tplname = 'searchplugin';
                         tpl_set_var('error_msg', mb_ereg_replace('{wp}', $searchfor, $errmsg_no_cache_found));
                         tpl_BuildTemplate();
+
                         exit;
                     } else if ($count > 1) {
                         $tplname = 'searchplugin';
                         tpl_set_var('error_msg', mb_ereg_replace('{wp}', $searchfor, $errmsg_many_caches_found));
                         tpl_BuildTemplate();
+
                         exit;
                     }
                     XDb::xFreeResults($rs);
@@ -120,6 +128,7 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                     $tplname = 'searchplugin';
                     tpl_set_var('error_msg', $errmsg_unknown_format);
                     tpl_BuildTemplate();
+
                     exit;
                 }
                 break;

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Cron;
 
 use src\Controllers\BaseController;

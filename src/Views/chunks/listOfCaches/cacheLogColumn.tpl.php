@@ -20,7 +20,6 @@ use src\Utils\Text\Formatter;
  */
 
 return function (array $data, Column_CacheLog $model = null) {
-
     if (! isset($data['logId']) || is_null($data['logId'])) {
         // there is no log data - exit;
         $nolog = true;
@@ -38,7 +37,6 @@ return function (array $data, Column_CacheLog $model = null) {
         $recommended = (isset($data['recommended']) && $data['logType'] == GeoCacheLog::LOGTYPE_FOUNDIT);
 
         $logTextEllipsisNecessary = $showFullLog && mb_strlen($logText) > 150; // elipsis text longer than...
-
     }
     ?>
     <?php if (! $nolog) { ?>

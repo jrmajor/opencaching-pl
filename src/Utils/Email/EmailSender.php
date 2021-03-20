@@ -27,7 +27,6 @@ class EmailSender
         $message,
         $spamDomain = OcSpamDomain::GENERIC_ERRORS)
     {
-
         //first check if sending email is allowed
         if(! OcSpamDomain::isEmailAllowed($spamDomain)){
             //skip email
@@ -36,11 +35,10 @@ class EmailSender
 
         //ok, mail allowed - build it
         foreach (OcConfig::getEmailAddrTechAdminNotification() as $techAdmAddress) {
-
             $email = new Email();
             $email->addToAddr($techAdmAddress);
             $email->setReplyToAddr($techAdmAddress);
-            $email->setFromAddr( OcConfig::getEmailAddrNoReply());
+            $email->setFromAddr(OcConfig::getEmailAddrNoReply());
 
             $email->addSubjectPrefix('OC Admin Email');
             $email->setSubject('Error in domain: ' . $spamDomain); //TODO
@@ -48,7 +46,7 @@ class EmailSender
 
             if (! $email->send()) {
                 // The only available fallback here is logging.
-                Debug::errorLog( __METHOD__ . ": Admin email sending failed! Message:\n" . $message, false);
+                Debug::errorLog(__METHOD__ . ": Admin email sending failed! Message:\n" . $message, false);
             }
         } // foreach
     }
@@ -199,7 +197,7 @@ class EmailSender
         $email->setFromAddr(OcConfig::getEmailAddrNoReply());
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefixForOcTeam());
 
-        if (isset($region, $country)  ) {
+        if (isset($region, $country)) {
             $email->setSubject(tr('ocTeamNewCache_sub') . ': ' . $country . ' -> ' . $region);
         } else {
             $email->setSubject(tr('ocTeamNewCache_sub') . ': ' . tr('dummy_outside'));

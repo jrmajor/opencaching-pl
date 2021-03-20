@@ -64,7 +64,7 @@ function convert($str)
     return $str;
 }
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $tplname = 'garmin';
 
@@ -75,6 +75,7 @@ tpl_set_var('htmlheaders', '<link rel="stylesheet" href="/css/garmin.css" type="
 tpl_set_var('bodyMod', ' onload="load()"');
 
 $garminKeyStr = '';
+
 if (isset($config['garmin-key'])){
     foreach($config['garmin-key'] as $k => $v){
         $garminKeyStr .= '"' . $k . '", "' . $v . '", ';
@@ -84,8 +85,10 @@ if (isset($config['garmin-key'])){
 tpl_set_var('garminKeyStr', $garminKeyStr);
 
 global $hide_coords;
+
 if (! ApplicationContainer::GetAuthorizedUser() && $hide_coords) {
     tpl_errorMsg($tplname, tr('login_message_09'));
+
     exit;
 }
 
@@ -100,8 +103,6 @@ tpl_set_var('lat', $lat);
 tpl_set_var('long', $long);
 tpl_set_var('wp_oc', $wp);
 tpl_set_var('cachename', $str);
-
-
 
 //make the template and send it out
 tpl_BuildTemplate();

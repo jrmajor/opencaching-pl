@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use src\Models\BaseObject;

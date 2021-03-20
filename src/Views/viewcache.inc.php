@@ -37,7 +37,6 @@ $gallery_icon = '<img src="images/free_icons/photo.png" alt="Photo" class="icon1
 $gallery_tr = tr('gallery');
 $gallery_link = '<a href="gallery_cache.php?cacheid={cacheid}">' . tr('gallery_short') . '</a>';
 
-
 $viewtext_on = tr('enter_text');
 $viewtext_off = tr('enter_text_error');
 $event_attended_text = ' ' . tr('attendends');
@@ -54,7 +53,6 @@ $hide_del_link = '<span style="white-space: nowrap;"><a href="{thispage}?cacheid
 $show_del_tr = tr('vc_ShowDeletions');
 $show_del_link = '<span style="white-space: nowrap;"><a href="{thispage}?cacheid={cacheid}&amp;showdel=y' . $linkargs . '#log_start" title="' . $show_del_tr . '">' . '<img src="images/log/16x16-trash.png" class="icon16" alt="' . $show_del_tr . '" title="' . $show_del_tr . '" /></a>&nbsp;<a href="{thispage}?cacheid={cacheid}&amp;showdel=y' . $linkargs . '#log_start" title="' . $show_del_tr . '">' . $show_del_tr . '</a></span>'; //add trash icon - todo: diff icon for show/hide
 //$show_del_link and $hide_del_link are used in both viewlogs and viewcashes .php - so {thispage} is determined for caller
-
 
 $decrypt_table = ' <font face="Courier" size="2" style="font-family : \'Courier New\', FreeMono, Monospace;">A|B|C|D|E|F|G|H|I|J|K|L|M</font>
                                                 <font face="Courier" size="2" style="font-family : \'Courier New\', FreeMono, Monospace;">N|O|P|Q|R|S|T|U|V|W|X|Y|Z</font>';

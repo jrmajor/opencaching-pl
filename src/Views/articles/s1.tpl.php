@@ -37,9 +37,11 @@ $r = XDb::xSql(
 
 $l2 = '';
 $licznik = 0;
-while ( $line = XDb::xFetchArray($r) ) {
+
+while ($line = XDb::xFetchArray($r)) {
     $l1 = $line['count'];
     $licznik++;
+
     if ($l2 != $l1) {
         echo '<tr class="bgcolor2"><td style="text-align: right; padding: 5px;">' . $licznik . '</td><td style="text-align: center; padding: 5px;">' . $l1 . '</td><td style="padding: 5px;"><a href="viewprofile.php?userid=' . $line['user_id'] . '">' . htmlspecialchars($line['username']) . '</a>';
         $l2 = $l1;

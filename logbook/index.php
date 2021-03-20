@@ -1,4 +1,5 @@
 <?php
+
 switch($_GET['page']) {
 default:
 case 'logbook':

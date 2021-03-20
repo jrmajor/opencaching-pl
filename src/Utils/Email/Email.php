@@ -7,6 +7,7 @@
  * proper method in EmailSender class.
  *
  */
+
 namespace src\Utils\Email;
 
 use RuntimeException;
@@ -44,9 +45,11 @@ class Email
         if (empty($this->toAddr)) {
             throw new RuntimeException('Missing email recipient.');
         }
+
         if (empty($this->fromAddr)) {
             throw new RuntimeException('Missing email sender.');
         }
+
         if (! self::isValidEmailAddr($this->toAddr) ||
             ! self::isValidEmailAddr($this->fromAddr)
         ) {
@@ -54,6 +57,7 @@ class Email
             // the return values of setFromAddr() and addToAddr() if handling
             // is needed.
             $to = implode(',', $this->toAddr);
+
             throw new RuntimeException("Invalid recipient/sender address! $to/{$this->fromAddr}");
         }
         $headers = [];
@@ -74,9 +78,11 @@ class Email
         if (! empty($this->ccAddr)) {
             $headers[] = 'Cc: ' . implode(',', $this->ccAddr);
         }
+
         if (! empty($this->bccAddr)) {
             $headers[] = 'Bcc: ' . implode(',', $this->bccAddr);
         }
+
         if (! empty($this->replyToAddr)) {
             $headers[] = 'Reply-To: ' . $this->replyToAddr;
         }
@@ -95,6 +101,7 @@ class Email
     public function setFromAddr($addr)
     {
         $this->fromAddr = $addr;
+
         return self::isValidEmailAddr($addr);
     }
 
@@ -106,6 +113,7 @@ class Email
     public function addToAddr($addr)
     {
         $this->toAddr[] = $addr;
+
         return self::isValidEmailAddr($addr);
     }
 
@@ -113,6 +121,7 @@ class Email
     {
         if (self::isValidEmailAddr($addr)) {
             $this->ccAddr[] = $addr;
+
             return true;
         } else {
             return false;
@@ -123,6 +132,7 @@ class Email
     {
         if (self::isValidEmailAddr($addr)) {
             $this->bccAddr[] = $addr;
+
             return true;
         } else {
             return false;
@@ -133,6 +143,7 @@ class Email
     {
         if (self::isValidEmailAddr($addr)) {
             $this->replyToAddr = $addr;
+
             return true;
         } else {
             return false;
@@ -142,13 +153,13 @@ class Email
     public function setSubject($subject)
     {
         $this->subject = $subject;
+
         return ($subject != '');
     }
 
     public function addSubjectPrefix($newPrefix)
     {
         if (! empty($newPrefix)) { // because somebody may want to turn off the global prefix in config
-
             $this->subjectPrefix = $this->subjectPrefix . '[' . $newPrefix . ']';
         }
     }
@@ -177,6 +188,7 @@ class Email
                     return false;
                 }
             }
+
             return true;
         }
 

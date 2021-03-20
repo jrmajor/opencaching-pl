@@ -1,4 +1,5 @@
 <?php
+
 use okapi\Facade;
 use src\Models\GeoCache\MobileCacheMove;
 use src\Utils\Database\XDb;
@@ -6,10 +7,7 @@ use src\Utils\Database\XDb;
 require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
-
     if (isset($_GET['id']) && ! empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
-
-
         $id = XDb::xEscape($_GET['id']);
 
         $query = "select user_id,deleted,cache_id,type from cache_logs where id = '" . $id . "'";
@@ -25,7 +23,6 @@ if (isset($_SESSION['user_id'])) {
         elseif ($wiersz['deleted'] == '1')
             $tpl->assign('error', '1');
         elseif (isset($_POST['confirm']) && $_POST['confirm'] == 'true') {
-
             $cache_id = $wiersz['cache_id'];
             $user_id = $wiersz['user_id'];
             $type = $wiersz['type'];
@@ -41,8 +38,8 @@ if (isset($_SESSION['user_id'])) {
                     XDb::xSql($query);
 
                     $check_toprating = Xdb::xMultiVariableQueryValue('SELECT COUNT(*) FROM `cache_rating` where user_id = :1 AND  cache_id = :2', 0, $_SESSION['user_id'], $cache_id);
-                    if ($check_toprating > 0) {
 
+                    if ($check_toprating > 0) {
                         $query = 'delete from `cache_rating` where user_id=' . $_SESSION['user_id'] . ' and cache_id=' . $cache_id;
                         XDb::xSql($query);
 
@@ -57,8 +54,8 @@ if (isset($_SESSION['user_id'])) {
                     }
 
                     $check_scores = Xdb::xMultiVariableQueryValue('SELECT COUNT(*) FROM `scores` where user_id = :1 AND  cache_id = :2', 0, $_SESSION['user_id'], $cache_id);
-                    if ($check_scores > 0) {
 
+                    if ($check_scores > 0) {
                         $query = 'delete from `scores` where user_id=' . $_SESSION['user_id'] . ' and cache_id=' . $cache_id;
                         XDb::xSql($query);
                         $query = 'update caches set votes=votes-1 ,score=(SELECT round( avg( score ) , 1 ) FROM scores WHERE cache_id = ' . $cache_id . ') where cache_id = ' . $cache_id;
@@ -92,6 +89,7 @@ if (isset($_SESSION['user_id'])) {
             $wp_oc = $wiersz['wp_oc'];
 
             header('Location: ./viewcache.php?wp=' . $wp_oc);
+
             exit;
         }
     }

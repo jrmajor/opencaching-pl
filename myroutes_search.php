@@ -10,11 +10,15 @@ use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 use src\Utils\Text\Formatter;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-require_once (__DIR__ . '/lib/export.inc.php');
-require_once (__DIR__ . '/lib/format.gpx.inc.php');
-require_once (__DIR__ . '/lib/calculation.inc.php');
-require_once (__DIR__ . '/src/Views/lib/icons.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
+
+require_once(__DIR__ . '/lib/export.inc.php');
+
+require_once(__DIR__ . '/lib/format.gpx.inc.php');
+
+require_once(__DIR__ . '/lib/calculation.inc.php');
+
+require_once(__DIR__ . '/src/Views/lib/icons.inc.php');
 
 global $content, $bUseZip, $config;
 global $cache_attrib_jsarray_line, $cache_attrib_img_line;
@@ -26,12 +30,13 @@ set_time_limit(1800);
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
-
 
 $tplname = 'myroutes_search';
 $user_id = $loggedUser->getUserId();
@@ -39,6 +44,7 @@ $user_id = $loggedUser->getUserId();
 if (isset($_REQUEST['routeid'])) {
     $route_id = $_REQUEST['routeid'];
 }
+
 if (isset($_POST['routeid'])) {
     $route_id = $_POST['routeid'];
 }
@@ -46,7 +52,6 @@ if (isset($_POST['routeid'])) {
 if (isset($_POST['distance'])) {
     $distance = $_POST['distance'];
 }
-
 
 tpl_set_var('cachemap_header',
     '<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=' . $googlemap_key .
@@ -92,7 +97,6 @@ if (isset($_POST['cache_attribs_not'])) {
 } else
     $options['cache_attribs_not'] = [];
 
-
 if (isset($_POST['cache_attribs'])) {
     if ($_POST['cache_attribs'] != '')
         $options['cache_attribs'] = mb_split(';', $_POST['cache_attribs']);
@@ -101,9 +105,7 @@ if (isset($_POST['cache_attribs'])) {
 } else
     $options['cache_attribs'] = [];
 
-
 if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
-
     $options['f_userowner'] = isset($_POST['f_userowner']) ? $_POST['f_userowner'] : '';
     $options['f_userfound'] = isset($_POST['f_userfound']) ? $_POST['f_userfound'] : '';
     $options['f_inactive'] = isset($_POST['f_inactive']) ? $_POST['f_inactive'] : '';
@@ -142,14 +144,9 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $options['cacherating'] = isset($_POST['cacherating']) ? $_POST['cacherating'] : '';
     //          $options['cache_attribs'] = isset($_POST['cache_attribs']) ? $_POST['cache_attribs'] : '';
     //          $options['cache_attribs_not'] = isset($_POST['cache_attribs_not']) ? $_POST['cache_attribs_not'] : '';
-
 } elseif (! empty($optsize) || isset($_POST['back'])) {
     $options = unserialize($rec['options']);
-
 } else {
-
-
-
     $options['f_userowner'] = isset($_POST['f_userowner']) ? $_POST['f_userowner'] : '1';
     $options['f_userfound'] = isset($_POST['f_userfound']) ? $_POST['f_userfound'] : '1';
     $options['f_inactive'] = isset($_POST['f_inactive']) ? $_POST['f_inactive'] : '1';
@@ -198,8 +195,6 @@ tpl_set_var('min_logs_caches', ($logs > 0) ? ' checked="checked"' : '');
 tpl_set_var('nrlogs', ($logs > 0) ? $logs : 0);
 tpl_set_var('min_logs_caches_disabled', ($logs == 0) ? ' disabled="disabled"' : '');
 
-
-
 $cache_attrib_jsarray_line = "new Array('{id}', {state}, '{text_long}', '{icon}', '{icon_no}', '{icon_undef}', '{category}')";
 $cache_attrib_img_line = '<img id="attrimg{id}" src="{icon}" title="{text_long}" alt="{text_long}" onmousedown="switchAttribute({id})" style="cursor: pointer;" />&nbsp;';
 
@@ -217,7 +212,6 @@ $s = $database->multiVariableQuery(
 );
 
 while ($record = $database->dbResultFetch($s)) {
-
     // icon specified
     $line = attr_jsline($cache_attrib_jsarray_line, $options, $record['id'], $record['text_long'], $record['icon_large'], $record['icon_no'], $record['icon_undef'], $record['category']);
 
@@ -226,7 +220,6 @@ while ($record = $database->dbResultFetch($s)) {
     $attributes_jsarray .= $line;
 
     $line = attr_image($cache_attrib_img_line, $options, $record['id'], $record['text_long'], $record['icon_large'], $record['icon_no'], $record['icon_undef'], $record['category']);
-
 
     if ($record['category'] != 1)
         $attributesCat2_img .= $line;
@@ -261,7 +254,6 @@ tpl_set_var('f_userowner_disabled', (false) ? ' disabled="disabled"' : '');
 tpl_set_var('f_userowner_disabled', ($options['f_userowner'] == 1) ? ' checked="checked"' : '');
 tpl_set_var('hidopt_userowner', ($options['f_userowner'] == 1) ? '1' : '0');
 
-
 if (isset($options['cacherating'])) {
     tpl_set_var('all_caches_checked', ($options['cacherating'] == 0) ? ' checked="checked"' : '');
     tpl_set_var('cacherating', $options['cacherating']);
@@ -269,7 +261,6 @@ if (isset($options['cacherating'])) {
     tpl_set_var('cache_min_rec', ($options['cacherating'] > 0) ? $options['cacherating'] : 0);
     tpl_set_var('min_rec_caches_disabled', ($options['cacherating'] == 0) ? ' disabled="disabled"' : '');
 }
-
 
 if (isset($options['cachedifficulty_1'])) {
     $cdf = $options['cachedifficulty_1'] * 2;
@@ -310,36 +301,44 @@ if ($options['cachenovote'] == 1) {
 if (isset($options['cachetype1'])) {
     tpl_set_var('cachetype1', ($options['cachetype1'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype2'])) {
     tpl_set_var('cachetype2', ($options['cachetype2'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype3'])) {
     tpl_set_var('cachetype3', ($options['cachetype3'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype4'])) {
     tpl_set_var('cachetype4', ($options['cachetype4'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype5'])) {
     tpl_set_var('cachetype5', ($options['cachetype5'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype6'])) {
     tpl_set_var('cachetype6', ($options['cachetype6'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype7'])) {
     tpl_set_var('cachetype7', ($options['cachetype7'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype8'])) {
     tpl_set_var('cachetype8', ($options['cachetype8'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype9'])) {
     tpl_set_var('cachetype9', ($options['cachetype9'] == 1) ? ' checked="checked"' : '');
 }
+
 if (isset($options['cachetype10'])) {
     tpl_set_var('cachetype10', ($options['cachetype10'] == 1) ? ' checked="checked"' : '');
 }
 
 for ($size = 1; $size <= 8; $size++) {
-
     $enabled = in_array($size, GeoCache::getSizesInUse());
     tpl_set_var(
         'cachesize_' . $size . '_enable',
@@ -355,12 +354,14 @@ unset($enabled);
 // SQL additional options
 if (! isset($options['f_userowner']))
     $options['f_userowner'] = '0';
+
 if ($options['f_userowner'] != 0) {
     $q_where[] = '`caches`.`user_id`!=\'' . $loggedUser->getUserId() . '\'';
 }
 
 if (! isset($options['f_userfound']))
     $options['f_userfound'] = '0';
+
 if ($options['f_userfound'] != 0) {
     $q_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_logs`.`cache_id` FROM `cache_logs`
                 WHERE `cache_logs`.`deleted`=0 AND `cache_logs`.`user_id`=\'' . XDb::xEscape($loggedUser->getUserId()) . '\'
@@ -369,11 +370,13 @@ if ($options['f_userfound'] != 0) {
 
 if (! isset($options['f_inactive']))
     $options['f_inactive'] = '0';
+
 if ($options['f_inactive'] != 0)
     $q_where[] = '`caches`.`status`=1';
 
 if (! isset($options['f_ignored']))
     $options['f_ignored'] = '0';
+
 if ($options['f_ignored'] != 0) {
     $q_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_ignore`.`cache_id` FROM `cache_ignore`
                    WHERE `cache_ignore`.`user_id`=\'' . XDb::xEscape($loggedUser->getUserId()) . '\')';
@@ -400,37 +403,44 @@ if (isset($options['cache_attribs_not']) && count($options['cache_attribs_not'])
     }
 }
 
-
-
 $cachetype = [];
 
 if (isset($options['cachetype1']) && ($options['cachetype1'] == '1')) {
     $cachetype[] = '1';
 }
+
 if (isset($options['cachetype2']) && ($options['cachetype2'] == '1')) {
     $cachetype[] = '2';
 }
+
 if (isset($options['cachetype3']) && ($options['cachetype3'] == '1')) {
     $cachetype[] = '3';
 }
+
 if (isset($options['cachetype4']) && ($options['cachetype4'] == '1')) {
     $cachetype[] = '4';
 }
+
 if (isset($options['cachetype5']) && ($options['cachetype5'] == '1')) {
     $cachetype[] = '5';
 }
+
 if (isset($options['cachetype6']) && ($options['cachetype6'] == '1')) {
     $cachetype[] = '6';
 }
+
 if (isset($options['cachetype7']) && ($options['cachetype7'] == '1')) {
     $cachetype[] = '7';
 }
+
 if (isset($options['cachetype8']) && ($options['cachetype8'] == '1')) {
     $cachetype[] = '8';
 }
+
 if (isset($options['cachetype9']) && ($options['cachetype9'] == '1')) {
     $cachetype[] = '9';
 }
+
 if (isset($options['cachetype10']) && ($options['cachetype10'] == '1')) {
     $cachetype[] = '10';
 }
@@ -439,33 +449,40 @@ if ((sizeof($cachetype) > 0) && (sizeof($cachetype) < 10)) {
     $q_where[] = '`caches`.`type` IN (' . XDb::xEscape(implode(',', $cachetype)) . ')';
 }
 
-
 $cachesize = [];
 
 if (isset($options['cachesize_1']) && ($options['cachesize_1'] == '1')) {
     $cachesize[] = '1';
 }
+
 if (isset($options['cachesize_2']) && ($options['cachesize_2'] == '1')) {
     $cachesize[] = '2';
 }
+
 if (isset($options['cachesize_3']) && ($options['cachesize_3'] == '1')) {
     $cachesize[] = '3';
 }
+
 if (isset($options['cachesize_4']) && ($options['cachesize_4'] == '1')) {
     $cachesize[] = '4';
 }
+
 if (isset($options['cachesize_5']) && ($options['cachesize_5'] == '1')) {
     $cachesize[] = '5';
 }
+
 if (isset($options['cachesize_6']) && ($options['cachesize_6'] == '1')) {
     $cachesize[] = '6';
 }
+
 if (isset($options['cachesize_7']) && ($options['cachesize_7'] == '1')) {
     $cachesize[] = '7';
 }
+
 if (isset($options['cachesize_8']) && ($options['cachesize_8'] == '1')) {
     $cachesize[] = '8';
 }
+
 if ((sizeof($cachesize) > 0) && (sizeof($cachesize) < 8)) {
     $q_where[] = '`caches`.`size` IN (' . implode(' , ', $cachesize) . ')';
 }
@@ -474,6 +491,7 @@ if (! isset($options['cachevote_1']) && ! isset($options['cachevote_2'])) {
     $options['cachevote_1'] = '';
     $options['cachevote_2'] = '';
 }
+
 if (
     ($options['cachevote_1'] != '' && $options['cachevote_2'] != '')
     && ($options['cachevote_1'] != '0' || $options['cachevote_2'] != '6')
@@ -482,7 +500,7 @@ if (
     $q_where[] = '`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3';
 } else if (
     ($options['cachevote_1'] != '') && ($options['cachevote_2'] != '')
-    && ( ($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6') )
+    && (($options['cachevote_1'] != '0') || ($options['cachevote_2'] != '6'))
     && isset($options['cachenovote']) && ($options['cachenovote'] == '1')
 ) {
     $q_where[] = '((`caches`.`score` BETWEEN \'' . XDb::xEscape($options['cachevote_1']) . '\' AND \'' . XDb::xEscape($options['cachevote_2']) . '\' AND `caches`.`votes` > 3) OR (`caches`.`votes` < 4))';
@@ -492,6 +510,7 @@ if (! isset($options['cachedifficulty_1']) && ! isset($options['cachedifficulty_
     $options['cachedifficulty_1'] = '';
     $options['cachedifficulty_2'] = '';
 }
+
 if (
     ($options['cachedifficulty_1'] != '' && $options['cachedifficulty_2'] != '')
     && ($options['cachedifficulty_1'] != '1' || $options['cachedifficulty_2'] != '5')
@@ -533,12 +552,11 @@ $qFilter = 'SELECT ' . implode(',', $q_select) .
 
 //echo $qFilter;
 
-
-
 if (isset($_POST['back_list'])) {
     // store options in DB
     set_route_options($route_id, $options);
     tpl_redirect('myroutes.php');
+
     exit;
 }
 
@@ -601,6 +619,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $ncaches = $database->rowCount($s);
 
     tpl_set_var('number_caches', $ncaches);
+
     if ($ncaches == 0) {
         tpl_set_var('list_empty_start', '<!--');
         tpl_set_var('list_empty_end', '-->');
@@ -613,15 +632,14 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
 
     $database_inner = OcDb::instance();
     $file_content = '';
-    while ($r = $database->dbResultFetch($s)) {
 
+    while ($r = $database->dbResultFetch($s)) {
         if (isset($_POST['submit_map'])) {
             $y = $r['longitude'];
             $x = $r['latitude'];
             $point .= sprintf("addMarker(%s,%s,'%s',%s,'%s','%s','%s',%s);\n", $x, $y, $r['icon_small'], $r['cacheid'], addslashes($r['cachename']), $r['wp_oc'], addslashes($r['username']), $r['topratings']);
             tpl_set_var('points', $point);
         } else {
-
             $file_content .= '<tr>';
             $file_content .= '<td style="width: 90px;">' . Formatter::date($r['date']) . '</td>';
             //      $file_content .= '<td style="width: 22px;"><span style="font-weight:bold;color: blue;">'.sprintf("%01.1f",$r['distance']). '</span></td>';
@@ -653,7 +671,6 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
                 ORDER BY cache_logs.date_created DESC LIMIT 1', $r['cacheid']);
 
             if ($r_log = $database_inner->dbResultFetchOneRowOnly($rs)) {
-
                 $file_content .= '<td style="width: 80px;">' . htmlspecialchars(Formatter::date($r_log['log_date']), ENT_COMPAT, 'UTF-8') . '</td>';
                 $file_content .= '<td width="22"><b><a class="links" href="viewlogs.php?logid=' . htmlspecialchars($r_log['id'], ENT_COMPAT, 'UTF-8') . '" onmouseover="Tip(\'';
                 $file_content .= '<b>' . $r_log['user_name'] . '</b>:<br>';
@@ -668,6 +685,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
         }
     }
     tpl_set_var('file_content', $file_content);
+
     if (isset($_POST['submit_map'])) {
         $tplname = 'myroutes_result_map';
     } else {
@@ -686,6 +704,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
     );
     $waypoints_tab = [];
     $cache_ids_tab = [];
+
     while ($r = $database->dbResultFetch($stmt)) {
         $waypoints_tab[] = $r['wp_oc'];
         $cache_ids_tab[] = $r['cache_id'];
@@ -711,6 +730,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
                 'select `queries`.`id` from `queries` where `user_id` = 0 and `options` = :options', -1, // default value
                 ['options' => ['value' => $options_text, 'data_type' => 'string']]
         );
+
         if ($queryid > 0) {
             $database->multiVariableQuery(
                     'UPDATE `queries` SET `last_queried` = NOW() WHERE `id` = :1', $queryid
@@ -725,6 +745,7 @@ if (isset($_POST['submit_gpx_with_photos'])) {
         }
         $links_content = '';
         $forlimit = intval($caches_count / $okapi_max_caches) + 1;
+
         for ($i = 1; $i <= $forlimit; $i++) {
             // ocpl.query-id is rewrite by htaccess rule!
             $zipname = 'ocpl' . $queryid . '.zip?startat=0&count=max&zip=1&zippart=' . $i . (isset($_REQUEST['okapidebug']) ? '&okapidebug' : '');
@@ -763,12 +784,11 @@ if (isset($_POST['submit_gpx_with_photos'])) {
             echo $e;
         }
     }
+
     exit;
 }
 
-
 if (isset($_POST['submit_gpx'])) {
-
     ob_start();
 
     $stmt = $database->paramQuery(
@@ -817,8 +837,10 @@ if (isset($_POST['submit_gpx'])) {
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
+
         require_once(__DIR__ . '/src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
@@ -828,12 +850,13 @@ if (isset($_POST['submit_gpx'])) {
     $gpxHead = str_replace('{time}', $time, $gpxHead);
 
     $s = XDb::xSql('SELECT `gpxcontent`.`cache_id` `cacheid` FROM `gpxcontent`');
+
     while ($rs = XDb::xFetchArray($s)) {
         $rwp = XDb::xSql(
             "SELECT  `status` FROM `waypoints`
             WHERE  `waypoints`.`cache_id`= ? AND `waypoints`.`status`='1'", $rs['cacheid']);
 
-        if ( XDb::xFetchArray($rwp) ) {
+        if (XDb::xFetchArray($rwp)) {
             $children = '(HasChildren)';
         }
         XDb::xFreeResults($rwp);
@@ -863,25 +886,25 @@ if (isset($_POST['submit_gpx'])) {
             AND `gpxcontent`.`user_id`=`user`.`user_id`');
 
     while ($r = XDb::xFetchArray($stmt)) {
-
         if (@$enable_cache_access_logs) {
-
             $dbc = OcDb::instance();
 
             $cache_id = $r['cacheid'];
             $user_id = $loggedUser->getUserId();
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
+
             if ($access_log === null) {
                 $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id];
             }
+
             if (@$access_log[$cache_id] !== true) {
                 $dbc->multiVariableQuery('INSERT INTO CACHE_ACCESS_LOGS
                                     (event_date, cache_id, user_id, source, event, ip_addr, user_agent, forwarded_for)
                                  VALUES
                                     (NOW(), :1, :2, \'B\', \'download_gpxgc\', :3, :4, :5)',
                                 $cache_id, $user_id, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                                ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
+                                (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
                 );
                 $access_log[$cache_id] = true;
                 $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = $access_log;
@@ -924,8 +947,7 @@ if (isset($_POST['submit_gpx'])) {
 
         $cacheNote = CacheNote::getNote($loggedUser->getUserId(), $r['cacheid']);
 
-        if ( ! empty($cacheNote) ) {
-
+        if (! empty($cacheNote)) {
             $thisline = str_replace('{personal_cache_note}',
                 cleanup_text('<br/><br/>-- ' . cleanup_text(tr('search_gpxgc_02')) .
                     ': -- <br/> ' . $cacheNote . '<br/>'), $thisline);
@@ -933,18 +955,19 @@ if (isset($_POST['submit_gpx'])) {
             $thisline = str_replace('{personal_cache_note}', '', $thisline);
         }
 
-
         // attributes
         $rsAttributes = XDb::xSql(
             'SELECT `caches_attributes`.`attrib_id` FROM `caches_attributes` WHERE `caches_attributes`.`cache_id`= ? ',
             $r['cacheid']);
 
         $attribentries = '';
+
         while ($rAttrib = XDb::xFetchArray($rsAttributes)) {
             if (isset($gpxAttribID[$rAttrib['attrib_id']])) {
                 $thisattribute = '<attribute id="{attrib_id}" inc="1">{attrib_text_long}</attribute>';
                 $thisattribute = mb_ereg_replace('{attrib_id}', $gpxAttribID[$rAttrib['attrib_id']], $thisattribute);
                 $thisattribute = mb_ereg_replace('{attrib_text_long}', $gpxAttribName[$rAttrib['attrib_id']], $thisattribute);
+
                 if (isset($gpxAttribInc[$rAttrib['attrib_id']]))
                     $thisattribute = mb_ereg_replace('{attrib_id}', $gpxAttribInc[$rAttrib['attrib_id']], $thisattribute);
                 else
@@ -968,8 +991,10 @@ if (isset($_POST['submit_gpx'])) {
 
         if (($r['votes'] > 3) || ($r['topratings'] > 0) || (XDb::xNumRows($rsAttributes) > 0)) {
             $thisextra .= "\n-- " . cleanup_text(tr('search_gpxgc_03')) . ": --\n";
+
             if (XDb::xNumRows($rsAttributes) > 0) {
                 $attributes = '' . cleanup_text(tr('search_gpxgc_04')) . ': ';
+
                 while ($rAttribute = XDb::xFetchArray($rsAttributes)) {
                     $attributes .= cleanup_text(xmlentities($rAttribute['text_long']));
                     $attributes .= ' | ';
@@ -978,10 +1003,10 @@ if (isset($_POST['submit_gpx'])) {
             }
 
             if ($r['votes'] > 3) {
-
                 $score = cleanup_text(GeoCache::ScoreNameTranslation($r['score']));
                 $thisextra .= "\n" . cleanup_text(tr('search_gpxgc_05')) . ': ' . $score . "\n";
             }
+
             if ($r['topratings'] > 0) {
                 $thisextra .= '' . cleanup_text(tr('search_gpxgc_06')) . ': ' . $r['topratings'] . "\n";
             }
@@ -995,7 +1020,8 @@ if (isset($_POST['submit_gpx'])) {
                     WHERE `cache_npa_areas`.`cache_id`= ? AND `cache_npa_areas`.`parki_id`!='0'", $r['cacheid']);
 
             if (XDb::xNumRows($rsArea) != 0) {
-                $thisextra .= '' . cleanup_text( tr('search_gpxgc_07')) . ': ';
+                $thisextra .= '' . cleanup_text(tr('search_gpxgc_07')) . ': ';
+
                 while ($npa = XDb::xFetchArray($rsArea)) {
                     $thisextra .= $npa['npaname'] . '  ';
                 }
@@ -1010,6 +1036,7 @@ if (isset($_POST['submit_gpx'])) {
 
             if (XDb::xNumRows($rsArea) != 0) {
                 $thisextra .= "\nNATURA 2000: ";
+
                 while ($npa = XDb::xFetchArray($rsArea)) {
                     $thisextra .= ' - ' . $npa['npaSitename'] . '  ' . $npa['npaSitecode'] . ' - ';
                 }
@@ -1067,6 +1094,7 @@ if (isset($_POST['submit_gpx'])) {
         } else {
             $gpxLogLimit = '';
         }
+
         if ($cache_logs == 0) {
             $gpxLogLimit = '';
         }
@@ -1085,10 +1113,12 @@ if (isset($_POST['submit_gpx'])) {
 
             $thislog = str_replace('{id}', $rLog['id'], $thislog);
             $thislog = str_replace('{date}', date($gpxTimeFormat, strtotime($rLog['date'])), $thislog);
+
             if (isset($gpxLogType[$rLog['type']]))
                 $logtype = $gpxLogType[$rLog['type']];
             else
                 $logtype = $gpxLogType[0];
+
             if ($logtype == 'OC Team Comment') {
                 $rLog['username'] = xmlentities(convert_string(tr('cog_user_name')));
                 $rLog['userid'] = '0';
@@ -1115,9 +1145,9 @@ if (isset($_POST['submit_gpx'])) {
             $waypoint);
 
         while ($geokret = XDb::xFetchArray($geokret_query)) {
-
             $thisGeoKret = $gpxGeoKrety;
             $gk_wp = strtoupper(dechex($geokret['id']));
+
             while (mb_strlen($gk_wp) < 4)
                 $gk_wp = '0' . $gk_wp;
             $gkWP = 'GK' . mb_strtoupper($gk_wp);
@@ -1152,12 +1182,14 @@ if (isset($_POST['submit_gpx'])) {
                 $thiswp = str_replace('{cacheid}', $rwp['cache_id'], $thiswp);
                 $thiswp = str_replace('{time}', $time, $thiswp);
                 $thiswp = str_replace('{wp_type_name}', cleanup_text($rwp['wp_type_name']), $thiswp);
+
                 if ($rwp['stage'] != 0) {
                     $thiswp = str_replace('{wp_stage}', ' ' . cleanup_text(tr('stage_wp')) . ': ' . $rwp['stage'], $thiswp);
                 } else {
                     $thiswp = str_replace('{wp_stage}', $rwp['wp_type_name'], $thiswp);
                 }
                 $thiswp = str_replace('{desc}', xmlentities(cleanup_text($rwp['desc'])), $thiswp);
+
                 if (isset($wptType[$rwp['type']]))
                     $thiswp = str_replace('{wp_type}', $wptType[$rwp['type']], $thiswp);
                 else
@@ -1234,6 +1266,7 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
                 $line = mb_ereg_replace('{icon}', $iconno, $line);
     } else
         $line = mb_ereg_replace('{icon}', $iconlarge, $line);
+
         return $line;
 }
 
@@ -1242,7 +1275,6 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
 //*************************************************************************
 function caches_along_route($route_id, $distance)
 {
-
     $initial_cache_list = [];
     $inter_cache_list = [];
     $final_cache_list = [];
@@ -1309,14 +1341,16 @@ function caches_along_route($route_id, $distance)
     while ($row = $database->dbResultFetch($s)) {
         $points[] = ['lat' => $row['lat'], 'lon' => $row['lon']];
     }
+
     foreach ($initial_cache_list as $list) {
         foreach ($points as $point) {
             $route_distance = cache_distances($point['lat'], $point['lon'], $list['lat'], $list['lon']);
+
             if ($route_distance <= $distance) {
                 if (! (
                     isset($inter_cache_list[$list['waypoint']])
                     && $inter_cache_list[$list['waypoint']]
-                    ) )
+                    ))
                 {
                     $final_cache_list[] = $list['waypoint'];
                     $inter_cache_list[$list['waypoint']] = $list['waypoint'];
@@ -1353,6 +1387,7 @@ function getPictures($cacheid, $picturescount)
                 ORDER BY date_created', $cacheid
         );
     $retval = '';
+
     while ($r = $database->dbResultFetch($s)) {
         $retval .= '&lt;img src="' . $r['url'] . '"&gt;&lt;br&gt;' . cleanup_text2($r['title']) . '&lt;br&gt;';
     }
@@ -1401,15 +1436,17 @@ function cleanup_text2($str)
  */
 function cache_distances($lat1, $lon1, $lat2, $lon2)
 {
-    if (( $lon1 == $lon2 ) and ( $lat1 == $lat2 )) {
+    if (($lon1 == $lon2) and ($lat1 == $lat2)) {
         return(0);
     } else {
         $earth_radius = 6378;
+
         foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate)
             $$ordinate = $$ordinate * (pi() / 180);
             $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +
                 sin($lat1) * sin($lat2)) * $earth_radius;
+
                 return($dist);
     }
 }

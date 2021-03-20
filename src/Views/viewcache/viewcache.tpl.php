@@ -115,7 +115,7 @@ use src\Utils\Uri\SimpleRouter;
             </div>
             <div class="align-center">
 
-              <?php if ( ! $view->geoCache->isEvent() ) { ?>
+              <?php if (! $view->geoCache->isEvent()) { ?>
 
                     <?php if (($view->geoCache->getFounds() + $view->geoCache->getNotFounds() + $view->geoCache->getNotesCount()) != 0) { ?>
 
@@ -514,7 +514,7 @@ use src\Utils\Uri\SimpleRouter;
 
 
 
-<?php if (! empty($view->geoCacheDesc->getAdminComment() )) { ?>
+<?php if (! empty($view->geoCacheDesc->getAdminComment())) { ?>
     <!-- admin comments: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -571,7 +571,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 </div>
 
-<?php if ( ! is_null($view->openChecker) ) { ?>
+<?php if (! is_null($view->openChecker)) { ?>
 <!-- openChecker container -->
 
     <div class="content2-container bg-blue02">
@@ -599,7 +599,7 @@ use src\Utils\Uri\SimpleRouter;
 
 <?php } // if-openchacker-present ?>
 
-<?php if ( ! empty($view->waypointsList) ) { ?>
+<?php if (! empty($view->waypointsList)) { ?>
     <!-- waypoints: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -662,7 +662,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } //if-waypoints-present ?>
 
-<?php if ( ! empty($view->geoCacheDesc->getHint()) ) { ?>
+<?php if (! empty($view->geoCacheDesc->getHint())) { ?>
     <!-- cache hint: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -786,7 +786,7 @@ use src\Utils\Uri\SimpleRouter;
 
 <?php } //if-isUserAuthorized ?>
 
-<?php if ( ! empty($view->geoCache->getNatureRegions() ) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
+<?php if (! empty($view->geoCache->getNatureRegions()) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
     <!-- natura2000 etc. -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -796,7 +796,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 
     <div class="content2-container align-center">
-        <?php if ( ! empty($view->geoCache->getNatureRegions() ) ) { ?>
+        <?php if (! empty($view->geoCache->getNatureRegions())) { ?>
             <table class="naturaTable">
                 <tr>
                     <td>
@@ -819,7 +819,7 @@ use src\Utils\Uri\SimpleRouter;
             </table>
 
         <?php } //if-NatureRegions-presents ?>
-        <?php if ( ! empty($view->geoCache->getNatura2000Sites())) { ?>
+        <?php if (! empty($view->geoCache->getNatura2000Sites())) { ?>
             <table class="naturaTable">
                 <tr>
                     <td>
@@ -846,7 +846,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } //if-natureRegions-present ?>
 
-<?php if ( ! empty($view->geoCache->getGeokretsHosted())) { ?>
+<?php if (! empty($view->geoCache->getGeokretsHosted())) { ?>
     <!-- geokrety: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -868,7 +868,7 @@ use src\Utils\Uri\SimpleRouter;
 <?php } //if-geokrety-inside ?>
 
 
-<?php if ( ! empty($view->geoCache->getMp3List() )) { ?>
+<?php if (! empty($view->geoCache->getMp3List())) { ?>
     <!-- mp3-list -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -892,7 +892,7 @@ use src\Utils\Uri\SimpleRouter;
     </div>
 <?php } // if-mp3-presents ?>
 
-<?php if ( ! empty($view->picturesToDisplay) ) { ?>
+<?php if (! empty($view->picturesToDisplay)) { ?>
     <!-- pics-list: -->
     <div class="content2-container bg-blue02">
         <span class="content-title-noshade-size1">
@@ -1025,7 +1025,7 @@ use src\Utils\Uri\SimpleRouter;
         <img src="images/log/16x16-note.png" class="icon16" alt="{{log_note}}">
         <?=$view->geoCache->getNotesCount()?>x
 
-        <?php if ( $view->geoCache->getPicsInLogsCount() > 0 ) { ?>
+        <?php if ($view->geoCache->getPicsInLogsCount() > 0) { ?>
             <img src="images/free_icons/photo.png" alt="{{image}}" class="icon16">
             <?=$view->geoCache->getPicsInLogsCount()?>x
         <?php } //if-getNumberOfPicsInLogs > 0 ?>
@@ -1059,7 +1059,7 @@ use src\Utils\Uri\SimpleRouter;
             </span>
         <?php } //if-showDeletedLogsDisplayLink ?>
 
-        <?php if ( $view->geoCache->getPicsInLogsCount() > 0 ) { ?>
+        <?php if ($view->geoCache->getPicsInLogsCount() > 0) { ?>
             <a class="btn btn-sm btn-default" href="gallery_cache.php?cacheid=<?=$view->geoCache->getCacheId()?>">
                <?=tr('gallery_short')?>
             </a>

@@ -1,12 +1,16 @@
 <?php
+
 use src\Models\PowerTrail\PowerTrail;
 use src\Utils\Database\OcDb;
 
 session_start();
+
 if (! isset($_SESSION['user_id'])) {
     echo 'no hacking please!';
+
     exit;
 }
+
 require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 $ptAPI = new powerTrailBase;
 $db = OcDb::instance();
@@ -37,13 +41,16 @@ echo $ptOwners;
 function displayPtOwnerList($ptOwners)
 {
     $ownerList = '';
+
     foreach ($ptOwners as $user) {
         $ownerList .= '<a href="viewprofile.php?userid=' . $user->getUserId() . '">' . $user->getUsername() . '</a>';
+
         if ($user->getUserId() != $_SESSION['user_id']) {
             $ownerList .= '<span style="display: none" class="removeUserIcon"><img onclick="ajaxRemoveUserFromPt(' . $user->getUserId() . ');" src="images/free_icons/cross.png" width=10 " /></span>, ';
         } else {
             $ownerList .= ', ';
         }
     }
+
     return substr($ownerList, 0, -2);
 }

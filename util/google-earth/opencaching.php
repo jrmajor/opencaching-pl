@@ -7,6 +7,7 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 
 require_once(__DIR__ . '/../../lib/common.inc.php');
+
 require_once(__DIR__ . '/../../lib/export.inc.php');
 
 header('Content-Type: application/vnd.google-earth.kml; charset=utf8');
@@ -37,6 +38,7 @@ $kml = '<?xml version="1.0" encoding="utf-8"?>
 $countryCoords = OcConfig::getMapDefaultCenter();
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if ($loggedUser) {
     // get the users home coords
     $rs_coords = XDb::xSql(
@@ -46,7 +48,6 @@ if ($loggedUser) {
 
     if ((($record_coords['latitude'] == null) || ($record_coords['longitude'] == null)) ||
         (($record_coords['latitude'] == 0) || ($record_coords['longitude'] == 0))) {
-
         // invalid or missing home coordinates
         // use default country coordinates
         $lat = $countryCoords->getLatitude();

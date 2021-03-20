@@ -2,6 +2,7 @@
 /**
  * Contains \src\Models\Watchlist\WatchlistReport class definition
  */
+
 namespace src\Models\Watchlist;
 
 use DateTime;
@@ -96,6 +97,7 @@ class WatchlistReport
         $email->addSubjectPrefix(OcConfig::getEmailSubjectPrefix());
         $email->setSubject($subject);
         $email->setHtmlBody($report->getEmailContent());
+
         return $email->send();
     }
 }

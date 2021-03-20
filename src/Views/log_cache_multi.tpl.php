@@ -57,6 +57,7 @@ use src\Models\GeoCache\GeoCacheLogCommons;
             <?php
             global $dane;
             global $datetimeFormat;
+
             foreach ($dane as $k => $v) {
                 ?>
                 <form method="POST" name="logCacheForm" action="log.php?cacheid=<?php echo @$v['cache_id']; ?>" target="_blank">
@@ -87,7 +88,6 @@ use src\Models\GeoCache\GeoCacheLogCommons;
                             <td width=70 style="text-align: right"><?php
                                 $v['data'] = date($datetimeFormat, strtotime($v['data']));
 
-
                                 echo isset($v['data']) ? str_replace(' ', '<br />', $v['data']) : ' ';
                                 echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                                 echo isset($v['status']) ? '<img src="' . GeoCacheLogCommons::GetIconForType($v['status']) . '" />' : ' ';
@@ -96,6 +96,7 @@ use src\Models\GeoCache\GeoCacheLogCommons;
                                 if (isset($v['got_last_activity'])) {
                                     $v['last_date'] = date($datetimeFormat, strtotime($v['last_date']));
                                     echo str_replace(' ', '<br />', $v['last_date']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+
                                     if (isset($v['last_status'])) {
                                         echo '<img src="' . GeoCacheLogCommons::GetIconForType($v['last_status']) . '" />';
                                     } else {

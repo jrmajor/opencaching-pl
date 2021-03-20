@@ -5,18 +5,19 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 global $googlemap_key;
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
-
 
         $tplname = 'myroutes_add_map2';
         $view = tpl_getView();
@@ -43,6 +44,7 @@ if (! $loggedUser) {
 
         if (isset($_POST['back'])) {
             tpl_redirect('myroutes.php');
+
             exit;
         }
 
@@ -64,6 +66,7 @@ if (! $loggedUser) {
                 0, $name, $desc, $user_id);
 
             $point_num = 0;
+
             foreach ($route_points as $route_point) {
                 $point_num++;
                 $latlng = explode(',', $route_point);
@@ -74,9 +77,9 @@ if (! $loggedUser) {
             }
 
             tpl_redirect('myroutes.php');
+
             exit;
         } //end submit
-
 
 //make the template and send it out
 tpl_BuildTemplate();

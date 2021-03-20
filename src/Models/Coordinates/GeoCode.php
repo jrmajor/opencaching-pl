@@ -9,7 +9,6 @@ use src\Utils\I18n\I18n;
 
 class GeoCode
 {
-
     private $countryCode = null;
     private $countryName = null;
     private $admCode = null;
@@ -37,6 +36,7 @@ class GeoCode
 
         if (empty($ors_key)) {
             Debug::errorLog('No api_key for OpenRouteService in configuration. Check /Config/map.default.php');
+
             return null;
         }
 
@@ -46,7 +46,9 @@ class GeoCode
 
         if (! $data) {
             Debug::errorLog('Problem with fetching data from ' . $url);
+
             throw new Exception('Problem with fetching data from OpenRouteService');
+
             return;
         }
 
@@ -129,15 +131,16 @@ class GeoCode
 
         // this JSON is a little bit complicated - find administrative_area_level_1 record
         foreach($resp->results as $record){
-            if( in_array('administrative_area_level_1', $record->types) ){
-
+            if(in_array('administrative_area_level_1', $record->types)){
                 $address = $record->address_components;
+
                 foreach($address as $level){
-                    if(in_array('administrative_area_level_1', $level->types) ){
+                    if(in_array('administrative_area_level_1', $level->types)){
                         $instance->admCode = $level->short_name;
                         $instance->admName = $level->long_name;
                     }
-                    if(in_array('country', $level->types) ){
+
+                    if(in_array('country', $level->types)){
                         $instance->countryCode = $level->short_name;
                         $instance->countryName = $level->long_name;
                     }
@@ -146,7 +149,6 @@ class GeoCode
         }
 
         return $instance;
-
     }
 
     /**
@@ -174,8 +176,10 @@ class GeoCode
         $resp = json_decode($data);
 
         $instance = new self();
+
         if(is_array($resp->results) && ! empty($resp->results)){
             $data = $resp->results[0];
+
             if(is_array($data->locations) && ! empty($data->locations)){
                 $data = $data->locations[0];
                 $instance->countryCode = $data->adminArea1;
@@ -219,7 +223,6 @@ class GeoCode
         }
 
         return $country . $separator . $adm;
-
     }
 }
 

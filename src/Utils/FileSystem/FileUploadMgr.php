@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\FileSystem;
 
+namespace src\Utils\FileSystem;
 
 use RuntimeException;
 use src\Models\ChunkModels\UploadModel;
@@ -21,11 +21,11 @@ class FileUploadMgr
      * @return string|string[] - file|array of files
      */
     public static function processFileUpload(UploadModel $model){
-
         self::checkUploadErrors($model);
         self::checkNumberOfFiles($model);
         self::checkFileSizes($model);
         self::checkFileMimeType($model);
+
         return self::saveUploadedFiles($model);
     }
 
@@ -45,7 +45,6 @@ class FileUploadMgr
         if(! is_writable($dir)){
             throw new RuntimeException("Can't save uploaded files - no permissions");
         }
-
     }
 
     /**
@@ -63,8 +62,8 @@ class FileUploadMgr
         self::checkDir($model->getDirAtServer());
 
         $newFiles = [];
-        foreach($_FILES[$model->formVarName]['name'] as $i => $name){
 
+        foreach($_FILES[$model->formVarName]['name'] as $i => $name){
             $extension = pathinfo($name, PATHINFO_EXTENSION);
             $fileName = Uuid::create() . ".$extension";
             $fullPath = $model->getDirAtServer() . '/' . $fileName;
@@ -73,6 +72,7 @@ class FileUploadMgr
 
             $newFiles[$name] = $fileName;
         }
+
         return $newFiles;
     }
 
@@ -109,6 +109,7 @@ class FileUploadMgr
      */
     private static function compareMimeType($type, $pattern){
         $patterns = explode('|', $pattern);
+
         foreach ($patterns as $mime){
             $typeParts = explode('/', $type);
             $mimeParts = explode('/', $mime);
@@ -129,13 +130,15 @@ class FileUploadMgr
                 return true;
             }
         }
+
         return false; // pattern not matched
     }
 
     private static function checkNumberOfFiles(UploadModel $model)
     {
         $uploadedFiles = count($_FILES[$model->formVarName]['name']);
-        if( $uploadedFiles > $model->maxFilesNumber ){
+
+        if($uploadedFiles > $model->maxFilesNumber){
             throw new RuntimeException("Too many file uploaded at once: $uploadedFiles > {$model->maxFilesNumber}");
         }
     }
@@ -166,7 +169,7 @@ class FileUploadMgr
     {
         $formVarName = $model->formVarName;
 
-        if ( ! isset($_FILES[$formVarName], $_FILES[$formVarName]['error'])) {
+        if (! isset($_FILES[$formVarName], $_FILES[$formVarName]['error'])) {
             /*
              * if upload fails here check error.log and php.ini for at least:
              *  - upload_max_filesize
@@ -179,7 +182,6 @@ class FileUploadMgr
 
         // check all errors
         foreach($_FILES[$formVarName]['error'] as $error){
-
             switch ($error) {
             case UPLOAD_ERR_OK:
                 break;

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Text;
 
 use DateTime;
@@ -78,6 +79,7 @@ class Formatter
         if(! $datetime){
             $datetime = new DateTime();
         }
+
         return self::date($datetime, true);
     }
 
@@ -108,6 +110,7 @@ class Formatter
         } else {
             $result = mb_substr($text, 0, $length);
         }
+
         return $result;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 use src\Models\ApplicationContainer;
 use src\Utils\Database\OcDb;
 
@@ -6,12 +7,15 @@ require_once __DIR__ . '/../lib/common.inc.php';
 
 if (! isset($_SESSION['user_id'])) {
     echo 'no hacking please!';
+
     exit;
 }
 
 $callingUser = (int) $_REQUEST['callingUser'];
+
 if ($callingUser != $_SESSION['user_id']) {
     echo 'wrong user!';
+
     exit;
 }
 

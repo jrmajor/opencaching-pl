@@ -25,6 +25,7 @@ $rsLocations = sql(
                 AND `ADM1` is not null" .
         ($force ? '' : ' AND ADMTXT1 is NULL')
 );
+
 while ($rLocations = sql_fetch_array($rsLocations)) {
     $sql = 'SELECT `FULL_NAME` FROM `gns_locations` WHERE dsg = \'ADM1\' AND cc1 = \'&1\' AND adm1 = \'&2\'
                       AND nt = \'N\'

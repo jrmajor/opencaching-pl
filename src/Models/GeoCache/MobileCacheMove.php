@@ -52,7 +52,7 @@ class MobileCacheMove extends BaseObject
             }
         }
 
-        if (isset($row['latitude'], $row['longitude'])  ) {
+        if (isset($row['latitude'], $row['longitude'])) {
             $this->coordinates = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
         }
     }
@@ -85,7 +85,6 @@ class MobileCacheMove extends BaseObject
 
     public static function updateDateOnLogEdit(GeoCacheLog $log, $newDate)
     {
-
         self::db()->multiVariableQuery(
             'UPDATE cache_moved SET date=:1 WHERE log_id=:2', $newDate, $log->getId());
 

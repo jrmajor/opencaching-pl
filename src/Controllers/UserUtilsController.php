@@ -33,13 +33,13 @@ class UserUtilsController extends BaseController
 
         if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
+
             exit;
         }
 
         $this->view->setTemplate('qrCodeGen/qrcode');
         $this->view->addLocalCss(
             Uri::getLinkWithModificationTime('/views/qrCodeGen/qrcode.css'));
-
 
         //set it to writable location, a place for temp generated PNG files
         $qrCodesDirName = 'tmp/qrcodes/';
@@ -51,11 +51,12 @@ class UserUtilsController extends BaseController
         }
 
         $qrCodeText = null;
-        if ( isset($_REQUEST['qrCodeText']) ) {
+
+        if (isset($_REQUEST['qrCodeText'])) {
             $qrCodeText = trim($_REQUEST['qrCodeText']);
         }
 
-        if( empty($qrCodeText)){ // load default text value if neccessary
+        if(empty($qrCodeText)){ // load default text value if neccessary
             $qrCodeText = $config['qrCodeUrl'];
         }
 
@@ -67,7 +68,6 @@ class UserUtilsController extends BaseController
 
         $qrCodeFile = $qrCodesDir . $qrCodeFileName;
         $labelFile = $qrCodesDir . $labelFileName;
-
 
         // generate QR-code with $qrCodeText to $filename png file
         $this->view->setVar('qrCodeText', $qrCodeText);
@@ -98,7 +98,6 @@ class UserUtilsController extends BaseController
 
         $this->view->setVar('ocLabelImgUrl', '/' . $qrCodesDirName . $labelFileName);
         $this->view->setVar('qrCodeImgUrl', '/' . $qrCodesDirName . $qrCodeFileName);
-
 
         $this->view->buildView();
     }

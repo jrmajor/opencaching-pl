@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Uri;
 
 use ReflectionClass;
@@ -110,7 +111,7 @@ class SimpleRouter
 
         // create class reflection
         try {
-            $ctrlReflection = new ReflectionClass ($ctrlName);
+            $ctrlReflection = new ReflectionClass($ctrlName);
         } catch (ReflectionException $ex) {
             self::displayErrorAndExit('Improper ctrl name', 403);
         }
@@ -127,6 +128,7 @@ class SimpleRouter
 
         // check if action can be called
         $ctrl = $ctrlReflection->newInstance($actionName);
+
         if (! $ctrl->isCallableFromRouter($actionName)) {
             self::displayErrorAndExit('Not callable from router', 403);
         }
@@ -143,12 +145,14 @@ class SimpleRouter
 
         // check if the given params number is enough for this action
         $numOfReqParams = $actionReflection->getNumberOfRequiredParameters();
-        if ($numOfReqParams != 0 && (! is_array($params) || $numOfReqParams > count($params)) ) {
+
+        if ($numOfReqParams != 0 && (! is_array($params) || $numOfReqParams > count($params))) {
             self::displayErrorAndExit('Not enough params', 403);
         }
 
         // run this requests
         call_user_func_array([$ctrl, $actionName], $params);
+
         exit;
     }
 
@@ -169,6 +173,7 @@ class SimpleRouter
         }
 
         header("Location: $uri");
+
         exit;
     }
 
@@ -218,6 +223,7 @@ class SimpleRouter
             // ctrl part is empty - hmm... assume someone add too many slashes
             if (empty($routeParts[0])) {
                 array_shift($routeParts);
+
                 if (empty($routeParts) || empty($routeParts[0])) {
                     // stop guess - came back to default
                     $routeParts[0] = self::DEFAULT_CTRL;
@@ -229,7 +235,7 @@ class SimpleRouter
         $ctrl = self::getControllerWithNamespace($routeParts[0]);
 
         // ctrl found, check the action
-        if( ! isset($routeParts[1]) || empty($routeParts[1]) ){
+        if(! isset($routeParts[1]) || empty($routeParts[1])){
             $action = self::DEFAULT_ACTION;
         } else {
             $action = $routeParts[1];
@@ -249,6 +255,7 @@ class SimpleRouter
         // normalize slashes - replace backslashes
         $ctrl = str_replace('\\', '/', $ctrl);
         $parts = explode('/', $ctrl);
+
         if(count($parts) == 1){
             return $parts[0]; // there is only ctrl name
         }else{
@@ -264,6 +271,7 @@ class SimpleRouter
 
         $ctrlName = self::getControllerWithNamespace(self::ERROR_CTRL);
         call_user_func_array([new $ctrlName(self::ERROR_ACTION),  self::ERROR_ACTION], [$message, $httpCode]);
+
         exit;
     }
 }

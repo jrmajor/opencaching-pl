@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use src\Models\BaseObject;
@@ -7,7 +8,6 @@ use src\Models\User\User;
 
 class ReportCommons extends BaseObject
 {
-
     /*
      * Default config
      */
@@ -138,9 +138,11 @@ class ReportCommons extends BaseObject
         $params = [];
         $params['reportid']['value'] = $reportId;
         $params['reportid']['data_type'] = 'integer';
+
         if (self::db()->paramQueryValue($query, 0, $params) == '1') {
             return true;
         }
+
         return false;
     }
 
@@ -157,6 +159,7 @@ class ReportCommons extends BaseObject
         $query = '
             SELECT COUNT(*)
             FROM `reports`';
+
         switch ($status) {
             case self::STATUS_ALL:
                 break;
@@ -171,6 +174,7 @@ class ReportCommons extends BaseObject
                 $params['status']['data_type'] = 'int';
                 break;
         }
+
         return self::db()->paramQueryValue($query, 0, $params);
     }
 
@@ -194,6 +198,7 @@ class ReportCommons extends BaseObject
         $params['offset']['value'] = self::db()->quoteOffset($offset);
         $params['offset']['data_type'] = 'integer';
         $query = 'SELECT `reports`.* FROM `reports`';
+
         if ($waypoint != '' and ! is_null($waypoint)) {
             $query .= ' INNER JOIN `caches` ON `reports`.`cache_id` = `caches`.`cache_id`
                     WHERE (`caches`.`wp_oc` LIKE :waypoint OR `caches`.`name` LIKE :waypoint)';
@@ -202,6 +207,7 @@ class ReportCommons extends BaseObject
         } else {
             $query .= ' WHERE 1';
         }
+
         if ($type == self::TYPE_ALL) {
             $query .= '';
         } else {
@@ -209,6 +215,7 @@ class ReportCommons extends BaseObject
             $params['type']['value'] = $type;
             $params['type']['data_type'] = 'integer';
         }
+
         if ($status == self::STATUS_ALL) {
             $query .= '';
         } elseif ($status == self::STATUS_OPEN) {
@@ -220,6 +227,7 @@ class ReportCommons extends BaseObject
             $params['status']['value'] = $status;
             $params['status']['data_type'] = 'integer';
         }
+
         if ($user == self::USER_ALL) {
             $query .= '';
         } elseif ($user == self::USER_YOU) {
@@ -266,6 +274,7 @@ class ReportCommons extends BaseObject
     {
         $params = [];
         $query = 'SELECT COUNT(*) FROM `reports`';
+
         if ($waypoint != '' and ! is_null($waypoint)) {
             $query .= ' INNER JOIN `caches` ON `reports`.`cache_id` = `caches`.`cache_id`
                     WHERE (`caches`.`wp_oc` LIKE :waypoint OR `caches`.`name` LIKE :waypoint)';
@@ -274,6 +283,7 @@ class ReportCommons extends BaseObject
         } else {
             $query .= ' WHERE 1';
         }
+
         if ($type == self::TYPE_ALL) {
             $query .= ' ';
         } else {
@@ -281,6 +291,7 @@ class ReportCommons extends BaseObject
             $params['type']['value'] = $type;
             $params['type']['data_type'] = 'integer';
         }
+
         if ($status == self::STATUS_ALL) {
             $query .= '';
         } elseif ($status == self::STATUS_OPEN) {
@@ -292,6 +303,7 @@ class ReportCommons extends BaseObject
             $params['status']['value'] = $status;
             $params['status']['data_type'] = 'integer';
         }
+
         if ($user == self::USER_ALL) {
             $query .= '';
         } elseif ($user == self::USER_YOU) {
@@ -315,6 +327,7 @@ class ReportCommons extends BaseObject
             $params['user']['value'] = $user;
             $params['user']['data_type'] = 'integer';
         }
+
         return self::db()->paramQueryValue($query, 0, $params);
     }
 
@@ -365,6 +378,7 @@ class ReportCommons extends BaseObject
         $params = [];
         $params['user_id']['value'] = $user->getUserId();
         $params['user_id']['data_type'] = 'integer';
+
         return self::db()->paramQueryValue($query, 0, $params);
     }
 
@@ -387,11 +401,13 @@ class ReportCommons extends BaseObject
             self::TYPE_COPYRIGHT,
             self::TYPE_OTHER,
         ];
+
         if ($includeVirtual) {
             $types = array_merge([
                 self::TYPE_ALL,
             ], $types);
         }
+
         return $types;
     }
 
@@ -409,12 +425,14 @@ class ReportCommons extends BaseObject
             self::STATUS_LOOK_HERE,
             self::STATUS_CLOSED,
         ];
+
         if ($includeVirtual) {
             $statuses = array_merge([
                 self::STATUS_ALL,
                 self::STATUS_OPEN,
-                ], $statuses);
+            ], $statuses);
         }
+
         return $statuses;
     }
 
@@ -539,13 +557,16 @@ class ReportCommons extends BaseObject
     {
         $types = self::getTypesArray($includeVirtual);
         $result = '';
+
         foreach ($types as $type) {
             $result .= '<option value="' . $type . '"';
+
             if ($type == $default) {
                 $result .= ' selected="selected"';
             }
             $result .= '>' . tr(self::reportTypeTranslationKey($type)) . '</option>';
         }
+
         return $result;
     }
 
@@ -560,13 +581,16 @@ class ReportCommons extends BaseObject
     {
         $statuses = self::getStatusesArray($includeVirtual);
         $result = '';
+
         foreach ($statuses as $status) {
             $result .= '<option value="' . $status . '"';
+
             if ($status == $default) {
                 $result .= ' selected="selected"';
             }
             $result .= '>' . tr(self::ReportStatusTranslationKey($status)) . '</option>';
         }
+
         return $result;
     }
 
@@ -580,9 +604,11 @@ class ReportCommons extends BaseObject
     public static function generateUserSelect($onlyOcTeam = false, $default = self::DEFAULT_REPORTS_USER)
     {
         $result = '';
+
         if ($default == null) {
             $result .= '<option value="' . self::USER_NOBODY . '" selected="selected">---</option>';
         }
+
         if (! $onlyOcTeam) {
             $users = [
                 self::USER_ALL,
@@ -590,8 +616,10 @@ class ReportCommons extends BaseObject
                 self::USER_YOU,
                 self::USER_YOU2,
             ];
+
             foreach ($users as $user) {
                 $result .= '<option value="' . $user . '"';
+
                 if ($user == $default) {
                     $result .= ' selected="selected"';
                 }
@@ -599,13 +627,16 @@ class ReportCommons extends BaseObject
             }
         }
         $users = MultiUserQueries::getOcTeamMembersArray();
+
         foreach ($users as $user) {
             $result .= '<option value="' . $user['user_id'] . '"';
+
             if ($user['user_id'] == $default) {
                 $result .= ' selected="selected"';
             }
             $result .= '>' . $user['username'] . '</option>';
         }
+
         return $result;
     }
 }

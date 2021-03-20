@@ -1,5 +1,7 @@
 <?php
+
 namespace src\Utils\Feed;
+
 use DateTime;
 
 /**
@@ -9,7 +11,6 @@ use DateTime;
 
 class AtomFeedEntry
 {
-
     /** @var string */
     private $title;
 
@@ -129,6 +130,7 @@ class AtomFeedEntry
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this->getTitle();
     }
 
@@ -141,6 +143,7 @@ class AtomFeedEntry
     public function setLink($link)
     {
         $this->link = $link;
+
         return $this->getLink();
     }
 
@@ -153,6 +156,7 @@ class AtomFeedEntry
     public function setId($id)
     {
         $this->id = $id;
+
         return $this->getId();
     }
 
@@ -165,6 +169,7 @@ class AtomFeedEntry
     public function setUpdated(DateTime $updated)
     {
         $this->updated = $updated;
+
         return $this->getUpdated();
     }
 
@@ -177,6 +182,7 @@ class AtomFeedEntry
     public function setPublished(DateTime $published)
     {
         $this->published = $published;
+
         return $this->getPublished();
     }
 
@@ -189,6 +195,7 @@ class AtomFeedEntry
     public function setSummary($summary)
     {
         $this->summary = $summary;
+
         return $this->getSummary();
     }
 
@@ -201,6 +208,7 @@ class AtomFeedEntry
     public function setContent($content)
     {
         $this->content = $content;
+
         return $this->getContent();
     }
 
@@ -213,6 +221,7 @@ class AtomFeedEntry
     public function setAuthor(AtomFeedAuthor $author)
     {
         $this->author = $author;
+
         return $this->getAuthor();
     }
 
@@ -230,18 +239,22 @@ class AtomFeedEntry
 
         $result = '<entry>' . PHP_EOL;
         $result .= '<title>' . htmlspecialchars($this->getTitle()) . '</title>' . PHP_EOL;
+
         if (! empty($this->getPublished())) {
             $result .= '<published>' . $this->getPublished()->format(DateTime::ATOM) . '</published>' . PHP_EOL;
         }
         $result .= '<updated>' . $this->getUpdated()->format(DateTime::ATOM) . '</updated>' . PHP_EOL;
         $result .= '<id>' . $this->getId() . '</id>' . PHP_EOL;
         $result .= '<link href="' . $this->getLink() . '" />' . PHP_EOL;
+
         if (! empty($this->getSummary())) {
             $result .= '<summary type="html">' . htmlspecialchars($this->getSummary()) . '</summary>' . PHP_EOL;
         }
+
         if (! empty($this->getContent())) {
             $result .= '<content type="html">' . htmlspecialchars($this->getContent()) . '</content>' . PHP_EOL;
         }
+
         if (! empty($this->getAuthor())) {
             $result .= $this->getAuthor()->getFormatedContent();
         }
@@ -262,15 +275,19 @@ class AtomFeedEntry
         if (empty($this->getTitle())) {
             return false;
         }
+
         if (empty($this->getId())) {
             return false;
         }
+
         if (empty($this->getLink())) {
             return false;
         }
+
         if (empty($this->getAuthor()) || ! $this->getAuthor()->isValid()) {
             return false;
         }
+
         return true;
     }
 }

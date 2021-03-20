@@ -5,7 +5,6 @@
  */
 
 return function ($cssUrl) {
-
 ?>
 
 <script>

@@ -9,9 +9,11 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -20,10 +22,12 @@ if (isset($_REQUEST['wpid'])) {
     $wp_id = $_REQUEST['wpid'];
 }
 $remove = 0;
+
 if (isset($_REQUEST['delete'])) {
     $wp_id = $_REQUEST['wpid'];
     $remove = 1;
 }
+
 if (isset($_POST['delete'])) {
     $wp_id = $_POST['wpid'];
     $remove = 1;
@@ -38,6 +42,7 @@ if ($wp_record = XDb::xFetchArray($wp_rs)) {
 } else {
     //TODO: does it needs error handling?
     trigger_error("Can't find waypoint with wp_id=" . $wp_id, E_USER_ERROR);
+
     exit;
 }
 
@@ -45,7 +50,6 @@ $cache_rs = XDb::xSql('SELECT `user_id`, `name`, `type`,  `longitude`, `latitude
                                FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
 
 if ($cache_record = XDb::xFetchArray($cache_rs)) {
-
     if ($cache_record['type'] == '2' || $cache_record['type'] == '4' ||
         $cache_record['type'] == '5' || $cache_record['type'] == '6' ||
         $cache_record['type'] == '8' || $cache_record['type'] == '9') {
@@ -56,25 +60,25 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('end_stage', '');
     }
 
-
     if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
-
         if ($remove == 1) {
             //remove
             XDb::xSql('DELETE FROM `waypoints` WHERE `wp_id`= ? ', $wp_id);
             XDb::xSql('UPDATE `caches` SET  `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
             tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
+
             exit;
         }
 
         $tplname = 'editwp';
+
         require(__DIR__ . '/src/Views/newcache.inc.php');
 
         $wp_type = isset($_POST['type']) ? $_POST['type'] : $wp_record['type'];
         //build typeoptions
         $types = '<option disabled selected="selected">' . tr('choose_waypoint_type') . '</options>';
-        foreach (WaypointCommons::getTypesArray($cache_record['type']) as $type) {
 
+        foreach (WaypointCommons::getTypesArray($cache_record['type']) as $type) {
             if ($type == $wp_type) {
                 $types .= '<option value="' . $type . '" selected="selected">' .
                     htmlspecialchars(tr(WaypointCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
@@ -102,6 +106,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         } else {
             tpl_set_var('openchecker_checked', '');
         }
+
         if (isset($_POST['openchecker']) && $config['module']['openchecker']['enabled'])
             $OpenChecker_present = 1;
         else
@@ -179,12 +184,15 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         $status2 = '';
         $status3 = '';
         $wp_status = isset($_POST['status']) ? $_POST['status'] : $wp_record['status'];
+
         if ($wp_status == 1) {
             $status1 = 'checked';
         }
+
         if ($wp_status == 2) {
             $status2 = 'checked';
         }
+
         if ($wp_status == 3) {
             $status3 = 'checked';
         }
@@ -195,6 +203,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         $wp_desc = isset($_POST['desc']) ? $_POST['desc'] : $wp_record['desc'];
 //                  $wp_desc = nl2br($wp_desc);
         $descwp_not_ok = false;
+
         if (isset($_POST['desc'])) {
             if ($_POST['desc'] == '')
                 $descwp_not_ok = true;
@@ -204,6 +213,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
             XDb::xFreeResults($cache_rs);
             XDb::xFreeResults($wp_rs);
+
             exit;
         }
         //try to save to DB?
@@ -212,12 +222,15 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             //check the entered data
             if ($wp_type == '4' || $wp_type == '5' || $wp_type == '6')
                 $wp_stage = '0';
+
             if (! ($lat_not_ok || $lon_not_ok || $descwp_not_ok)) {
                 $wp_lat = $coords_lat_h + $coords_lat_min / 60;
+
                 if ($coords_latNS == 'S')
                     $wp_lat = -$wp_lat;
 
                 $wp_lon = $coords_lon_h + $coords_lon_min / 60;
+
                 if ($coords_lonEW == 'W')
                     $wp_lon = -$wp_lon;
 
@@ -234,6 +247,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
                 if (($OpenChecker_present == 1) && ($wp_type == 3)) {
                     $proba = XDb::xSimpleQueryValue("SELECT count(*) FROM `opensprawdzacz` WHERE `cache_id` = '$cache_id'", '');
+
                     if ($proba == 0) {
                         XDb::xSql("INSERT INTO `opensprawdzacz`(
                                                                     `id`,
@@ -242,11 +256,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                                                                     `sukcesy`)
                                                       VALUES ('', '$cache_id',   0,       0)");
                     }
-
                 }
                 // ==== openchecker end ===========================================
                 //display cache-page
                 tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
+
                 exit;
             }
         }

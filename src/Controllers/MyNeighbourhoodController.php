@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\ChunkModels\DynamicMap\CacheMarkerModel;
@@ -16,7 +17,6 @@ use src\Utils\Uri\Uri;
 
 class MyNeighbourhoodController extends BaseController
 {
-
     // Minimum MyNeighbourhood radius (in km)
     const NBH_RADIUS_MIN = 1;
 
@@ -56,17 +56,21 @@ class MyNeighbourhoodController extends BaseController
         $this->redirectNotLoggedUsers();
 
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (empty($neighbourhoodsList)) { // User doesn't have any MyNeighbourhoods set, so redirect to config
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'config'));
+
             exit();
         }
         $selectedNbh = (int) $nbhSeq;
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             if ($selectedNbh == 0) { // User has no Home Coords -> redirect to config
                 $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'config'));
             } else { // Redirect to default MyNeighbourhood
                 $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index', 0));
             }
+
             exit();
         }
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
@@ -92,6 +96,7 @@ class MyNeighbourhoodController extends BaseController
 
         $mapModel = new DynamicMapModel();
         $allCaches = [];
+
         foreach ($preferences['items'] as $sectionName => $sectionConfig) {
             if ($sectionConfig['show']) {
                 switch ($sectionName) {
@@ -145,8 +150,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -178,8 +185,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -211,8 +220,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -244,8 +255,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -277,8 +290,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -310,8 +325,10 @@ class MyNeighbourhoodController extends BaseController
         $selectedNbh = (int) $nbhSeq;
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if (! array_key_exists($selectedNbh, $neighbourhoodsList)) { // Selected MyNeighbourhood not found
             $this->view->redirect(SimpleRouter::getLink('MyNeighbourhood', 'index'));
+
             exit();
         }
         $coords = $neighbourhoodsList[$selectedNbh]->getCoords();
@@ -345,9 +362,11 @@ class MyNeighbourhoodController extends BaseController
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
 
         $neighbourhoodsList = Neighbourhood::getNeighbourhoodsList($this->loggedUser);
+
         if ($selectedNbh != -1 && ! array_key_exists($selectedNbh, $neighbourhoodsList)) {
             $selectedNbh = 0;
         }
+
         if (array_key_exists($selectedNbh, $neighbourhoodsList)) {
             $this->view->setVar('coordsOK', 1);
         } else {
@@ -389,14 +408,16 @@ class MyNeighbourhoodController extends BaseController
         $seq = null;
         $definedNbh = count(Neighbourhood::getAdditionalNeighbourhoodsList($this->loggedUser));
         // Store MyNeighbourhood data
-        if (isset($_POST['lon'], $_POST['lat'], $_POST['radius'])    ) {
+        if (isset($_POST['lon'], $_POST['lat'], $_POST['radius'])) {
             $coords = Coordinates::FromCoordsFactory($_POST['lat'], $_POST['lon']);
             $radius = (int) $_POST['radius'];
+
             if ($radius > self::NBH_RADIUS_MAX) {
                 $radius = self::NBH_RADIUS_MAX;
             } elseif ($radius < self::NBH_RADIUS_MIN) {
                 $radius = self::NBH_RADIUS_MIN;
             }
+
             if ($coords !== null) {
                 if ($nbhSeq == 0) { // Update Home Coords and radius
                     if (! $this->loggedUser->updateUserNeighbourhood($coords, $_POST['radius'])) {
@@ -408,9 +429,11 @@ class MyNeighbourhoodController extends BaseController
                     $name = UserInputFilter::purifyHtmlString($name);
                     $name = strip_tags($name);
                     $name = mb_strcut($name, 0, 16);
+
                     if (mb_strlen($name) < 1) { // Name too short
                         $name = 'X';
                     }
+
                     if (! Neighbourhood::storeUserNeighbourhood($this->loggedUser, $coords, $radius, $name, $seq)) {
                         $error = tr('myn_save_error'); // Error during save additional MyNbh (should never happen, but...)
                     }
@@ -426,6 +449,7 @@ class MyNeighbourhoodController extends BaseController
         // Store user preferences
         if ($nbhSeq == 0 && isset($_POST['caches-perpage'], $_POST['style']) && ($_POST['style'] == 'full' || $_POST['style'] == 'min')) {
             $cachesPerpage = (int) $_POST['caches-perpage'];
+
             if ($cachesPerpage > self::CACHES_PER_PAGE_MAX) {
                 $cachesPerpage = self::CACHES_PER_PAGE_MAX;
             } elseif ($cachesPerpage < self::CACHES_PER_PAGE_MIN) {
@@ -434,10 +458,12 @@ class MyNeighbourhoodController extends BaseController
             $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
             $preferences['style']['name'] = $_POST['style'];
             $preferences['style']['caches-count'] = $cachesPerpage;
+
             if (! UserPreferences::savePreferencesJson(NeighbourhoodPref::KEY, json_encode($preferences))) {
                 $error = tr('myn_save_error'); // Error during storing user preferences
             }
         }
+
         if (is_null($error)) {
             $this->infoMsg = tr('myn_save_success');
         } else {
@@ -455,6 +481,7 @@ class MyNeighbourhoodController extends BaseController
     {
         $this->redirectNotLoggedUsers();
         $success = true;
+
         if ($nbhSeq > 0) { // User cannot delete HomeCoords!
             if (! Neighbourhood::removeUserNeighbourhood($this->loggedUser, $nbhSeq)) {
                 $success = false;
@@ -462,12 +489,14 @@ class MyNeighbourhoodController extends BaseController
         } else {
             $success = false; // User try to delete Home Coords
         }
+
         if ($success) {
             $this->infoMsg = tr('myn_delete_success');
         } else {
             $this->errorMsg = tr('myn_delete_error');
         }
         $this->config(0);
+
         exit();
     }
 
@@ -482,10 +511,12 @@ class MyNeighbourhoodController extends BaseController
         parse_str($_POST['order'], $order);
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $counter = 1;
+
         foreach ($order['item'] as $itemOrder) {
             $preferences['items'][$itemOrder]['order'] = $counter;
             $counter++;
         }
+
         if (! UserPreferences::savePreferencesJson(NeighbourhoodPref::KEY, json_encode($preferences))) {
             $this->ajaxErrorResponse('Error saving UserPreferences');
         }
@@ -503,6 +534,7 @@ class MyNeighbourhoodController extends BaseController
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $itemNr = ltrim($_POST['item'], 'item_');
         $preferences['items'][$itemNr]['fullsize'] = filter_var($_POST['size'], FILTER_VALIDATE_BOOLEAN);
+
         if (! UserPreferences::savePreferencesJson(NeighbourhoodPref::KEY, json_encode($preferences))) {
             $this->ajaxErrorResponse('Error saving UserPreferences');
         }
@@ -520,6 +552,7 @@ class MyNeighbourhoodController extends BaseController
         $preferences = UserPreferences::getUserPrefsByKey(NeighbourhoodPref::KEY)->getValues();
         $itemNr = ltrim($_POST['item'], 'item_');
         $preferences['items'][$itemNr]['show'] = ! filter_var($_POST['hide'], FILTER_VALIDATE_BOOLEAN);
+
         if (! UserPreferences::savePreferencesJson(NeighbourhoodPref::KEY, json_encode($preferences))) {
             $this->ajaxErrorResponse('Error saving UserPreferences');
         }
@@ -540,6 +573,7 @@ class MyNeighbourhoodController extends BaseController
     {
         if (! isset($_POST[$paramName])) {
             $this->ajaxErrorResponse('No parameter: ' . $paramName, 400);
+
             exit();
         }
     }

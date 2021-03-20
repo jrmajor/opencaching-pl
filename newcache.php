@@ -1,4 +1,5 @@
 <?php
+
 use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Models\GeoCache\GeoCacheCommons;
@@ -15,7 +16,7 @@ use src\Utils\I18n\I18n;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Text\Validator;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $ocWP = $GLOBALS['oc_waypoint'];
 $no_tpl_build = false;
@@ -24,9 +25,11 @@ $view = tpl_getView();
 
 // user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     $view->redirect('/login.php?target=' . $target);
+
     exit;
 }
 
@@ -47,10 +50,11 @@ if (! $user->canCreateNewCache()) {
     $view->setVar('need_find_limit', OcConfig::getNeedFindLimit());
     $view->setTemplate('newcache_beginner');
     $view->buildView();
+
     exit();
 }
 
-require_once (__DIR__ . '/src/Views/newcache.inc.php');
+require_once(__DIR__ . '/src/Views/newcache.inc.php');
 
 $errors = false; // set if there was any errors
 
@@ -108,6 +112,7 @@ if (! isset($cache_type)) {
     $cache_type = -1;
 }
 $sel_type = isset($_POST['type']) ? $_POST['type'] : -1;
+
 if (! isset($_POST['size'])) {
     if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM || $sel_type == GeoCache::TYPE_EVENT) {
         $sel_size = GeoCache::SIZE_NONE;
@@ -116,6 +121,7 @@ if (! isset($_POST['size'])) {
     }
 } else {
     $sel_size = isset($_POST['size']) ? $_POST['size'] : -1;
+
     if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM || $sel_type == GeoCache::TYPE_EVENT) {
         $sel_size = GeoCache::SIZE_NONE;
     }
@@ -128,6 +134,7 @@ $show_all_langs = isset($_POST['show_all_langs']) ? $_POST['show_all_langs'] : 0
 
 // coords
 $lonEW = isset($_POST['lonEW']) ? $_POST['lonEW'] : $default_EW;
+
 if ($lonEW == 'E') {
     tpl_set_var('lonWsel', '');
     tpl_set_var('lonEsel', ' selected="selected"');
@@ -142,6 +149,7 @@ $lon_min = isset($_POST['lon_min']) ? $_POST['lon_min'] : '';
 tpl_set_var('lon_min', htmlspecialchars($lon_min, ENT_COMPAT, 'UTF-8'));
 
 $latNS = isset($_POST['latNS']) ? $_POST['latNS'] : $default_NS;
+
 if ($latNS == 'N') {
     tpl_set_var('latNsel', ' selected="selected"');
     tpl_set_var('latSsel', '');
@@ -227,6 +235,7 @@ tpl_set_var('activate_year', htmlspecialchars($activate_year, ENT_COMPAT, 'UTF-8
 
 if (isset($_POST['publish'])) {
     $publish = $_POST['publish'];
+
     if ($publish == 'now') {
         tpl_set_var('publish_now_checked', 'checked="checked"');
     } else {
@@ -254,6 +263,7 @@ if (isset($_POST['publish'])) {
 // fill activate hours
 $activate_hour = isset($_POST['activate_hour']) ? $_POST['activate_hour'] + 0 : date('H') + 0;
 $activation_hours = '';
+
 for ($i = 0; $i <= 23; $i++) {
     if ($activate_hour == $i) {
         $activation_hours .= '<option value="' . $i . '" selected="selected">' . $i . ':00</option>';
@@ -284,6 +294,7 @@ tpl_set_var('wp_nc', htmlspecialchars($wp_nc, ENT_COMPAT, 'UTF-8'));
 // difficulty
 $difficulty = isset($_POST['difficulty']) ? $_POST['difficulty'] : 1;
 $difficulty_options = '<option value="1" disabled selected="selected">' . $sel_message . '</option>';
+
 for ($i = 2; $i <= 10; $i++) {
     if ($difficulty == $i) {
         $difficulty_options .= '<option value="' . $i . '" selected="selected">' . $i / 2 . '</option>';
@@ -297,6 +308,7 @@ tpl_set_var('difficulty_options', $difficulty_options);
 // terrain
 $terrain = isset($_POST['terrain']) ? $_POST['terrain'] : 1;
 $terrain_options = '<option value="1" disabled selected="selected">' . $sel_message . '</option>';
+
 for ($i = 2; $i <= 10; $i++) {
     if ($terrain == $i) {
         $terrain_options .= '<option value="' . $i . '" selected="selected">' . $i / 2 . '</option>';
@@ -309,6 +321,7 @@ tpl_set_var('terrain_options', $terrain_options);
 
 // size options
 tpl_set_var('sizeoptions', buildCacheSizeSelector($sel_type, $sel_size));
+
 if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM || $sel_type == GeoCache::TYPE_EVENT) {
     tpl_set_var('is_disabled_size', 'disabled');
 } else {
@@ -317,6 +330,7 @@ if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM ||
 
 // typeoptions
 $types = '<option value="-1" disabled selected="selected">' . tr('select_one') . '</option>';
+
 foreach (GeoCacheCommons::CacheTypesArray() as $typeId) {
     /* block creating forbidden cache types */
     if (in_array($typeId, OcConfig::getNoNewCacheOfTypesArray())) {
@@ -330,6 +344,7 @@ foreach (GeoCacheCommons::CacheTypesArray() as $typeId) {
     ) {
         continue;
     }
+
     if ($typeId == $sel_type) {
         $types .= '<option value="' . $typeId . '" selected="selected">' .
             tr(GeoCacheCommons::CacheTypeTranslationKey($typeId)) . '</option>';
@@ -352,6 +367,7 @@ buildDescriptionLanguageSelector($show_all_langs, I18n::getCurrentLang(), $confi
 // countryoptions
 $countriesoptions = '';
 $defaultCountryList = [];
+
 if ($show_all_countries == 1) {
     tpl_set_var('show_all_countries', '1');
     tpl_set_var('show_all_countries_submit', '');
@@ -378,8 +394,6 @@ tpl_set_var('countryoptions', $countriesoptions);
 // cache-attributes
 $cache_attribs = (isset($_POST['cache_attribs']) && ! empty($_POST['cache_attribs'])) ? mb_split(';', $_POST['cache_attribs']) : [];
 
-
-
 // cache-attributes
 $cache_attrib_list = '';
 $cache_attrib_array = '';
@@ -392,6 +406,7 @@ while ($record = XDb::xFetchArray($rs)) {
     $line = $cache_attrib_pic;
     $line = mb_ereg_replace('{attrib_id}', $record['id'], $line);
     $line = mb_ereg_replace('{attrib_text}', $record['text_long'], $line);
+
     if (in_array($record['id'], $cache_attribs)) {
         $line = mb_ereg_replace('{attrib_pic}', $record['icon_large'], $line);
     } else {
@@ -400,6 +415,7 @@ while ($record = XDb::xFetchArray($rs)) {
     $cache_attrib_list .= $line;
     $line = $cache_attrib_js;
     $line = mb_ereg_replace('{id}', $record['id'], $line);
+
     if (in_array($record['id'], $cache_attribs)) {
         $line = mb_ereg_replace('{selected}', 1, $line);
     } else {
@@ -407,6 +423,7 @@ while ($record = XDb::xFetchArray($rs)) {
     }
     $line = mb_ereg_replace('{img_undef}', $record['icon_undef'], $line);
     $line = mb_ereg_replace('{img_large}', $record['icon_large'], $line);
+
     if ($cache_attrib_array != '') {
         $cache_attrib_array .= ',';
     }
@@ -425,7 +442,6 @@ tpl_set_var('jsattributes_array', $cache_attrib_array);
 tpl_set_var('cache_attribs', $cache_attribs_string);
 
 if (isset($_POST['submitform'])) {
-
     // check the entered data
     /* Prevent binary data in cache descriptions, e.g. <img src='data:...'> tags. */
     if (strlen($desc) > 300000) {
@@ -464,6 +480,7 @@ if (isset($_POST['submitform'])) {
         }
 
         $latitude = $lat_h + round($lat_min, 3) / 60;
+
         if ($latNS == 'S') {
             $latitude = -$latitude;
         }
@@ -509,9 +526,11 @@ if (isset($_POST['submitform'])) {
         }
 
         $longitude = $lon_h + round($lon_min, 3) / 60;
+
         if ($lonEW == 'W') {
             $longitude = -$longitude;
         }
+
         if ($longitude == 0) {
             tpl_set_var('lon_message', $error_coords_not_ok);
             $error = true;
@@ -528,17 +547,21 @@ if (isset($_POST['submitform'])) {
 
     // check effort
     $time_not_ok = true;
+
     if (is_numeric($search_time) || ($search_time == '')) {
         $time_not_ok = false;
     }
+
     if ($time_not_ok) {
         tpl_set_var('effort_message', $time_not_ok_message);
         $error = true;
     }
     $way_length_not_ok = true;
+
     if (is_numeric($way_length) || ($search_time == '')) {
         $way_length_not_ok = false;
     }
+
     if ($way_length_not_ok) {
         tpl_set_var('effort_message', $way_length_not_ok_message);
         $error = true;
@@ -546,9 +569,11 @@ if (isset($_POST['submitform'])) {
 
     // check hidden_since
     $hidden_date_not_ok = true;
+
     if (is_numeric($hidden_day) && is_numeric($hidden_month) && is_numeric($hidden_year)) {
         $hidden_date_not_ok = (checkdate($hidden_month, $hidden_day, $hidden_year) == false);
     }
+
     if ($hidden_date_not_ok) {
         tpl_set_var('hidden_since_message', $date_not_ok_message);
         $error = true;
@@ -563,11 +588,13 @@ if (isset($_POST['submitform'])) {
         if (is_numeric($activate_day) && is_numeric($activate_month) && is_numeric($activate_year) && is_numeric($activate_hour)) {
             $activation_date_not_ok = ((checkdate($activate_month, $activate_day, $activate_year) == false) || $activate_hour < 0 || $activate_hour > 23);
         }
+
         if ($activation_date_not_ok == false) {
             if (! ($publish == 'now' || $publish == 'later' || $publish == 'notnow')) {
                 $activation_date_not_ok = true;
             }
         }
+
         if ($activation_date_not_ok) {
             tpl_set_var('activate_on_message', $date_not_ok_message);
             $error = true;
@@ -600,6 +627,7 @@ if (isset($_POST['submitform'])) {
 
     // cache-size
     $size_not_ok = false;
+
     if ($sel_size == -1) {
         tpl_set_var('size_message', $size_not_ok_message);
         $error = true;
@@ -614,6 +642,7 @@ if (isset($_POST['submitform'])) {
         $error = true;
         $type_not_ok = true;
     }
+
     if ($sel_size != 7 && ($sel_type == 4 || $sel_type == 5 || $sel_type == 6)) {
         if (! $size_not_ok) {
             tpl_set_var('size_message', $sizemismatch_message);
@@ -623,6 +652,7 @@ if (isset($_POST['submitform'])) {
     }
     // difficulty / terrain
     $diff_not_ok = false;
+
     if ($difficulty < 2 || $difficulty > 10 || $terrain < 2 || $terrain > 10) {
         tpl_set_var('diff_message', $diff_not_ok_message);
         $error = true;
@@ -637,6 +667,7 @@ if (isset($_POST['submitform'])) {
 
         if (${$wpVar} != '') {
             $validatedCode = Validator::xxWaypoint($wpType, ${$wpVar});
+
             if ($validatedCode !== false) {
                 ${$wpVar} = $validatedCode;
             } else {
@@ -695,6 +726,7 @@ if (isset($_POST['submitform'])) {
 
         // insert cache_location
         $code1 = $sel_country;
+
         if (I18n::isTranslationAvailable($code1)){
             $adm1 = tr($code1);
         } else {
@@ -706,6 +738,7 @@ if (isset($_POST['submitform'])) {
         if ($sel_region == -1) {
             $sel_region = $default_region;
         }
+
         if ($sel_region != '0') {
             $code3 = $sel_region;
             $adm3 = XDb::xMultiVariableQueryValue('SELECT `name` FROM `nuts_codes`
@@ -765,6 +798,7 @@ if (isset($_POST['submitform'])) {
 }
 
 tpl_set_var('language4js', I18n::getCurrentLang());
+
 if ($no_tpl_build == false) {
     // make the template and send it out
     tpl_BuildTemplate();
@@ -773,21 +807,19 @@ if ($no_tpl_build == false) {
 function buildCacheSizeSelector($sel_type, $sel_size)
 {
     $sizes = '<option value="-1" disabled selected="selected">' . tr('select_one') . '</option>';
-    foreach (GeoCacheCommons::CacheSizesArray() as $size) {
 
+    foreach (GeoCacheCommons::CacheSizesArray() as $size) {
         if (! in_array($size, OcConfig::getEnabledCacheSizesArray())) {
             continue;
         }
 
         if ($sel_type == GeoCacheCommons::TYPE_EVENT || $sel_type == GeoCacheCommons::TYPE_VIRTUAL || $sel_type == GeoCacheCommons::TYPE_WEBCAM) {
-
             if ($size == GeoCacheCommons::SIZE_NONE) {
                 $sizes .= '<option value="' . $size . '" selected="selected">' . tr(GeoCacheCommons::CacheSizeTranslationKey($size)) . '</option>';
             } else {
                 $sizes .= '<option value="' . $size . '">' . tr(GeoCacheCommons::CacheSizeTranslationKey($size)) . '</option>';
             }
         } elseif ($size != GeoCacheCommons::SIZE_NONE) {
-
             if ($size == $sel_size) {
                 $sizes .= '<option value="' . $size . '" selected="selected">' . tr(GeoCacheCommons::CacheSizeTranslationKey($size)) . '</option>';
             } else {
@@ -795,6 +827,7 @@ function buildCacheSizeSelector($sel_type, $sel_size)
             }
         }
     }
+
     return $sizes;
 }
 
@@ -802,6 +835,7 @@ function buildDescriptionLanguageSelector($show_all_langs, $langCode, $defaultLa
 {
     tpl_set_var('show_all_langs', '0');
     tpl_set_var('show_all_langs_submit', '<input class="btn btn-default btn-sm" type="submit" name="show_all_langs_submit" value="' . $show_all . '"/>');
+
     if ($show_all_langs == 1) {
         tpl_set_var('show_all_langs', '1');
         tpl_set_var('show_all_langs_submit', '');
@@ -810,11 +844,13 @@ function buildDescriptionLanguageSelector($show_all_langs, $langCode, $defaultLa
         $dbResult = $db->dbResultFetchAll($s);
 
         $defaultLangugaeList = [];
+
         foreach ($dbResult as $langTmp) {
             $defaultLangugaeList[] = $langTmp['short'];
         }
     }
     $langsoptions = '';
+
     foreach ($defaultLangugaeList as $defLang) {
         if (strtoupper($langCode) === strtoupper($defLang)) {
             $selected = 'selected="selected"';
@@ -831,9 +867,11 @@ function generateNextWaypoint($currentWP, $ocWP)
     $wpCharSequence = '0123456789ABCDEFGHJKLMNPQRSTUWXYZ';
 
     $wpCode = mb_substr($currentWP, 2, 4);
+
     if (strcasecmp($wpCode, '8000') < 0) {
         // Old rule - use hexadecimal wp codes
         $nNext = dechex(hexdec($wpCode) + 1);
+
         while (mb_strlen($nNext) < 4)
             $nNext = '0' . $nNext;
         $wpCode = mb_strtoupper($nNext);
@@ -842,6 +880,7 @@ function generateNextWaypoint($currentWP, $ocWP)
         // as defined in $wpCharSequence
         for ($i = 3; $i >= 0; $i--) {
             $pos = strpos($wpCharSequence, $wpCode[$i]);
+
             if ($pos < strlen($wpCharSequence) - 1) {
                 $wpCode[$i] = $wpCharSequence[$pos + 1];
                 break;
@@ -850,6 +889,7 @@ function generateNextWaypoint($currentWP, $ocWP)
             }
         }
     }
+
     return $ocWP . $wpCode;
 }
 

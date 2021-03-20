@@ -2,14 +2,12 @@
 
 namespace src\Models\CacheSet;
 
-
 use src\Models\BaseObject;
 use src\Models\GeoCache\GeoCache;
 use src\Utils\Debug\Debug;
 
 class CacheSetCommon extends BaseObject
 {
-
     const TYPE_GEODRAW = 1;
     const TYPE_TOURING = 2;
     const TYPE_NATURE = 3;
@@ -40,9 +38,9 @@ class CacheSetCommon extends BaseObject
             case self::TYPE_TOURING:    return 'cs_typeTouring';
             case self::TYPE_NATURE:     return 'cs_typeNature';
             case self::TYPE_THEMATIC:   return 'cs_typeThematic';
-
             default:
                 Debug::errorLog("Unknown type: $type");
+
                 return '';
         }
     }
@@ -56,9 +54,9 @@ class CacheSetCommon extends BaseObject
             case self::TYPE_TOURING:    return $iconPath . 'footprintBlue.png';
             case self::TYPE_NATURE:     return $iconPath . 'footprintGreen.png';
             case self::TYPE_THEMATIC:   return $iconPath . 'footprintYellow.png';
-
             default:
                 Debug::errorLog("Unknown type: $type");
+
                 return '';
         }
     }
@@ -70,9 +68,9 @@ class CacheSetCommon extends BaseObject
             case self::STATUS_UNAVAILABLE:      return 'cs_statusNotYetAvailable';
             case self::STATUS_CLOSED:           return 'cs_statusClosed';
             case self::STATUS_INSERVICE:        return 'cs_statusInService';
-
             default:
                 Debug::errorLog("Unknown status: $status");
+
                 return '';
         }
     }
@@ -145,6 +143,7 @@ class CacheSetCommon extends BaseObject
         $sizePoints = $sizePointsArray[$cache->getSizeId()];
 
         $altitude = round($cache->getAltitude());
+
         if ($altitude <= 400){
             $altPoints = 1;
         }else{

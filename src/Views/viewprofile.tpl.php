@@ -59,7 +59,7 @@ jQuery(function($) {
 
 <!--    CONTENT -->
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', '', $view->infoMsg, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', '', $view->infoMsg, $view->errorMsg); ?>
     <div class="content2-pagetitle">{{user_profile}} {username} </div>
     <div class="content-title-noshade">
         <table border="0" cellspacing="2" cellpadding="1" style="margin-left: 10px;font-size: 115%;" width="97%">

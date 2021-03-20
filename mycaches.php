@@ -9,10 +9,12 @@ use src\Utils\Text\Formatter;
 
 //include template handling
 require_once(__DIR__ . '/lib/common.inc.php');
+
 require_once(__DIR__ . '/src/Views/lib/icons.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
@@ -21,6 +23,7 @@ if (! $loggedUser) {
     //get user record
     $user_id = $loggedUser->getUserId();
     tpl_set_var('userid', $user_id);
+
     if (isset($_REQUEST['status'])) {
         $stat_cache = $_REQUEST['status'];
     } else {
@@ -28,6 +31,7 @@ if (! $loggedUser) {
     }
     //get the news
     $tplname = 'mycaches';
+
     require(__DIR__ . '/src/Views/newlogs.inc.php');
 
     $eLang = I18n::getLangForDbTranslations('cache_status');
@@ -68,6 +72,7 @@ if (! $loggedUser) {
 
     $pages = '';
     $total_pages = ceil($total_logs / $LOGS_PER_PAGE);
+
     if (! isset($_GET['start']) || intval($_GET['start']) < 0 || intval($_GET['start']) > $total_logs) {
         $start = 0;
     } else {
@@ -79,11 +84,13 @@ if (! $loggedUser) {
     } else {
         $sort_col = intval($_GET['col']);
     }
+
     if (! isset($_GET['sort']) || intval($_GET['sort']) < 0 || intval($_GET['sort']) > 1) {
         $sort_sort = 2;
     } else {
         $sort_sort = intval($_GET['sort']);
     }
+
     if ($sort_sort == 1) {
         $sort_txt = 'ASC';
         $sort_neg = 2;
@@ -93,6 +100,7 @@ if (! $loggedUser) {
     }
     $my_cache_sort = "&start=$start&status=$stat_cache&sort=$sort_neg";
     tpl_set_var('my_cache_sort', $my_cache_sort);
+
     switch ($sort_col) {
         case 1:
             $sort_warunek = 'date_hidden';
@@ -124,22 +132,27 @@ if (! $loggedUser) {
             break;
     }
     $startat = max(0, floor((($start / $LOGS_PER_PAGE) + 1) / $PAGES_LISTED) * $PAGES_LISTED);
+
     if (($start / $LOGS_PER_PAGE) + 1 >= $PAGES_LISTED) {
         $pages .= '<a href="mycaches.php?status=' . $stat_cache . '&amp;start=' . max(0,
                 ($startat - $PAGES_LISTED - 1) * $LOGS_PER_PAGE) . '&col=' . $sort_col . '&sort=' . $sort_sort . '">{first_img}</a> ';
     } else {
         $pages .= '{first_img_inactive}';
     }
+
     for ($i = max(1, $startat); $i < $startat + $PAGES_LISTED; $i++) {
         $page_number = ($i - 1) * $LOGS_PER_PAGE;
+
         if ($page_number == $start) {
             $pages .= '<b> [ ';
         }
         $pages .= '<a href="mycaches.php?status=' . $stat_cache . '&amp;start=' . $page_number . '&col=' . $sort_col . '&sort=' . $sort_sort . '">' . $i . '</a> ';
+
         if ($page_number == $start) {
             $pages .= ' ] </b>';
         }
     }
+
     if ($total_pages > $PAGES_LISTED) {
         $pages .= '<a href="mycaches.php?status=' . $stat_cache . '&amp;start=' . (($i - 1) * $LOGS_PER_PAGE) . '&col=' . $sort_col . '&sort=' . $sort_sort . '">{last_img}</a> ';
     } else {
@@ -184,7 +197,6 @@ if (! $loggedUser) {
     $params['stat_cache']['value'] = (int) $stat_cache;
     $params['stat_cache']['data_type'] = 'integer';
 
-
     $dbc = OcDb::instance();
     $s = $dbc->paramQuery($caches_query, $params);
     unset($params);
@@ -217,6 +229,7 @@ if (! $loggedUser) {
             ORDER BY `cache_logs`.`date_created` DESC
             LIMIT 5";
     $edit_geocache_tr = tr('mc_edit_geocache');
+
     for ($zz = 0; $zz < $log_record_count; $zz++) {
         $log_record = $log_record_all[$zz];
         $table = '';
@@ -232,11 +245,13 @@ if (! $loggedUser) {
         $table .= '<td  align="right">&nbsp;' . intval($log_record['gkcount']) . '&nbsp;</td>';
         $table .= '<td  align="right">&nbsp;' . intval($log_record['visits']) . '&nbsp;</td>';
         $table .= '<td>&nbsp;';
+
         if ($stat_cache == 2) {
             $dni = $log_record['dni_od_zmiany'];
         } else {
             $dni = $log_record['ilosc_dni'];
         }
+
         if ($dni == null) {
             $table .= tr('not_found');
         } elseif ($dni == 0) {
@@ -263,7 +278,7 @@ if (! $loggedUser) {
         $log_entries_count = count($log_entries_all);
 
         for ($yy = 0; $yy < $log_entries_count; $yy++) {
-            $logs = $log_entries_all [$yy];
+            $logs = $log_entries_all[$yy];
             $table .= '<a class="links" href="viewlogs.php?logid=' . htmlspecialchars($logs['id'], ENT_COMPAT,
                     'UTF-8') . '" onmouseover="Tip(\'';
             $table .= '<b>' . htmlspecialchars($logs['user_name']) . '</b>&nbsp;(' . htmlspecialchars(
@@ -277,21 +292,26 @@ if (! $loggedUser) {
                 $oznacz = '';
             }
             $table .= '\',OFFSETY, 25, OFFSETX, -135, PADDING,5, WIDTH,280,SHADOW,true)" onmouseout="UnTip()"><img src="/images/' . $logs['icon_small'] . '" border="0" ' . $oznacz . ' alt=""/></a></b>';
+
             if ($stat_cache == 1) { //obsluga DNF i serwisu tylko dla skrzynek aktywnych
                 if ($sprawdzaj < 2) { // sprawdzaj logi
                     if ($logs['log_type'] == 10) {
                         $sprawdzaj = 2;
                     }                                // skrzynka gotowa do szukania wiec nie trzeba juz nic sprawdzac
+
                     if (($logs['log_type'] == 3) && ($logs['cache_owner'] == $logs['luser_id'])) {
                         $sprawdzaj = 2;
                     }  //if comment by cache owner dont check
+
                     if ($sprawdzaj < 1) {
                         if ($logs['log_type'] == 2) {
                             $dnf++;
                         }           // jesli DNF zwieksz licznik
+
                         if ($logs['log_type'] == 5) {
                             $warning = 1;
                         }       // zgloszono potrzebe serwisu
+
                         if ($logs['log_type'] == 1 || $logs['log_type'] == 6) {
                             $sprawdzaj = 1;
                         }     // skrzynka znaleziona lub po serwisie wiec nie trzeba szukac DNF
@@ -304,6 +324,7 @@ if (! $loggedUser) {
             }
         }
         $pokaz_problem = '';
+
         if ($stat_cache == 1) {
             if ($dnf > 1) {
                 $pokaz_problem = 'bgcolor=red';
@@ -336,7 +357,6 @@ if (! $loggedUser) {
     } else {
         tpl_set_var('col5_header', tr('last_found'));
     }
-
 
 //make the template and send it out
 tpl_BuildTemplate();

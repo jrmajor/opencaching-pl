@@ -8,7 +8,6 @@
  *
  */
 
-
 /* * *************************************************************************
 
   This script imports data downloaded from GEOnet Names Server (GNS) into the
@@ -48,7 +47,6 @@ $importfiles = [
     'lu.txt', 'lu_administrative_a.txt',
     'ro.txt', 'ro_administrative_a.txt',
 ]; # first download the file from the URLs above
-
 
 sql('DROP TABLE IF EXISTS `gns_locations` ');
 
@@ -111,6 +109,7 @@ function importGns($filename)
     }
     echo "Importing '$filename'...\n";
     $file = fopen($filename, 'r');
+
     if (! $file) {
         return;
     }
@@ -118,15 +117,17 @@ function importGns($filename)
     $utf_columns = mb_split("[\t ,]", 'SHORT_FORM,GENERIC,SORT_NAME,FULL_NAME,FULL_NAME_ND,SORT_NAME_RG,FULL_NAME_RG,FULL_NAME_ND_RG,NOTE');
     $line_cnt = 0;
     $cnt = 0;
+
     while ($line = fgets($file, 4096)) {
         if ($line_cnt++ == 0) // skip first line
             continue;
-
         $gns = mb_split("\t", $line);
         $sql = 'INSERT IGNORE INTO gns_locations SET';
         $is_first = true;
+
         for ($i = 0; $i < count($gns); $i++) {
             $item = $gns[$i];
+
             if ($item !== '') {
                 if ($is_first) {
                     $sql .= "\n";

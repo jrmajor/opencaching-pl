@@ -2,6 +2,7 @@
 /**
  * Contains \src\Models\Watchlist\Watchlist class definition
  */
+
 namespace src\Models\Watchlist;
 
 use DateTime;
@@ -76,6 +77,7 @@ class Watchlist extends BaseObject
             );
         });
         $stmt->closeCursor();
+
         return $result;
     }
 
@@ -95,6 +97,7 @@ class Watchlist extends BaseObject
     ) {
         if (! empty($itemText)) {
             $this->updateWatchesWaiting($log, $itemText);
+
             if ($this->updateCacheLogsStmt == null) {
                 $this->updateCacheLogsStmt = $this->db->prepare(
                     'UPDATE cache_logs SET owner_notified=1 WHERE id=?'
@@ -102,6 +105,7 @@ class Watchlist extends BaseObject
             }
             $this->updateCacheLogsStmt->execute([$log->getLogId()]);
         }
+
         if ($useLogentries) {
             Log::logentry(
                 Log::EVENT_OWNERNOTIFY,
@@ -140,6 +144,7 @@ class Watchlist extends BaseObject
                 $itemText,
             ]);
         }
+
         if ($this->insertWatchersWaitingsStmt == null) {
             $this->insertWatchersWaitingsStmt = $this->db->prepare(
                 'INSERT IGNORE INTO watches_waiting (
@@ -193,8 +198,9 @@ class Watchlist extends BaseObject
         );
         $currentWatcher = null;
         $result = [];
+
         while ($row = $this->db->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
-            if ( $currentWatcher == null || $currentWatcher->getUserId() != $row['user_id'] ) {
+            if ($currentWatcher == null || $currentWatcher->getUserId() != $row['user_id']) {
                 if ($currentWatcher != null) {
                     $result[] = $currentWatcher;
                 }
@@ -209,6 +215,7 @@ class Watchlist extends BaseObject
                     is_null($nextmail) ? null: new DateTime($nextmail)
                 );
             }
+
             if ($row['watchtype'] != null && (
                 (
                     $currentWatcher->getWatchmailMode() == UserNotify::SEND_NOTIFICATION_HOURLY
@@ -225,9 +232,11 @@ class Watchlist extends BaseObject
             }
         }
         $stmt->closeCursor();
+
         if ($currentWatcher != null) {
             $result[] = $currentWatcher;
         }
+
         return $result;
     }
 
@@ -259,6 +268,7 @@ class Watchlist extends BaseObject
                     $this->deleteWatchersWaitingStmt->execute([
                         $watcher->getUserId(),
                     ]);
+
                     if ($watcher->getWatchmailNext() != null
                         && $watcher->getWatchmailNext()->getTimestamp() > 0
                     ) {
@@ -274,6 +284,7 @@ class Watchlist extends BaseObject
                             $watcher->getUserId(),
                         ]);
                     }
+
                     if ($useLogentries) {
                         Log::logentry(
                             Log::EVENT_MAILWATCHLIST,

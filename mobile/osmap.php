@@ -1,10 +1,10 @@
 <?php
+
 use src\Utils\Database\XDb;
 
 require_once('./lib/common.inc.php');
 
 $wp = XDb::xEscape($_GET['wp']);
-
 
 $query = "select name,latitude,longitude from caches where wp_oc = '" . $wp . "'";
 $wynik = XDb::xSql($query);

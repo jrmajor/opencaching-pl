@@ -2,6 +2,7 @@
 /**
  * Contains \src\Utils\Lock\RealLock class definition.
  */
+
 namespace src\Utils\Lock;
 
 use \RuntimeException;
@@ -23,6 +24,7 @@ abstract class RealLock extends Lock
     final public function __construct($settings)
     {
         $trace = debug_backtrace();
+
         if (
             empty($trace[1])
             || ! isset($trace[1]['class'])

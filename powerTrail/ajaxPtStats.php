@@ -1,18 +1,22 @@
 <?php
+
 use src\Utils\Database\OcDb;
 
 require_once __DIR__ . '/../lib/common.inc.php';
 
-if (! isset( $_REQUEST['ptId']) || ! is_numeric($_REQUEST['ptId'])) {
+if (! isset($_REQUEST['ptId']) || ! is_numeric($_REQUEST['ptId'])) {
     echo tr('pt105');
+
     exit;
 }
 
 $ptId = (int) $_REQUEST['ptId'];
 
 $ptTotalCacheesCount = powerTrailBase::getPtCacheCount($ptId);
+
 if($ptTotalCacheesCount == 0){ // power Trail has no caches!
     echo tr('pt105');
+
     exit;
 }
 
@@ -45,12 +49,13 @@ $statsArr = $db->dbResultFetchAll($s);
 
 if(count($statsArr) == 0){ // no result!
     echo tr('pt105');
+
     exit;
 }
 
-
 foreach ($statsArr as $user) {
     $tmpDate = substr($user['date'], 0, -9);
+
     if(! isset($sorted[$user['user_id']])) {
         $sorted[$user['user_id']] = [
             'user_id' => $user['user_id'],
@@ -60,6 +65,7 @@ foreach ($statsArr as $user) {
         $tmp[$user['user_id']]['dates'][] = $tmpDate;
     } else {
         $sorted[$user['user_id']]['FoundCount'] += $user['FoundCount'];
+
         if(! in_array($tmpDate, $tmp[$user['user_id']]['dates'])){
             $tmp[$user['user_id']]['dates'][] = $tmpDate;
         }
@@ -71,6 +77,7 @@ foreach ($tmp as $userId => $value) {
 }
 
 $sort = [];
+
 foreach($sorted as $k => $v) {
     $sort['username'][$k] = $v['username'];
     $sort['FoundCount'][$k] = $v['FoundCount'];
@@ -87,16 +94,20 @@ $stats2display = '<table class="statsTable"><tr>
 <th>' . tr('pt101') . '</th>
 <th>' . tr('pt102') . '</th>
 </tr>';
+
 if ($ptTotalCacheesCount != 0) {
     $bgcolor = '#ffffff';
 
     $fullPtFoundCount = 0;
     $totCacheDays = 0;
+
     foreach ($sorted as $user) {
         $totCacheDays += $user['daysSpent'];
         $ptPercent = round($user['FoundCount'] * 100 / $ptTotalCacheesCount, 2);
+
         if ($ptPercent >= $ptDbRow['perccentRequired']) {
             $fullPtFoundCount++;
+
             if(isset($averageDaysSpent)) {
                 $averageDaysSpent = (($averageDaysSpent * $totalNumber) + $user['daysSpent']) / ($totalNumber + 1);
                 $totalNumber++;
@@ -106,6 +117,7 @@ if ($ptTotalCacheesCount != 0) {
                 $totalNumber = 1;
             }
         }
+
         if($bgcolor == '#eeeeff') $bgcolor = '#ffffff'; else $bgcolor = '#eeeeff';
         $stats2display .= '<tr style="background-color: ' . $bgcolor . ';">
             <td ><a href="viewprofile.php?userid=' . $user['user_id'] . '">' . $user['username'] . '</a></td>

@@ -47,6 +47,7 @@ use src\Utils\Uri\SimpleRouter;
   <div class="lightTip"><?=UserInputFilter::purifyHtmlString($log->getText())?></div>
   </div>
   <?php } //end foreach
+
   if (count($view->latestLogs) == $view->preferences['style']['caches-count']) { ?>
     <a class="btn btn-sm btn-default" href="<?=SimpleRouter::getLink('MyNeighbourhood','latestLogs', $view->selectedNbh)?>" title="<?=tr('myn_hlp_more')?>"><?=tr('more')?></a>
   <?php } // end if

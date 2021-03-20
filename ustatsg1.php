@@ -4,12 +4,13 @@ use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 use src\Utils\View\View;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 if (! ApplicationContainer::GetAuthorizedUser()) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -22,9 +23,6 @@ if (isset($_REQUEST['userid'])) {
 $view->setTemplate('ustat');
 $view->setVar('userId', $user_id);
 $view->setVar('displayFindStats', true);
-
-
-
 
 $content = '';
 
@@ -43,8 +41,6 @@ if ($user_record['hidden_count'] == 0) {
                 &nbsp;&nbsp;&nbsp;' . tr('graph_created') . '</p></div><br /><br />
                 <p><b>' . tr('there_is_no_caches_registered') . '</b></p>';
 } else {
-
-
     // calculate diif days between date of register on OC  to current date
     $rdd = XDb::xSql(
         'SELECT TO_DAYS(NOW()) - TO_DAYS(`date_created`) `diff` from `user`
@@ -69,6 +65,7 @@ if ($user_record['hidden_count'] == 0) {
     $year = date('Y');
 
     $content .= '<p><img src="graphs/BarGraphustat.php?userid=' . $user_id . '&amp;t=ccm' . $year . '" border="0" alt="" width="500" height="200" /></p>';
+
     if ($user_record['usertime'] != $year) {
         $yearr = $year - 1;
         $content .= '<p><img src="graphs/BarGraphustat.php?userid=' . $user_id . '&amp;t=ccm' . $yearr . '" border="0" alt="" width="500" height="200" /></p>';
@@ -77,9 +74,7 @@ if ($user_record['hidden_count'] == 0) {
     XDb::xFreeResults($rsGeneralStat);
 
     $content .= '<p><img src="graphs/BarGraphustat.php?userid=' . $user_id . '&amp;t=ccy" border="0" alt="" width="500" height="200" /></p>';
-
 }
 tpl_set_var('content', $content);
-
 
 tpl_BuildTemplate();

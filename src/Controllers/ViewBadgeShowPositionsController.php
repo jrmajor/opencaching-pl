@@ -2,9 +2,7 @@
 
 namespace src\Controllers;
 
-
 class ViewBadgeShowPositionsController extends BaseController{
-
     private $sCode = '';
 
     public function __construct()
@@ -20,8 +18,9 @@ class ViewBadgeShowPositionsController extends BaseController{
 
     public function index()
     {
-        if( $this->loggedUser->getUserId() == null ){
+        if($this->loggedUser->getUserId() == null){
             self::redirectToLoginPage();
+
             exit;
         }
 
@@ -34,14 +33,15 @@ class ViewBadgeShowPositionsController extends BaseController{
         $badge_id = $_REQUEST['badge_id'];
 
         $ctrlMeritBadge = new MeritBadgeController;
-        $meritBadge = $ctrlMeritBadge->buildMeritBadge( $badge_id );
-        if ( $meritBadge->getCfgShowPositions() == '' )
+        $meritBadge = $ctrlMeritBadge->buildMeritBadge($badge_id);
+
+        if ($meritBadge->getCfgShowPositions() == '')
             return '';
 
         $this->prepareCode();
 
-        $this->setVar( 'user_id', $userid);
-        $this->setVar( 'badge_id', $badge_id);
+        $this->setVar('user_id', $userid);
+        $this->setVar('badge_id', $badge_id);
 
         return $this->sCode;
     }

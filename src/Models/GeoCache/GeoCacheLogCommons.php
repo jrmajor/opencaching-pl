@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
@@ -10,7 +11,6 @@ use src\Utils\Debug\Debug;
 
 class GeoCacheLogCommons extends BaseObject
 {
-
     const LOGTYPE_FOUNDIT = 1;
     const LOGTYPE_DIDNOTFIND = 2;
     const LOGTYPE_COMMENT = 3;
@@ -33,7 +33,6 @@ class GeoCacheLogCommons extends BaseObject
 
     public static function GetIconForType($logType, $fileNameOnly = false)
     {
-
         switch ($logType) {
             case self::LOGTYPE_FOUNDIT:
                 $icon = 'found.svg';
@@ -75,7 +74,6 @@ class GeoCacheLogCommons extends BaseObject
                 Debug::errorLog("Unknown log type: $logType");
                 $icon = 'found.svg';
                 break;
-
         }
 
         if (! $fileNameOnly) {
@@ -87,7 +85,6 @@ class GeoCacheLogCommons extends BaseObject
 
     public static function typeTranslationKey($logType)
     {
-
         switch ($logType) {
             case self::LOGTYPE_FOUNDIT:         return 'logType1';
             case self::LOGTYPE_DIDNOTFIND:      return 'logType2';
@@ -103,6 +100,7 @@ class GeoCacheLogCommons extends BaseObject
             case self::LOGTYPE_ADMINNOTE:       return 'logType12';
             default:
                 Debug::errorLog("Unknown log type: $logType");
+
                 return '';
         }
     }
@@ -144,9 +142,9 @@ class GeoCacheLogCommons extends BaseObject
                 return 'blocked_by_octeam';
             default:
                 Debug::errorLog("Unknown cache status: $status");
+
                 return '';
         }
-
     }
 
     /**
@@ -156,9 +154,8 @@ class GeoCacheLogCommons extends BaseObject
      * @param String $text - original log text
      * @return String - clean log text
      */
-    public static function cleanLogTextForToolTip( $text )
+    public static function cleanLogTextForToolTip($text)
     {
-
         //strip all tags but not <li>
         $text = strip_tags($text, '<li>');
 
@@ -188,9 +185,9 @@ class GeoCacheLogCommons extends BaseObject
             '' => '',
         ];
 
-        $text = str_ireplace( array_keys($replace), array_values($replace), $text);
-        return preg_replace('/[\x00-\x08\x0E-\x1F\x7F\x0A\x0C]+/', '', $text);
+        $text = str_ireplace(array_keys($replace), array_values($replace), $text);
 
+        return preg_replace('/[\x00-\x08\x0E-\x1F\x7F\x0A\x0C]+/', '', $text);
     }
 
     public static function getLogUrlByLogId($logId)
@@ -217,6 +214,7 @@ class GeoCacheLogCommons extends BaseObject
             self::LOGTYPE_READYTOSEARCH, self::LOGTYPE_TEMPORARYUNAVAILABLE,
             self::LOGTYPE_ADMINNOTE,
         ];
+
         if ($cacheType == GeoCacheCommons::TYPE_EVENT) {
             array_push($logTypes,
                 self::LOGTYPE_ATTENDED, self::LOGTYPE_WILLATTENDED
@@ -225,14 +223,17 @@ class GeoCacheLogCommons extends BaseObject
             array_push($logTypes,
                 self::LOGTYPE_FOUNDIT, self::LOGTYPE_DIDNOTFIND
             );
+
             if ($cacheType == GeoCacheCommons::TYPE_MOVING) {
                 $logTypes[] = self::LOGTYPE_MOVED;
             }
         }
         sort($logTypes);
+
         foreach ($logTypes as $logType) {
             $result[$logType] = self::typeTranslationKey($logType);
         }
+
         return $result;
     }
 }

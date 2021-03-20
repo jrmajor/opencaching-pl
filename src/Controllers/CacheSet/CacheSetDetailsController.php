@@ -4,7 +4,6 @@ namespace src\Controllers\CacheSet;
 
 use src\Controllers\BaseController;
 
-
 class CacheSetDetailsController extends BaseController
 {
     public function __construct()
@@ -20,6 +19,5 @@ class CacheSetDetailsController extends BaseController
 
     public function index()
     {
-
     }
 }

@@ -27,7 +27,6 @@ class Waypoint extends WaypointCommons
     private $cacheId;
     private $openChecker;
 
-
     private $iconNames = [
         self::TYPE_PHYSICAL => 'images/waypoints/wp_physical.png',
         self::TYPE_VIRTUAL => 'images/waypoints/wp_virtual.png',
@@ -41,6 +40,7 @@ class Waypoint extends WaypointCommons
     {
         $waypoint = new Waypoint();
         $waypoint->loadFromDbRow($row);
+
         return $waypoint;
     }
 
@@ -93,36 +93,42 @@ class Waypoint extends WaypointCommons
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
     public function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     public function setCoordinates($coordinates)
     {
         $this->coordinates = $coordinates;
+
         return $this;
     }
 
     public function setDescription($description)
     {
         $this->description = $description;
+
         return $this;
     }
 
     public function setStatus($status)
     {
         $this->status = $status;
+
         return $this;
     }
 
     public function setStage($stage)
     {
         $this->stage = $stage;
+
         return $this;
     }
 
@@ -134,6 +140,7 @@ class Waypoint extends WaypointCommons
     public function setGeocache($geocache)
     {
         $this->geocache = $geocache;
+
         return $this;
     }
 
@@ -161,8 +168,6 @@ class Waypoint extends WaypointCommons
     }
 
     public static function GetWaypointsForCacheId(GeoCache $geoCache, $skipHiddenWps = true){
-
-
         if($geoCache->getCacheType() == GeoCache::TYPE_MOVING){
             // mobiles can't have waypoints...
             return [];
@@ -176,9 +181,11 @@ class Waypoint extends WaypointCommons
             $geoCache->getCacheId());
 
         $results = [];
+
         while($row = XDb::xFetchArray($s)){
             $wp = Waypoint::FromDbRow($row);
-            if( ! $wp->isHidden() || ! $skipHiddenWps ){
+
+            if(! $wp->isHidden() || ! $skipHiddenWps){
                 $results[] = $wp;
             }
         }

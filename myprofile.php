@@ -13,6 +13,7 @@ $db = XDb::instance();
 $description = '';
 
 $user = ApplicationContainer::GetAuthorizedUser();
+
 if (! $user) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
@@ -21,6 +22,7 @@ if (! $user) {
 $guidesConfig = OcConfig::instance()->getGuidesConfig();
 tpl_set_var('desc_updated', '');
 tpl_set_var('displayGeoPathSection', displayGeoPathSection('table'));
+
 if (isset($_POST['description'])) {
     $q = 'UPDATE user SET description = :1 WHERE user_id=:2';
     $db->multiVariableQuery($q, strip_tags($_POST['description']), (int) $user->getUserId());
@@ -69,6 +71,7 @@ tpl_set_var('registered_since', Formatter::date($record['date_created']));
 /* GeoKretyApi - display if secid from geokrety is set; (by Łza) */
 $GKAPIKeyQuery = 'SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` =:1';
 $s = $db->multiVariableQuery($GKAPIKeyQuery, $user->getUserId());
+
 if ($db->rowCount($s) > 0) {
     tpl_set_var('GeoKretyApiIntegration', tr('yes'));
 } else {
@@ -84,10 +87,12 @@ $geoPathsEmail = $record['power_trail_email'];
 
 if (isset($_REQUEST['action'])) {
     $action = $_REQUEST['action'];
+
     if ($action == 'change') { // display the change form
         tpl_set_tplname('myprofile_change');
         $error_username_not_ok = '<span class="errormsg">' . tr('username_incorrect') . '</span>';
         $error_username_exists = '<span class="errormsg">' . tr('username_exists') . '</span>';
+
         if ($nrecom >= $guidesConfig['guideGotRecommendations']) {
             tpl_set_var('guide_start', '');
             tpl_set_var('guide_end', '');
@@ -96,6 +101,7 @@ if (isset($_REQUEST['action'])) {
             tpl_set_var('guide_end', '-->');
         }
         $guide = isset($_POST['guide']) ? (int) $_POST['guide'] : 0;
+
         if (isset($_POST['submit'])) {
             // load datas from form
             $username = $_POST['username'];
@@ -103,6 +109,7 @@ if (isset($_REQUEST['action'])) {
             tpl_set_var('ozi_path', $ozi_path);
 
             $using_permantent_login = isset($_POST['using_permanent_login']) ? (int) $_POST['using_permanent_login'] : 0;
+
             if ($using_permantent_login == 1) {
                 tpl_set_var('permanent_login_sel', ' checked="checked"');
             } else {
@@ -116,6 +123,7 @@ if (isset($_REQUEST['action'])) {
             }
             /* geoPaths - switch on/off notification email */
             $geoPathsEmail = isset($_POST['geoPathsEmail']) ? (int) $_POST['geoPathsEmail'] : 0;
+
             if ($geoPathsEmail == 1) {
                 tpl_set_var('geoPathsEmailCheckboxChecked', ' checked="checked"');
             } else {
@@ -136,6 +144,7 @@ if (isset($_REQUEST['action'])) {
                 $secid_not_ok = false;
                 tpl_set_var('secid_message', '');
             }
+
             if ($GeoKretyApiSecid == '') {
                 $secid_not_ok = false;
                 tpl_set_var('secid_message', '');
@@ -151,6 +160,7 @@ if (isset($_REQUEST['action'])) {
                 if ($username != $user->getUserName()) {
                     $q = 'SELECT `username` FROM `user` WHERE `username`=:1 LIMIT 1';
                     $s = $db->multiVariableQuery($q, $username);
+
                     if ($db->rowCount($s) > 0) {
                         $username_exists = true;
                         tpl_set_var('username_message', $error_username_exists);
@@ -162,7 +172,6 @@ if (isset($_REQUEST['action'])) {
             if (isset($_POST['submit'])) {
                 // try to save
                 if (! ($username_not_ok || $username_exists || $secid_not_ok)) {
-
                     /* GeoKretyApi - insert or update in DB user secid from Geokrety */
                     if (strlen($GeoKretyApiSecid) == 128) {
                         $db->multiVariableQuery(
@@ -187,6 +196,7 @@ if (isset($_REQUEST['action'])) {
                         $db->beginTransaction();
                         $q = 'select count(id) from user_nick_history where user_id = :1';
                         $hist_count = $db->multiVariableQueryValue($q, 0, (int) $user->getUserId());
+
                         if ($hist_count == 0) {
                             // no history at all
                             $q = 'insert into user_nick_history (user_id, date_from, date_to, username) select user_id, date_created, now(), username from user where user_id = :1';
@@ -228,11 +238,13 @@ if (isset($_REQUEST['action'])) {
             } else {
                 tpl_set_var('permanent_login_sel', '');
             }
+
             if ($guide == 1) {
                 tpl_set_var('guide_sel', ' checked="checked"');
             } else {
                 tpl_set_var('guide_sel', '');
             }
+
             if ($geoPathsEmail == 1) {
                 tpl_set_var('geoPathsEmailCheckboxChecked', ' checked="checked"');
             } else {
@@ -243,6 +255,7 @@ if (isset($_REQUEST['action'])) {
             tpl_set_var('username_message', '');
             tpl_set_var('secid_message', '');
         }
+
         if ($record['guru'] == 1 || $guide == 1) {
             tpl_set_var('guides_start', '');
             tpl_set_var('guides_end', '');
@@ -255,23 +268,26 @@ if (isset($_REQUEST['action'])) {
 
 // build useroptions
 $user_options = '';
+
 if ($using_permantent_login == 1) {
     $user_options .= $using_permantent_login_message . '<br>';
 }
+
 if ($geoPathsEmail == 1) {
     $user_options .= '<div style="display: ' . displayGeoPathSection('div') . '">' . tr('pt235') . '</div><br>';
 }
+
 if ($user_options == '') {
     $user_options = '&nbsp;';
 }
 tpl_set_var('user_options', $user_options);
 $ozi_path = strip_tags($record['ozi_filips']);
+
 if (isset($_POST['ozi_path'])) {
     tpl_set_var('ozi_path', strip_tags($_POST['ozi_path']));
 } else {
     tpl_set_var('ozi_path', $ozi_path);
 }
-
 
 // make the template and send it out
 tpl_BuildTemplate();
@@ -279,6 +295,7 @@ tpl_BuildTemplate();
 function displayGeoPathSection($type)
 {
     global $powerTrailModuleSwitchOn;
+
     if ($powerTrailModuleSwitchOn === true) {
         switch ($type) {
             case 'div':
@@ -289,5 +306,6 @@ function displayGeoPathSection($type)
                 return 'inline';
         }
     }
+
     return 'none';
 }

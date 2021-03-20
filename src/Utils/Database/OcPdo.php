@@ -50,6 +50,7 @@ class OcPdo extends PDO
         }
 
         $dsnpairs = [];
+
         foreach ($dsnarr as $k => $v) {
             if ($v === null) {
                 continue;
@@ -58,6 +59,7 @@ class OcPdo extends PDO
         }
 
         $dsn = 'mysql:' . implode(';', $dsnpairs);
+
         try {
             parent::__construct(
                 $dsn, $conf->getDbUser($adminAccess), $conf->getDbPass($adminAccess), $options
@@ -78,9 +80,11 @@ class OcPdo extends PDO
         if ($e === null) {
             throw new PDOException($message);
         }
+
         if ($message != '') {
             throw new PDOException($message . "\n" . $e->getMessage());
         }
+
         throw $e;
     }
 
@@ -91,7 +95,7 @@ class OcPdo extends PDO
      */
     protected function debugOut(/*PHP7:string*/ $text)
     {
-        if( ! $this->debug ){
+        if(! $this->debug){
             return;
         }
         d($text);
@@ -108,9 +112,11 @@ class OcPdo extends PDO
     protected static function instance($access = self::NORMAL_ACCESS)
     {
         static $instance = [];
+
         if (! isset($instance[$access])) {
             $instance[$access] = new static($access == self::ADMIN_ACCESS, false);
         }
+
         return $instance[$access];
     }
 

@@ -1,6 +1,6 @@
 <?php
-namespace src\Models\User\UserPreferences;
 
+namespace src\Models\User\UserPreferences;
 
 class MainMapSettings extends UserPreferencesBaseData
 {
@@ -36,7 +36,7 @@ class MainMapSettings extends UserPreferencesBaseData
                 'exWithoutRecommendation' => false,
                 'rating' => '1-5|X',
                 'size2' => 'any',
-             ],
+            ],
             'map' => 'OSM',                 /* last used map */
         ];
     }

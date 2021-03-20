@@ -1,11 +1,11 @@
 <?php
 
 namespace src\Models\GeoCache;
+
 use ArrayObject;
 
 class Collection extends ArrayObject
 {
-
     private $isReady = false;
     private $geocachesIdArray = [];
 
@@ -30,6 +30,7 @@ class Collection extends ArrayObject
     public function setGeocachesIdArray(array $geocachesIdArray)
     {
         $this->geocachesIdArray = $geocachesIdArray;
+
         return $this;
     }
 
@@ -44,6 +45,7 @@ class Collection extends ArrayObject
     public function setIsReady($isReady)
     {
         $this->isReady = $isReady;
+
         return $this;
     }
 }

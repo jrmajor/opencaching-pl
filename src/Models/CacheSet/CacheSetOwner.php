@@ -38,18 +38,21 @@ class CacheSetOwner extends BaseObject
     public function setUserId($val)
     {
         $this->userId = $val;
+
         return $this;
     }
 
     public function setUserName($val)
     {
         $this->username = $val;
+
         return $this;
     }
 
     public function setRole($val)
     {
         $this->role = $val;
+
         return $this;
     }
 
@@ -68,10 +71,10 @@ class CacheSetOwner extends BaseObject
     {
         $db = self::db();
 
-        if( empty($cacheSetIds) ){
+        if(empty($cacheSetIds)){
             return [];
         }
-        
+
         $csIdsStr = implode(',', $cacheSetIds);
 
         $stmt = $db->simpleQuery(
@@ -82,6 +85,7 @@ class CacheSetOwner extends BaseObject
             WHERE PowerTrailId IN ($csIdsStr)");
 
         $result = array_fill_keys($cacheSetIds, []);
+
         while($row = $db->dbResultFetch($stmt)){
             $cso = new self();
             $cso->setUserId($row['uId'])
@@ -90,6 +94,7 @@ class CacheSetOwner extends BaseObject
 
             $result[$row['ptId']][] = $cso;
         }
+
         return $result;
     }
 
@@ -102,6 +107,7 @@ class CacheSetOwner extends BaseObject
     public static function setOwnersToCacheSets(array $cacheSets)
     {
         $csIds = [];
+
         foreach ($cacheSets as $cs){
             $csIds[] = $cs->getId();
         }
@@ -109,7 +115,7 @@ class CacheSetOwner extends BaseObject
         $owners = self::getOwnersOfCacheSets($csIds);
 
         foreach ($cacheSets as $cs){
-            $cs->setOwners( $owners[$cs->getId()] );
+            $cs->setOwners($owners[$cs->getId()]);
         }
 
         return $cacheSets;

@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\Text;
 
+namespace src\Utils\Text;
 
 // !!! NOTE !!! : This class is also included in OKAPI code, to filter submitted log texts.
 
@@ -37,6 +37,7 @@ class InputFilter
                                      'pluginspage,data');
 
         $myFilter = new self($allowedtags, $allowedattr);
+
         return $myFilter->process($dirtyText);
     }
 
@@ -145,21 +146,24 @@ class InputFilter
 
             // end of tag
             $tagOpen_end = mb_strpos($fromTagOpen, '>');
+
             if ($tagOpen_end === false)
                 break;
-
             // next start of tag (for nested tag assessment)
             $tagOpen_nested = mb_strpos($fromTagOpen, '<');
+
             if (($tagOpen_nested !== false) && ($tagOpen_nested < $tagOpen_end)) {
                 $preTag .= mb_substr($postTag, 0, ($tagOpen_nested + 1));
                 $postTag = mb_substr($postTag, ($tagOpen_nested + 1));
                 $tagOpen_start = mb_strpos($postTag, '<');
+
                 continue;
             }
 
             $tagOpen_nested = (mb_strpos($fromTagOpen, '<') + $tagOpen_start + 1);
             $currentTag = mb_substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength = mb_strlen($currentTag);
+
             if (! $tagOpen_end) {
                 $preTag .= $postTag;
                 $tagOpen_start = mb_strpos($postTag, '<');
@@ -267,6 +271,7 @@ class InputFilter
 
         // append any code after end of tags
         $preTag .= $postTag;
+
         return $preTag;
     }
 
@@ -285,22 +290,22 @@ class InputFilter
             // skip blank spaces in tag
             if (! $attrSet[$i])
                 continue;
-
             // split into attr name and value
             $attrSubSet = mb_split('=', trim($attrSet[$i]));
             [$attrSubSet[0]] = mb_split(' ', $attrSubSet[0]);
 
             // bugfix ... '=' inside attributes
             $aCount = count($attrSubSet);
+
             for ($aN = 2; $aN < $aCount; $aN++)
                 $attrSubSet[1] .= '=' . $attrSubSet[$aN];
+
             while (count($attrSubSet) > 2)
                 unset($attrSubSet[count($attrSubSet) - 1]);
 
             // removes all "non-regular" attr names AND also attr blacklisted
             if ((! mb_eregi('^[a-z]*$', $attrSubSet[0])) || (($this->xssAuto) && ((in_array(mb_strtolower($attrSubSet[0]), $this->attrBlacklist)) || (mb_substr($attrSubSet[0], 0, 2) == 'on'))))
                 continue;
-
             // xss attr value filtering
             if ($attrSubSet[1]) {
                 // strips unicode, hex, etc
@@ -329,7 +334,6 @@ class InputFilter
                     (mb_strpos(mb_strtolower($attrSubSet[1]), 'livescript:') !== false)
             )
                 continue;
-
             // if matches user defined array
             $attrFound = in_array(mb_strtolower($attrSubSet[0]), $this->attrArray);
 
@@ -410,9 +414,9 @@ class InputFilter
                 $filter_len = mb_strlen($tag) - $pos;
                 $no_filter_len = 0;
             } else {
-
                 if ($nextdPos === false)
                     $nextdPos = mb_strlen($tag) + 1;
+
                 if ($nextsPos === false)
                     $nextsPos = mb_strlen($tag) + 1;
 

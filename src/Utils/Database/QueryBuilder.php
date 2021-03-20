@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Database;
 
 /**
@@ -24,7 +25,6 @@ namespace src\Utils\Database;
 
 class QueryBuilder
 {
-
     private $method;
 
     private $fromTable;
@@ -39,7 +39,6 @@ class QueryBuilder
 
     public function __construct()
     {
-
     }
 
     public static function instance()
@@ -49,25 +48,28 @@ class QueryBuilder
 
     public function select($columns = null){
         $this->method = 'SELECT';
-        if(! is_null($columns)){
 
+        if(! is_null($columns)){
             if(is_array($columns)){
                 $this->columns = implode(',',$columns);
             }else{
                 $this->columns = $columns;
             }
         }
+
         return $this;
     }
 
     public function from($tableName){
         $this->fromTable = $tableName;
+
         return $this;
     }
 
     public function join($tableName, $onStr = null)
     {
         $this->joins[] = "$tableName ON $onStr";
+
         return $this;
     }
 
@@ -75,6 +77,7 @@ class QueryBuilder
         if($column && $value){
             $this->eq($column, $value);
         }
+
         return $this;
     }
 
@@ -82,6 +85,7 @@ class QueryBuilder
     {
         $str = "$column = $value";
         $this->wheres[] = self::escapeStr($str);
+
         return $this;
     }
 
@@ -91,6 +95,7 @@ class QueryBuilder
             $queryStr = self::escapeStr(implode(',',$arrayOfValues));
             $this->wheres[] = "$column IN ($queryStr)";
         }
+
         return $this;
     }
 
@@ -103,15 +108,18 @@ class QueryBuilder
     {
         $this->limit = self::getNonNegativeIntValOrNull($limit);
         $this->offset = self::getNonNegativeIntValOrNull($offset);
+
         return $this;
     }
 
     private function getFromString()
     {
         $result = ' FROM ' . $this->fromTable;
+
         foreach ($this->joins as $join){
             $result .= " JOIN $join";
         }
+
         return $result;
     }
 
@@ -120,6 +128,7 @@ class QueryBuilder
         if(! empty($this->wheres)){
             return ' WHERE ' . implode(' AND ', $this->wheres);
         }
+
         return '';
     }
 
@@ -128,18 +137,22 @@ class QueryBuilder
         if(! empty($this->groupBy)){
             return ' GROUP BY ' . implode(',', $this->groupBy);
         }
+
         return '';
     }
 
     private function getLimitString()
     {
         $result = '';
+
         if(! is_null($this->limit)){
             $result .= ' LIMIT ' . $this->limit;
         }
+
         if(! is_null($this->offset)){
             $result .= ' OFFSET ' . $this->offset;
         }
+
         return $result;
     }
 
@@ -150,6 +163,7 @@ class QueryBuilder
         $result .= $this->getWhereString();
         $result .= $this->getGroupByString();
         $result .= $this->getLimitString();
+
         return $result;
     }
 

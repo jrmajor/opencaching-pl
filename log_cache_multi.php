@@ -2,6 +2,7 @@
 
 use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
+
 if (isset($_POST['submitDownloadGpx'])) {
     $fd = '';
     $fd .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n";
@@ -14,8 +15,10 @@ if (isset($_POST['submitDownloadGpx'])) {
     $fd .= "  xmlns=\"http://www.topografix.com/GPX/1/0\">\r\n\r\n";
     $fd .= "<name>Opencaching.pl Oregon multiload</name>\r\n";
     session_start();
+
     if (isset($_SESSION['log_cache_multi_filteredData'])) {
         $tempList = [];
+
         foreach ($_SESSION['log_cache_multi_filteredData'] as $k => $v) {
             $v['cache_creator'] = str_replace('&', ' ', $v['cache_creator']);
 
@@ -25,6 +28,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             $fd .= '    <desc>' . $v['cache_name'] . ' by ' . $v['cache_creator'] . "</desc>\r\n";
             $fd .= '    <url>http://opencaching.pl/viewcache.php?cacheid=' . $v['cache_id'] . "</url>\r\n";
             $fd .= '    <urlname>' . $v['kod_str'] . ' ' . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</urlname>\r\n";
+
             if ($v['status'] == 1 || $v['status'] == 5) { // found, need maintenance
                 $fd .= "    <sym>Geocache found</sym>\r\n";
             } else {
@@ -34,6 +38,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             $fd .= "    <geocache xmlns=\"http://genpol.com/temp/geocache/\">\r\n";
             $fd .= '        <name>' . $v['kod_str'] . ' ' . mb_substr($v['cache_name'], 0, 20, 'UTF-8') . "</name>\r\n";
             $fd .= '        <owner>' . $v['cache_creator'] . "</owner>\r\n";
+
             switch ($v['cache_type']) {
                 case 2: $fd .= "        <type>Traditional</type>\r\n";
                     break;
@@ -56,6 +61,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             // pre-define TRK
             $tmpDate = $v['timestamp'] - 4 * 60 * 60; // -4 godziny do daty.
             $td = date('Ymd', $tmpDate);
+
             if (! isset($tempList[$td])) { // zaloz dla daty:
                 $tempList[$td]['name'] = 'OC-PL ' . date('Y-m-d', $tmpDate);
                 $tempList[$td]['pts'] = [];
@@ -68,6 +74,7 @@ if (isset($_POST['submitDownloadGpx'])) {
             $fd .= "\r\n<trk>\r\n";
             $fd .= '    <name>' . $v['name'] . "</name>\r\n";
             $fd .= "    <trkseg>\r\n";
+
             foreach ($v['pts'] as $k1 => $v1) {
                 $fd .= $v1;
             }
@@ -86,19 +93,21 @@ if (isset($_POST['submitDownloadGpx'])) {
         header('Content-Disposition: attachment; filename="' . $filname . '"');
         echo pack('ccc', 0xef, 0xbb, 0xbf);
         echo $fd;
+
         exit();
     } else {
         exit('No data');
     }
 }
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $no_tpl_build = false;
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cache_multi_data']))) {
     tpl_redirect('log_cache_multi_send.php');
+
     exit;
 }
 
@@ -126,6 +135,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
             if ($_FILES['userfile']['error'] == 2) {
                 exit('Plik zbyt duzy');
             }
+
             exit;
         }
 
@@ -145,7 +155,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         unset($_FILES['userfile']);
 
         // sprawdz czy utf16 i konwert jesli tak
-        if (( $filesize >= 2) &&
+        if (($filesize >= 2) &&
                 (
                 ($filecontent[0] == 0x00 || $filecontent[1] == 0x00) ||
                 ($filecontent[0] == 0xFF && $filecontent[1] == 0xFE) ||
@@ -166,8 +176,10 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
 
         // parsuje plik
         $listaKodowOP = [];
+
         foreach ($filecontent as $line) {
             $rec = preg_split('[,]', trim($line), 4);
+
             if (count($rec) >= 4) {
                 // wyglada na skrzynke
                 if (substr($rec[0], 0, 2) == $oc_waypoint) {
@@ -179,6 +191,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                     // kod
                     // czas
                     $regex = '/^([0-9]{4})-([0-9]{2})-([0-9]{2})T([0-9]{2}):([0-9]{2})[:Z]/';
+
                     if (preg_match($regex, trim($rec[1]), $matches)) {
                         $dane[$dane_i]['timestamp'] = mktime($matches[4], $matches[5], 0, $matches[2], $matches[3], $matches[1]);
                     } else {
@@ -207,10 +220,13 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         $listaKodowOP = [];
         $minTimeStamp = time();
         $maxTimeStamp = 1;
+
         foreach ($dane as $k => $v) {
             $listaKodowOP[] = XDb::xEscape($v['kod_str']);
+
             if ($v['timestamp'] < $minTimeStamp)
                 $minTimeStamp = $v['timestamp'];
+
             if ($v['timestamp'] > $maxTimeStamp)
                 $maxTimeStamp = $v['timestamp'];
         }
@@ -219,14 +235,13 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         $cacheIdList = [];
 
         // dociagam informacje o nazwie i id skrzynki...
-        if ( count($listaKodowOP) > 0) {
+        if (count($listaKodowOP) > 0) {
             $rs = XDb::xSql(
                 "SELECT c.*,u.`username`
                 FROM `caches` as c LEFT JOIN `user` as u ON u.`user_id` = c.`user_id`
-                WHERE c.`wp_oc` IN ('" . implode("','",$listaKodowOP ) . "')");
+                WHERE c.`wp_oc` IN ('" . implode("','",$listaKodowOP) . "')");
 
-            while ( $record = XDb::xFetchArray($rs) ){
-
+            while ($record = XDb::xFetchArray($rs)){
                 // dodanie dodatkowych info do odpowiedniej skrzynki:
                 foreach ($dane as $k => $v) {
                     if ($v['kod_str'] == $record['wp_oc']) {
@@ -247,7 +262,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         }
 
         // dociagam info o ostatniej aktywnosci dla kazdej skrzynki
-        if ( count($cacheIdList) > 0) {
+        if (count($cacheIdList) > 0) {
             $rs = XDb::xSql(
                 'SELECT c.*
                 FROM (
@@ -260,7 +275,6 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                         AND c.date = x.date', $loggedUser->getUserId());
 
             while ($record = XDb::xFetchArray($rs)) {
-
                 foreach ($dane as $k => $v) {
                     if (isset($v['cache_id']) && $v['cache_id'] == $record['cache_id']) {
                         $v['got_last_activity'] = true;
@@ -271,7 +285,6 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                 }
             }//while
         }//if
-
 
         // filtrowanie...
         // wczytanie wartosci filtrow, a jesli nie ma to odpowiednio min i max wartosc z pliku tak by wszystkie byly.
@@ -288,7 +301,6 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         }
         $_SESSION['filter_from'] = $filter_from;
 
-
         if (isset($_POST['filter_to']) && false !== strtotime($_POST['filter_to'])) {
             $filter_to = strtotime($_POST['filter_to']);
         } else if (isset($_SESSION['filter_to'])) {
@@ -302,13 +314,10 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         }
         $_SESSION['filter_to'] = $filter_to;
 
-
-
-
         // lece po wszystkim i kolejne opracje:
         $daneFiltrowane = [];
-        foreach ($dane as $k => $v) {
 
+        foreach ($dane as $k => $v) {
             if (isset($_POST['SubmitShiftTimeMinusOne'])) {
                 $v['timestamp'] = $v['timestamp'] - (60 * 60);
                 $v = UstawDatyZTimeStampa($v);
@@ -327,11 +336,12 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
 
             if ($doFiltra) {
                 // dodaje mass komentarze dla filtrowanych skrzynek:
-                if (isset($_POST['submitCommentsForm'], $_POST['logtext'])  ) {
+                if (isset($_POST['submitCommentsForm'], $_POST['logtext'])) {
                     $v['koment'] .= ' ' . $_POST['logtext'];
                 }
             }
             $dane[$k] = $v;
+
             if ($doFiltra) {
                 $daneFiltrowane[$k] = $v; // uzywam $k by miec te same klucze co oryginalna tablica, przyda sie pozniej.
             }
@@ -348,7 +358,6 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
     tpl_set_var('filter_to', date('d-m-Y H:i', $filter_to));
     tpl_set_var('log_cache_multi_html', $myHtml);
 
-
 if ($no_tpl_build == false) {
     //make the template and send it out
     tpl_BuildTemplate();
@@ -362,6 +371,7 @@ function UstawDatyZTimeStampa($rekord)
     $rekord['godz'] = date('H', $rekord['timestamp']);
     $rekord['min'] = date('i', $rekord['timestamp']);
     $rekord['data'] = date('d-m-Y H:i', $rekord['timestamp']);
+
     return $rekord;
 }
 
@@ -386,6 +396,7 @@ function utf16_to_utf8($str)
 
     $len = strlen($str);
     $dec = '';
+
     for ($i = 0; $i < $len; $i += 2) {
         $c = ($be) ? ord($str[$i]) << 8 | ord($str[$i + 1]) : ord($str[$i + 1]) << 8 | ord($str[$i]);
 
@@ -402,6 +413,7 @@ function utf16_to_utf8($str)
             $dec .= chr(0x80 | (($c >> 0) & 0x3F));
         }
     }
+
     return $dec;
 }
 
@@ -412,5 +424,6 @@ function fcGetStatusyEn()
     $statusy['Didn\'t find it'] = 2; // Nie znaleziona
     $statusy['Unattempted'] = 3; // Komentarz
     $statusy['Needs Maintenance'] = 5; // Potrzebny serwis
+
     return $statusy;
 }

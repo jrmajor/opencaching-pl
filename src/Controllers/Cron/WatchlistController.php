@@ -2,6 +2,7 @@
 /**
  * Contains \Controllers\Cron\WatchlistController class definition
  */
+
 namespace src\Controllers\Cron;
 
 use DateTime;
@@ -45,6 +46,7 @@ class WatchlistController extends BaseController
     {
         parent::__construct();
         $this->watchlistConfig = $this->ocConfig->getWatchlistConfig();
+
         if ($this->watchlistConfig == null) {
             $this->watchlistConfig = [];
         }
@@ -78,12 +80,14 @@ class WatchlistController extends BaseController
     private function processWatchlist()
     {
         $lockHandle = Lock::tryLock($this, Lock::EXCLUSIVE | Lock::NONBLOCKING);
+
         if ($lockHandle) {
             if (isset($this->watchlistConfig['diag_file'])) {
                 $diagFilePath = $this->watchlistConfig['diag_file'];
             } else {
                 $diagFilePath = '';
             }
+
             if (mb_strlen($diagFilePath) > 0) {
                 $this->diagFileHandle = fopen($diagFilePath, 'a');
             }
@@ -119,6 +123,7 @@ class WatchlistController extends BaseController
         }
 
         $newLogs = $this->watchlist->getUnprocessedCacheLogs();
+
         foreach ($newLogs as $log) {
             $this->watchlist->storeAndNotifyLog(
                 $log,
@@ -149,6 +154,7 @@ class WatchlistController extends BaseController
     private function sendReportsAndUpdateChecks()
     {
         $watchers = $this->watchlist->getWatchersAndWaitings();
+
         foreach ($watchers as $watcher) {
             if (
                 (sizeof($watcher->getOwnerLogs()) > 0
@@ -197,11 +203,13 @@ class WatchlistController extends BaseController
     private function computeWatchmailNextDateTime(WatchlistWatcher $watcher)
     {
         $result = null;
+
         if (
             $watcher->getWatchmailMode() !=
                 UserNotify::SEND_NOTIFICATION_HOURLY
         ) {
             $now = new DateTime();
+
             if (
                 $watcher->getWatchmailMode() ==
                     UserNotify::SEND_NOTIFICATION_DAILY
@@ -218,6 +226,7 @@ class WatchlistController extends BaseController
                     UserNotify::SEND_NOTIFICATION_WEEKLY
             ) {
                 $weekday = $now->format('w');
+
                 if ($weekday == 0) {
                     $weekday = 7;
                 }
@@ -232,6 +241,7 @@ class WatchlistController extends BaseController
                     setTime($watcher->getWatchmailHour(), 0, 0);
             }
         }
+
         return $result;
     }
 
@@ -249,6 +259,7 @@ class WatchlistController extends BaseController
         if ($time == null) {
             $time = new DateTime();
         }
+
         return $time->format($this->ocConfig->getDbDateTimeFormat());
     }
 }

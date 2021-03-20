@@ -20,6 +20,7 @@ use src\Utils\Uri\OcCookie;
 <?php
 $sNameOfStat = '';
 $sTitleOfStat = '';
+
 if (isset($_REQUEST['stat'])) {
     $sNameOfStat = $_REQUEST['stat'];
 }
@@ -53,7 +54,6 @@ else
         $sIsEmptDate = OcCookie::get($sNameOfStatCookieEmptyDate);
     }
 
-
     if (! isset($_REQUEST['init'])) {
         $sRok = $_REQUEST['Rok'];
         $sMc = $_REQUEST['Mc'];
@@ -63,17 +63,15 @@ else
 
         $sRD = $_REQUEST['rRD'];
 
-
         if ($sRD == 'R' && $sRok == '' && $sMc == ''){
             OcCookie::set($sNameOfStatCookieEmptyDate, 'Yes', true);
         }else{
             OcCookie::set($sNameOfStatCookieEmptyDate, 'No', true);
         }
-
     }
 
-    if (( isset($_REQUEST['init']) or intval($sMc) > 12 or intval($sMc) < 0 or intval($sRok) < 0 )
-            or ( intval($sMc) != 0 and intval($sRok) == 0 )) {
+    if ((isset($_REQUEST['init']) or intval($sMc) > 12 or intval($sMc) < 0 or intval($sRok) < 0)
+            or (intval($sMc) != 0 and intval($sRok) == 0)) {
         if ($sIsEmptDate != 'Yes') {
             $sRok = date('Y');
             $sMc = date('m');
@@ -139,7 +137,7 @@ else
 
     </div> <!-- End of GCT-div -->
 
-    <?php include ('t102.php'); /* blah! this is called in in common_tpl_funcs.php context*/ ?>
+    <?php include('t102.php'); /* blah! this is called in in common_tpl_funcs.php context*/ ?>
 
 
 </div>

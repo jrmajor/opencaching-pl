@@ -59,7 +59,7 @@ class GeoKretLog extends BaseObject
             ->setLogDateTime(new DateTime($row['log_date_time']))
             ->setEnqueueDatetime(new DateTime($row['enqueue_date_time']))
             ->setUser(new User(['userId' => $row['user_id']]))
-            ->setGeoCache(GeoCache::fromCacheIdFactory($row['geocache_id']) )
+            ->setGeoCache(GeoCache::fromCacheIdFactory($row['geocache_id']))
             ->setLogType($row['log_type'])
             ->setComment($row['comment'])
             ->setTrackingCode($row['tracking_code'])
@@ -125,54 +125,63 @@ class GeoKretLog extends BaseObject
     public function setLogDateTime(DateTime $logDateTime)
     {
         $this->logDateTime = $logDateTime;
+
         return $this;
     }
 
     public function setEnqueueDatetime(DateTime $enqueueDatetime)
     {
         $this->enqueueDatetime = $enqueueDatetime;
+
         return $this;
     }
 
     public function setUser($user)
     {
         $this->user = $user;
+
         return $this;
     }
 
     public function setGeoCache(GeoCache $geoCache)
     {
         $this->geoCache = $geoCache;
+
         return $this;
     }
 
     public function setLogType($logType)
     {
         $this->logType = (int) $logType;
+
         return $this;
     }
 
     public function setComment($comment)
     {
         $this->comment = $comment;
+
         return $this;
     }
 
     public function setTrackingCode($nr)
     {
         $this->trackingCode = $nr;
+
         return $this;
     }
 
     public function setGeoKretId($GeoKretId)
     {
         $this->geoKretId = (int) $GeoKretId;
+
         return $this;
     }
 
     public function setGeoKretName($GeoKretName)
     {
         $this->geoKretName = $GeoKretName;
+
         return $this;
     }
 
@@ -184,6 +193,7 @@ class GeoKretLog extends BaseObject
     public function setId($id)
     {
         $this->id = $id;
+
         return $this;
     }
 
@@ -206,6 +216,7 @@ class GeoKretLog extends BaseObject
                     comment, tracking_code, geokret_id, geokret_name)
                   VALUES ';
         $paramId = 1;
+
         foreach ($geoKretogs as $geoKretLog) {
             $query .= '(:' . $paramId++ . ', NOW(), :' . $paramId++ . ','
                 . ' :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ','
@@ -226,13 +237,13 @@ class GeoKretLog extends BaseObject
 
     public static function RemoveFromQueueByIds(array $ids)
     {
-        if( count($ids) > 0 ){
+        if(count($ids) > 0){
             self::db()->query('DELETE FROM geokret_log WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
 
     public static function UpdateLastTryForIds(array $ids){
-        if( count($ids) > 0 ){
+        if(count($ids) > 0){
             self::db()->query('UPDATE geokret_log SET last_try = NOW() WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
@@ -246,6 +257,7 @@ class GeoKretLog extends BaseObject
              LIMIT 50');
 
         $result = [];
+
         while($row = self::db()->dbResultFetch($stmt)){
             $result[] = self::FromDbRowFactory($row);
         }

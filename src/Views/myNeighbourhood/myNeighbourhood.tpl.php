@@ -19,13 +19,16 @@ use src\Utils\Uri\SimpleRouter;
   <div class="nbh-sort-list">
   <?php
     $order = [];
+
     foreach ($view->preferences['items'] as $key => $item) {
         $order[$item['order']] = $item;
         $order[$item['order']]['item'] = $key;
     }
     ksort($order);
+
     foreach ($order as $item) {
       $classSize = ($item['fullsize'] == 1) ? 'nbh-full' : 'nbh-half';
+
       switch ($item['item']) {
           case Neighbourhood::ITEM_MAP:
               $subTemplate = '/myNeighbourhood/sub_Map';

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Neighbourhood;
 
 use Exception;
@@ -8,7 +9,6 @@ use src\Models\User\User;
 
 class Neighbourhood extends BaseObject
 {
-
     const ITEM_MAP = 1;
     const ITEM_LATESTCACHES = 2;
     const ITEM_UPCOMINGEVENTS = 3;
@@ -91,6 +91,7 @@ class Neighbourhood extends BaseObject
         if (is_null($this->user)) {
             $this->user = User::fromUserIdFactory($this->getUserid());
         }
+
         return $this->user;
     }
 
@@ -163,11 +164,13 @@ class Neighbourhood extends BaseObject
     public static function fromIdFactory($id)
     {
         $result = new self();
+
         try {
             $result->loadById($id);
         } catch (Exception $e) {
             return null;
         }
+
         return $result;
     }
 
@@ -198,6 +201,7 @@ class Neighbourhood extends BaseObject
                 LIMIT 1';
             $nbhId = self::db()->multiVariableQueryValue($query, null, $user->getUserId(), $seq);
             $nbh = self::fromIdFactory($nbhId);
+
             if (empty($nbh)) {
                 return $result;
             } else {
@@ -236,9 +240,11 @@ class Neighbourhood extends BaseObject
         }
         // Stage 2 - get additional neighbourhoods stored in user_neighbourhoods table
         $myNghAdd = self::getAdditionalNeighbourhoodsList($user);
+
         foreach ($myNghAdd as $row) {
             $result[$row->getSeq()] = $row;
         }
+
         return $result;
     }
 
@@ -258,10 +264,12 @@ class Neighbourhood extends BaseObject
             return Neighbourhood::fromIdFactory($row['id']);
         });
         $result = [];
+
         foreach ($tmplist as $row) {
             $row->prepareForSerialization();
             $result[$row->getSeq()] = $row;
         }
+
         return $result;
     }
 
@@ -292,6 +300,7 @@ class Neighbourhood extends BaseObject
               `radius` = :6,
               `notify` = :7
             ';
+
         return (self::db()->multiVariableQuery($query, $user->getUserId(), (int) $seq, $name, $coords->getLongitude(), $coords->getLatitude(), (int) $radius, boolval($notify)) !== null);
     }
 
@@ -310,9 +319,11 @@ class Neighbourhood extends BaseObject
             LIMIT 1
         ';
         $stmt = self::db()->multiVariableQuery($query, $user->getUserId(), $seq);
+
         if ($stmt == null) {
             return false;
         }
+
         return (self::db()->rowCount($stmt) == 1);
     }
 
@@ -348,6 +359,7 @@ class Neighbourhood extends BaseObject
             FROM `user_neighbourhoods`
             WHERE `user_id` = :1
         ';
+
         return self::db()->multiVariableQueryValue($query, 0, $user->getUserId());
     }
 
@@ -363,6 +375,7 @@ class Neighbourhood extends BaseObject
         $params['id']['data_type'] = 'integer';
         $stmt = $this->db->paramQuery($query, $params);
         $neighbourhoodDbRow = $this->db->dbResultFetch($stmt);
+
         if (is_array($neighbourhoodDbRow)) {
             $this->loadFromRow($neighbourhoodDbRow);
         } else {
@@ -381,6 +394,7 @@ class Neighbourhood extends BaseObject
         $this->radius = $neighbourhoodDbRow['radius'];
         $this->notify = $neighbourhoodDbRow['notify'];
         $this->dataLoaded = true;
+
         return $this;
     }
 }

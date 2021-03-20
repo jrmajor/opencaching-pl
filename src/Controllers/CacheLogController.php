@@ -48,6 +48,7 @@ class CacheLogController extends BaseController
         }
 
         $log = GeoCacheLog::fromLogIdFactory($logId);
+
         if (! $log) {
             $this->ajaxErrorResponse('Incorrect logId', 400);
         }
@@ -56,6 +57,7 @@ class CacheLogController extends BaseController
             $log->removeLog();
         } catch (Exception $ex) {
             $this->ajaxErrorResponse('Can\'t remove log', 400);
+
             exit;
         }
 
@@ -73,6 +75,7 @@ class CacheLogController extends BaseController
         $this->checkUserLoggedAjax();
 
         $log = GeoCacheLog::fromLogIdFactory($logId);
+
         if (! $log) {
             $this->ajaxErrorResponse('Incorrect logId', 400);
         }
@@ -81,6 +84,7 @@ class CacheLogController extends BaseController
             $log->revertLog();
         } catch (Exception $ex) {
             $this->ajaxErrorResponse('Can\'t revert log', 400);
+
             exit;
         }
 
@@ -106,6 +110,7 @@ class CacheLogController extends BaseController
 
         // find cacheOwners and logAuthor usernames
         $userIds = [];
+
         foreach ($lastLogs as $row) {
             $userIds[$row['logAuthor']] = '';
             $userIds[$row['cacheOwner']] = '';
@@ -116,7 +121,6 @@ class CacheLogController extends BaseController
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(
             LogMarkerModel::class, $lastLogs, function ($row) use ($usernameDict) {
-
             $marker = new LogMarkerModel();
 
             $marker->log_link = GeoCacheLog::getLogUrlByLogId($row['id']);
@@ -139,9 +143,7 @@ class CacheLogController extends BaseController
         });
         $this->view->setVar('mapModel', $mapModel);
 
-
         $this->view->buildView();
-
     }
 
     /**
@@ -169,6 +171,7 @@ class CacheLogController extends BaseController
         $userIds = [];
         $userStsDict = [];
         $geopathDict = [];
+
         foreach ($allLogs as $row) {
             $userIds[$row['logAuthor']] = null;
             $userStsDict[$row['cache_id']] = null;
@@ -193,10 +196,10 @@ class CacheLogController extends BaseController
         }, 'width10'));
 
         $listModel->addColumn(new Column_GeoPathIcon('', function ($row) use ($geopathDict) {
-
             if (! $geopathDict[$row['cache_id']]) {
                 return [];
             }
+
             return [
                 'ptId' => $geopathDict[$row['cache_id']]['id'],
                 'ptType' => $geopathDict[$row['cache_id']]['type'],

@@ -21,6 +21,7 @@ class LogEntryController
     public function loadLogs(GeoCache $cache, $includeDeletedLogs = false, $offset = 0, $limit = 0)
     {
         $query = 'SELECT * FROM `cache_logs` WHERE `cache_logs`.`cache_id` = :cacheid';
+
         if (! $includeDeletedLogs) {
             $query .= ' AND `cache_logs`.`deleted` = 0';
         }
@@ -42,9 +43,9 @@ class LogEntryController
         ];
         $db = OcDb::instance();
         $stmt = $db->paramQuery($query, $params);
+
         return $db->dbFetchAllAsObjects($stmt, function ($row) {
             return GeoCacheLog::fromDbRowFactory($row);
-
         });
     }
 
@@ -65,6 +66,7 @@ class LogEntryController
                 'data_type' => 'integer',
             ],
         ];
+
         if ($logId) {
             $params['v4'] = [
                 'value' => (int) $logId,
@@ -88,6 +90,7 @@ class LogEntryController
             $showDeletedLogsSql = '';
             $showDeletedLogsSql2 = ' AND `cache_logs`.`deleted` = 0 ';
         }
+
         if ($logId) {
             $showOneLogSql = ' AND `cache_logs`.`id` =:v4 ';
         } else {

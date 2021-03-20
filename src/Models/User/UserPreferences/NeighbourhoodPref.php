@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User\UserPreferences;
 
 use src\Models\Neighbourhood\Neighbourhood;

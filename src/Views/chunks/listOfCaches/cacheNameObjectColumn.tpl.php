@@ -10,7 +10,6 @@ use src\Models\GeoCache\GeoCache;
  */
 
 return function (GeoCache $cache) {
-
     ?>
     <a href="<?= $cache->getCacheUrl() ?>" target=”_blank” class="links">
         <?= htmlentities($cache->getCacheName()) ?>

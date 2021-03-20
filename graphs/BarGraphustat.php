@@ -14,9 +14,10 @@ JpGraphLoader::module('date');
 
 $year = '';
 // check for old-style parameters
-if (isset($_REQUEST['userid'], $_REQUEST['t'])  ) {
+if (isset($_REQUEST['userid'], $_REQUEST['t'])) {
     $user_id = $_REQUEST['userid'];
     $titles = $_REQUEST['t'];
+
     if (strlen($titles) > 3) {
         $year = substr($titles, -4);
         $tit = substr($titles, 0, -4);
@@ -28,7 +29,6 @@ if (isset($_REQUEST['userid'], $_REQUEST['t'])  ) {
 $y = [];
 $x = [];
 
-
 if ($tit == 'ccy') {
     $rsCreateCachesYear = XDb::xSql(
         'SELECT COUNT(*) `count`,YEAR(`date_created`) `year` FROM `caches`
@@ -39,6 +39,7 @@ if ($tit == 'ccy') {
     if ($rsCreateCachesYear !== false) {
         $descibe = tr('annual_stat_created');
         $xtitle = '';
+
         while ($ry = XDb::xFetchArray($rsCreateCachesYear)) {
             $y[] = $ry['count'];
             $x[] = $ry['year'];
@@ -46,7 +47,6 @@ if ($tit == 'ccy') {
     }
     XDb::xFreeResults($rsCreateCachesYear);
 }
-
 
 if ($tit == 'ccm') {
     for ($i = 1; $i < 13; $i++) {
@@ -61,6 +61,7 @@ if ($tit == 'ccm') {
         $descibe = tr('monthly_stat_created_user');
         $xtitle = $year;
         $rm = XDb::xFetchArray($rsCreateCachesMonth);
+
         if ($rm !== false) {
             $x[] = $rm['month'];
             $y[] = $rm['count'];
@@ -83,6 +84,7 @@ if ($tit == 'cfy') {
     if ($rsCachesFindYear !== false) {
         $descibe = tr('annual_stat_founds_user');
         $xtitle = '';
+
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['year'];
@@ -105,6 +107,7 @@ if ($tit == 'cfm') {
         $xtitle = $year;
 
         $rfm = XDb::xFetchArray($rsCachesFindMonth);
+
         if ($rfm !== false) {
             $x[] = $rfm['month'];
             $y[] = $rfm['count'];
@@ -116,7 +119,6 @@ if ($tit == 'cfm') {
 
     XDb::xFreeResults($rsCachesFindMonth);
 }
-
 
 // Create the graph. These two calls are always required
 $graph = new Graph(500, 200, 'auto');
@@ -147,7 +149,6 @@ $graph->title->SetFont(FF_ARIAL, FS_NORMAL);
 $graph->yaxis->title->SetFont(FF_FONT1, FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1, FS_BOLD);
 
-
 // Setup the values that are displayed on top of each bar
 $bplot->value->Show();
 
@@ -155,7 +156,6 @@ $bplot->value->Show();
 $bplot->value->SetFont(FF_FONT1, FS_BOLD);
 $bplot->value->SetAngle(0);
 $bplot->value->SetFormat('%d');
-
 
 // Display the graph
 $graph->Stroke();

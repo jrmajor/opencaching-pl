@@ -1,5 +1,7 @@
 <?php
+
 namespace src\Utils\Generators;
+
 /**
  * This class is used to generate automatic texts
  *
@@ -17,10 +19,12 @@ class TextGen
         $alphabet = 'abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789';
         $text = [];
         $alphaLength = strlen($alphabet) - 1;
+
         for ($i = 0; $i < $textLen; $i++) {
             $n = rand(0, $alphaLength);
             $text[] = $alphabet[$n];
         }
+
         return implode($text);
     }
 }

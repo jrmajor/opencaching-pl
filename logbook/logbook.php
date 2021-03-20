@@ -1,10 +1,10 @@
 <?php
 $secret = 'dupa231';
+
 include('commons.php');
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
 echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
-
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
@@ -123,6 +123,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                     <select name="logbook_type" id="logbook_type" onchange="parentNode.submit();">
                         <?php
                         $_GET['logbook_type'] = (int) $_GET['logbook_type'];
+
                         if(! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) print '<option value="0" selected="true">Wybierz</option>'; ?>
                         <option value="1" <?if($_GET['logbook_type'] == 1) print "selected=\"true\"";?>>Logbook A6 Dwustronny</option>
                         <option value="2" <?if($_GET['logbook_type'] == 2) print "selected=\"true\"";?>>Logbook A7 Dwustronny</option>

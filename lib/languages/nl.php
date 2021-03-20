@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Voordat je de eerste cache kunt plaatsen op {site_name} dien je eerst {NEED_FIND_LIMIT} caches gevonden te hebben om ervaring op te doen.',
     'postActivation_mail_cacheguides' => 'Geocaching gidsen / goeroes',
 
-
     'password_confirm' => 'Bevestig wachtwoord',
     'register_msg1' => 'Om een gebruikersaccount aan te maken op {site_name}, dien je een geldig e-mail adres en een gebruikersnaam op te geven. <br/>Een e-mail bericht zal naar het opgegeven e-mail adres verzonden worden met een activatie link, waarmee het gebruikersaccount geactiveerd kan worden. Per e-mail adres kan één account aangemaakt worden.',
     'register_msg2' => '* zijn verplicht',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Jouw cache is al toegevoegd aan GeoPath.',
     'gp_cacheRemovedFromGeopath' => 'Cache was al verwijderd uit GeoPath.',
 
-
     'statpic_found' => 'Gevonden:',
     'statpic_hidden' => 'Geplaatst:',
     'statpic_html_link' => '- statistieken van',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Aanbevelingen',
     'search_gpxgc_07' => 'Nationale parken / landschappen',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Honden niet toegelaten',
     'attribute_2' => 'Toegang of parkeerkosten',
     'attribute_3' => 'Klimuitrusting nodig',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'Geschikt om trackables te deponeren',
     'attribute_220' => 'Officieel aangeduide historische monument',
     'attribute_999' => 'Log wachtwoord',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Het weer',
     'vl_Recently_modified_on' => 'Laatst bewerkt op',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'Kan deze aanbieding niet annuleren. Er is een fout opgetreden',
     'gpCandidates_cancelOfferInProgress' => 'Annulering in uitvoering',
 
-
     'gpMyCandidates_title' => 'Kandidaten Geopath voor gebruiker',
     'gpMyCandidates_submitedDate' => 'Datum',
     'gpMyCandidates_geopathName' => 'GeoPath',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'Probleem met de weergavevolgorde opgetreden',
     'editCache_orderPicsSaveSuccess' => 'Volgorde foto\'s is gewijzigd',
 
-
     'vote_criteriaNotPassed' => 'Momenteel ingelogde gebruikersaccount is niet toegankelijk voor deelname aan de stemming',
     'vote_electionOpenUntil' => 'Deze verkiezing is open tot',
     'vote_electionWillBeOpen' => 'Deze verkiezing zal open zijn',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'Beschrijving',
     'vote_elListThStart' => 'Begin van de verkiezing',
     'vote_elListThEnd' => 'Einde van de verkiezing',
-//  '' => '',
+    //  '' => '',
 ];

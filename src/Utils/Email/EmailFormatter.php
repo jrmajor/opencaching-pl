@@ -16,7 +16,6 @@ class EmailFormatter
 
     public function __construct($emailTemplateFile, $autoLoadTranslations = false)
     {
-
         $this->emailContent = file_get_contents($emailTemplateFile);
 
         if ($autoLoadTranslations) {
@@ -78,7 +77,6 @@ class EmailFormatter
     private function loadTranslations()
     {
         if (preg_match_all('/{{[^}]*}}/u', $this->emailContent, $matches)) {
-
             foreach ($matches[0] as $translationPhase) {
                 $translationKey = substr($translationPhase, 2, -2);
                 $this->emailContent = preg_replace("/$translationPhase/u", tr($translationKey), $this->emailContent);

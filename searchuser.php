@@ -9,20 +9,22 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
-
         $tplname = 'searchuser';
         $options['username'] = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
+
         if (! isset($options['username'])) {
             $options['username'] = '';
         }
-        if ($options['username'] != '') {
 
+        if ($options['username'] != '') {
             $query = 'SELECT user_id, username, date_created FROM user WHERE username LIKE :username ORDER BY username ASC';
             $params = [
                 'username' => [
@@ -40,12 +42,14 @@ if (! $loggedUser) {
             $lines = '';
 
             $ilosc = $dbc->rowCount($s);
+
             if ($ilosc != 0) {
                 if ($ilosc == 1) {
                     $record = $dbc->dbResultFetch($s);
                     tpl_redirect('viewprofile.php?userid=' . $record['user_id']);
                 } else {
                     $i = 0;
+
                     while ($record = $dbc->dbResultFetch($s)) {
                         $tmp_line = $line;
                         $tmp_line = mb_ereg_replace('{bgcolor}', ($i % 2 == 0) ? $bgcolor1 : $bgcolor2, $tmp_line);

@@ -1,14 +1,11 @@
 <?php
+
 use src\Utils\Database\XDb;
 
 require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
-
     if (isset($_GET['id']) && ! empty($_GET['id']) && preg_match("/^\d+$/", $_GET['id'])) {
-
-
-
         $id = XDb::xEscape($_GET['id']);
 
         $query = "select user_id,cache_id from cache_watches where id = '" . $id . "'";
@@ -27,6 +24,7 @@ if (isset($_SESSION['user_id'])) {
             $wynik = XDb::xSql($query);
 
             header('Location: ./viewcache.php?wp=' . $cache_id2);
+
             exit;
         }
     }

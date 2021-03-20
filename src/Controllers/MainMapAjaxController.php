@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use ArrayObject;
@@ -49,6 +50,7 @@ class MainMapAjaxController extends BaseController
 
         if(! preg_match(self::BBOX_REGEX, $bboxStr)){
             $this->ajaxErrorResponse('Incorrect bbox!', 500);
+
             exit;
         }
 
@@ -91,7 +93,8 @@ class MainMapAjaxController extends BaseController
 
         $resp->cacheRatingVotes = $cache->getRatingVotes();
         $resp->cacheRecosNumber = $cache->getRecommendations();
-        if( $cache->isTitled() ) {
+
+        if($cache->isTitled()) {
             global $titled_cache_period_prefix; //TODO: move it to the ocConfig
             $resp->titledDesc = tr($titled_cache_period_prefix . '_titled_cache');
         }
@@ -109,7 +112,7 @@ class MainMapAjaxController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if( $zoom > 21){ // OKAPI mapper max zoom
+        if($zoom > 21){ // OKAPI mapper max zoom
             //TODO
             exit(); // zoom is too large
         }
@@ -145,7 +148,6 @@ class MainMapAjaxController extends BaseController
 
     public function saveMapSettingsAjax()
     {
-
         $this->checkUserLoggedAjax();
 
         if (! isset($_POST['userMapSettings'])) {
@@ -163,7 +165,6 @@ class MainMapAjaxController extends BaseController
 
     private function getCache($forUserUuid, $bboxStr)
     {
-
         if ($searchData = $this->getSearchDataParam()) {
             // searchData = set of caches - the rest of caches are excluded
             $this->loadSearchData($searchData);
@@ -175,7 +176,6 @@ class MainMapAjaxController extends BaseController
         $this->searchParams['bbox'] = $bboxStr;
         $this->searchParams['limit'] = 1;
 
-
         // we need only id from OKAPI...
         $fields = 'code';
 
@@ -185,7 +185,6 @@ class MainMapAjaxController extends BaseController
         $params['retr_method'] = 'services/caches/geocaches';
         $params['retr_params'] = '{"fields":"' . $fields . '"}';
         $params['wrap'] = 'false';
-
 
         // call OKAPI
         /** @var ArrayObject */
@@ -198,6 +197,7 @@ class MainMapAjaxController extends BaseController
         if (! is_a($okapiResp, 'ArrayObject')) { // strange OKAPI return !?
             Debug::errorLog('Strange OKAPI response - not an ArrayObject!');
             $this->ajaxErrorResponse('Internal error', 500);
+
             exit;
         }
 
@@ -227,11 +227,9 @@ class MainMapAjaxController extends BaseController
      */
     private function getSearchDataParam()
     {
-        if ( isset($_GET['searchdata']) &&
+        if (isset($_GET['searchdata']) &&
             preg_match(self::SEARCHDATA_REGEX, $_GET['searchdata'])){
-
             return $_GET['searchdata'];
-
         } else {
             return null;
         }
@@ -260,41 +258,41 @@ class MainMapAjaxController extends BaseController
         }
 
         // filter out found or not yet found caches
-        if ( isset($_GET['exFound'])) {
-
-            if ( isset($_GET['exNoYetFound'])) {
+        if (isset($_GET['exFound'])) {
+            if (isset($_GET['exNoYetFound'])) {
                 // exclude found && notAttendYet = empty set of caches
                 $this->ajaxErrorResponse('Search params are contradictory', 400);
             } else {
                 $this->searchParams['not_found_by'] = $userUuid;
             }
-
-        } else if ( isset($_GET['exNoYetFound'])) {
+        } else if (isset($_GET['exNoYetFound'])) {
             $this->searchParams['found_by'] = $userUuid;
         }
 
         // exNoGeokret - Convert to OKAPI's "with_trackables_only" parameter.
-        if ( isset($_GET['exNoGeokret']) ) {
+        if (isset($_GET['exNoGeokret'])) {
             $this->searchParams['with_trackables_only'] = 'true';
         }
 
         // OKAPI's "status" filter.
         $status = ['Available']; // available is always present
-        if ( ! isset($_GET['exTempUnavail']) ) {
+
+        if (! isset($_GET['exTempUnavail'])) {
             $status[] = 'Temporarily unavailable';
         }
-        if ( ! isset($_GET['exArchived']) ) {
+
+        if (! isset($_GET['exArchived'])) {
             $status[] = 'Archived';
         }
         $this->searchParams['status'] = implode('|', $status);
 
         // exNoGeokret - Convert to OKAPI's "with_trackables_only" parameter.
-        if ( isset($_GET['exWithoutRecommendation']) ) {
+        if (isset($_GET['exWithoutRecommendation'])) {
             $this->searchParams['min_rcmds'] = '1';
         }
 
         // ftfHunter (hunt for FTFs) - convert to OKAPI's "ftf_hunter" parameter.
-        if ( isset($_GET['ftfHunter']) ) {
+        if (isset($_GET['ftfHunter'])) {
             $this->searchParams['ftf_hunter'] = 'true';
 
             // BTW, if we override "status" parameter, then we should also override
@@ -303,18 +301,17 @@ class MainMapAjaxController extends BaseController
         }
 
         // powertrailOnly (hunt for powerTrails) - convert to OKAPI's "powertrail_only" parameter.
-        if ( isset($_GET['powertrailOnly']) ) {
+        if (isset($_GET['powertrailOnly'])) {
             $this->searchParams['powertrail_only'] = 'true';
         }
 
         // min_score - convert to OKAPI's "rating" filter
-        if ( isset($_GET['rating']) && preg_match(self::RATING_REGEX, $_GET['rating']) ){
+        if (isset($_GET['rating']) && preg_match(self::RATING_REGEX, $_GET['rating'])){
             $this->searchParams['rating'] = $_GET['rating'];
         }
 
-
         // min_score - convert to OKAPI's "rating" filter
-        if ( isset($_GET['size2']) ){
+        if (isset($_GET['size2'])){
             //'none', 'nano', 'micro', 'small', 'regular', 'large', 'xlarge', 'other'.
             switch($_GET['size2']){
                 case 'nano':
@@ -333,23 +330,22 @@ class MainMapAjaxController extends BaseController
         }
 
         // powertrail_ids (only caches from powerTrails with id) - convert to OKAPI's "powertrail_ids" param.
-        if ( isset($_GET['csId']) &&
-             preg_match(self::GEOPATH_ID_REGEX, $_GET['csId']) ) {
-
+        if (isset($_GET['csId']) &&
+             preg_match(self::GEOPATH_ID_REGEX, $_GET['csId'])) {
                 $this->searchParams['powertrail_ids'] = $_GET['csId'];
         }
-
 
         // exclusion of types - convert to OKAPI's "type" filter
         $typesToExclude = [];
         $types = ['Other', 'Traditional', 'Multi', 'Virtual', 'Webcam', 'Event', 'Quiz', 'Moving', 'Own'];
 
         foreach ($types as $type) {
-            if( isset($_GET['exType' . $type]) ){
+            if(isset($_GET['exType' . $type])){
                 $typesToExclude[] = $type;
             }
         }
-        if ( ! empty($typesToExclude) ) {
+
+        if (! empty($typesToExclude)) {
             $this->searchParams['type'] = '-' . implode('|', $typesToExclude);
         }
     }

@@ -5,10 +5,15 @@ use src\Models\OcConfig\OcConfig;
 session_start();
 
 require_once('../lib/settingsGlue.inc.php');
+
 require_once('./lib/OcSmarty.class.php');
+
 require_once('./lib/functions.inc.php');
+
 require_once('./lib/cookie.class.php');
+
 require_once('./lib/login.class.php');
+
 require_once('../lib/ClassPathDictionary.php');
 
 $tpl = new OcSmarty;
@@ -18,6 +23,7 @@ if (! (isset($_SESSION['logout_cookie']))) {
 }
 
 $show_coords = false;
+
 if (! $hide_coords || (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)) {
     $show_coords = true;
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use okapi\Facade;

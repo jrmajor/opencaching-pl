@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Pictures;
 
 use DateTime;
@@ -64,6 +65,7 @@ class OcPicture extends BaseObject
         } catch (Exception $e) {
             return null;
         }
+
         return $obj;
     }
 
@@ -102,6 +104,7 @@ class OcPicture extends BaseObject
         return $db->dbFetchAllAsObjects($rs, function ($row) {
             $pic = new self();
             $pic->loadFromRow($row);
+
             return $pic;
         });
     }
@@ -208,6 +211,7 @@ class OcPicture extends BaseObject
 
         // thumbnail not found - try to generate new one
         $instance = self::fromUuidFactory($uuid);
+
         if(! $instance) {
             // there is no picture with given uuid
             return Thumbnail::PHD_ERROR_404;
@@ -227,6 +231,7 @@ class OcPicture extends BaseObject
             "SELECT $cols FROM pictures WHERE uuid = :1 LIMIT 1", $uuid);
 
         $row = $this->db->dbResultFetchOneRowOnly($s);
+
         if (is_array($row)) {
             $this->loadFromRow($row);
         } else {
@@ -320,6 +325,7 @@ class OcPicture extends BaseObject
                 return $path . '/' . basename($result[0]);
             }
         }
+
         return null;
     }
 
@@ -332,14 +338,17 @@ class OcPicture extends BaseObject
         switch($this->parentType) {
             case self::TYPE_CACHE:
                 $cache = $this->getParent();
+
                 return $cache->getOwnerId() == $user->getUserId();
 
             case self::TYPE_LOG:
                 $log = $this->getParent();
+
                 return $log->getUserId() == $user->getUserId();
 
             default:
                 Debug::errorLog("Unsupported parent type: {$this->parentType}");
+
                 return false;
         }
     }
@@ -366,7 +375,6 @@ class OcPicture extends BaseObject
              VALUES (:1, :2, 6, NOW(), :3)',
             $this->id, $this->uuid, OcConfig::getSiteNodeId());
 
-
         // updated picturescount in parent object (+last_modified)
         $this->updateParentPicturesCountInDb(-1);
 
@@ -378,6 +386,7 @@ class OcPicture extends BaseObject
         }
 
         $path = $this->getPathToImg();
+
         if($path) {
             // remove main image
             FileManager::removeFile($path);
@@ -398,6 +407,7 @@ class OcPicture extends BaseObject
 
             default:
                 Debug::errorLog("Unsupported parent type: {$parentType}");
+
                 return null;
         }
     }
@@ -409,6 +419,7 @@ class OcPicture extends BaseObject
         }
 
         $this->parent = self::getParentObj($this->parentType, $this->parentId);
+
         return $this->parent;
     }
 
@@ -432,6 +443,7 @@ class OcPicture extends BaseObject
         if(! $this->getPathToImg()) {
             // strange - there is image in DB but no such image on disk
             Debug::errorLog("Can't find image uuid={$this->uuid}");
+
             return Thumbnail::placeholderUri(Thumbnail::PHD_ERROR_INTERN);
         }
 
@@ -512,6 +524,7 @@ class OcPicture extends BaseObject
         $obj->title = $this->getTitle();
         $obj->isHidden = $this->isHidden();
         $obj->isSpoiler = $this->isSpoilerImg();
+
         return $obj;
     }
 

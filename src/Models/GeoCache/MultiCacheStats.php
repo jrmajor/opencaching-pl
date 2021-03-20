@@ -21,7 +21,6 @@ class MultiCacheStats extends BaseObject
      */
     public static function getLatestCaches($limit, $offset = 0)
     {
-
         $db = self::db();
         [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);
 
@@ -44,6 +43,7 @@ class MultiCacheStats extends BaseObject
             LIMIT $offset, $limit", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
 
         $result = [];
+
         while ($row = $db->dbResultFetch($rs)) {
             $row['location'] = CacheLocation::fromDbRowFactory($row);
             $result[] = $row;
@@ -74,8 +74,8 @@ class MultiCacheStats extends BaseObject
                 c.date_hidden ASC
             LIMIT $offset, $limit", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
 
-
         $result = [];
+
         while ($row = $db->dbResultFetch($rs)) {
             $row['location'] = CacheLocation::fromDbRowFactory($row);
             $result[] = $row;
@@ -106,7 +106,6 @@ class MultiCacheStats extends BaseObject
 
     public static function getAllCachesCount($activeOnly = false)
     {
-
         if ($activeOnly) {
             $countedStatuses = implode(',', [
                 GeoCache::STATUS_READY,
@@ -125,7 +124,6 @@ class MultiCacheStats extends BaseObject
 
     public static function getNewCachesCount($fromLastDays)
     {
-
         $days = (int) $fromLastDays;
 
         $countedStatuses = implode(',', [
@@ -162,7 +160,6 @@ class MultiCacheStats extends BaseObject
             ORDER BY newCaches DESC", $year);
 
         return $db->dbFetchAsKeyValArray($rs, 'region', 'newCaches');
-
     }
 
     /**
@@ -211,11 +208,13 @@ class MultiCacheStats extends BaseObject
             "SELECT * FROM caches WHERE cache_id IN ($cacheIdsStr) LIMIT $limit");
 
         $result = [];
+
         while ($data = $db->dbResultFetch($rs)) {
             $cache = new GeoCache();
             $cache->loadFromRow($data);
             $result[] = $cache;
         }
+
         return $result;
     }
 
@@ -256,6 +255,7 @@ class MultiCacheStats extends BaseObject
     {
         return OcMemCache::getOrCreate(__CLASS__ . ':getLatestNationalCaches', 60 * 60, function () {
             $countriesStr = '';
+
             foreach (OcConfig::getSitePrimaryCountriesList() as $item) {
                 $countriesStr .= "'" . self::db()->quoteString($item) . "', ";
             }
@@ -273,6 +273,7 @@ class MultiCacheStats extends BaseObject
                 `cache_id` DESC',
                 GeoCache::STATUS_READY,
                 GeoCache::TYPE_EVENT);
+
             return self::db()->dbFetchOneColumnArray($stmt, 'cache_id');
         });
     }
@@ -305,12 +306,14 @@ class MultiCacheStats extends BaseObject
         $result = [];
 
         $index = $offset;
+
         while ($index < $cachesCount && $index < $offset + $limit) {
             $cache = GeoCache::fromCacheIdFactory($cachesId[$index]);
             // Remove ignored caches
             if (! is_null($user) && $cache->isIgnoredByUser($user)) {
                 unset($cache);
                 $index++;
+
                 continue;
             }
             $result[] = $cache;
@@ -336,11 +339,13 @@ class MultiCacheStats extends BaseObject
     {
         $cachesList = self::getLatestNationalCachesId();
         $result = [];
+
         foreach ($cachesList as $cache) {
             $cacheObj = GeoCache::fromCacheIdFactory($cache);
             // Remove ignored caches
             if (! is_null($user) && $cacheObj->isIgnoredByUser($user)) {
                 unset($cacheObj);
+
                 continue;
             }
             $result[$cacheObj->getCountry()][] = $cacheObj;
@@ -369,6 +374,7 @@ class MultiCacheStats extends BaseObject
     {
         $cachesList = OcMemCache::getOrCreate(__CLASS__ . ':getLatestForeignCaches', 60 * 60, function () {
             $countriesStr = '';
+
             foreach (OcConfig::getSitePrimaryCountriesList() as $item) {
                 $countriesStr .= "'" . self::db()->quoteString($item) . "', ";
             }
@@ -385,15 +391,18 @@ class MultiCacheStats extends BaseObject
                 `cache_id` DESC
             LIMIT 300',
                 GeoCache::STATUS_READY);
+
             return self::db()->dbResultFetchAll($stmt);
         });
 
         $result = [];
+
         foreach ($cachesList as $cache) {
             $cacheObj = GeoCache::fromCacheIdFactory($cache['cache_id']);
             // Remove ignored caches
             if (! is_null($user) && $cacheObj->isIgnoredByUser($user)) {
                 unset($cacheObj);
+
                 continue;
             }
             $result[$cache['country']][] = $cacheObj;
@@ -431,15 +440,18 @@ class MultiCacheStats extends BaseObject
             LIMIT 500',
                 GeoCache::STATUS_READY,
                 GeoCache::TYPE_EVENT);
+
             return self::db()->dbResultFetchAll($stmt);
         });
 
         $result = [];
+
         foreach ($eventList as $event) {
             $eventObj = GeoCache::fromCacheIdFactory($event['cache_id']);
             // Remove ignored events
             if (! is_null($user) && $eventObj->isIgnoredByUser($user)) {
                 unset($eventObj);
+
                 continue;
             }
             $result[$eventObj->getCacheLocationObj()->getLocationDesc(' &gt; ')][] = $eventObj;
@@ -451,7 +463,6 @@ class MultiCacheStats extends BaseObject
         }
 
         return $result;
-
     }
 
     /**
@@ -471,6 +482,7 @@ class MultiCacheStats extends BaseObject
                 `cache_titled`.`date_alg` DESC
             LIMIT 500',
                 GeoCache::STATUS_READY);
+
             return self::db()->dbResultFetchAll($stmt);
         });
     }
@@ -504,6 +516,7 @@ class MultiCacheStats extends BaseObject
         $result = [];
 
         $index = $offset;
+
         while ($index < $cachesCount && $index < $offset + $limit) {
             $result[] = [
                 'date' => $cachesId[$index]['date'],
@@ -535,6 +548,7 @@ class MultiCacheStats extends BaseObject
                 `date_published` DESC
             LIMIT 500',
                 GeoCache::STATUS_READY);
+
             return self::db()->dbFetchOneColumnArray($stmt, 'cache_id');
         });
     }
@@ -564,6 +578,7 @@ class MultiCacheStats extends BaseObject
         $result = [];
 
         $index = $offset;
+
         while ($index < $cachesCount && $index < $offset + $limit) {
             $result[] = GeoCache::fromCacheIdFactory($cachesId[$index]);
             $index++;

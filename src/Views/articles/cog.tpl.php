@@ -7,6 +7,7 @@ use src\Models\ApplicationContainer;
 
     <?php
     $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
     if ($loggedUser && $loggedUser->hasOcTeamRole()) {
         echo '<br/><img src="graphs/COGstat.php" alt="" title="" align="middle" /><br/><br/>';
     }

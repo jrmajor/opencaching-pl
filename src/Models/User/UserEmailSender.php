@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User;
 
 use src\Models\OcConfig\OcConfig;
@@ -9,7 +10,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class UserEmailSender
 {
-
     const TEMPLATE_PATH = __DIR__ . '/../../../resources/email/user/';
 
     /**
@@ -25,7 +25,6 @@ class UserEmailSender
      */
     public static function sendU2UMessage(User $from, User $to, $subject, $text, $attachSenderAddress)
     {
-
         // prepare message text
         $userMessage = new EmailFormatter(self::TEMPLATE_PATH . 'messageU2U.email.html', true);
         $userMessage->setVariable('fromUserMailUrl', SimpleRouter::getAbsLink('UserProfile', 'mailTo', [
@@ -37,6 +36,7 @@ class UserEmailSender
         $userMessage->setVariable('absoluteServerURI', rtrim(OcConfig::getAbsolute_server_URI(), '/'));
         $userMessage->setVariable('serverName', OcConfig::getSiteName());
         $userMessage->setVariable('text', nl2br($text));
+
         if ($attachSenderAddress) {
             $userMessage->setVariable('mailReply', tr('mailto_respByEmail'));
         } else {
@@ -46,6 +46,7 @@ class UserEmailSender
         // send email to Recipient
         $email = new Email();
         $email->addToAddr($to->getEmail());
+
         if ($attachSenderAddress) {
             $email->setReplyToAddr($from->getEmail());
         } else {
@@ -58,9 +59,11 @@ class UserEmailSender
         $email->setSubject($subject);
         $email->setHtmlBody($userMessage->getEmailContent());
         $result = $email->send();
+
         if (! $result) {
             Debug::errorLog('Mail sending failure to: ' . $to->getEmail());
         }
+
         return $result;
     }
 
@@ -95,9 +98,11 @@ class UserEmailSender
         $email->setSubject($subject);
         $email->setHtmlBody($userMessage->getEmailContent());
         $result = $email->send();
+
         if (! $result) {
             Debug::errorLog('Sender copy sending failure to: ' . $from->getEmail());
         }
+
         return $result;
     }
 

@@ -2,7 +2,6 @@
 
 namespace src\Utils\Database\Updates;
 
-
 /**
  * This is a unit test for all the table-structure methods in OcDb.
  * It can only be run manually via the the sysadmin interface.

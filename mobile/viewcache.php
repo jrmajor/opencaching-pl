@@ -1,4 +1,5 @@
 <?php
+
 use src\Models\GeoCache\GeoCacheCommons;
 use src\Utils\Database\OcDb;
 use src\Utils\Database\XDb;
@@ -7,9 +8,6 @@ use src\Utils\I18n\I18n;
 require_once('./lib/common.inc.php');
 
 if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
-
-
-
     $wp = XDb::xEscape($_GET['wp']);
 
     $query = 'select votes,cache_id,topratings,user_id,type,size,status,cache_id,name,longitude,latitude,date_hidden,wp_oc,score,founds,notfounds,notes,picturescount';
@@ -22,20 +20,21 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         $tpl->assign('error', '1');
 
     else {
-
         // detailed cache access logging
         global $enable_cache_access_logs;
-        if (@$enable_cache_access_logs) {
 
+        if (@$enable_cache_access_logs) {
             $dbc = OcDb::instance();
 
             $cache_id = $caches['cache_id'];
             $user_id = @$_SESSION['user_id'] > 0 ? $_SESSION['user_id'] : null;
             $access_log = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
+
             if ($access_log === null) {
                 $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = [];
                 $access_log = $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id];
             }
+
             if (@$access_log[$cache_id] !== true) {
                 $dbc->multiVariableQuery(
                         'INSERT INTO CACHE_ACCESS_LOGS
@@ -43,7 +42,7 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
                          VALUES
                             (NOW(), :1, :2, \'M\', \'view_cache\', :3, :4, :5)',
                         $cache_id, $user_id, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                        ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '' )
+                        (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
                 );
                 $access_log[$cache_id] = true;
                 $_SESSION['CACHE_ACCESS_LOG_VC_' . $user_id] = $access_log;
@@ -66,13 +65,14 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         $cache_desc['hint'] = '';
 
         while ($rekord = XDb::xFetchArray($wynik)) {
-
             if ($i > 0)
                 $cache_desc['desc'] .= '<br/><br/>';
             $cache_desc['desc'] .= $rekord['desc'];
+
             if ($i > 0)
                 $cache_desc['short_desc'] .= '<br/>';
             $cache_desc['short_desc'] .= $rekord['short_desc'];
+
             if ($i > 0)
                 $cache_desc['hint'] .= '\\n\\n';
             $cache_desc['hint'] .= $rekord['hint'];
@@ -119,6 +119,7 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
             $wynik3 = XDb::xSql($query3);
             $watched = XDb::xFetchArray($wynik3);
             $watched = $watched[0];
+
             if ($watched > 0)
                 $cache_info['watched'] = $watched;
             else
@@ -154,7 +155,6 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         $tpl->assign('cache', $cache_info);
 
         if ($caches['picturescount'] > 0) {
-
             $query = "select url, title, spoiler from pictures where object_id = '" . $caches['cache_id'] . "' and display=1 and object_type=2;";
             $wynik = XDb::xSql($query);
 
@@ -167,11 +167,9 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         }
 
         if (! empty($cache_attributes)) {
-
             $attr_text = '';
 
             while ($rekord = XDb::xFetchArray($cache_attributes)) {
-
                 $query = "select text_long from cache_attrib where id ='" . $rekord['attrib_id'] . "' and language = '" . I18n::getCurrentLang() . "';";
                 $wynik = XDb::xSql($query);
                 $attr = XDb::xFetchArray($wynik);
@@ -196,6 +194,7 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
     }
 } else {
     header('Location: ./index.php');
+
     exit;
 }
 

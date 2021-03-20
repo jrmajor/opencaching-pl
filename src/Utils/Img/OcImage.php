@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Img;
 
 use Exception;
@@ -28,6 +29,7 @@ class OcImage
     {
         $img = new OcImage($inputFile);
         $img->resizeToMaxDimensions($maxSize);
+
         return $img->save($outputFile, true);
     }
 
@@ -129,13 +131,13 @@ class OcImage
     {
         // prepare new image
         $newImage = @imagecreatetruecolor($width, $height);
+
         if (! $newImage) {
             throw new Exception("Can't create new image");
         }
 
         if (! @imagecopyresampled($newImage, $this->gdImage, 0, 0, 0, 0,
                 $width, $height, $this->getWidth(), $this->getHeight())) {
-
             throw new Exception("Can't resample new image");
         }
 
@@ -153,7 +155,8 @@ class OcImage
      */
     public function crop($x, $y, $width, $height)
     {
-        $this->gdImage = @imagecrop($this->gdImage, [$x, $y, $width, $height] );
+        $this->gdImage = @imagecrop($this->gdImage, [$x, $y, $width, $height]);
+
         if (! $this->gdImage) {
             throw new Exception("Can't crop the image");
         }
@@ -167,7 +170,8 @@ class OcImage
      */
     public function rotate($degrees)
     {
-        $this->gdImage = @imagerotate ($this->gdImage, $degrees, 0);
+        $this->gdImage = @imagerotate($this->gdImage, $degrees, 0);
+
         if (! $this->gdImage) {
             throw new Exception("Can't rotate the image");
         }
@@ -190,7 +194,8 @@ class OcImage
         if (! is_dir(dirname($outputPath))) {
             // there is no such dir - try to create it
             $dir = dirname($outputPath);
-            if ( ! mkdir($dir, 0755, true)) {
+
+            if (! mkdir($dir, 0755, true)) {
                 throw new Exception("Can't save - there is no such directory and can't create it!");
             }
         }
@@ -245,6 +250,7 @@ class OcImage
 
         // 1 : read BMPFile header
         $fileHeader = unpack('vfile_type/Vfile_size/Vreserved/Vbitmap_offset', fread($fileHandler, 14));
+
         if ($fileHeader['file_type'] != 'BM') {
             return false;
         }
@@ -253,6 +259,7 @@ class OcImage
         $bmp = unpack('Vheader_size/Vwidth/Vheight/vplanes/vbits_per_pixel' . '/Vcompression/Vsize_bitmap/Vhoriz_resolution' . '/Vvert_resolution/Vcolors_used/Vcolors_important', fread($fileHandler, 40));
 
         $bmp['colors'] = pow(2, $bmp['bits_per_pixel']);
+
         if ($bmp['size_bitmap'] == 0)
             $bmp['size_bitmap'] = $fileHeader['file_size'] - $fileHeader['bitmap_offset'];
         $bmp['bytes_per_pixel'] = $bmp['bits_per_pixel'] / 8;
@@ -260,12 +267,14 @@ class OcImage
         $bmp['decal'] = ($bmp['width'] * $bmp['bytes_per_pixel'] / 4);
         $bmp['decal'] -= floor($bmp['width'] * $bmp['bytes_per_pixel'] / 4);
         $bmp['decal'] = 4 - (4 * $bmp['decal']);
+
         if ($bmp['decal'] == 4) {
             $bmp['decal'] = 0;
         }
 
         // 3 : palette decoding
         $palette = [];
+
         if ($bmp['colors'] < 0x1000000) {
             $palette = unpack('V' . $bmp['colors'], fread($fileHandler, $bmp['colors'] * 4));
         }
@@ -277,8 +286,10 @@ class OcImage
         $res = imagecreatetruecolor($bmp['width'], $bmp['height']);
         $p = 0;
         $y = $bmp['height'] - 1;
+
         while ($y >= 0) {
             $x = 0;
+
             while ($x < $bmp['width']) {
                 if ($bmp['bits_per_pixel'] == 24)
                     $color = unpack('V', substr($img, $p, 3) . $vide);
@@ -290,6 +301,7 @@ class OcImage
                     $color[1] = $palette[$color[1] + 1];
                 } elseif ($bmp['bits_per_pixel'] == 4) {
                     $color = unpack('n', $vide . substr($img, floor($p), 1));
+
                     if (($p * 2) % 2 == 0) {
                         $color[1] = ($color[1] >> 4);
                     } else {
@@ -298,6 +310,7 @@ class OcImage
                     $color[1] = $palette[$color[1] + 1];
                 } elseif ($bmp['bits_per_pixel'] == 1) {
                     $color = unpack('n', $vide . substr($img, floor($p), 1));
+
                     if (($p * 8) % 8 == 0)
                         $color[1] = $color[1] >> 7;
                     elseif (($p * 8) % 8 == 1)

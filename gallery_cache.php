@@ -1,4 +1,5 @@
 <?php
+
 use src\Controllers\PictureController;
 use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
@@ -6,7 +7,7 @@ use src\Models\Pictures\Thumbnail;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 global $hide_coords;
 
@@ -15,6 +16,7 @@ $app = ApplicationContainer::Instance();
 
 if (! isset($_REQUEST['cacheid']) || ($cache = GeoCache::fromCacheIdFactory($_REQUEST['cacheid'])) === null) {
     $view->redirect('/');
+
     exit();
 }
 
@@ -26,6 +28,7 @@ if (($cache->getStatus() == GeoCache::STATUS_WAITAPPROVERS
         || ($app->getLoggedUser()->getUserId() != $cache->getOwnerId()
             && ! $app->getLoggedUser()->hasOcTeamRole()))) {
     $view->redirect('/');
+
     exit();
 }
 
@@ -41,8 +44,10 @@ $params['cacheid']['value'] = $cache->getCacheId();
 $params['cacheid']['data_type'] = 'integer';
 $stmt = $app->db->paramQuery($query, $params);
 $logpictures = [];
+
 while ($row = $app->db->dbResultFetch($stmt)) {
     $row['url'] = str_replace('images/uploads', 'upload', $row['url']);
+
     if ($row['spoiler'] == '1') {
         $row['thumbUrl'] = Thumbnail::placeholderUri(Thumbnail::PHD_SPOILER);
     } else {

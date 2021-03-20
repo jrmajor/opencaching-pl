@@ -49,8 +49,10 @@ if (isset($_REQUEST['region'])) {
 
             $l2 = '';
             $licznik = 0;
+
             while ($line = XDb::xFetchArray($r)) {
                 $l1 = $line['count'];
+
                 if ($l2 != $l1) {
                     echo '</td></tr>';
                     $licznik = $licznik + 1;

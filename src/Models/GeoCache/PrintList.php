@@ -14,11 +14,9 @@ use src\Utils\Uri\Uri;
 class PrintList {
     public static function HandleRequest($cacheId)
     {
-
         if (isset($_REQUEST['print_list']) && $_REQUEST['print_list'] == 'y') {
-
             // add cache to print (do not duplicate items)
-            if ( ! isset($_SESSION['print_list']) || ! is_array($_SESSION['print_list']) ){
+            if (! isset($_SESSION['print_list']) || ! is_array($_SESSION['print_list'])){
                 $_SESSION['print_list'] = [];
             }
 
@@ -26,7 +24,6 @@ class PrintList {
         }
 
         if (isset($_REQUEST['print_list']) && $_REQUEST['print_list'] == 'n') {
-
             // remove cache from print list
             self::RemoveCache($cacheId);
         }
@@ -68,7 +65,7 @@ class PrintList {
 
     public static function GetContent()
     {
-        if( isset($_SESSION['print_list']) && is_array($_SESSION['print_list']) ){
+        if(isset($_SESSION['print_list']) && is_array($_SESSION['print_list'])){
             return $_SESSION['print_list'];
         }else{
             return [];
@@ -84,8 +81,7 @@ class PrintList {
     {
         if (isset($_SESSION['print_list']) &&
             is_array($_SESSION['print_list']) &&
-            isset($_SESSION['print_list'][$cacheId]) ){
-
+            isset($_SESSION['print_list'][$cacheId])){
             unset($_SESSION['print_list'][$cacheId]);
         }
     }

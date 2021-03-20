@@ -576,12 +576,13 @@ $items = [
     "Heuglin's Gull" => 'Larus heuglini',
 ];
 
-
 $result = [];
+
 foreach ($items as $key => $value) {
     if (strpos(strtolower($key), $q) !== false) {
         array_push($result, ['id' => $value, 'label' => $key, 'value' => strip_tags($key)]);
     }
+
     if (count($result) > 11)
         break;
 }

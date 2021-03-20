@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\CacheSet\CacheSet;
@@ -110,9 +111,11 @@ class MainMapController extends BaseController
 
         // find user for this map display
         $user = null;
+
         if (isset($_GET['userid'])) {
             $user = User::fromUserIdFactory($_GET['userid']);
         }
+
         if (! $user) {
             $user = $this->loggedUser;
         }
@@ -130,11 +133,12 @@ class MainMapController extends BaseController
         $mapModel->setInitLayerName($this->mapJsParams->initUserPrefs['map']);
 
         // set map center based on requested coords&zoom
-        if ( isset($_GET['zoom'], $_GET['lat'], $_GET['lon']) ) {
+        if (isset($_GET['zoom'], $_GET['lat'], $_GET['lon'])) {
             // coords + zoom
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
+
             if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
@@ -142,23 +146,24 @@ class MainMapController extends BaseController
             }
 
         // set map center based on requested coords and open popup at center (used to show geocache)
-        } else if( isset($_GET['openPopup'], $_GET['lat'], $_GET['lon']) ) {
+        } else if(isset($_GET['openPopup'], $_GET['lat'], $_GET['lon'])) {
             // opened popup
             $this->mapJsParams->openPopupAtCenter = true;
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
+
             if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
                 $zoom = 14;
             }
-
-        } else if( isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
+        } else if(isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
             // 150m-circle at coords
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
+
             if(! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             }else{
@@ -169,11 +174,10 @@ class MainMapController extends BaseController
 
                 $mapModel->setInfoMessage(tr('map_circle150mMode'));
             }
-        } else if( isset($_GET['searchdata'], $_GET['bbox']) ) {
-
+        } else if(isset($_GET['searchdata'], $_GET['bbox'])) {
             // searchData + bbox mode
             if(! preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
-               ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox']) ){
+               ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox'])){
                 // searchData error!
                    $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             } else {
@@ -189,7 +193,6 @@ class MainMapController extends BaseController
 
                 $mapModel->setStartExtent($swCoord, $neCoord);
             }
-
         } else if(isset($_GET['cs'])){
             // only given geopath
             $geoPath = CacheSet::fromCacheSetIdFactory($_GET['cs']);

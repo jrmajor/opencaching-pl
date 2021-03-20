@@ -3,7 +3,6 @@
 namespace src\Models\MeritBadge;
 
 class PositionMeritBadge{
-
     private $id; //cache
     private $name; //cache
     private $type; //cache
@@ -43,25 +42,23 @@ class PositionMeritBadge{
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow( $rec ){
-
-        if ( isset($rec['badge_position_id'])  )
+    public function setFromRow($rec){
+        if (isset($rec['badge_position_id']))
             $this->id = $rec['badge_position_id'];
 
-        if ( isset($rec['badge_position_name'])  )
+        if (isset($rec['badge_position_name']))
             $this->name = $rec['badge_position_name'];
 
-        if ( isset($rec['badge_position_type'])  )
+        if (isset($rec['badge_position_type']))
             $this->type = $rec['badge_position_type'];
 
-        if ( isset($rec['badge_position_gain_date'])  )
+        if (isset($rec['badge_position_gain_date']))
             $this->gain_date = $rec['badge_position_gain_date'];
 
-        if ( isset($rec['badge_position_owner_id'])  )
+        if (isset($rec['badge_position_owner_id']))
             $this->owner_id = $rec['badge_position_owner_id'];
 
-        if ( isset($rec['badge_position_owner_name'])  )
+        if (isset($rec['badge_position_owner_name']))
             $this->owner_name = $rec['badge_position_owner_name'];
-
     }
 }

@@ -8,7 +8,6 @@ class CleanupAccessLogs
 {
     function run()
     {
-
         $sql = 'delete from CACHE_ACCESS_LOGS where date_sub(now(), INTERVAL 5 DAY) > event_date';
 
         set_time_limit(360);

@@ -30,25 +30,27 @@ use src\Utils\Database\XDb;
 use src\Utils\View\View;
 
 //prepare the templates and include all neccessary
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     // not logged in, go to login page
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
-if ( $config['module']['openchecker']['enabled'] == false ) {
+if ($config['module']['openchecker']['enabled'] == false) {
     tpl_redirect('index.php');
+
     exit;
 }
 
 /** @var View */
 $view->setTemplate('openchecker');
 $view->loadJQuery();
-
 
 $OpenCheckerSetup = new OpenCheckerSetup();
 tpl_set_var('openchecker_script', $OpenCheckerSetup->scriptname);
@@ -126,8 +128,8 @@ $wp_rs = XDb::xSql('SELECT `waypoints`.`wp_id`,
         WHERE `cache_id`= ? AND `type` = ' . Waypoint::TYPE_FINAL, $cache_id);
 
 $wp_record = XDb::xFetchArray($wp_rs);
-if (($wp_record['type'] == Waypoint::TYPE_FINAL) && ($wp_record['opensprawdzacz'] == 1)) {
 
+if (($wp_record['type'] == Waypoint::TYPE_FINAL) && ($wp_record['opensprawdzacz'] == 1)) {
     $view->setVar('displayOpencheckerForm', true);
 
     tpl_set_var('openchecker_not_enabled', '');

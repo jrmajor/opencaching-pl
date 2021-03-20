@@ -2,7 +2,6 @@
 
 namespace src\Models\ChunkModels\StaticMap;
 
-
 class StaticMapMarker
 {
     const TYPE_IMG_MARKER = 0;        // marker with the image
@@ -50,6 +49,7 @@ class StaticMapMarker
         $marker->coords = null;
         $marker->tooltip = $tooltip;
         $marker->link = $link;
+
         return $marker;
     }
 

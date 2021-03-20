@@ -5,13 +5,14 @@ use src\Models\GeoCache\GeoCacheCommons;
 use src\Models\GeoCache\GeoCacheLogCommons;
 use src\Utils\Database\XDb;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 $no_tpl_build = false;
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cache_multi_data']))) {
     tpl_redirect('log_cache_multi_send.php');
+
     exit;
 }
 ?>
@@ -54,22 +55,23 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                 $dane = $_SESSION['log_cache_multi_filteredData'];
 
                 $cacheIdList = [];
+
                 foreach ($dane as $k => $v) {
                     $cacheIdList[] = $v['cache_id'];
                 }
 
                 // dociagam info o ostatniej aktywnosci dla kazdej skrzynki
-                if ( count($cacheIdList) > 0) {
+                if (count($cacheIdList) > 0) {
                     $rs = XDb::xSql(
                         'SELECT c.* FROM
                             (
                                 SELECT cache_id, MAX(date) date FROM `cache_logs`
-                                WHERE user_id= ? AND cache_id IN (' . XDb::xEscape( implode(',',$cacheIdList) ) . ')
+                                WHERE user_id= ? AND cache_id IN (' . XDb::xEscape(implode(',',$cacheIdList)) . ')
                                 GROUP BY cache_id
                             ) as x INNER JOIN `cache_logs` as c ON c.cache_id = x.cache_id
-                                AND c.date = x.date', $loggedUser->getUserId()  );
+                                AND c.date = x.date', $loggedUser->getUserId());
 
-                    while( $record = XDb::xFetchArray($rs) ){
+                    while($record = XDb::xFetchArray($rs)){
                         foreach ($dane as $k => $v) {
                             if ($v['cache_id'] == $record['cache_id']) {
                                 $v['got_last_activity'] = true;
@@ -80,8 +82,6 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                         }
                     }//while
                 }
-
-
 
                 foreach ($dane as $k => $v) {
                     ?>
@@ -129,5 +129,3 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                     <?php
                 }
             }
-
-

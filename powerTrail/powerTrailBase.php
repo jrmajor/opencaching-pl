@@ -1,10 +1,10 @@
 <?php
+
 use src\Utils\Database\OcDb;
 /**
  *
  */
 class powerTrailBase{
-
     /**
      * declare types and id of types of geoPaths:
      */
@@ -20,23 +20,27 @@ class powerTrailBase{
 
     public static function minimumCacheCount(){
         include __DIR__ . '/../lib/settingsGlue.inc.php';
+
         return $powerTrailMinimumCacheCount['current'];
     }
 
     public static function historicMinimumCacheCount(){
         include __DIR__ . '/../lib/settingsGlue.inc.php';
         $min = $powerTrailMinimumCacheCount['current'];
+
         foreach ($powerTrailMinimumCacheCount['old'] as $date) {
             //var_dump($date['dateFrom'], $ptPublished, $date['dateTo']);
             if ($min > $date['limit']) {
                 $min = $date['limit'];
             }
         }
+
         return $min;
     }
 
     public static function userMinimumCacheFoundToSetNewPowerTrail(){
         include __DIR__ . '/../lib/settingsGlue.inc.php';
+
         return $powerTrailUserMinimumCacheFoundToSetNewPowerTrail;
     }
 
@@ -75,6 +79,7 @@ class powerTrailBase{
         $query = 'SELECT count(*) AS `checkResult` FROM `PowerTrail_owners` WHERE `PowerTrailId` = :1 AND `userId` = :2';
         $s = $db->multiVariableQuery($query, $powerTrailId, $userId);
         $result = $db->dbResultFetchAll($s);
+
         return $result[0]['checkResult'];
     }
 
@@ -107,13 +112,15 @@ class powerTrailBase{
     }
 
     private static function getConstName($constValue) {
-        $cClass = new ReflectionClass (__CLASS__);
+        $cClass = new ReflectionClass(__CLASS__);
         $constants = $cClass->getConstants();
+
         foreach ($constants as $name => $value){
             if ($value == $constValue){
                 return $name;
             }
         }
+
         return null;
     }
 
@@ -127,18 +134,19 @@ class powerTrailBase{
             3 => 'footprintGreen.png',
             4 => 'footprintYellow.png',
         ];
+
         return $ret;
     }
 
     public static function cacheSizePoints() {
         return  [
-        2 => 2.5,   # Micro
-        3 => 2, # Small
-        4 => 1.5,   # Normal [from 1 to 3 litres]
-        5 => 1, # Large [from 3 to 10 litres]
-        6 => 0.5,   # Very large [more than 10 litres]
-        7 => 0, # Bez pojemnika
-    ];
+            2 => 2.5,   # Micro
+            3 => 2, # Small
+            4 => 1.5,   # Normal [from 1 to 3 litres]
+            5 => 1, # Large [from 3 to 10 litres]
+            6 => 0.5,   # Very large [more than 10 litres]
+            7 => 0, # Bez pojemnika
+        ];
     }
 
     public static function cacheTypePoints() {
@@ -162,6 +170,7 @@ class powerTrailBase{
             WHERE userId = :1 AND PowerTrailId = :2 AND `commentType` =2 AND deleted !=1 ';
         $s = $db->multiVariableQuery($q, $userId, $ptId);
         $response = $db->dbResultFetchOneRowOnly($s);
+
         return $response['c'];
     }
 
@@ -171,6 +180,7 @@ class powerTrailBase{
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $userId);
         $ptCount = $db->dbResultFetchOneRowOnly($s);
+
         return (int) $ptCount['ptCount'];
     }
 
@@ -188,6 +198,7 @@ class powerTrailBase{
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $userId);
         $points = $db->dbResultFetchOneRowOnly($s);
+
         return round($points['sum'],2);
     }
 
@@ -200,6 +211,7 @@ class powerTrailBase{
     public static function calculateMagnifier($x){
             $w = self::cCountForMaxMagnifier;
             $b = (2 - $w) / (-$w + 1);
+
             return (1 - $b) * $x + $b;
         }
 
@@ -224,6 +236,7 @@ class powerTrailBase{
         $totalPoint = 0;
         $geoPathCount = 0;
         $pointsDetails = [];
+
         foreach ($points as $ptPoints) {
             $magnifier = self::calculateMagnifier($ptPoints['cacheCount']);
             $earnedPoints = $ptPoints['pointsSum'] * $magnifier;
@@ -237,6 +250,7 @@ class powerTrailBase{
             $totalPoint += $earnedPoints;
             $geoPathCount++;
         }
+
         return ['totalPoints' => round($totalPoint,2), 'geoPathCount' => $geoPathCount, 'pointsDetails' => $pointsDetails];
     }
 
@@ -244,6 +258,7 @@ class powerTrailBase{
         $queryPt = 'SELECT `id`, `name`, `image` FROM `PowerTrail` WHERE `id` IN ( SELECT `PowerTrailId` FROM `powerTrail_caches` WHERE `cacheId` =:1 ) AND `status` = 1 ';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $cacheId);
+
         return $db->dbResultFetchAll($s);
     }
 
@@ -253,9 +268,11 @@ class powerTrailBase{
         $s = $db->multiVariableQuery($query, $ptId);
         $dbResult = $db->dbResultFetchAll($s);
         $result = [];
+
         foreach ($dbResult as $ptOwner) {
             $result[$ptOwner['user_id']] = $ptOwner;
         }
+
         return $result;
     }
 
@@ -263,6 +280,7 @@ class powerTrailBase{
         $query = 'SELECT * FROM `PowerTrail` WHERE `id` = :1 LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $ptId);
+
         return $db->dbResultFetchOneRowOnly($s);
     }
 
@@ -271,6 +289,7 @@ class powerTrailBase{
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $ptId);
         $answer = $db->dbResultFetchOneRowOnly($s);
+
         return $answer['count'];
     }
 
@@ -279,6 +298,7 @@ class powerTrailBase{
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $userId);
         $answer = $db->dbResultFetchOneRowOnly($s);
+
         return $answer;
     }
 
@@ -286,6 +306,7 @@ class powerTrailBase{
         $query = 'SELECT * FROM `PowerTrail_comments` WHERE `id` = :1 LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $commentId);
+
         return $db->dbResultFetchOneRowOnly($s);
     }
 
@@ -295,6 +316,7 @@ class powerTrailBase{
                 WHERE  `PowerTrailId` =:1) AND user.user_id = caches.user_id AND powerTrail_caches.cacheId = caches.cache_id
                 ORDER BY caches.name';
         $s = $db->multiVariableQuery($q, $PtId);
+
         return $db->dbResultFetchAll($s);
     }
 
@@ -307,6 +329,7 @@ class powerTrailBase{
         foreach ($r as $c) {
             $result[] = $c['cacheId'];
         }
+
         return $result;
     }
 
@@ -319,6 +342,7 @@ class powerTrailBase{
         $ptName = str_replace('♥', 'Serduszko', $ptName);
         $ptName = str_replace(' ', '', $ptName);
         $ptName = trim($ptName);
+
         return $ptName;
     }
 
@@ -330,6 +354,7 @@ class powerTrailBase{
             ) LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $ptId);
+
         return $db->dbResultFetchOneRowOnly($s);
     }
 
@@ -341,6 +366,7 @@ class powerTrailBase{
                 ORDER BY ' . $sortBy . ' ' . $sortOder . ' ';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q);
+
         return $db->dbResultFetchAll($s);
     }
 }

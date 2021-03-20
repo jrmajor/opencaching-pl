@@ -1,12 +1,13 @@
 <?php
+
 use src\Utils\Database\XDb;
 
 require_once('./lib/common.inc.php');
 
 if (! isset($_SESSION['user_id'])) {
-
     if (! isset($_SESSION['target']))
         $_SESSION['target'] = $_SERVER['HTTP_REFERER'];
+
     if (empty($_SESSION['target']))
         $_SESSION['target'] = './index.php';
 
@@ -14,12 +15,8 @@ if (! isset($_SESSION['user_id'])) {
     $cookie->header();
 
     if (isset($_POST['username']) && ! empty($_POST['username']) && isset($_POST['pass']) && ! empty($_POST['pass'])) {
-
         if ($cookie->is_set_cookie() && $cookie->is_set('test') && $cookie->get('test') == '1') {
-
             $cookie->un_set('test');
-
-
 
             $username = XDb::xEscape($_POST['username']);
             $pass = XDb::xEscape($_POST['pass']);
@@ -34,6 +31,7 @@ if (! isset($_SESSION['user_id'])) {
                 $temp_target = $_SESSION['target'];
                 unset($_SESSION['target']);
                 header('Location: ' . $temp_target);
+
                 exit;
             }
         } else
@@ -41,6 +39,7 @@ if (! isset($_SESSION['user_id'])) {
     }
 }else {
     header('Location: ./index.php');
+
     exit;
 }
 

@@ -1,4 +1,5 @@
 <?php
+
 /** @noinspection PhpUnused */
 
 namespace src\Controllers;
@@ -19,7 +20,6 @@ use src\Models\GeoCache\MultiCacheStats;
 
 class CacheController extends BaseController
 {
-
     const CACHES_PER_NEW_CACHES_PAGE = 50;
 
     public function index()
@@ -41,7 +41,6 @@ class CacheController extends BaseController
 
         $this->view->addLocalCss('/css/lightTooltip.css')
             ->buildView();
-
     }
 
     private function newCachesOneCountry() {
@@ -80,6 +79,7 @@ class CacheController extends BaseController
     private function newCachesMultipleCountries() {
         $cacheList = MultiCacheStats::getLatestNationalCachesForUserMultiCountries($this->loggedUser);
         $modelArray = [];
+
         foreach ($cacheList as $country => $caches) {
             $model = new ListOfCachesModel();
             $model->addColumn(new Column_DateTime(tr('cs_publicationDate'),
@@ -115,6 +115,7 @@ class CacheController extends BaseController
     {
         $cacheList = MultiCacheStats::getLatestForeignCachesForUser($this->loggedUser);
         $modelArray = [];
+
         foreach ($cacheList as $country => $caches) {
             $model = new ListOfCachesModel();
             $model->addColumn(new Column_DateTime(tr('cs_publicationDate'),
@@ -152,6 +153,7 @@ class CacheController extends BaseController
     {
         $eventList = MultiCacheStats::getLatestEventsForUser($this->loggedUser);
         $modelArray = [];
+
         foreach ($eventList as $location => $caches) {
             $model = new ListOfCachesModel();
             $model->addColumn(new Column_DateTime(tr('date'),

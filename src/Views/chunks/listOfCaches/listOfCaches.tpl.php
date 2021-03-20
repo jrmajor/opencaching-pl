@@ -10,7 +10,6 @@ use src\Utils\Uri\Uri;
  * @param ListOfCachesModel $listModel
  */
 return function (ListOfCachesModel $listModel) {
-
     if ($listModel->getId() == 1) {
         $chunkCSS = Uri::getLinkWithModificationTime(
             '/views/chunks/listOfCaches/listOfCaches.css'); ?>

@@ -4,14 +4,15 @@ use src\Models\ApplicationContainer;
 use src\Utils\Database\XDb;
 use src\Utils\Text\InputFilter;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -23,14 +24,13 @@ if (! $loggedUser) {
             FROM `routes`  WHERE `user_id`= ?
             ORDER BY `route_id` DESC', $user_id);
 
-
-        if ( $routes_record = XDb::xFetchArray($route_rs) ) {
-
+        if ($routes_record = XDb::xFetchArray($route_rs)) {
             $routes = '<div class="headitems">';
             $routes .= '<div style="width:80px;" class="myr">' . tr('route_name') . '</div><div class="ver">&nbsp;</div><div style="width:295px;" class="myr">&nbsp;' . tr('route_desc') . '</div><div class="ver">&nbsp;</div><div style="width:60px;" class="myr">&nbsp;' . tr('radius') . '</div><div class="ver">&nbsp;</div><div style="width:60px;" class="myr">&nbsp;' . tr('length') . '</div><div class="ver">&nbsp;</div><div style="width:70px;" class="myr">&nbsp;' . tr('caches') . '</div><div class="ver">&nbsp;</div><div style="width:50px;" class="myr">' . tr('edit') . '</div><div class="ver">&nbsp;</div><div style="width:20px;" class="myr">&nbsp;' . tr('delete') . '</div></div>';
 
             do{
                 $desc = $routes_record['desc'];
+
                 if ($desc != '') {
                     $desc = InputFilter::cleanupUserInput($desc);
                 }
@@ -42,13 +42,10 @@ if (! $loggedUser) {
                             <td style="width:73px;" class="myr"><a class="links" href="myroutes_search.php?routeid=' . $routes_record['route_id'] . '"><img src="/images/action/16x16-search.png" alt="" title=' . tr('search_caches_along_route') . ' /></a></td><td width="2" style="border-right:solid thin #7fa2ca"></td>
                             <td style="width:53px;" class="myr"><a class="links" href="myroutes_edit.php?routeid=' . $routes_record['route_id'] . '"><img src="images/actions/edit-16.png" alt="" title=' . tr('edit_route') . ' /></a></td><td width="2" style="border-right:solid thin #7fa2ca"></td>
                             <td style="width:23px;" class="myr"><a class="links" href="myroutes_edit.php?routeid=' . $routes_record['route_id'] . '&delete" onclick="return confirm(\'' . tr('confirm_remove_route') . '\');"><img style="vertical-align: middle;" src="images/log/16x16-trash.png" alt="" title=' . tr('delete') . ' /></a></td></tr></table></div>';
-
-            } while( $routes_record = XDb::xFetchArray($route_rs));
+            } while($routes_record = XDb::xFetchArray($route_rs));
             $routes .= '';
 
-
             tpl_set_var('content', $routes);
-
         } else {
             tpl_set_var('content', '<div class="listitems"><br/><center><span style="font-size:140%;font-weight:bold ">&nbsp;&nbsp;' . tr('no_routes') . '</span><br/><br/></center></div>');
         }

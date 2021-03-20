@@ -12,7 +12,7 @@ global $content, $bUseZip, $hide_coords, $dbcSearch;
 
 set_time_limit(1800);
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
@@ -36,13 +36,13 @@ $wptType[8] = 'Moving Cache';
 $wptType[9] = 'Podcast';
 $wptType[10] = 'Own Cache';
 
-if( $loggedUser || ! $hide_coords ) {
+if($loggedUser || ! $hide_coords) {
     //prepare the output
     $caches_per_page = 20;
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } elseif (! $loggedUser) {
         $query .= '0 distance, ';
@@ -71,6 +71,7 @@ if( $loggedUser || ! $hide_coords ) {
 
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`,
         `caches`.`user_id` `user_id`, ';
+
     if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
     } else {
@@ -82,6 +83,7 @@ if( $loggedUser || ! $hide_coords ) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
@@ -105,12 +107,12 @@ if( $loggedUser || ! $hide_coords ) {
     $queryLimit = ' LIMIT ' . $startat . ', ' . $count;
 
     // cleanup (old gpxcontent lingers if gpx-download is cancelled by user)
-    $dbcSearch->simpleQuery( 'DROP TEMPORARY TABLE IF EXISTS `wptcontent`');
+    $dbcSearch->simpleQuery('DROP TEMPORARY TABLE IF EXISTS `wptcontent`');
 
     // create temporary table
-    $dbcSearch->simpleQuery( 'CREATE TEMPORARY TABLE `wptcontent` ' . $query . $queryLimit);
+    $dbcSearch->simpleQuery('CREATE TEMPORARY TABLE `wptcontent` ' . $query . $queryLimit);
 
-    $s = $dbcSearch->simpleQuery( 'SELECT COUNT(*) `count` FROM `wptcontent`');
+    $s = $dbcSearch->simpleQuery('SELECT COUNT(*) `count` FROM `wptcontent`');
     $rCount = $dbcSearch->dbResultFetchOneRowOnly($s);
 
     if ($rCount['count'] == 1) {
@@ -130,6 +132,7 @@ if( $loggedUser || ! $hide_coords ) {
             WHERE `queries`.`id`= ? LIMIT 1', $options['queryid']);
         $rName = XDb::xFetchArray($rsName);
         XDb::xFreeResults($rsName);
+
         if (isset($rName['name']) && ($rName['name'] != '')) {
             $sFilebasename = trim(convert_string($rName['name']));
             $sFilebasename = str_replace(' ', '_', $sFilebasename);
@@ -141,8 +144,10 @@ if( $loggedUser || ! $hide_coords ) {
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
+
         require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('',6);
     }
@@ -156,14 +161,14 @@ if( $loggedUser || ! $hide_coords ) {
                 `caches`.`status` `status`, `caches`.`type` `type` FROM `wptcontent`, `caches`, `cache_type`, `user`
         WHERE `wptcontent`.`cache_id`=`caches`.`cache_id`
             AND `wptcontent`.`type`=`cache_type`.`id`
-            AND `wptcontent`.`user_id`=`user`.`user_id`' );
+            AND `wptcontent`.`user_id`=`user`.`user_id`');
 
     echo "OziExplorer Waypoint File Version 1.1\r\n";
     echo "WGS 84\r\n";
     echo "Reserved 2\r\n";
     echo "Reserved 3\r\n";
 
-    while($r = XDb::xFetchArray($stmt) ) {
+    while($r = XDb::xFetchArray($stmt)) {
         $lat = sprintf('%01.6f', $r['latitude']);
         $lon = sprintf('%01.6f', $r['longitude']);
 
@@ -187,12 +192,15 @@ if( $loggedUser || ! $hide_coords ) {
         $userid = XDb::xMultiVariableQueryValue('SELECT user_id FROM caches WHERE cache_id = :1 LIMIT 1',0, $id);
 
         $kolor = 16776960;
+
         if ($loggedUser && $userid == $loggedUser->getUserId()) {
             $kolor = 65280;
         }
+
         if ($r['status'] == 3 || $r['status'] == 2) {
             $kolor = 255;
         }
+
         if ($r['found']) {
             $kolor = 65535;
         }

@@ -4,9 +4,7 @@ namespace src\Controllers;
 
 use src\Models\MeritBadge\MeritBadge; //for static functions
 
-
 class ViewBadgeHeadController extends BaseController{
-
     private $sCode = '';
 
     public function __construct()
@@ -22,9 +20,9 @@ class ViewBadgeHeadController extends BaseController{
 
     public function index()
     {
-
-        if( $this->loggedUser->getUserId() == null ){
+        if($this->loggedUser->getUserId() == null){
               self::redirectToLoginPage();
+
               exit;
         }
 
@@ -54,21 +52,21 @@ class ViewBadgeHeadController extends BaseController{
 
         $this->preapareCode();
 
-        $this->setVar( 'picture', $userMeritBadge->getPicture() );
-        $this->setVar( 'progresbar_curr_val', MeritBadge::getProgressBarCurrValue($currUserPrevThreshold, $currUserCurrVal, $currUserThreshold) );
-        $this->setVar( 'progresbar_next_val', MeritBadge::getProgressBarValueMax($currUserPrevThreshold, $currUserThreshold) );
-        $this->setVar( 'progresbar_color', MeritBadge::getColor($currUserLevel, $noLevels) );
-        $this->setVar( 'progresbar_size', MeritBadge::getBarSize($currUserLevel, $noLevels) );
-        $this->setVar( 'badge_name', $userMeritBadge->getOBadge()->getName() );
-        $this->setVar( 'badge_short_desc', MeritBadge::prepareShortDescription( $userMeritBadge->getOBadge()->getShortDescription(), $currUserThreshold, $currUserCurrVal) );
-        $this->setVar( 'desc_cont', MeritBadge::sqlTextTransform($description) );
-        $this->setVar( 'who_prepared', $whoPrepared);
+        $this->setVar('picture', $userMeritBadge->getPicture());
+        $this->setVar('progresbar_curr_val', MeritBadge::getProgressBarCurrValue($currUserPrevThreshold, $currUserCurrVal, $currUserThreshold));
+        $this->setVar('progresbar_next_val', MeritBadge::getProgressBarValueMax($currUserPrevThreshold, $currUserThreshold));
+        $this->setVar('progresbar_color', MeritBadge::getColor($currUserLevel, $noLevels));
+        $this->setVar('progresbar_size', MeritBadge::getBarSize($currUserLevel, $noLevels));
+        $this->setVar('badge_name', $userMeritBadge->getOBadge()->getName());
+        $this->setVar('badge_short_desc', MeritBadge::prepareShortDescription($userMeritBadge->getOBadge()->getShortDescription(), $currUserThreshold, $currUserCurrVal));
+        $this->setVar('desc_cont', MeritBadge::sqlTextTransform($description));
+        $this->setVar('who_prepared', $whoPrepared);
 
-        $this->setVar( 'userLevel', $currUserLevel );
+        $this->setVar('userLevel', $currUserLevel);
 
-        $this->setVar( 'userLevelName', $currUserLevelName );
-        $this->setVar( 'userCurrValue', $currUserCurrVal );
-        $this->setVar( 'userThreshold', MeritBadge::prepareTextThreshold($currUserThreshold) );
+        $this->setVar('userLevelName', $currUserLevelName);
+        $this->setVar('userCurrValue', $currUserCurrVal);
+        $this->setVar('userThreshold', MeritBadge::prepareTextThreshold($currUserThreshold));
 
         return $this->sCode;
     }

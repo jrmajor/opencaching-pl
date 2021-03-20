@@ -8,7 +8,7 @@ use src\Utils\Uri\SimpleRouter;
 </div>
 
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', null, null, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', null, null, $view->errorMsg); ?>
 
   <div class="callout callout-info">
     <?=tr('register_intro')?>

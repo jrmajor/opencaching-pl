@@ -38,11 +38,11 @@ use src\Utils\Uri\SimpleRouter as SRouter;
       }
   } ?>
 
-  <?php foreach( $view->getLocalCss() as $css ) { ?>
+  <?php foreach($view->getLocalCss() as $css) { ?>
       <link rel="stylesheet" type="text/css" href="<?=$css?>">
   <?php } //foreach-css ?>
 
-  <?php foreach ( $view->getHeaderChunks() as $chunkName => $args ) {?>
+  <?php foreach ($view->getHeaderChunks() as $chunkName => $args) {?>
     <!-- load chunk $chunkName -->
     <?php $view->callChunk($chunkName, ...$args); ?>
   <?php } //foreach getHeaderChunks ?>
@@ -53,17 +53,21 @@ use src\Utils\Uri\SimpleRouter as SRouter;
 
   <?php
       if ($view->isGoogleAnalyticsEnabled()) {
-          $view->callChunkOnce( 'googleAnalytics', $view->getGoogleAnalyticsKey() );
+          $view->callChunkOnce('googleAnalytics', $view->getGoogleAnalyticsKey());
       }
+
       if ($view->isjQueryEnabled()) {
           $view->callChunk('jQuery');
       }
+
       if ($view->isjQueryUIEnabled()) {
           $view->callChunk('jQueryUI');
       }
+
       if ($view->isTimepickerEnabled()) {
           $view->callChunk('timepicker');
       }
+
       if ($view->isFancyBoxEnabled()) {
           $view->callChunk('fancyBoxLoader', true, false);
       }
@@ -393,11 +397,11 @@ use src\Utils\Uri\SimpleRouter as SRouter;
   </script>
   <?php
       // fancyBox js should be loaded at the end of page
-      if( $view->isFancyBoxEnabled()) {
+      if($view->isFancyBoxEnabled()) {
           $view->callChunk('fancyBoxLoader', false, true);
       }
       // load defer JS at the end
-      foreach( $view->getLocalJs() as $js ) {
+      foreach($view->getLocalJs() as $js) {
           if ($js['defer']) {?>
             <script src="<?=$js['url']?>"<?=$js['async'] ? ' async' : ''?> defer></script>
   <?php   } //if

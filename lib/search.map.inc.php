@@ -9,8 +9,9 @@ use src\Utils\Database\OcDb;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
-require_once (__DIR__ . '/../lib/common.inc.php');
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/common.inc.php');
+
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 set_time_limit(1800);
 
@@ -23,7 +24,7 @@ $dbc = OcDb::instance();
 
 $query = 'SELECT ';
 
-if (isset($lat_rad, $lon_rad)  ) {
+if (isset($lat_rad, $lon_rad)) {
     $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159,
         0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
@@ -66,6 +67,7 @@ $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 /* ,AVG(`caches`.`longitude`) AS avglongitude, AVG(`caches`.`latitude`) AS avglatitude */
 
 $sortby = $options['sort'];
+
 if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
     $query .= ' ORDER BY distance ASC';
 } else
@@ -87,13 +89,12 @@ $minlon = $r['minlongitude'];
 $maxlat = $r['maxlatitude'];
 $maxlon = $r['maxlongitude'];
 
-
 $stmt = $dbcSearch->simpleQuery($query);
 $cnt = 0;
 $hash = uniqid();
 $f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
-while ($r = $dbcSearch->dbResultFetch($stmt)) {
 
+while ($r = $dbcSearch->dbResultFetch($stmt)) {
      $cnt++;
     fprintf($f, "%s\n", $r['cache_id']);
 }

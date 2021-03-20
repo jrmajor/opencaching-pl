@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\ChunkModels\DynamicMap\CacheWithLogMarkerModel;
@@ -19,7 +20,6 @@ use src\Utils\Uri\Uri;
 
 class UserWatchedCachesController extends BaseController
 {
-
     private $infoMsg = null;
     private $errorMsg = null;
 
@@ -58,7 +58,6 @@ class UserWatchedCachesController extends BaseController
             CacheWithLogMarkerModel::class,
             UserWatchedCache::getWatchedCachesWithLastLogs($this->loggedUser->getUserId()),
             function($row){
-
                 $iconFile = GeoCacheCommons::CacheIconByType(
                     $row['type'], $row['status'], $row['user_sts']);
 
@@ -85,6 +84,7 @@ class UserWatchedCachesController extends BaseController
                 $m->log_typeName = $logTypeName;
                 $m->log_username = $row['llog_username'];
                 $m->log_date = Formatter::date($row['llog_date']);
+
                 return $m;
         });
 
@@ -179,6 +179,7 @@ class UserWatchedCachesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
@@ -203,6 +204,7 @@ class UserWatchedCachesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
@@ -215,6 +217,5 @@ class UserWatchedCachesController extends BaseController
         }else{
             $this->ajaxErrorResponse('Unknown OKAPI error', 500);
         }
-
     }
 }

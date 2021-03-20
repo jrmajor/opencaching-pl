@@ -15,7 +15,7 @@ JpGraphLoader::module('pie3d');
 
 $year = '';
 // check for old-style parameters
-if (isset($_REQUEST['userid'], $_REQUEST['t'])  ) {
+if (isset($_REQUEST['userid'], $_REQUEST['t'])) {
     $user_id = $_REQUEST['userid'];
     $tit = $_REQUEST['t'];
 }
@@ -36,6 +36,7 @@ if ($tit == 'cc') {
 
     if ($rsCreateCachesYear !== false) {
         $xtitle = '';
+
         while ($ry = XDb::xFetchArray($rsCreateCachesYear)) {
             $y[] = $ry['count'];
             $x[] = $ry['type'];
@@ -54,6 +55,7 @@ if ($tit == 'cf') {
 
     if ($rsCachesFindYear !== false) {
         $xtitle = '';
+
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['type'];

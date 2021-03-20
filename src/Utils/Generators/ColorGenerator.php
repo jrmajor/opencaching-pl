@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\Generators;
 
+namespace src\Utils\Generators;
 
 class ColorGenerator
 {
@@ -365,6 +365,7 @@ class ColorGenerator
     {
         $pallete = self::NICE_PALETTE;
         $skipLights = [self::HTML_WHITE_WHITE, self::HTML_PURPLE_LAVENDER, self::HTML_WHITE_BEIGE];
+
         foreach ($skipLights as $col) {
             if (($key = array_search($col, $pallete)) !== false) {
                 unset($pallete[$key]);
@@ -373,6 +374,7 @@ class ColorGenerator
         $randKeys = array_rand($pallete, $howManyColors);
         $result = array_intersect_key($pallete, array_flip($randKeys));
         shuffle($result);
+
         return $result;
     }
 }

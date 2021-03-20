@@ -27,6 +27,7 @@ function nonEmptyCacheName($cacheName)
 {
     if (str_replace(' ', '', $cacheName) == '')
         return '[bez nazwy]';
+
     return $cacheName;
 }
 
@@ -75,6 +76,7 @@ function activateCache($cacheid)
         } else
             return false;
     }
+
     return false;
 }
 
@@ -87,6 +89,7 @@ function declineCache($cacheid)
         } else
             return false;
     }
+
     return false;
 }
 
@@ -102,6 +105,7 @@ function assignUserToCase($userid, $cacheid)
 {
     // check if user is in OC Team Member
     $user = User::fromUserIdFactory($userid);
+
     if (! $user || ! $user->hasOcTeamRole()) {
         return false;
     }
@@ -119,6 +123,7 @@ function notifyOwner($cacheid, $msgType)
     global $absolute_server_URI;
 
     $user = ApplicationContainer::GetAuthorizedUser();
+
     if(! $user) {
         return;
     }
@@ -126,6 +131,7 @@ function notifyOwner($cacheid, $msgType)
     $user_id = getCacheOwnerId($cacheid);
 
     $cachename = getCachename($cacheid);
+
     if ($msgType == 0) {
         $email_content = file_get_contents(__DIR__ . '/resources/email/activated_cache.email');
     } else {
@@ -149,7 +155,6 @@ function notifyOwner($cacheid, $msgType)
     $email_content = mb_ereg_replace('{Cacheactivated_04}', tr('Cacheactivated_04'), $email_content);
     $email_content = mb_ereg_replace('{Cacheactivated_05}', tr('Cacheactivated_05'), $email_content);
 
-
     $owner_email['email'] = XDb::xMultiVariableQueryValue(
         'SELECT `email` FROM `user` WHERE `user_id`= :1 LIMIT 1', '', $user_id);
 
@@ -166,7 +171,6 @@ function notifyOwner($cacheid, $msgType)
                 (`cache_id`, `user_id`, `type`, `date`, `text`, `text_html`, `date_created`, `last_modified`, `uuid`, `node`)
             VALUES (?, ?, '12', NOW(), ?, '2', NOW(), NOW(), ?, ?)",
             $cacheid, $user->getUserId(), $log_text, $log_uuid, OcConfig::getSiteNodeId());
-
     } else {
         //send email to owner
         mb_send_mail($owner_email['email'], tr('viewPending_04') . ': ' . $cachename, $email_content, $email_headers);
@@ -203,6 +207,7 @@ if (empty($user) || ! $user->hasOcTeamRole()) {
 $view->setTemplate('viewpendings');
 
 $content = '';
+
 if (isset($_GET['cacheid'])) {
     if (isset($_GET['assign'])) {
         if (assignUserToCase($_GET['assign'], $_GET['cacheid'])) {
@@ -279,6 +284,7 @@ $stmt = XDb::xSql(
         ORDER BY caches.date_created DESC");
 
 $row_num = 0;
+
 while ($report = XDb::xFetchArray($stmt)) {
     $assignedUserId = getAssignedUserId($report['cache_id']);
 

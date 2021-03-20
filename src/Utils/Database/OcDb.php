@@ -40,9 +40,11 @@ class OcDb extends OcPdo
     function beginTransaction() {
         if ($this->hasActiveTransaction) {
             Debug::errorLog('DB transation already started - check the code!');
+
             return false;
         } else {
-            $this->hasActiveTransaction = parent::beginTransaction ();
+            $this->hasActiveTransaction = parent::beginTransaction();
+
             return $this->hasActiveTransaction;
         }
     }
@@ -54,7 +56,7 @@ class OcDb extends OcPdo
      * @see OcPdo::commit()
      */
     function commit () {
-        parent::commit ();
+        parent::commit();
         $this->hasActiveTransaction = false;
     }
 
@@ -65,7 +67,7 @@ class OcDb extends OcPdo
      * @see OcPdo::commit()
      */
     function rollback () {
-        parent::rollback ();
+        parent::rollback();
         $this->hasActiveTransaction = false;
     }
 
@@ -120,12 +122,14 @@ class OcDb extends OcPdo
     public function dbResultFetchAllAsDict(PDOStatement $stmt = null, callable $extractor = null)
     {
         $result = [];
+
         while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
             if ($extractor !== null) {
                 [$key, $val] = $extractor($row);
                 $result[$key] = $val;
             } else {
                 $key = reset($row);
+
                 if (count($row) == 2) {
                     $result[$key] = next($row);
                 } else {
@@ -176,6 +180,7 @@ class OcDb extends OcPdo
     public function dbFetchAllAsObjects(PDOStatement $stmt, callable $rowToObjectCallback)
     {
         $result = [];
+
         while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
             $result[] = $rowToObjectCallback($row);
         }
@@ -196,10 +201,12 @@ class OcDb extends OcPdo
     public function dbFetchAsKeyValArray(PDOStatement $stmt, $keyCol, $valCol, $caseSensitiveKey = true)
     {
         $result = [];
+
         if (! is_null($stmt)) {
             if (! $caseSensitiveKey) {
                 $keyCol = strtolower($keyCol);
             }
+
             while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
                 if (! $caseSensitiveKey) {
                     $row = array_change_key_case($row, CASE_LOWER);
@@ -223,10 +230,12 @@ class OcDb extends OcPdo
     public function dbFetchOneColumnArray(PDOStatement $stmt, $keyCol, $caseSensitiveKey = true)
     {
         $result = [];
+
         if (! is_null($stmt)) {
             if (! $caseSensitiveKey) {
                 $keyCol = strtolower($keyCol);
             }
+
             while ($row = $this->dbResultFetch($stmt, OcDb::FETCH_ASSOC)) {
                 if (! $caseSensitiveKey) {
                     $row = array_change_key_case($row, CASE_LOWER);
@@ -249,12 +258,12 @@ class OcDb extends OcPdo
      */
     protected function dbResultFetchValue(PDOStatement $stmt, $default)
     {
-
         $row = $this->dbResultFetch($stmt);
         $stmt->closeCursor();
 
         if ($row) {
             $value = reset($row);
+
             if ($value == null) {
                 return $default;
             } else {
@@ -294,9 +303,7 @@ class OcDb extends OcPdo
             $stmt = $this->prepare($query);
             $stmt->setFetchMode(self::FETCH_ASSOC);
             $stmt->execute();
-
         } catch (PDOException $e) {
-
             $this->error('Query: ' . $query, $e);
         }
 
@@ -324,8 +331,10 @@ class OcDb extends OcPdo
         } else {
             $delimiter = ';';
         }
+
         foreach (explode($delimiter, $queries) as $query) {
             $query = trim($query);
+
             if (! empty($query) && strcasecmp(substr($query, 0, 9), 'DELIMITER') != 0) {
                 $this->simpleQuery($query);
             }
@@ -412,11 +421,10 @@ class OcDb extends OcPdo
 
             $stmt->setFetchMode(self::FETCH_ASSOC);
             $stmt->execute();
-
         } catch (PDOException $e) {
-
             $this->error("Query:\n$query\n\nParams:\n" . implode(' | ', $params), $e);
         }
+
         if ($this->debug) {
             self::debugOut(__METHOD__ . ":\n\nQuery:\n$query\n\nParams:\n" . implode(' | ', $params));
         }
@@ -474,6 +482,7 @@ class OcDb extends OcPdo
             $stmt = $this->prepare($query);
 
             $i = 1;
+
             foreach ($argList as $param) {
                 $stmt->bindValue(self::BIND_CHAR . $i++, $param);
             }
@@ -508,10 +517,8 @@ class OcDb extends OcPdo
         $numArgs = func_num_args();
 
         if ($numArgs <= 2) {
-
             //only query + default value=> use simpleQuery
             $this->error('Improper use of ' . __METHOD__ . ': Too few arguments. Use simpleQueryValue() instead.');
-
         } else {
             // check if params are passed as array
             if ($numArgs == 3 && is_array($argList[2])) {
@@ -611,6 +618,7 @@ class OcDb extends OcPdo
             // nulled limit means that there is no limit
             $limit = 'max';
         }
+
         return self::quoteLimitNumber($limit);
     }
 
@@ -620,6 +628,7 @@ class OcDb extends OcPdo
             // nulled offset means that there is no offset
             $offset = 0;
         }
+
         return self::quoteLimitNumber($offset);
     }
 
@@ -633,6 +642,7 @@ class OcDb extends OcPdo
             // Note that is somewhat less than PHP_INT_MAX/2.
             return 1000000000;
         }
+
         if ($number <= 0) {
             // This includes all non-numeric values. Previous implementation
             // returned 1000000000 for non_numeric limit, but that prevents
@@ -704,6 +714,7 @@ class OcDb extends OcPdo
             'SHOW COLUMNS FROM `' . $table . '` LIKE :1',
             $column
         ));
+
         if (! $row) {
             $this->error("Column not found: '" . $table . '.' . $column . "'");
         }
@@ -711,15 +722,16 @@ class OcDb extends OcPdo
 
         $type = strtolower($row['type']);
         $isNullable = (strtoupper($row['null']) == 'YES');
+
         if (! $isNullable) {
             $type .= ' NOT NULL';
         }
+
         if ($row['default'] !== null) {
             // Some MySQL/MariaDB versions quote numeric default values, other don't.
             // We will always quote them for consistency (and because it's simpler).
 
             $type .= " DEFAULT '" . $row['default'] . "'";
-
         } elseif ($isNullable) {
             $type .= ' DEFAULT NULL';
         }
@@ -736,6 +748,7 @@ class OcDb extends OcPdo
             'SHOW FULL COLUMNS FROM `' . $table . '` LIKE :1',
             $column
         ));
+
         if (! $row) {
             return '';
         }
@@ -796,6 +809,7 @@ class OcDb extends OcPdo
     private function funcExists($name, $sql)
     {
         self::validateEntityName($name);
+
         return $this->multiVariableQueryValue($sql, null, $name) !== null;
     }
 
@@ -807,6 +821,7 @@ class OcDb extends OcPdo
         // $fields and $params are not validated.
 
           $p = '';
+
           foreach ($params as $key => $value) {
               $p .= ' ' . $key . '=' . $value;
           }
@@ -837,7 +852,6 @@ class OcDb extends OcPdo
         // $newType is not validated.
 
         if (strcasecmp($this->getFullColumnType($table, $column), $newType) !== 0) {
-
             // The above comparison will not always work, as different DB servers
             // use slightly differrent syntaxes. But it's just an optimization.
 
@@ -924,7 +938,6 @@ class OcDb extends OcPdo
         $table, $column, $refTable, $refColumn, $refOptions = ''
     ) {
         if (! $this->foreignKeyExists($table, $column, $refTable)) {
-
             self::validateEntityName($refColumn);
             self::validateSqlKeywords($refOptions);
 
@@ -938,7 +951,6 @@ class OcDb extends OcPdo
     public function dropForeignKeyIfExists($table, $column, $refTable)
     {
         if ($this->foreignKeyExists($table, $column, $refTable)) {
-
             $constraint = $this->multiVariableQueryValue(
                 'SELECT constraint_name FROM information_schema.key_column_usage
                 WHERE table_name = :1 AND column_name = :2 AND referenced_table_name = :3',
@@ -987,8 +999,8 @@ class OcDb extends OcPdo
         // $params and $body are not validated
 
         $type = strtoupper($type);
-        if ($type != 'DETERMINISTIC' && $type != 'READS SQL DATA') {
 
+        if ($type != 'DETERMINISTIC' && $type != 'READS SQL DATA') {
             # Other types will not work if binary logging is enabled (e.g. at OC NL); see
             # https://stackoverflow.com/questions/26015160/deterministic-no-sql-or-reads-sql-data-in-its-declaration-and-binary-logging-i
 

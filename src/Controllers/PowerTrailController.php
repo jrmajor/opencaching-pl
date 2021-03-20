@@ -11,7 +11,6 @@ use src\Utils\Database\OcDb;
 
 class PowerTrailController
 {
-
     const MINIMUM_PERCENT_REQUIRED = 67;
 
     private $config;
@@ -68,7 +67,7 @@ class PowerTrailController
      * @param type $text
      * @return boolean
      */
-    public function addComment(PowerTrail $powerTrail, User $user, DateTime $dateTime, $type, $text )
+    public function addComment(PowerTrail $powerTrail, User $user, DateTime $dateTime, $type, $text)
     {
         $log = new Log();
         $result = $log->setPowerTrail($powerTrail)
@@ -77,9 +76,11 @@ class PowerTrailController
             ->setType($type)
             ->setText($text)
             ->storeInDb();
+
         if($result){
             sendEmail::emailOwners($powerTrail->getId(), $log->getType(), $dateTime->format('Y-m-d H:i'), $text, 'newComment');
         }
+
         return $result;
     }
 
@@ -111,9 +112,11 @@ class PowerTrailController
         $db = OcDb::instance();
         $archiveAbandonQuery = 'SELECT `id` FROM `PowerTrail` WHERE `id` NOT IN (SELECT PowerTrailId FROM `PowerTrail_owners` WHERE 1 GROUP BY PowerTrailId)';
         $s = $db->simpleQuery($archiveAbandonQuery);
+
         if ($db->rowCount($s) > 0) { // close all abandon geoPaths
             $ptToClose = $db->dbResultFetchAll($s);
             $updateArr = [];
+
             foreach ($ptToClose as $pt) {
                 array_push($updateArr, $pt['id']);
             }

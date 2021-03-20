@@ -50,6 +50,7 @@ function xmlentities($str) {
     for ($i = 0; $i <= 4; $i++)
         $str = str_replace($from[$i], $to[$i], $str);
     $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
+
     return $str;
 }
 
@@ -62,6 +63,7 @@ function xmlencode_text($str)
 {
     static $pattern = '/[^\x{0009}\x{000a}\x{000d}\x{0020}-\x{D7FF}\x{E000}-\x{FFFD}]+/u';
     $str = preg_replace($pattern, '', $str);
+
     return strtr($str, ['<' => '&lt;', '>' => '&gt;', '"' => '&quot;', "'" => '&apos;', '&' => '&amp;']);
 }
 
@@ -100,6 +102,7 @@ function cleanup_text($str) {
     for ($i = 0; $i < count($from); $i++)
         $str = str_replace($from[$i], $to[$i], $str);
     $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
+
     return $str;
 }
 
@@ -126,6 +129,7 @@ function convert_lang($source,$dest,$str)
 {
     $source = strtoupper($source);
     $dest = strtoupper($dest);
+
     if($source == $dest) return $str;
     $chars['LATIN'] = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
     $chars['POLSKAWY'] = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
@@ -133,10 +137,13 @@ function convert_lang($source,$dest,$str)
     $chars['WINDOWS-1250'] = ["\xB9", "\xE6", "\xEA", "\xB3", "\xF1", "\xF3", "\x9C", "\x9F", "\xBF", "\xA5", "\xC6", "\xCA", "\xA3", "\xD1", "\xD3", "\x8C", "\x8F", "\xAF"];
     $chars['UTF-8'] = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'];
     $chars['ENTITIES'] = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'];
+
     if(! isset($chars[$source])) return false;
+
     if(! isset($chars[$dest])) return false;
         $str = str_replace('a', 'a', $str);
         $str = str_replace('é', 'e', $str);
+
     return str_replace($chars[$source],$chars[$dest],$str);
 }
 
@@ -148,9 +155,11 @@ function convert_lang($source,$dest,$str)
 function convert_string($str) {
    if (! empty($str)) {
         $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
+
         if ($str === false) {
             $str = '--- charset error ---';
         }
     }
+
     return $str;
 }

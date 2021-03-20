@@ -4,7 +4,6 @@ $cookie = new cookie();
 
 class cookie
 {
-
     var $changed = false;
     var $values = [];
 
@@ -68,11 +67,11 @@ class cookie
         global $config;
 
         if ($this->changed == true) {
-
             // Config setting for mobile cookies is missing. Use the main page
             // setting and hack 'm.' into the domain.
 
             $domain = $config['cookie']['domain'];
+
             if (preg_match('/^(.+?)?open(.+?)$/', $domain, $matches)) {
                 if ($matches[1] == 'www.') {
                     $domain = 'm.open' . $matches[2];
@@ -99,6 +98,7 @@ class cookie
     function debug()
     {
         print_r($this->values);
+
         exit;
     }
 }

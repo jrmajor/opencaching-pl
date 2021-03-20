@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Database;
 
 use Exception;
@@ -76,15 +77,18 @@ class DbUpdateHistory
     public static function wasRunAt($uuid)
     {
         self::init();
+
         if (isset(self::$history[$uuid]['wasRunAt'])) {
             return self::$history[$uuid]['wasRunAt'];
         }
+
         return null;
     }
 
     public static function contains($uuid)
     {
         self::init();
+
         return isset(self::$history[$uuid]);
     }
 
@@ -92,6 +96,7 @@ class DbUpdateHistory
     {
         self::init();
         self::verifyUuid($uuid);
+
         return self::$history[$uuid]['name'];
     }
 
@@ -99,8 +104,8 @@ class DbUpdateHistory
     {
         self::init();
         self::verifyUuid($uuid);
-        if ($newName != self::$history[$uuid]['name']) {
 
+        if ($newName != self::$history[$uuid]['name']) {
             self::$history[$uuid]['name'] = $newName;
 
             # If at least one of the following operations fails, we get a teporary
@@ -162,6 +167,7 @@ class DbUpdateHistory
             $db->addPrimaryKeyIfNotExists('db_update_history', 'uuid');
 
             self::$path = OcConfig::instance()->getDynFilesPath() . 'db_update_history';
+
             if (! file_exists(self::$path)) {
                 mkdir(self::$path);
             }
@@ -182,6 +188,7 @@ class DbUpdateHistory
             // add missing entries to DB history
             foreach ($fileHistory as $filePath) {
                 $uuid = basename($filePath);
+
                 if (! isset(self::$history[$uuid])) {
                     $fileData = file_get_contents($filePath);
                     [$date, $time, $name] = explode(' ', $fileData);

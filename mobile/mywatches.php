@@ -1,12 +1,11 @@
 <?php
+
 use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
+
 require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'])) {
-
-
-
     function find_news($start, $end)
     {
         global $ile;
@@ -19,13 +18,12 @@ if (isset($_SESSION['user_id'])) {
 
         if ($ile2 > 0) {
             $znalezione = [];
-            while ($rek = XDb::xFetchArray($wynik)) {
 
+            while ($rek = XDb::xFetchArray($wynik)) {
                 $query = 'select status,cache_id,name, score, latitude, longitude, wp_oc, user_id, type, date_hidden, null as distance from caches where cache_id=' . $rek['cache_id'] . ' order by name';
                 $wynik2 = XDb::xSql($query);
 
                 while ($rekord = XDb::xFetchArray($wynik2)) {
-
                     if (isset($_SESSION['user_id'])) {
                         $query2 = "select 1 from cache_logs where user_id = '" . $_SESSION['user_id'] . "' and type = '1' and deleted='0' and cache_id ='" . $rekord['cache_id'] . "';";
                         $if_found = XDb::xSimpleQueryValue($query2, 0);
@@ -52,7 +50,7 @@ if (isset($_SESSION['user_id'])) {
                     $rekord['E'] = cords($rekord['longitude']);
                     $rekord['typetext'] = $wiersz2[0];
 
-                    $znalezione [] = $rekord;
+                    $znalezione[] = $rekord;
                 }
             }
         }

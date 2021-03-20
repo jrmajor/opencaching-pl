@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\GeoCache\MultiLogStats;
@@ -16,7 +17,6 @@ use src\Utils\Uri\Uri;
 
 class UserProfileController extends BaseController
 {
-
     /** @var User $requestedUser */
     private $requestedUser;
 
@@ -60,7 +60,6 @@ class UserProfileController extends BaseController
         $watchmailDay = $settings['watchmail_day'];
 
         if (! $this->areEmailSettingsInScope($watchmailMode, $watchmailHour, $watchmailDay)) {
-
             // email settings are wrong - reset to defaults
             // by default send notification: hourly
             $watchmailMode = UserNotify::SEND_NOTIFICATION_HOURLY;
@@ -141,7 +140,7 @@ class UserProfileController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if (isset($_POST['nbh'], $_POST['state'])  ) {
+        if (isset($_POST['nbh'], $_POST['state'])) {
             if (Neighbourhood::setNeighbourhoodNotify($this->loggedUser, (int) $_POST['nbh'], $_POST['state'])) {
                 $this->ajaxSuccessResponse();
             }
@@ -184,12 +183,14 @@ class UserProfileController extends BaseController
     public function mailTo($userId = null, $subject = '')
     {
         $this->redirectNotLoggedUsers();
+
         if (! $this->prepareUserData($userId)) {
             // Bad request - user not selected.
             $this->view->redirect('/');
         }
         $subject = UserInputFilter::purifyHtmlString(urldecode($subject));
         $content = '';
+
         if (isset($_POST['sendEmailAction'])) {
             $this->sendEmail($subject, $content);
         }
@@ -222,6 +223,7 @@ class UserProfileController extends BaseController
         if (! isset($_POST['subject']) || (mb_strlen($subject = mb_substr(strip_tags(trim($_POST['subject'])), 0, 150)) == 0)) {
             $this->errorMsg = tr('mailto_lackOfSubject');
         }
+
         if (! empty($this->errorMsg)) {
             return;
         }
@@ -231,6 +233,7 @@ class UserProfileController extends BaseController
         UserPreferences::savePreferencesJson(UserProfilePref::KEY, json_encode($this->preferences));
         // Send mail to recipient
         $result = UserEmailSender::sendU2UMessage($this->loggedUser, $this->requestedUser, $subject, $content, $this->preferences['email']['showMyEmail']);
+
         if ($result && $this->preferences['email']['recieveCopy']) {
             // Send copy of email - to sender
             $result = UserEmailSender::sendU2UCopy($this->loggedUser, $this->requestedUser, $subject, $content);
@@ -239,6 +242,7 @@ class UserProfileController extends BaseController
         Log::logEmail($this->loggedUser, $this->requestedUser, $subject, $this->preferences['email']['showMyEmail']);
         // Redirect to user profile page
         $uri = $this->requestedUser->getProfileUrl();
+
         if ($result) {
             $uri = Uri::setOrReplaceParamValue('infoMsg', tr('mailto_messageSent'), $uri);
         } else {
@@ -253,6 +257,7 @@ class UserProfileController extends BaseController
             return false;
         }
         $this->preferences = UserPreferences::getUserPrefsByKey(UserProfilePref::KEY)->getValues();
+
         return true;
     }
 
@@ -261,12 +266,14 @@ class UserProfileController extends BaseController
         if (isset($_REQUEST['userid'])) {
             return User::fromUserIdFactory($_REQUEST['userid']);
         }
+
         return null;
     }
 
     public function confirmRules()
     {
         $uri = (empty($_REQUEST['url'])) ? '/' : urldecode($_REQUEST['url']);
+
         if ($this->isUserLogged()) {
             $this->loggedUser->confirmRules();
         }

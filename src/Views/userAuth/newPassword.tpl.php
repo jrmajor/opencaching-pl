@@ -7,7 +7,7 @@ use src\Utils\Uri\SimpleRouter;
   <?=tr('newpw_title')?> - <?=tr('step1')?>
 </div>
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', null, null, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', null, null, $view->errorMsg); ?>
   <div class="callout callout-info">
     <?=tr('newpw_info')?>
   </div>

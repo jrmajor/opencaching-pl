@@ -4,13 +4,13 @@ use src\Models\ApplicationContainer;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 
-require_once (__DIR__ . '/lib/common.inc.php');
-
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 if (! ApplicationContainer::GetAuthorizedUser()) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -18,7 +18,6 @@ if (! ApplicationContainer::GetAuthorizedUser()) {
 if (isset($_REQUEST['userid'])) {
     $user_id = $_REQUEST['userid'];
 }
-
 
 /** @var View */
 $view->setTemplate('ustat');
@@ -33,10 +32,10 @@ $rsGeneralStat = XDb::xSql(
 
 $user_record = XDb::xFetchArray($rsGeneralStat);
 tpl_set_var('username', htmlspecialchars($user_record['username']));
+
 if ($user_record['founds_count'] == 0) {
     $content .= '<p>&nbsp;</p><p>&nbsp;</p><div class="content2-container bg-blue02"><p class="content-title-noshade-size1">&nbsp;<img src="/images/blue/logs.png" class="icon32" alt="Caches Find" title="Caches Find" />&nbsp;&nbsp;&nbsp;' . tr('graph_find') . '</p></div><br /><br /><p> <b>' . tr('there_is_no_caches_found') . '</b></p>';
 } else {
-
     // calculate diif days between date of register on OC  to current date
     $ddays = XDb::xMultiVariableQueryValue(
         'SELECT TO_DAYS( NOW() ) - TO_DAYS(`date_created`) `diff` FROM `user` WHERE user_id= :1 LIMIT 1 ', 0, $user_id);
@@ -44,6 +43,7 @@ if ($user_record['founds_count'] == 0) {
     $rsGeneralStat = XDb::xSql(
         'SELECT YEAR(`date_created`) usertime,hidden_count, founds_count, log_notes_count, username
         FROM `user` WHERE user_id= ? LIMIT 1', $user_id);
+
     if ($rsGeneralStat !== false) {
         $user_record = XDb::xFetchArray($rsGeneralStat);
         XDb::xFreeResults($rsGeneralStat);
@@ -64,7 +64,6 @@ if ($user_record['founds_count'] == 0) {
 
     $content .= '<p><img src="graphs/BarGraphustat.php?userid=' . $user_id . '&amp;t=cfy"  border="0" alt="" width="500" height="200" /></p>';
 }
-
 
 // Parameter
 $jpeg_qualitaet = 80;
@@ -102,10 +101,11 @@ $wyniki = XDb::xSql(
         AND cache_logs.deleted='0'
         AND cache_location.code3 IN ('PL11','PL12','PL21','PL22','PL31','PL32','PL33','PL34','PL41','PL42','PL43','PL51','PL52','PL61','PL62','PL63')
         AND cache_logs.cache_id=cache_location.cache_id
-    GROUP BY cache_location.code3", $user_id );
+    GROUP BY cache_location.code3", $user_id);
 
 while ($wynik = XDb::xFetchArray($wyniki)) {
     $text = $wynik['ilosc'];
+
     if ($text != '0')
         imagettftext($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
 }

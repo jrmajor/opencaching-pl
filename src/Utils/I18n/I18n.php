@@ -6,6 +6,7 @@
  *
  * After refactoring all views it should be moved to the View class.
  */
+
 namespace
 {
     use src\Utils\I18n\I18n;
@@ -214,6 +215,7 @@ namespace src\Utils\I18n
 
             // Oops - no such phrase at all - even in the fallback language...
             Debug::errorLog("Unknown translation for id: {$key}");
+
             return "No translation available (id: {$key})";
         }
 

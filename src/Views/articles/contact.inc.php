@@ -7,9 +7,11 @@ class contactDataProcessor
     public static function processContacts($contactData, $headerLevel)
     {
         $result = '';
+
         foreach ($contactData as $contact) {
             $result .= self::processContactItem($contact, $headerLevel);
         }
+
         return $result;
     }
 
@@ -20,11 +22,14 @@ class contactDataProcessor
         if (isset($contact['groupName'])) {
             $result .= "<h$headerLevel>" . self::translate($contact['groupName'], $contact) . "</h$headerLevel>\n";
         }
+
         if (isset($contact['emailAddress'])) {
             $result .= '<p><b>E-mail: ' . $contact['emailAddress'] . "</b></p>\n";
         }
+
         if (isset($contact['groupDescription'])) {
             $groupDescription = $contact['groupDescription'];
+
             if (is_array($groupDescription)) {
                 foreach ($groupDescription as $groupItem) {
                     $result .= '<p>' . self::translate($groupItem, $contact) . "</p>\n";
@@ -33,6 +38,7 @@ class contactDataProcessor
                 $result .= '<p>' . self::translate($groupDescription, $contact) . "</p>\n";
             }
         }
+
         if (isset($contact['subgroup'])) {
             $result .= self::processContacts($contact['subgroup'], $headerLevel + 1);
         }
@@ -46,6 +52,7 @@ class contactDataProcessor
             $str = I18n::translatePhrase($str, null, true);
         }
         $str = self::resolve($str, $context);
+
         return $str;
     }
 
@@ -58,6 +65,7 @@ class contactDataProcessor
                 }
             }
         }
+
         return $str;
     }
 }

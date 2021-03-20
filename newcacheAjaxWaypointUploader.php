@@ -7,9 +7,7 @@ use src\Models\OcConfig\OcConfig;
 
 require_once __DIR__ . '/lib/common.inc.php';
 
-
 $destination_path = OcConfig::getPicUploadFolder(true) . DIRECTORY_SEPARATOR;
-
 
 $result = 'No Data';
 
@@ -21,6 +19,7 @@ $size = $_FILES['myfile']['size'];
 if (strlen($name)) {
     [$txt, $ext] = explode('.', $name);
     $ext = strtolower($ext);
+
     if (in_array($ext, $valid_formats)) {
         if ($size < (1024 * 1024 * 2)) { // Image size max 2 MB
             $actual_image_name = 'tempgpx.' . $ext;
@@ -39,6 +38,7 @@ if (strlen($name)) {
 function loadWaypointFromGpx($wpts)
 {
     $arr = (array) $wpts;
+
     if (count($wpts->wpt) == 1) {
         $tmp = $arr['wpt'];
         unset($arr);
@@ -48,6 +48,7 @@ function loadWaypointFromGpx($wpts)
     foreach ($arr['wpt'] as $key => $waypoint) {
         $coordsLon = (float) $waypoint->attributes()->lon;
         $coordsLat = (float) $waypoint->attributes()->lat;
+
         if ($coordsLon < 0) {
             $coords_lonEW = 'W';
             $coordsLon = -$coordsLon;
@@ -85,6 +86,7 @@ function loadWaypointFromGpx($wpts)
         if (isset($waypoint->cmt) && $wpts->wpt->cmt != '') {
             $result[$key]['desc'] .= (string) $wpts->wpt->desc;
         }
+
         if (isset($waypoint->cmt) && $wpts->wpt->cmt != '') {
             $result[$key]['cmt'] .= (string) $wpts->wpt->cmt;
         }

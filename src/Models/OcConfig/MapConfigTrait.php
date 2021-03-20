@@ -72,6 +72,7 @@ trait MapConfigTrait
         $maps = self::getKeyFromMapConfig('external') ?? [];
 
         $result = [];
+
         foreach ($maps as $key => $conf) {
             if (! is_array($conf)) {
                 continue;

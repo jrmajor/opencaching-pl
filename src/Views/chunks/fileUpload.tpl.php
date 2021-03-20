@@ -8,7 +8,6 @@
  */
 
 return function ($inputName, $accepted, $maxFileSize = 0) {
-
 // begining of chunk
 ?>
 <!-- MAX= <?=$maxFileSize?> -->

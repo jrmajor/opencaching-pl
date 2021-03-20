@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateTime;
@@ -152,6 +153,7 @@ class Report extends BaseObject
     public function __construct(array $params = [])
     {
         parent::__construct();
+
         if (isset($params['reportId'])) {
             $this->loadById($params['reportId']);
         }
@@ -186,6 +188,7 @@ class Report extends BaseObject
         if ($this->userSubmit == null && $this->dataLoaded) {
             $this->userSubmit = new User(['userId' => $this->userIdSubmit]);
         }
+
         return $this->userSubmit;
     }
 
@@ -199,6 +202,7 @@ class Report extends BaseObject
         if ($this->userLeader == null && $this->dataLoaded) {
             $this->userLeader = new User(['userId' => $this->userIdLeader]);
         }
+
         return $this->userLeader;
     }
 
@@ -212,6 +216,7 @@ class Report extends BaseObject
         if ($this->userLastChange == null && $this->dataLoaded) {
             $this->userLastChange = new User(['userId' => $this->userIdLastChange]);
         }
+
         return $this->userLastChange;
     }
 
@@ -225,6 +230,7 @@ class Report extends BaseObject
         if ($this->cache == null && $this->dataLoaded) {
             $this->cache = new GeoCache(['cacheId' => $this->cacheId]);
         }
+
         return $this->cache;
     }
 
@@ -362,11 +368,13 @@ class Report extends BaseObject
         } else {
             $interval = 0;
         }
+
         if ($interval >= 7) {
             return 'report-status-error';
         } elseif ($interval >= 5) {
             return 'report-status-warning';
         }
+
         return '';
     }
 
@@ -436,14 +444,17 @@ class Report extends BaseObject
             return null;
         }
         $polls = ReportPoll::getActivePolls($this->id);
+
         if (empty($polls)) {
             return ReportCommons::POLLS_NOACTIVE;
         }
+
         foreach ($polls as $poll) {
             if (! $poll->userVoted()) {
                 return ReportCommons::POLLS_ACTIVE;
             }
         }
+
         return ReportCommons::POLLS_ACTIVE_VOTED;
     }
 
@@ -465,18 +476,22 @@ class Report extends BaseObject
         $this->updateLastChanged();
         $this->saveReport();
         $logId = ReportLog::addLog($this->id, ReportLog::TYPE_CHANGELEADER, $this->getUserLeader()->getUserName());
+
         if ($this->userIdLeader == $this->userIdLastChange) { // Assign report to yourself
             $this->sendWatchEmails($logId);
         } else { // Assign report to other user
             ReportEmailSender::sendReportNewLeader($this, $this->getUserLeader());
             $this->sendWatchEmails($logId, [$this->userIdLeader]);
         }
+
         if (! $this->isReportWatched($oldLeaderId) && ! is_null($oldLeaderId)) { // If previeous leader don't watch this report - inform him anyway
             ReportEmailSender::sendReportWatch($this, new User(['userId' => $oldLeaderId]), $logId);
         }
+
         if ($this->status == ReportCommons::STATUS_NEW) { // If sb assign user to new report -> change status to "In progress"
             $this->changeStatus(ReportCommons::STATUS_IN_PROGRESS);
         }
+
         return true;
     }
 
@@ -492,6 +507,7 @@ class Report extends BaseObject
         if (! $this->dataLoaded) {
             return false;
         }
+
         if ($newStatus != ReportCommons::STATUS_LOOK_HERE && ! empty(ReportPoll::getActivePolls($this->id))) { // If polls are active - status should be Look Here!
             return false;
         }
@@ -499,10 +515,12 @@ class Report extends BaseObject
         $this->updateLastChanged();
         $this->saveReport();
         $logId = ReportLog::addLog($this->id, ReportLog::TYPE_CHANGESTATUS, tr($this->getReportStatusTranslationKey()));
+
         if (! $silent) {
             // Send notification about new status
             if ($this->status == ReportCommons::STATUS_LOOK_HERE) {
                 $userlist = MultiUserQueries::getOcTeamMembersArray();
+
                 foreach ($userlist as $user) { // Send mails to all OC Team members
                     if ($user['user_id'] != $this->userIdLastChange) { // Don't notify logged user
                         $usrObj = new User(['userId' => $user['user_id']]);
@@ -512,17 +530,20 @@ class Report extends BaseObject
                 }
             } else { //Status changed NOT to look here
                 $this->sendWatchEmails($logId); // If it is not change to "Look here", send standard watch mails
+
                 if ($this->userIdLeader != ReportCommons::USER_NOBODY && self::getCurrentUser()->getUserId() != $this->userIdLeader && ! $this->isReportWatched($this->userIdLeader)) {
                     // If somebody change status of the report assigned to another user - inform leader even if he don't watch this report
                     ReportEmailSender::sendReportWatch($this, $this->getUserLeader(), $logId);
                 }
             }
         }
+
         if ($this->userIdLeader == null && $newStatus != ReportCommons::STATUS_NEW && $newStatus != ReportCommons::STATUS_LOOK_HERE) {
             // If sbd changes status to other than "New", and report has no leader -
             // Set current logged user as leader!
             $this->changeLeader($this->getCurrentUser()->getUserId());
         }
+
         return true;
     }
 
@@ -578,10 +599,12 @@ class Report extends BaseObject
         $this->saveReport();
         $logId = ReportLog::addLog($this->id, ReportLog::TYPE_NOTE, $submittedNote);
         $this->sendWatchEmails($logId);
+
         if ($this->userIdLeader != ReportCommons::USER_NOBODY && self::getCurrentUser()->getUserId() != $this->userIdLeader && ! $this->isReportWatched($this->userIdLeader)) {
             // If somebody adds note to the report assigned to another user - inform leader even if he don't watch this report
             ReportEmailSender::sendReportWatch($this, $this->getUserLeader(), $logId);
         }
+
         return true;
     }
 
@@ -595,6 +618,7 @@ class Report extends BaseObject
     {
         $content = strip_tags($content, '<br>');
         $content = nl2br($content);
+
         switch ($recipient) {
             case ReportEmailTemplate::RECIPIENT_ALL:
                 ReportEmailSender::sendMailToUser($this, $this->getCache()->getOwner(), $content);
@@ -613,6 +637,7 @@ class Report extends BaseObject
         $this->updateLastChanged();
         $this->saveReport();
         $this->sendWatchEmails($logId);
+
         if ($this->userIdLeader != ReportCommons::USER_NOBODY && self::getCurrentUser()->getUserId() != $this->userIdLeader && ! $this->isReportWatched($this->userIdLeader)) {
             // If somebody adds note to the report assigned to another user - inform leader even if he don't watch this report
             ReportEmailSender::sendReportWatch($this, $this->getUserLeader(), $logId);
@@ -634,10 +659,12 @@ class Report extends BaseObject
         $this->updateLastChanged();
         $this->saveReport();
         ReportLog::addLog($this->id, ReportLog::TYPE_POLL, null, $pollId);
+
         if ($this->status != ReportCommons::STATUS_LOOK_HERE) {
             $this->changeStatus(ReportCommons::STATUS_LOOK_HERE, true);
         }
         $userlist = MultiUserQueries::getOcTeamMembersArray();
+
         foreach ($userlist as $user) { // Send mails to all OC Team members
             if ($user['user_id'] != $this->userIdLastChange) { // Don't notify logged user
                 ReportEmailSender::sendNewPoll(new ReportPoll(['pollId' => $pollId]), new User(['userId' => $user['user_id']]));
@@ -675,6 +702,7 @@ class Report extends BaseObject
         $params['uuid']['data_type'] = 'string';
         $params['node']['value'] = OcConfig::getSiteNodeId();
         $params['node']['data_type'] = 'string';
+
         return (self::db()->paramQuery($query, $params) !== null);
     }
 
@@ -698,6 +726,7 @@ class Report extends BaseObject
      */
     public function sendWatchEmails($logId, $excludeUsers = []) {
         $userlist = ReportWatches::getWatchersByReportId($this->id);
+
         foreach ($userlist as $user) {
             if (in_array($user['user_id'], $excludeUsers) || $user['user_id'] == self::getCurrentUser()->getUserId()) {
                 continue;
@@ -715,9 +744,11 @@ class Report extends BaseObject
         if (! $this->isDataComplete()) {
             return null;
         }
+
         if ($this->uuid == null || $this->uuid == '') {
             $this->uuid = Uuid::create();
         }
+
         if (ReportCommons::isValidReportId($this->id)) {
             return $this->saveToDb();
         } else {
@@ -735,6 +766,7 @@ class Report extends BaseObject
             return false;
         }
         $this->dataLoaded = true;
+
         return true;
     }
 
@@ -764,6 +796,7 @@ class Report extends BaseObject
         $params = $this->buildSaveQueryParams();
         $params['id']['value'] = (int) $this->id;
         $params['id']['data_type'] = 'integer';
+
         return (self::db()->paramQuery($query, $params) !== null);
     }
 
@@ -784,10 +817,12 @@ class Report extends BaseObject
             :PowerTrail_id, :type, :text,
             :note, :submit_date, :status, :secret,
             :changed_by, :changed_date, :responsible_id)';
+
         if (self::db()->paramQuery($query, $this->buildSaveQueryParams()) == null) {
             return null;
         }
         $this->id = self::db()->lastInsertId();
+
         return $this->id;
     }
 
@@ -818,6 +853,7 @@ class Report extends BaseObject
         $params['secret']['data_type'] = ($this->secret !== null) ? 'string' : 'null';
         $params['changed_by']['value'] = ($this->userIdLastChange !== null) ? $this->userIdLastChange : 0;
         $params['changed_by']['data_type'] = 'integer';
+
         if ($this->dateLastChange === null) {
             $params['changed_date']['value'] = null;
             $params['changed_date']['data_type'] = 'null';
@@ -827,6 +863,7 @@ class Report extends BaseObject
         }
         $params['responsible_id']['value'] = $this->userIdLeader;
         $params['responsible_id']['data_type'] = ($this->userIdLeader !== null) ? 'integer' : 'null';
+
         return $params;
     }
 
@@ -903,6 +940,7 @@ class Report extends BaseObject
     {
         $n = new self();
         $n->loadFromDbRow($dbRow);
+
         return $n;
     }
 
@@ -915,8 +953,10 @@ class Report extends BaseObject
     public static function fromIdFactory($reportId)
     {
         $obj = new self();
+
         try {
             $obj->loadById($reportId);
+
             if ($obj->isDataLoaded()) {
                 return $obj;
             } else {

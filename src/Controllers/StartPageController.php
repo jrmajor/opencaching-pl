@@ -56,6 +56,7 @@ class StartPageController extends BaseController
         $this->view->loadJQuery();
 
         $this->view->setVar('isUserLogged', $this->isUserLogged());
+
         if ($this->isUserLogged()) {
             $this->view->setVar('username', $this->loggedUser->getUserName());
         }
@@ -84,6 +85,7 @@ class StartPageController extends BaseController
         global $config;
 
         $center = OcConfig::getMapDefaultCenter();
+
         if (! $center) {
             $this->displayCommonErrorPageAndExit('Wrong default coords?');
         }
@@ -98,7 +100,6 @@ class StartPageController extends BaseController
         $newestCaches = OcMemCache::getOrCreate(
             __CLASS__ . ':newestCaches', 3 * 60 * 60,
             function () {
-
                 $result = new stdClass();
                 $result->createdAt = time();
                 $result->latestCaches = [];
@@ -106,7 +107,6 @@ class StartPageController extends BaseController
 
                 // find latest caches
                 foreach (MultiCacheStats::getLatestCaches(7) as $c) {
-
                     $loc = $c['location'];
 
                     $result->latestCaches[] = [
@@ -125,7 +125,6 @@ class StartPageController extends BaseController
 
                 // find incoming events
                 foreach (MultiCacheStats::getIncomingEvents(7) as $c) {
-
                     $loc = $c['location'];
 
                     $result->incomingEvents[] = [
@@ -180,6 +179,7 @@ class StartPageController extends BaseController
         $cacheSetsEnabledInConfig = $this->ocConfig->isPowertrailsEnabled();
 
         $this->view->setVar('displayLastCacheSets', $cacheSetsEnabledInConfig);
+
         if (! $cacheSetsEnabledInConfig) {
             return;
         }
@@ -202,6 +202,7 @@ class StartPageController extends BaseController
                 $result = new stdClass();
                 $result->createdAt = time();
                 $result->lastCacheSets = $lastCacheSets;
+
                 return $result;
             });
 
@@ -251,6 +252,7 @@ class StartPageController extends BaseController
         $totStsArr[] = ['val' => $ts->activeCaches, 'desc' => tr('startPage_readyToSearch'), 'ldesc' => tr('startPage_readyToSearchDesc')];
         $totStsArr[] = ['val' => $ts->topRatedCaches, 'desc' => tr('startPage_topRatedCaches'), 'ldesc' => tr('startPage_topRatedCachesDesc')];
         $totStsArr[] = ['val' => $ts->totalUsers, 'desc' => tr('startPage_totalUsers'), 'ldesc' => tr('startPage_totalUsersDesc')];
+
         if ($this->ocConfig->isPowertrailsEnabled()) {
             $totStsArr[] = ['val' => $ts->activeCacheSets, 'desc' => tr('startPage_activeCacheSets'), 'ldesc' => tr('startPage_activeCacheSetsDesc')];
         }
@@ -262,13 +264,13 @@ class StartPageController extends BaseController
 
         // rotate stats table random number of times
         $rotator = rand(0, 9);
+
         for ($i = 0; $i < $rotator; $i++) {
             array_push($totStsArr, array_shift($totStsArr));
         }
 
         $this->view->setVar('totStsArr', $totStsArr);
         $this->view->setVar('totStsValidAt', Formatter::dateTime($ts->createdAt));
-
     }
 
     private function processTitleCaches()
@@ -276,22 +278,23 @@ class StartPageController extends BaseController
         $titledCacheDataObj = OcMemCache::getOrCreate(
             __CLASS__ . ':titledCacheData', 5 * 60 * 60,
             function () {
-
                 $lastTitledCache = CacheTitled::getLastCacheTitled();
+
                 if (is_null($lastTitledCache)) {
                     return null;
                 } else {
-
                     $lastTitledCache->prepareForSerialization();
 
                     /** @var GeoCache */
                     $geocache = GeoCache::fromCacheIdFactory($lastTitledCache->getCacheId());
+
                     if (! $geocache) {
                         return null;
                     }
                     $geocache->prepareForSerialization();
 
                     $log = GeoCacheLog::fromLogIdFactory($lastTitledCache->getLogId());
+
                     if (! $log) {
                         return null;
                     }
@@ -310,6 +313,7 @@ class StartPageController extends BaseController
         if (! $titledCacheDataObj) {
             // there is no titledCache? - some error occurred?!
             $this->view->setVar('titledCacheData', null);
+
             return;
         }
         /** @var GeoCache */
@@ -345,7 +349,6 @@ class StartPageController extends BaseController
         $this->view->setVar('titledCacheData', $titledCacheData);
         $this->view->setVar('titledCacheValidAt',
             Formatter::dateTime($titledCacheDataObj->createdAt));
-
     }
 
     private function processFeeds()
@@ -393,6 +396,7 @@ class StartPageController extends BaseController
     private function getFeedsData($onlyIfReady = false)
     {
         $feedsKey = __CLASS__ . ':feeds';
+
         if ($onlyIfReady) {
             return OcMemCache::get($feedsKey);
         } else {
@@ -404,7 +408,6 @@ class StartPageController extends BaseController
                     $result->feeds = [];
 
                     foreach ($config['feed']['enabled'] as $feedName) {
-
                         $feed = new RssFeed($config['feed'][$feedName]['url']);
                         $postsCount = min($config['feed'][$feedName]['posts'], $feed->count());
                         $result->feeds[$feedName] = [];
@@ -422,6 +425,7 @@ class StartPageController extends BaseController
                     }//foreach
 
                     $result->createdAt = time();
+
                     return $result;
                 });
         }

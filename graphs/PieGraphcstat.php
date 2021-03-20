@@ -33,6 +33,7 @@ $rsCSF = XDb::xSql(
 
 $xtitle = '';
 $ry = XDb::xFetchArray($rsCSF);
+
 if ($ry !== false) {
     $y[] = $ry['count'];
     $x[] = $ry['type'];
@@ -66,6 +67,7 @@ $rsCSC = XDb::xSql(
 
 $xtitle = '';
 $ry = XDb::xFetchArray($rsCSC);
+
 if ($ry !== false) {
     $y[] = $ry['count'];
     $x[] = $ry['type'];
@@ -76,7 +78,6 @@ if ($ry !== false) {
 XDb::xFreeResults($rsCSF);
 XDb::xFreeResults($rsCSNF);
 XDb::xFreeResults($rsCSC);
-
 
 // A new pie graph
 $graph = new PieGraph(400, 200, 'auto');

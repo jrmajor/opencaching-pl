@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
@@ -8,7 +9,6 @@ class UserCacheCoords extends BaseObject
 {
     public static function getCoords($userId, $cacheId)
     {
-
         $rs = self::db()->multiVariableQuery(
             'SELECT longitude AS lon, latitude AS lat FROM cache_mod_cords
             WHERE cache_id = :1 AND user_id = :2 LIMIT 1',

@@ -1,6 +1,6 @@
 <?php
-namespace src\Models\CacheSet;
 
+namespace src\Models\CacheSet;
 
 use src\Models\BaseObject;
 
@@ -22,7 +22,6 @@ class MultiGeopathsStats extends BaseObject
      */
     public static function getGeopathForEachGeocache(array $cacheIds)
     {
-
         if (empty($cacheIds)) {
             return [];
         }
@@ -65,6 +64,7 @@ class MultiGeopathsStats extends BaseObject
             "SELECT * FROM  PowerTrail WHERE id IN ($gpIdsStr) LIMIT $limit");
 
         $result = [];
+
         while($data = $db->dbResultFetch($rs)) {
             $path = new CacheSet();
             $path->loadFromDbRow($data);

@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'crwdns11228:0{site_name}crwdnd11228:0{NEED_FIND_LIMIT}crwdne11228:0',
     'postActivation_mail_cacheguides' => 'crwdns26758:0crwdne26758:0',
 
-
     'password_confirm' => 'crwdns5968:0crwdne5968:0',
     'register_msg1' => 'crwdns5969:0{site_name}crwdne5969:0',
     'register_msg2' => 'crwdns5970:0crwdne5970:0',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'crwdns26916:0crwdne26916:0',
     'gp_cacheRemovedFromGeopath' => 'crwdns26918:0crwdne26918:0',
 
-
     'statpic_found' => 'crwdns7519:0crwdne7519:0',
     'statpic_hidden' => 'crwdns7520:0crwdne7520:0',
     'statpic_html_link' => 'crwdns7521:0crwdne7521:0',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'crwdns7597:0crwdne7597:0',
     'search_gpxgc_07' => 'crwdns7598:0crwdne7598:0',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'crwdns27031:0crwdne27031:0',
     'attribute_2' => 'crwdns27033:0crwdne27033:0',
     'attribute_3' => 'crwdns27035:0crwdne27035:0',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'crwdns27195:0crwdne27195:0',
     'attribute_220' => 'crwdns27197:0crwdne27197:0',
     'attribute_999' => 'crwdns27199:0crwdne27199:0',
-// END Attributes
+    // END Attributes
 
     'weather' => 'crwdns7625:0crwdne7625:0',
     'vl_Recently_modified_on' => 'crwdns7626:0crwdne7626:0',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'crwdns27010:0crwdne27010:0',
     'gpCandidates_cancelOfferInProgress' => 'crwdns26976:0crwdne26976:0',
 
-
     'gpMyCandidates_title' => 'crwdns26978:0crwdne26978:0',
     'gpMyCandidates_submitedDate' => 'crwdns26980:0crwdne26980:0',
     'gpMyCandidates_geopathName' => 'crwdns26982:0crwdne26982:0',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'crwdns27262:0crwdne27262:0',
     'editCache_orderPicsSaveSuccess' => 'crwdns27264:0crwdne27264:0',
 
-
     'vote_criteriaNotPassed' => 'crwdns27282:0crwdne27282:0',
     'vote_electionOpenUntil' => 'crwdns27284:0crwdne27284:0',
     'vote_electionWillBeOpen' => 'crwdns27286:0crwdne27286:0',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'crwdns27342:0crwdne27342:0',
     'vote_elListThStart' => 'crwdns27344:0crwdne27344:0',
     'vote_elListThEnd' => 'crwdns27346:0crwdne27346:0',
-//  '' => '',
+    //  '' => '',
 ];

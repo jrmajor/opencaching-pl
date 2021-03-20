@@ -13,18 +13,19 @@ class RepairUserScores
         $sql = 'SELECT user_id FROM user where user_id >= 0 ';
 
         $params = [];
+
         if (isset($_GET['user_id'])) {
             $sql .= ' and user_id=:user_id';
             $params['user_id']['value'] = intval($_GET['user_id']);
             $params['user_id']['data_type'] = 'integer';
         }
 
-
         $s = $db->paramQuery($sql, $params);
         $users = $db->dbResultFetchAll($s);
 
         set_time_limit(3600);
         $total_touched = 0;
+
         foreach ($users as $user) {
             $user_id = $user['user_id'];
 
@@ -78,6 +79,7 @@ class RepairUserScores
             $params['user_id']['value'] = intval($user_id);
             $params['user_id']['data_type'] = 'integer';
             $s = $db->paramQuery($sql, $params);
+
             if ($db->rowCount($s) > 0) {
                 echo "<b>user_id=$user_id</b><br>";
                 echo "hidden_count=$hidden_count<br>cache_ignores=$cache_ignores<br>";

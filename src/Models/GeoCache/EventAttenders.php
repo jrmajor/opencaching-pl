@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use DateTime;
@@ -24,6 +25,7 @@ class EventAttenders extends BaseObject
         if (! $cache->isEvent()) {
             return [];
         }
+
         if ($cache->getDatePlaced() > new DateTime()) {
             $logTypes = GeoCacheLog::LOGTYPE_WILLATTENDED;
         } else {
@@ -40,9 +42,11 @@ class EventAttenders extends BaseObject
             ORDER BY `user`.`username`',
             $logTypes, $cache->getCacheId());
         $result = self::db()->dbResultFetchAll($stmt);
+
         if ($result === false) {
             return [];
         }
+
         return $result;
     }
 }

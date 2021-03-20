@@ -6,10 +6,8 @@
 
 namespace src\Models\User\OAuthSimpleUser;
 
-
 abstract class OAuthSimpleUserBase
 {
-
     protected $isUserDataLoaded = false;  // is data is loaded from ext. service
 
     protected $error = null;  // error state
@@ -125,9 +123,8 @@ abstract class OAuthSimpleUserBase
     {
         self::checkSession();
 
-        if( ! isset($_SESSION[static::SESSION_VAR]) ||
+        if(! isset($_SESSION[static::SESSION_VAR]) ||
             ! is_array($_SESSION[static::SESSION_VAR])){
-
                 $_SESSION[static::SESSION_VAR] = [];
         }
         $_SESSION[static::SESSION_VAR][$var] = true;
@@ -137,12 +134,12 @@ abstract class OAuthSimpleUserBase
     {
         self::checkSession();
 
-        if( isset($_SESSION[static::SESSION_VAR]) &&
+        if(isset($_SESSION[static::SESSION_VAR]) &&
             is_array($_SESSION[static::SESSION_VAR]) &&
-            isset($_SESSION[static::SESSION_VAR][$var]) ){
-
+            isset($_SESSION[static::SESSION_VAR][$var])){
                 // state var is single-use only
                 unset($_SESSION[static::SESSION_VAR][$var]);
+
                 return true;
         }
 

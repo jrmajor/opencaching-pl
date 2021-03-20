@@ -48,6 +48,7 @@ class powerTrail_cCorection
 
     private function takeDistance(){
         $lastchar = substr($this->cacheId, -1);
+
         switch ($lastchar) {
             case 0:
                 return 40;
@@ -86,17 +87,21 @@ class powerTrail_cCorection
 
     private function getDirectionInteger() {
         $direction = substr($this->cacheId, 0, 1);
-        if($direction == 0 ) {
+
+        if($direction == 0) {
             return 5;
         }
+
         if($direction == 9) {
              return 8;
         }
+
         return $direction;
     }
 
     private function calcNewCoords($degDiffLong, $degDiffLat) {
         $direction = $this->getDirectionInteger();
+
         switch ($direction) {
             case 1:
                 $this->latitude = $this->latitude + $degDiffLat;
@@ -131,21 +136,23 @@ class powerTrail_cCorection
 
 final class UserCollection
 {
-
     private $userArray = [];
 
     public static function Instance()
     {
         static $inst = null;
+
         if ($inst === null) {
             $inst = new UserCollection();
         }
+
         return $inst;
     }
 
     private function __construct()
     {
         include __DIR__ . '/../lib/settingsGlue.inc.php';
+
         if(isset($userCollection)) {
             $this->userArray = $userCollection;
         }

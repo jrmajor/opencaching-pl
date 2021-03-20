@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Admin;
 
 use src\Controllers\BaseController;
@@ -18,7 +19,6 @@ use src\Utils\Uri\Uri;
 
 class ReportsController extends BaseController
 {
-
     private $infoMsg = null;
     private $errorMsg = null;
 
@@ -42,6 +42,7 @@ class ReportsController extends BaseController
             } else {
                 $this->redirectToLoginPage();
             }
+
             exit();
         } elseif (! $this->loggedUser->hasOcTeamRole()) {
             if (isset($_REQUEST['ajax'])) {
@@ -49,6 +50,7 @@ class ReportsController extends BaseController
             } else {
                 $this->view->redirect('\\');
             }
+
             exit();
         }
 
@@ -86,28 +88,36 @@ class ReportsController extends BaseController
                     break;
                 case 'watchOn':
                     $this->turnWatchReportOnAjax();
+
                     exit();
                 case 'watchOff':
                     $this->turnWatchReportOffAjax();
+
                     exit();
                 case 'changeCacheStatus':
                     $this->changeCacheStatusAjax();
+
                     exit();
                 case 'changeStatus':
                     $this->changeStatusAjax();
+
                     exit();
                 case 'changeLeader':
                     $this->changeLeaderAjax();
+
                     exit();
                 case 'getTemplates':
                     $this->getEmailTemplatesAjax();
+
                     exit();
                 case 'getTemplate':
                     $this->getTemplateByIdAjax();
+
                     exit();
                 default:
                     if (isset($_REQUEST['ajax'])) {
                         $this->ajaxErrorResponse('Invalid/no action', 400);
+
                         exit();
                     }
             }
@@ -139,12 +149,15 @@ class ReportsController extends BaseController
         $this->paramAjaxCheck('id');
         $this->reportIdAjaxCheck($_REQUEST['id']);
         $this->paramAjaxCheck('status');
+
         if (! in_array($_REQUEST['status'], ReportCommons::getStatusesArray())) {
             $this->ajaxErrorResponse('Invalid new status', 400);
+
             exit();
         }
         $report = new Report(['reportId' => $_REQUEST['id']]);
         $oldleader = $report->getUserIdLeader();
+
         if ($report->changeStatus($_REQUEST['status'])) {
             if ($oldleader != $report->getUserIdLeader()) {
                 $this->ajaxSuccessResponse('reqReloadPage');
@@ -154,6 +167,7 @@ class ReportsController extends BaseController
         } else {
             $this->ajaxErrorResponse('Poll is active!', 400);
         }
+
         exit();
     }
 
@@ -163,11 +177,14 @@ class ReportsController extends BaseController
         $this->paramAjaxCheck('id');
         $this->reportIdAjaxCheck($_REQUEST['id']);
         $this->paramAjaxCheck('leader');
+
         if ($_REQUEST['leader'] != ReportCommons::USER_NOBODY) {
             $user = new User(['userId' => $_REQUEST['leader']]);
+
             if (! $user->hasOcTeamRole()) {
                 unset($user);
                 $this->ajaxErrorResponse('Invalid new leader', 400);
+
                 exit();
             }
             unset($user);
@@ -175,11 +192,13 @@ class ReportsController extends BaseController
         $report = new Report(['reportId' => $_REQUEST['id']]);
         $oldstatus = $report->getStatus();
         $report->changeLeader($_REQUEST['leader']);
+
         if ($oldstatus == ReportCommons::STATUS_NEW) { //Status changed new -> in progress => Page needs to be reloaded
             $this->ajaxSuccessResponse('reqReloadPage');
         } else {
             $this->ajaxSuccessResponse($report->getUserLeader()->getUserName());
         }
+
         exit();
     }
 
@@ -191,18 +210,22 @@ class ReportsController extends BaseController
         $this->reportIdAjaxCheck($_REQUEST['id']);
         $this->paramAjaxCheck('status');
         $newStatus = $_REQUEST['status'];
+
         if (! in_array($newStatus, GeoCache::CacheStatusArray())) {
             $this->ajaxErrorResponse('Invalid new cache status', 400);
+
             exit();
         }
 
         $report = Report::fromIdFactory($_REQUEST['id']);
+
         if ($newStatus != $report->getCache()->getStatus())
         {
             $report->changeCacheStatus($newStatus);
         }
 
         $this->ajaxSuccessResponse(tr($report->getCache()->getStatusTranslationKey()));
+
         exit();
     }
 
@@ -229,6 +252,7 @@ class ReportsController extends BaseController
     private function paramAjaxCheck($paramName) {
         if (! isset($_REQUEST[$paramName])) {
             $this->ajaxErrorResponse('No parameter: ' . $paramName, 400);
+
             exit();
         }
     }
@@ -236,6 +260,7 @@ class ReportsController extends BaseController
     private function reportIdAjaxCheck($reportId) {
         if (! ReportCommons::isValidReportId($reportId)) {
             $this->ajaxErrorResponse('Incorrect report ID', 400);
+
             exit();
         }
     }
@@ -249,14 +274,17 @@ class ReportsController extends BaseController
                 $this->errorMsg = tr('admin_reports_err_noID');
             }
         }
+
         if (isset($_REQUEST['reset'])) {
             $this->resetSession();
         } else {
             $this->setSession();
         }
+
         if (isset($_REQUEST['infomsg'])) {
             $this->infoMsg = strip_tags(urldecode($_REQUEST['infomsg']));
         }
+
         if (isset($_REQUEST['errormsg'])) {
             $this->errorMsg = strip_tags(urldecode($_REQUEST['errormsg']));
         }
@@ -280,6 +308,7 @@ class ReportsController extends BaseController
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/admin/reports.css'));
         $this->view->setTemplate('admin/reports_list');
         $this->view->buildView();
+
         exit();
     }
 
@@ -288,6 +317,7 @@ class ReportsController extends BaseController
         if (isset($_REQUEST['infomsg'])) {
             $this->infoMsg = strip_tags(urldecode($_REQUEST['infomsg']));
         }
+
         if (isset($_REQUEST['errormsg'])) {
             $this->errorMsg = strip_tags(urldecode($_REQUEST['errormsg']));
         }
@@ -312,6 +342,7 @@ class ReportsController extends BaseController
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/admin/reports.css'));
         $this->view->setTemplate('admin/report_show');
         $this->view->buildView();
+
         exit();
     }
 
@@ -330,6 +361,7 @@ class ReportsController extends BaseController
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/admin/reports.css'));
         $this->view->setTemplate('admin/reports_watch');
         $this->view->buildView();
+
         exit();
     }
 
@@ -351,11 +383,13 @@ class ReportsController extends BaseController
         $this->checkReportId();
         $this->checkParam('content', true);
         $report = new Report(['reportId' => $_REQUEST['id']]);
+
         if ($report->addOcTeamLog($_REQUEST['content'])) {
             $report->updateLastChanged();
             $report->saveReport();
             $logid = ReportLog::addLog($_REQUEST['id'], ReportLog::TYPE_CACHELOG_ADD, nl2br(strip_tags($_REQUEST['content'])));
             $report->sendWatchEmails($logid);
+
             if ($report->getUserIdLeader() != ReportCommons::USER_NOBODY && $this->loggedUser->getUserId() != $report->getUserIdLeader() && ! $report->isReportWatched($report->getUserIdLeader())) {
                 ReportEmailSender::sendReportWatch($report, $report->getUserLeader(), $logid);
             }
@@ -399,16 +433,19 @@ class ReportsController extends BaseController
         $this->checkSecurity();
         $this->checkReportId();
         $this->checkParam('pollid');
+
         if (! ReportPoll::isValidPollId($_REQUEST['pollid'])) {
             $this->errorMsg = tr('admin_reports_info_errform');
         } else {
             $poll = new ReportPoll(['pollId' => $_REQUEST['pollid']]);
+
             if (! $poll->cancelPoll()) {
                 $this->errorMsg = tr('admin_reports_err_poll');
             } else {
                 $logid = ReportLog::addLog($_REQUEST['id'], ReportLog::TYPE_POLL_CANCEL, null, $_REQUEST['pollid']);
                 $report = new Report(['reportId' => $_REQUEST['id']]);
                 $report->sendWatchEmails($logid);
+
                 if ($report->getUserIdLeader() != ReportCommons::USER_NOBODY && $report->getUserIdLeader() != $this->loggedUser->getUserId() && ! $report->isReportWatched($report->getUserIdLeader())) {
                     // If somebody cancels pool in the report assigned to another user - inform leader even if he don't watch this report
                     ReportEmailSender::sendReportWatch($report, $report->getUserLeader(), $logid);
@@ -427,6 +464,7 @@ class ReportsController extends BaseController
         $this->checkParam('pollid');
         $voterlist = ReportPoll::getVotersArray($_REQUEST['pollid']);
         $userlist = MultiUserQueries::getOcTeamMembersArray();
+
         foreach ($userlist as $user) {
             if (! in_array($user['user_id'], $voterlist) && $user['user_id'] != $this->loggedUser->getUserId()) {
                 ReportEmailSender::sendNewPoll(new ReportPoll(['pollId' => $_REQUEST['pollid']]), new User(['userId' => $user['user_id']]), true);
@@ -442,6 +480,7 @@ class ReportsController extends BaseController
         $this->checkReportId();
         $this->checkParam('pollid', true);
         $this->checkParam('vote', true);
+
         if (! ReportPoll::isValidPollId($_POST['pollid'])) { // check if pollid id valid
             $this->errorMsg = tr('admin_reports_info_errform');
         } else {
@@ -480,6 +519,7 @@ class ReportsController extends BaseController
         if (! isset($_SERVER['HTTP_REFERER']) || (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) != parse_url($this->ocConfig->getAbsolute_server_URI(), PHP_URL_HOST))) {
             if ($ajax) {
                 $this->ajaxErrorResponse('No hacking please!', 403);
+
                 exit();
             } else {
                 $this->errorMsg = 'No hacking please!';
@@ -491,9 +531,11 @@ class ReportsController extends BaseController
     private function redirectToSingleReport($id)
     {
         $uri = '/admin_reports.php?action=showreport&id=' . $id;
+
         if ($this->errorMsg !== null) {
             $uri .= '&errormsg=' . urlencode($this->errorMsg);
         }
+
         if ($this->infoMsg !== null) {
             $uri .= '&infomsg=' . urlencode($this->infoMsg);
         }
@@ -503,13 +545,16 @@ class ReportsController extends BaseController
     private function redirectToReportList()
     {
         $uri = '/admin_reports.php';
+
         if ($this->errorMsg !== null) {
             $uri = Uri::setOrReplaceParamValue('errormsg', $this->errorMsg, $uri);
         }
+
         if ($this->infoMsg !== null) {
             $uri = Uri::setOrReplaceParamValue('infomsg', $this->infoMsg, $uri);
         }
         $this->view->redirect($uri);
+
         exit();
     }
 
@@ -517,6 +562,7 @@ class ReportsController extends BaseController
     {
         $cleanuri = Uri::removeParam('errormsg');
         $cleanuri = Uri::removeParam('infomsg', $cleanuri);
+
         return $cleanuri;
     }
 
@@ -527,16 +573,19 @@ class ReportsController extends BaseController
         } elseif (! isset($_SESSION['reportType'])) {
             $_SESSION['reportType'] = ReportCommons::DEFAULT_REPORTS_TYPE;
         }
+
         if (isset($_REQUEST['reportStatus'])) {
             $_SESSION['reportStatus'] = (int) $_REQUEST['reportStatus'];
         } elseif (! isset($_SESSION['reportStatus'])) {
             $_SESSION['reportStatus'] = ReportCommons::DEFAULT_REPORTS_STATUS;
         }
+
         if (isset($_REQUEST['reportUser'])) {
             $_SESSION['reportUser'] = (int) $_REQUEST['reportUser'];
         } elseif (! isset($_SESSION['reportUser'])) {
             $_SESSION['reportUser'] = ReportCommons::DEFAULT_REPORTS_USER;
         }
+
         if (isset($_REQUEST['reportWp']) && $_REQUEST != '') {
             $_SESSION['reportWp'] = $_REQUEST['reportWp'];
         } elseif (! isset($_SESSION['reportWp'])) {

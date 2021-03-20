@@ -115,7 +115,6 @@ class MultiLogStats extends BaseObject
 
     public static function getLastLogs($numberOfLogs = 100, $offset = 0)
     {
-
         $allowedCacheStatuses = self::getAllowedCacheStatusesList();
 
         $db = self::db();
@@ -267,6 +266,7 @@ class MultiLogStats extends BaseObject
     public static function getUserFtfs ($userId)
     {
         $db = self::db();
+
         return $db->dbResultFetchAll(
             $db->multiVariableQuery(
                 'SELECT clftf.cache_id, caches.name, clftf.date

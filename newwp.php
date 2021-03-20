@@ -10,9 +10,11 @@ $no_tpl_build = false;
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -20,6 +22,7 @@ if (! $loggedUser) {
 if (isset($_REQUEST['cacheid'])) {
     $cache_id = $_REQUEST['cacheid'];
 }
+
 if (isset($_POST['cacheid'])) {
     $cache_id = $_POST['cacheid'];
 }
@@ -29,7 +32,6 @@ $cache_rs = XDb::xSql('SELECT `user_id`, `name`, `type`,  `longitude`, `latitude
                          FROM `caches` WHERE `cache_id`= ? ', $cache_id);
 
 if ($cache_record = XDb::xFetchArray($cache_rs)) {
-
     tpl_set_var('cache_name', htmlspecialchars($cache_record['name']));
     tpl_set_var('cachetype', htmlspecialchars($cache_record['type']));
 
@@ -68,7 +70,6 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
     }
 
     if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
-
         $tplname = 'newwp';
 
         require_once(__DIR__ . '/src/Views/newcache.inc.php');
@@ -99,14 +100,12 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         foreach (WaypointCommons::getTypesArray($cache_record['type']) as $type) {
             if ($type == $sel_type) {
                 if (($type == WaypointCommons::TYPE_FINAL) && ($pomin == 1)) {
-
                 } // if final waypoint alreday exist for this cache do not allow create new waypoint type "final location"
                 else
                     $types .= '<option value="' . $type . '" selected="selected">' .
                         htmlspecialchars(tr(WaypointCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
             } else {
                 if (($type == WaypointCommons::TYPE_FINAL) && ($pomin == 1)) {
-
                 } //// if final waypoint already exist for this cache do not allow create new waypoint type "final location"
                 else
                     $types .= '<option value="' . $type . '">' .
@@ -118,6 +117,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
         //coords
         $lonEW = isset($_POST['lonEW']) ? $_POST['lonEW'] : $default_EW;
+
         if ($lonEW == 'E') {
             tpl_set_var('lonEsel', ' selected="selected"');
             tpl_set_var('lonWsel', '');
@@ -132,6 +132,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('lon_min', htmlspecialchars($lon_min, ENT_COMPAT, 'UTF-8'));
 
         $latNS = isset($_POST['latNS']) ? $_POST['latNS'] : $default_NS;
+
         if ($latNS == 'N') {
             tpl_set_var('latNsel', ' selected="selected"');
             tpl_set_var('latSsel', '');
@@ -155,6 +156,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_set_var('openchecker_start', '<!--');
             tpl_set_var('openchecker_end', '-->');
         }
+
         if (isset($_POST['openchecker'])) {
             $OpenChecker_present = 1;
             tpl_set_var('openchecker_checked', 'checked=""');
@@ -175,12 +177,15 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         $status2 = '';
         $status3 = '';
         $wp_status = isset($_POST['status']) ? $_POST['status'] : '1';
+
         if ($wp_status == 1) {
             $status1 = 'checked';
         }
+
         if ($wp_status == 2) {
             $status2 = 'checked';
         }
+
         if ($wp_status == 3) {
             $status3 = 'checked';
         }
@@ -196,6 +201,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
             XDb::xFreeResults($cache_rs);
             XDb::xFreeResults($wp_rs);
+
             exit;
         }
 
@@ -234,6 +240,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                 }
 
                 $latitude = $lat_h + $lat_min / 60;
+
                 if ($latNS == 'S')
                     $latitude = -$latitude;
 
@@ -278,6 +285,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                 }
 
                 $longitude = $lon_h + $lon_min / 60;
+
                 if ($lonEW == 'W')
                     $longitude = -$longitude;
 
@@ -316,6 +324,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             }
             //wp-type
             $type_not_ok = false;
+
             if ($sel_type == -1) {
                 tpl_set_var('type_message', $typewp_not_ok_message);
                 $error = true;
@@ -333,14 +342,12 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                     $cache_id, $longitude, $latitude, $sel_type,
                     $wp_status, $wp_stage, $wp_desc, $OpenChecker_present);
 
-
                 XDb::xSql('UPDATE `caches` SET `last_modified`=NOW() WHERE `cache_id`= ? ', $cache_id);
 
                 // ==== openchecker ===============================================
                 // add/update active status to/in opensprawdzacz table
 
                 if (($OpenChecker_present == 1) && ($sel_type == 3)) {
-
                     $proba = XDb::xMultiVariableQueryValue(
                         'SELECT COUNT(*) FROM `opensprawdzacz` WHERE `cache_id` = :1 ', 0, $cache_id);
 
@@ -348,7 +355,6 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                         XDb::xSql("INSERT INTO `opensprawdzacz`(`cache_id`, `proby`, `sukcesy`)
                                                      VALUES ('$cache_id', 0, 0)");
                     }
-
                 }
                 // ==== openchecker end ===========================================
 

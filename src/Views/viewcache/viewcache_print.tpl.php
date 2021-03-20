@@ -88,7 +88,7 @@ use src\Models\GeoKret\GeoKretyApi;
 </div>
 
 
-<?php if ( ! empty($view->geoCacheDesc->getHint()) ) { ?>
+<?php if (! empty($view->geoCacheDesc->getHint())) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -141,7 +141,7 @@ use src\Models\GeoKret\GeoKretyApi;
     </div>
 <?php } //if-isUserAuthorized ?>
 
-<?php if ( ! empty($view->waypointsList) ) { ?>
+<?php if (! empty($view->waypointsList)) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -198,7 +198,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
 
 
-<?php if ( ! empty($view->geoCache->getNatureRegions() ) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
+<?php if (! empty($view->geoCache->getNatureRegions()) || ! empty($view->geoCache->getNatura2000Sites())) { ?>
 
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
@@ -212,7 +212,7 @@ use src\Models\GeoKret\GeoKretyApi;
             <tr>
                 <td align="center" valign="middle">&nbsp;</td><td align="center" valign="middle">
 
-                        <?php if ( ! empty($view->geoCache->getNatureRegions() ) ) { ?>
+                        <?php if (! empty($view->geoCache->getNatureRegions())) { ?>
 
                             <table width="90%" border="0" style="border-collapse: collapse; font-weight: bold;font-size: 14px; line-height: 1.6em">
                               <tr>
@@ -240,7 +240,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
                          <?php } //if-NatureRegions-presents ?>
 
-                         <?php if (  ! empty($view->geoCache->getNatura2000Sites()) ) { ?>
+                         <?php if (! empty($view->geoCache->getNatura2000Sites())) { ?>
 
                             <table width="90%" border="0" style="border-collapse: collapse; font-weight: bold;font-size: 14px; line-height: 1.6em\">
                               <tr>
@@ -293,7 +293,7 @@ use src\Models\GeoKret\GeoKretyApi;
 
 <!-- koniec sekcji modyfikatora współrzędnych -->
 
-<?php if ( ! empty($view->geoCache->getGeokretsHosted())) { ?>
+<?php if (! empty($view->geoCache->getGeokretsHosted())) { ?>
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
         <img src="/images/blue/travelbug.png" class="icon32" alt="" align="absmiddle">
@@ -314,7 +314,7 @@ use src\Models\GeoKret\GeoKretyApi;
 <?php } //if-geokrety-inside ?>
 
 
-<?php if ( ! empty($view->picturesToDisplay) ) { ?>
+<?php if (! empty($view->picturesToDisplay)) { ?>
 <div class="content2-container bg-blue02">
     <p class="content-title-noshade-size1">
         <img src="/images/blue/picture.png" class="icon32" alt="" align="absmiddle">
@@ -333,7 +333,7 @@ use src\Models\GeoKret\GeoKretyApi;
                 <!-- <br style="clear: left;"> at every 4 pic... TODO -->
                 <div class="viewcache-pictureblock">
 
-                    <?php if ( ! $pic->spoiler || $view->isUserAuthorized || $view->alwaysShowCoords ) { ?>
+                    <?php if (! $pic->spoiler || $view->isUserAuthorized || $view->alwaysShowCoords) { ?>
                       <div class="img-shadow">
                         <a href="<?=$pic->url?>" title="<?=$pic->title?>" >
                           <img src="<?=$pic->thumbUrl?>" alt="<?=$pic->title?>" title="<?=$pic->title?>">

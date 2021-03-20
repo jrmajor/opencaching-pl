@@ -1,6 +1,6 @@
 <?php
-namespace src\Utils\Generators;
 
+namespace src\Utils\Generators;
 
 class Uuid
 {

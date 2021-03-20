@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Cron;
 
 use okapi\Facade;
@@ -13,6 +14,7 @@ class CronJobsController extends BaseController
     public function __construct($jobToRun = null)
     {
         parent::__construct();
+
         if ($jobToRun !== null && ! $this->ocConfig->getCronjobSchedule($jobToRun)) {
             exit('unknown job: ' . $jobToRun . "\n");
         }
@@ -33,6 +35,7 @@ class CronJobsController extends BaseController
     private function processCronJobs()
     {
         $lockHandle = Lock::tryLock($this, Lock::EXCLUSIVE | Lock::NONBLOCKING);
+
         if (! $lockHandle) {
             $lastLockedRun = Facade::cache_get('ocpl/lastLockedCronRun');
             $minutesSinceLastRun = (time() - strtotime($lastLockedRun)) / 60;
@@ -66,6 +69,7 @@ class CronJobsController extends BaseController
         foreach ($this->ocConfig->getCronjobSchedule() as $jobName => $schedule) {
             if (! $this->jobToRun || $jobName == $this->jobToRun) {
                 $jobPath = __DIR__ . '/Jobs/' . $jobName . '.php';
+
                 if (! file_exists($jobPath)) {
                     echo "\nConfigured cronjob '" . $jobName . "' does not exist.\n";
                 } else {
@@ -92,8 +96,10 @@ class CronJobsController extends BaseController
     public function getScheduleStatus()
     {
         $result = [];
+
         foreach ($this->ocConfig->getCronjobSchedule() as $jobName => $schedule) {
             $jobPath = __DIR__ . '/Jobs/' . $jobName . '.php';
+
             if (! file_exists($jobPath)) {
                 $lastRun = '?';
             } else {
@@ -109,6 +115,7 @@ class CronJobsController extends BaseController
                 'mayRunNow' => $job->mayRunNow(),
             ];
         }
+
         return $result;
     }
 }

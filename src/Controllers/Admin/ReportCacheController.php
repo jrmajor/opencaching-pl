@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Admin;
 
 use DateTime;
@@ -14,7 +15,6 @@ use src\Utils\Uri\Uri;
 
 class ReportCacheController extends BaseController
 {
-
     private $infoMsg;
 
     private $errorMsg;
@@ -33,6 +33,7 @@ class ReportCacheController extends BaseController
     public function index()
     {
         $this->checkSecurity();
+
         switch ($_REQUEST['action']) {
             case 'add':
                 $this->addReport();
@@ -50,6 +51,7 @@ class ReportCacheController extends BaseController
                 $this->view->redirect('/');
                 break;
         }
+
         exit();
     }
 
@@ -63,6 +65,7 @@ class ReportCacheController extends BaseController
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/admin/reports.css'));
         $this->view->setTemplate('report/report_add');
         $this->view->buildView();
+
         exit();
     }
 
@@ -73,10 +76,12 @@ class ReportCacheController extends BaseController
         $this->checkParam('type', true);
         $this->checkParam('reason', true);
         $this->checkParam('content', true);
+
         if ((! in_array($_POST['type'], ReportCommons::getReportRecipientsArray())) || (! in_array($_POST['reason'], ReportCommons::getTypesArray()))) {
             $this->errorMsg = tr('admin_reports_info_errform') . ' (params)';
             $this->redirectToInfoPage();
         }
+
         try {
             $cache = new GeoCache([
                 'cacheId' => $_POST['cacheid'],
@@ -89,6 +94,7 @@ class ReportCacheController extends BaseController
             'userId' => $cache->getOwnerId(),
         ]);
         $content = nl2br(strip_tags($_POST['content']));
+
         switch ($_POST['type']) {
             case ReportCommons::RECIPIENT_OWNER:
                 ReportEmailSender::sendReport2COMail2CO($cacheOwner, $this->loggedUser, $cache, $content, $_POST['reason'], isset($_POST['report-pubemail']));
@@ -104,12 +110,14 @@ class ReportCacheController extends BaseController
                 $report->setContent($content);
                 $report->setDateSubmit(new DateTime('now'));
                 $report->setStatus(ReportCommons::STATUS_NEW);
+
                 if ($report->saveReport() == null) {
                     $this->errorMsg = tr('reports_user_msg_reporterr');
                 } else {
                     ReportEmailSender::sendReport2OCTMail2CO($cacheOwner, $report);
                     ReportEmailSender::sendReport2OCTMail2S($this->loggedUser, $report);
                     $userlist = MultiUserQueries::getOcTeamMembersArray();
+
                     foreach ($userlist as $user) { // Send mails to all OC Team members
                         ReportEmailSender::sendReport2OCTMail2OCTeam(new User([
                             'userId' => $user['user_id'],
@@ -121,8 +129,9 @@ class ReportCacheController extends BaseController
                 break;
         }
         unset($cacheOwner, $cache);
-        
+
         $this->redirectToViewPage($_POST['cacheid']);
+
         exit();
     }
 
@@ -132,6 +141,7 @@ class ReportCacheController extends BaseController
         $this->view->setVar('errorMsg', $this->errorMsg);
         $this->view->setTemplate('report/report_show');
         $this->view->buildView();
+
         exit();
     }
 
@@ -140,6 +150,7 @@ class ReportCacheController extends BaseController
         if (isset($_REQUEST['infomsg'])) {
             $this->infoMsg = strip_tags(urldecode($_REQUEST['infomsg']));
         }
+
         if (isset($_REQUEST['errormsg'])) {
             $this->errorMsg = strip_tags(urldecode($_REQUEST['errormsg']));
         }
@@ -148,32 +159,39 @@ class ReportCacheController extends BaseController
         $this->view->setVar('errorMsg', $this->errorMsg);
         $this->view->setTemplate('report/report_info');
         $this->view->buildView();
+
         exit();
     }
 
     private function redirectToInfoPage()
     {
         $uri = '/report.php?action=info';
+
         if ($this->errorMsg !== null) {
             $uri .= '&errormsg=' . urlencode($this->errorMsg);
         }
+
         if ($this->infoMsg !== null) {
             $uri .= '&infomsg=' . urlencode($this->infoMsg);
         }
         $this->view->redirect($uri);
+
         exit();
     }
 
     private function redirectToViewPage($cacheid)
     {
         $uri = '/viewcache.php?cacheid=' . $cacheid;
+
         if ($this->errorMsg !== null) {
             $uri .= '&errormsg=' . urlencode($this->errorMsg);
         }
+
         if ($this->infoMsg !== null) {
             $uri .= '&infomsg=' . urlencode($this->infoMsg);
         }
         $this->view->redirect($uri);
+
         exit();
     }
 
@@ -196,10 +214,13 @@ class ReportCacheController extends BaseController
     {
         if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
+
             exit();
         }
+
         if (! isset($_REQUEST['action'])) {
             $this->view->redirect('/');
+
             exit();
         }
     }

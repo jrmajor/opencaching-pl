@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\Cron;
 
 use okapi\Facade;
@@ -34,7 +35,6 @@ class OkapiController extends BaseController
         while ($signals = Facade::fetch_signals(10)) {
             foreach ($signals as $signal) {
                 switch ($signal['type']) {
-
                     case 'log-merit-badges':
                         $cacheId = $signal['payload']['cache_id'];
                         $userId = $signal['payload']['user_id'];
@@ -46,7 +46,6 @@ class OkapiController extends BaseController
 
                         Facade::signals_done([$signal]);
                         break;
-
                     case 'cache-altitude':
                         $cacheId = $signal['payload']['cache_id'];
 

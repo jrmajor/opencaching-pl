@@ -17,7 +17,6 @@ $config = [
      */
     'ocNode' => 'pl', // pl is a default
 
-
     /**
      *Add button to a shop. Set true otherwise false
      *Add link to the shop of choise.
@@ -25,15 +24,11 @@ $config = [
     //NOT USED: 'showShopButton' => false, - to display/hide mapv2 change menu conf.
     //NOT USED: 'showShopButtonUrl' => 'http://www.shop of choise', - to display/hide mapv2 change menu conf.
 
-
     /** to switch cache map v2 on set true otherwise false */
     //NOT USED: 'map2SwithedOn' => true, - to display/hide mapv2 change menu conf.
 
-
     /** to switch flopp's map on set true otherwise false */
     //NOT USED: 'FloppSwithedOn' => false, - to display/hide Flopp's map change menu conf.
-
-
 
     /* === Node personalizations === */
 
@@ -130,7 +125,6 @@ $config['module']['openchecker']['show_final'] = true;
 $config['maps']['cache_page_map']['layer'] = 'terrain';
 $config['maps']['cache_page_map']['zoom'] = 8;
 
-
 // available map source (for osm based  static map): mapnik, cycle, sterrain, stoner
 $config['maps']['main_page_map']['source'] = 'mapnik';
 
@@ -154,7 +148,6 @@ $config['limits']['image']['width'] = 640;
 $config['limits']['image']['height'] = 640;
 // Image recommended size in pixels (for translations)
 $config['limits']['image']['pixels_text'] = '640 x 480';
-
 
 // Minimum distance between caches (physical containers) in meters
 $config['oc']['limits']['proximity'] = 150;

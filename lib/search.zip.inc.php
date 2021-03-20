@@ -18,6 +18,7 @@ function call_okapi(User $loggedUser, $waypoints, $lang, $file_base_name, $zip_p
         $loggedUser->getUserId(), $okapi_params);
     // Modifying OKAPI's default HTTP Response headers.
     $okapi_response->content_disposition = 'attachment; filename=' . $file_base_name . (($zip_part != 0) ? '-' . $zip_part : '') . '.zip';
+
     return $okapi_response;
 }
 
@@ -29,6 +30,7 @@ function generate_link_content($queryid, $file_base_name, $zip_part)
         $format = '';
     $zipname = 'ocpl' . $queryid . '.zip?startat=0&count=max&zippart=' . $zip_part . $format . (isset($_GET['okapidebug']) ? '&okapidebug' : '');
     $link_content = '<li><a class="links" href="' . $zipname . '" title="Garmin ZIP file (part ' . $zip_part . ')">' . $file_base_name . '-' . $zip_part . '.zip</a></li>';
+
     return $link_content;
 }
 
@@ -49,6 +51,7 @@ function get_pagination_template()
             default: return 'garminzip-' . $_GET['format'];
         }
     }
+
     return 'garminzip';
 }
 

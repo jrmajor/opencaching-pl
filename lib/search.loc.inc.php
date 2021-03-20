@@ -12,7 +12,7 @@ use src\Utils\Database\XDb;
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 set_time_limit(1800);
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
@@ -47,7 +47,7 @@ if ($loggedUser || ! $hide_coords) {
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
         if (! $loggedUser) {
@@ -75,6 +75,7 @@ if ($loggedUser || ! $hide_coords) {
     }
 
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
+
     if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id
                     FROM `caches` ';
@@ -87,6 +88,7 @@ if ($loggedUser || ! $hide_coords) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
@@ -119,13 +121,11 @@ if ($loggedUser || ! $hide_coords) {
     $s = $dbcSearch->simpleQuery('SELECT COUNT(*) `count` FROM `loccontent`');
     $rCount = $dbcSearch->dbResultFetchOneRowOnly($s);
 
-
     if ($rCount['count'] == 1) {
         $s = $dbcSearch->simpleQuery(
             'SELECT `caches`.`wp_oc` `wp_oc` FROM `loccontent`, `caches`
             WHERE `loccontent`.`cache_id`=`caches`.`cache_id` LIMIT 1');
         $rName = $dbcSearch->dbResultFetchOneRowOnly($s);
-
 
         $sFilebasename = $rName['wp_oc'];
     } else {
@@ -151,9 +151,11 @@ if ($loggedUser || ! $hide_coords) {
     $bUseZip = ($rCount['count'] > 200000000000);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && $_REQUEST['zip'] == '1');
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
-        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -223,7 +225,6 @@ if ($loggedUser || ! $hide_coords) {
         header('Content-Disposition: attachment; filename=' . $sFilebasename . '.loc');
         ob_end_flush();
     }
-
 }
 
 exit();

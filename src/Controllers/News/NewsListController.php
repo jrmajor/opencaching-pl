@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\News;
 
 use src\Controllers\BaseController;
@@ -9,7 +10,6 @@ use src\Utils\Uri\Uri;
 
 class NewsListController extends BaseController
 {
-
     /**
      * How many news to display max on mainpage
      */
@@ -71,8 +71,10 @@ class NewsListController extends BaseController
     public function show($newsId)
     {
         $news = News::fromNewsIdFactory($newsId);
+
         if (is_null($news) || ! $news->canBeViewed($this->isUserLogged())) {
            $this->view->redirect(SimpleRouter::getLink('News.NewsList'));
+
            exit();
         }
         $this->view->setVar('news', $news);

@@ -8,13 +8,13 @@
  * - (optionally) set the name of the variable set in links to request pages
  *
  */
+
 namespace src\Models\ChunkModels;
 
 use src\Utils\Debug\Debug;
 use src\Utils\Uri\Uri;
 
 class PaginationModel {
-
     const DEFAULT_PAGE_PARAM_NAME = '_page';
     const DEFAULT_STEP_VALUE = 10;
     const DEFAULT_PAGES_LIST_SIZE = 10;
@@ -31,7 +31,6 @@ class PaginationModel {
     private $errorMsg;                      // error message to display
 
     public function __construct($recordsPerPage = null){
-
         $this->loadPaginationUrlParams();
 
         if(! is_null($recordsPerPage)){
@@ -54,15 +53,15 @@ class PaginationModel {
      * @return number
      */
     private function getQueryOffset(){
-        if( is_null($this->currentPage) || is_null($this->recordsPerPage) ){
+        if(is_null($this->currentPage) || is_null($this->recordsPerPage)){
             // TODO: how to handle errors?
             Debug::errorLog('Pagination model used without initialization!');
+
             return 0;
         }
 
         //calculate current Limit
         return ($this->currentPage - 1) * ($this->recordsPerPage);
-
     }
 
     /**
@@ -71,9 +70,10 @@ class PaginationModel {
      * @return number
      */
     private function getRecordsPerPageNum(){
-        if( is_null($this->currentPage) || is_null($this->recordsPerPage) ){
+        if(is_null($this->currentPage) || is_null($this->recordsPerPage)){
             // TODO: how to handle errors?
             Debug::errorLog('Pagination model used without initialization!');
+
             return 0;
         }
 
@@ -129,12 +129,12 @@ class PaginationModel {
     public function getPagesList(){
         $result = [];
 
-
         //calculate the range of the list
         $leftPage = $this->currentPage - floor($this->pagesListSize / 2);
         $rightPage = $this->currentPage + floor($this->pagesListSize / 2);
 
         $lastPage = null;
+
         if(! is_null($this->recordsCount)){
             $lastPage = ceil($this->recordsCount / $this->recordsPerPage);
         }
@@ -149,26 +149,25 @@ class PaginationModel {
             $leftPage = 1;
         }
 
-
         // add "left markers" on the list
         if($leftPage > 1){
-
             $destPage = $this->currentPage - 1;
+
             if($destPage <= 0){
                 $destPage = 1;
             }
             // "<<" mark
             $result[] =
-            new PageModel( '&lt;&lt;', false, $this->getLink(1), tr('pagination_first'));
+            new PageModel('&lt;&lt;', false, $this->getLink(1), tr('pagination_first'));
 
             // "<" mark
             $result[] =
-            new PageModel( '&lt;', false, $this->getLink($destPage), tr('pagination_left'));
+            new PageModel('&lt;', false, $this->getLink($destPage), tr('pagination_left'));
         }
 
         // generate pages marks
         for($i = $leftPage; $i <= $rightPage; $i++){
-            if( ! is_null($lastPage) && $i > $lastPage ){
+            if(! is_null($lastPage) && $i > $lastPage){
                 // last page found
                 break;
             }
@@ -180,10 +179,9 @@ class PaginationModel {
 
         // calculate page number under '>' marker
         $destPage = $this->currentPage + 1;
-        if( ! is_null($lastPage) ){
 
+        if(! is_null($lastPage)){
             if($lastPage > $rightPage){
-
                 // add "right marker" - ">"
                 if($destPage > $lastPage){
                     $destPage = $lastPage;
@@ -191,20 +189,17 @@ class PaginationModel {
 
                 // ">" mark
                 $result[] =
-                new PageModel( '&gt;',false,$this->getLink($destPage), tr('pagination_right'));
+                new PageModel('&gt;',false,$this->getLink($destPage), tr('pagination_right'));
 
                 // ">" mark
                 $result[] =
-                new PageModel( '&gt;&gt;',false,$this->getLink($lastPage), tr('pagination_last'));
-
+                new PageModel('&gt;&gt;',false,$this->getLink($lastPage), tr('pagination_last'));
             }
-
         }else{
             // ">" mark
             $result[] =
-            new PageModel( '&gt;',false,$this->getLink($destPage), tr('pagination_right'));
+            new PageModel('&gt;',false,$this->getLink($destPage), tr('pagination_right'));
         }
-
 
         return $result;
     }
@@ -214,12 +209,10 @@ class PaginationModel {
     }
 
     private function loadPaginationUrlParams(){
-
         //look for pagination param
-        if(! isset($_GET[$this->pageParamName]) ){
+        if(! isset($_GET[$this->pageParamName])){
             //no such param - this is initial, first page
             $this->currentPage = 1;
-
         }else{
             $this->currentPage = $_GET[$this->pageParamName];
 
@@ -239,7 +232,6 @@ class PaginationModel {
  * This is for pagination chunk internal use only.
  */
 class PageModel{
-
     public $text;
     public $isActive;
     public $link;

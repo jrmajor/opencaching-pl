@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Notify;
 
 use src\Models\BaseObject;
@@ -8,7 +9,6 @@ use src\Utils\Debug\Debug;
 
 class Notify extends BaseObject
 {
-
     /* @var integer */
     private $id;
 
@@ -44,6 +44,7 @@ class Notify extends BaseObject
         if ($this->cache == null && $this->isDataLoaded()) {
             $this->cache = GeoCache::fromCacheIdFactory($this->cacheId);
         }
+
         return $this->cache;
     }
 
@@ -57,6 +58,7 @@ class Notify extends BaseObject
         if ($this->user == null && $this->isDataLoaded()) {
             $this->user = User::fromUserIdFactory($this->userId);
         }
+
         return $this->user;
     }
 
@@ -84,6 +86,7 @@ class Notify extends BaseObject
     {
         $n = new self();
         $n->loadFromDbRow($dbRow);
+
         return $n;
     }
 
@@ -117,6 +120,7 @@ class Notify extends BaseObject
             SELECT DISTINCT `user_id`
                 FROM `notify_waiting`';
         $stmt = self::db()->multiVariableQuery($query);
+
         return self::db()->dbResultFetchAll($stmt);
     }
 

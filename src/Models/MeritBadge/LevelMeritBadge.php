@@ -4,7 +4,6 @@ namespace src\Models\MeritBadge;
 
 class LevelMeritBadge
 {
-
     private $name;
     private $level;
     private $picture;

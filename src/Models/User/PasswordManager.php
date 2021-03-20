@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User;
 
 use Exception;
@@ -6,7 +7,6 @@ use src\Utils\Database\OcDb;
 
 class PasswordManager
 {
-
     /**
      * By default, if hashes stored in the database are considered unsafe,
      * PasswordManager will automatically "upgrade" the stored hashes to a
@@ -78,6 +78,7 @@ class PasswordManager
      */
     public static function verifyPassword($userId, $password){
         $pm = new self($userId);
+
         return $pm->verify($password);
     }
 
@@ -88,12 +89,15 @@ class PasswordManager
     private function verify($password)
     {
         $hash = $this->computeHash($password);
+
         if ($hash == $this->hash) {
             $this->correctPassword = $password;
         }
+
         if ($this->autoUpgradeOldHashes && $this->needsUpgrade()) {
             $this->performUpgrade();
         }
+
         return ($this->correctPassword !== null);
     }
 
@@ -115,9 +119,11 @@ class PasswordManager
         if ($this->rounds != $this->wantedHashingRounds) {
             return true;
         }
+
         if (strlen($this->salt) != $this->wantedSaltLength) {
             return true;
         }
+
         return false;
     }
 
@@ -132,12 +138,11 @@ class PasswordManager
          * such case. */
 
         if ($this->correctPassword === null) {
-
             /* We don't know the password. */
 
             $previousRounds = $this->rounds;
-            if ($previousRounds > $this->wantedHashingRounds) {
 
+            if ($previousRounds > $this->wantedHashingRounds) {
                 /* We would have to reduce the number of rounds, which is
                  * impossible in this case. No update can be performed. */
 
@@ -146,7 +151,6 @@ class PasswordManager
             $this->rounds = $this->wantedHashingRounds;
 
             if ($previousRounds <= 1) {
-
                 /* Since the first round doesn't use a salt, it is safe for us
                  * to change it. */
 
@@ -161,7 +165,6 @@ class PasswordManager
                      * skip. */ $previousRounds
             );
         } else {
-
             /* The correct password is known. In that case, we will generate
              * the hash "from scratch", and with a new salt. */
 
@@ -195,7 +198,6 @@ class PasswordManager
     private function singleHashingRound($round_number, $input)
     {
         if ($round_number == 1) {
-
             /* We'll keeping the unsalted MD5 + SHA512 as the first hashing
              * round, for backward compatibility. (This makes it possible to
              * add salt to existing hashes without knowing the correct
@@ -203,7 +205,6 @@ class PasswordManager
 
             return hash('sha512', md5($input));
         } else {
-
             /* All the other rounds are salted. */
 
             return hash('sha512', $input . $this->salt);
@@ -225,9 +226,11 @@ class PasswordManager
             throw new Exception();
         }
         $input = $password;
+
         for ($i = $skippedRounds; $i < $this->rounds; $i++) {
             $input = $this->singleHashingRound($i + 1, $input);
         }
+
         return $input;
     }
 
@@ -243,9 +246,11 @@ class PasswordManager
         $characters = '23456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
+
         for ($i = 0; $i < $length; $i++) {
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
+
         return $randomString;
     }
 }

@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Before you can publish your first cache on {site_name} you should find at least {NEED_FIND_LIMIT} caches, to gain experience.',
     'postActivation_mail_cacheguides' => 'Geocaching Guides / Gurus',
 
-
     'password_confirm' => 'Bekräfta lösenord',
     'register_msg1' => 'För att skapa ett konto på opencaching.pl måste du ange en fungerande e-postadress och ett användarnamn. <br> Ett e-post med en aktiveringskod kommer att skickas till den adress du anger. Endast ett konto kan skapas per e-postadress.',
     'register_msg2' => '* Krävs',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Your cache is already added to geopath.',
     'gp_cacheRemovedFromGeopath' => 'Cache is already removed from geopath.',
 
-
     'statpic_found' => 'Found:',
     'statpic_hidden' => 'Dold:',
     'statpic_html_link' => '- Statistics for',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Recommendation',
     'search_gpxgc_07' => 'National Park',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Hundar ej tillåtna',
     'attribute_2' => 'Access or parking fee',
     'attribute_3' => 'Climbing gear requried',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'Suitable to hold trackables',
     'attribute_220' => 'Officially designated historical monument',
     'attribute_999' => 'Log password',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Väder',
     'vl_Recently_modified_on' => 'Recently modified on',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'Cannot cancel this offer - error occurred',
     'gpCandidates_cancelOfferInProgress' => 'Cancelation in progress',
 
-
     'gpMyCandidates_title' => 'Candidates to geopaths for user',
     'gpMyCandidates_submitedDate' => 'Datum',
     'gpMyCandidates_geopathName' => 'Geopath',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'Problem with update pics order occured',
     'editCache_orderPicsSaveSuccess' => 'Pics order has been changed',
 
-
     'vote_criteriaNotPassed' => 'Currently logged user account doesn\'t pass criteria of participation in voting',
     'vote_electionOpenUntil' => 'This election is open until',
     'vote_electionWillBeOpen' => 'This election will be open',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'Description',
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
-//  '' => '',
+    //  '' => '',
 ];

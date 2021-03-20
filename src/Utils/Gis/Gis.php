@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Gis;
 
 use src\Models\Coordinates\Coordinates;
@@ -54,6 +55,7 @@ class Gis
         // number of points in the polygon
         $n = count($polygon);
         $poly1 = $polygon[0];
+
         for ($i = 1; $i <= $n; $i++) {
             $poly1XY = explode(' ', $poly1);
             $poly1x = $poly1XY[0];
@@ -68,6 +70,7 @@ class Gis
                     if ($px <= max($poly1x, $poly2x)) {
                         if ($poly1y != $poly2y) {
                             $xinters = ($py - $poly1y) * ($poly2x - $poly1x) / ($poly2y - $poly1y) + $poly1x;
+
                             if ($poly1x == $poly2x || $px <= $xinters) {
                                 $counter++;
                             }
@@ -108,34 +111,49 @@ class Gis
 
         if ($bearing < 11.25 || $bearing > 348.75)
             return tr($form . '_n');
+
         if ($bearing < 33.75)
             return tr($form . '_nne');
+
         if ($bearing < 56.25)
             return tr($form . '_ne');
+
         if ($bearing < 78.75)
             return tr($form . '_ene');
+
         if ($bearing < 101.25)
             return tr($form . '_e');
+
         if ($bearing < 123.75)
             return tr($form . '_ese');
+
         if ($bearing < 146.25)
             return tr($form . '_se');
+
         if ($bearing < 168.75)
             return tr($form . '_sse');
+
         if ($bearing < 191.25)
             return tr($form . '_s');
+
         if ($bearing < 213.75)
             return tr($form . '_ssw');
+
         if ($bearing < 236.25)
             return tr($form . '_sw');
+
         if ($bearing < 258.75)
             return tr($form . '_wsw');
+
         if ($bearing < 281.25)
             return tr($form . '_w');
+
         if ($bearing < 303.75)
             return tr($form . '_wnw');
+
         if ($bearing < 326.25)
             return tr($form . '_nw');
+
         if ($bearing <= 348.75)
             return tr($form . '_nnw');
         else
@@ -152,13 +170,13 @@ class Gis
      * @return string|number
      */
     public static function calcBearing($lat1, $lon1, $lat2, $lon2){
-
         if ($lat1 == $lat2 && $lon1 == $lon2) {
             return '-';
         }
 
         if ($lat1 == $lat2)
             $lat1 += 0.0000166;
+
         if ($lon1 == $lon2)
             $lon1 += 0.0000166;
 
@@ -212,7 +230,6 @@ class Gis
     public static function positionAtMapImg(Coordinates $marker, Coordinates $mapCenter,
         $mapZoom, $mapImgWidth, $mapImgHeight)
     {
-
        // find the px coords of central point at map for given zoom
        // (for given zoom map has fixed scale - see e.g. http://wiki.openstreetmap.org/wiki/Zoom_levels)
        $offset = self::HALF_EARTH_CIRCUMFERENCE_AT_ZOOM21_IN_PX >> (21 - $mapZoom);

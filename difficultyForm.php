@@ -38,7 +38,6 @@ if (isset($_POST['Rating']) && $_POST['Rating'] == 'TRUE') {
 
     $view->setVar('diffResult', $Difficulty);
     $view->setVar('terrainResult', $terrain);
-
 } else {
     // print form
     $view->setTemplate('cacheEdit/difficultyForm');

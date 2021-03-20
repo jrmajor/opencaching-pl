@@ -9,7 +9,6 @@ use src\Utils\Debug\Debug;
 
 class CacheLocation extends BaseObject
 {
-
     /** @var NutsLocation */
     private $location;
     private $cacheId;
@@ -20,7 +19,6 @@ class CacheLocation extends BaseObject
         $this->location = new NutsLocation();
         $this->cacheId = $cacheId;
 
-
         if ($this->cacheId) {
             $this->loadCacheLocation($cacheId);
         }
@@ -30,6 +28,7 @@ class CacheLocation extends BaseObject
     {
         $instance = new self();
         $instance->loadFromDbRow($dbRow);
+
         return $instance;
     }
 
@@ -66,9 +65,9 @@ class CacheLocation extends BaseObject
      */
     public function updateInDb()
     {
-
         if (is_null($this->cacheId)) {
             Debug::errorLog('Trying to update CacheLocation of unknown cache!');
+
             return;
         }
 
@@ -123,7 +122,6 @@ class CacheLocation extends BaseObject
      */
     private function loadCacheLocation($cacheId)
     {
-
         $stmt = $this->db->multiVariableQuery(
             'SELECT `code1`, `code2`, `code3`, `code4`, `adm1`,
                     `adm2`, `adm3`, `adm4`  FROM `cache_location`
@@ -131,7 +129,6 @@ class CacheLocation extends BaseObject
 
         $dbResult = $this->db->dbResultFetch($stmt);
         $this->loadFromDbRow($dbResult);
-
     }
 
     /**
@@ -200,10 +197,12 @@ class CacheLocation extends BaseObject
             $location->cacheId = $row['cache_id'];
 
             $coords = Coordinates::FromCoordsFactory($row['latitude'], $row['longitude']);
+
             if (! $coords) {
                 // improper coords!
                 d('WRONG COORDS!');
                 $notFixed++;
+
                 continue;
             }
             $location->location = NutsLocation::fromCoordsFactory($coords);

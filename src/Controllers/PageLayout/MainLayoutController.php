@@ -23,10 +23,8 @@ use stdClass;
  */
 class MainLayoutController extends BaseController
 {
-
     const MAIN_TEMPLATE = 'common/mainLayout';
     const MINI_TEMPLATE = 'common/miniLayout';
-
 
     private $legacyLayout = false;
 
@@ -64,7 +62,6 @@ class MainLayoutController extends BaseController
     {
         global $config; //TODO: refactor
 
-
         if ($this->isUserLogged()) {
             $this->view->setVar('_isUserLogged', true);
             $this->view->setVar('_username', $this->loggedUser->getUserName());
@@ -79,6 +76,7 @@ class MainLayoutController extends BaseController
             }
         } else {
             $this->view->setVar('_isUserLogged', false);
+
             if ($this->view->isRedirectToMainPageAfterLogin()) {
                 $this->view->setVar('_target', '/');
             } else {
@@ -94,6 +92,7 @@ class MainLayoutController extends BaseController
         $this->view->setVar('_backgroundSeason', $this->view->getSeasonCssName());
 
         $this->view->setVar('_showVideoBanner', $this->view->showVideoBanner());
+
         if ($this->view->showVideoBanner()) {
             $this->view->setVar('_topBannerTxt', $this->ocConfig->getTopBannerTxt());
             $this->view->setVar('_topBannerVideo', $this->ocConfig->getTopBannerVideo());
@@ -103,7 +102,6 @@ class MainLayoutController extends BaseController
             $this->view->addLocalCss(Uri::getLinkWithModificationTime('/js/libs/slick/slick-theme.css'));
             $this->view->addLocalJs(
                     Uri::getLinkWithModificationTime('/js/libs/slick/slick.min.js'));
-
         }
 
         if (! $this->legacyLayout) {
@@ -157,6 +155,7 @@ class MainLayoutController extends BaseController
         $this->view->setVar('_qSearchByUserEnabled', $config['quick_search']['byuser']);
 
         $onlineUsers = self::getOnlineUsers();
+
         if (! empty($onlineUsers)) {
             $this->view->setVar('_displayOnlineUsers', $config['mainLayout']['displayOnlineUsers']);
             $this->view->setVar('_onlineUsers', $onlineUsers->listOfUsers);
@@ -175,7 +174,6 @@ class MainLayoutController extends BaseController
 
     private function initMenu()
     {
-
         if (! $this->isUserLogged()) {
             // user not authorized
             $this->view->setVar('_isAdmin', false);
@@ -189,7 +187,6 @@ class MainLayoutController extends BaseController
             // custom user menu
             $this->view->setVar('_customUserMenu',
                 $this->getMenu(OcConfig::MENU_CUSTOM_USER));
-
 
             if ($this->loggedUser->hasOcTeamRole()) {
                 $this->view->setVar('_isAdmin', true);
@@ -209,7 +206,6 @@ class MainLayoutController extends BaseController
 
         $this->view->setVar('_additionalMenu',
             $this->getMenu(OcConfig::MENU_ADDITIONAL_PAGES));
-
     }
 
     /**
@@ -229,8 +225,8 @@ class MainLayoutController extends BaseController
 
                 break;
             case 'mnu_pendings':
-
                 $new_pendings = GeoCacheApproval::getWaitingForApprovalCount();
+
                 if ($new_pendings > 0) {
                     $in_review_count = GeoCacheApproval::getInReviewCount();
                     $waitingForAssigne = $new_pendings - $in_review_count;
@@ -254,7 +250,7 @@ class MainLayoutController extends BaseController
         switch ($key) {
             case 'mnu_clipboard':
                 // add number of caches in clipboard
-                if (! empty(PrintList::GetContent()) ) {
+                if (! empty(PrintList::GetContent())) {
                     $cachesInClipboard = count(PrintList::GetContent());
                     $key = tr($key) . " ($cachesInClipboard)";
                 } else {
@@ -277,7 +273,7 @@ class MainLayoutController extends BaseController
         switch ($key) {
             case 'mnu_geoPaths':
                 // disable geopaths link if disabled in config
-                if (! OcConfig::isPowertrailsEnabled() ) {
+                if (! OcConfig::isPowertrailsEnabled()) {
                     $url = '';
                     break;
                 }
@@ -289,23 +285,21 @@ class MainLayoutController extends BaseController
     private function getMenu($menuPrefix)
     {
         $menu = [];
-        foreach (OcConfig::getMenu($menuPrefix) as $key => $url) {
 
+        foreach (OcConfig::getMenu($menuPrefix) as $key => $url) {
             switch ($menuPrefix) {
                 case OcConfig::MENU_ADMIN_PREFIX:
                     $this->adminMenuHandler($key, $url);
                     break;
-
                 case OcConfig::MENU_HORIZONTAL_BAR:
                     $this->horizontalMenuHandler($key, $url);
                     break;
-
                 case OcConfig::MENU_AUTH_USER:
                     $this->authUserMenuHandler($key, $url);
                     break;
-
                 default:
                     $key = tr($key);
+
                     if (! is_array($url)) {
                         $url = htmlspecialchars($url);
                     }
@@ -317,6 +311,7 @@ class MainLayoutController extends BaseController
 
             $menu[$key] = $url;
         }
+
         return $menu;
     }
 
@@ -337,6 +332,7 @@ class MainLayoutController extends BaseController
             $obj = new stdClass();
             $obj->listOfUsers = UserAuthorization::getOnlineUsersFromDb();
             $obj->validAt = time();
+
             return $obj;
         });
     }

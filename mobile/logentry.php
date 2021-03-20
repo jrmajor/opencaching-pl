@@ -1,11 +1,11 @@
 <?php
+
 use okapi\Facade;
 use src\Utils\Database\XDb;
 
 require_once('./lib/common.inc.php');
 
 if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
-
     $wp = XDb::xEscape($_GET['wp']);
 
     $query = "select name,cache_id,user_id,votes,score,logpw,type from caches where wp_oc = '" . $wp . "' and status='1';";
@@ -13,7 +13,6 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
     $caches = XDb::xFetchArray($wynik);
 
     if (! empty($caches)) {
-
         // Prevent https://github.com/opencaching/opencaching-pl/issues/228
         XDb::xSql('start transaction');
         XDb::xSql("
@@ -24,6 +23,7 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
                 and cache_id = '" . XDb::xEscape($caches['cache_id']) . "'
             for update
         ");
+
         if ($caches['type'] == 6)
             $query = "select 1 from cache_logs where user_id = '" . $_SESSION['user_id'] . "' and type = '7' and deleted='0' and cache_id ='" . $caches['cache_id'] . "';";
         else
@@ -43,13 +43,13 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
         $przyznanych = XDb::xFetchArray($wynik);
 
         $dowykorzystania = $dostepne[0] - $przyznanych[0];
+
         if ($dowykorzystania > 0 && $caches['type'] != 6)
             $topratingav = 1;
         else
             $topratingav = 0;
 
         if (isset($_POST['entry']) && $_POST['entry'] == 'true') {
-
             $rodzaj = XDb::xEscape($_POST['rodzaj']);
             $date_d = XDb::xEscape($_POST['date_d']);
             $date_m = XDb::xEscape($_POST['date_m']);
@@ -85,14 +85,12 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
             elseif (! empty($caches['logpw']) && $caches['logpw'] != $logpw && $rodzaj == 1) {
                 $tpl->assign('error', '5');
             } else {
-
                 $uuid = mb_strtoupper(md5(uniqid(rand(), true)));
                 $query = 'insert into cache_logs (uuid, cache_id, user_id, type, date, text, last_modified, date_created, node) ';
                 $query .= "values ('" . $uuid . "','" . $caches['cache_id'] . "','" . $_SESSION['user_id'] . "','" . $rodzaj . "','" . $dzis . "','" . $tekst . "',now(),now(), '2');";
                 XDb::xSql($query);
 
                 switch ($rodzaj) {
-
                     case 1:
                         $query = 'update caches set founds=founds+1 where cache_id = ' . $caches['cache_id'];
                         XDb::xSql($query);
@@ -135,6 +133,7 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
                         //$query="update caches set topratings=topratings+1 where cache_id=".$caches['cache_id'];
                         //XDb::xSql($query);
                     }
+
                     if ($ocena >= '-3' && $ocena <= '3') {
                         $query = 'insert into scores(cache_id,user_id,score) values (' . $caches['cache_id'] . ',' . $_SESSION['user_id'] . ',' . $ocena . ');';
                         XDb::xSql($query);
@@ -145,6 +144,7 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
                 }
                 XDb::xSql('commit');
                 header('Location: ./viewcache.php?wp=' . $wp);
+
                 exit;
             }
         }
@@ -153,6 +153,7 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
 }
 else {
     header('Location: ./index.php');
+
     exit;
 }
 

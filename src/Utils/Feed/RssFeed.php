@@ -81,6 +81,7 @@ class RssFeed {
         if ($this->current < $this->count()) {
             $this->current++;
             $next = $this->getReader()->item($this->current);
+
             return $next;
         }
     }
@@ -102,6 +103,7 @@ class RssFeed {
     public function random() {
         if ($this->remaining === null) {
             $this->remaining = [];
+
             for ($i = 0; $i < $this->count(); $i++) {
                 $this->remaining[] = $i;
             }
@@ -111,6 +113,7 @@ class RssFeed {
             $picked = array_rand($this->remaining);
             $index = $this->remaining[$picked];
             unset($this->remaining[$picked]);
+
             return $this->getReader()->item($index);
         }
     }
@@ -126,6 +129,7 @@ class RssFeed {
 
         while ($item = $this->next()) {
             $items[] = $item;
+
             if (count($items) >= $count) {
                 break;
             }
@@ -151,6 +155,7 @@ class RssFeed {
     private function getReader() {
         if (! $this->reader) {
             $xml = $this->getXML();
+
             if (RSSReader::canRead($xml)) {
                 $this->reader = new RSSReader($xml);
             } else if (AtomReader::canRead($xml)) {
@@ -159,6 +164,7 @@ class RssFeed {
                 $this->reader = new NullReader($xml);
             }
         }
+
         return $this->reader;
     }
 
@@ -185,6 +191,7 @@ class RssFeed {
     private function getCacheXML() {
         //Store URL data in local cache.
         $cacheFilename = $this->getCacheFilename();
+
         if (file_exists($cacheFilename) && (time() - filemtime($cacheFilename)) < $this->cacheTime) {
             if ($data = file_get_contents($cacheFilename)) {
                 return new SimpleXMLElement($data);
@@ -203,6 +210,7 @@ class RssFeed {
             try {
                 $xml = new SimpleXMLElement($data);
                 file_put_contents($this->getCacheFilename(), $data);
+
                 return $xml;
             } catch (Exception $e) {
                 return null;
@@ -279,7 +287,6 @@ class NullReader implements FeedReader {
  * Concrete implementation of FeedReader that will read an Atom feed.
  */
 class AtomReader implements FeedReader {
-
     private $root;
 
     public function __construct(SimpleXMLElement $root) {
@@ -311,6 +318,7 @@ class AtomReader implements FeedReader {
             if (strpos($link['type'], 'text') === 0 || $item['link'] === null) {
                 $item['link'] = (string) $link['href'];
             }
+
             if (strpos($link['type'], 'image') === 0) {
                 $item['image'] = (string) $link['href'];
             }
@@ -329,7 +337,6 @@ class AtomReader implements FeedReader {
  * Concrete implementation of FeedReader that will read an RSS feed.
  */
 class RSSReader implements FeedReader {
-
     private $root;
 
     public function __construct(SimpleXMLElement $root) {
@@ -347,6 +354,7 @@ class RSSReader implements FeedReader {
             return null;
         }
         $dc = $node->children('http://purl.org/dc/elements/1.1/');
+
         return (object) [
             'title' => (string) $node->title,
             'description' => (string) $node->description,

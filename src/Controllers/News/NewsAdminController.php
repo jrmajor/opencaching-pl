@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers\News;
 
 use src\Controllers\BaseController;
@@ -42,10 +43,12 @@ class NewsAdminController extends BaseController
         $this->checkUserIsAdmin();
 
         $formResult = $_POST;
+
         if (! is_array($formResult)) {
             return false;
         }
         header('X-XSS-Protection: 0');
+
         if ($formResult['id'] != 0) {
             $news = News::fromNewsIdFactory($formResult['id']);
         } else {
@@ -64,8 +67,10 @@ class NewsAdminController extends BaseController
     {
         $this->checkUserIsAdmin();
         $news = News::fromNewsIdFactory($newsId);
+
         if (is_null($news)) {
             $this->view->redirect(SimpleRouter::getLink('News.NewsAdmin'));
+
             exit();
         }
         $this->showEditForm($news);
@@ -90,6 +95,7 @@ class NewsAdminController extends BaseController
 
         $this->view->setTemplate('news/newsAdminEdit');
         $this->view->buildView();
+
         exit();
     }
 
@@ -100,6 +106,7 @@ class NewsAdminController extends BaseController
 
         $this->view->setTemplate('news/newsAdmin');
         $this->view->buildView();
+
         exit();
     }
 
@@ -107,6 +114,7 @@ class NewsAdminController extends BaseController
     {
         if (! $this->isUserLogged() || ! $this->loggedUser->hasNewsPublisherRole()) {
             $this->view->redirect('/');
+
             exit();
         }
     }

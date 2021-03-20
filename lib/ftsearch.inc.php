@@ -54,6 +54,7 @@ function ftsearch_hash(&$str)
         else
             unset($astr[$k]);
     }
+
     return $astr;
 }
 
@@ -78,6 +79,7 @@ function ftsearch_split(&$str, $simple)
     $str = mb_ereg_replace("\r", ' ', $str);
 
     $ostr = '';
+
     while ($ostr != $str) {
         $ostr = $str;
         $str = mb_ereg_replace('  ', ' ', $str);
@@ -113,6 +115,7 @@ function ftsearch_load_ignores()
 
     if ($ftsearch_ignores_loaded != true) {
         $rs = XDb::xSql('SELECT `word` FROM `search_ignore`');
+
         while ($r = XDb::xFetchArray($rs))
             $ftsearch_ignores[] = $r['word'];
         XDb::xFreeResults($rs);
@@ -136,6 +139,7 @@ function ftsearch_text2simple($str)
     // replace duplicate chars
     for ($c = ord('a'); $c <= ord('z'); $c++) {
         $old_str = '';
+
         while ($old_str != $str) {
             $old_str = $str;
             $str = mb_ereg_replace(chr($c) . chr($c), chr($c), $str);
@@ -234,6 +238,7 @@ function ftsearch_refresh_all_caches()
 function ftsearch_refresh_cache($cache_id)
 {
     $rs = XDb::xSql('SELECT `name`, `last_modified` FROM `caches` WHERE `cache_id`= ? LIMIT 1', $cache_id);
+
     if ($r = XDb::xFetchArray($rs)) {
         ftsearch_set_entries(2, $cache_id, $cache_id, $r['name'], $r['last_modified']);
     }
@@ -259,6 +264,7 @@ function ftsearch_refresh_all_cache_desc()
                 WHERE `cache_desc`.`last_modified`>`search_index_times`.`last_refresh`
                     AND `caches`.`status`!=5 AND `caches`.`status`!=6
                     AND `caches`.`status`!= 4');
+
     while ($r = XDb::xFetchArray($rs))
         ftsearch_refresh_cache_desc($r['id']);
     XDb::xFreeResults($rs);
@@ -267,6 +273,7 @@ function ftsearch_refresh_all_cache_desc()
 function ftsearch_refresh_cache_desc($id)
 {
     $rs = XDb::xSql('SELECT `cache_id`, `desc`, `last_modified` FROM `cache_desc` WHERE `id`= ? LIMIT 1', $id);
+
     if ($r = XDb::xFetchArray($rs)) {
         $r['desc'] = ftsearch_strip_html($r['desc']);
         ftsearch_set_entries(3, $id, $r['cache_id'], $r['desc'], $r['last_modified']);
@@ -308,6 +315,7 @@ function ftsearch_refresh_picture($id)
                 AND `cache_logs`.`id`=`pictures`.`object_id`
             WHERE `cache_logs`.`deleted`=0 AND `pictures`.`id`= ?
             LIMIT 1', $id, $id);
+
     if ($r = XDb::xFetchArray($rs)) {
         ftsearch_set_entries(6, $id, $r['cache_id'], $r['title'], $r['last_modified']);
     }
@@ -342,6 +350,7 @@ function ftsearch_refresh_cache_logs($id)
         FROM `cache_logs`
         WHERE `id`= ?
             AND `cache_logs`.`deleted` = ? ', $id, 0);
+
     if ($r = XDb::xFetchArray($rs)) {
         $r['text'] = ftsearch_strip_html($r['text']);
         ftsearch_set_entries(1, $id, $r['cache_id'], $r['text'], $r['last_modified']);
@@ -369,6 +378,7 @@ function ftsearch_set_entries($object_type, $object_id, $cache_id, &$text, $last
     ftsearch_delete_entries($object_type, $object_id, $cache_id);
 
     $ahash = ftsearch_hash($text);
+
     foreach ($ahash as $k => $h) {
         XDb::xSql(
             'INSERT DELAYED INTO `search_index` (`object_type`, `cache_id`, `hash`, `count`)

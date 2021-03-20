@@ -39,7 +39,7 @@
                 <td valign="top">{{newmp3_15}}:</td>
                 <td>
                     <div class="form-inline">
-                        <?php $view->callChunk('fileUpload','file', 'audio/*', $view->maxMp3Size ); ?>
+                        <?php $view->callChunk('fileUpload','file', 'audio/*', $view->maxMp3Size); ?>
                     </div>
                     {errnomp3givendesc}
                 </td>

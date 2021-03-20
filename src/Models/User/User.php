@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User;
 
 use ArrayObject;
@@ -15,7 +16,6 @@ use src\Utils\Generators\Uuid;
  */
 class User extends UserCommons
 {
-
     private $userId;
     private $userUuid;
     private $isGuide;
@@ -67,7 +67,6 @@ class User extends UserCommons
 
     private $permanentLogin = false;
 
-
     /* user identifier used to communication with geoKrety Api*/
     private $geokretyApiSecid;
 
@@ -116,20 +115,15 @@ class User extends UserCommons
         if (isset($params['userId'])) {
             $this->userId = (int) $params['userId'];
             $this->loadDataFromDb($fields);
-
         } elseif (isset($params['userUuid'])) {
             $this->userUuid = $params['userUuid'];
             $this->loadDataFromDbByUuid($fields);
-
         } elseif (isset($params['username'])) {
             $this->loadDataFromDbByUsername($params['username'], $fields);
-
         } elseif (isset($params['userDbRow'])) {
             $this->setUserFieldsByUsedDbRow($params['userDbRow']);
-
         } elseif (isset($params['okapiRow'])) {
             $this->loadFromOKAPIRsp($params['okapiRow']);
-
         }
     }
 
@@ -141,15 +135,16 @@ class User extends UserCommons
      */
     public static function fromUsernameFactory($username, $fields = null)
     {
-
         if (! $fields) {
             $fields = self::COMMON_COLUMNS;
         }
 
         $u = new self();
+
         if ($u->loadDataFromDbByUsername($username, $fields)) {
             return $u;
         }
+
         return null;
     }
 
@@ -161,15 +156,16 @@ class User extends UserCommons
      */
     public static function fromEmailFactory($email, $fields = null)
     {
-
         if (! $fields) {
             $fields = self::COMMON_COLUMNS;
         }
 
         $u = new self();
+
         if ($u->loadDataFromDbByEmail($email, $fields)) {
             return $u;
         }
+
         return null;
     }
 
@@ -191,6 +187,7 @@ class User extends UserCommons
         if ($u->loadDataFromDb($fields)) {
             return $u;
         }
+
         return null;
     }
 
@@ -231,58 +228,61 @@ class User extends UserCommons
         }
 
         $this->dataLoaded = true; //mark object as containing data
-
     }
 
     private function loadDataFromDb($fields)
     {
-
         $stmt = $this->db->multiVariableQuery(
             "SELECT $fields FROM `user` WHERE `user_id`=:1 LIMIT 1", $this->userId);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
+
             return true;
         }
+
         return false;
     }
 
     private function loadDataFromDbByUuid($fields)
     {
-
         $stmt = $this->db->multiVariableQuery(
             "SELECT $fields FROM `user` WHERE `uuid`=:1 LIMIT 1", $this->userUuid);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
+
             return true;
         }
+
         return false;
     }
 
     private function loadDataFromDbByUsername($username, $fields)
     {
-
         $stmt = $this->db->multiVariableQuery(
             "SELECT $fields FROM `user` WHERE `username`=:1 LIMIT 1", $username);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
+
             return true;
         }
+
         return false;
     }
 
     private function loadDataFromDbByEmail($email, $fields)
     {
-
         $stmt = $this->db->multiVariableQuery(
             "SELECT $fields FROM `user` WHERE `email`=:1 LIMIT 1", $email);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
+
             return true;
         }
+
         return false;
     }
 
@@ -376,12 +376,10 @@ class User extends UserCommons
                 case 'permanent_login_flag':
                     $this->permanentLogin = boolval($value);
                     break;
-
                 /* db fields not used in this class yet*/
                 case 'password':
                     // just skip it...
                     break;
-
                 default:
                     Debug::errorLog("Unknown column: $key");
             }
@@ -463,6 +461,7 @@ class User extends UserCommons
         if (! $this->profileUrl) {
             $this->profileUrl = self::GetUserProfileUrl($this->getUserId());
         }
+
         return $this->profileUrl;
     }
 
@@ -476,6 +475,7 @@ class User extends UserCommons
         if (is_null($this->newCachesNoLimit)) {
             $this->loadExtendedSettings();
         }
+
         return $this->newCachesNoLimit;
     }
 
@@ -564,17 +564,21 @@ class User extends UserCommons
                 $geocache = new GeoCache();
                 $geocache->loadFromRow($geocacheRow);
                 $this->geocaches->append($geocache);
+
                 if ($geocache->getStatus() === GeoCache::STATUS_NOTYETAVAILABLE) {
                     $this->appendNotPublishedGeocache($geocache);
                 }
+
                 if ($geocache->getStatus() === GeoCache::STATUS_WAITAPPROVERS) {
                     $this->appendWaitApproveGeocache($geocache);
                 }
+
                 if ($geocache->getStatus() === GeoCache::STATUS_BLOCKED) {
                     $this->appendBlockedGeocache($geocache);
                 }
             }
         }
+
         return $this->geocaches;
     }
 
@@ -592,6 +596,7 @@ class User extends UserCommons
             $this->geocachesNotPublished = new ArrayObject;
             $this->getGeocaches();
         }
+
         return $this->geocachesNotPublished;
     }
 
@@ -609,6 +614,7 @@ class User extends UserCommons
             $this->geocachesWaitApprove = new ArrayObject;
             $this->getGeocaches();
         }
+
         return $this->geocachesWaitApprove;
     }
 
@@ -626,6 +632,7 @@ class User extends UserCommons
             $this->geocachesBlocked = new ArrayObject;
             $this->getGeocaches();
         }
+
         return $this->geocachesBlocked;
     }
 
@@ -648,7 +655,7 @@ class User extends UserCommons
      */
     public function isUnderCacheVerification()
     {
-        if ( $this->getVerifyAll() == 1 ) {
+        if ($this->getVerifyAll() == 1) {
             return true;
         }
 
@@ -661,6 +668,7 @@ class User extends UserCommons
         if ($activeCachesNum < OcConfig::getNeedApproveLimit()) {
             return true;
         }
+
         return false;
     }
 
@@ -693,6 +701,7 @@ class User extends UserCommons
                 AND `cache_logs`.`user_id` = :1
                 ', 0, $this->getUserId());
         }
+
         return $this->foundPhysicalGeocachesCount;
     }
 
@@ -704,9 +713,10 @@ class User extends UserCommons
      */
     public function isAdoptionApplicable()
     {
-        if ( $this->canCreateNewCache() && ! $this->isUnderCacheVerification() ) {
+        if ($this->canCreateNewCache() && ! $this->isUnderCacheVerification()) {
             return true;
         }
+
         return false;
     }
 
@@ -805,12 +815,12 @@ class User extends UserCommons
                     'SELECT `secid` FROM `GeoKretyAPI` WHERE `userID` = :1 LIMIT 1',
                     '', $this->userId);
         }
+
         return $this->geokretyApiSecid;
     }
 
     public function getCacheWatchEmailSettings()
     {
-
         return $this->db->dbResultFetchOneRowOnly(
             $this->db->multiVariableQuery(
                 'SELECT watchmail_mode, watchmail_hour, watchmail_day
@@ -819,12 +829,10 @@ class User extends UserCommons
 
     public function updateCacheWatchEmailSettings(
         $watchmail_mode, $watchmail_hour, $watchmail_day) {
-
         $this->db->multiVariableQuery(
             'UPDATE user SET watchmail_mode=:1, watchmail_hour=:2, watchmail_day=:3
              WHERE user_id=:4 LIMIT 1',
             $watchmail_mode, $watchmail_hour, $watchmail_day, $this->userId);
-
     }
 
     /**
@@ -839,6 +847,7 @@ class User extends UserCommons
     {
         $this->homeCoordinates = $coords;
         $this->notifyRadius = $radius;
+
         return (null !== $this->db->multiVariableQuery('
             UPDATE `user` SET
               `latitude` = :1,
@@ -914,6 +923,7 @@ class User extends UserCommons
     public function confirmRules()
     {
         $this->rulesConfirmed = true;
+
         return (null !== $this->db->multiVariableQuery('
             UPDATE `user`
             SET `rules_confirmed` = 1
@@ -1001,7 +1011,7 @@ class User extends UserCommons
      */
     public function changeStatPic($statPicLogo, $statPicText)
     {
-        $this->db->multiVariableQuery (
+        $this->db->multiVariableQuery(
             'UPDATE user SET statpic_text=:1, statpic_logo=:2 WHERE user_id=:3 ',
             $statPicText, $statPicLogo, $this->getUserId());
 

@@ -9,7 +9,6 @@ use src\Models\GeoCache\GeoCache;
  */
 
 return function (GeoCache $cache) {
-
     $statusTitle = tr($cache->getCacheTypeTranslationKey());
     $statusTitle .= ', ' . tr($cache->getStatusTranslationKey());
 

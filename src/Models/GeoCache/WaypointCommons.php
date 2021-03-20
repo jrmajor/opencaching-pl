@@ -1,11 +1,10 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
 
-
 class WaypointCommons extends BaseObject {
-
     const TYPE_PHYSICAL = 1;
     const TYPE_VIRTUAL = 2;
     const TYPE_FINAL = 3;
@@ -39,7 +38,7 @@ class WaypointCommons extends BaseObject {
             GeoCacheCommons::TYPE_GEOPATHFINAL,
         ];
 
-        if ($forCacheType && in_array($forCacheType, $cacheTypesWithSimpleWps) ) {
+        if ($forCacheType && in_array($forCacheType, $cacheTypesWithSimpleWps)) {
             return [
                 self::TYPE_INTERESTING,
                 self::TYPE_PARKING,

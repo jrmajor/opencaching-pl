@@ -9,7 +9,6 @@ $login = new login();
 
 class login
 {
-
     var $userid = 0;
     var $username = '';
     var $lastlogin = 0;
@@ -21,7 +20,6 @@ class login
         global $cookie;
 
         if ($cookie->is_set('username') && $cookie->is_set('userid') && $cookie->is_set('lastlogin') && $cookie->is_set('sessionid')) {
-
             $this->username = XDb::xEscape($cookie->get('username'));
             $this->userid = XDb::xEscape($cookie->get('userid'));
             $this->lastlogin = XDb::xEscape($cookie->get('lastlogin'));
@@ -59,6 +57,7 @@ class login
 
         if ($this->userid == 0) {
             $this->pClear();
+
             return;
         }
 
@@ -81,8 +80,6 @@ class login
     function try_login($user, $password, $remember)
     {
         $this->pClear();
-
-
 
         $query = "select user_id,username from user where username = '" . XDb::xEscape($user) . "';";
         $wynik = XDb::xSql($query);
@@ -122,17 +119,16 @@ class login
             $query = "update user set uuid_mobile ='" . $uuid . "', last_login_mobile='" . $dzis . "' where user_id='" . $user_id . "';";
             XDb::xSql($query);
         }
+
         return;
     }
 
     function logout()
     {
-
         $query = "update user set uuid_mobile ='NULL', last_login_mobile='0000-00-00 00:00:00' where user_id='" . $_SESSION['user_id'] . "';";
         XDb::xSql($query);
 
         unset($_SESSION['user_id'], $_SESSION['username']);
-        
 
         session_destroy();
 

@@ -25,7 +25,7 @@ use src\Utils\Text\TextConverter;
 
 ob_start();
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 set_time_limit(1800);
 global $content, $bUseZip, $hide_coords, $dbcSearch;
@@ -61,7 +61,7 @@ if ($loggedUser || ! $hide_coords) {
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getSqlDistanceFormula($lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
         if (! $loggedUser) {
@@ -91,13 +91,13 @@ if ($loggedUser || ! $hide_coords) {
                                                                     WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {
             $query .= ' ORDER BY date_created DESC';
         } else { // by name
-
             $query .= ' ORDER BY name ASC';
         }
 
@@ -133,9 +133,11 @@ if ($loggedUser || ! $hide_coords) {
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
-        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -190,14 +192,11 @@ if ($loggedUser || ! $hide_coords) {
         header('Content-Disposition: attachment; filename=' . $sFilebasename . '.uam');
         ob_end_flush();
     }
-
 }
 
 exit();
 
-
 function cs2cs_core2($lat, $lon, $to) {
-
     $descriptorspec = [
         0 => ['pipe', 'r'],     // stdin is a pipe that the child will read from
         1 => ['pipe', 'w'],     // stdout is a pipe that the child will write to
@@ -213,7 +212,6 @@ function cs2cs_core2($lat, $lon, $to) {
     $process = proc_open($command, $descriptorspec, $pipes);
 
     if (is_resource($process)) {
-
         fwrite($pipes[0], $lon . ' ' . $lat);
         fclose($pipes[0]);
 
@@ -239,7 +237,6 @@ function cs2cs_core2($lat, $lon, $to) {
         proc_close($process);
 
         return mb_split("\t|\n| ", TextConverter::mb_trim($stdout));
-
     } else {
         exit("proc_open() failed, command=$command\n");
     }

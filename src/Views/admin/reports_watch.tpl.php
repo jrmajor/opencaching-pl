@@ -22,11 +22,11 @@ use src\Models\Admin\ReportCommons;
       <td style="text-align: center;">
         <a href="/admin_reports.php?action=showreport&amp;id=<?=$report->getId()?>" class="links">
         <?php switch ($report->getPollStatus()) {
-            case ReportCommons::POLLS_ACTIVE :  ?>
+            case ReportCommons::POLLS_ACTIVE:  ?>
                 <img src="/images/misc/poll-vote.svg" class="report-vote-img" alt="{{admin_reports_poll_active}}" title="{{admin_reports_poll_active}}"><br>
                 <?php
                 break;
-            case ReportCommons::POLLS_ACTIVE_VOTED : ?>
+            case ReportCommons::POLLS_ACTIVE_VOTED: ?>
                 <img src="/images/misc/poll-voted.svg" class="report-vote-img" alt="{{admin_reports_poll_voted}}" title="{{admin_reports_poll_voted}}"><br>
                 <?php
                 break; }?>

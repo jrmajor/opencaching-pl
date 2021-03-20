@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Feed;
 
 use DateTime;
@@ -27,7 +28,6 @@ use src\Utils\Uri\Uri;
  */
 class AtomFeed
 {
-
     /** @var string */
     private $title;
 
@@ -143,6 +143,7 @@ class AtomFeed
     public function setTitle($title)
     {
         $this->title = $title;
+
         return $this->getTitle();
     }
 
@@ -155,6 +156,7 @@ class AtomFeed
     public function setId($id)
     {
         $this->id = $id;
+
         return $this->getId();
     }
 
@@ -167,6 +169,7 @@ class AtomFeed
     public function setUpdated(DateTime $updated)
     {
         $this->updated = $updated;
+
         return $this->getUpdated();
     }
 
@@ -179,6 +182,7 @@ class AtomFeed
     public function setLink($link)
     {
         $this->link = $link;
+
         return $this->getLink();
     }
 
@@ -191,6 +195,7 @@ class AtomFeed
     public function setIcon($icon)
     {
         $this->icon = $icon;
+
         return $this->getIcon();
     }
 
@@ -203,6 +208,7 @@ class AtomFeed
     public function setLogo($logo)
     {
         $this->logo = $logo;
+
         return $this->getLogo();
     }
 
@@ -215,6 +221,7 @@ class AtomFeed
     public function setAuthor(AtomFeedAuthor $author)
     {
         $this->author = $author;
+
         return $this->getAuthor();
     }
 
@@ -301,15 +308,19 @@ class AtomFeed
         $result .= '<id>' . $this->getId() . '</id>' . PHP_EOL;
         $result .= '<updated>' . $this->getUpdated()->format(DateTime::ATOM) . '</updated>' . PHP_EOL;
         $result .= '<link href="' . OcConfig::getAbsolute_server_URI() . '" />' . PHP_EOL;
+
         if (! empty($this->getLink())) {
             $result .= '<link type="application/atom+xml" rel="self" href="' . $this->getLink() . '" />' . PHP_EOL;
         }
+
         if (! empty(($this->getIcon()))) {
             $result .= '<icon>' . $this->getIcon() . '</icon>' . PHP_EOL;
         }
+
         if (! empty(($this->getLogo()))) {
             $result .= '<logo>' . $this->getLogo() . '</logo>' . PHP_EOL;
         }
+
         if (! empty($this->getAuthor())) {
             $result .= $this->getAuthor()->getFormatedContent();
         }
@@ -332,9 +343,11 @@ class AtomFeed
     private function buildErrorPage()
     {
         $result = 'Feed problem(s):' . PHP_EOL;
+
         foreach ($this->errors as $error) {
             $result .= $error . PHP_EOL;
         }
+
         return $result;
     }
 }

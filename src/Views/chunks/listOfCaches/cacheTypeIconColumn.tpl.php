@@ -13,13 +13,11 @@ use src\Models\GeoCache\GeoCacheLogCommons;
  */
 
 return function (array $data){
-
     $cacheIconSrc = GeoCacheCommons::CacheIconByType(
-        $data['type'], $data['status'], $data['user_sts'] );
+        $data['type'], $data['status'], $data['user_sts']);
 
-
-    $statusTitle = tr( GeoCacheCommons::CacheTypeTranslationKey($data['type']) );
-    $statusTitle .= ', ' . tr ( GeoCacheCommons::CacheStatusTranslationKey($data['status']));
+    $statusTitle = tr(GeoCacheCommons::CacheTypeTranslationKey($data['type']));
+    $statusTitle .= ', ' . tr(GeoCacheCommons::CacheStatusTranslationKey($data['status']));
 
     if(! is_null($data['user_sts'])){
         $statusTitle .= ', ' . tr(GeoCacheLogCommons::typeTranslationKey($data['user_sts']));

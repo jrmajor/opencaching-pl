@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Debug;
 
 /**
@@ -12,7 +13,6 @@ namespace src\Utils\Debug;
  */
 
 class StopWatch {
-
     const SWICH_VAR = 'StopWatch'; //this var needs to be set in request (in GET/POST etc)
 
     private $stages;
@@ -45,6 +45,7 @@ class StopWatch {
 
         $last = null;
         $start = null;
+
         foreach ($instance->stages as $stageName => $stageTime){
             $ms = self::microTimeToMs($stageTime);
 
@@ -55,7 +56,7 @@ class StopWatch {
                 $fromStart = number_format($ms - $start, 4);
             }
 
-            if( is_null($last) ){
+            if(is_null($last)){
                 $fromLast = '-';
             }else{
                 $fromLast = number_format($ms - $last, 4);
@@ -63,8 +64,8 @@ class StopWatch {
 
             $result[$stageName] = "$fromStart s. [$fromLast s.]";
             $last = $ms;
-
         }
+
         return $result;
     }
 
@@ -83,7 +84,7 @@ class StopWatch {
      */
     public static function reset()
     {
-        if( $instance = self::instance() ){
+        if($instance = self::instance()){
             $instance->stages = [];
         }
     }
@@ -91,14 +92,17 @@ class StopWatch {
     private static function instance()
     {
         static $instance = null;
+
         if ($instance === null) {
             if(isset($_REQUEST[self::SWICH_VAR])){
                 $instance = new static();
+
                 return $instance;
             }else{
                 return null;
             }
         }
+
         return $instance;
     }
 
@@ -108,6 +112,7 @@ class StopWatch {
     private static function microTimeToMs($microtime)
     {
         [$usec, $sec] = explode(' ', $microtime);
+
         return ((float) $usec + (float) $sec);
     }
 }

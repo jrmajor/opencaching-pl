@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User;
 
 use src\Models\BaseObject;
@@ -20,7 +21,6 @@ class MultiUserQueries extends BaseObject
      */
     public static function getActiveUsersCount()
     {
-
         $countedTypes = implode(',',[
             GeoCacheLog::LOGTYPE_FOUNDIT,
             GeoCacheLog::LOGTYPE_DIDNOTFIND,
@@ -50,7 +50,8 @@ class MultiUserQueries extends BaseObject
         }
         $query->groupBy('MONTH(date_created)');
 
-        $rs = $db->simpleQuery( $query->build() );
+        $rs = $db->simpleQuery($query->build());
+
         return $db->dbFetchAsKeyValArray($rs, 'month', 'usersCount');
     }
 
@@ -71,7 +72,6 @@ class MultiUserQueries extends BaseObject
      */
     public static function GetUserNamesForListOfIds(array $userIds)
     {
-
         if(empty($userIds)){
             return [];
         }
@@ -84,7 +84,7 @@ class MultiUserQueries extends BaseObject
             "SELECT user_id, username FROM user
             WHERE user_id IN ( $userIdsStr )");
 
-        return $db->dbFetchAsKeyValArray($s, 'user_id', 'username' );
+        return $db->dbFetchAsKeyValArray($s, 'user_id', 'username');
     }
 
     /**
@@ -130,7 +130,7 @@ class MultiUserQueries extends BaseObject
 
         $activeGuidesDict = $db->dbResultFetchAllAsDict($s);
 
-        if(empty($activeGuidesDict) ){
+        if(empty($activeGuidesDict)){
             // there is no guides...
             return [];
         }
@@ -148,13 +148,14 @@ class MultiUserQueries extends BaseObject
             HAVING recos >= $guideGotRecommendations");
 
         $result = [];
+
         while($row = $db->dbResultFetch($s)){
             $userData = $activeGuidesDict[$row['user_id']];
             $userData['recomendations'] = $row['recos'];
             $result[] = $userData;
         }
-        return $result;
 
+        return $result;
     }
 
     public static function getOcTeamMembersArray()
@@ -165,6 +166,7 @@ class MultiUserQueries extends BaseObject
             WHERE role & ' . User::ROLE_OC_TEAM . '>0 AND is_active_flag = 1
             ORDER BY username';
         $stmt = self::db()->simpleQuery($query);
+
         return self::db()->dbResultFetchAll($stmt);
     }
 
@@ -184,6 +186,7 @@ class MultiUserQueries extends BaseObject
             ORDER BY `username`
             ';
         $stmt = self::db()->multiVariableQuery($query, '%' . $subString . '%');
+
         return self::db()->dbFetchAllAsObjects($stmt, function ($row) {
             return User::fromUserIdFactory($row['user_id']);
         });

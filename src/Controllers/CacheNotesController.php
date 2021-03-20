@@ -36,9 +36,9 @@ class CacheNotesController extends BaseController
 
     public function index()
     {
-
         if(! $this->isUserLogged()){
             $this->redirectToLoginPage();
+
             exit;
         }
 
@@ -57,8 +57,6 @@ class CacheNotesController extends BaseController
             Uri::getLinkWithModificationTime('/js/lightPopup/lightPopup.css'));
         $this->view->addLocalJs(
             Uri::getLinkWithModificationTime('/js/lightPopup/lightPopup.js'));
-
-
 
         $rowCount = CacheNote::getCountOfUserNotesAndModCoords($this->loggedUser->getUserId());
         $this->view->setVar('rowCount', $rowCount);
@@ -130,7 +128,6 @@ class CacheNotesController extends BaseController
 
             $model->addColumn(new Column_OnClickActionIcon(tr('myNotes_removeCoords'),
                 function($row){
-
                     return [
                         'icon' => isset($row['coords'])?'/images/log/16x16-trash.png':null,
                         'onClick' => "removeCoords(this, {$row['cache_id']})",
@@ -144,7 +141,7 @@ class CacheNotesController extends BaseController
             [$queryLimit, $queryOffset] = $pagination->getQueryLimitAndOffset();
             $model->setPaginationModel($pagination);
 
-            $model->addDataRows( self::completeDataRows(
+            $model->addDataRows(self::completeDataRows(
                     $this->loggedUser->getUserId(), $queryLimit, $queryOffset));
 
             $this->view->setVar('listCacheModel', $model);
@@ -161,12 +158,14 @@ class CacheNotesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
         //check cacheId
         if(! is_numeric($cacheId)){
             $this->ajaxErrorResponse('Invalid param', 400);
+
             exit;
         }
 
@@ -182,18 +181,19 @@ class CacheNotesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
         //check cacheId
         if(! is_numeric($cacheId)){
             $this->ajaxErrorResponse('Invalid param', 400);
+
             exit;
         }
 
-        CacheNote::deleteNote( $this->loggedUser->getUserId(), $cacheId);
+        CacheNote::deleteNote($this->loggedUser->getUserId(), $cacheId);
         $this->ajaxSuccessResponse();
-
     }
 
     private function completeDataRows($userId, $limit = null, $offset = null)
@@ -204,40 +204,43 @@ class CacheNotesController extends BaseController
 
         // fill notes
         foreach (CacheNote::getNotesByCacheIds($cacheIds, $userId) as $note){
-            $result[ $note['cache_id'] ]['noteTxt'] = $note['desc'];
+            $result[$note['cache_id']]['noteTxt'] = $note['desc'];
         }
 
         // fill mod-coords
-        foreach ( UserCacheCoords::getCoordsByCacheIds($cacheIds, $userId) as $coord){
-            $result[ $coord['cache_id'] ]['coords'] =
+        foreach (UserCacheCoords::getCoordsByCacheIds($cacheIds, $userId) as $coord){
+            $result[$coord['cache_id']]['coords'] =
                 Coordinates::FromCoordsFactory($coord['lat'], $coord['lot']);
 
-            $result[ $coord['cache_id'] ]['coordsDate'] = $coord['date'];
+            $result[$coord['cache_id']]['coordsDate'] = $coord['date'];
         }
 
         // fill caches data
         $cacheFields = ['cache_id', 'name', 'type', 'status', 'wp_oc'];
-        foreach ( MultiCacheStats::getGeocachesDataById($cacheIds, $cacheFields) as $c){
+
+        foreach (MultiCacheStats::getGeocachesDataById($cacheIds, $cacheFields) as $c){
             foreach($cacheFields as $col){
-                $result[ $c['cache_id'] ][$col] = $c[$col];
+                $result[$c['cache_id']][$col] = $c[$col];
             }
         }
 
         // find last logs
         $logFields = ['id', 'text', 'type', 'user_id', 'date'];
-        foreach( MultiLogStats::getLastLogForEachCache($cacheIds) as $log) {
+
+        foreach(MultiLogStats::getLastLogForEachCache($cacheIds) as $log) {
             foreach($logFields as $col){
-                $result[ $log['cache_id'] ]['llog_' . $col] = $log[$col];
+                $result[$log['cache_id']]['llog_' . $col] = $log[$col];
             }
         }
 
         // find cache status for user (found/not-found)
-        foreach ( MultiLogStats::getStatusForUser($userId, $cacheIds) as $s){
-            $result[ $s['cache_id']] ['user_sts'] = $s['type'];
+        foreach (MultiLogStats::getStatusForUser($userId, $cacheIds) as $s){
+            $result[$s['cache_id']]['user_sts'] = $s['type'];
         }
 
         // find necessary-users
         $userIds = [];
+
         foreach ($result as $r){
             if (isset($r['llog_user_id'])){
                 $userIds[$r['cache_id']] = $r['llog_user_id'];
@@ -245,6 +248,7 @@ class CacheNotesController extends BaseController
         }
 
         $userNames = MultiUserQueries::GetUserNamesForListOfIds($userIds);
+
         foreach ($result as &$r){
             if (isset($r['llog_user_id'])){
                 $r['llog_userName'] = $userNames[$r['llog_user_id']];

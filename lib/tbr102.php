@@ -50,13 +50,11 @@ require_once(__DIR__ . '/common.inc.php');
             $sPeriodName = tr('.year');
         }
 
-
         if ($sDateFrom != '')
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
 
         if ($sDateTo != '')
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
-
 
         if ($sNameOfStat == 'NumberOfFinds')
             $sTypeCondition = ' and  cl.type=1 ';
@@ -64,9 +62,7 @@ require_once(__DIR__ . '/common.inc.php');
         if ($sNameOfStat == 'MaintenanceOfCaches')
             $sTypeCondition = ' and  cl.type=6 ';
 
-
         $asUserID = explode(',', $sUserIDLine);
-
 
         if (! strlen($sUserIDLine))
             $sEND = tr('SelectUsers');
@@ -81,18 +77,14 @@ require_once(__DIR__ . '/common.inc.php');
             echo '</script>';
         }
 
-
-
         if ($sEND != '') {
             echo '<script>';
             echo 'return;';
             echo '</script>';
         }
 
-
-
-
         $sCondition = '';
+
         foreach ($asUserID as $sID) {
             if (strlen($sCondition))
                 $sCondition = $sCondition . ' or ';
@@ -105,9 +97,6 @@ require_once(__DIR__ . '/common.inc.php');
         }
 
         $sCondition .= $sDateCondition;
-
-
-
 
 /////////////////
 
@@ -122,10 +111,7 @@ require_once(__DIR__ . '/common.inc.php');
                 . $sCondition .
                 ' order by period';
 
-
-
         $s = $dbc->multiVariableQuery($query);
-
 
         $aNrColumn = [];
         $i = 0;
@@ -133,7 +119,6 @@ require_once(__DIR__ . '/common.inc.php');
         echo '<script>';
 
         while ($record = $dbc->dbResultFetch($s)) {
-
             $nPeriod = $record['period'];
 
             $aNrColumn[$nPeriod] = $i;
@@ -143,7 +128,6 @@ require_once(__DIR__ . '/common.inc.php');
 
             $i = $i + 1;
         }
-
 
 ////////////////////
 
@@ -173,10 +157,10 @@ require_once(__DIR__ . '/common.inc.php');
 
             $s = $dbc->multiVariableQuery($query);
 
-
             echo '<script>';
 
             $nStart = 1;
+
             while ($record = $dbc->dbResultFetch($s)) {
                 $nPeriod = $record['period'];
                 $nVal = $record['count'];
@@ -193,7 +177,6 @@ require_once(__DIR__ . '/common.inc.php');
 
                     $nStart = 0;
                 }
-
 
                 $nrCol = $aNrColumn[$nPeriod];
                 echo "gcb.addToLastRow( $nrCol+1 , $nVal );";

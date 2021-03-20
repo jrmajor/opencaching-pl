@@ -31,10 +31,13 @@ $cachelogscount = XDb::xSimpleQueryValue(
 
     $no_types = 0;
     $typ = '';
-    while ( $res = XDb::xFetchArray($res_q) ) {
+
+    while ($res = XDb::xFetchArray($res_q)) {
         $no_types++;
+
         if (isset($_GET[$res['id']]) && $_GET[$res['id']] == 1) {
             $checked = 'checked';
+
             if ($typ == ''){
                 $typ = ' AND caches.type NOT IN (' . $res['id'];
             } else {
@@ -44,8 +47,10 @@ $cachelogscount = XDb::xSimpleQueryValue(
             $checked = '';
 
             echo '<input type="checkbox" value="1" name="' . intval($res['id']) . '" id="' . intval($res['id']) . '" ' . $checked . ' /> <label for="' . intval($res['id']) . '">' . tr('cacheType_' . $res['id']) . '</label> &nbsp;';
+
             if ($no_types % 5 != 0)
                 echo ' | ';
+
                 if ($no_types == 5)
                     echo '<br />';
     }
@@ -60,8 +65,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
     echo '</form></td></tr></table>';
     echo '<table border="1" bgcolor="white" width="97%" style="font-size:11px; line-height:1.6em;">' . "\n";
 
-
-    if( $typ == '' ) { //without cache-type filter
+    if($typ == '') { //without cache-type filter
         $a = 'SELECT COUNT(*) count, username, stat_ban, user.user_id
           FROM cache_logs, user
           WHERE `cache_logs`.`deleted`=0
@@ -69,7 +73,6 @@ $cachelogscount = XDb::xSimpleQueryValue(
             AND cache_logs.type=1
           GROUP BY user.user_id
           ORDER BY 1 DESC, user.username ASC';
-
     } else { //with cache-type filter : very expensive!!!
         $a = "SELECT COUNT(*) count, username, stat_ban, user.user_id
         FROM caches, cache_logs, user
@@ -86,10 +89,11 @@ $cachelogscount = XDb::xSimpleQueryValue(
     $lines = OcMemCache::get($cache_key);
 
     if ($lines === false) {
-        $r = XDb::xSql( $a );
+        $r = XDb::xSql($a);
 
         $lines = [];
-        while ( $line = XDb::xFetchArray($r) ){
+
+        while ($line = XDb::xFetchArray($r)){
             $lines[] = $line;
         }
 
@@ -98,7 +102,6 @@ $cachelogscount = XDb::xSimpleQueryValue(
     }
 
     echo '<br />';
-
 
     echo '<tr class="bgcolor2">' .
         '<td align="center">&nbsp;&nbsp;<b>' . tr('ranking') . '</b>&nbsp;&nbsp;</td>' .
@@ -114,12 +117,14 @@ $cachelogscount = XDb::xSimpleQueryValue(
         $color = 'black';
         $banned = '';
         $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
         if (($loggedUser && $loggedUser->hasOcTeamRole()) || $line['stat_ban'] == 0) {
             if ($line['stat_ban']) {
                 $color = 'gray';
                 $banned = ' (BAN)';
             }
             $l1 = $line['count'];
+
             if ($l2 != $l1) {
                 // new rank (finish recent row and start new one)
                 echo '</td></tr>';

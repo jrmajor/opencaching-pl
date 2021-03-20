@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
@@ -10,7 +11,6 @@ use src\Utils\Debug\Debug;
  */
 
 class GeoCacheCommons extends BaseObject {
-
     const TYPE_OTHERTYPE = 1;
     const TYPE_TRADITIONAL = 2;
     const TYPE_MULTICACHE = 3;
@@ -81,7 +81,6 @@ class GeoCacheCommons extends BaseObject {
 
     public static function CacheTypeTranslationKey($type)
     {
-
         switch ($type) {
             case self::TYPE_TRADITIONAL:    return self::TYPE_TRADITIONAL_TR_KEY;
             case self::TYPE_OTHERTYPE:      return self::TYPE_OTHERTYPE_TR_KEY;
@@ -141,9 +140,9 @@ class GeoCacheCommons extends BaseObject {
             case self::SIZE_LARGE:   return self::SIZE_LARGE_TR_KEY;
             case self::SIZE_XLARGE:  return self::SIZE_XLARGE_TR_KEY;
             case self::SIZE_NONE:    return self::SIZE_NONE_TR_KEY;
-
             default:
                 Debug::errorLog('Unknown cache sizeId: ' . $sizeId);
+
                 return 'size_04';
         }
     }
@@ -213,6 +212,7 @@ class GeoCacheCommons extends BaseObject {
                 return self::TYPE_OTHERTYPE;
             default:
                 Debug::errorLog('Unknown cache type from OKAPI: ' . $okapiType);
+
                 return self::TYPE_TRADITIONAL;
         }
     }
@@ -226,7 +226,6 @@ class GeoCacheCommons extends BaseObject {
     public static function CacheSizeIdFromOkapi($okapiSize)
     {
         switch ($okapiSize) {
-
             case 'none':
                 return self::SIZE_NONE;
             case 'nano':
@@ -245,6 +244,7 @@ class GeoCacheCommons extends BaseObject {
                 return self::SIZE_OTHER;
             default:
                 Debug::errorLog('Unknown cache size from OKAPI: ' . $okapiSize);
+
                 return self::SIZE_OTHER;
         }
     }
@@ -266,6 +266,7 @@ class GeoCacheCommons extends BaseObject {
                 return self::STATUS_ARCHIVED;
             default:
                 Debug::errorLog('Unknown cache status from OKAPI: ' . $okapiStatus);
+
                 return self::STATUS_READY;
         }
     }
@@ -285,8 +286,8 @@ class GeoCacheCommons extends BaseObject {
     public static function CacheIconByType(
         $type, $status, $logStatus = null, $fileNameOnly = false, $isOwner = false)
     {
-
         $statusPart = ''; //part of icon name represents cache status
+
         switch ($status) {
             case self::STATUS_UNAVAILABLE:
             case self::STATUS_NOTYETAVAILABLE:
@@ -305,6 +306,7 @@ class GeoCacheCommons extends BaseObject {
         }
 
         $logStatusPart = ''; //part of icon name represents status for user based on logs
+
         switch ($logStatus) {
             case GeoCacheLog::LOGTYPE_FOUNDIT:
                 $logStatusPart = '-found';
@@ -319,40 +321,33 @@ class GeoCacheCommons extends BaseObject {
         }
 
         $typePart = ''; //part of icon name represents cache type
+
         switch ($type) {
             case self::TYPE_OTHERTYPE:
                 $typePart = 'unknown';
                 break;
-
             case self::TYPE_TRADITIONAL:
             default:
                 $typePart = 'traditional';
                 break;
-
             case self::TYPE_MULTICACHE:
                 $typePart = 'multi';
                 break;
-
             case self::TYPE_VIRTUAL:
                 $typePart = 'virtual';
                 break;
-
             case self::TYPE_WEBCAM:
                 $typePart = 'webcam';
                 break;
-
             case self::TYPE_EVENT:
                 $typePart = 'event';
                 break;
-
             case self::TYPE_QUIZ:
                 $typePart = 'quiz';
                 break;
-
             case self::TYPE_MOVING:
                 $typePart = 'moving';
                 break;
-
             case self::TYPE_OWNCACHE:
                 $typePart = 'owncache';
                 break;
@@ -379,9 +374,13 @@ class GeoCacheCommons extends BaseObject {
         // former score2ratingnum
 
         if ($score >= self::MIN_SCORE_OF_RATING_5) return 5;
+
         if ($score >= self::MIN_SCORE_OF_RATING_4) return 4;
+
         if ($score >= self::MIN_SCORE_OF_RATING_3) return 3;
+
         if ($score >= self::MIN_SCORE_OF_RATING_2) return 2;
+
         return 1;
     }
 
@@ -390,9 +389,13 @@ class GeoCacheCommons extends BaseObject {
         //former new2oldscore($score)
 
         if ($ratingId == 5) return 3.0;
+
         if ($ratingId == 4) return 1.7;
+
         if ($ratingId == 3) return 0.7;
+
         if ($ratingId == 2) return -0.5;
+
         return -2.0;
     }
 
@@ -407,10 +410,9 @@ class GeoCacheCommons extends BaseObject {
      */
     public static function ScoreNameTranslation($score)
     {
-
         $ratingNum = self::ScoreAsRatingNum($score);
-        return tr(self::CacheRatingTranslationKey($ratingNum));
 
+        return tr(self::CacheRatingTranslationKey($ratingNum));
     }
 
     /**

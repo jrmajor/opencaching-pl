@@ -2,6 +2,7 @@
 /**
  * Contains \src\Models\Watchlist\WatchlistGeoCacheLog class definition
  */
+
 namespace src\Models\Watchlist;
 
 use DateTime;

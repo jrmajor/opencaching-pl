@@ -15,8 +15,7 @@ $rsCache = XDb::xSql(
     'SELECT `cache_id`, `latitude`, `longitude` FROM `caches` WHERE `need_npa_recalc`=1');
 
 while ($rCache = XDb::xFetchArray($rsCache)) {
-
-    if( ! is_numeric($rCache['longitude']) || ! is_numeric($rCache['latitude']) ){
+    if(! is_numeric($rCache['longitude']) || ! is_numeric($rCache['latitude'])){
         continue;
     }
 
@@ -24,8 +23,6 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
         'DELETE FROM `cache_npa_areas`
         WHERE `cache_id`= ? AND `calculated`=1
         LIMIT 1', $rCache['cache_id']);
-
-
 
     // Natura 2000
     $rsLayers = XDb::xSql(
@@ -35,11 +32,10 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
             GEOMFROMTEXT(
                 POINT(' . $rCache['longitude'] . ', ' . $rCache['latitude'] . ')
             ), `shape`
-        )' );
+        )');
 
     while ($rLayers = XDb::xFetchArray($rsLayers)) {
-
-        if ( gis::ptInLineRing(
+        if (gis::ptInLineRing(
                 $rLayers['geometry'],
                 'POINT(' . $rCache['longitude'] . ' ' . $rCache['latitude'] . ')')
             ) {
@@ -48,7 +44,6 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
                 VALUES ( ?, ?, 1)
                 ON DUPLICATE KEY UPDATE `calculated`=1',
                 $rCache['cache_id'], $rLayers['id']);
-
         }
     }
     XDb::xFreeResults($rsLayers);
@@ -60,10 +55,10 @@ while ($rCache = XDb::xFetchArray($rsCache)) {
             GEOMFROMTEXT(
                 POINT(' . $rCache['longitude'] . ', ' . $rCache['latitude'] . ')
             ), `shape`
-        )' );
+        )');
 
     while ($rLayers = XDb::xFetchArray($rsLayers)) {
-        if ( gis::ptInLineRing(
+        if (gis::ptInLineRing(
                 $rLayers['geometry'],
                 'POINT(' . $rCache['longitude'] . ' ' . $rCache['latitude'] . ')')
             ) {

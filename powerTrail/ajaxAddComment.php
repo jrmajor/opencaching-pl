@@ -10,15 +10,18 @@ $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
 if (! $loggedUser){
     echo 'User not authorized!';
+
     exit;
 }
 
 $text = htmlspecialchars($_REQUEST['text']);
+
 try{
     $dateTime = new DateTime($_REQUEST['datetime']);
 } catch (Exception $e) {
     // improper request
     echo 'improper datetime format';
+
     exit;
 }
 

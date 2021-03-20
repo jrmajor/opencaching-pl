@@ -3,10 +3,8 @@
 namespace src\Models\MeritBadge;
 
 class CategoryMeritBadge{
-
     private $id;
     private $name;
-
 
     //////////////////////////////////////////////////////////////////////
     // getField functions
@@ -24,8 +22,7 @@ class CategoryMeritBadge{
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow( $rec ){
-
+    public function setFromRow($rec){
         if (isset($rec['badge_categories_id']))
             $this->id = $rec['badge_categories_id'];
 

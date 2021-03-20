@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Uri;
 
 use src\Models\User\UserAuthorization;
@@ -8,7 +9,6 @@ use stdClass;
 
 class OcCookie
 {
-
     private static $ocData = null;
  // data stored in cookie
     private static $changed = false;
@@ -43,6 +43,7 @@ class OcCookie
     public static function get($key, $skipPurifying = false)
     {
         $data = self::getOcCookieData(); // init oc data
+
         if (isset($data->$key)) {
             if (! $skipPurifying) {
                 return UserInputFilter::purifyHtmlString($data->$key);
@@ -71,6 +72,7 @@ class OcCookie
     public static function contains($key)
     {
         $data = self::getOcCookieData();
+
         return isset($data->$key);
     }
 
@@ -104,6 +106,7 @@ class OcCookie
         if (is_null(self::$ocData)) {
             if (isset($_COOKIE[self::getOcCookieName()])) {
                 self::$ocData = json_decode(base64_decode($_COOKIE[self::getOcCookieName()]));
+
                 if(! is_object(self::$ocData)){
                     self::$ocData = new stdClass();
                 }
@@ -111,6 +114,7 @@ class OcCookie
                 self::$ocData = new stdClass();
             }
         }
+
         return self::$ocData;
     }
 
@@ -123,7 +127,7 @@ class OcCookie
 
         $result = CookieBase::setCookie(
             self::getOcCookieName(),
-            base64_encode( json_encode(self::$ocData)),
+            base64_encode(json_encode(self::$ocData)),
             $cookieExpiry,
             '/',
             false,
@@ -143,6 +147,7 @@ class OcCookie
         unset($_COOKIE[self::getOcCookieName()]);
 
         $result = CookieBase::deleteCookie(self::getOcCookieName());
+
         if (! $result) {
             Debug::errorLog(__METHOD__ . ": Can't delete OCUserData cookie");
         }
@@ -154,6 +159,7 @@ class OcCookie
     private static function getOcCookieName()
     {
         global $config;
+
         return $config['cookie']['name'] . '-userData';
     }
 }

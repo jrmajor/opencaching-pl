@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\Debug;
 
 use ErrorException;
@@ -79,6 +80,7 @@ class ErrorHandler
 
         // Try to send an admin email
         $mailFail = false;
+
         try {
             EmailSender::adminOnErrorMessage($msg);
         } catch (Exception $e) {

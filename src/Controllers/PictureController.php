@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use RuntimeException;
@@ -37,17 +38,19 @@ class PictureController extends BaseController
 
         // check parent object and access rights
         if (! is_numeric($parentId) || ! is_numeric($parentType)) {
-            $this->ajaxErrorResponse ('Icorrect parentId');
+            $this->ajaxErrorResponse('Icorrect parentId');
         }
 
         // create parent object
         $parentObj = OcPicture::getParentObj($parentType, $parentId);
+
         if (! $parentObj) {
             $this->ajaxErrorResponse('Improper parent type/id');
         }
 
         // use the same upload model and store the files in the right place on server
         $uploadModel = UploadModel::PicUploadFactory($parentType, $parentId);
+
         try{
             // save uploaded files
             $newFiles = FileUploadMgr::processFileUpload($uploadModel);
@@ -63,8 +66,8 @@ class PictureController extends BaseController
         $uploadModel->addUrlBaseToNewFilesArray($newFiles);
 
         $pics = [];
-        foreach ($newFiles as $orgFilename => $path) {
 
+        foreach ($newFiles as $orgFilename => $path) {
             // create OcPicture object for each new pic and save the records in DB
             $pic = OcPicture::getNewPicPlaceholder($parentType, $parentObj);
 
@@ -102,22 +105,25 @@ class PictureController extends BaseController
         $this->checkUserLoggedAjax();
 
         $uuids = $_POST['uuidsOrder'] ?? null;
+
         if (is_null($uuids) || ! is_array($uuids) || empty($uuids)) {
             $this->ajaxErrorResponse('Wrong uuids array');
         }
 
         $pics = [];
         $orderIdx = 0;
+
         foreach($uuids as $uuid) {
             if (! Uuid::isValidUuid($uuid)) {
                 $this->ajaxErrorResponse('Invalid UUID');
             }
             $pic = OcPicture::fromUuidFactory($uuid);
+
             if (! $pic) {
                 $this->ajaxErrorResponse('Unknown UUID');
             }
             // check if this pic is assigned to the same parent
-            if ($pic->getParentId() != $parentId || $pic->getParentType() != $parentType ) {
+            if ($pic->getParentId() != $parentId || $pic->getParentType() != $parentType) {
                 $this->ajaxErrorResponse('Uuid from another parent');
             }
 
@@ -149,11 +155,13 @@ class PictureController extends BaseController
         $this->checkUserLoggedAjax();
 
         $title = $_POST['title'] ?? null;
+
         if (is_null($title)) {
             $this->ajaxErrorResponse('Empty title!');
         }
 
-        $title = strip_tags ($title);
+        $title = strip_tags($title);
+
         if($title == '') {
             $title = '-';
         }
@@ -163,6 +171,7 @@ class PictureController extends BaseController
         }
 
         $pic = OcPicture::fromUuidFactory($uuid);
+
         if (! $pic) {
             $this->ajaxErrorResponse('Unknown UUID');
         }
@@ -233,6 +242,7 @@ class PictureController extends BaseController
             $this->ajaxErrorResponse('Invalid UUID');
         }
         $pic = OcPicture::fromUuidFactory($uuid);
+
         if (! $pic) {
             $this->ajaxErrorResponse('Unknown UUID');
         }
@@ -277,7 +287,8 @@ class PictureController extends BaseController
         }
 
         $picture = OcPicture::fromUuidFactory($uuid);
-        if (! $picture ) {
+
+        if (! $picture) {
             $this->displayCommonErrorPageAndExit('No such picture?!');
         }
 

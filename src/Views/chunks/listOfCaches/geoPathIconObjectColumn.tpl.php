@@ -9,7 +9,6 @@ use src\Models\GeoCache\GeoCache;
  */
 
 return function (GeoCache $cache) {
-
     if ($cache->isPowerTrailPart(false)) {
         ?>
         <a href="<?= $cache->getPowerTrail()->getPowerTrailUrl() ?>" target="_blank">
@@ -18,5 +17,4 @@ return function (GeoCache $cache) {
         </a>
         <?php
     }
-
 };

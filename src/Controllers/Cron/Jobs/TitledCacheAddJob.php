@@ -36,7 +36,6 @@ class TitledCacheAddJob extends Job
                 $daysSinceLastTitle . ' vs ' . $securityPeriod . ' days)';
         }
         unset($daysSinceLastTitle, $securityPeriod);
-        
 
         $date_alg = date('Y-m-d');
 
@@ -112,7 +111,7 @@ class TitledCacheAddJob extends Job
             ORDER BY nrTinR, cFounds DESC, cDateCrt, RATE DESC
         ';
 
-        $s = $this->db->multiVariableQuery($queryS, $date_alg, $titled_cache_nr_found );
+        $s = $this->db->multiVariableQuery($queryS, $date_alg, $titled_cache_nr_found);
         $rec = $this->db->dbResultFetch($s);
 
         if (! $rec) {
@@ -147,8 +146,8 @@ class TitledCacheAddJob extends Job
                 (cache_id, rate, ratio, rating, found, days, date_alg, log_id)
             VALUES (:1, :2, :3, :4, :5, :6, :7, :8)';
 
-        $this->db->multiVariableQuery($queryI, $rec[ 'cacheId' ], $rec[ 'RATE' ], $rec[ 'ratio' ],
-                $rec[ 'cRating' ], $rec[ 'cFounds' ], $rec[ 'cNrDays' ], $date_alg, $recL['logId'] );
+        $this->db->multiVariableQuery($queryI, $rec['cacheId'], $rec['RATE'], $rec['ratio'],
+                $rec['cRating'], $rec['cFounds'], $rec['cNrDays'], $date_alg, $recL['logId']);
 
         $SystemUser = -1;
         $LogType = GeoCacheLog::LOGTYPE_ADMINNOTE;

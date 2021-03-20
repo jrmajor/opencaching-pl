@@ -1,13 +1,14 @@
 <?php
+
 use src\Controllers\PowerTrailController;
 use src\Models\ApplicationContainer;
 use src\Utils\Database\OcDb;
 
-
 require_once __DIR__ . '/../lib/common.inc.php';
 
 $appContainer = ApplicationContainer::Instance();
-if( $appContainer->getLoggedUser() === null){
+
+if($appContainer->getLoggedUser() === null){
     $loggedUserId = null;
     $ocTeamUser = false;
 } else {
@@ -15,17 +16,18 @@ if( $appContainer->getLoggedUser() === null){
     $ocTeamUser = $appContainer->getLoggedUser()->hasOcTeamRole();
 }
 
-
 $commentsArr = PowerTrailController::getEntryTypes();
 
 if (! isset($_REQUEST['projectId'])){
     http_response_code(403);
     echo 'Unknown PT';
+
     exit;
 }
 $ptOwners = powerTrailBase::getPtOwners($_REQUEST['projectId']);
 
 $paginateCount = powerTrailBase::commentsPaginateCount;
+
 foreach ($ptOwners as $owner) {
     $ownersIdArray[] = $owner['user_id'];
 }
@@ -58,11 +60,11 @@ $result = $db->dbResultFetchAll($s);
 
 if(count($result) == 0) {
     echo '<p><br /><br />' . tr('pt118') . '</p><br /><br />';
+
     exit;
 }
 // build to display
 $toDisplay = '<table id="commentsTable" cellspacing="0">';
-
 
 foreach ($result as $key => $dbEntry) {
     $userActivity = $dbEntry['hidden_count'] + $dbEntry['founds_count'] + $dbEntry['notfounds_count'];
@@ -99,7 +101,8 @@ foreach ($result as $key => $dbEntry) {
             ) {
                 $toDisplay .= '&nbsp;<img src="images/free_icons/cross.png" /> <a href="javascript:void(0);" onclick="deleteComment(' . $dbEntry['id'] . ',' . $loggedUserId . ', false)">' . tr('pt130') . '</a>';
             }
-            if ($loggedUserId == $dbEntry['userId'] ) {
+
+            if ($loggedUserId == $dbEntry['userId']) {
                 $toDisplay .= '
                     &nbsp;<img src="images/free_icons/pencil.png" />
                     <a href="javascript:void(0);" onclick="editComment(' . $dbEntry['id'] . ',' . $loggedUserId . ')">' . tr('pt145') . '</a>';
@@ -119,14 +122,16 @@ $toDisplay .= '<div align="center">';
 
 if ($count > $nextSearchStart || $_REQUEST['start'] > 0) $toDisplay .= '<div style="padding:3px">' . paginate(ceil($count / $paginateCount), $_REQUEST['start']) . '</div>';
 
-if ($_REQUEST['start'] - $paginateCount < 0 ) {
+if ($_REQUEST['start'] - $paginateCount < 0) {
     $startNew = 0;
 } else {
     $startNew = $_REQUEST['start'] - $paginateCount;
 }
+
 if ($_REQUEST['start'] > 0) {
     $toDisplay .= '<a href="javascript:void(0)" onclick="ajaxGetComments(' . $startNew . ', ' . $paginateCount . ');" class="editPtDataButton">' . tr('pt059') . '</a>';
 }
+
 if ($count > $nextSearchStart) {
     $toDisplay .= ' <a href="javascript:void(0)" onclick="ajaxGetComments(' . $nextSearchStart . ', ' . $paginateCount . ');" class="editPtDataButton">' . tr('pt058') . '</a>';
 }
@@ -137,10 +142,12 @@ echo $toDisplay;
 
 function paginate($totalPagesCount, $startNow){
     $displayStr = '<br />';
+
     for ($i = 0; $i < $totalPagesCount; $i++) {
         if(ceil($startNow / powerTrailBase::commentsPaginateCount) == $i) $btnStyle = 'currentPaginateButton';
         else $btnStyle = 'paginateButton';
         $displayStr .= '<a href="javascript:void(0)" onclick="ajaxGetComments(' . ($i * powerTrailBase::commentsPaginateCount) . ', ' . powerTrailBase::commentsPaginateCount . ');" class="' . $btnStyle . '">' . ($i + 1) . '</a>';
     }
+
 return $displayStr;
 }

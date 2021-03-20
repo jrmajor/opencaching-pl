@@ -14,13 +14,11 @@ use src\Utils\Text\TextConverter;
  * See /test/upload for example of useage of it.
  */
 class UploadModel {
-
   const MIME_IMAGE = 'image/*';
   const MIME_IMAGE_WITH_GD_SUPPORT = 'image/gif|image/jpeg|image/png'; // OcImage supported formats
   const MIME_AUDIO = 'audio/*';
   const MIME_ANYFILE = 'image/*|audio/*|application/*|video/*|text/*';
   const MIME_TEXT = 'text/*';
-
 
   const DEFAULT_TMP_DIR = 'move files to server tmp dir';
 
@@ -36,7 +34,6 @@ class UploadModel {
   public $maxFileSize; //in MB
   public $submitUrl;
   public $formVarName = 'fileToUpload'; // name of the file name in $_FILES after upload
-
 
   // private data used server side only
   protected $dirAtServer = null; // directory to store files (under dynamic-files-dir!)
@@ -65,6 +62,7 @@ class UploadModel {
       $obj->setMaxFileNumber(2);
       $obj->submitUrl = '/test/uploadAjax';
       $obj->setDirs('/tmp/test/upload');
+
       return $obj;
   }
 
@@ -79,6 +77,7 @@ class UploadModel {
       $uploadModel->allowedTypesRegex = UploadModel::MIME_IMAGE;                    // allowed img mime types
       $uploadModel->submitUrl = "/picture/uploadPicsAjax/$parentType/$parentId";    // server API to store the files over AJAX
       $uploadModel->setDirs(OcConfig::getPicUploadFolderInDynBaseDir());            // where to store files on server
+
       return $uploadModel;
   }
 
@@ -106,6 +105,7 @@ class UploadModel {
       if(! $this->urlBase){
         throw new Exception('Trying to use unset baseUrl for uploaded file!');
       }
+
       return $this->urlBase;
   }
 
@@ -122,6 +122,7 @@ class UploadModel {
       if($dirInDirBasePath == self::DEFAULT_TMP_DIR) {
           $this->urlBase = null; // files are not accessible in TMP dir - it will be moved in separate code
           $this->dirAtServer = sys_get_temp_dir();
+
           return;
       }
 

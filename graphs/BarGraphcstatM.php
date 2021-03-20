@@ -12,11 +12,12 @@ JpGraphLoader::load();
 JpGraphLoader::module('bar');
 JpGraphLoader::module('date');
 
-
 $year = '';
-if (isset($_REQUEST['cacheid'], $_REQUEST['t'])  ) {
+
+if (isset($_REQUEST['cacheid'], $_REQUEST['t'])) {
     $cache_id = $_REQUEST['cacheid'];
     $titles = $_REQUEST['t'];
+
     if (strlen($titles) > 3) {
         $year = substr($titles, -4);
         $tit = substr($titles, 0, -4);
@@ -38,6 +39,7 @@ if ($tit == 'csy') {
     if ($rsCachesFindYear1 !== false) {
         $describe = tr('annual_stat');
         $xtitle = '';
+
         while ($rfy1 = XDb::xFetchArray($rsCachesFindYear1)) {
             $y1[] = $rfy1['count'];
             $x1[] = $rfy1['year'];
@@ -54,6 +56,7 @@ if ($tit == 'csy') {
     if ($rsCachesFindYear2 !== false) {
         $describe = tr('annual_stat');
         $xtitle = '';
+
         while ($rfy2 = XDb::xFetchArray($rsCachesFindYear2)) {
             $y2[] = $rfy2['count'];
             $x2[] = $rfy2['year'];
@@ -66,6 +69,7 @@ if ($tit == 'csm') {
     $describe = tr('monthly_stat');
     $describe .= $year;
     $xtitle = $year;
+
     for ($i = 1; $i < 13; $i++) {
         $month = $i;
         $rsCachesFindMonth1 = XDb::xSql(
@@ -76,6 +80,7 @@ if ($tit == 'csm') {
             $cache_id, $year, $month);
 
         $rfm = XDb::xFetchArray($rsCachesFindMonth1);
+
         if ($rfm !== false) {
             $y1[] = $rfm['count'];
             $x1[] = $rfm['month'];
@@ -96,6 +101,7 @@ if ($tit == 'csm') {
             $cache_id, $year, $month);
 
         $rfm = XDb::xFetchArray($rsCachesFindMonth2);
+
         if ($rfm !== false) {
             $y2[] = $rfm['count'];
             $x2[] = $rfm['month'];
@@ -148,7 +154,6 @@ $graph->yaxis->title->SetFont(FF_COURIER, FS_BOLD);
 $graph->xaxis->title->SetFont(FF_COURIER, FS_BOLD);
 
 $graph->legend->SetFont(FF_ARIAL, FS_NORMAL);
-
 
 // Display the graph
 $graph->Stroke();

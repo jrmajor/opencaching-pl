@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Pictures;
 
 use src\Models\BaseObject;
@@ -31,7 +32,7 @@ class StatPic extends BaseObject
 
     public static function isStatPicPresent ($userId)
     {
-        return file_exists (self::getStatPicPath($userId));
+        return file_exists(self::getStatPicPath($userId));
     }
 
     /**
@@ -52,6 +53,7 @@ class StatPic extends BaseObject
 
         $obj = new self();
         $obj->loadFromDbRow($row);
+
         return $obj;
     }
 
@@ -63,11 +65,13 @@ class StatPic extends BaseObject
     public static function getAllTpls ()
     {
         $db = self::db();
+
         return $db->dbFetchAllAsObjects(
             $db->simpleQuery('SELECT * FROM statpics'),
             function ($row) {
                 $obj = new self();
                 $obj->loadFromDbRow($row);
+
                 return $obj;
             });
     }
@@ -78,16 +82,16 @@ class StatPic extends BaseObject
      */
     public static function generateStatPic(User $user)
     {
-
         // find user template
         [$statPicText, $statPicLogo] = $user->getStatPicDataArr();
         $statPicTpl = self::fromTplIdFactory($statPicLogo);
+
         if (is_null($statPicTpl)) {
             // there is no such tpl - take the defaut one
             $statPicTpl = self::getDefaultTpl();
         }
 
-        $im = imagecreatefromgif (Uri::getAbsServerPath('/' . $statPicTpl->tplPath));
+        $im = imagecreatefromgif(Uri::getAbsServerPath('/' . $statPicTpl->tplPath));
         $maxTxtWidth = $statPicTpl->maxtextwidth;
 
         $clrBlack = imagecolorallocate($im, 0, 0, 0);
@@ -105,14 +109,14 @@ class StatPic extends BaseObject
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext(
                     $im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     32, $clrBlack, $fontfile, $text);
 
                 break;
@@ -121,20 +125,20 @@ class StatPic extends BaseObject
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 7;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     29, $clrBlack, $fontfile, $statPicText);
 
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 8, $maxTxtWidth),
                     45, $clrBlack, $fontfile, $text);
 
                 break;
@@ -144,13 +148,13 @@ class StatPic extends BaseObject
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 7.5;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     32, $clrBlack, $fontfile, $statPicText);
 
                 break;
@@ -160,36 +164,35 @@ class StatPic extends BaseObject
                 $text = $user->getUserName();
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     15, $clrBlack, $fontfile, $text);
 
                 $fontSz = 8;
                 $text = tr('statpic_found') . $found . ' / ' . tr('statpic_hidden') . $hidden;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $text);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     29, $clrBlack, $fontfile, $text);
 
                 $fontSz = 8;
                 $txtSz = imagettfbbox($fontSz, 0, $fontfile, $statPicText);
                 imagettftext($im, $fontSz, 0,
-                    max (imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
+                    max(imagesx($im) - ($txtSz[2] - $txtSz[0]) - 5, $maxTxtWidth),
                     45, $clrBlack, $fontfile, $statPicText);
-
         } // switch (statPic-TPL)
 
         // draw border
         imagerectangle($im, 0, 0, imagesx($im) - 1, imagesy($im) - 1, imagecolorallocate($im, 70, 70, 70));
 
         // write output
-        imagejpeg($im, self::getStatPicPath ($user->getUserId()), 80);
+        imagejpeg($im, self::getStatPicPath($user->getUserId()), 80);
         imagedestroy($im);
     }
 
     protected function loadFromDbRow($row)
     {
         $this->id = $row['id'];
-        $this->tplPath = $row ['tplpath'];
+        $this->tplPath = $row['tplpath'];
         $this->previewPath = $row['previewpath'];
         $this->description = $row['description'];
         $this->maxtextwidth = $row['maxtextwidth'];

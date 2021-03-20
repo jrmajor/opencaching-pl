@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Pictures;
 
 use Exception;
@@ -7,7 +8,6 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
 use src\Utils\I18n\I18n;
 use src\Utils\Img\OcImage;
-
 
 /**
  * This class provide methods to manage the thumbnails.
@@ -44,9 +44,11 @@ class Thumbnail extends BaseObject
     public static function placeholderUri($placeholder)
     {
         $path = '/images/thumb/' . I18n::getCurrentLang() . '/' . $placeholder;
+
         if (! file_exists($path)) {
             $path = '/images/thumb/en/' . $placeholder;
         }
+
         return $path;
     }
 
@@ -60,11 +62,11 @@ class Thumbnail extends BaseObject
      */
     public static function getUrl($uuid, $showSpoiler, $thumbSize)
     {
-
         //$basePath = OcConfig::getPicUploadFolder(true) . self::THUMBS_FOLDER;
 
         // first try to localize non-spoiler thumbnail
         $nonSpoilerUrl = self::getThumbnailUrl($uuid, self::NON_SPOILER_DIR, $thumbSize);
+
         if ($nonSpoilerUrl) {
             // non-spoiler is found
             return $nonSpoilerUrl;
@@ -72,6 +74,7 @@ class Thumbnail extends BaseObject
 
         // non-spoiler not found - look for spoiler thumb
         $spoilerUrl = self::getThumbnailUrl($uuid, self::SPOILER_DIR, $thumbSize);
+
         if ($spoilerUrl) {
             if ($showSpoiler) {
                 // spoiler thumb found and should be display
@@ -104,6 +107,7 @@ class Thumbnail extends BaseObject
                 break;
             default:
                 Debug::errorLog("Unknown thumbnail size: $thumbSize");
+
                 return null;
         }
 
@@ -125,8 +129,9 @@ class Thumbnail extends BaseObject
         try {
             //ddd($orginalImagePath, $outPath, $maxSize);
             $outPath = OcImage::createThumbnail($orginalImagePath, "$outPath/$uuid", $maxSize);
-        } catch ( Exception $e) {
+        } catch (Exception $e) {
             Debug::logException($e);
+
             return null;
         }
 
@@ -146,13 +151,13 @@ class Thumbnail extends BaseObject
 
         foreach ($allSizes as $size) {
             foreach ($spoilerDirs as $spoiler) {
-
                 $path = self::buildPath($uuid, $spoiler, $size);
+
                 if ($result = glob("$basePath$path/$uuid.*")) {
                     if (! empty($result) || ! is_array($result)) {
                         // thumbnail found
                         foreach ($result as $thumb) {
-                            unlink ($thumb);
+                            unlink($thumb);
                         }
                     }
                 }
@@ -186,12 +191,13 @@ class Thumbnail extends BaseObject
         return null;
     }
 
-    private static function buildPath($uuid, $spoiler, $size )
+    private static function buildPath($uuid, $spoiler, $size)
     {
         $path = self::THUMBS_DIR;
         $path .= $spoiler;
         $path .= $size;
         $path .= "/{$uuid[0]}/{$uuid[1]}/{$uuid[2]}";
+
         return $path;
     }
 }

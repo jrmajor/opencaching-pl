@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\DateTime;
 
 use DateTime;
@@ -21,6 +22,7 @@ class OcDateTime
         if (! $baseDate) {
             $baseDate = self::now();
         }
+
         return $checkedDate->getTimestamp() < $baseDate->getTimestamp();
     }
 
@@ -35,6 +37,7 @@ class OcDateTime
         if (! $baseDate) {
             $baseDate = self::now();
         }
+
         return $checkedDate->getTimestamp() > $baseDate->getTimestamp();
     }
 

@@ -8,7 +8,6 @@ class powerTrailMenu
     private $menu;
 
     function __construct($user) {
-
         if ($user) {
             $this->menu = [
                 1 => [

@@ -7,6 +7,7 @@
  */
 
 namespace src\Utils\Database;
+
 use PDOException;
 use PDOStatement;
 
@@ -23,6 +24,7 @@ class XDb extends OcDb {
     public static function xQuery($sql)
     {
         $db = self::instance();
+
         return $db->query($sql);
     }
 
@@ -36,7 +38,6 @@ class XDb extends OcDb {
      */
     public static function xNumRows(PDOStatement $stmt)
     {
-
         /*
          * WARNING: This "can" NOT WORK for SELECT... queries! Details:
          * http://php.net/manual/en/pdostatement.rowcount.php
@@ -55,6 +56,7 @@ class XDb extends OcDb {
     public static function xQuote($string)
     {
         $db = self::instance();
+
         return $db->quote($string);
     }
 
@@ -68,6 +70,7 @@ class XDb extends OcDb {
         $value = self::xQuote($string);
         $value = substr($value, 1, -1); //remove ' char from the begining and end of the string
         $value = mb_ereg_replace('&', '\&', $value);
+
         return $value;
     }
 
@@ -103,6 +106,7 @@ class XDb extends OcDb {
      */
     public static function xSql($query){
         $db = self::instance();
+
         try {
             $stmt = $db->prepare($query);
 
@@ -115,8 +119,8 @@ class XDb extends OcDb {
 
             $stmt->execute($argList);
         } catch (PDOException $e) {
-
             $db->error('Query: ' . $query, $e);
+
             return null;
         }
 
@@ -136,6 +140,7 @@ class XDb extends OcDb {
     public static function xSimpleQueryValue($query, $default)
     {
         $db = self::instance();
+
         return $db->simpleQueryValue($query, $default);
     }
 
@@ -150,6 +155,7 @@ class XDb extends OcDb {
         $params = array_slice(func_get_args(), 2); //skip query + default
 
         $db = self::instance();
+
         return $db->multiVariableQueryValue($query, $default, $params);
     }
 
@@ -160,6 +166,7 @@ class XDb extends OcDb {
      */
     public static function xLastInsertId(){
         $db = self::instance();
+
         return $db->lastInsertId();
     }
 
@@ -175,9 +182,11 @@ class XDb extends OcDb {
         $columnName = self::xEscape($columnName);
 
         $stmt = XDb::xSql("SHOW COLUMNS FROM $tableName WHERE Field = '$columnName'");
-        while( $column = XDb::xFetchArray($stmt)){
+
+        while($column = XDb::xFetchArray($stmt)){
             return true; //any result
         }
+
         return false;
     }
 }

@@ -381,7 +381,6 @@ $translations = [
     'postActivation_mail_04' => 'Zanim założysz swoje pierwsze skrzynki w serwisie {site_name}, znajdź przynajmniej {NEED_FIND_LIMIT} skrzynek, by zdobyć doświadczenie.',
     'postActivation_mail_cacheguides' => 'Przewodnicy-wolontariusze po geocachingu',
 
-
     'password_confirm' => 'Potwierdź hasło',
     'register_msg1' => 'W celu rejestracji na {site_name} musisz posiadać rzeczywisty adres e-mail, na który zostanie wysłany link aktywacyjny. Na jeden adres e-mail możesz zarejestrować tylko jednego użytkownika.',
     'register_msg2' => 'Pola zaznaczone * są obowiązkowe.',
@@ -1844,7 +1843,6 @@ $translations = [
     'gp_ownCacheAddedToGeopath' => 'Twoja skrzynka została dodana do GeoŚcieżki.',
     'gp_cacheRemovedFromGeopath' => 'Skrzynkę usunięto z GeoŚcieżki.',
 
-
     'statpic_found' => 'Znalazł:',
     'statpic_hidden' => 'Ukrył:',
     'statpic_html_link' => '- Statystyka dla',
@@ -1924,7 +1922,7 @@ $translations = [
     'search_gpxgc_06' => 'Rekomendacje',
     'search_gpxgc_07' => 'Parki Narodowe/Krajobrazowe',
 
-// Attributes
+    // Attributes
     'attribute_9001' => 'Nie można zabrać psa',
     'attribute_2' => 'Opłata za wejście lub parking',
     'attribute_3' => 'Wymagany sprzęt wspinaczkowy',
@@ -2010,7 +2008,7 @@ $translations = [
     'attribute_219' => 'Odpowiedni by zawierać geokrety',
     'attribute_220' => 'Oficjalny zabytek historyczny',
     'attribute_999' => 'Hasło do logu',
-// END Attributes
+    // END Attributes
 
     'weather' => 'Pogoda',
     'vl_Recently_modified_on' => 'Ostatnio edytowany',
@@ -3013,7 +3011,6 @@ $translations = [
     'gpCandidates_errorOnCancel' => 'Nie można anulować tej oferty - wystąpił błąd',
     'gpCandidates_cancelOfferInProgress' => 'Anulowanie w toku',
 
-
     'gpMyCandidates_title' => 'Kandydaci do geościeżki dla użytkownika',
     'gpMyCandidates_submitedDate' => 'Data',
     'gpMyCandidates_geopathName' => 'GeoŚcieżka',
@@ -3065,7 +3062,6 @@ $translations = [
     'editCache_orderPicsSaveErr' => 'Wystąpił problem ze zmianą kolejności obrazków',
     'editCache_orderPicsSaveSuccess' => 'Kolejność obrazków została zmieniona',
 
-
     'vote_criteriaNotPassed' => 'Currently logged user account doesn\'t pass criteria of participation in voting',
     'vote_electionOpenUntil' => 'This election is open until',
     'vote_electionWillBeOpen' => 'This election will be open',
@@ -3099,5 +3095,5 @@ $translations = [
     'vote_elListThDesc' => 'Description',
     'vote_elListThStart' => 'Start of election',
     'vote_elListThEnd' => 'End of election',
-//  '' => '',
+    //  '' => '',
 ];

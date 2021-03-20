@@ -23,8 +23,7 @@ use src\Utils\Generators\TextGen;
  */
 
 return function ($data){
-
-    if( strlen($data['text']) > $data['maxChars'] ){
+    if(strlen($data['text']) > $data['maxChars']){
         //trim the text
         $text = mb_substr($data['text'], 0, $data['maxChars']) . '...';
         $fullText = $data['text'];

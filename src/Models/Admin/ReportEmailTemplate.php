@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateTime;
@@ -7,7 +8,6 @@ use src\Models\User\User;
 
 class ReportEmailTemplate extends BaseObject
 {
-
     /**
      * Recipients of emails
      */
@@ -122,6 +122,7 @@ class ReportEmailTemplate extends BaseObject
     {
         $content = self::getContentByTemplateId($templateId);
         $content = self::processTemplate($content, $report);
+
         return $content;
     }
 
@@ -152,6 +153,7 @@ class ReportEmailTemplate extends BaseObject
         $content = mb_ereg_replace('{leader}', ($report->getUserLeader() !== null) ? $report->getUserLeader()->getUserName() : '', $content);
         $content = mb_ereg_replace('%cachename%', $report->getCache()->getCacheName(), $content);  // Backward compatibility
         $content = mb_ereg_replace('%rr_member_name%', self::getCurrentUser()->getUserName(), $content);  // Backward compatibility
+
         return $content;
     }
 
@@ -180,6 +182,7 @@ class ReportEmailTemplate extends BaseObject
         $params['receiver']['value'] = $recipient;
         $params['receiver']['data_type'] = 'integer';
         $stmt = self::db()->paramQuery($query, $params);
+
         return self::db()->dbResultFetchAll($stmt);
     }
 
@@ -195,9 +198,11 @@ class ReportEmailTemplate extends BaseObject
     {
         $content = '';
         $templates = self::generateTemplateArray($recipient, $objectType);
+
         foreach ($templates as $template) {
             $content .= '<option value="' . $template['id'] . '">' . $template['shortdesc'] . '</option>';
         }
+
         return $content;
     }
 
@@ -207,6 +212,7 @@ class ReportEmailTemplate extends BaseObject
         $params = [];
         $params['id']['value'] = $templateId;
         $params['id']['data_type'] = 'integer';
+
         return self::db()->paramQueryValue($query, null, $params);
     }
 }

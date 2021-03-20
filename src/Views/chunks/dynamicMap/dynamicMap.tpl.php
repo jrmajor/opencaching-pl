@@ -13,7 +13,6 @@ use src\Utils\View\View;
  *
  */
 return function (DynamicMapModel $mapModel, $canvasId){
-
   // load chunk CSS
   View::callChunkInline('loadCssByJs',
     Uri::getLinkWithModificationTime('/views/chunks/dynamicMap/dynamicMap.css'));

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Controllers;
 
 use src\Models\ChunkModels\ListOfCaches\Column_CacheLog;
@@ -11,7 +12,6 @@ use src\Models\GeoCache\UserIgnoredCache;
 
 class UserIgnoredCachesController extends BaseController
 {
-
     private $infoMsg = null;
     private $errorMsg = null;
 
@@ -111,6 +111,7 @@ class UserIgnoredCachesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 
@@ -132,6 +133,7 @@ class UserIgnoredCachesController extends BaseController
     {
         if(! $this->isUserLogged()){
             $this->ajaxErrorResponse('User not logged', 401);
+
             return;
         }
 

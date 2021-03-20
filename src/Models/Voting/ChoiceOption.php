@@ -45,6 +45,7 @@ class ChoiceOption extends BaseObject
         return $db->dbFetchAllAsObjects($stmt, function (array $row) {
             $obj = new self();
             $obj->loadFromDbRow($row);
+
             return $obj;
         });
     }

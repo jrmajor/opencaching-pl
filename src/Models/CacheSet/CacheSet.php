@@ -2,7 +2,6 @@
 
 namespace src\Models\CacheSet;
 
-
 use DateTime;
 use RuntimeException;
 use src\Controllers\GeoPathController;
@@ -54,7 +53,7 @@ class CacheSet extends CacheSetCommon
         $cs = new self();
         $cs->id = $id;
 
-        if( $cs->loadDataFromDb() ){
+        if($cs->loadDataFromDb()){
             return $cs;
         }
 
@@ -72,8 +71,10 @@ class CacheSet extends CacheSetCommon
 
         if($row = $this->db->dbResultFetch($s)){
             $this->loadFromDbRow($row);
+
             return true;
         }
+
         return false;
     }
 
@@ -121,7 +122,6 @@ class CacheSet extends CacheSetCommon
                 case 'uuid':
                     $this->uuid = $val;
                     break;
-
                 case 'centerLatitude':
                 case 'centerLongitude':
                     // cords are handled below...
@@ -142,6 +142,7 @@ class CacheSet extends CacheSetCommon
     {
         $gp = new self();
         $gp->loadFromDbRow($dbRow);
+
         return $gp;
     }
 
@@ -151,11 +152,9 @@ class CacheSet extends CacheSetCommon
      */
     public static function GetAllCacheSets($statusIn = [], $offset = null, $limit = null)
     {
-
         if(empty($statusIn)){
             $statusIn = [CacheSetCommon::STATUS_OPEN];
         }
-
 
         $query = QueryBuilder::instance()
             ->select('*')
@@ -174,7 +173,6 @@ class CacheSet extends CacheSetCommon
 
     public static function GetAllCacheSetsCount(array $statusIn = [])
     {
-
         $query = QueryBuilder::instance()
             ->select('COUNT(*)')
             ->from('PowerTrail')
@@ -201,6 +199,7 @@ class CacheSet extends CacheSetCommon
             $query = 'SELECT * FROM `PowerTrail` WHERE `status` = :1 AND `name` LIKE :2 ORDER BY `name`';
             $stmt = self::db()->multiVariableQuery($query, CacheSet::STATUS_OPEN, '%' . $name . '%');
         }
+
         return self::db()->dbFetchAllAsObjects($stmt, function ($row){
             return self::FromDbRowFactory($row);
         });
@@ -339,7 +338,6 @@ class CacheSet extends CacheSetCommon
 
     public static function getLastCreatedSets($limit)
     {
-
         $db = self::db();
 
         $limit = $db->quoteLimit($limit);
@@ -353,6 +351,7 @@ class CacheSet extends CacheSetCommon
             LIMIT $limit", self::STATUS_OPEN);
 
         $result = [];
+
         while($row = $db->dbResultFetch($rs, OcDb::FETCH_ASSOC)){
             $result[] = self::FromDbRowFactory($row);
         }
@@ -413,7 +412,7 @@ class CacheSet extends CacheSetCommon
         if($oldLogo != $newLogoUrl){
             // delete old logo
             if (is_file(OcConfig::getDynFilesPath() . $oldLogo)) {
-                unlink (OcConfig::getDynFilesPath() . $oldLogo);
+                unlink(OcConfig::getDynFilesPath() . $oldLogo);
             }
         }
     }
@@ -477,7 +476,6 @@ class CacheSet extends CacheSetCommon
         $this->db->multiVariableQuery(
             'UPDATE PowerTrail SET cacheCount = :1 WHERE id = :2 LIMIT 1',
             $this->cacheCount, $this->id);
-
     }
 
     public function addCacheCandidate(GeoCache $cache)
@@ -514,6 +512,7 @@ class CacheSet extends CacheSetCommon
             $email->send();
         } catch(RuntimeException $e) {
             Debug::errorLog('Mail sending failure: ' . $e->getMessage());
+
             return false;
         }
 
@@ -533,6 +532,7 @@ class CacheSet extends CacheSetCommon
                 WHERE cacheId = :1 AND PowerTrailId = :2
                 LIMIT 1', 0, $cache->getCacheId(), $this->id);
         }
+
         return $matchingRecords != 0;
     }
 
@@ -615,4 +615,3 @@ class CacheSet extends CacheSetCommon
             );
     }
 }
-

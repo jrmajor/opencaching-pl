@@ -66,16 +66,18 @@ class GeoKretyNewJob extends Job
                 "SELECT distinct wp FROM gk_item_waypoint
                 WHERE id='" . XDb::xEscape($id) . "'");
             $cache_codes = [];
+
             while ($row = XDb::xFetchArray($rs))
                 $cache_codes[] = $row[0];
             Facade::schedule_geocache_check($cache_codes);
 
             /* waypoints update */
             XDb::xSql('DELETE FROM gk_item_waypoint WHERE id= ?', $id);
+
             foreach ($geokret->waypoints as $waypoint) {
                 $wp = XDb::xEscape($waypoint->waypoint);
-                if ($wp != '') {
 
+                if ($wp != '') {
                     XDb::xSql(
                         "INSERT INTO gk_item_waypoint (id, wp)
                         VALUES ('" . $id . "', '" . $wp . "')
@@ -89,6 +91,7 @@ class GeoKretyNewJob extends Job
         /* Notify OKAPI. https://github.com/opencaching/okapi/issues/179 */
         $rs = XDb::xSql('SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)');
         $cache_codes = [];
+
         while ($row = XDb::xFetchArray($rs)){
             $cache_codes[] = $row[0];
         }

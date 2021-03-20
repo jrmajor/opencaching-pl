@@ -30,9 +30,11 @@ final class ApplicationContainer
     public static function Instance()
     {
         static $inst = null;
+
         if ($inst === null) {
             $inst = new ApplicationContainer();
         }
+
         return $inst;
     }
 
@@ -57,6 +59,7 @@ final class ApplicationContainer
     public function setLoggedUser(User $loggedUser)
     {
         $this->loggedUser = $loggedUser;
+
         return $this;
     }
 

@@ -40,7 +40,8 @@ echo '}';
 echo '</script>';
 
 use src\Utils\Database\OcDb;
-require_once (__DIR__ . '/ClassPathDictionary.php');
+
+require_once(__DIR__ . '/ClassPathDictionary.php');
 $sRok = '';
 $sMc = '';
 
@@ -81,7 +82,6 @@ if (isset($_REQUEST['DataOd']))
 if (isset($_REQUEST['DataDo']))
     $sDataDo = $_REQUEST['DataDo'];
 
-
 if ($sRD == 'R') {
     if ($sRok != '' and $sMc != '') {
         $sData_od = $sRok . '-' . $sMc . '-' . '01';
@@ -98,7 +98,6 @@ if ($sRD == 'R') {
         $dDate->add(new DateInterval('P1Y'));
         $nIsCondition = 1;
     }
-
 
     if ($nIsCondition) {
         $sData_do = $dDate->format('Y-m-d');
@@ -129,7 +128,6 @@ if ($sRD == 'R') {
     }
 }
 
-
 $dbc = OcDb::instance();
 
 if ($sNameOfStat == 'MaintenanceOfCaches') {
@@ -148,12 +146,9 @@ if ($sNameOfStat == 'MaintenanceOfCaches') {
             . $sDateCondition .
             'GROUP BY u.user_id
         ORDER BY count DESC, u.username ASC';
-
 }else if ($sNameOfStat == 'NumberOfFinds') {
-
     if ($sDateCondition != '')
         $sDateCondition = ' WHERE ' . $sDateCondition;
-
 
     $query = 'SELECT f.c count, f.user_id, u.username username, UPPER(u.username) UUN,
                         DATE(u.date_created) date_created, u.description description
@@ -176,8 +171,6 @@ $s = $dbc->multiVariableQuery($query);
 
 echo '<script>';
 
-
-
 $nRanking = 0;
 $sOpis = '';
 $nOldCount = -1;
@@ -194,15 +187,12 @@ while ($record = $dbc->dbResultFetch($s)) {
         $sOpis = str_replace("\n", ' ', $sOpis);
         $sOpis = str_replace("'", '-', $sOpis);
         $sOpis = str_replace('"', ' ', $sOpis);
-
     } else
         $sOpis = '';
 
     $sOpis = '' . $sOpis;
 
-
     $sProfil = '<b>' . tr('registered_since_label') . '</b> ' . $record['date_created'];
-
 
     $nCount = $record['count'];
     $sUUN = htmlspecialchars($record['UUN']);
@@ -215,6 +205,7 @@ while ($record = $dbc->dbResultFetch($s)) {
     }
 
     $sUserClass = '';
+
     if ($nRanking <= 3)
         $sUserClass = ' class="GCT-link-3"; ';
     else
@@ -249,13 +240,11 @@ echo $contentUsr;
 echo '}
 ';
 
-
 echo "document.Details.SelectedUser.value = '0';";
 echo "document.Position.Ranking.value = '" . $nMyRanking . ' / ' . $nRanking . "';";
 echo "document.Position.RealPosOfTable.value = '" . $nMyRealPos . "';";
 echo "document.FilterDate.DateFrom.value = '" . $sData_od . "';";
 echo "document.FilterDate.DateTo.value = '" . $sData_do . "';";
-
 
 echo '</script>';
 

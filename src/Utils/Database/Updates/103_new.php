@@ -3,6 +3,7 @@
 /**
  * Tables used by internal OC voting system
  */
+
 namespace src\Utils\Database\Updates;
 
 class C16126270995966 extends UpdateScript

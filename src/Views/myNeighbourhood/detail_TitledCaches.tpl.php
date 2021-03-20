@@ -60,6 +60,7 @@ $logController = new LogEntryController();
         </td>
         <?php
           $log = $logController->loadLogs($cache, false, 0, 1);
+
           if (! empty($log)) { ?>
             <td onclick="location.href='<?=$log[0]->getLogUrl()?>';" style="cursor: pointer;">
               <div class="lightTipped">

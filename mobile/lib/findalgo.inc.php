@@ -12,12 +12,8 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
         isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP' ||
         isset($_GET['owner']) && ! empty($_GET['owner']) ||
         isset($_GET['finder']) && ! empty($_GET['finder'])) {
-
-
-
     function find_news($start, $end)
     {
-
         global $ile;
         global $url;
         global $tpl;
@@ -58,13 +54,13 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
         $wynik = XDb::xSql($query);
         $ilewyn = XDb::xNumRows($wynik);
 
-
         if ($czykilka == 0) {
             if ($ilewyn > 0) {
                 global $address;
                 $wiersz = XDb::xFetchArray($wynik);
                 $adres = './' . $address . '.php?wp=' . $wiersz['wp_oc'];
                 header('Location: ' . $adres);
+
                 exit;
             } else {
                 $tpl->assign('error', '1');
@@ -72,11 +68,9 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
         }
 
         if ($czykilka == 1) {
-
             $znalezione = [];
 
             while ($rekord = XDb::xFetchArray($wynik)) {
-
                 if (isset($_SESSION['user_id'])) {
                     $query2 = "select 1 from cache_logs where user_id = '" . $_SESSION['user_id'] . "' and type = '1' and deleted='0' and cache_id ='" . $rekord['cache_id'] . "';";
                     $if_found = XDb::xSimpleQueryValue($query2, 0);
@@ -97,7 +91,6 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
                 $wynik2 = XDb::xSql($query);
                 $wiersz2 = XDb::xFetchArray($wynik2);
 
-
                 if ($rekord['votes'] > 3)
                     $rekord['score'] = GeoCacheCommons::ScoreAsRatingNum($rekord['score']);
                 else
@@ -110,7 +103,7 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
                 $rekord['E'] = cords($rekord['longitude']);
                 $rekord['typetext'] = $wiersz2[0];
 
-                $znalezione [] = $rekord;
+                $znalezione[] = $rekord;
             }
         }
     }
@@ -118,7 +111,6 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
     if (isset($_GET['nazwa']) && strlen($_GET['nazwa']) < 3) {
         $tpl->assign('error', '2');
     } else {
-
         global $tpl;
 
         $na_stronie = 10;

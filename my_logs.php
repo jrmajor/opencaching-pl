@@ -10,9 +10,11 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -26,6 +28,7 @@ if (! $loggedUser) {
     }
 
     $logTypes = GeoCacheLog::logTypesArray();
+
     if (isset($_REQUEST['logtypes'])) {
         $logTypes = array_intersect($logTypes, explode(',', $_REQUEST['logtypes']));
     }
@@ -34,6 +37,7 @@ if (! $loggedUser) {
     //get the news
     $tplname = 'my_logs';
     tpl_set_var('latest_logs_cache', tr('latest_logs'));
+
     require(__DIR__ . '/src/Views/newlogs.inc.php');
 
     $username = XDb::xMultiVariableQueryValue(
@@ -64,6 +68,7 @@ if (! $loggedUser) {
     $startat = max(0, floor((($start / $LOGS_PER_PAGE) + 1) / $PAGES_LISTED) * $PAGES_LISTED);
 
     $logsPage = 'my_logs.php?userid=' . $user_id;
+
     if (array_diff(GeoCacheLog::logTypesArray(), $logTypes)) {
         $logsPage .= '&amp;logtypes=' . implode(',',$logTypes);
     }
@@ -75,16 +80,20 @@ if (! $loggedUser) {
     } else {
         $pages .= '{first_img_inactive} ';
     }
+
     for ($i = max(1, $startat); $i < min($startat + $PAGES_LISTED, $total_pages + 1); $i++) {
         $page_number = ($i - 1) * $LOGS_PER_PAGE;
+
         if ($page_number == $start) {
             $pages .= '<b>';
         }
         $pages .= '<a href="' . $logsPage . $page_number . '">' . $i . '</a> ';
+
         if ($page_number == $start) {
             $pages .= '</b>';
         }
     }
+
     if ($total_pages >= $startat + $PAGES_LISTED) {
         $pages .= '<a href="' . $logsPage . (($i - 1) * $LOGS_PER_PAGE) . '">{last_img}</a> ';
     } else {
@@ -110,6 +119,7 @@ if (! $loggedUser) {
             LIMIT ' . intval($start) . ', ' . intval($LOGS_PER_PAGE), $user_id);
 
     $log_ids = [];
+
     while ($record = XDb::xFetchArray($rs)) {
         $log_ids[] = $record['id'];
     }
@@ -118,7 +128,6 @@ if (! $loggedUser) {
     $file_content = '';
 
     if (! empty($log_ids)) {
-
         $rs = XDb::xSql(
             'SELECT cache_logs.id, cache_logs.cache_id AS cache_id, cache_logs.type AS log_type, cache_logs.date AS log_date,
                         cache_logs.text AS log_text, caches.user_id AS cache_owner,
@@ -141,7 +150,6 @@ if (! $loggedUser) {
             $user_id);
 
         while ($log_record = XDb::xFetchArray($rs)) {
-
             //hide log type "COG comment" behind 'ordinary' users, displya all logs for admins
             if (! (($log_record['log_type'] == 12) && (! $loggedUser->hasOcTeamRole()))) {
                 $file_content .= '<tr>';
@@ -185,7 +193,6 @@ if (! $loggedUser) {
 
     tpl_set_var('file_content', $file_content);
     tpl_set_var('pages', $pages);
-
 
 //make the template and send it out
 tpl_BuildTemplate();

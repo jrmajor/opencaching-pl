@@ -8,7 +8,6 @@ use src\Models\BaseObject;
 
 class CacheTitled extends BaseObject
 {
-
     private $cacheId;
     private $logId;
     /**
@@ -46,8 +45,10 @@ class CacheTitled extends BaseObject
      */
     public static function fromCacheIdFactory($cacheId){
         $result = new self();
+
         try {
             $result->loadByCacheId($cacheId);
+
             return $result;
         } catch (Exception $e){
             return null;
@@ -84,9 +85,11 @@ class CacheTitled extends BaseObject
             'SELECT * FROM cache_titled ORDER BY date_alg DESC LIMIT 1');
 
         $row = $db->dbResultFetchOneRowOnly($rs);
+
         if(! empty($row)){
             $obj = new self();
             $obj->loadFromRow($row);
+
             return $obj;
         }else{
             // strange - titledCaches table is empty ?!
@@ -98,6 +101,7 @@ class CacheTitled extends BaseObject
     {
         $s = $this->db->multiVariableQuery('SELECT * FROM `cache_titled` WHERE cache_id = :1 LIMIT 1', $cacheId);
         $cacheTitledDbRow = $this->db->dbResultFetch($s);
+
         if (is_array($cacheTitledDbRow)) {
             $this->loadFromRow($cacheTitledDbRow);
         } else {

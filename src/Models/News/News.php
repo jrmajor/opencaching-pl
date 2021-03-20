@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\News;
 
 use DateInterval;
@@ -14,7 +15,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class News extends BaseObject
 {
-
     private $id = 0;
     private $title = null;
     private $content = '';
@@ -38,6 +38,7 @@ class News extends BaseObject
     public function __construct(array $params = [])
     {
         parent::__construct();
+
         if (isset($params['newsId'])) {
             $this->loadById($params['newsId']);
         }
@@ -48,9 +49,11 @@ class News extends BaseObject
         if (! $this->dataLoaded) {
             return false;
         }
+
         if (is_null($this->date_publication)) {
             $this->date_publication = new DateTime('now');
         }
+
         if ($this->id == 0) {
             return $this->insertIntoDb();
         } else {
@@ -155,8 +158,10 @@ class News extends BaseObject
     public static function fromNewsIdFactory($newsId)
     {
         $obj = new self();
+
         try {
             $obj->loadById($newsId);
+
             if ($obj->isDataLoaded()) {
                 return $obj;
             } else {
@@ -243,6 +248,7 @@ class News extends BaseObject
     {
         $n = new self();
         $n->loadFromDbRow($dbRow);
+
         return $n;
     }
 
@@ -260,15 +266,19 @@ class News extends BaseObject
                 OR date_expiration IS NULL)
                 AND (date_publication < NOW()
                 OR date_publication IS NULL)';
+
         if ($mainpage) {
             $query .= ' AND show_onmainpage = 1 AND (date_mainpageexp > NOW() OR date_mainpageexp IS NULL)';
         }
+
         if (! $loggeduser) {
             $query .= ' AND show_notlogged = 1';
         }
         $query .= ' ORDER BY date_publication DESC';
+
         if (! is_null($limit)) {
             $query .= ' LIMIT ' . self::db()->quoteLimit($limit);
+
             if (! is_null($offset)) {
                 $query .= ' OFFSET ' . self::db()->quoteOffset($offset);
             }
@@ -285,20 +295,25 @@ class News extends BaseObject
         $query = 'SELECT COUNT(*) FROM news
             WHERE (date_expiration > NOW() OR date_expiration IS NULL)
                 AND (date_publication < NOW() OR date_publication IS NULL)';
+
         if ($mainpage) {
             $query .= ' AND show_onmainpage = 1 AND (date_mainpageexp > NOW() OR date_mainpageexp IS NULL)';
         }
+
         if (! $loggeduser) {
             $query .= ' AND show_notlogged = 1';
         }
+
         return self::db()->simpleQueryValue($query, 0);
     }
 
     public static function getAdminNews($offset = null, $limit = null)
     {
         $query = 'SELECT * FROM news ORDER BY date_publication DESC';
+
         if (! is_null($limit)) {
             $query .= ' LIMIT ' . $limit;
+
             if (! is_null($offset)) {
                 $query .= ' OFFSET ' . $offset;
             }
@@ -421,6 +436,7 @@ class News extends BaseObject
     public function canBeViewed($isUserLogged)
     {
         $now = new DateTime();
+
         if ($this->getDatePublication() != null && $this->getDatePublication() > $now) {
             // not published yet
             return false;
@@ -432,10 +448,12 @@ class News extends BaseObject
         }
 
         $isUserLogged = boolval($isUserLogged);
+
         if (! $this->getShowNotLogged() && ! $isUserLogged) {
             // news only for logged user, but user is not logged in
             return false;
         }
+
         return true;
     }
 
@@ -449,6 +467,7 @@ class News extends BaseObject
         if (is_null($obj)) { // Date is not set
             return null;
         }
+
         if ($asString) { // Date should be formated as human readable string
             return Formatter::date($obj);
         } else { // Date should be returned as an object
@@ -464,6 +483,7 @@ class News extends BaseObject
     public function getStatus()
     {
         $currentTime = new DateTime('NOW');
+
         if ($this->date_publication > $currentTime) {
             return self::STATUS_FUTURE;
         } elseif (! is_null($this->date_expiration) && $this->date_expiration < $currentTime) {

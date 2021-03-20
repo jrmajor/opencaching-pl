@@ -2,8 +2,8 @@
 /**
  * This class allow to retrive altitude for selected point
  */
-namespace src\Models\Coordinates;
 
+namespace src\Models\Coordinates;
 
 use src\Utils\Debug\Debug;
 
@@ -67,7 +67,7 @@ class Altitude
         $resp = @file_get_contents($url);
         $data = json_decode($resp);
 
-        if(isset($data->results) && is_array($data->results) && ! empty($data->results) ){
+        if(isset($data->results) && is_array($data->results) && ! empty($data->results)){
             if(is_object($data->results[0])){
                 if(isset($data->results[0]->elevation)){
                     return $data->results[0]->elevation;
@@ -103,13 +103,15 @@ class Altitude
           }
         ]
          */
-        if(! empty($data) && isset($data[0]->statistics, $data[0]->statistics->elevation)  ){
+        if(! empty($data) && isset($data[0]->statistics, $data[0]->statistics->elevation)){
             $stats = $data[0]->statistics->elevation;
+
             if($stats->units == 'meters'){
                 if (! is_numeric($stats->value)) {
                     Debug::errorLog('External service: datasciencetoolkit returns unexpected' .
                                     " non numeric value for coords: $coords->getAsText()?!");
                 }
+
                 return $stats->value;
             }
         }

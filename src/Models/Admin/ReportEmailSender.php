@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateTime;
@@ -13,7 +14,6 @@ use src\Utils\Uri\SimpleRouter;
 
 class ReportEmailSender
 {
-
     const TEMPLATE_PATH = __DIR__ . '/../../../resources/email/admin/reports/';
 
     /**
@@ -147,6 +147,7 @@ class ReportEmailSender
         $formattedMessage->setVariable('cachename', $poll->getReport()->getCache()->getCacheName());
         $formattedMessage->setVariable('cacheregion', $poll->getReport()->getCache()->getCacheLocationObj()->getLocationDesc(' &gt; '));
         $formattedMessage->setVariable('server', rtrim(OcConfig::getAbsolute_server_URI(), '/'));
+
         if ($remind) {
             $header = tr('admin_reports_mail_txtpollrem');
         } else {
@@ -158,6 +159,7 @@ class ReportEmailSender
         $email->addToAddr($toUser->getEmail());
         $email->setReplyToAddr(OcConfig::getEmailAddrNoReply());
         $email->setFromAddr(OcConfig::getEmailAddrNoReply());
+
         if ($remind) {
             $subject = ReportEmailTemplate::processTemplate(tr('admin_reports_mail_subjpollrem'), $poll->getReport());
         } else {
@@ -229,6 +231,7 @@ class ReportEmailSender
         $formattedMessage->setVariable('content', $content);
         $email = new Email();
         $email->addToAddr($toUser->getEmail());
+
         if ($publishMail) {
             $formattedMessage->setVariable('reply', tr('mailto_respByEmail') . '<br><a href="' . $server . SimpleRouter::getLink('UserProfile','mailTo', $submitter->getUserId()) . '">' . tr('reports_user_mail_send') . '</a>');
             $formattedMessage->addFooterAndHeader($toUser->getUserName(), false);
@@ -301,6 +304,7 @@ class ReportEmailSender
         $formattedMessage->setVariable('intro', $intro);
         $formattedMessage->setVariable('reason', tr(ReportCommons::reportTypeTranslationKey($report->getType())));
         $formattedMessage->setVariable('content', $report->getContent());
+
         if ($report->getSecretLink() === null) {
             $formattedMessage->setVariable('secretlink', '');
         } else {
@@ -340,6 +344,7 @@ class ReportEmailSender
         $formattedMessage->setVariable('intro', $intro);
         $formattedMessage->setVariable('reason', tr(ReportCommons::reportTypeTranslationKey($report->getType())));
         $formattedMessage->setVariable('content', $report->getContent());
+
         if ($report->getSecretLink() === null) {
             $formattedMessage->setVariable('secretlink', '');
         } else {

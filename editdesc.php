@@ -13,16 +13,19 @@ require_once(__DIR__ . '/lib/common.inc.php');
 //Preprocessing
 if ($error) {
     tpl_errorMsg('editdesc', 'Error?');
+
     exit;
 }
 
-$descid = ( isset($_REQUEST['descid']) && is_numeric($_REQUEST['descid']) ) ? $_REQUEST['descid'] : 0;
+$descid = (isset($_REQUEST['descid']) && is_numeric($_REQUEST['descid'])) ? $_REQUEST['descid'] : 0;
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -35,14 +38,14 @@ $desc_rs = XDb::xSql(
     WHERE (`caches`.`cache_id` = `cache_desc`.`cache_id`)
         AND `cache_desc`.`id`= ? LIMIT 1', $descid);
 
-if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
-
+if ($desc_record = XDb::xFetchArray($desc_rs)) {
     $desc_lang = $desc_record['language'];
     $cache_id = $desc_record['cache_id'];
 
     if ($desc_record['user_id'] != $loggedUser->getUserId() &&
         ! $loggedUser->hasOcTeamRole()) {
         tpl_errorMsg('editdesc', "You're not an owner of this cache!");
+
         exit;
     }
 
@@ -58,6 +61,7 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
         $hints = $_POST['hints'];
         $desclang = $_POST['desclang'];
         $show_all_langs = isset($_POST['show_all_langs_value']) ? $_POST['show_all_langs_value'] : 0;
+
         if (! is_numeric($show_all_langs))
             $show_all_langs = 0;
 
@@ -67,14 +71,13 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
         $hints = htmlspecialchars($hints, ENT_COMPAT, 'UTF-8');
 
         if (isset($_POST['submitform'])) {
-
             // consider whether language does not already exist
             $cacheLang = XDb::xMultiVariableQueryValue(
                 'SELECT COUNT(*) `count` FROM `cache_desc`
                 WHERE `cache_id`= :1 AND `id` != :2 AND `language`= :3 ',
                 0, $desc_record['cache_id'], $descid, $desclang);
 
-            if ( $cacheLang > 0){
+            if ($cacheLang > 0){
                 tpl_errorMsg('editdesc', 'There is such languages description for this cache...');
             }
 
@@ -96,6 +99,7 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
 
             // redirect to cachepage
             tpl_redirect('editcache.php?cacheid=' . urlencode($desc_record['cache_id']));
+
             exit;
         } else if (isset($_POST['show_all_langs'])) {
             $show_all_langs = true;
@@ -112,10 +116,12 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
 
     //here we only set up the template variables
     tpl_set_var('desc', htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'), true);
+
     if ($show_all_langs == false) {
         $r_list = XDb::xMultiVariableQueryValue(
             "SELECT `list_default_$eLang` AS `list` FROM `languages`
             WHERE `short`= :1 LIMIT 1", 0, $desc_lang);
+
         if ($r_list == 0)
             $show_all_langs = true;
     }
@@ -137,7 +143,6 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
     XDb::xFreeResults($rs);
     tpl_set_var('desclangs', $languages);
 
-
     if ($show_all_langs == false) {
         $show_all_langs_submit = '&nbsp;<input class="btn btn-default btn-sm" type="submit" name="show_all_langs" value="' . tr('edDescShowAll') . '" />';
         tpl_set_var('show_all_langs_submit', $show_all_langs_submit);
@@ -154,7 +159,6 @@ if ( $desc_record = XDb::xFetchArray($desc_rs) ) {
     tpl_set_var('desclang_name', htmlspecialchars(Languages::languageNameFromCode($desc_lang, I18n::getCurrentLang()), ENT_COMPAT, 'UTF-8'));
     tpl_set_var('cachename', htmlspecialchars($desc_record['name'], ENT_COMPAT, 'UTF-8'));
 }
-
 
 //make the template and send it out
 tpl_set_var('language4js', I18n::getCurrentLang());

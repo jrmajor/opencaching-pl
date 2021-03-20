@@ -137,12 +137,14 @@ class AutoArchiveCachesJob extends Job
     private function sendEmail(GeoCache $cache, $reason)
     {
         $email = new Email();
+
         if (! $email->addToAddr($cache->getOwner()->getEmail())) {
             return;
         }
 
         $email_template = self::TEMPLATE_DIR;
         $subject = '';
+
         switch ($reason) {
             case self::STEP_1_FIRST_MAIL_SENT:
                 $email_template .= 'step1.email.html';
@@ -243,6 +245,7 @@ class AutoArchiveCachesJob extends Job
             GeoCache::TYPE_EVENT,
             GeoCache::STATUS_ARCHIVED
         );
+
         while ($row = $this->db->dbResultFetch($stmt)) {
             $cache = GeoCache::fromCacheIdFactory($row['cache_id']);
             $cache->updateStatus(GeoCache::STATUS_ARCHIVED);

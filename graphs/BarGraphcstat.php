@@ -13,9 +13,11 @@ JpGraphLoader::module('bar');
 JpGraphLoader::module('date');
 
 $year = '';
-if (isset($_REQUEST['cacheid'], $_REQUEST['t'])  ) {
+
+if (isset($_REQUEST['cacheid'], $_REQUEST['t'])) {
     $cache_id = $_REQUEST['cacheid'];
     $titles = $_REQUEST['t'];
+
     if (strlen($titles) > 3) {
         $year = substr($titles, -4);
         $tit = substr($titles, 0, -4);
@@ -24,10 +26,8 @@ if (isset($_REQUEST['cacheid'], $_REQUEST['t'])  ) {
     }
 }
 
-
 $y = [];
 $x = [];
-
 
 if ($tit == 'csy') {
     $rsCachesFindYear = XDb::xSql(
@@ -39,6 +39,7 @@ if ($tit == 'csy') {
     if ($rsCachesFindYear !== false) {
         $descibe = tr('annual_stat_founds');
         $xtitle = '';
+
         while ($rfy = XDb::xFetchArray($rsCachesFindYear)) {
             $y[] = $rfy['count'];
             $x[] = $rfy['year'];
@@ -67,13 +68,11 @@ if ($tit == 'csm') {
     XDb::xFreeResults($rsCachesFindMonth);
 }
 
-
 // Create the graph. These two calls are always required
 $graph = new Graph(400, 200, 'auto');
 $graph->SetScale('textint', 0, max($y) + (max($y) * 0.2), 0, 0);
 // Add a drop shadow
 $graph->SetShadow();
-
 
 // Label callback
 
@@ -87,12 +86,10 @@ $bplot = new BarPlot($y);
 $bplot->SetFillColor('chartreuse3');
 $graph->Add($bplot);
 
-
 // Setup the titles
 $graph->title->Set($descibe);
 $graph->xaxis->title->Set($xtitle);
 $graph->xaxis->SetTickLabels($x);
-
 
 // Some extra margin looks nicer
 //$graph->xaxis->SetLabelMargin(10);
@@ -103,7 +100,6 @@ $graph->title->SetFont(FF_ARIAL, FS_NORMAL);
 $graph->yaxis->title->SetFont(FF_COURIER, FS_BOLD);
 $graph->xaxis->title->SetFont(FF_COURIER, FS_BOLD);
 
-
 // Setup the values that are displayed on top of each bar
 $bplot->value->Show();
 
@@ -111,7 +107,6 @@ $bplot->value->Show();
 $bplot->value->SetFont(FF_COURIER, FS_BOLD);
 $bplot->value->SetAngle(0);
 $bplot->value->SetFormat('%d');
-
 
 // Display the graph
 $graph->Stroke();

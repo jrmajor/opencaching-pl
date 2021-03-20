@@ -10,7 +10,6 @@ date_default_timezone_set('Europe/Warsaw');
 // country-id of the running node: pl|ro|nl...
 $config['ocNode'] = 'pl';
 
-
 //OC Waypoint for your site for example OX
 $GLOBALS['oc_waypoint'] = 'OP';
 
@@ -34,9 +33,9 @@ $NEED_APPROVE_LIMIT = 3;
 //Debug?
 if (! isset($debug_page))
     $debug_page = false;
+
 if (! isset($debug))
     $debug = false;
-
 
 //if you are running this site on a other domain than staging.opencaching.de, you can set
 //this in private_db.inc.php, but don't forget the ending /
@@ -45,13 +44,13 @@ $absolute_server_URI = '//localhost/';
 //then you can set $OKAPI_server_URI to another than $absolute_server_URI address.
 //$OKAPI_server_URI = 'http://localhost/';
 
-
 // location for dynamically generated files
 $dynbasepath = '/var/www/ocpl-data/';
 
 // location of cache mp3 files
 if (! isset($mp3dir))
     $mp3dir = $dynbasepath . 'mp3';
+
 if (! isset($mp3url))
     $mp3url = '//localhost/mp3';
 
@@ -71,7 +70,6 @@ $dbpasswd = 'PassworD';
 
 $opt['db']['admin_username'] = 'ocdbua';        //username for automatic DB updates
 $opt['db']['admin_password'] = 'AdminPassword';
-
 
 // Your own Google map API key
 $googlemap_key = '';
@@ -134,15 +132,14 @@ $powerTrailMinimumCacheCount = [
             'dateTo' => '2013-10-29 23:59:59',
             'limit' => 5,
         ],
-// if limit change in future, just uncomment and place here current limit and period of time
-//              2 => array (
-//                  'dateFrom' => '2013-10-30 00:00:00',
-//                  'dateTo' => '20??-??-?? 23:59:59',
-//                  'limit' => 25,
-//              ),
+        // if limit change in future, just uncomment and place here current limit and period of time
+        // 2 => [
+        //     'dateFrom' => '2013-10-30 00:00:00',
+        //     'dateTo' => '20??-??-?? 23:59:59',
+        //     'limit' => 25,
+        // ],
     ],
 ];
-
 
 // minimum cahes Found count of user, to alow user set new Power Trail
 // user who found less than $powerTrailUserMinimumCacheFoundToSetNewPowerTrail can't create new PT
@@ -152,7 +149,6 @@ $powerTrailUserMinimumCacheFoundToSetNewPowerTrail = 500;
 
 // enable detailed cache access logging
 //$enable_cache_access_logs = true;
-
 
 //Short sitename for international use.
 $short_sitename = 'OC PL';
@@ -261,18 +257,16 @@ $config['license_html'] = '<a rel="license" href="http://creativecommons.org/lic
 $dateFormat = 'Y-m-d';
 $datetimeFormat = 'Y-m-d H:i';
 
-
 // map of garmin keys,
 // key: domain name, value: garmin key value
 // the map may contain only one entry
 $config['garmin-key'] = [
-        'http://opencaching.pl' => '0fe1300131fcc0e417bb04de798c5acf',
-        'http://www.opencaching.nl' => 'b01f02cba1c000fe034471d2b08044c6',
+    'http://opencaching.pl' => '0fe1300131fcc0e417bb04de798c5acf',
+    'http://www.opencaching.nl' => 'b01f02cba1c000fe034471d2b08044c6',
 ];
 
 $titled_cache_nr_found = 10;
 $titled_cache_period_prefix = 'week';
-
 
 /* ************************************************************************
  * Cache page mini map
@@ -285,7 +279,6 @@ $config['maps']['cache_page_map']['zoom'] = 8;
 
 // available source for osm static map: mapnik,cycle, sterrain, stoner
 $config['maps']['main_page_map']['source'] = 'mapnik';
-
 
 // Configuration of feeds displayed on the main page
 $config['feed']['enabled'] = ['forum', 'blog'];    // This array defines which feeds to display and in what order.

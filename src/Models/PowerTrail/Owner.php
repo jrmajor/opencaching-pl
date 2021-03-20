@@ -23,6 +23,7 @@ class Owner extends User
     public function setPrivileages($privileages)
     {
         $this->privileages = $privileages;
+
         return $this;
     }
 }

@@ -1,8 +1,8 @@
 <?php
+
 namespace src\Utils\Debug;
 
 use Throwable;
-
 
 class Debug {
     /**
@@ -16,6 +16,7 @@ class Debug {
         $traceStr = "\n  STACKTRACE:";
 
         $i = 0;
+
         foreach ($backtrace as $trace) {
             $file = $trace['file'] ?? '?';
             $line = $trace['line'] ?? '?';
@@ -25,12 +26,14 @@ class Debug {
             $traceStr .= "\n  #$i: $file:$line [$class$func()]";
             $i++;
         }
+
         return $traceStr . "\n";
     }
 
     public static function logException(Throwable $e)
     {
         $message = sprintf('%s: [%s:%d] %s ', get_class($e), $e->getFile(), $e->getLine(), $e->getMessage());
+
         if (! empty($e->getTrace())) {
             $message .= self::formTraceStr($e->getTrace());
         }

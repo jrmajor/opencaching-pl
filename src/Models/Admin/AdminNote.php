@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateTime;
@@ -9,7 +10,6 @@ use src\Models\User\User;
 
 class AdminNote extends BaseObject
 {
-
     const VERIFY_ALL = '1';
     const NO_VERIFY_ALL = '2';
     const BAN_STATS = '3';
@@ -85,6 +85,7 @@ class AdminNote extends BaseObject
         if (is_null($this->user) && ! is_null($this->getUserId())) {
             $this->user = User::fromUserIdFactory($this->getUserId());
         }
+
         return $this->user;
     }
 
@@ -104,6 +105,7 @@ class AdminNote extends BaseObject
         if (is_null($this->admin) && ! is_null($this->getAdminId())) {
             $this->admin = User::fromUserIdFactory($this->getAdminId());
         }
+
         return $this->admin;
     }
 
@@ -123,6 +125,7 @@ class AdminNote extends BaseObject
         if (is_null($this->cache) && ! is_null($this->getCacheId())) {
             $this->cache = GeoCache::fromCacheIdFactory($this->getCacheId());
         }
+
         return $this->cache;
     }
 
@@ -149,6 +152,7 @@ class AdminNote extends BaseObject
                 $result = '/images/log/octeam.svg';
                 break;
         }
+
         return $result;
     }
 
@@ -229,6 +233,7 @@ class AdminNote extends BaseObject
                 $result = 'unknown';
                 break;
         }
+
         return $result;
     }
 
@@ -325,8 +330,10 @@ class AdminNote extends BaseObject
     public static function fromNoteIdFactory($noteId)
     {
         $obj = new self();
+
         try {
             $obj->loadByNoteId($noteId);
+
             return $obj;
         } catch (Exception $e) {
             return null;

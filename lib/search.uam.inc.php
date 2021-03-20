@@ -11,7 +11,7 @@ use src\Utils\Database\XDb;
 
 set_time_limit(1800);
 
-require_once (__DIR__ . '/../lib/calculation.inc.php');
+require_once(__DIR__ . '/../lib/calculation.inc.php');
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
@@ -46,7 +46,7 @@ if ($loggedUser || ! $hide_coords) {
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getSqlDistanceFormula($lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
     } else {
         if (! $loggedUser) {
@@ -72,6 +72,7 @@ if ($loggedUser || ! $hide_coords) {
         }
     }
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
+
     if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id FROM `caches` ';
     } else {
@@ -83,6 +84,7 @@ if ($loggedUser || ! $hide_coords) {
     $query .= '   WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
@@ -134,6 +136,7 @@ if ($loggedUser || ! $hide_coords) {
 
             $rName = XDb::xFetchArray($rsName);
             XDb::xFreeResults($rsName);
+
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim(convert_string($rName['name']));
                 $sFilebasename = str_replace(' ', '_', $sFilebasename);
@@ -143,12 +146,14 @@ if ($loggedUser || ! $hide_coords) {
         }
     }
 
-    $bUseZip = ( isset($rCount['count']) && $rCount['count'] > 50 );
+    $bUseZip = (isset($rCount['count']) && $rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     $bUseZip = false;
+
     if ($bUseZip == true) {
         $content = '';
-        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -216,7 +221,6 @@ exit();
 
 function wgs2u1992($lat, $lon)
 {
-
     //double Brad , Lrad, Lorad ,k, C, firad, Xmer, Ymer, Xgk, Ygk;
     // stale
     $E = 0.0818191910428;
@@ -230,7 +234,6 @@ function wgs2u1992($lat, $lon)
     $a6 = 0.000000001197638019173;
     $a8 = 0.00000000000244337624251;
 
-
     // uklad UTM
     //#define mo  0.9996   //wspo#udnik skali na po#udniku #rodkowym
     //#define Lo  (double)((((int)(lon/6)) * 6) + 3) // po#udnik #rodkowy
@@ -242,7 +245,6 @@ function wgs2u1992($lat, $lon)
     $Lo = 19.0;
     $FE = 500000;   //False Easting
     $FN = -5300000; //False Northing
-
 
     $Brad = $lat * $Pi / 180; //Pi / 180;
     $Lrad = $lon * $Pi / 180; // Pi / 180;

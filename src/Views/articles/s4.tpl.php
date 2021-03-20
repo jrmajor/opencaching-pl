@@ -23,10 +23,12 @@ $results = XDb::xSql(
 
 $position = 0;
 $prevCount = 0;
+
 while ($result = XDb::xFetchArray($results)) {
-    if ($result['count'] != $prevCount ) {
+    if ($result['count'] != $prevCount) {
         $position++;
         $prevCount = $result['count'];
+
         if ($position == 1) {
             echo '<tr>';
         } else {

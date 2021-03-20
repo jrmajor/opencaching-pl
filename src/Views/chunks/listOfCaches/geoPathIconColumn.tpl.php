@@ -13,7 +13,6 @@ use src\Models\PowerTrail\PowerTrail;
  */
 
 return function (array $data) {
-
     if (empty($data)) {
         // seems that no GeoPath data is present here
         return;

@@ -20,7 +20,6 @@ if (empty($user) || ! $user->hasOcTeamRole()) {
  * - I'm going to change it soon...
  */
 if ($short_sitename == 'OC PL') {
-
     $GLOBALS['regions'] = [
         'PL51' => 'dolnośląskie',
         'PL61' => 'kujawsko-pomorskie',
@@ -41,7 +40,6 @@ if ($short_sitename == 'OC PL') {
         'NON_PL' => '* zagraniczne',
         'XXX' => '* polskie-nie-ustalone',
     ];
-
 } else {
     //OC !PL
     $GLOBALS['regions'] = []; //temporary empty list
@@ -85,14 +83,11 @@ if (isset($_REQUEST['regionSel'])) {
         $regionCondition = "AND loc.code3 = '$region'";
         $countryCondition = '';
     }
-
 } else {
-
     if ($short_sitename == 'OC PL') {
         $regionCondition = 'AND 1 = 0'; //block all results if region is not select
         $countryCondition = '';
         tpl_set_var('region_name', 'Wybierz region!'); //temporary solution
-
     } else {
         $regionCondition = '';
         $countryCondition = '';
@@ -136,6 +131,7 @@ $rs = XDb::xSql($query);
 
 $file_content = '';
 $i = 0;
+
 while ($record = XDb::xFetchArray($rs)) {
     if (($i % 2) == 0) {
         $bgcolor = '#eeeeee';

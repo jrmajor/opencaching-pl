@@ -13,6 +13,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 $view = tpl_getView();
 
 $loggedUser = ApplicationContainer::Instance()->getLoggedUser();
+
 if (empty($loggedUser) || ! $loggedUser->hasOcTeamRole()) {
     $view->redirect('/');
 }
@@ -66,12 +67,13 @@ $view->buildView();
 
 function makePtSelector($ptAll, $id)
 {
-
     $selector = '<select class="form-control input400" id=' . $id . ' name=' . $id . '>';
+
     foreach ($ptAll as $pt) {
         $selector .= '<option value=' . $pt['id'] . '>' . $pt['name'] . '</option>';
     }
     $selector .= '</select>';
+
     return $selector;
 }
 
@@ -92,6 +94,7 @@ function preparePtCaches(PowerTrail $powerTrail)
         } else {
             $color = '#eeffee';
         }
+
         if ($geocache->getFounds() > 0) {
             $color = 'ffbbbb';
         }
@@ -104,22 +107,25 @@ function preparePtCaches(PowerTrail $powerTrail)
         </tr>';
     }
     $table .= '</table>';
+
     return $table;
 }
 
 function generateStatusSelector($currStatus)
 {
     $selector = '<select id="ptStatusSelector">';
+
     foreach (\src\Controllers\PowerTrailController::getPowerTrailStatus() as $val => $desc) {
         if ($val == $currStatus)
             $selected = 'selected="selected"';
         else
             $selected = '';
-        if ($val == 2 && $currStatus != 2) {
 
+        if ($val == 2 && $currStatus != 2) {
         } else // (this status is only after new geoPath creation.)
             $selector .= '<option ' . $selected . ' value="' . $val . '">' . tr($desc['translate']) . '</option>';
     }
     $selector .= '</select>';
+
     return $selector;
 }

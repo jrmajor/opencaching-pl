@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\Admin;
 
 use DateInterval;
@@ -9,7 +10,6 @@ use src\Utils\Debug\Debug;
 
 class ReportPoll extends BaseObject
 {
-
     /**
      * Configuration
      */
@@ -85,6 +85,7 @@ class ReportPoll extends BaseObject
     public function __construct(array $params = [])
     {
         parent::__construct();
+
         if (isset($params['pollId'])) {
             $this->loadById($params['pollId']);
         }
@@ -107,6 +108,7 @@ class ReportPoll extends BaseObject
                 'reportId' => $this->reportId,
             ]);
         }
+
         return $this->report;
     }
 
@@ -150,6 +152,7 @@ class ReportPoll extends BaseObject
         if (! $this->dataLoaded) {
             return null;
         }
+
         if ($this->dateEnd > new DateTime('now')) {
             return true;
         } else {
@@ -178,6 +181,7 @@ class ReportPoll extends BaseObject
         $params['id']['data_type'] = 'integer';
         $params['date_end']['value'] = $this->dateEnd->format(OcConfig::instance()->getDbDateTimeFormat());
         $params['date_end']['data_type'] = 'string';
+
         return (self::db()->paramQuery($query, $params) !== null);
     }
 
@@ -193,8 +197,10 @@ class ReportPoll extends BaseObject
             return false;
         } elseif ($this->isPollActive() && ! $this->userVoted() && $vote >= 1 && ($vote <= ($this->ans3 === null) ? 2 : 3)) {
             $this->saveVote($vote);
+
             return true;
         }
+
         return false;
     }
 
@@ -217,6 +223,7 @@ class ReportPoll extends BaseObject
         $params['poll_id']['data_type'] = 'integer';
         $params['user_id']['value'] = self::getCurrentUser()->getUserId();
         $params['user_id']['data_type'] = 'integer';
+
         return (self::db()->paramQueryValue($query, 0, $params) > 0);
     }
 
@@ -250,6 +257,7 @@ class ReportPoll extends BaseObject
         $poll->dataLoaded = true;
         $pollId = $poll->insertToDb();
         unset($poll);
+
         return $pollId;
     }
 
@@ -277,6 +285,7 @@ class ReportPoll extends BaseObject
     public static function getInActivePolls($reportId, $empty = false)
     {
         $polls = self::getPollsObj($reportId, false);
+
         if (! $empty) {
             foreach ($polls as $key => $value) {
                 if ($value->getVotesCount() == 0) {
@@ -284,6 +293,7 @@ class ReportPoll extends BaseObject
                 }
             }
         }
+
         return $polls;
     }
 
@@ -302,6 +312,7 @@ class ReportPoll extends BaseObject
             data.addRows([
             ["' . $this->ans1 . '", ' . addslashes($this->getVotesCount(1)) . '],
             ["' . $this->ans2 . '", ' . addslashes($this->getVotesCount(2)) . ']';
+
         if ($this->ans3 !== null) {
             $content .= ',["' . $this->ans3 . '", ' . addslashes($this->getVotesCount(3)) . ']';
         }
@@ -310,6 +321,7 @@ class ReportPoll extends BaseObject
             var chart = new google.visualization.PieChart(document.getElementById("chart-poll-' . $this->id . '"));
             chart.draw(data, options);
             }';
+
         return $content;
     }
 
@@ -332,6 +344,7 @@ class ReportPoll extends BaseObject
         $params['poll_id']['value'] = $pollId;
         $params['poll_id']['data_type'] = 'integer';
         $stmt = self::db()->paramQuery($query, $params);
+
         return self::db()->dbResultFetchAll($stmt);
     }
 
@@ -360,6 +373,7 @@ class ReportPoll extends BaseObject
         $voters = self::db()->dbResultFetchAll($stmt);
         $first = true;
         $content = '';
+
         foreach ($voters as $voter) {
             if ($first) {
                 $first = false;
@@ -368,6 +382,7 @@ class ReportPoll extends BaseObject
             }
             $content .= $voter['username'];
         }
+
         return $content;
     }
 
@@ -384,6 +399,7 @@ class ReportPoll extends BaseObject
         if (($this->isPollActive() || $this->id === null) && $option != null) { // Don't publish voters list if poll is active!
             return 0;
         }
+
         if ($option !== null && ($option < 1 || $option > 3)) { // Incorrect $option
             return 0;
         }
@@ -392,6 +408,7 @@ class ReportPoll extends BaseObject
             SELECT COUNT(*)
             FROM `reports_poll_votes`
             WHERE `poll_id` = :poll_id';
+
         if ($option !== null) {
             $query .= ' AND `vote` = :vote';
             $params['vote']['value'] = $option;
@@ -399,6 +416,7 @@ class ReportPoll extends BaseObject
         }
         $params['poll_id']['value'] = $this->id;
         $params['poll_id']['data_type'] = 'integer';
+
         return self::db()->paramQueryValue($query, 0, $params);
     }
 
@@ -413,10 +431,12 @@ class ReportPoll extends BaseObject
         if ($this->isPollActive() || $this->id === null) { // Don't publish voters list if poll is active!
             return 0;
         }
+
         if ($option < 1 || $option > 3) { // Incorrect $option
             return 0;
         }
         $percent = (float) $this->getVotesCount($option) / (float) $this->getVotesCount(null) * 100;
+
         return round($percent, $precision);
     }
 
@@ -435,9 +455,11 @@ class ReportPoll extends BaseObject
         $params = [];
         $params['pollid']['value'] = $pollId;
         $params['pollid']['data_type'] = 'integer';
+
         if (self::db()->paramQueryValue($query, 0, $params) == '1') {
             return true;
         }
+
         return false;
     }
 
@@ -449,9 +471,11 @@ class ReportPoll extends BaseObject
     public static function generatePollIntervalSelect()
     {
         $result = '';
+
         for ($i = self::POLL_INTERVAL_MIN; $i <= self::POLL_INTERVAL_MAX; $i++) {
             $result .= '<option value="' . $i . '">' . $i . '</option>';
         }
+
         return $result;
     }
 
@@ -484,6 +508,7 @@ class ReportPoll extends BaseObject
         $params['ans3']['data_type'] = ($this->ans3 == null) ? 'null' : 'string';
         self::db()->paramQuery($query, $params);
         $this->id = self::db()->lastInsertId();
+
         return $this->id;
     }
 
@@ -528,6 +553,7 @@ class ReportPoll extends BaseObject
     {
         $n = new self();
         $n->loadFromDbRow($dbRow);
+
         return $n;
     }
 
@@ -539,6 +565,7 @@ class ReportPoll extends BaseObject
         $params['id']['data_type'] = 'integer';
         $stmt = self::db()->paramQuery($query, $params);
         $dbRow = self::db()->dbResultFetch($stmt);
+
         if (is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
@@ -557,6 +584,7 @@ class ReportPoll extends BaseObject
             SELECT *
             FROM `reports_poll`
             WHERE `report_id` = :report_id AND `date_end`';
+
         if ($active) {
             $query .= ' > NOW()';
         } else {

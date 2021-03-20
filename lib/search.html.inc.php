@@ -34,15 +34,14 @@ function fHideColumn($nr, $set)
 
     if (isset($_REQUEST['C' . $nr])) {
         $C = 1;
+
         if ($set) {
             OcCookie::set($sNameColumnsSearch, 1, true);
         }
     } else {
         if (! isset($_REQUEST['notinit'])) // first ent.
 {
-
             $C = OcCookie::getOrDefault($sNameColumnsSearch, 0);
-
         } else // next ent.
 {
             if ($set) {
@@ -61,6 +60,7 @@ function fHideColumn($nr, $set)
     } else {
         $descCol = $colNameSearch[$nr]['O'];
         $NrColVisable++;
+
         if ($NrColSortSearch != $NrColVisable)
             $selectList .= "<option value=$NrColVisable>$descCol</option>";
         else
@@ -71,8 +71,10 @@ function fHideColumn($nr, $set)
 }
 
 global $dbcSearch, $hide_coords, $NrColSortSearch, $OrderSortSearch, $SearchWithSort, $TestStartTime, $queryFilter;
-require_once (__DIR__ . '/../src/Views/lib/icons.inc.php');
-require_once (__DIR__ . '/calculation.inc.php');
+
+require_once(__DIR__ . '/../src/Views/lib/icons.inc.php');
+
+require_once(__DIR__ . '/calculation.inc.php');
 
 set_time_limit(1800);
 
@@ -167,6 +169,7 @@ $colNameSearch = [
 ];
 
 $sDefCol4Search = 'DefCol4Search';
+
 if (! OcCookie::contains($sDefCol4Search)) {
     OcCookie::set('NCSearch3', '1');
     OcCookie::set('NCSearch6', '1');
@@ -185,24 +188,19 @@ if (! OcCookie::contains($sDefCol4Search)) {
 }
 
 if (! isset($_REQUEST['NrColSort'])) {
-
     if (OcCookie::contains($sNrColumnsSortSearch)){
         $NrColSortSearch = OcCookie::get($sNrColumnsSortSearch);
     }else{
         OcCookie::set($sNrColumnsSortSearch, 1);
     }
-
 } else {
-
     $NrColSortSearch = $_REQUEST['NrColSort'];
     OcCookie::set($sNrColumnsSortSearch, $NrColSortSearch);
-
 }
 
 // //////////////////////////////////
 
 if (! isset($_REQUEST['OrderSortSearch'])) {
-
     if (OcCookie::contains($sOrderSortSearch)){
         $OrderSortSearch = OcCookie::get($sOrderSortSearch);
     }else{
@@ -246,22 +244,27 @@ else
     $caches_output = '<div class="errormsg" style="font-size:13px;text-align:center;"><b>' . tr('CachesNotMatchCryteria') . '</b></br></br></br></div>';
 
 $CalcDistance = true;
+
 if ($SearchWithSort && fHideColumn(findColumn(tr('Distance')), false) == 1)
     $CalcDistance = false;
 
 $CalcCoordinates = true;
+
 if (fHideColumn(findColumn(tr('Coordinates')), false) == 1)
     $CalcCoordinates = false;
 
 $CalcSendToGPS = true;
+
 if (fHideColumn(findColumn(tr('srch_Send_to_GPS'), 'O'), false) == 1)
     $CalcSendToGPS = false;
 
 $CalcFNC = true;
+
 if (fHideColumn(findColumn(tr('FNC')), false) == 1 && fHideColumn(findColumn(tr('F')), false) == 1 && fHideColumn(findColumn(tr('N')), false) == 1 && fHideColumn(findColumn(tr('C')), false) == 1)
     $CalcFNC = false;
 
 $CalcEntry = true;
+
 if (fHideColumn(findColumn(tr('Entry')), false) == 1)
     $CalcEntry = false;
 
@@ -275,7 +278,7 @@ $distance_unit = 'km';
 
 $query = 'SELECT ';
 
-if (isset($lat_rad, $lon_rad)  ) {
+if (isset($lat_rad, $lon_rad)) {
     if ($CalcDistance)
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
 } else {
@@ -308,6 +311,7 @@ $query .= '   `caches`.`name` `name`, `caches`.`status` `status`, `caches`.`wp_o
                 `user`.`username` `username`, `user`.`user_id` `user_id`,
                 `cache_type`.`icon_large` `icon_large`,
                 `caches`.`founds` `founds`, `caches`.`topratings` `toprating`, cache_desc.short_desc short_desc ';
+
 if (! $loggedUser) {
     if ($CalcCoordinates)
         $query .= ', `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id ';
@@ -353,6 +357,7 @@ if (isset($_REQUEST['startat'])) {
 }
 
 $caches_per_page = OcDb::quoteOffset($caches_per_page);
+
 if ($caches_per_page > 0) {
     $startat = floor($startat / $caches_per_page) * $caches_per_page;
 }
@@ -388,6 +393,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
     $tmpline = str_replace('{date_created_sort}', date($logdateformat_ymd, strtotime($caches_record['date_created'])), $tmpline);
 
     $ratingA = $caches_record['toprating'];
+
     if ($ratingA > 0)
         $ratingimg = '<img src="images/rating-star.png" alt="' . $tr_Recommended . '" title="' . $tr_Recommended . '" />';
     else
@@ -401,6 +407,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
     } else {
         if ($CalcCoordinates) {
             $tmpline = str_replace('{long}', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($caches_record['longitude'])), $tmpline);
+
             if ($caches_record['coord_modified'] == true) {
                 $tmpline = str_replace('{mod_cord_style}', 'style="color:orange;" alt ="' . $tr_Coord_have_been_modified . '" title="' . $tr_Coord_have_been_modified . '"', $tmpline);
                 $tmpline = str_replace('{mod_suffix}', '[F]', $tmpline);
@@ -411,18 +418,16 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
             $tmpline = str_replace('{lat}', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($caches_record['latitude'])), $tmpline);
         }
     }
-    
+
     $tmpline = str_replace('{cachetype}', tr(GeoCacheCommons::CacheTypeTranslationKey($caches_record['cache_type'])), $tmpline);
 
     // sp2ong short_desc ermitteln TODO: nicht die erste sondern die richtige wĂ¤hlen
     $tmpline = str_replace('{wp_oc}', htmlspecialchars($caches_record['wp_oc'], ENT_COMPAT, 'UTF-8'), $tmpline);
-    
 
     if ($CalcCoordinates) {
         $tmpline = str_replace('{latitude}', htmlspecialchars($caches_record['latitude'], ENT_COMPAT, 'UTF-8'), $tmpline);
-        
+
         $tmpline = str_replace('{longitude}', htmlspecialchars($caches_record['longitude'], ENT_COMPAT, 'UTF-8'), $tmpline);
-        
     }
 
     $tmpline = str_replace('{short_desc}', htmlspecialchars(PrepareText($caches_record['short_desc']), ENT_COMPAT, 'UTF-8'), $tmpline);
@@ -435,8 +440,8 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
         1 => 0,
         2 => 0,
     ];
-    if ($CalcFNC) {
 
+    if ($CalcFNC) {
         $rs = $dbc->multiVariableQuery(
             'SELECT count(cache_logs.type) as typy, cache_logs.type as type
             FROM `cache_logs`, `log_types`
@@ -453,7 +458,6 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
         }
 
         $tmpline = str_replace('{logtypes1}', '<span ' . str_pad($typy[0], 5, 0, STR_PAD_LEFT) . " style='color:green'>" . $typy[0] . "</span>.<span style='color:red'>" . $typy[1] . "</span>.<span style='color:black'>" . $typy[2] . '</span>', $tmpline);
-
     }
     $tmpline = str_replace('{find}', $typy[0], $tmpline);
     $tmpline = str_replace('{notfind}', $typy[1], $tmpline);
@@ -461,7 +465,6 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
 
     // search the last found
     if ($CalcEntry) {
-
         $rs = $dbc->multiVariableQuery(
             'SELECT `cache_logs`.`id` `id`, `cache_logs`.`type` `type`, `cache_logs`.`date` `date`,
                    `log_types`.`icon_small` `icon_small`,
@@ -510,10 +513,12 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
 
     $availableDescLangs = '';
     $aLangs = mb_split(',', $caches_record['desc_languages']);
+
     foreach ($aLangs as $thislang) {
         $availableDescLangs .= '<a href="viewcache.php?cacheid=' . urlencode($caches_record['cache_id']) . '&amp;desclang=' . urlencode($thislang) . '" style="text-decoration:none;"><b><font color="blue">' . htmlspecialchars($thislang, ENT_COMPAT, 'UTF-8') . '</font></b></a> ';
     }
     $tmpline = str_replace('{desclangs}', $availableDescLangs, $tmpline);
+
     if ($loggedUser || ! $hide_coords) {
         if ($CalcCoordinates) {
             if ($caches_record['coord_modified'] == true) {
@@ -521,8 +526,8 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
             } else {
                 $mod_suffix_garmin = '';
             }
-            
         }
+
         if ($CalcSendToGPS) {
             $tmpline = str_replace('{sendtogps}', ("<a href=\"#\" onclick=\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . '&amp;long=' . $caches_record['longitude'] . '&amp;wp=' . $caches_record['wp_oc'] . '&amp;name=' . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\"><img src='/images/garmin.jpg' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0' /></a>"), $tmpline);
             $tmpline = str_replace('{sendtogpsnew}', "<a href='#' onclick=\\\"javascript:window.open('garmin.php?lat=" . $caches_record['latitude'] . '&amp;long=' . $caches_record['longitude'] . '&amp;wp=' . $caches_record['wp_oc'] . '&amp;name=' . urlencode($mod_suffix_garmin . $caches_record['name']) . "&amp;popup=y','Send_To_GPS','width=450,height=160,resizable=no,scrollbars=0')\\\"><img src='/images/blue/gps-receiving-32.png' alt='Send to GPS' title='" . $tr_Send_to_GPS . "' border='0'  height='16' width='16' /></a>", $tmpline);
@@ -588,12 +593,14 @@ if ($startat > 0) {
 }
 
 $frompage = ($startat / $caches_per_page) - 3;
+
 if ($frompage < 1)
     $frompage = 1;
 
 $maxpage = ceil($resultcount / $caches_per_page);
 
 $topage = $frompage + 8;
+
 if ($topage > $maxpage)
     $topage = $maxpage;
 
@@ -656,7 +663,7 @@ else
 
     tpl_BuildTemplate();
 
-function trChar( $word )
+function trChar($word)
 {
     $word = str_replace('Ą', 'A|', $word);
     $word = str_replace('ą', 'A|', $word);
@@ -688,9 +695,9 @@ function trChar( $word )
     return $word;
 }
 
-function PrepareText( $text )
+function PrepareText($text)
 {
-    $log_text = strip_tags( $text, '');
+    $log_text = strip_tags($text, '');
     $log_text = str_replace("\r\n", ' ',$log_text);
     $log_text = str_replace("\n", ' ',$log_text);
     $log_text = str_replace("'", '-',$log_text);
@@ -706,11 +713,13 @@ function icon_difficulty($what, $difficulty)
         exit('Wrong difficulty-identifier!');
 
         $difficulty = (int) $difficulty;
+
         if ($difficulty < 2 || $difficulty > 10)
             exit("Wrong difficulty-value $what: $difficulty");
 
             $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
             $text = sprintf($what == 'diff' ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
+
             return "<img src='$icon' class='img-difficulty' width='19' height='16' alt='$text' title='$text'>";
 }
 
@@ -721,7 +730,6 @@ function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconna
     $inactive = false;
 
     $iconname = str_replace('mystery', 'quiz', $iconname);
-
 
     // mark if found
     if (isset($user_id)) {
@@ -749,6 +757,7 @@ function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconna
     if ($cache_userid == $user_id) {
         $cacheicon_type = '-owner';
         $inactive = true;
+
         switch ($cache_status) {
             case 1: $cacheicon_searchable = '-s';
             break;

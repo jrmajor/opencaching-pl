@@ -9,7 +9,6 @@
  */
 
 return function (array $data){
-
     // exit if there is no icon given
     if(is_null($data['icon'])){
         return '';

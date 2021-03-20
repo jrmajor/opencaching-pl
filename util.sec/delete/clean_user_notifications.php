@@ -15,6 +15,7 @@ use src\Utils\Database\OcDb;
 
 if (php_sapi_name() != 'cli') {
     printf("This script should be run from command-line only.\n");
+
     exit(1);
 }
 
@@ -30,16 +31,14 @@ $longopts = [
 ];
 $options = getopt($shortopts, $longopts);
 
-
-if( isset($options['h']) ){
+if(isset($options['h'])){
     printUsageAndExit();
 }
-
 
 $userName = isset($options['u']) ?            $options['u']     : null;
 $userId = isset($options['userId']) ? (int) $options['userId']: null;
 
-if( is_null($userId) && is_null($userName) ){
+if(is_null($userId) && is_null($userName)){
     echo "Error: No param given?!\n\n";
     printUsageAndExit();
 }
@@ -58,12 +57,13 @@ if(! is_null($userId) && ! is_null($userName)){
 if(is_null($userId)){
     // Check that user exists
     $userId = $db->multiVariableQueryValue('SELECT user_id FROM user WHERE username = :1', 0, $userName);
+
     if ($userId == 0) {
         printf("Error: User not found: %s\n", $userName);
+
         exit(2);
     }
 }
-
 
 // Clean notify radius - to avoid notification about new caches
 $notify_radius = $db->multiVariableQueryValue('SELECT notify_radius FROM user WHERE user_id = :1', -1, $userId);
@@ -77,18 +77,18 @@ if ($notify_radius > 0) {
 // Clean all cache_watches
 $s = $db->multiVariableQuery('SELECT cache_id FROM cache_watches WHERE user_id = :1', $userId);
 $cache_watches = $db->dbResultFetchAll($s);
+
 foreach ($cache_watches as $watch) {
     remove_watch($watch['cache_id'], $userId);
 }
 
 function printUsageAndExit(){
-
     echo "Usage: \n";
     echo " php clean_user_notifications.php -u <username>\n";
     echo "   or \n";
     echo " php clean_user_notifications.php --userId=<userId>\n";
-    exit(1);
 
+    exit(1);
 }
 
 function remove_watch($cache_id, $userId) {
@@ -98,5 +98,4 @@ function remove_watch($cache_id, $userId) {
 
     // Remove watch
     $db->multiVariableQuery('DELETE FROM cache_watches WHERE cache_id = :1 AND user_id = :2', $cache_id, $userId);
-
 }

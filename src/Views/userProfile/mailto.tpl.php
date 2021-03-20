@@ -6,7 +6,7 @@ use src\Utils\Uri\SimpleRouter;
   <?=tr('email_user')?> <?=$view->requestedUser->getUserName()?>
 </div>
 <div class="content2-container">
-  <?php $view->callChunk('infoBar', '', $view->infoMsg, $view->errorMsg ); ?>
+  <?php $view->callChunk('infoBar', '', $view->infoMsg, $view->errorMsg); ?>
   <form action="<?=SimpleRouter::getLink('UserProfile', 'mailTo', $view->requestedUser->getUserId()) ?>" method="post">
     <div class="input-group input-group-sm">
       <label for="subject" class="input-group-addon btn btn-sm btm-default"><?=tr('titles')?></label>

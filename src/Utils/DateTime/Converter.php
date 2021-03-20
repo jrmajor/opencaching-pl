@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Utils\DateTime;
 
 class Converter
@@ -47,10 +48,13 @@ class Converter
         ];
         $jqueryui_format = '';
         $escaping = false;
+
         for ($i = 0; $i < strlen($php_format); $i++) {
             $char = $php_format[$i];
+
             if ($char === '\\') { // PHP date format escaping character
                 $i++;
+
                 if ($escaping)
                     $jqueryui_format .= $php_format[$i];
                 else
@@ -61,12 +65,14 @@ class Converter
                     $jqueryui_format .= "'";
                     $escaping = false;
                 }
+
                 if (isset($SYMBOLS_MATCHING[$char]))
                     $jqueryui_format .= $SYMBOLS_MATCHING[$char];
                 else
                     $jqueryui_format .= $char;
             }
         }
+
         return $jqueryui_format;
     }
 }

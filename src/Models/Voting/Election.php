@@ -35,6 +35,7 @@ class Election extends BaseObject
         $elections = $db->dbFetchAllAsObjects($stmt, function (array $row) {
             $obj = new self();
             $obj->loadFromDbRow($row);
+
             return $obj;
         });
 
@@ -54,6 +55,7 @@ class Election extends BaseObject
         return $db->dbFetchAllAsObjects($stmt, function (array $row) {
             $obj = new self();
             $obj->loadFromDbRow($row);
+
             return $obj;
         });
     }
@@ -81,18 +83,21 @@ class Election extends BaseObject
         // check if election is still active
         if (! $this->isActiveNow()) {
             $errorMsg = tr('vote_inactiveVoting');
+
             return false;
         }
 
         // check if user has already voted
         if ($this->hasUserAlreadyVoted($user)) {
             $errorMsg = tr('vote_alreadyVoted');
+
             return false;
         }
 
         // check if user pass criteria to vote
         if (! $this->validateCriteriaForUser($user)) {
             $errorMsg = tr('vote_criteriaNotPassed');
+
             return false;
         }
 
@@ -100,6 +105,7 @@ class Election extends BaseObject
         foreach ($votes as $vote) {
             if (! ChoiceOption::checkOption($this, $vote)) {
                 $errorMsg = tr('vote_invalidVote') . '. [Incorrect option]';
+
                 return false;
             }
         }
@@ -107,12 +113,14 @@ class Election extends BaseObject
         // check rules in context of votes
         if (! $this->electionRules->validatesVotesArr($votes)) {
             $errorMsg = tr('vote_invalidVote') . '. [Rules conflict]';
+
             return false;
         }
 
         // OK votes can be saved
         if (! $this->db->beginTransaction()) {
             $errorMsg = tr('vote_internalError');
+
             return false;
         }
         // save fact that user voted
@@ -289,6 +297,7 @@ class ElectionRules
 
     public function __construct ($jsonStr) {
         $arr = json_decode($jsonStr, true);
+
         if (is_array($arr)) {
             foreach ($arr as $key => $val) {
                 switch ($key){
@@ -355,6 +364,7 @@ class VoterCriteria
 
     public function __construct ($jsonStr) {
         $arr = json_decode($jsonStr, true);
+
         if (is_array($arr)) {
             foreach ($arr as $key => $val) {
                 switch ($key){
@@ -389,6 +399,7 @@ class VoterCriteria
         if ($this->daysWithOc) {
             $tmpDate = clone $election->getStartDate(); // to not modify original date
             $lastDayToVote = $tmpDate->modify('-' . $this->daysWithOc . ' days');
+
             if (OcDateTime::isAfter($user->getDateCreated(), $lastDayToVote)) {
                 return false;
             }

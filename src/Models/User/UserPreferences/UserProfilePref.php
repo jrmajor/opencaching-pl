@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\User\UserPreferences;
 
 class UserProfilePref extends UserPreferencesBaseData

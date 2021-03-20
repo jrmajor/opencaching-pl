@@ -41,6 +41,7 @@ use src\Utils\Uri\SimpleRouter;
     </a>
   </div>
   <?php } //end foreach
+
   if (count($view->topRatedCaches) == $view->preferences['style']['caches-count']) { ?>
     <a class="btn btn-sm btn-default" href="<?=SimpleRouter::getLink('MyNeighbourhood', 'mostRecommended', $view->selectedNbh)?>" title="<?=tr('myn_hlp_more')?>"><?=tr('more')?></a>
   <?php } // end if

@@ -6,7 +6,6 @@ use Exception;
 use src\Models\OcConfig\OcConfig;
 use src\Utils\Debug\Debug;
 
-
 /**
  * This is just wrapper for apcu.
  *
@@ -30,6 +29,7 @@ class OcMemCache
     public static function getOrCreate($key, $ttl, callable $generator)
     {
         $var = self::get($key);
+
         if ($var === false) {
             $var = call_user_func($generator);
             self::store($key, $ttl, $var);
@@ -71,6 +71,7 @@ class OcMemCache
             // null would be returned as false, see get()
             $var = '[OcMemCache null]';
         }
+
         if ($var !== false) {
             // false is the same as "not in cache" - no need to store
             try {
@@ -92,16 +93,19 @@ class OcMemCache
     public static function get($key)
     {
         $value = apcu_fetch(self::getPrefix() . $key);
+
         if ($value === null) {
             $value = false;
         } elseif ($value == '[OcMemCache null]') {
             $value = null;
         }
+
         if (self::$debug) {
             echo "$key: ";
             var_dump($value);
             echo '<br />';
         }
+
         return $value;
     }
 

@@ -94,7 +94,6 @@ class StaticMap
     protected $centerX, $centerY, $offsetX, $offsetY;
 
     public static function displayPureMap (Coordinates $center, $zoom, array $size, $mapType) {
-
         $map = new self();
         $map->lat = $center->getLatitude();
         $map->lon = $center->getLongitude();
@@ -104,7 +103,6 @@ class StaticMap
         $map->maptype = $mapType;
 
         echo $map->showMap();
-
     }
 
     public static function displayMapWithMarkerAtCenter(
@@ -141,6 +139,7 @@ class StaticMap
     private function showMap()
     {
         $this->parseParams();
+
         if ($this->useMapCache) {
             // use map cache, so check cache for map
             if (! $this->checkMapCache()) {
@@ -149,6 +148,7 @@ class StaticMap
                 $this->mkdir_recursive(dirname($this->mapCacheIDToFilename()), 0755);
                 imagepng($this->image, $this->mapCacheIDToFilename(), 9);
                 $this->sendHeader();
+
                 if (file_exists($this->mapCacheIDToFilename())) {
                     return file_get_contents($this->mapCacheIDToFilename());
                 } else {
@@ -157,14 +157,15 @@ class StaticMap
             } else {
                 // map is in cache
                 $this->sendHeader();
+
                 return file_get_contents($this->mapCacheIDToFilename());
             }
-
         } else {
             // no cache, make map, send headers and deliver png
             $this->makeMap();
 
             $this->sendHeader();
+
             return imagepng($this->image);
         }
     }
@@ -185,10 +186,10 @@ class StaticMap
 
     private function parseParams()
     {
-
         if ($this->zoom > 18) {
             $this->zoom = 18;
         }
+
         if ($this->zoom < 0) {
             $this->zoom = 0;
         }
@@ -196,6 +197,7 @@ class StaticMap
         if ($this->width > $this->maxWidth) {
             $this->width = $this->maxWidth;
         }
+
         if ($this->width < $this->minWidth) {
             $this->width = $this->minWidth;
         }
@@ -249,6 +251,7 @@ class StaticMap
             for ($y = $startY; $y <= $endY; $y++) {
                 $url = str_replace(['{Z}', '{X}', '{Y}'], [$this->zoom, $x, $y], $this->tileSrcUrl[$this->maptype]);
                 $tileData = $this->fetchTile($url);
+
                 if (! $tileData || ! $tileImage = @imagecreatefromstring($tileData)) {
                     // error on fetch tile image or error on image creation
                     $tileImage = imagecreate($this->tileSize, $this->tileSize);
@@ -266,7 +269,6 @@ class StaticMap
     {
         // loop thru marker array
         foreach ($this->markers as $marker) {
-
             // set some local variables
             $markerLat = $marker['lat'];
             $markerLon = $marker['lon'];
@@ -282,15 +284,16 @@ class StaticMap
                 foreach ($this->markerPrototypes as $markerPrototype) {
                     if (preg_match($markerPrototype['regex'], $markerType, $matches)) {
                         $markerFilename = $matches[0] . $markerPrototype['extension'];
+
                         if ($markerPrototype['offsetImage']) {
                             [$markerImageOffsetX, $markerImageOffsetY] = explode(',', $markerPrototype['offsetImage']);
                         }
                         $markerShadow = $markerPrototype['shadow'];
+
                         if ($markerShadow) {
                             [$markerShadowOffsetX, $markerShadowOffsetY] = explode(',', $markerPrototype['offsetShadow']);
                         }
                     }
-
                 }
             }
 
@@ -307,7 +310,6 @@ class StaticMap
             } else {
                 $markerImg = imagecreatefrompng($this->markerBaseDir . '/mark-small-blue.png');
             }
-
 
             // check for shadow + create shadow recource
             if ($markerShadow && file_exists($this->markerBaseDir . '/' . $markerShadow)) {
@@ -338,9 +340,11 @@ class StaticMap
     private function checkTileCache($url)
     {
         $filename = $this->tileUrlToFilename($url);
+
         if (file_exists($filename)) {
             return file_get_contents($filename);
         }
+
         return null;
     }
 
@@ -348,9 +352,11 @@ class StaticMap
     {
         $this->mapCacheID = md5($this->serializeParams());
         $filename = $this->mapCacheIDToFilename();
+
         if (file_exists($filename)) {
             return true;
         }
+
         return false;
     }
 
@@ -366,12 +372,14 @@ class StaticMap
                 '/cache_' . substr($this->mapCacheID, 0, 2) .
                 '/' . substr($this->mapCacheID, 2, 2) . '/' . substr($this->mapCacheID, 4);
         }
+
         return $this->mapCacheFile . '.' . $this->mapCacheExtension;
     }
 
     private function mkdir_recursive($pathname, $mode)
     {
         is_dir(dirname($pathname)) || $this->mkdir_recursive(dirname($pathname), $mode);
+
         return is_dir($pathname) || @mkdir($pathname, $mode);
     }
 
@@ -393,12 +401,12 @@ class StaticMap
                 'method' => 'GET',
                 'timeout' => 2.0,
                 'header' => 'User-Agent: https://github.com/opencaching/opencaching-pl',
-                ],
-//            'ssl' => [
-//                    'verify_peer' => false,
-//                    'verify_peer_name' => false,
-//                ],
-            ];
+            ],
+            // 'ssl' => [
+            //     'verify_peer' => false,
+            //     'verify_peer_name' => false,
+            // ],
+        ];
 
         $context = stream_context_create($opts);
         $tile = file_get_contents($url, false, $context);
@@ -406,8 +414,8 @@ class StaticMap
         if ($tile && $this->useTileCache) {
             $this->writeTileToCache($url, $tile);
         }
-        return $tile;
 
+        return $tile;
     }
 
     private function copyrightNotice()
@@ -426,6 +434,7 @@ class StaticMap
 
         $color = imagecolorallocate($img, 0, 0, 0);
         $ypos = 0;
+
         for($i = 0; $i < $len; $i++) {
             // Position of the character horizontally
             $xpos = $i * imagefontwidth($font_size);
@@ -454,6 +463,7 @@ class StaticMap
         $this->initCoords();
 
         $this->createBaseMap();
+
         if (count($this->markers)) {
             $this->placeMarkers();
         }

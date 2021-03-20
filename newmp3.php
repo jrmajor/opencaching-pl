@@ -5,13 +5,15 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 use src\Utils\Generators\Uuid;
 
-require_once (__DIR__ . '/lib/common.inc.php');
+require_once(__DIR__ . '/lib/common.inc.php');
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
+
 if (! $loggedUser) {
     $target = urlencode(tpl_get_current_page());
     tpl_redirect('login.php?target=' . $target);
+
     exit;
 }
 
@@ -25,16 +27,18 @@ if (! $loggedUser) {
         $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : -1;
         $def_seq_m = isset($_REQUEST['def_seq_m']) ? $_REQUEST['def_seq_m'] : 1; // set up default seq for newly added mp3
 
-
         $bNoDisplay = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
+
         if (($bNoDisplay != 0) && ($bNoDisplay != 1))
             $bNoDisplay = 0;
 
         $title = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
 
         $allok = true;
+
         if (! is_numeric($objectid))
             $allok = false;
+
         if (! is_numeric($type))
             $allok = false;
 
@@ -47,7 +51,7 @@ if (! $loggedUser) {
                         'SELECT `user_id`, `cache_id` FROM `cache_logs`
                         WHERE `deleted`=0 AND `id`= ? LIMIT 1', $objectid);
 
-                    if ( ! $r = XDb::xFetchArray($rs))
+                    if (! $r = XDb::xFetchArray($rs))
                         $allok = false;
                     else {
                         if ($r['user_id'] != $loggedUser->getUserId())
@@ -68,17 +72,15 @@ if (! $loggedUser) {
 
                     XDb::xFreeResults($rs);
                     break;
-
                 // cache
                 case 2:
                     $rs = XDb::xSql(
                         'SELECT `user_id`, `cache_id`, `name` FROM `caches`
                         WHERE `cache_id`= ? LIMIT 1', $objectid);
 
-                    if ( ! $r = XDb::xFetchArray($rs) )
+                    if (! $r = XDb::xFetchArray($rs))
                         $allok = false;
                     else {
-
                         tpl_set_var('cachename', htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8'));
                         tpl_set_var('cacheid', $r['cache_id']);
                         tpl_set_var('mp3typedesc', $mp3typedesc_cache);
@@ -92,13 +94,13 @@ if (! $loggedUser) {
 
                     XDb::xFreeResults($rs);
                     break;
-
                 default:
                     $allok = false;
                     break;
             }
 
             $errnofilegiven = false;
+
             if (isset($_REQUEST['submit'])) {
                 if (isset($_FILES['file']['error'])) {
                     if ($_FILES['file']['error'] == UPLOAD_ERR_NO_FILE) {
@@ -109,6 +111,7 @@ if (! $loggedUser) {
             }
 
             $errnotitle = false;
+
             if (($title == '') && (isset($_REQUEST['submit']))) {
                 $allok = false;
                 $errnotitle = true;
@@ -126,6 +129,7 @@ if (! $loggedUser) {
                         tpl_set_var('message_end', '');
                         tpl_set_var('message', $message_internal);
                         tpl_BuildTemplate();
+
                         exit;
                     } else {
                         // correct file extension?
@@ -139,6 +143,7 @@ if (! $loggedUser) {
                             tpl_set_var('message_end', '');
                             tpl_set_var('message', $message_wrongext);
                             tpl_BuildTemplate();
+
                             exit;
                         }
 
@@ -150,6 +155,7 @@ if (! $loggedUser) {
                             tpl_set_var('message_end', '');
                             tpl_set_var('message', $message_toobig);
                             tpl_BuildTemplate();
+
                             exit;
                         }
 
@@ -173,7 +179,6 @@ if (! $loggedUser) {
 
                                 tpl_redirect('viewcache.php?cacheid=' . urlencode($cacheid));
                                 break;
-
                             // cache
                             case 2:
                                 XDb::xSql(
@@ -185,6 +190,7 @@ if (! $loggedUser) {
                         }
 
                         tpl_redirect_absolute($mp3url . '/' . $uuid . '.' . $extension);
+
                         exit;
                     }
                 }
@@ -229,7 +235,6 @@ if (! $loggedUser) {
                 }
             }
         }
-
 
 //make the template and send it out
 tpl_BuildTemplate();

@@ -67,30 +67,35 @@ class Log
     public function setPowerTrail(PowerTrail $powerTrail)
     {
         $this->powerTrail = $powerTrail;
+
         return $this;
     }
 
     public function setUser(User $user)
     {
         $this->user = $user;
+
         return $this;
     }
 
     public function setDateTime(DateTime $dateTime)
     {
         $this->dateTime = $dateTime;
+
         return $this;
     }
 
     public function setDeleted($isDeleted)
     {
         $this->isDeleted = $isDeleted;
+
         return $this;
     }
 
     public function setText($text)
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -107,15 +112,18 @@ class Log
     function setType($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
     public function storeInDb()
     {
         $db = OcDb::instance();
+
         if($_REQUEST['type'] == Log::TYPE_CONQUESTED && $this->powerTrail->isAlreadyConquestedByUser($this->user)){ /* atempt to add second 'conquested' log */
             return false;
         }
+
         if($this->id){
             exit('TODO');
         } else {
@@ -127,17 +135,20 @@ class Log
                        `logDateTime`, `dbInsertDateTime`, `deleted`, uuid)
                       VALUES (:1, :2, :3, :4, :5, NOW(),0, ' . Uuid::getSqlForUpperCaseUuid() . ')';
             $db->multiVariableQuery($query, $this->user->getUserId(), $this->powerTrail->getId(), $this->type, $this->text, $this->dateTime->format('Y-m-d H:i:s'));
+
             if($this->type == self::TYPE_CONQUESTED){
                 $this->powerTrail->increaseConquestedCount();
             }
         }
         $this->changePowerTrailStatusAfterLog();
+
         return true;
     }
 
     private function changePowerTrailStatusAfterLog()
     {
         $expectedPowerTarilStatus = $this->getPowerTrailStatusByLogType();
+
         if($expectedPowerTarilStatus && $this->powerTrail->getStatus() != $expectedPowerTarilStatus){ // update powerTrail status
             if($this->type === self::TYPE_OPENING && $this->powerTrail->canBeOpened() === false){ // power Trail do not meet critertia to be opened.
                 return;

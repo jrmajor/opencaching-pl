@@ -11,8 +11,10 @@ use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 
 global $absolute_server_URI, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
-require_once (__DIR__ . '/format.kml.inc.php');
-require_once (__DIR__ . '/calculation.inc.php');
+
+require_once(__DIR__ . '/format.kml.inc.php');
+
+require_once(__DIR__ . '/calculation.inc.php');
 
 set_time_limit(1800);
 
@@ -26,7 +28,7 @@ if ($loggedUser || ! $hide_coords) {
 
     $query = 'SELECT ';
 
-    if (isset($lat_rad, $lon_rad)  ) {
+    if (isset($lat_rad, $lon_rad)) {
         $query .= getCalcDistanceSqlFormula(
             is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159,
             0, $multiplier[$distance_unit]) . ' `distance`, ';
@@ -53,6 +55,7 @@ if ($loggedUser || ! $hide_coords) {
     }
 
     $query .= '`caches`.`cache_id` `cache_id`, `caches`.`status` `status`, `caches`.`type` `type`, `caches`.`size` `size`, `caches`.`user_id` `user_id`, ';
+
     if (! $loggedUser) {
         $query .= ' `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id
                     FROM `caches` ';
@@ -65,13 +68,13 @@ if ($loggedUser || ! $hide_coords) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
 
     $sortby = $options['sort'];
+
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } else
         if ($sortby == 'bycreated') {
             $query .= ' ORDER BY date_created DESC';
         } else {// by name
-
             $query .= ' ORDER BY name ASC';
         }
 
@@ -118,6 +121,7 @@ if ($loggedUser || ! $hide_coords) {
 
             $rName = XDb::xFetchArray($rsName);
             XDb::xFreeResults($rsName);
+
             if (isset($rName['name']) && ($rName['name'] != '')) {
                 $sFilebasename = trim($rName['name']);
             } else {
@@ -131,7 +135,7 @@ if ($loggedUser || ! $hide_coords) {
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     // $bUseZip = false;
     if ($bUseZip == true) {
-        require_once (__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
         $phpzip = new ss_zip('', 6);
     }
 
@@ -174,6 +178,7 @@ if ($loggedUser || ! $hide_coords) {
         }
 
         $statusStyle = 'color: green';
+
         if ($kmlArchived[$r['status']] == 'True') {
             $icon .= '-archived';
             $statusStyle = 'color: #900; text-decoration: line-through';
@@ -242,4 +247,5 @@ if ($loggedUser || ! $hide_coords) {
         ob_end_flush();
     }
 }
+
 exit();

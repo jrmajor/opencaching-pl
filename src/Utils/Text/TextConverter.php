@@ -1,18 +1,19 @@
 <?php
-namespace src\Utils\Text;
 
+namespace src\Utils\Text;
 
 class TextConverter
 {
     public static function addHyperlinkToURL($text){
-
         $texti = mb_strtolower($text);
         $retval = '';
         $curpos = 0;
         $starthttp = mb_strpos($texti, 'http://', $curpos);
         $endhttp = false;
+
         while (($starthttp !== false) || ($endhttp >= mb_strlen($text))) {
             $endhttp1 = mb_strpos($text, ' ', $starthttp);
+
             if ($endhttp1 === false){
                 $endhttp1 = mb_strlen($text);
             }
@@ -23,26 +24,31 @@ class TextConverter
             }
 
             $endhttp3 = mb_strpos($text, "\r", $starthttp);
+
             if ($endhttp3 === false){
                 $endhttp3 = mb_strlen($text);
             }
 
             $endhttp4 = mb_strpos($text, '<', $starthttp);
+
             if ($endhttp4 === false){
                 $endhttp4 = mb_strlen($text);
             }
 
             $endhttp5 = mb_strpos($text, '] ', $starthttp);
+
             if ($endhttp5 === false){
                 $endhttp5 = mb_strlen($text);
             }
 
             $endhttp6 = mb_strpos($text, ')', $starthttp);
+
             if ($endhttp6 === false){
                 $endhttp6 = mb_strlen($text);
             }
 
             $endhttp7 = mb_strpos($text, '. ', $starthttp);
+
             if ($endhttp7 === false){
                 $endhttp7 = mb_strlen($text);
             }
@@ -55,6 +61,7 @@ class TextConverter
             $retval .= '<a href="' . $url . '" alt="" target="_blank">' . $url . '</a>';
 
             $curpos = $endhttp;
+
             if ($curpos >= mb_strlen($text)){
                 break;
             }
@@ -62,6 +69,7 @@ class TextConverter
         }
 
         $retval .= mb_substr($text, $curpos);
+
         return $retval;
     }
 
@@ -73,6 +81,7 @@ class TextConverter
      */
     public static function mb_trim($str){
         $bLoop = true;
+
         while ($bLoop == true) {
             $sPos = mb_substr($str, 0, 1);
 
@@ -83,6 +92,7 @@ class TextConverter
         }
 
         $bLoop = true;
+
         while ($bLoop == true) {
             $sPos = mb_substr($str, -1, 1);
 
@@ -112,6 +122,7 @@ class TextConverter
         $string = str_ireplace('październik', 'października', $string);
         $string = str_ireplace('listopad', 'listopada', $string);
         $string = str_ireplace('grudzień', 'grudnia', $string);
+
         return $string;
     }
 
@@ -128,7 +139,7 @@ class TextConverter
             return $val;
         }
 
-        $unit = strtolower( $val[strlen($val) - 1]);
+        $unit = strtolower($val[strlen($val) - 1]);
         $val = substr($val, 0, -1); // necessary since PHP 7.1; otherwise optional
 
         switch($unit) {

@@ -1,4 +1,5 @@
 <?php
+
 namespace src\Models\GeoCache;
 
 use src\Models\BaseObject;
@@ -7,7 +8,6 @@ class GeoCacheScore extends BaseObject
 {
     public static function getVotesScoreForCache($cacheId)
     {
-
         $db = self::db();
 
         $stmt = $db->multiVariableQuery(
@@ -20,7 +20,6 @@ class GeoCacheScore extends BaseObject
         } else {
             return [$row['votes'], $row['avgScore']];
         }
-
     }
 
     public static function updateScoreOnLogRemove(GeoCacheLog $log)
