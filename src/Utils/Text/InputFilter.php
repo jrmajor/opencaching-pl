@@ -188,7 +188,7 @@ class InputFilter
                 [$tagName] = mb_split(' ', $currentTag);
                 $tagName = mb_substr($tagName, 1);
 
-                // is start tag
+            // is start tag
             } else {
                 $isCloseTag = false;
                 [$tagName] = mb_split(' ', $currentTag);

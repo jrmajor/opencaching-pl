@@ -74,7 +74,7 @@ class Uri
 
     public static function getCurrentUri($savePrecedingSlash = false)
     {
-       return ($savePrecedingSlash) ? $_SERVER['REQUEST_URI'] : substr($_SERVER['REQUEST_URI'], 1);
+        return ($savePrecedingSlash) ? $_SERVER['REQUEST_URI'] : substr($_SERVER['REQUEST_URI'], 1);
     }
 
     /**

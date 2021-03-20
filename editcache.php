@@ -628,8 +628,8 @@ if (! $loggedUser) {
                         if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_ARCHIVED ||
                             $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_UNAVAILABLE) {
-                                // generate automatic log about status cache
-                                GeoCacheLog::newLog(
+                            // generate automatic log about status cache
+                            GeoCacheLog::newLog(
                                     $cache->getCacheId(),
                                     $loggedUser->getUserId(),
                                     GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE,
@@ -639,8 +639,8 @@ if (! $loggedUser) {
                         if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_UNAVAILABLE ||
                             $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_ARCHIVED) {
-                                // generate automatic log about status cache
-                                GeoCacheLog::newLog(
+                            // generate automatic log about status cache
+                            GeoCacheLog::newLog(
                                     $cache->getCacheId(),
                                     $loggedUser->getUserId(),
                                     GeoCacheLog::LOGTYPE_ARCHIVED,
@@ -650,8 +650,8 @@ if (! $loggedUser) {
                         if (($status_old == GeoCache::STATUS_UNAVAILABLE ||
                             $status_old == GeoCache::STATUS_ARCHIVED ||
                             $status_old == GeoCache::STATUS_BLOCKED) && $status == GeoCache::STATUS_READY) {
-                                // generate automatic log about status cache
-                                GeoCacheLog::newLog(
+                            // generate automatic log about status cache
+                            GeoCacheLog::newLog(
                                     $cache->getCacheId(),
                                     $loggedUser->getUserId(),
                                     GeoCacheLog::LOGTYPE_READYTOSEARCH,
@@ -661,8 +661,8 @@ if (! $loggedUser) {
                         if (($status_old == GeoCache::STATUS_READY ||
                             $status_old == GeoCache::STATUS_UNAVAILABLE ||
                             $status_old == GeoCache::STATUS_ARCHIVED) && $status == GeoCache::STATUS_BLOCKED) {
-                                // generate automatic log about status cache
-                                GeoCacheLog::newLog(
+                            // generate automatic log about status cache
+                            GeoCacheLog::newLog(
                                     $cache->getCacheId(),
                                     $loggedUser->getUserId(),
                                     GeoCacheLog::LOGTYPE_ADMINNOTE,

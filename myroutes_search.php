@@ -1268,13 +1268,13 @@ function attr_jsline($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconu
         $line = mb_ereg_replace('{state}', 1, $line);
     }
 
-        $line = mb_ereg_replace('{text_long}', addslashes($textlong), $line);
-        $line = mb_ereg_replace('{icon}', $iconlarge, $line);
-        $line = mb_ereg_replace('{icon_no}', $iconno, $line);
-        $line = mb_ereg_replace('{icon_undef}', $iconundef, $line);
-        $line = mb_ereg_replace('{category}', $category, $line);
+    $line = mb_ereg_replace('{text_long}', addslashes($textlong), $line);
+    $line = mb_ereg_replace('{icon}', $iconlarge, $line);
+    $line = mb_ereg_replace('{icon_no}', $iconno, $line);
+    $line = mb_ereg_replace('{icon_undef}', $iconundef, $line);
+    $line = mb_ereg_replace('{category}', $category, $line);
 
-        return $line;
+    return $line;
 }
 
 function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconundef, $category)

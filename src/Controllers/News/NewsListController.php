@@ -73,9 +73,9 @@ class NewsListController extends BaseController
         $news = News::fromNewsIdFactory($newsId);
 
         if (is_null($news) || ! $news->canBeViewed($this->isUserLogged())) {
-           $this->view->redirect(SimpleRouter::getLink('News.NewsList'));
+            $this->view->redirect(SimpleRouter::getLink('News.NewsList'));
 
-           exit();
+            exit();
         }
         $this->view->setVar('news', $news);
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/news/news.css'));

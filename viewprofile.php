@@ -898,25 +898,25 @@ function buildGeocacheHtml(GeoCache $geocache, $html)
 
 function buildMeritBadges($user_id)
 {
-$meritBadgeCtrl = new MeritBadgeController();
-$userCategories = $meritBadgeCtrl->buildArrayUserCategories($user_id);
+    $meritBadgeCtrl = new MeritBadgeController();
+    $userCategories = $meritBadgeCtrl->buildArrayUserCategories($user_id);
 
-$content_badge_rows = '';
-$content = '';
+    $content_badge_rows = '';
+    $content = '';
 
-foreach ($userCategories as $oneCategory) {
-    $badgesInCategory = $meritBadgeCtrl->buildArrayUserMeritBadgesInCategory($user_id, $oneCategory->getId());
+    foreach ($userCategories as $oneCategory) {
+        $badgesInCategory = $meritBadgeCtrl->buildArrayUserMeritBadgesInCategory($user_id, $oneCategory->getId());
 
-    $content_badge = '';
+        $content_badge = '';
 
-    foreach ($badgesInCategory as $oneBadge) {
-        $short_desc = MeritBadge::prepareShortDescription($oneBadge->getOBadge()->getShortDescription(),
+        foreach ($badgesInCategory as $oneBadge) {
+            $short_desc = MeritBadge::prepareShortDescription($oneBadge->getOBadge()->getShortDescription(),
                                                             $oneBadge->getNextVal(),
                                                             $oneBadge->getCurrVal());
 
-        $short_desc = mb_ereg_replace("'", "\\'", $short_desc);
+            $short_desc = mb_ereg_replace("'", "\\'", $short_desc);
 
-        $element = '<div class="Badge-div-element-small">
+            $element = '<div class="Badge-div-element-small">
         <a href="badge.php?badge_id={badge_id}&user_id={user_id}" onmouseover="Tip(\'{content_tip}\', PADDING,10)" onmouseout="UnTip()">
             <div class="Badge-pie-progress-small" role="progressbar" data-goal="{progresbar_curr_val}" data-trackcolor="#d9d9d9" data-barcolor="{progresbar_color}" data-barsize="{progresbar_size}" aria-valuemin="0" aria-valuemax="{progresbar_next_val}">
             <div class="pie_progress__content"><img src="{picture}" class="Badge-pic-small" /><br>
@@ -925,7 +925,7 @@ foreach ($userCategories as $oneCategory) {
         </a>
         </div>';
 
-        $element = mb_ereg_replace('{content_tip}',
+            $element = mb_ereg_replace('{content_tip}',
             "<div style =\'width:500px;\'><img src=\'{picture}\' style= \'float: left;margin-right:20px;\' /> \\
              <p style=\'font-size:20px; font-weight:bold;\'> {name} <br>\\
              <span style=\'font-size:13px; font-weight:normal; font-style:italic;\'> {short_desc} </span></p> \\
@@ -934,61 +934,65 @@ foreach ($userCategories as $oneCategory) {
             . tr('merit_badge_number') . ': <b>{curr_val}</b><br>\\'
             . tr('merit_badge_next_level_threshold') . ': <b>{next_val}</b><br>\\
              </p></div>', $element);
-        $element = mb_ereg_replace('{name}', $oneBadge->getOBadge()->getName(), $element);
-        $element = mb_ereg_replace('{short_desc}', $short_desc , $element);
-        $element = mb_ereg_replace('{picture}', $oneBadge->getPicture(), $element);
-        $element = mb_ereg_replace('{level_name}', $oneBadge->getOLevel()->getLevelName(), $element);
-        $element = mb_ereg_replace('{badge_id}', $oneBadge->getBadgeId(), $element);
-        $element = mb_ereg_replace('{user_id}', $user_id, $element);
-        $element = mb_ereg_replace('{curr_val}', $oneBadge->getCurrVal(), $element);
-        $element = mb_ereg_replace('{progresbar_curr_val}', MeritBadge::getProgressBarCurrValue($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getCurrVal(), $oneBadge->getNextVal()), $element);
-        $element = mb_ereg_replace('{progresbar_next_val}', MeritBadge::getProgressBarValueMax($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getNextVal()), $element);
-        $element = mb_ereg_replace('{progresbar_size}', MeritBadge::getBarSize($oneBadge->getLevelId(),  $oneBadge->getOBadge()->getLevelsNumber()), $element);
-        $element = mb_ereg_replace('{progresbar_color}', MeritBadge::getColor($oneBadge->getLevelId(), $oneBadge->getOBadge()->getLevelsNumber()), $element);
-        $element = mb_ereg_replace('{next_val}', MeritBadge::prepareTextThreshold($oneBadge->getNextVal()), $element);
+            $element = mb_ereg_replace('{name}', $oneBadge->getOBadge()->getName(), $element);
+            $element = mb_ereg_replace('{short_desc}', $short_desc , $element);
+            $element = mb_ereg_replace('{picture}', $oneBadge->getPicture(), $element);
+            $element = mb_ereg_replace('{level_name}', $oneBadge->getOLevel()->getLevelName(), $element);
+            $element = mb_ereg_replace('{badge_id}', $oneBadge->getBadgeId(), $element);
+            $element = mb_ereg_replace('{user_id}', $user_id, $element);
+            $element = mb_ereg_replace('{curr_val}', $oneBadge->getCurrVal(), $element);
+            $element = mb_ereg_replace('{progresbar_curr_val}', MeritBadge::getProgressBarCurrValue($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getCurrVal(), $oneBadge->getNextVal()), $element);
+            $element = mb_ereg_replace('{progresbar_next_val}', MeritBadge::getProgressBarValueMax($oneBadge->getOLevel()->getPrevThreshold(), $oneBadge->getNextVal()), $element);
+            $element = mb_ereg_replace('{progresbar_size}', MeritBadge::getBarSize($oneBadge->getLevelId(),  $oneBadge->getOBadge()->getLevelsNumber()), $element);
+            $element = mb_ereg_replace('{progresbar_color}', MeritBadge::getColor($oneBadge->getLevelId(), $oneBadge->getOBadge()->getLevelsNumber()), $element);
+            $element = mb_ereg_replace('{next_val}', MeritBadge::prepareTextThreshold($oneBadge->getNextVal()), $element);
 
-        $content_badge .= $element;
-    }
+            $content_badge .= $element;
+        }
 
-    $content_badge_rows .= mb_ereg_replace('{content_badge}', $content_badge,
+        $content_badge_rows .= mb_ereg_replace('{content_badge}', $content_badge,
         "<tr class='Badge-table-view'><td><span class='Badge-category-small'>{category_table}</span><br>{content_badge}</tr></td>");
 
-    $content_badge_rows = mb_ereg_replace('{category_table}', $oneCategory->getName(), $content_badge_rows);
-}
+        $content_badge_rows = mb_ereg_replace('{category_table}', $oneCategory->getName(), $content_badge_rows);
+    }
 
-$content .= mb_ereg_replace('{content_badge_rows}', $content_badge_rows, '
+    $content .= mb_ereg_replace('{content_badge_rows}', $content_badge_rows, '
                 <table width="770px">
                     <tbody>
                     {content_badge_rows}
                     </tbody>
                 </table>
                 <br>');
-$content .= "<a class='links'  href='user_badges.php?user_id=$user_id'>[" . tr('merit_badge_show_details') . ']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-$content .= "<a class='links'  href='user_badges.php?user_id=999999'>[" . tr('merit_badge_show_list') . ']</a><br><br>';
+    $content .= "<a class='links'  href='user_badges.php?user_id=$user_id'>[" . tr('merit_badge_show_details') . ']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+    $content .= "<a class='links'  href='user_badges.php?user_id=999999'>[" . tr('merit_badge_show_list') . ']</a><br><br>';
 
-return $content;
+    return $content;
 }
 
 function buildOpenCloseButton($userid, $check, $pic, $field, $txt, $title)
 {
-$content = "<form action='/viewprofile.php' style='display:inline;'>";
+    $content = "<form action='/viewprofile.php' style='display:inline;'>";
 
-$content .= "<div class='content2-container bg-blue02'>
+    $content .= "<div class='content2-container bg-blue02'>
                                 <table style='width: 100%; padding: 5px;'><tr><td>
                                 <p class='content-title-noshade-size1'>
                                 <img src='/images/blue/$pic' width='33' class='icon32' alt='$title' title='$title'>&nbsp;$txt" .
                                 '</p></td>';
 
-$content .= "<td style='text-align: right'>
+    $content .= "<td style='text-align: right'>
             <button type='submit' class='btn btn-primary btn-sm'>";
 
-if ($check == 1) $content .= '&nbsp;-&nbsp;'; else $content .= '&nbsp;+&nbsp;';
-$content .= '</td></tr></table>';
-$content .= "
+    if ($check == 1) {
+        $content .= '&nbsp;-&nbsp;';
+    } else {
+        $content .= '&nbsp;+&nbsp;';
+    }
+    $content .= '</td></tr></table>';
+    $content .= "
 <input type='hidden' name='userid' value='$userid' >
 <input type='hidden' name='save' value='true' >
 <input type='hidden' name='$field' value='$check'>
 </div></form>";
 
-return $content;
+    return $content;
 }

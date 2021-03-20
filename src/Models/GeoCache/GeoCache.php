@@ -1451,8 +1451,8 @@ class GeoCache extends GeoCacheCommons
     public function getMp3List()
     {
         if (is_null($this->mp3List)) {
-        $this->mp3List = [];
-        $rs = XDb::xSql(
+            $this->mp3List = [];
+            $rs = XDb::xSql(
             'SELECT uuid, title, url FROM mp3
             WHERE object_id = ? AND object_type=2 AND display=1
             ORDER BY seq, date_created', $this->id);

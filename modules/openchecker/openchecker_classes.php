@@ -11,9 +11,9 @@ use src\Utils\Database\XDb;
 
 class OpenCheckerSetup
 {
-/**
- * initial setup - setting default values used in OpenChecker
- */
+    /**
+     * initial setup - setting default values used in OpenChecker
+     */
 
     var $scriptname;
     var $count_limit;
@@ -358,10 +358,10 @@ class OpenCheckerCore
         LIMIT   0, 1000
         ";
 
-/*
- * Only show active (available and temporarily disabled) caches from SQL query to
- * obtain correct counters
- */
+            /*
+             * Only show active (available and temporarily disabled) caches from SQL query to
+             * obtain correct counters
+             */
 
             $status = [
                 '1' => '<img src="images/log/16x16-found.png" border="0" alt="Gotowa do szukania">',

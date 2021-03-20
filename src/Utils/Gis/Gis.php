@@ -255,25 +255,25 @@ class Gis
     public static function positionAtMapImg(Coordinates $marker, Coordinates $mapCenter,
         $mapZoom, $mapImgWidth, $mapImgHeight)
     {
-       // find the px coords of central point at map for given zoom
-       // (for given zoom map has fixed scale - see e.g. http://wiki.openstreetmap.org/wiki/Zoom_levels)
-       $offset = self::HALF_EARTH_CIRCUMFERENCE_AT_ZOOM21_IN_PX >> (21 - $mapZoom);
-       $radius = $offset / self::PI;
+        // find the px coords of central point at map for given zoom
+        // (for given zoom map has fixed scale - see e.g. http://wiki.openstreetmap.org/wiki/Zoom_levels)
+        $offset = self::HALF_EARTH_CIRCUMFERENCE_AT_ZOOM21_IN_PX >> (21 - $mapZoom);
+        $radius = $offset / self::PI;
 
-       $marker_X = round($offset + $offset * $marker->getLongitude() / 180);
-       $mapCenter_X = round($offset + $offset * $mapCenter->getLongitude() / 180);
-       $left = $marker_X - $mapCenter_X + ($mapImgWidth / 2);
+        $marker_X = round($offset + $offset * $marker->getLongitude() / 180);
+        $mapCenter_X = round($offset + $offset * $mapCenter->getLongitude() / 180);
+        $left = $marker_X - $mapCenter_X + ($mapImgWidth / 2);
 
-       $marker_Y = round($offset - $radius * log(
+        $marker_Y = round($offset - $radius * log(
            (1 + sin($marker->getLatitude() * self::PI / 180)) /
            (1 - sin($marker->getLatitude() * self::PI / 180))) / 2);
 
-       $mapCenter_Y = round($offset - $radius * log(
+        $mapCenter_Y = round($offset - $radius * log(
            (1 + sin($mapCenter->getLatitude() * self::PI / 180)) /
            (1 - sin($mapCenter->getLatitude() * self::PI / 180))) / 2);
 
-       $top = $marker_Y - $mapCenter_Y + ($mapImgHeight / 2);
+        $top = $marker_Y - $mapCenter_Y + ($mapImgHeight / 2);
 
-       return [$left, $top];
+        return [$left, $top];
     }
 }

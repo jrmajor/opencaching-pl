@@ -10,9 +10,9 @@ use stdClass;
 class OcCookie
 {
     private static $ocData = null;
- // data stored in cookie
+    // data stored in cookie
     private static $changed = false;
- //
+    //
 
     /**
      * Set data in cookie uder the $key

@@ -823,12 +823,12 @@ class OcDb extends OcPdo
         self::validateEntityName($table);
         // $fields and $params are not validated.
 
-          $p = '';
+        $p = '';
 
-          foreach ($params as $key => $value) {
-              $p .= ' ' . $key . '=' . $value;
-          }
-          $this->multiVariableQuery(
+        foreach ($params as $key => $value) {
+            $p .= ' ' . $key . '=' . $value;
+        }
+        $this->multiVariableQuery(
               'CREATE TABLE IF NOT EXISTS`' . $table . '` (' .
               implode(', ', $fieldDefs) . ')' . $p
           );

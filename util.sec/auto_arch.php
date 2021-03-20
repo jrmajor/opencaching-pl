@@ -32,12 +32,12 @@ class AutoArch
         $this->ocConfig = OcConfig::instance();
     }
 
-  /**
-     * step:
-     *   1: first notification (4 months)
-     *   2: second notification (5 months)
-     *   3: autoarchive finished
-     */
+    /**
+       * step:
+       *   1: first notification (4 months)
+       *   2: second notification (5 months)
+       *   3: autoarchive finished
+       */
     public function run()
     {
         $this->removeLastEditedCachesFromList();

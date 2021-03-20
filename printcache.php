@@ -209,7 +209,7 @@ if ($_POST['spoiler_only'] == '&spoiler_only=1') {
 <div class="nodisplay-onprint">
     <?php
     if ($cache_id) {
-    ?>
+        ?>
     <input type="hidden" id="cacheid" value="<?= $cache_id ?>">
     <input type="hidden" id="owner_id" value="0">
     <input type="hidden" id="logEntriesCount" value="{logEntriesCount}">
@@ -220,17 +220,17 @@ if ($_POST['spoiler_only'] == '&spoiler_only=1') {
 
     <form action="/printcache.php?cacheid=<?php echo $cache_id; ?>" method="post">
         <?php
-        } else {
+    } else {
         if ((! isset($_GET['source'])) || ($_GET['source'] != 'mywatches')) {
-        ?>
+            ?>
         <form action="printcache.php" method="POST">
             <?php
-            } else {
+        } else {
             ?>
             <form action="printcache.php?source=mywatches" method="POST">
                 <?php
-                }
-                }
+        }
+    }
                 ?>
                 <div>
                     <input type="radio" name="showlogs" id="shownologbook"

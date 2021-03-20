@@ -115,7 +115,7 @@ class MainLayoutController extends BaseController
             $this->view->addLocalJs(
                 Uri::getLinkWithModificationTime(
                     '/views/common/primaAprilis/rythm.min.js'));
-                //'https://cdnjs.cloudflare.com/ajax/libs/rythm.js/2.2.3/rythm.min.js');
+            //'https://cdnjs.cloudflare.com/ajax/libs/rythm.js/2.2.3/rythm.min.js');
 
             $this->view->addLocalJs(Uri::getLinkWithModificationTime(
                 '/views/common/primaAprilis/rythmOc.js'));

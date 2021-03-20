@@ -107,7 +107,7 @@ class RSSController extends BaseController
 
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {
-                    $entry['content'] .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
+                $entry['content'] .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
             }
             $entry['content'] .= ' (' . Formatter::dateTime($log->getDate()) . ')<br>';
             $entry['content'] .= $log->getText();
@@ -303,10 +303,10 @@ class RSSController extends BaseController
 
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {
-                    $content .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
-                }
-                $content .= ' (' . Formatter::dateTime($log->getDate()) . ')<br>';
-                $content .= $log->getText();
+                $content .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
+            }
+            $content .= ' (' . Formatter::dateTime($log->getDate()) . ')<br>';
+            $content .= $log->getText();
             $entry->setContent($content);
 
             $entry->setAuthor(new AtomFeedAuthor());
@@ -349,18 +349,18 @@ class RSSController extends BaseController
 
             if ($log->getType() == GeoCacheLog::LOGTYPE_FOUNDIT
                 && $log->isRecommendedByUser($log->getUser())) {
-                    $content .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
-                }
-                $content .= ' (' . Formatter::dateTime($log->getDate()) . ')<br>';
-                $content .= $log->getText();
-                $entry->setContent($content);
+                $content .= ' <img src="' . Uri::getAbsUri('images/rating-star.png') . '" alt="' . tr('recommended') . '" />';
+            }
+            $content .= ' (' . Formatter::dateTime($log->getDate()) . ')<br>';
+            $content .= $log->getText();
+            $entry->setContent($content);
 
-                $entry->setAuthor(new AtomFeedAuthor());
-                $entry->getAuthor()->setName($log->getUser()->getUserName());
-                $entry->getAuthor()->setUri(Uri::getAbsUri($log->getUser()->getProfileUrl()));
+            $entry->setAuthor(new AtomFeedAuthor());
+            $entry->getAuthor()->setName($log->getUser()->getUserName());
+            $entry->getAuthor()->setUri(Uri::getAbsUri($log->getUser()->getProfileUrl()));
 
-                $rss->addEntry($entry);
-                unset($entry, $content);
+            $rss->addEntry($entry);
+            unset($entry, $content);
         }
 
         $rss->publish();

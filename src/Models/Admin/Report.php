@@ -645,15 +645,15 @@ class Report extends BaseObject
         }
     }
 
- /**
-  * Create new poll in report.
-  *
-  * @param int $period  // in days
-  * @param string $question
-  * @param string $ans1
-  * @param string $ans2
-  * @param string $ans3
-  */
+    /**
+     * Create new poll in report.
+     *
+     * @param int $period  // in days
+     * @param string $question
+     * @param string $ans1
+     * @param string $ans2
+     * @param string $ans3
+     */
     public function createPoll($period, $question, $ans1, $ans2, $ans3 = null)
     {
         $pollId = ReportPoll::createPoll($this->id, $period, $question, $ans1, $ans2, $ans3);

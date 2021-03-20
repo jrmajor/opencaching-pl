@@ -125,7 +125,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                         $_GET['logbook_type'] = (int) $_GET['logbook_type'];
 
                         if (! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) {
-                            print '<option value="0" selected="true">Wybierz</option>';
+                            echo '<option value="0" selected="true">Wybierz</option>';
                         } ?>
                         <option value="1" <?if($_GET['logbook_type'] == 1) print "selected=\"true\"";?>>Logbook A6 Dwustronny</option>
                         <option value="2" <?if($_GET['logbook_type'] == 2) print "selected=\"true\"";?>>Logbook A7 Dwustronny</option>

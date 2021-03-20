@@ -221,14 +221,14 @@ class GeoKretLog extends BaseObject
             $query .= '(:' . $paramId++ . ', NOW(), :' . $paramId++ . ','
                 . ' :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ', :' . $paramId++ . ','
                     . ' :' . $paramId++ . ', :' . $paramId++ . '),';
-                    $queryParams[] = $geoKretLog->getLogDateTime()->format('Y-m-d H:i:s');
-                    $queryParams[] = $geoKretLog->getUser()->getUserId();
-                    $queryParams[] = $geoKretLog->getGeoCache()->getCacheId();
-                    $queryParams[] = $geoKretLog->getLogType();
-                    $queryParams[] = $geoKretLog->getComment();
-                    $queryParams[] = $geoKretLog->getTrackingCode();
-                    $queryParams[] = $geoKretLog->getGeoKretId();
-                    $queryParams[] = $geoKretLog->getGeoKretName();
+            $queryParams[] = $geoKretLog->getLogDateTime()->format('Y-m-d H:i:s');
+            $queryParams[] = $geoKretLog->getUser()->getUserId();
+            $queryParams[] = $geoKretLog->getGeoCache()->getCacheId();
+            $queryParams[] = $geoKretLog->getLogType();
+            $queryParams[] = $geoKretLog->getComment();
+            $queryParams[] = $geoKretLog->getTrackingCode();
+            $queryParams[] = $geoKretLog->getGeoKretId();
+            $queryParams[] = $geoKretLog->getGeoKretName();
         }
         $query = rtrim($query,',');
 

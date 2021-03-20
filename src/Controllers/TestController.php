@@ -277,10 +277,10 @@ class TestController extends BaseController
         }
 
         foreach (MultiLogStats::getLastLogForEachCache(array_keys($caches), [
-            'id as log_id', 'cache_id', 'text', 'date', 'type as log_type', 'user_id as log_user_id'
+            'id as log_id', 'cache_id', 'text', 'date', 'type as log_type', 'user_id as log_user_id',
         ]) as $log) {
-                $caches[$log['cache_id']] = array_merge($log, $caches[$log['cache_id']]);
-                $userIds[$log['log_user_id']] = null;
+            $caches[$log['cache_id']] = array_merge($log, $caches[$log['cache_id']]);
+            $userIds[$log['log_user_id']] = null;
         }
 
         $users = MultiUserQueries::GetUserNamesForListOfIds(array_keys($userIds));

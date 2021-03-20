@@ -53,9 +53,9 @@ class UserStats extends BaseObject
      */
     public static function getGeoPathsOwned($userId)
     {
-            $geoPathsOwned = new ArrayObject();
+        $geoPathsOwned = new ArrayObject();
 
-            $stmt = self::db()->multiVariableQuery(
+        $stmt = self::db()->multiVariableQuery(
                 'SELECT `PowerTrail`.*
                 FROM `PowerTrail`, `PowerTrail_owners`
                 WHERE `PowerTrail_owners`.`userId` = :1
@@ -63,11 +63,11 @@ class UserStats extends BaseObject
                 ORDER BY `PowerTrail`.`id`',
                 $userId);
 
-            $list = self::db()->dbResultFetchAll($stmt);
+        $list = self::db()->dbResultFetchAll($stmt);
 
-            foreach ($list as $row) {
-                $geoPathsOwned->append(new PowerTrail(['dbRow' => $row]));
-            }
+        foreach ($list as $row) {
+            $geoPathsOwned->append(new PowerTrail(['dbRow' => $row]));
+        }
 
         return $geoPathsOwned;
     }

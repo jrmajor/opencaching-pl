@@ -7,19 +7,19 @@ echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
 echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
 
 if (get_magic_quotes_gpc()) {
-function stripslashes_deep($value)
-{
-$value = is_array($value) ?
+    function stripslashes_deep($value)
+    {
+        $value = is_array($value) ?
 array_map('stripslashes_deep', $value) :
 stripslashes($value);
 
-return $value;
-}
+        return $value;
+    }
 
-$_POST = array_map('stripslashes_deep', $_POST);
-$_GET = array_map('stripslashes_deep', $_GET);
-$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
+    $_POST = array_map('stripslashes_deep', $_POST);
+    $_GET = array_map('stripslashes_deep', $_GET);
+    $_COOKIE = array_map('stripslashes_deep', $_COOKIE);
+    $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
 
 ?>
@@ -88,10 +88,10 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             //callback function for the regex
             function utf8_entity_decode($entity)
             {
-            $convmap = [0x0, 0x10000, 0, 0xfffff];
+                $convmap = [0x0, 0x10000, 0, 0xfffff];
 
-            return 'ż';
-            // return mb_decode_numericentity($entity, $convmap, 'UTF-8');
+                return 'ż';
+                // return mb_decode_numericentity($entity, $convmap, 'UTF-8');
             }
 
             $tidy = tidy_parse_string(html_entity_decode($text, ENT_NOQUOTES, 'UTF-8'), $options);
@@ -99,89 +99,89 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             function iterate_over($node)
             {
-            $removed = [];
+                $removed = [];
 
-            echo '<br />Iterating over ' . $node->tagName . "\n";
+                echo '<br />Iterating over ' . $node->tagName . "\n";
 
-            if ($node->tagName == 'span') {
-                echo "deleting\n";
-                array_push($removed, $node);
-            }
+                if ($node->tagName == 'span') {
+                    echo "deleting\n";
+                    array_push($removed, $node);
+                }
 
-            if (! $node) {
-                return;
-            }
+                if (! $node) {
+                    return;
+                }
 
-            if ($node->hasAttributes()) {
-                $attributes = $node->attributes;
+                if ($node->hasAttributes()) {
+                    $attributes = $node->attributes;
 
-                if (! is_null($attributes)) {
-                    foreach ($attributes as $index => $attr) {
-                        echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
+                    if (! is_null($attributes)) {
+                        foreach ($attributes as $index => $attr) {
+                            echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
+                        }
                     }
                 }
-            }
 
-            if ($node->hasChildNodes()) {
-                $children = $node->childNodes;
+                if ($node->hasChildNodes()) {
+                    $children = $node->childNodes;
 
-                foreach ($children as $child) {
-                    $removed = array_merge($removed, iterate_over($child, $array));
+                    foreach ($children as $child) {
+                        $removed = array_merge($removed, iterate_over($child, $array));
+                    }
                 }
-            }
 
-            return $removed;
+                return $removed;
             }
 
             function appendSibling(DOMNode $newnode, DOMNode $ref)
             {
-            if ($ref->nextSibling) {
-            // $ref has an immediate brother : insert newnode before this one
-            return $ref->parentNode->insertBefore($newnode, $ref->nextSibling);
-            } else {
-            // $ref has no brother next to him : insert newnode as last child of his parent
-            return $ref->parentNode->appendChild($newnode);
-            }
+                if ($ref->nextSibling) {
+                    // $ref has an immediate brother : insert newnode before this one
+                    return $ref->parentNode->insertBefore($newnode, $ref->nextSibling);
+                } else {
+                    // $ref has no brother next to him : insert newnode as last child of his parent
+                    return $ref->parentNode->appendChild($newnode);
+                }
             }
 
             function remove_node($domElement)
             {
-            if ($domElement->hasChildNodes()) {
-                $children = $domElement->childNodes;
-                $toAppend = [];
+                if ($domElement->hasChildNodes()) {
+                    $children = $domElement->childNodes;
+                    $toAppend = [];
 
-                foreach ($children as $child) {
-                    array_unshift($toAppend, $child);
-                }
+                    foreach ($children as $child) {
+                        array_unshift($toAppend, $child);
+                    }
 
-                foreach ($toAppend as $child) {
-                    appendSibling($child, $domElement);
+                    foreach ($toAppend as $child) {
+                        appendSibling($child, $domElement);
+                    }
                 }
-            }
-            //  $domElement->parentNode->removeChild($domElement);
+                //  $domElement->parentNode->removeChild($domElement);
             }
 
             $str = (string) $tidy;
 
             if ($str) {
-            //  $str = str_replace("&amp;", "&", $str);
-            $doc = DOMDocument::loadXML('<cache_description>' . $str . '</cache_description>');
-            $doc->encoding = 'utf-8';
-            $main = $doc->documentElement;
+                //  $str = str_replace("&amp;", "&", $str);
+                $doc = DOMDocument::loadXML('<cache_description>' . $str . '</cache_description>');
+                $doc->encoding = 'utf-8';
+                $main = $doc->documentElement;
 
-            if ($main) {
-            $for_removal = iterate_over($main);
+                if ($main) {
+                    $for_removal = iterate_over($main);
 
-            foreach ($for_removal as $domElement) {
-            echo "<br/>removing ..\n";
-            remove_node($domElement);
-            $domElement->parentNode->removeChild($domElement);
-            }
-            }
+                    foreach ($for_removal as $domElement) {
+                        echo "<br/>removing ..\n";
+                        remove_node($domElement);
+                        $domElement->parentNode->removeChild($domElement);
+                    }
+                }
 
-            $str = $doc->saveXML();
-            $str = str_replace('<?xml version="1.0" encoding="utf-8"?>' . "\n", '', $str);
-            $str = str_replace('<cache_description>', '', $str);
+                $str = $doc->saveXML();
+                $str = str_replace('<?xml version="1.0" encoding="utf-8"?>' . "\n", '', $str);
+                $str = str_replace('<cache_description>', '', $str);
                 $str = str_replace('</cache_description>', '', $str);
             }
 
