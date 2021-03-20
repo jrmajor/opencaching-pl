@@ -52,13 +52,13 @@ class CacheSetsListController extends BaseController
         $listModel->addColumn(
             new Column_CacheSetNameAndIcon(tr('cacheSet_name'),
                 /** @var CacheSet  $row*/
-                function($row){
+                function($row) {
                     return [
                         'id' => $row->getId(),
                         'type' => $row->getType(),
                         'name' => $row->getName(),
                     ];
-        }));
+                }));
         $listModel->setPaginationModel($paginationModel);
 
         // load rows to display
@@ -70,14 +70,14 @@ class CacheSetsListController extends BaseController
 
         $mapModel = new DynamicMapModel();
         $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $allCacheSets,
-            function(CacheSet $cs){
-            if(is_null($cs->getCoordinates())){
-                // skip cachesets without coords
-                return null;
-            }
+            function(CacheSet $cs) {
+                if (is_null($cs->getCoordinates())) {
+                    // skip cachesets without coords
+                    return null;
+                }
 
-            return CacheSetMarkerModel::fromCacheSetFactory($cs);
-        });
+                return CacheSetMarkerModel::fromCacheSetFactory($cs);
+            });
 
         $this->view->setVar('mapModel', $mapModel);
 

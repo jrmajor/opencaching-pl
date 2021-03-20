@@ -75,7 +75,7 @@ abstract class BaseController
 
     protected function ajaxJsonResponse($response, $statusCode = null)
     {
-        if(is_null($statusCode)){
+        if (is_null($statusCode)) {
             $statusCode = self::HTTP_STATUS_OK;
         }
         http_response_code($statusCode);
@@ -85,36 +85,38 @@ abstract class BaseController
         exit;
     }
 
-    protected function ajaxSuccessResponse($message = null, array $additionalResponseData = null){
+    protected function ajaxSuccessResponse($message = null, array $additionalResponseData = null)
+    {
         $response = [
             'status' => 'OK',
         ];
 
-        if(! is_null($message)){
+        if (! is_null($message)) {
             $response['message'] = $message;
         }
 
-        if(is_array($additionalResponseData)){
+        if (is_array($additionalResponseData)) {
             $response = array_merge($additionalResponseData, $response);
         }
 
         $this->ajaxJsonResponse($response);
     }
 
-    protected function ajaxErrorResponse($message = null, $statusCode = null, array $additionalResponseData = null){
+    protected function ajaxErrorResponse($message = null, $statusCode = null, array $additionalResponseData = null)
+    {
         $response = [
             'status' => 'ERROR',
         ];
 
-        if(! is_null($message)){
+        if (! is_null($message)) {
             $response['message'] = $message;
         }
 
-        if(is_null($statusCode)){
+        if (is_null($statusCode)) {
             $statusCode = self::HTTP_STATUS_BAD_REQUEST;
         }
 
-        if(is_array($additionalResponseData)){
+        if (is_array($additionalResponseData)) {
             $response = array_merge($additionalResponseData, $response);
         }
         $this->ajaxJsonResponse($response, $statusCode);

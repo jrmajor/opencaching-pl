@@ -51,8 +51,9 @@ function search_text2simple($str)
     }
 
     // replace duplicate chars
-    for ($c = ord('a'); $c <= ord('z'); $c++)
+    for ($c = ord('a'); $c <= ord('z'); $c++) {
         $str = mb_ereg_replace(chr($c) . chr($c), chr($c), $str);
+    }
 
     return $str;
 }

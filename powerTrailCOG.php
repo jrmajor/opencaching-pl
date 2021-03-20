@@ -116,14 +116,16 @@ function generateStatusSelector($currStatus)
     $selector = '<select id="ptStatusSelector">';
 
     foreach (\src\Controllers\PowerTrailController::getPowerTrailStatus() as $val => $desc) {
-        if ($val == $currStatus)
+        if ($val == $currStatus) {
             $selected = 'selected="selected"';
-        else
+        } else {
             $selected = '';
+        }
 
         if ($val == 2 && $currStatus != 2) {
-        } else // (this status is only after new geoPath creation.)
+        } else { // (this status is only after new geoPath creation.)
             $selector .= '<option ' . $selected . ' value="' . $val . '">' . tr($desc['translate']) . '</option>';
+        }
     }
     $selector .= '</select>';
 

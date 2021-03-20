@@ -589,7 +589,8 @@ class Report extends BaseObject
      * @param string $submittedNote
      * @return boolean
      */
-    public function addNote($submittedNote) {
+    public function addNote($submittedNote)
+    {
         if (! $this->dataLoaded) {
             return false;
         }
@@ -710,7 +711,8 @@ class Report extends BaseObject
      * "Touch" report. Update last change date and last change user.
      * This method don't save "touched" report!
      */
-    public function updateLastChanged() {
+    public function updateLastChanged()
+    {
         unset($this->dateLastChange);
         $this->dateLastChange = new DateTime('now');
         $this->userIdLastChange = $this->getCurrentUser()->getUserId();
@@ -724,7 +726,8 @@ class Report extends BaseObject
      * @param int $logId
      * @param array $excludeUsers
      */
-    public function sendWatchEmails($logId, $excludeUsers = []) {
+    public function sendWatchEmails($logId, $excludeUsers = [])
+    {
         $userlist = ReportWatches::getWatchersByReportId($this->id);
 
         foreach ($userlist as $user) {
@@ -740,7 +743,8 @@ class Report extends BaseObject
      *
      * @return boolean
      */
-    public function saveReport() {
+    public function saveReport()
+    {
         if (! $this->isDataComplete()) {
             return null;
         }
@@ -775,7 +779,8 @@ class Report extends BaseObject
      *
      * @return boolean
      */
-    private function saveToDb() {
+    private function saveToDb()
+    {
         $query = '
             UPDATE `reports`
              SET `uuid` = :uuid,
@@ -805,7 +810,8 @@ class Report extends BaseObject
      *
      * @return int
      */
-    private function insertToDb() {
+    private function insertToDb()
+    {
         $query = '
             INSERT INTO `reports`
             (`uuid`, `object_type`, `user_id`, `cache_id`,

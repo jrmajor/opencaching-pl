@@ -95,7 +95,7 @@ class OcPdo extends PDO
      */
     protected function debugOut(/*PHP7:string*/ $text)
     {
-        if(! $this->debug){
+        if (! $this->debug) {
             return;
         }
         d($text);
@@ -135,5 +135,7 @@ class OcPdo extends PDO
      *
      * @return void
      */
-    private function __clone() {}
+    private function __clone()
+    {
+    }
 }

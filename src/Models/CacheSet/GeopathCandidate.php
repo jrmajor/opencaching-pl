@@ -24,7 +24,7 @@ class GeopathCandidate extends BaseObject
         $candidate = new self();
         $candidate->id = $candidateId;
 
-        if($candidate->loadDataFromDb()){
+        if ($candidate->loadDataFromDb()) {
             return $candidate;
         }
 
@@ -48,7 +48,7 @@ class GeopathCandidate extends BaseObject
 
         $data = $this->db->dbResultFetchOneRowOnly($stmt);
 
-        if(! $data) {
+        if (! $data) {
             return false;
         }
         $this->loadFromDbRow($data);
@@ -94,8 +94,9 @@ class GeopathCandidate extends BaseObject
      * Retuns geocache object
      * @return GeoCache
      */
-    public function getGeoCache(){
-        if(! $this->cache) {
+    public function getGeoCache()
+    {
+        if (! $this->cache) {
             $this->cache = GeoCache::fromCacheIdFactory($this->cacheId);
         }
 
@@ -117,7 +118,7 @@ class GeopathCandidate extends BaseObject
      */
     public function getGeopath()
     {
-        if(! $this->geopath){
+        if (! $this->geopath) {
             $this->geopath = CacheSet::fromCacheSetIdFactory($this->geopathId);
         }
 
@@ -139,7 +140,7 @@ class GeopathCandidate extends BaseObject
         $result = [];
         $cacheIds = [];
 
-        while($row = $db->dbResultFetch($rs)){
+        while ($row = $db->dbResultFetch($rs)) {
             $candidate = new self();
             $candidate->id = $row['id'];
             $candidate->date = $row['date'];
@@ -151,7 +152,7 @@ class GeopathCandidate extends BaseObject
         }
 
         // find geocaches
-        foreach(MultiCacheStats::getGeocachesById($cacheIds) as $geoCache){
+        foreach (MultiCacheStats::getGeocachesById($cacheIds) as $geoCache) {
             $result[$geoCache->getCacheId()]->cache = $geoCache;
         }
 
@@ -173,7 +174,7 @@ class GeopathCandidate extends BaseObject
         $cacheIds = [];
         $geopathIds = [];
 
-        while($row = $db->dbResultFetch($rs)){
+        while ($row = $db->dbResultFetch($rs)) {
             $candidate = new self();
             $candidate->id = $row['id'];
             $candidate->date = $row['date'];
@@ -190,7 +191,7 @@ class GeopathCandidate extends BaseObject
         $geopaths = MultiGeopathsStats::getGeopathsByIds($geopathIds);
 
         // add geocaches and geopaths
-        foreach(MultiCacheStats::getGeocachesById($cacheIds) as $geoCache){
+        foreach (MultiCacheStats::getGeocachesById($cacheIds) as $geoCache) {
             $candidate = $result[$geoCache->getCacheId()];
             $candidate->cache = $geoCache;
             $candidate->geopath = $geopaths[$candidate->geopathId];
@@ -201,11 +202,11 @@ class GeopathCandidate extends BaseObject
 
     public function prepareForSerialization()
     {
-        if($this->cache){
+        if ($this->cache) {
             $this->cache->prepareForSerialization();
         }
 
-        if($this->geopath){
+        if ($this->geopath) {
             $this->geopath->prepareForSerialization();
         }
         $this->db = null;
@@ -213,11 +214,11 @@ class GeopathCandidate extends BaseObject
 
     public function restoreAfterSerialization()
     {
-        if($this->cache){
+        if ($this->cache) {
             $this->cache->restoreAfterSerialization();
         }
 
-        if($this->geopath){
+        if ($this->geopath) {
             $this->geopath->restoreAfterSerialization();
         }
         $this->db = self::db();
@@ -226,7 +227,8 @@ class GeopathCandidate extends BaseObject
     /**
      * Cancel this offer of assigning cache to the geopath
      */
-    public function cancelOffer() {
+    public function cancelOffer()
+    {
         $this->db->multiVariableQuery(
             'DELETE FROM PowerTrail_cacheCandidate
              WHERE id = :1 LIMIT 1', $this->id);
@@ -235,14 +237,16 @@ class GeopathCandidate extends BaseObject
     /**
      * Refuse this offer of assigning cache to the geopath
      */
-    public function refuseOffer() {
+    public function refuseOffer()
+    {
         $this->cancelOffer();
     }
 
     /**
      * Accept this offer of assigning cache to the geopath
      */
-    public function acceptOffer() {
+    public function acceptOffer()
+    {
         $geoPath = $this->getGeopath();
         $geoPath->addCache($this->getGeoCache());
         $this->cancelOffer();

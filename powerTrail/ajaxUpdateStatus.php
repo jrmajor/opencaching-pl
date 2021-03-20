@@ -9,7 +9,7 @@ require_once __DIR__ . '/../lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if(! $loggedUser){
+if (! $loggedUser) {
     echo 'User not authorized!';
 
     exit;
@@ -20,41 +20,41 @@ $powerTrailId = (int) $_REQUEST['projectId'];
 $powerTrail = new PowerTrail(['id' => $powerTrailId]);
 $newStatus = (int) $_REQUEST['newStatus'];
 
-if(isset($_REQUEST['commentTxt'])) {
+if (isset($_REQUEST['commentTxt'])) {
     $commentText = htmlspecialchars($_REQUEST['commentTxt']);
 } else {
     $commentText = false;
 }
 
 // check if user is owner of selected power Trail
-if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId) == 1 ||
+if ($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId) == 1 ||
     $loggedUser->hasOcTeamRole()) {
     switch ($newStatus) {
         case PowerTrail::STATUS_OPEN: // publish
             $commentType = 3;
 
-            if(! $commentText) {
+            if (! $commentText) {
                 $commentText = tr('pt215') . '!';
             }
             break;
         case PowerTrail::STATUS_INSERVICE: // in service
             $commentType = 4;
 
-            if(! $commentText) {
+            if (! $commentText) {
                 $commentText = tr('pt217') . '!';
             }
             break;
         case PowerTrail::STATUS_CLOSED: // permannet Closure
             $commentType = 5;
 
-            if(! $commentText) {
+            if (! $commentText) {
                 $commentText = tr('pt218') . '!';
             }
             break;
         default:
             $commentType = 1;
 
-            if(! $commentText) {
+            if (! $commentText) {
                 $commentText = tr('pt056') . '!';
             }
             break;
@@ -63,7 +63,7 @@ if($ptAPI::checkIfUserIsPowerTrailOwner($loggedUser->getUserId(), $powerTrailId)
     // update geoPatch status
     $updateStatusResult = $powerTrail->setAndStoreStatus($newStatus);
 
-    if($updateStatusResult['updateStatusResult'] === true){
+    if ($updateStatusResult['updateStatusResult'] === true) {
         $db = OcDb::instance();
         // add comment
         $query = 'INSERT INTO `PowerTrail_comments`

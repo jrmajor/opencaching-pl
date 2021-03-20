@@ -124,18 +124,19 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                         <?php
                         $_GET['logbook_type'] = (int) $_GET['logbook_type'];
 
-                        if(! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) print '<option value="0" selected="true">Wybierz</option>'; ?>
+                        if (! ($_GET['logbook_type'] > 0 && (int) $_GET['logbook_type'] <= 2)) {
+                            print '<option value="0" selected="true">Wybierz</option>';
+                        } ?>
                         <option value="1" <?if($_GET['logbook_type'] == 1) print "selected=\"true\"";?>>Logbook A6 Dwustronny</option>
                         <option value="2" <?if($_GET['logbook_type'] == 2) print "selected=\"true\"";?>>Logbook A7 Dwustronny</option>
                     </select>
                 </form>
                 <hr />
                 <?php
-                if($_GET['logbook_type'] == 0) {
-                echo 'Proszę wybrać typ logbooku.';
-                }
-                elseif($_GET['logbook_type'] == 1) {
-                echo
+                if ($_GET['logbook_type'] == 0) {
+                    echo 'Proszę wybrać typ logbooku.';
+                } elseif ($_GET['logbook_type'] == 1) {
+                    echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -162,9 +163,8 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 <input type="hidden" name="pdf" id="pdf" />
                 </form>
                 ';
-                }
-                elseif($_GET['logbook_type'] == 2) {
-                echo
+                } elseif ($_GET['logbook_type'] == 2) {
+                    echo
                 '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
@@ -191,9 +191,8 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 <input type="hidden" name="pdf" id="pdf" />
                 </form>
                 ';
-                }
-                else {
-                echo 'Wrong logbook type!';
+                } else {
+                    echo 'Wrong logbook type!';
                 }
                 ?>
             </div>

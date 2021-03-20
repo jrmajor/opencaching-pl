@@ -45,7 +45,7 @@ class MultiUserQueries extends BaseObject
 
         $query->select('COUNT(*) AS usersCount, MONTH(date_created) AS month')->from('user')->where('YEAR(date_created)', $year);
 
-        if($activeOnly) {
+        if ($activeOnly) {
             $query->where('is_active_flag', 1);
         }
         $query->groupBy('MONTH(date_created)');
@@ -72,7 +72,7 @@ class MultiUserQueries extends BaseObject
      */
     public static function GetUserNamesForListOfIds(array $userIds)
     {
-        if(empty($userIds)){
+        if (empty($userIds)) {
             return [];
         }
 
@@ -130,7 +130,7 @@ class MultiUserQueries extends BaseObject
 
         $activeGuidesDict = $db->dbResultFetchAllAsDict($s);
 
-        if(empty($activeGuidesDict)){
+        if (empty($activeGuidesDict)) {
             // there is no guides...
             return [];
         }
@@ -149,7 +149,7 @@ class MultiUserQueries extends BaseObject
 
         $result = [];
 
-        while($row = $db->dbResultFetch($s)){
+        while ($row = $db->dbResultFetch($s)) {
             $userData = $activeGuidesDict[$row['user_id']];
             $userData['recomendations'] = $row['recos'];
             $result[] = $userData;

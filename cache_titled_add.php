@@ -9,8 +9,9 @@ global $titled_cache_nr_found, $titled_cache_period_prefix;
 
 require_once(__DIR__ . '/lib/common.inc.php');
 
-if (! isset($_REQUEST['CRON']))
+if (! isset($_REQUEST['CRON'])) {
     exit;
+}
 
 $dbc = OcDb::instance();
 
@@ -29,14 +30,17 @@ $dDiff = $dStart->diff($dEnd);
 
 $securityPeriod = 0;
 
-if ($titled_cache_period_prefix == 'week')
+if ($titled_cache_period_prefix == 'week') {
     $securityPeriod = 7;
+}
 
-if ($titled_cache_period_prefix == 'month')
+if ($titled_cache_period_prefix == 'month') {
     $securityPeriod = 28;
+}
 
-if ($dDiff->days < $securityPeriod)
+if ($dDiff->days < $securityPeriod) {
     exit;
+}
 
     $queryS = '
     select

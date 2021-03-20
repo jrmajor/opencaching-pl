@@ -11,9 +11,9 @@ if (isset($_SESSION['user_id'])) {
         $wynik = XDb::xSql($query);
         $wiersz = XDb::xFetchArray($wynik);
 
-        if (empty($wiersz['user_id']))
+        if (empty($wiersz['user_id'])) {
             $tpl->assign('error', 1);
-        else {
+        } else {
             $adres = './user.php?id=' . $wiersz['user_id'];
             header('Location: ' . $adres);
         }
@@ -27,9 +27,9 @@ if (isset($_SESSION['user_id'])) {
         $wynik = XDb::xSql($query);
         $wiersz2 = XDb::xFetchArray($wynik);
 
-        if (empty($wiersz['username']))
+        if (empty($wiersz['username'])) {
             $tpl->assign('error', 1);
-        else {
+        } else {
             $tpl->assign('user_id', $id);
             $tpl->assign('username', $wiersz['username']);
             $tpl->assign('date_created', date('d-m-Y', strtotime($wiersz['date_created'])));
@@ -41,5 +41,6 @@ if (isset($_SESSION['user_id'])) {
     }
 
     $tpl->display('tpl/user.tpl');
-} else
+} else {
     header('Location: ./login.php');
+}

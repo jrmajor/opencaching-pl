@@ -64,23 +64,29 @@ $nMyRanking = 0;
 $nIsCondition = 0;
 $nMyRanking = 0;
 
-if (isset($_REQUEST['stat']))
+if (isset($_REQUEST['stat'])) {
     $sNameOfStat = $_REQUEST['stat'];
+}
 
-if (isset($_REQUEST['Rok']))
+if (isset($_REQUEST['Rok'])) {
     $sRok = $_REQUEST['Rok'];
+}
 
-if (isset($_REQUEST['Mc']))
+if (isset($_REQUEST['Mc'])) {
     $sMc = $_REQUEST['Mc'];
+}
 
-if (isset($_REQUEST['rRD']))
+if (isset($_REQUEST['rRD'])) {
     $sRD = $_REQUEST['rRD'];
+}
 
-if (isset($_REQUEST['DataOd']))
+if (isset($_REQUEST['DataOd'])) {
     $sDataOd = $_REQUEST['DataOd'];
+}
 
-if (isset($_REQUEST['DataDo']))
+if (isset($_REQUEST['DataDo'])) {
     $sDataDo = $_REQUEST['DataDo'];
+}
 
 if ($sRD == 'R') {
     if ($sRok != '' and $sMc != '') {
@@ -114,12 +120,14 @@ if ($sRD == 'R') {
         $dDate->add(new DateInterval('P1D'));
         $sData_do = $dDate->format('Y-m-d');
 
-        if ($sData_od != '')
+        if ($sData_od != '') {
             $sDateCondition = ' ' . $sJoinWDate . "date >='" . $sData_od . "' ";
+        }
 
         if ($sData_do != '') {
-            if ($sDateCondition != '')
+            if ($sDateCondition != '') {
                 $sDateCondition = $sDateCondition . ' and ';
+            }
 
             $sDateCondition = $sDateCondition . ' ' . $sJoinWDate . "date < '" . $sData_do . "' ";
         }
@@ -131,8 +139,9 @@ if ($sRD == 'R') {
 $dbc = OcDb::instance();
 
 if ($sNameOfStat == 'MaintenanceOfCaches') {
-    if ($sDateCondition != '')
+    if ($sDateCondition != '') {
         $sDateCondition = ' and ' . $sDateCondition;
+    }
 
     $query = 'SELECT COUNT(*) count, u.username username, UPPER(u.username) UUN, u.user_id user_id,
         DATE(u.date_created) date_created, u.description description
@@ -146,9 +155,10 @@ if ($sNameOfStat == 'MaintenanceOfCaches') {
             . $sDateCondition .
             'GROUP BY u.user_id
         ORDER BY count DESC, u.username ASC';
-}elseif ($sNameOfStat == 'NumberOfFinds') {
-    if ($sDateCondition != '')
+} elseif ($sNameOfStat == 'NumberOfFinds') {
+    if ($sDateCondition != '') {
         $sDateCondition = ' WHERE ' . $sDateCondition;
+    }
 
     $query = 'SELECT f.c count, f.user_id, u.username username, UPPER(u.username) UUN,
                         DATE(u.date_created) date_created, u.description description
@@ -187,8 +197,9 @@ while ($record = $dbc->dbResultFetch($s)) {
         $sOpis = str_replace("\n", ' ', $sOpis);
         $sOpis = str_replace("'", '-', $sOpis);
         $sOpis = str_replace('"', ' ', $sOpis);
-    } else
+    } else {
         $sOpis = '';
+    }
 
     $sOpis = '' . $sOpis;
 
@@ -206,10 +217,11 @@ while ($record = $dbc->dbResultFetch($s)) {
 
     $sUserClass = '';
 
-    if ($nRanking <= 3)
+    if ($nRanking <= 3) {
         $sUserClass = ' class="GCT-link-3"; ';
-    else
+    } else {
         $sUserClass = ' class="GCT-link"; ';
+    }
 
     $sUserProfil = 'viewprofile.php?userid=' . $record['user_id'];
     $sUsername = '<span ' . $record['username'] . $sUserClass . '  onclick="GCTStatsGotoProfil( \\\'' . $sUserProfil . '\\\' )"  onmouseover="Tip(\\\'' . $sProfil . '\\\')" onmouseout="UnTip()"  >' . $record['username'] . '</span><a name="' . $sUUN . '"></a>';

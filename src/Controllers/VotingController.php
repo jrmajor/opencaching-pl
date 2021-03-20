@@ -13,7 +13,8 @@ use src\Utils\DateTime\OcDateTime;
 
 class VotingController extends BaseController
 {
-    public function __construct($param) {
+    public function __construct($param)
+    {
         parent::__construct();
         $this->redirectNotLoggedUsers();
     }
@@ -66,7 +67,7 @@ class VotingController extends BaseController
         // check if we are before voting
         if (OcDateTime::isPast($election->getStartDate())) {
             // voting is now active
-            if ($election->hasUserAlreadyVoted($this->loggedUser)){
+            if ($election->hasUserAlreadyVoted($this->loggedUser)) {
                 // user has already voted
                 $this->view->setVar('alreadyVoted', true);
             } else {
@@ -102,7 +103,7 @@ class VotingController extends BaseController
 
         // check votes
         foreach ($votes as $vote) {
-            if(! is_numeric($vote)) {
+            if (! is_numeric($vote)) {
                 $this->ajaxErrorResponse(tr('vote_saveResultInternalError') . '. [Unknown format]');
             }
         }

@@ -107,7 +107,7 @@ class AutoArch
         $emailheaders .= "Reply-To: $siteName <$octeamEmailAddress>";
         $status = mb_send_mail($cache->getOwner()->getEmail(), tr('autoArchive_11'), $email_content, $emailheaders);
 
-        if(! $status){
+        if (! $status) {
             Debug::errorLog('Mail sending failure: to:' . $cache->getOwner()->getEmail());
         }
         Log::logentry(Log::EVENT_AUTOARCHIVE, $cache->getOwner()->getUserId(), $cache->getCacheId(), 0, 'Sending mail to ' . $cache->getOwner()->getEmail(), ['status' => $status]);

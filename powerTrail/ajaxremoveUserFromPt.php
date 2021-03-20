@@ -3,7 +3,7 @@
 use src\Utils\Database\OcDb;
 session_start();
 
-if(! isset($_SESSION['user_id'])){
+if (! isset($_SESSION['user_id'])) {
     echo 'no hacking please!';
 
     exit;
@@ -17,7 +17,7 @@ $projectId = $_REQUEST['projectId'];
 $userId = $_REQUEST['userId'];
 
 //check if user is only one owner
-if(count(powerTrailBase::getPtOwners($projectId)) > 1 && $ptAPI::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $projectId) == 1) {
+if (count(powerTrailBase::getPtOwners($projectId)) > 1 && $ptAPI::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $projectId) == 1) {
     $addQuery = 'DELETE FROM `PowerTrail_owners` WHERE `userId` = :1 AND  `PowerTrailId` = :2';
     $db->multiVariableQuery($addQuery, $userId, $projectId);
 
@@ -37,7 +37,7 @@ function displayPtOwnerList($ptOwners)
     foreach ($ptOwners as $userId => $user) {
         $ownerList .= '<a href="viewprofile.php?userid=' . $userId . '">' . $user['username'] . '</a>';
 
-        if($userId != $_SESSION['user_id']) {
+        if ($userId != $_SESSION['user_id']) {
             $ownerList .= '<span style="display: none" class="removeUserIcon"><img onclick="ajaxRemoveUserFromPt(' . $userId . ');" src="images/free_icons/cross.png" width=10 /></span>, ';
         } else {
             $ownerList .= ', ';

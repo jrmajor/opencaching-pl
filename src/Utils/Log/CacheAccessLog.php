@@ -15,7 +15,8 @@ class CacheAccessLog
     const SOURCE_MOBILE = 'M';
     const SOURCE_OKAPI = 'O';
 
-    public static function logCacheAccess($cacheId, $userId, $event, $source){
+    public static function logCacheAccess($cacheId, $userId, $event, $source)
+    {
         $accessLog = @$_SESSION['CACHE_ACCESS_LOG_VC_' . $userId];
 
         if ($accessLog === null) {
@@ -39,7 +40,8 @@ class CacheAccessLog
         }
     }
 
-    public static function logBrowserCacheAccess($cacheId, $userId, $event){
+    public static function logBrowserCacheAccess($cacheId, $userId, $event)
+    {
         return self::logCacheAccess($cacheId, $userId, $event, self::SOURCE_BROWSER);
     }
 }

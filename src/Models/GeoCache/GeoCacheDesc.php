@@ -28,18 +28,19 @@ class GeoCacheDesc extends BaseObject
     private $node;
     private $rr_comment = '';
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
     public static function fromCacheIdFactory($cacheId, $descLang)
     {
-        try{
+        try {
             $obj = new self();
             $obj->loadByCacheId($cacheId, $descLang);
 
             return $obj;
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -63,14 +64,15 @@ class GeoCacheDesc extends BaseObject
 
         $descDbRow = $this->db->dbResultFetchOneRowOnly($rs);
 
-        if(is_array($descDbRow)){
+        if (is_array($descDbRow)) {
             $this->loadFromRow($descDbRow);
-        }else{
+        } else {
             throw new Exception("Description not found for cacheId=$cacheId");
         }
     }
 
-    public function loadFromRow(array $descDbRow){
+    public function loadFromRow(array $descDbRow)
+    {
         $this->id = $descDbRow['id'];
         $this->cacheId = $descDbRow['cache_id'];
         $this->language = $descDbRow['language'];
@@ -86,7 +88,8 @@ class GeoCacheDesc extends BaseObject
         $this->rr_comment = $descDbRow['rr_comment'];
     }
 
-    public function getShortDescToDisplay(){
+    public function getShortDescToDisplay()
+    {
         // plain text, needs escaping
         $short_desc = htmlspecialchars($this->short_desc, ENT_COMPAT, 'UTF-8');
 
@@ -129,11 +132,13 @@ class GeoCacheDesc extends BaseObject
         return $this->id;
     }
 
-    public function getAdminComment(){
+    public function getAdminComment()
+    {
         return $this->rr_comment;
     }
 
-    public static function UpdateAdminComment(GeoCache $geoCache, $comment, User $author){
+    public static function UpdateAdminComment(GeoCache $geoCache, $comment, User $author)
+    {
         $userName = $author->getUserName();
         $comment = UserInputFilter::purifyHtmlString(nl2br($comment));
         $date = Formatter::dateTime(); //current formated date+time
@@ -150,7 +155,8 @@ class GeoCacheDesc extends BaseObject
         EmailSender::sendNotifyOfOcTeamCommentToCache($geoCache, $author, $comment);
     }
 
-    public static function RemoveAdminComment(GeoCache $geoCache){
+    public static function RemoveAdminComment(GeoCache $geoCache)
+    {
         self::db()->multiVariableQuery("UPDATE cache_desc SET rr_comment='' WHERE cache_id=:1 ", $geoCache->getCacheId());
     }
 }

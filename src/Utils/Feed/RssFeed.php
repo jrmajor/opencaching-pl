@@ -60,7 +60,8 @@ class RssFeed
      *
      * @param string $url
      */
-    public function __construct($url) {
+    public function __construct($url)
+    {
         $this->url = $url;
         $this->reset();
     }
@@ -68,7 +69,8 @@ class RssFeed
     /**
      * Reset current item to first RSS item.
      */
-    public function reset() {
+    public function reset()
+    {
         $this->current = -1;
         $this->remaining = null;
     }
@@ -78,7 +80,8 @@ class RssFeed
      *
      * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
-    public function next() {
+    public function next()
+    {
         if ($this->current < $this->count()) {
             $this->current++;
             $next = $this->getReader()->item($this->current);
@@ -92,7 +95,8 @@ class RssFeed
      *
      * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
-    public function current() {
+    public function current()
+    {
         return $this->getReader()->item(max(0, $this->current));
     }
 
@@ -101,7 +105,8 @@ class RssFeed
      *
      * @return stdClass Object representing the item. Will return null when the list is exhausted.
      */
-    public function random() {
+    public function random()
+    {
         if ($this->remaining === null) {
             $this->remaining = [];
 
@@ -125,7 +130,8 @@ class RssFeed
      * @param int $count
      * @return array of stdClass
      */
-    public function find($count) {
+    public function find($count)
+    {
         $items = [];
 
         while ($item = $this->next()) {
@@ -144,7 +150,8 @@ class RssFeed
      *
      * @return int
      */
-    public function count() {
+    public function count()
+    {
         return $this->getReader()->count();
     }
 
@@ -153,7 +160,8 @@ class RssFeed
      *
      * @return FeedReader
      */
-    private function getReader() {
+    private function getReader()
+    {
         if (! $this->reader) {
             $xml = $this->getXML();
 
@@ -174,7 +182,8 @@ class RssFeed
      *
      * @return SimpleXMLElement
      */
-    private function getXML() {
+    private function getXML()
+    {
         if ($xml = $this->getCacheXML()) {
             return $xml;
         } elseif ($xml = $this->getURLXML()) {
@@ -189,7 +198,8 @@ class RssFeed
      *
      * @return SimpleXMLElement or null if cache doesn't exist.
      */
-    private function getCacheXML() {
+    private function getCacheXML()
+    {
         //Store URL data in local cache.
         $cacheFilename = $this->getCacheFilename();
 
@@ -206,7 +216,8 @@ class RssFeed
      *
      * @return SimpleXMLElement or null if URL is unreachable.
      */
-    private function getURLXML() {
+    private function getURLXML()
+    {
         if ($data = @file_get_contents($this->url)) {
             try {
                 $xml = new SimpleXMLElement($data);
@@ -224,7 +235,8 @@ class RssFeed
      *
      * @return string
      */
-    private function getCacheFilename() {
+    private function getCacheFilename()
+    {
         return OcConfig::instance()->getDynamicFilesPath() . md5($this->url) . '.feed.cache';
     }
 }
@@ -269,19 +281,23 @@ interface FeedReader
  */
 class NullReader implements FeedReader
 {
-    public function __construct(SimpleXMLElement $root) {
+    public function __construct(SimpleXMLElement $root)
+    {
         //Nothing
     }
 
-    public function count() {
+    public function count()
+    {
         return null;
     }
 
-    public function item($index) {
+    public function item($index)
+    {
         return null;
     }
 
-    public static function canRead(SimpleXMLElement $root) {
+    public static function canRead(SimpleXMLElement $root)
+    {
         return true;
     }
 }
@@ -293,15 +309,18 @@ class AtomReader implements FeedReader
 {
     private $root;
 
-    public function __construct(SimpleXMLElement $root) {
+    public function __construct(SimpleXMLElement $root)
+    {
         $this->root = $root;
     }
 
-    public function count() {
+    public function count()
+    {
         return count($this->root->entry);
     }
 
-    public function item($index) {
+    public function item($index)
+    {
         $node = $this->root->entry[$index];
 
         if (! $node) {
@@ -331,7 +350,8 @@ class AtomReader implements FeedReader
         return (object) $item;
     }
 
-    public static function canRead(SimpleXMLElement $root) {
+    public static function canRead(SimpleXMLElement $root)
+    {
         //Check for Atom namespace.
         return in_array('http://www.w3.org/2005/Atom', $root->getNamespaces());
     }
@@ -344,15 +364,18 @@ class RSSReader implements FeedReader
 {
     private $root;
 
-    public function __construct(SimpleXMLElement $root) {
+    public function __construct(SimpleXMLElement $root)
+    {
         $this->root = $root;
     }
 
-    public function count() {
+    public function count()
+    {
         return count($this->root->channel->item);
     }
 
-    public function item($index) {
+    public function item($index)
+    {
         $node = $this->root->channel->item[$index];
 
         if (! $node) {
@@ -370,7 +393,8 @@ class RSSReader implements FeedReader
         ];
     }
 
-    public static function canRead(SimpleXMLElement $root) {
+    public static function canRead(SimpleXMLElement $root)
+    {
         //RSS feeds name their root node 'rss'.
         return $root->getName() == 'rss';
     }

@@ -12,14 +12,14 @@ use src\Models\GeoCache\GeoCacheLogCommons;
  * - user_sts - status for current user - for example found or not found etc.
  */
 
-return function (array $data){
+return function (array $data) {
     $cacheIconSrc = GeoCacheCommons::CacheIconByType(
         $data['type'], $data['status'], $data['user_sts']);
 
     $statusTitle = tr(GeoCacheCommons::CacheTypeTranslationKey($data['type']));
     $statusTitle .= ', ' . tr(GeoCacheCommons::CacheStatusTranslationKey($data['status']));
 
-    if(! is_null($data['user_sts'])){
+    if (! is_null($data['user_sts'])) {
         $statusTitle .= ', ' . tr(GeoCacheLogCommons::typeTranslationKey($data['user_sts']));
     }
 

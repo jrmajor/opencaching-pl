@@ -68,7 +68,7 @@ class CacheAdoptionController extends BaseController
      */
     public function accept($cacheId)
     {
-        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
+        if (is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))) {
             $this->index();
 
             return;
@@ -78,12 +78,12 @@ class CacheAdoptionController extends BaseController
         if (! $this->loggedUser->isAdoptionApplicable() ||
             ! $this->checkOffer($cacheObj, $this->loggedUser)
             ) {
-                // it shouldn't happens - someone try to hack smth?!
+            // it shouldn't happens - someone try to hack smth?!
 
-                // redirect to main script
-                $this->view->redirect(SimpleRouter::getLink(self::class));
+            // redirect to main script
+            $this->view->redirect(SimpleRouter::getLink(self::class));
 
-                exit;
+            exit;
         }
 
         // owner changing
@@ -160,7 +160,7 @@ class CacheAdoptionController extends BaseController
      */
     public function refuse($cacheId)
     {
-        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
+        if (is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))) {
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
 
@@ -197,7 +197,7 @@ class CacheAdoptionController extends BaseController
      */
     public function abort($cacheId)
     {
-        if(is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))){
+        if (is_null($cacheObj = GeoCache::fromCacheIdFactory($cacheId))) {
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
 
@@ -228,13 +228,13 @@ class CacheAdoptionController extends BaseController
     {
         $cacheObj = GeoCache::fromCacheIdFactory($cacheId);
 
-        if(is_null($cacheObj)){
+        if (is_null($cacheObj)) {
             $this->index();
 
             exit;
         }
 
-        if(! isset($_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']))) {
+        if (! isset($_POST['username']) || is_null($newUserObj = User::fromUsernameFactory($_POST['username']))) {
             // redirect to main script
             $this->view->redirect(SimpleRouter::getLink(self::class));
 
@@ -297,7 +297,7 @@ class CacheAdoptionController extends BaseController
     {
         $cacheObj = GeoCache::fromCacheIdFactory($cacheId);
 
-        if(is_null($cacheObj)){
+        if (is_null($cacheObj)) {
             $this->index();
 
             exit;

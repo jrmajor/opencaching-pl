@@ -6,13 +6,15 @@ use src\Models\BaseObject;
 
 class UserIgnoredCache extends BaseObject
 {
-    public static function isCacheIgnoredBy($cacheId, $userId){
+    public static function isCacheIgnoredBy($cacheId, $userId)
+    {
         return '1' == self::db()->multiVariableQueryValue(
             'SELECT 1 FROM cache_ignore WHERE cache_id= :1 AND user_id =:2 LIMIT 1',
             0, $cacheId, $userId);
     }
 
-    public static function addCacheToIgnored($userId, $cacheWp){
+    public static function addCacheToIgnored($userId, $cacheWp)
+    {
         $params = [
             'cache_code' => $cacheWp,
             'ignored' => 'true', // true need to be a string!!!
@@ -23,7 +25,8 @@ class UserIgnoredCache extends BaseObject
         return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
-    public static function removeFromIgnored($userId, $cacheWp){
+    public static function removeFromIgnored($userId, $cacheWp)
+    {
         $params = [
             'cache_code' => $cacheWp,
             'ignored' => 'false', // false need to be a string!!!
@@ -34,7 +37,8 @@ class UserIgnoredCache extends BaseObject
         return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
-    public static function getIgnoredCachesCount($userId){
+    public static function getIgnoredCachesCount($userId)
+    {
         return self::db()->multiVariableQueryValue(
             'SELECT COUNT(*) FROM cache_ignore
             WHERE user_id = :1  ', 0, $userId);
@@ -42,7 +46,7 @@ class UserIgnoredCache extends BaseObject
 
     public static function getIgnoredCachesWithLastLogs(
         $userId, $limit = null, $offset = null
-    ){
+    ) {
         $db = self::db();
 
         [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);

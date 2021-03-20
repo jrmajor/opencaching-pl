@@ -38,24 +38,27 @@ $cachelogscount = XDb::xSimpleQueryValue(
         if (isset($_GET[$res['id']]) && $_GET[$res['id']] == 1) {
             $checked = 'checked';
 
-            if ($typ == ''){
+            if ($typ == '') {
                 $typ = ' AND caches.type NOT IN (' . $res['id'];
             } else {
                 $typ .= ', ' . $res['id'];
             }
-        } else
+        } else {
             $checked = '';
+        }
 
             echo '<input type="checkbox" value="1" name="' . intval($res['id']) . '" id="' . intval($res['id']) . '" ' . $checked . ' /> <label for="' . intval($res['id']) . '">' . tr('cacheType_' . $res['id']) . '</label> &nbsp;';
 
-            if ($no_types % 5 != 0)
+            if ($no_types % 5 != 0) {
                 echo ' | ';
+            }
 
-                if ($no_types == 5)
+                if ($no_types == 5) {
                     echo '<br />';
+                }
     }
 
-    if ($typ != ''){
+    if ($typ != '') {
         $typ .= ')';
     }
 
@@ -65,7 +68,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
     echo '</form></td></tr></table>';
     echo '<table border="1" bgcolor="white" width="97%" style="font-size:11px; line-height:1.6em;">' . "\n";
 
-    if($typ == '') { //without cache-type filter
+    if ($typ == '') { //without cache-type filter
         $a = 'SELECT COUNT(*) count, username, stat_ban, user.user_id
           FROM cache_logs, user
           WHERE `cache_logs`.`deleted`=0
@@ -93,7 +96,7 @@ $cachelogscount = XDb::xSimpleQueryValue(
 
         $lines = [];
 
-        while ($line = XDb::xFetchArray($r)){
+        while ($line = XDb::xFetchArray($r)) {
             $lines[] = $line;
         }
 

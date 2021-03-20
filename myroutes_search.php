@@ -90,20 +90,24 @@ $sFilebasename .= trim($record['name']);
 $sFilebasename = str_replace(' ', '_', $sFilebasename);
 
 if (isset($_POST['cache_attribs_not'])) {
-    if ($_POST['cache_attribs_not'] != '')
+    if ($_POST['cache_attribs_not'] != '') {
         $options['cache_attribs_not'] = mb_split(';', $_POST['cache_attribs_not']);
-    else
+    } else {
         $options['cache_attribs_not'] = [];
-} else
+    }
+} else {
     $options['cache_attribs_not'] = [];
+}
 
 if (isset($_POST['cache_attribs'])) {
-    if ($_POST['cache_attribs'] != '')
+    if ($_POST['cache_attribs'] != '') {
         $options['cache_attribs'] = mb_split(';', $_POST['cache_attribs']);
-    else
+    } else {
         $options['cache_attribs'] = [];
-} else
+    }
+} else {
     $options['cache_attribs'] = [];
+}
 
 if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $options['f_userowner'] = isset($_POST['f_userowner']) ? $_POST['f_userowner'] : '';
@@ -142,7 +146,7 @@ if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
     $options['cacheterrain_2'] = isset($_POST['cacheterrain_2']) ? $_POST['cacheterrain_2'] : '';
 
     $options['cacherating'] = isset($_POST['cacherating']) ? $_POST['cacherating'] : '';
-    //          $options['cache_attribs'] = isset($_POST['cache_attribs']) ? $_POST['cache_attribs'] : '';
+//          $options['cache_attribs'] = isset($_POST['cache_attribs']) ? $_POST['cache_attribs'] : '';
     //          $options['cache_attribs_not'] = isset($_POST['cache_attribs_not']) ? $_POST['cache_attribs_not'] : '';
 } elseif (! empty($optsize) || isset($_POST['back'])) {
     $options = unserialize($rec['options']);
@@ -215,16 +219,18 @@ while ($record = $database->dbResultFetch($s)) {
     // icon specified
     $line = attr_jsline($cache_attrib_jsarray_line, $options, $record['id'], $record['text_long'], $record['icon_large'], $record['icon_no'], $record['icon_undef'], $record['category']);
 
-    if ($attributes_jsarray != '')
+    if ($attributes_jsarray != '') {
         $attributes_jsarray .= ",\n";
+    }
     $attributes_jsarray .= $line;
 
     $line = attr_image($cache_attrib_img_line, $options, $record['id'], $record['text_long'], $record['icon_large'], $record['icon_no'], $record['icon_undef'], $record['category']);
 
-    if ($record['category'] != 1)
+    if ($record['category'] != 1) {
         $attributesCat2_img .= $line;
-    else
+    } else {
         $attributes_img .= $line;
+    }
 }
 
 $line = attr_jsline($cache_attrib_jsarray_line, $options, '999', tr('with_password'), $config['search-attr-icons']['password'][0], $config['search-attr-icons']['password'][1], $config['search-attr-icons']['password'][2], 0);
@@ -352,15 +358,17 @@ for ($size = 1; $size <= 8; $size++) {
 unset($enabled);
 
 // SQL additional options
-if (! isset($options['f_userowner']))
+if (! isset($options['f_userowner'])) {
     $options['f_userowner'] = '0';
+}
 
 if ($options['f_userowner'] != 0) {
     $q_where[] = '`caches`.`user_id`!=\'' . $loggedUser->getUserId() . '\'';
 }
 
-if (! isset($options['f_userfound']))
+if (! isset($options['f_userfound'])) {
     $options['f_userfound'] = '0';
+}
 
 if ($options['f_userfound'] != 0) {
     $q_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_logs`.`cache_id` FROM `cache_logs`
@@ -368,14 +376,17 @@ if ($options['f_userfound'] != 0) {
                 AND `cache_logs`.`type` IN (1, 7))';
 }
 
-if (! isset($options['f_inactive']))
+if (! isset($options['f_inactive'])) {
     $options['f_inactive'] = '0';
+}
 
-if ($options['f_inactive'] != 0)
+if ($options['f_inactive'] != 0) {
     $q_where[] = '`caches`.`status`=1';
+}
 
-if (! isset($options['f_ignored']))
+if (! isset($options['f_ignored'])) {
     $options['f_ignored'] = '0';
+}
 
 if ($options['f_ignored'] != 0) {
     $q_where[] = '`caches`.`cache_id` NOT IN (SELECT `cache_ignore`.`cache_id` FROM `cache_ignore`
@@ -384,9 +395,9 @@ if ($options['f_ignored'] != 0) {
 
 if (isset($options['cache_attribs']) && count($options['cache_attribs']) > 0) {
     for ($i = 0; $i < count($options['cache_attribs']); $i++) {
-        if ($options['cache_attribs'][$i] == 999) // special password attribute case
+        if ($options['cache_attribs'][$i] == 999) { // special password attribute case
             $q_where[] = '`caches`.`logpw` != ""';
-        else {
+        } else {
             $q_from[] = '`caches_attributes` `a' . ($options['cache_attribs'][$i] + 0) . '`';
             $q_where[] = '`a' . ($options['cache_attribs'][$i] + 0) . '`.`cache_id`=`caches`.`cache_id`';
             $q_where[] = '`a' . ($options['cache_attribs'][$i] + 0) . '`.`attrib_id`=' . ($options['cache_attribs'][$i] + 0);
@@ -396,10 +407,11 @@ if (isset($options['cache_attribs']) && count($options['cache_attribs']) > 0) {
 
 if (isset($options['cache_attribs_not']) && count($options['cache_attribs_not']) > 0) {
     for ($i = 0; $i < count($options['cache_attribs_not']); $i++) {
-        if ($options['cache_attribs_not'][$i] == 999) // special password attribute case
+        if ($options['cache_attribs_not'][$i] == 999) { // special password attribute case
             $q_where[] = '`caches`.`logpw` = ""';
-        else
+        } else {
             $q_where[] = 'NOT EXISTS (SELECT `caches_attributes`.`cache_id` FROM `caches_attributes` WHERE `caches_attributes`.`cache_id`=`caches`.`cache_id` AND `caches_attributes`.`attrib_id`=\'' . XDb::xEscape($options['cache_attribs_not'][$i]) . '\')';
+        }
     }
 }
 
@@ -935,10 +947,11 @@ if (isset($_POST['submit_gpx'])) {
             $thisline = str_replace('{mod_suffix}', '', $thisline);
         }
 
-        if ($r['hint'] == '')
+        if ($r['hint'] == '') {
             $thisline = str_replace('{hints}', '', $thisline);
-        else
+        } else {
             $thisline = str_replace('{hints}', cleanup_text($r['hint']), $thisline);
+        }
 
         $logpw = ($r['logpw'] == '' ? '' : '' . cleanup_text(tr('search_gpxgc_01')) . ' <br />');
 
@@ -968,10 +981,11 @@ if (isset($_POST['submit_gpx'])) {
                 $thisattribute = mb_ereg_replace('{attrib_id}', $gpxAttribID[$rAttrib['attrib_id']], $thisattribute);
                 $thisattribute = mb_ereg_replace('{attrib_text_long}', $gpxAttribName[$rAttrib['attrib_id']], $thisattribute);
 
-                if (isset($gpxAttribInc[$rAttrib['attrib_id']]))
+                if (isset($gpxAttribInc[$rAttrib['attrib_id']])) {
                     $thisattribute = mb_ereg_replace('{attrib_id}', $gpxAttribInc[$rAttrib['attrib_id']], $thisattribute);
-                else
+                } else {
                     $thisattribute = mb_ereg_replace('{attrib_inc}', 1, $thisattribute);
+                }
 
                 $attribentries .= $thisattribute . "\n";
             }
@@ -1045,37 +1059,43 @@ if (isset($_POST['submit_gpx'])) {
         $thisline = str_replace('{extra_info}', $thisextra, $thisline);
         // end of extra info
 
-        if ($r['rr_comment'] == '')
+        if ($r['rr_comment'] == '') {
             $thisline = str_replace('{rr_comment}', '', $thisline);
-        else
+        } else {
             $thisline = str_replace('{rr_comment}', cleanup_text('<br /><br />--------<br />' . $r['rr_comment'] . '<br />'), $thisline);
+        }
 
         $thisline = str_replace('{images}', getPictures($r['cacheid'], false, $r['picturescount']), $thisline);
 
-        if (isset($gpxType[$r['type']]))
+        if (isset($gpxType[$r['type']])) {
             $thisline = str_replace('{type}', $gpxType[$r['type']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{type}', $gpxType[1], $thisline);
+        }
 
-        if (isset($gpxGeocacheTypeText[$r['type']]))
+        if (isset($gpxGeocacheTypeText[$r['type']])) {
             $thisline = str_replace('{type_text}', $gpxGeocacheTypeText[$r['type']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{type_text}', $gpxGeocacheTypeText[1], $thisline);
+        }
 
-        if (isset($gpxContainer[$r['size']]))
+        if (isset($gpxContainer[$r['size']])) {
             $thisline = str_replace('{container}', $gpxContainer[$r['size']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{container}', $gpxContainer[0], $thisline);
+        }
 
-        if (isset($gpxAvailable[$r['status']]))
+        if (isset($gpxAvailable[$r['status']])) {
             $thisline = str_replace('{available}', $gpxAvailable[$r['status']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{available}', $gpxAvailable[1], $thisline);
+        }
 
-        if (isset($gpxArchived[$r['status']]))
+        if (isset($gpxArchived[$r['status']])) {
             $thisline = str_replace('{archived}', $gpxArchived[$r['status']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{archived}', $gpxArchived[1], $thisline);
+        }
 
         $difficulty = sprintf('%01.1f', $r['difficulty'] / 2);
         $difficulty = str_replace('.0', '', $difficulty); // garmin devices cannot handle .0 on integer values
@@ -1114,10 +1134,11 @@ if (isset($_POST['submit_gpx'])) {
             $thislog = str_replace('{id}', $rLog['id'], $thislog);
             $thislog = str_replace('{date}', date($gpxTimeFormat, strtotime($rLog['date'])), $thislog);
 
-            if (isset($gpxLogType[$rLog['type']]))
+            if (isset($gpxLogType[$rLog['type']])) {
                 $logtype = $gpxLogType[$rLog['type']];
-            else
+            } else {
                 $logtype = $gpxLogType[0];
+            }
 
             if ($logtype == 'OC Team Comment') {
                 $rLog['username'] = xmlentities(convert_string(tr('cog_user_name')));
@@ -1148,8 +1169,9 @@ if (isset($_POST['submit_gpx'])) {
             $thisGeoKret = $gpxGeoKrety;
             $gk_wp = strtoupper(dechex($geokret['id']));
 
-            while (mb_strlen($gk_wp) < 4)
+            while (mb_strlen($gk_wp) < 4) {
                 $gk_wp = '0' . $gk_wp;
+            }
             $gkWP = 'GK' . mb_strtoupper($gk_wp);
             $thisGeoKret = str_replace('{geokret_id}', xmlentities($geokret['id']), $thisGeoKret);
             $thisGeoKret = str_replace('{geokret_ref}', $gkWP, $thisGeoKret);
@@ -1190,10 +1212,11 @@ if (isset($_POST['submit_gpx'])) {
                 }
                 $thiswp = str_replace('{desc}', xmlentities(cleanup_text($rwp['desc'])), $thiswp);
 
-                if (isset($wptType[$rwp['type']]))
+                if (isset($wptType[$rwp['type']])) {
                     $thiswp = str_replace('{wp_type}', $wptType[$rwp['type']], $thiswp);
-                else
+                } else {
                     $thiswp = str_replace('{wp_type}', $wptType[0], $thiswp);
+                }
                 $waypoints .= $thiswp;
             }
         }
@@ -1236,12 +1259,14 @@ function attr_jsline($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconu
     $line = mb_ereg_replace('{id}', $id, $line);
 
     if (array_search($id, $options['cache_attribs']) === false) {
-        if (array_search($id, $options['cache_attribs_not']) === false)
+        if (array_search($id, $options['cache_attribs_not']) === false) {
             $line = mb_ereg_replace('{state}', 0, $line);
-            else
-                $line = mb_ereg_replace('{state}', 2, $line);
-    } else
+        } else {
+            $line = mb_ereg_replace('{state}', 2, $line);
+        }
+    } else {
         $line = mb_ereg_replace('{state}', 1, $line);
+    }
 
         $line = mb_ereg_replace('{text_long}', addslashes($textlong), $line);
         $line = mb_ereg_replace('{icon}', $iconlarge, $line);
@@ -1260,14 +1285,16 @@ function attr_image($tpl, $options, $id, $textlong, $iconlarge, $iconno, $iconun
     $line = mb_ereg_replace('{text_long}', $textlong, $line);
 
     if (array_search($id, $options['cache_attribs']) === false) {
-        if (array_search($id, $options['cache_attribs_not']) === false)
+        if (array_search($id, $options['cache_attribs_not']) === false) {
             $line = mb_ereg_replace('{icon}', $iconundef, $line);
-            else
-                $line = mb_ereg_replace('{icon}', $iconno, $line);
-    } else
+        } else {
+            $line = mb_ereg_replace('{icon}', $iconno, $line);
+        }
+    } else {
         $line = mb_ereg_replace('{icon}', $iconlarge, $line);
+    }
 
-        return $line;
+    return $line;
 }
 
 //*************************************************************************
@@ -1350,8 +1377,7 @@ function caches_along_route($route_id, $distance)
                 if (! (
                     isset($inter_cache_list[$list['waypoint']])
                     && $inter_cache_list[$list['waypoint']]
-                    ))
-                {
+                    )) {
                     $final_cache_list[] = $list['waypoint'];
                     $inter_cache_list[$list['waypoint']] = $list['waypoint'];
                     break;
@@ -1424,11 +1450,13 @@ function cleanup_text2($str)
     $from[] = ']]>'; $to[] = ']] >';
     $from[] = ''; $to[] = '';
 
-    for ($i = 0; $i < count($from); $i++)
+    for ($i = 0; $i < count($from); $i++) {
         $str = str_replace($from[$i], $to[$i], $str);
-        $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
+    }
 
-        return $str;
+    $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
+
+    return $str;
 }
 
 /**
@@ -1441,12 +1469,13 @@ function cache_distances($lat1, $lon1, $lat2, $lon2)
     } else {
         $earth_radius = 6378;
 
-        foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate)
+        foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate) {
             $$ordinate = $$ordinate * (pi() / 180);
-            $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
+        }
+        $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +
                 sin($lat1) * sin($lat2)) * $earth_radius;
 
-                return($dist);
+        return($dist);
     }
 }

@@ -91,10 +91,11 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
                 $wynik2 = XDb::xSql($query);
                 $wiersz2 = XDb::xFetchArray($wynik2);
 
-                if ($rekord['votes'] > 3)
+                if ($rekord['votes'] > 3) {
                     $rekord['score'] = GeoCacheCommons::ScoreAsRatingNum($rekord['score']);
-                else
+                } else {
                     $rekord['score'] = 5;
+                }
 
                 $rekord['username'] = $wiersz['username'];
 
@@ -145,8 +146,9 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
             $ile = XDb::xNumRows($wynik);
         }
 
-        while ($rekord = XDb::xFetchArray($wynik))
+        while ($rekord = XDb::xFetchArray($wynik)) {
             $lista[] = $rekord['wp_oc'];
+        }
 
         $tpl->assign('lista', $lista);
 
@@ -162,8 +164,9 @@ if (isset($_GET['nazwa']) && ! empty($_GET['nazwa']) ||
 
         $max = ceil($ile / $na_stronie);
 
-        if ($max == '0')
+        if ($max == '0') {
             $max = '1';
+        }
 
         $tpl->assign('max', $max);
 

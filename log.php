@@ -173,10 +173,11 @@ if ($is_scored_query == 0 && $user->getUserId() != $geoCache->getOwnerId()) {
             $break_line = '';
         }
 
-        if (isset($_POST['r']) && $score_radio == $_POST['r'])
+        if (isset($_POST['r']) && $score_radio == $_POST['r']) {
             $checked = ' checked="true"';
-        else
+        } else {
             $checked = '';
+        }
 
         $score .= '
             <label><input type="radio" style="vertical-align: top" name="r" id="r' .
@@ -495,12 +496,14 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
         // converting from HH MM.MMM to DD.DDDDDD
         $wspolrzedneNS = $wsp_NS_st + round($wsp_NS_min, 3) / 60;
 
-        if ($wybor_NS == 'S')
+        if ($wybor_NS == 'S') {
             $wspolrzedneNS = -$wspolrzedneNS;
+        }
         $wspolrzedneWE = $wsp_WE_st + round($wsp_WE_min, 3) / 60;
 
-        if ($wybor_WE == 'W')
+        if ($wybor_WE == 'W') {
             $wspolrzedneWE = -$wspolrzedneWE;
+        }
 
         // if it is first log "cache mooved" then move start coordinates from table caches
         // to table cache_moved and create log type cache_moved, witch description
@@ -582,12 +585,13 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
     if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT ||
         $log_type == GeoCacheLog::LOGTYPE_COMMENT
     ) {
-        if ($top_cache == 1)
+        if ($top_cache == 1) {
             XDb::xSql('INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`) VALUES(?, ?)',
                 $user->getUserId(), $geoCache->getCacheId());
-        else
+        } else {
             XDb::xSql('DELETE FROM `cache_rating` WHERE `user_id`=? AND `cache_id`=?',
                 $user->getUserId(), $geoCache->getCacheId());
+        }
     }
 
     //call eventhandler
@@ -603,13 +607,15 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($geoCache->getCacheId(), $user->getUserId());
             $titledIds = $ctrlMeritBadge->updateTriggerTitledCache($geoCache->getCacheId(), $user->getUserId());
 
-            if ($changedLevelBadgesIds != '' && $titledIds != '')
+            if ($changedLevelBadgesIds != '' && $titledIds != '') {
                 $changedLevelBadgesIds .= ',';
+            }
 
             $changedLevelBadgesIds .= $titledIds;
 
-            if ($changedLevelBadgesIds != '')
+            if ($changedLevelBadgesIds != '') {
                 $badgetParam = '&badgesPopupFor=' . $changedLevelBadgesIds;
+            }
 
             $ctrlMeritBadge->updateTriggerCacheAuthor($geoCache->getCacheId());
         }
@@ -861,13 +867,15 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
 
     if ($score_not_ok == true) {
         tpl_set_var('score_message', '<span class="errormsg">' . tr('lxg02') . '</span>');
-    } else
+    } else {
         tpl_set_var('score_message', '');
+    }
 
-    if (($log_type < 0) && (isset($_POST['logtype'])))
+    if ($log_type < 0 && isset($_POST['logtype'])) {
         tpl_set_var('log_message', '&nbsp;<span class="errormsg">' . tr('no_logtype_choosen') . '</span>');
-    else
+    } else {
         tpl_set_var('log_message', '');
+    }
 }
 
 //make the template and send it out
@@ -896,8 +904,9 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
         $error = true;
     }
 
-    if (@$error)
+    if (@$error) {
         return $error;
+    }
 
     //check coordinates
     $error = false;
@@ -933,8 +942,9 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
 
         $latitude = $lat_h + round($lat_min, 3) / 60;
 
-        if ($latNS == 'S')
+        if ($latNS == 'S') {
             $latitude = -$latitude;
+        }
 
         if ($latitude == 0) {
             tpl_set_var('lon_message', tr('error_coords_not_ok'));
@@ -979,8 +989,9 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
 
         $longitude = $lon_h + round($lon_min, 3) / 60;
 
-        if ($lonEW == 'W')
+        if ($lonEW == 'W') {
             $longitude = -$longitude;
+        }
 
         if ($longitude == 0) {
             tpl_set_var('lon_message', tr('error_coords_not_ok'));

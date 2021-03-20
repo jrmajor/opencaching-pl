@@ -139,34 +139,34 @@ class MainMapController extends BaseController
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
 
-            if(! $mapCenter) {
+            if (! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
-            }else{
+            } else {
                 $zoom = intval($_GET['zoom']);
             }
 
-        // set map center based on requested coords and open popup at center (used to show geocache)
-        } elseif(isset($_GET['openPopup'], $_GET['lat'], $_GET['lon'])) {
+            // set map center based on requested coords and open popup at center (used to show geocache)
+        } elseif (isset($_GET['openPopup'], $_GET['lat'], $_GET['lon'])) {
             // opened popup
             $this->mapJsParams->openPopupAtCenter = true;
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
 
-            if(! $mapCenter) {
+            if (! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
-            }else{
+            } else {
                 $zoom = 14;
             }
-        } elseif(isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
+        } elseif (isset($_GET['circle'], $_GET['lat'], $_GET['lon'])) {
             // 150m-circle at coords
 
             $mapCenter = Coordinates::FromCoordsFactory(
                 floatval($_GET['lat']), floatval($_GET['lon']));
 
-            if(! $mapCenter) {
+            if (! $mapCenter) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
-            }else{
+            } else {
                 $zoom = 17;
                 $this->mapJsParams->circle150m = true;
                 $this->mapJsParams->initUserPrefs = null;  // clear filters
@@ -174,12 +174,12 @@ class MainMapController extends BaseController
 
                 $mapModel->setInfoMessage(tr('map_circle150mMode'));
             }
-        } elseif(isset($_GET['searchdata'], $_GET['bbox'])) {
+        } elseif (isset($_GET['searchdata'], $_GET['bbox'])) {
             // searchData + bbox mode
-            if(! preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
-               ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox'])){
+            if (! preg_match(MainMapAjaxController::SEARCHDATA_REGEX, $_GET['searchdata']) ||
+               ! preg_match(MainMapAjaxController::BBOX_REGEX, $_GET['bbox'])) {
                 // searchData error!
-                   $mapModel->setInfoMessage(tr('map_incorectMapParams'));
+                $mapModel->setInfoMessage(tr('map_incorectMapParams'));
             } else {
                 $this->mapJsParams->searchData = $_GET['searchdata'];
                 $this->mapJsParams->initUserPrefs = null;  // clear filters
@@ -193,15 +193,15 @@ class MainMapController extends BaseController
 
                 $mapModel->setStartExtent($swCoord, $neCoord);
             }
-        } elseif(isset($_GET['cs'])){
+        } elseif (isset($_GET['cs'])) {
             // only given geopath
             $geoPath = CacheSet::fromCacheSetIdFactory($_GET['cs']);
 
             $this->view->setVar('cacheSet', $geoPath);
 
-            if(! $geoPath){
+            if (! $geoPath) {
                 $mapModel->setInfoMessage(tr('map_incorectMapParams'));
-            }else{
+            } else {
                 $this->mapJsParams->cacheSetId = $geoPath->getId();
                 $this->mapJsParams->initUserPrefs = null;  // clear filters
                 $this->mapJsParams->dontSaveFilters = true;
@@ -215,7 +215,7 @@ class MainMapController extends BaseController
             $zoom = 11; //default zoom for user-home coords
         }
 
-        if(isset($mapCenter) && is_object($mapCenter) && $mapCenter->areCordsReasonable()){
+        if (isset($mapCenter) && is_object($mapCenter) && $mapCenter->areCordsReasonable()) {
             $mapModel->setCoords($mapCenter);
             $mapModel->setZoom($zoom);
         }

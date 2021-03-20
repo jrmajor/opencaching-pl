@@ -76,7 +76,8 @@ class PasswordManager
      * Return true, if the given password matches the one stored in the
      * database (for the given userId)
      */
-    public static function verifyPassword($userId, $password){
+    public static function verifyPassword($userId, $password)
+    {
         $pm = new self($userId);
 
         return $pm->verify($password);

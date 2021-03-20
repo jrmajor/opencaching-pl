@@ -50,25 +50,31 @@ require_once(__DIR__ . '/common.inc.php');
             $sPeriodName = tr('.year');
         }
 
-        if ($sDateFrom != '')
+        if ($sDateFrom != '') {
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
+        }
 
-        if ($sDateTo != '')
+        if ($sDateTo != '') {
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
+        }
 
-        if ($sNameOfStat == 'NumberOfFinds')
+        if ($sNameOfStat == 'NumberOfFinds') {
             $sTypeCondition = ' and  cl.type=1 ';
+        }
 
-        if ($sNameOfStat == 'MaintenanceOfCaches')
+        if ($sNameOfStat == 'MaintenanceOfCaches') {
             $sTypeCondition = ' and  cl.type=6 ';
+        }
 
         $asUserID = explode(',', $sUserIDLine);
 
-        if (! strlen($sUserIDLine))
+        if (! strlen($sUserIDLine)) {
             $sEND = tr('SelectUsers');
+        }
 
-        if (count($asUserID) > 30)
+        if (count($asUserID) > 30) {
             $sEND = tr('more30');
+        }
 
         if ($sEND != '') {
             echo '<script>';
@@ -86,8 +92,9 @@ require_once(__DIR__ . '/common.inc.php');
         $sCondition = '';
 
         foreach ($asUserID as $sID) {
-            if (strlen($sCondition))
+            if (strlen($sCondition)) {
                 $sCondition = $sCondition . ' or ';
+            }
 
             $sCondition = $sCondition . "cl.user_id = '" . $sID . "'";
         }

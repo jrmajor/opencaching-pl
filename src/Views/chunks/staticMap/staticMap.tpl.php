@@ -8,7 +8,7 @@ use src\Models\ChunkModels\StaticMap\StaticMapModel;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 
-return function (StaticMapModel $m){
+return function (StaticMapModel $m) {
     //start of chunk
 
     $chunkCSS = Uri::getLinkWithModificationTime(
@@ -30,7 +30,7 @@ return function (StaticMapModel $m){
     <img src="<?=$m->getMapImgSrc()?>" alt="<?=$m->getMapTitle()?>" title="<?=$m->getMapTitle()?>" />
 
     <!-- markers -->
-    <?php foreach($m->getMapMarkers() as $mx) {
+    <?php foreach ($m->getMapMarkers() as $mx) {
         View::callChunkInline('staticMap/staticMapMarker', $mx);
     } //foreach mapMarkers ?>
 

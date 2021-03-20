@@ -82,8 +82,7 @@ class UserInputFilter
             $config = OcMemCache::getOrCreate(
                 'HTMLPurifierConfig',
                 isset($debug_page) && $debug_page ? 1 : 60,
-                function ()
-                {
+                function () {
                     $cfg = self::createConfig();
                     // finalize and lock the config
                     $cfg->getHTMLDefinition();

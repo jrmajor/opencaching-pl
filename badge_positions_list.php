@@ -35,7 +35,7 @@ $content = '';
 
 $positionsMeritBadge = $meritBadgeCtrl->buildArrayGainedPositions($userid, $badge_id);
 
-foreach($positionsMeritBadge as $onePositionBadge){
+foreach ($positionsMeritBadge as $onePositionBadge) {
     $cacheName = str_replace("'", '-', $onePositionBadge->getName());
     $cacheName = str_replace('"', ' ', $cacheName);
 

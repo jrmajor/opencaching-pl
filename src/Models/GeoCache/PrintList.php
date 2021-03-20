@@ -17,7 +17,7 @@ class PrintList
     {
         if (isset($_REQUEST['print_list']) && $_REQUEST['print_list'] == 'y') {
             // add cache to print (do not duplicate items)
-            if (! isset($_SESSION['print_list']) || ! is_array($_SESSION['print_list'])){
+            if (! isset($_SESSION['print_list']) || ! is_array($_SESSION['print_list'])) {
                 $_SESSION['print_list'] = [];
             }
 
@@ -49,9 +49,9 @@ class PrintList
      */
     public static function AddOrRemoveCacheUrl($cacheId)
     {
-        if(self::IsOnTheList($cacheId)){
+        if (self::IsOnTheList($cacheId)) {
             return self::RemoveCacheUrl($cacheId);
-        }else{
+        } else {
             return self::AddCacheUrl($cacheId);
         }
     }
@@ -66,9 +66,9 @@ class PrintList
 
     public static function GetContent()
     {
-        if(isset($_SESSION['print_list']) && is_array($_SESSION['print_list'])){
+        if (isset($_SESSION['print_list']) && is_array($_SESSION['print_list'])) {
             return $_SESSION['print_list'];
-        }else{
+        } else {
             return [];
         }
     }
@@ -82,7 +82,7 @@ class PrintList
     {
         if (isset($_SESSION['print_list']) &&
             is_array($_SESSION['print_list']) &&
-            isset($_SESSION['print_list'][$cacheId])){
+            isset($_SESSION['print_list'][$cacheId])) {
             unset($_SESSION['print_list'][$cacheId]);
         }
     }

@@ -25,10 +25,11 @@ class StaticMapMarker
     public $markerImg;      // optional image to display
     public $link = null;    // marker can be clickable
 
-    public function getClasses(){
+    public function getClasses()
+    {
         $cssClasses = [];
 
-        if($this->tooltip){
+        if ($this->tooltip) {
             $cssClasses[] = 'lightTipped';
         }
 

@@ -36,7 +36,7 @@ $wptType[8] = 'Moving Cache';
 $wptType[9] = 'Podcast';
 $wptType[10] = 'Own Cache';
 
-if($loggedUser || ! $hide_coords) {
+if ($loggedUser || ! $hide_coords) {
     //prepare the output
     $caches_per_page = 20;
 
@@ -168,7 +168,7 @@ if($loggedUser || ! $hide_coords) {
     echo "Reserved 2\r\n";
     echo "Reserved 3\r\n";
 
-    while($r = XDb::xFetchArray($stmt)) {
+    while ($r = XDb::xFetchArray($stmt)) {
         $lat = sprintf('%01.6f', $r['latitude']);
         $lon = sprintf('%01.6f', $r['longitude']);
 
@@ -209,7 +209,7 @@ if($loggedUser || ! $hide_coords) {
         $r['ozi_filips'] = XDb::xMultiVariableQueryValue(
             'SELECT ozi_filips FROM user WHERE user_id= :1 LIMIT 1', null, $loggedUser->getUserId());
 
-        if($r['ozi_filips'] != '' || $r['ozi_filips'] != null) {
+        if ($r['ozi_filips'] != '' || $r['ozi_filips'] != null) {
             $attach = $r['ozi_filips'] . '\\op\\' . $r['wp_oc'][2] . '\\' . $r['wp_oc'][3] . '\\' . $r['wp_oc'][4] . $r['wp_oc'][5] . '.html';
         } else {
             $attach = '';

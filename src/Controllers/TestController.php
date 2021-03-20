@@ -35,13 +35,14 @@ use src\Utils\Uri\Uri;
 
 class TestController extends BaseController
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
 
         // test pages are only for users with AdvancedUsers role
         $this->redirectNotLoggedUsers();
 
-        if(! $this->loggedUser->hasAdvUserRole()){
+        if (! $this->loggedUser->hasAdvUserRole()) {
             $this->displayCommonErrorPageAndExit('Sorry, no such page.');
         }
     }
@@ -57,7 +58,7 @@ class TestController extends BaseController
         $methods = get_class_methods($this);
 
         foreach ($methods as $method) {
-            switch($method){
+            switch ($method) {
                 case '__construct':
                 case 'isCallableFromRouter':
                 case 'index':
@@ -70,7 +71,8 @@ class TestController extends BaseController
         }
     }
 
-    public function lorenIpsumContent(){
+    public function lorenIpsumContent()
+    {
         $this->view->setTemplate('test/testTemplate');
         $this->view->buildView();
     }
@@ -97,7 +99,7 @@ class TestController extends BaseController
 
         $this->view->setVar('fbTestEn', $fbTestEnabled);
 
-        if($fbTestEnabled){
+        if ($fbTestEnabled) {
             $this->view->setVar('fbLink',
                 FacebookOAuth::getOAuthStartUrl(
                     Uri::getCurrentUriBase() . '/Test/oAuthCallback/Facebook'));
@@ -105,7 +107,7 @@ class TestController extends BaseController
 
         $this->view->setVar('gTestEn', $gTestEnabled);
 
-        if($gTestEnabled){
+        if ($gTestEnabled) {
             $this->view->setVar('gLink',
                 GoogleOAuth::getOAuthStartUrl(
                     Uri::getCurrentUriBase() . '/Test/oAuthCallback/Google'));
@@ -125,20 +127,20 @@ class TestController extends BaseController
 
         $this->view->setTemplate('test/oAuthCallback');
 
-        switch($service){
+        switch ($service) {
             case 'Facebook':
-                if(FacebookOAuth::isEnabledForTests()){
+                if (FacebookOAuth::isEnabledForTests()) {
                     $oAuth = FacebookOAuth::oAuthCallbackHandler();
-                }else{
+                } else {
                     $this->displayCommonErrorPageAndExit('Unknown oAuth service', 404);
 
                     exit;
                 }
                 break;
             case 'Google':
-                if(GoogleOAuth::isEnabledForTests()){
+                if (GoogleOAuth::isEnabledForTests()) {
                     $oAuth = GoogleOAuth::oAuthCallbackHandler();
-                }else{
+                } else {
                     $this->displayCommonErrorPageAndExit('Unknown oAuth service', 404);
 
                     exit;
@@ -152,10 +154,10 @@ class TestController extends BaseController
 
         $this->view->setVar('service', $service);
 
-        if(! $oAuth->isUserAuthorized()){
+        if (! $oAuth->isUserAuthorized()) {
             $this->view->setVar('error', true);
             $this->view->setVar('errorDesc', $oAuth->getErrorDescription());
-        }else{
+        } else {
             $this->view->setVar('error', false);
             $this->view->setVar('oAuthObj', $oAuth);
         }
@@ -170,19 +172,19 @@ class TestController extends BaseController
     {
         $this->view->setTemplate('test/userInputFilterTest');
 
-        if(isset($_POST['html'])){
+        if (isset($_POST['html'])) {
             $html = htmlentities($_POST['html']);
             $context = [];
             $rawCleanedHtml = UserInputFilter::purifyHtmlString($_POST['html'], $context);
 
-            if(isset($context['errors'])){
+            if (isset($context['errors'])) {
                 $errors = $context['errors'];
                 $errorHTML = $errors->getHTMLFormatted(UserInputFilter::getConfig());
-            }else{
+            } else {
                 $errorHTML = '';
             }
             $cleanedHTML = htmlentities($rawCleanedHtml);
-        }else{
+        } else {
             $html = '';
             $errorHTML = '';
             $rawCleanedHtml = '';
@@ -233,7 +235,7 @@ class TestController extends BaseController
 
         //...and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheSetMarkerModel::class, $csToArchive, function($row){
+            CacheSetMarkerModel::class, $csToArchive, function($row) {
                 $markerModel = new CacheSetMarkerModel();
 
                 $markerModel->lat = $row['centerLatitude'];
@@ -250,7 +252,7 @@ class TestController extends BaseController
         $cachesToShow = MultiCacheStats::getLatestCaches(5);
         // ..and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheMarkerModel::class, $cachesToShow, function($row){
+            CacheMarkerModel::class, $cachesToShow, function($row) {
                 $markerModel = new CacheMarkerModel();
 
                 $markerModel->lat = $row['latitude'];
@@ -269,27 +271,28 @@ class TestController extends BaseController
         $caches = [];
         $userIds = [];
 
-        foreach(MultiCacheStats::getGeocachesDataById([1, 2, 3, 4, 5]) as $c){
+        foreach (MultiCacheStats::getGeocachesDataById([1, 2, 3, 4, 5]) as $c) {
             $caches[$c['cache_id']] = $c;
             $userIds[$c['user_id']] = null;
         }
 
-        foreach(MultiLogStats::getLastLogForEachCache(array_keys($caches),
-            ['id as log_id', 'cache_id', 'text', 'date', 'type as log_type', 'user_id as log_user_id']) as $log){
+        foreach (MultiLogStats::getLastLogForEachCache(array_keys($caches), [
+            'id as log_id', 'cache_id', 'text', 'date', 'type as log_type', 'user_id as log_user_id'
+        ]) as $log) {
                 $caches[$log['cache_id']] = array_merge($log, $caches[$log['cache_id']]);
                 $userIds[$log['log_user_id']] = null;
         }
 
         $users = MultiUserQueries::GetUserNamesForListOfIds(array_keys($userIds));
 
-        foreach ($caches as &$c){
+        foreach ($caches as &$c) {
             $c['owner'] = $users[$c['user_id']];
             $c['log_username'] = $users[$c['log_user_id']];
         }
 
         // ...and add to map
         $mapModel->addMarkersWithExtractor(
-            CacheWithLogMarkerModel::class, $caches, function($row){
+            CacheWithLogMarkerModel::class, $caches, function($row) {
                 $markerModel = new CacheWithLogMarkerModel();
 
                 $markerModel->lon = $row['longitude'];
@@ -357,10 +360,10 @@ class TestController extends BaseController
         // use the same upload model
         $uploadModel = UploadModel::TestTxtUploadFactory();
 
-        try{
+        try {
             // save uploaded files
             $newFiles = FileUploadMgr::processFileUpload($uploadModel);
-        } catch (RuntimeException $e){
+        } catch (RuntimeException $e) {
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }
@@ -403,7 +406,7 @@ class TestController extends BaseController
 
     public function registration()
     {
-        if($this->isUserLogged()){
+        if ($this->isUserLogged()) {
             return $this->alreadyRegistered();
         }
 
@@ -445,11 +448,11 @@ class TestController extends BaseController
 
     public function altitudeTest($lat = null, $lon = null)
     {
-        if(! $lat){
+        if (! $lat) {
             $lat = 54;
         }
 
-        if(! $lon){
+        if (! $lon) {
             $lon = 18;
         }
 
@@ -515,7 +518,7 @@ class TestController extends BaseController
         // generate options
         $i = 0;
 
-        foreach($users as $userId => $user) {
+        foreach ($users as $userId => $user) {
             // find random user
             $i++;
             $optName = $user->getUserName();

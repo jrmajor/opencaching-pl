@@ -18,7 +18,8 @@ class AtomFeedAuthor
     private $email;
 
     public function __construct()
-    {}
+    {
+    }
 
     /**
      * Returns author name

@@ -39,14 +39,15 @@ class powerTrail_cCorection
 
     private function process()
     {
-        if($this->cacheType == GeoCache::TYPE_TRADITIONAL || $this->cacheType == GeoCache::TYPE_MULTICACHE){
-            if(in_array($this->userId, $this->userArray)){
+        if ($this->cacheType == GeoCache::TYPE_TRADITIONAL || $this->cacheType == GeoCache::TYPE_MULTICACHE) {
+            if (in_array($this->userId, $this->userArray)) {
                 $this->updateCoords();
             }
         }
     }
 
-    private function takeDistance(){
+    private function takeDistance()
+    {
         $lastchar = substr($this->cacheId, -1);
 
         switch ($lastchar) {
@@ -73,7 +74,8 @@ class powerTrail_cCorection
         }
     }
 
-    private function updateCoords(){
+    private function updateCoords()
+    {
         $meters = $this->takeDistance(); //Number of meters to calculate coords for north/south/east/west
         $equatorCircumference = 6371000; //meters
         $polarCircumference = 6356800; //meters
@@ -85,21 +87,23 @@ class powerTrail_cCorection
         $this->calcNewCoords($degDiffLong, $degDiffLat);
     }
 
-    private function getDirectionInteger() {
+    private function getDirectionInteger()
+    {
         $direction = substr($this->cacheId, 0, 1);
 
-        if($direction == 0) {
+        if ($direction == 0) {
             return 5;
         }
 
-        if($direction == 9) {
-             return 8;
+        if ($direction == 9) {
+            return 8;
         }
 
         return $direction;
     }
 
-    private function calcNewCoords($degDiffLong, $degDiffLat) {
+    private function calcNewCoords($degDiffLong, $degDiffLat)
+    {
         $direction = $this->getDirectionInteger();
 
         switch ($direction) {
@@ -153,7 +157,7 @@ final class UserCollection
     {
         include __DIR__ . '/../lib/settingsGlue.inc.php';
 
-        if(isset($userCollection)) {
+        if (isset($userCollection)) {
             $this->userArray = $userCollection;
         }
     }

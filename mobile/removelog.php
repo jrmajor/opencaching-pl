@@ -16,13 +16,13 @@ if (isset($_SESSION['user_id'])) {
 
         $user_id2 = $wiersz['user_id'];
 
-        if (empty($user_id2))
+        if (empty($user_id2)) {
             $tpl->assign('error', '1');
-        elseif ($user_id2 != $_SESSION['user_id'])
+        } elseif ($user_id2 != $_SESSION['user_id']) {
             $tpl->assign('error', '2');
-        elseif ($wiersz['deleted'] == '1')
+        } elseif ($wiersz['deleted'] == '1') {
             $tpl->assign('error', '1');
-        elseif (isset($_POST['confirm']) && $_POST['confirm'] == 'true') {
+        } elseif (isset($_POST['confirm']) && $_POST['confirm'] == 'true') {
             $cache_id = $wiersz['cache_id'];
             $user_id = $wiersz['user_id'];
             $type = $wiersz['type'];
@@ -93,7 +93,8 @@ if (isset($_SESSION['user_id'])) {
             exit;
         }
     }
-} else
+} else {
     header('Location: ./index.php');
+}
 
 $tpl->display('tpl/removelog.tpl');

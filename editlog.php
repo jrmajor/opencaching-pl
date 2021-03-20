@@ -80,11 +80,13 @@ if (! $loggedUser) {
                 $log_pw = '';
                 $use_log_pw = (($log_record['logpw'] == null) || ($log_record['logpw'] == '')) ? false : true;
 
-                if (($use_log_pw) && $log_record['logtype'] == 1)
+                if (($use_log_pw) && $log_record['logtype'] == 1) {
                     $use_log_pw = false;
+                }
 
-                if ($use_log_pw)
+                if ($use_log_pw) {
                     $log_pw = $log_record['logpw'];
+                }
 
                 // check if user has exceeded his top5% limit
                 $userRecoCountForThisCache = XDb::xMultiVariableQueryValue(
@@ -197,10 +199,11 @@ if (! $loggedUser) {
                     WHERE user_id=:1 AND cache_id= :2 AND type='1' AND deleted=0",
                     0, $log_record['user_id'], $log_record['cache_id']);
 
-                if ($founds == 0)
+                if ($founds == 0) {
                     if ($log_type != 1 && $log_type != 7 /* && $log_type != 3 */) {
                         $top_cache = 0;
                     }
+                }
 
                 $pw_not_ok = false;
 
@@ -306,14 +309,15 @@ if (! $loggedUser) {
                         } elseif ($log_type == 2) {
                             $user_record['notfounds_count']++;
 
-                            if ($founds <= 1)
+                            if ($founds <= 1) {
                                 $top_cache = 0;
-                        }
-                        elseif ($log_type == 3) {
+                            }
+                        } elseif ($log_type == 3) {
                             $user_record['log_notes_count']++;
 
-                            if ($founds <= 1)
+                            if ($founds <= 1) {
                                 $top_cache = 0;
+                            }
                         }
 
                         XDb::xSql(
@@ -360,11 +364,11 @@ if (! $loggedUser) {
                     }
 
                     // update top-list
-                    if ($top_cache == 1){
+                    if ($top_cache == 1) {
                         XDb::xSql(
                             'INSERT IGNORE INTO `cache_rating` (`user_id`, `cache_id`)
                             VALUES(?, ?)', $log_record['user_id'], $log_record['cache_id']);
-                    }else{
+                    } else {
                         XDb::xSql(
                             'DELETE FROM `cache_rating`
                             WHERE `user_id`=? AND `cache_id`=?',
@@ -389,23 +393,25 @@ if (! $loggedUser) {
 
                     $badgetParam = '';
 
-                    if ($config['meritBadges']){
+                    if ($config['meritBadges']) {
                         $cache_id = $log_record['cache_id'];
 
                         if ($log_type == GeoCacheLog::LOGTYPE_FOUNDIT ||
-                            $log_type == GeoCacheLog::LOGTYPE_ATTENDED){
+                            $log_type == GeoCacheLog::LOGTYPE_ATTENDED) {
                             $ctrlMeritBadge = new MeritBadgeController;
 
                             $changedLevelBadgesIds = $ctrlMeritBadge->updateTriggerLogCache($cache_id, $loggedUser->getUserId());
                             $titledIds = $ctrlMeritBadge->updateTriggerTitledCache($cache_id, $loggedUser->getUserId());
 
-                            if ($changedLevelBadgesIds != '' && $titledIds != '')
+                            if ($changedLevelBadgesIds != '' && $titledIds != '') {
                                 $changedLevelBadgesIds .= ',';
+                            }
 
                             $changedLevelBadgesIds .= $titledIds;
 
-                            if ($changedLevelBadgesIds != '')
+                            if ($changedLevelBadgesIds != '') {
                                 $badgetParam = '&badgesPopupFor=' . $changedLevelBadgesIds;
+                            }
 
                             $ctrlMeritBadge->updateTriggerCacheAuthor($cache_id);
                         }
@@ -433,7 +439,7 @@ if (! $loggedUser) {
                         WHERE id= :1 AND type=1 AND deleted=0',
                         0, $log_id);
 
-                    if ($founds3 == 0){
+                    if ($founds3 == 0) {
                         $already_found_in_other_comment = 1;
                     }
                 }
@@ -469,7 +475,7 @@ if (! $loggedUser) {
                         $log_record['user_id'] == $cache_user_id &&                       // is owner
                         $type != GeoCacheLogCommons::LOGTYPE_COMMENT &&
                         $type != GeoCacheLogCommons::LOGTYPE_MADEMAINTENANCE) {
-                            continue;
+                        continue;
                     }
 
                     if ($already_found_in_other_comment) {

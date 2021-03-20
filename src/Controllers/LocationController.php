@@ -23,13 +23,14 @@ class LocationController extends BaseController
     }
 
     public function index()
-    {}
+    {
+    }
 
     public function getRegionsByCountryCodeAjax($countryCode)
     {
         $this->checkUserLoggedAjax();
 
-        if(! Countries::isKnownCountryCode($countryCode)){
+        if (! Countries::isKnownCountryCode($countryCode)) {
             $this->ajaxErrorResponse('Unknown country code.');
         }
 

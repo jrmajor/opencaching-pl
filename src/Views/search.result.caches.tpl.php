@@ -42,10 +42,8 @@ use src\Utils\I18n\I18n;
 <?php
 global $hide_coords, $colNameSearch, $NrColSortSearch, $OrderSortSearch, $SearchWithSort, $selectList, $NrColVisable;
 
-if (! $SearchWithSort)
-{
-    if ($NrColSortSearch != -1 && ! isset($_REQUEST['startat']))
-    {
+if (! $SearchWithSort) {
+    if ($NrColSortSearch != -1 && ! isset($_REQUEST['startat'])) {
         echo "<script>
             alert( '" . tr('MaxSearchRec') . "' );
             </script>; ";
@@ -58,14 +56,17 @@ echo '</script>';
 
 $NrColSortToSet = $NrColSortSearch - 1;
 
-if ($NrColSortToSet < 0)
+if ($NrColSortToSet < 0) {
     $NrColSortSearch = 0;
+}
 
-if ($NrColSortToSet > 18)
+if ($NrColSortToSet > 18) {
     $NrColSortSearch = 0;
+}
 
-if (! $SearchWithSort && $NrColSortSearch != -1)
+if (! $SearchWithSort && $NrColSortSearch != -1) {
     $NrColSortSearch = -1;
+}
 ?>
 
 <script>
@@ -127,16 +128,13 @@ function searchCB(){
     echo '<script>';
     echo 'function turnOnOProperOptions(){';
 
-    if ($SearchWithSort)
-    {
+    if ($SearchWithSort) {
         echo "gct.addOption('sortColumn', $NrColSortToSet );";
         echo "gct.addOption('sortAscending',";
         echo $OrderSortSearch == 'M' ? 'false' : 'true';
         echo ' );';
         echo "gct.addOption('pageSize', 20);";
-    }
-    else
-    {
+    } else {
         echo "gct.addOption('showRowNumber', false );";
         echo "gct.addOption('sort', 'disable' );";
         echo "gct.addOption('page', 'disable' );";
@@ -155,11 +153,15 @@ function searchCB(){
 
 <div id='idGTC' align = "left" ></div>
 
-<?php if (! $SearchWithSort) echo "<div class='content-title-noshade'><p align='left'>"; ?>
+<?php if (! $SearchWithSort) {
+    echo "<div class='content-title-noshade'><p align='left'>";
+} ?>
 {pages}
-<?php if (! $SearchWithSort) { echo '</p></div>'; }
-    else {
-        echo "<span style='font-size:10px;'>{{pagination_page}}: </span><span id='pageNumber' style='font-size:11px; color:green; font-weight:bold'>1</span>"; }
+<?php if (! $SearchWithSort) {
+    echo '</p></div>';
+} else {
+        echo "<span style='font-size:10px;'>{{pagination_page}}: </span><span id='pageNumber' style='font-size:11px; color:green; font-weight:bold'>1</span>";
+}
 ?>
 
 <div class="buffer"></div>
@@ -169,10 +171,11 @@ function searchCB(){
 $selectList = '';
 $descCol = tr('Disable');
 
-if ($NrColSortSearch != -1)
+if ($NrColSortSearch != -1) {
     $selectList .= "<option style='color:red' value=-1>$descCol</option>";
-else
+} else {
     $selectList .= "<option style='color:red' selected='selected' value=-1>$descCol</option>";
+}
 
 $descCol = tr('Enable');
 $selectList .= "<optgroup style='color:green' label='" . $descCol . "'>";

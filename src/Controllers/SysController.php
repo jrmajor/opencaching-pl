@@ -6,13 +6,14 @@ use src\Models\GeoCache\CacheLocation;
 
 class SysController extends BaseController
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
 
         // test pages are only for users with AdvancedUsers role
         $this->redirectNotLoggedUsers();
 
-        if(! $this->loggedUser->hasSysAdminRole()){
+        if (! $this->loggedUser->hasSysAdminRole()) {
             $this->displayCommonErrorPageAndExit('Sorry, no such page.');
         }
     }
@@ -37,7 +38,7 @@ class SysController extends BaseController
      */
     public function apc($redirectToApcScript = true)
     {
-        if($redirectToApcScript){
+        if ($redirectToApcScript) {
             $this->view->redirect('/src/Libs/Apc/apc.php');
 
             exit;
@@ -57,7 +58,8 @@ class SysController extends BaseController
         define('GRAPH_SIZE',200);                         // Image size
     }
 
-    public function phpinfo(){
+    public function phpinfo()
+    {
         phpinfo();
     }
 

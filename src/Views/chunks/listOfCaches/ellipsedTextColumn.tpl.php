@@ -22,12 +22,12 @@ use src\Utils\Generators\TextGen;
  *
  */
 
-return function ($data){
-    if(strlen($data['text']) > $data['maxChars']){
+return function ($data) {
+    if (strlen($data['text']) > $data['maxChars']) {
         //trim the text
         $text = mb_substr($data['text'], 0, $data['maxChars']) . '...';
         $fullText = $data['text'];
-    }else{
+    } else {
         $text = $data['text'];
         $fullText = '';
     }
@@ -35,7 +35,7 @@ return function ($data){
     $popupId = 'elipsed_' . TextGen::randomText(12);
 ?>
 
-  <?php if(! empty($fullText)){ ?>
+  <?php if (! empty($fullText)) { ?>
 
     <div onclick="showLightPopup(this, '<?=$popupId?>')">
 
@@ -43,7 +43,7 @@ return function ($data){
 
       <div><?=$text?></div>
 
-  <?php if(! empty($fullText)){ ?>
+  <?php if (! empty($fullText)) { ?>
       <div class="btn btn-xs" ><?=$data['labelShow']?></div>
       <div id="<?=$popupId?>" class="lightPopupHidden">
         <div class="popupClose">&#10006;</div>

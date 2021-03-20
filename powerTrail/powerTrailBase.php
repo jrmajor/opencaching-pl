@@ -19,13 +19,15 @@ class powerTrailBase
     const cCountForMaxMagnifier = 50;
     const iconPath = '/images/blue/';
 
-    public static function minimumCacheCount(){
+    public static function minimumCacheCount()
+    {
         include __DIR__ . '/../lib/settingsGlue.inc.php';
 
         return $powerTrailMinimumCacheCount['current'];
     }
 
-    public static function historicMinimumCacheCount(){
+    public static function historicMinimumCacheCount()
+    {
         include __DIR__ . '/../lib/settingsGlue.inc.php';
         $min = $powerTrailMinimumCacheCount['current'];
 
@@ -39,7 +41,8 @@ class powerTrailBase
         return $min;
     }
 
-    public static function userMinimumCacheFoundToSetNewPowerTrail(){
+    public static function userMinimumCacheFoundToSetNewPowerTrail()
+    {
         include __DIR__ . '/../lib/settingsGlue.inc.php';
 
         return $powerTrailUserMinimumCacheFoundToSetNewPowerTrail;
@@ -66,7 +69,8 @@ class powerTrailBase
         ],
     ];
 
-    function __construct() {
+    function __construct()
+    {
         //include __DIR__.'/../lib/settings.inc.php';
         //$this->userMinimumCacheFoundToSetNewPowerTrail = $userMinimumCacheFoundToSetNewPowerTrail;
     }
@@ -75,7 +79,8 @@ class powerTrailBase
      * check if user $userId is owner of $powerTrailId.
      * @return 0 or 1
      */
-    public static function checkIfUserIsPowerTrailOwner($userId, $powerTrailId){
+    public static function checkIfUserIsPowerTrailOwner($userId, $powerTrailId)
+    {
         $db = OcDb::instance();
         $query = 'SELECT count(*) AS `checkResult` FROM `PowerTrail_owners` WHERE `PowerTrailId` = :1 AND `userId` = :2';
         $s = $db->multiVariableQuery($query, $powerTrailId, $userId);
@@ -87,7 +92,8 @@ class powerTrailBase
     /**
      * here power Trail types
      */
-    public static function getPowerTrailTypes(){
+    public static function getPowerTrailTypes()
+    {
         return  [
             self::GEODRAW => [
                 'geopathTypeName' => self::getConstName(self::GEODRAW),
@@ -112,12 +118,13 @@ class powerTrailBase
         ];
     }
 
-    private static function getConstName($constValue) {
+    private static function getConstName($constValue)
+    {
         $cClass = new ReflectionClass(__CLASS__);
         $constants = $cClass->getConstants();
 
-        foreach ($constants as $name => $value){
-            if ($value == $constValue){
+        foreach ($constants as $name => $value) {
+            if ($value == $constValue) {
                 return $name;
             }
         }
@@ -125,10 +132,11 @@ class powerTrailBase
         return null;
     }
 
-     /**
-     * here power Trail icons
-     */
-    public static function getPowerTrailIconsByType() {
+    /**
+    * here power Trail icons
+    */
+    public static function getPowerTrailIconsByType()
+    {
         $ret = [
             1 => 'footprintRed.png',
             2 => 'footprintBlue.png',
@@ -139,7 +147,8 @@ class powerTrailBase
         return $ret;
     }
 
-    public static function cacheSizePoints() {
+    public static function cacheSizePoints()
+    {
         return  [
             2 => 2.5,   # Micro
             3 => 2, # Small
@@ -150,7 +159,8 @@ class powerTrailBase
         ];
     }
 
-    public static function cacheTypePoints() {
+    public static function cacheTypePoints()
+    {
         return  [
             1 => 2, #Other
             2 => 2, #Trad.
@@ -165,7 +175,8 @@ class powerTrailBase
         ];
     }
 
-    public static function checkUserConquestedPt($userId, $ptId){
+    public static function checkUserConquestedPt($userId, $ptId)
+    {
         $db = OcDb::instance();
         $q = 'SELECT count(*) AS `c` FROM PowerTrail_comments
             WHERE userId = :1 AND PowerTrailId = :2 AND `commentType` =2 AND deleted !=1 ';
@@ -175,7 +186,8 @@ class powerTrailBase
         return $response['c'];
     }
 
-    public static function getPoweTrailCompletedCountByUser($userId) {
+    public static function getPoweTrailCompletedCountByUser($userId)
+    {
         $queryPt = 'SELECT count(`PowerTrailId`) AS `ptCount` FROM `PowerTrail_comments`
             WHERE `commentType` =2 AND `deleted` =0 AND `userId` =:1';
         $db = OcDb::instance();
@@ -185,7 +197,8 @@ class powerTrailBase
         return (int) $ptCount['ptCount'];
     }
 
-    public static function getUserPoints($userId) {
+    public static function getUserPoints($userId)
+    {
         $queryPt = 'SELECT sum( `points` ) AS sum
                     FROM powerTrail_caches
                     WHERE `PowerTrailId` IN (
@@ -209,14 +222,16 @@ class powerTrailBase
      * math function y=ax+b
      * where x1=1 y1=1 and x2=$w, y2=2
      */
-    public static function calculateMagnifier($x){
-            $w = self::cCountForMaxMagnifier;
-            $b = (2 - $w) / (-$w + 1);
+    public static function calculateMagnifier($x)
+    {
+        $w = self::cCountForMaxMagnifier;
+        $b = (2 - $w) / (-$w + 1);
 
-            return (1 - $b) * $x + $b;
-        }
+        return (1 - $b) * $x + $b;
+    }
 
-    public static function getOwnerPoints($userId){
+    public static function getOwnerPoints($userId)
+    {
         $query = 'SELECT
                     round(sum(`powerTrail_caches`.`points`),2) AS `pointsSum`,
                     count( `powerTrail_caches`.`cacheId` ) AS `cacheCount`,
@@ -255,7 +270,8 @@ class powerTrailBase
         return ['totalPoints' => round($totalPoint,2), 'geoPathCount' => $geoPathCount, 'pointsDetails' => $pointsDetails];
     }
 
-    public static function checkForPowerTrailByCache($cacheId){
+    public static function checkForPowerTrailByCache($cacheId)
+    {
         $queryPt = 'SELECT `id`, `name`, `image` FROM `PowerTrail` WHERE `id` IN ( SELECT `PowerTrailId` FROM `powerTrail_caches` WHERE `cacheId` =:1 ) AND `status` = 1 ';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($queryPt, $cacheId);
@@ -263,7 +279,8 @@ class powerTrailBase
         return $db->dbResultFetchAll($s);
     }
 
-    public static function getPtOwners($ptId) {
+    public static function getPtOwners($ptId)
+    {
         $query = 'SELECT user_id, username, email, power_trail_email FROM `user` WHERE user_id IN (SELECT `userId` FROM `PowerTrail_owners` WHERE `PowerTrailId` = :1 ) ';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $ptId);
@@ -277,7 +294,8 @@ class powerTrailBase
         return $result;
     }
 
-    public static function getPtDbRow($ptId) {
+    public static function getPtDbRow($ptId)
+    {
         $query = 'SELECT * FROM `PowerTrail` WHERE `id` = :1 LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $ptId);
@@ -285,7 +303,8 @@ class powerTrailBase
         return $db->dbResultFetchOneRowOnly($s);
     }
 
-    public static function getPtCacheCount($ptId) {
+    public static function getPtCacheCount($ptId)
+    {
         $q = 'SELECT count( * ) AS `count` FROM `powerTrail_caches` WHERE `PowerTrailId` =:1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $ptId);
@@ -294,7 +313,8 @@ class powerTrailBase
         return $answer['count'];
     }
 
-    public static function getUserDetails($userId) {
+    public static function getUserDetails($userId)
+    {
         $q = 'SELECT * FROM `user` WHERE `user_id` =:1 LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $userId);
@@ -303,7 +323,8 @@ class powerTrailBase
         return $answer;
     }
 
-    public static function getSingleComment($commentId) {
+    public static function getSingleComment($commentId)
+    {
         $query = 'SELECT * FROM `PowerTrail_comments` WHERE `id` = :1 LIMIT 1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($query, $commentId);
@@ -311,7 +332,8 @@ class powerTrailBase
         return $db->dbResultFetchOneRowOnly($s);
     }
 
-    public static function getPtCaches($PtId){
+    public static function getPtCaches($PtId)
+    {
         $db = OcDb::instance();
         $q = 'SELECT powerTrail_caches.isFinal, caches . * , user.username FROM  `caches` , user, powerTrail_caches WHERE cache_id IN ( SELECT  `cacheId` FROM  `powerTrail_caches`
                 WHERE  `PowerTrailId` =:1) AND user.user_id = caches.user_id AND powerTrail_caches.cacheId = caches.cache_id
@@ -321,7 +343,8 @@ class powerTrailBase
         return $db->dbResultFetchAll($s);
     }
 
-    public static function getPtCachesIds($PtId){
+    public static function getPtCachesIds($PtId)
+    {
         $q = 'SELECT `cacheId` FROM `powerTrail_caches` WHERE `PowerTrailId` =:1';
         $db = OcDb::instance();
         $s = $db->multiVariableQuery($q, $PtId);
@@ -338,7 +361,8 @@ class powerTrailBase
      * remove unwanted chars from pt names
      * (for gpx filenames)
      */
-    public static function clearPtNames($ptName){
+    public static function clearPtNames($ptName)
+    {
         $ptName = ucwords(strtolower($ptName));
         $ptName = str_replace('♥', 'Serduszko', $ptName);
         $ptName = str_replace(' ', '', $ptName);
@@ -347,7 +371,8 @@ class powerTrailBase
         return $ptName;
     }
 
-    public static function getLeadingUser($ptId){
+    public static function getLeadingUser($ptId)
+    {
         $q = 'SELECT  `username`, `user_id` FROM  `user`
             WHERE  `user_id` = (
                 SELECT  `userId` FROM  `PowerTrail_actionsLog`
@@ -359,7 +384,8 @@ class powerTrailBase
         return $db->dbResultFetchOneRowOnly($s);
     }
 
-    public static function getAllPt($filter){
+    public static function getAllPt($filter)
+    {
         $sortOder = 'ASC';
         $sortBy = 'name';
 

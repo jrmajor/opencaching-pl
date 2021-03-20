@@ -29,18 +29,21 @@ if (! $loggedUser) {
 
         $bNoDisplay = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
 
-        if (($bNoDisplay != 0) && ($bNoDisplay != 1))
+        if (($bNoDisplay != 0) && ($bNoDisplay != 1)) {
             $bNoDisplay = 0;
+        }
 
         $title = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
 
         $allok = true;
 
-        if (! is_numeric($objectid))
+        if (! is_numeric($objectid)) {
             $allok = false;
+        }
 
-        if (! is_numeric($type))
+        if (! is_numeric($type)) {
             $allok = false;
+        }
 
         if ($allok == true) {
             //check if object exists and we are the owner (allowed to upload a mp3)
@@ -51,11 +54,12 @@ if (! $loggedUser) {
                         'SELECT `user_id`, `cache_id` FROM `cache_logs`
                         WHERE `deleted`=0 AND `id`= ? LIMIT 1', $objectid);
 
-                    if (! $r = XDb::xFetchArray($rs))
+                    if (! $r = XDb::xFetchArray($rs)) {
                         $allok = false;
-                    else {
-                        if ($r['user_id'] != $loggedUser->getUserId())
+                    } else {
+                        if ($r['user_id'] != $loggedUser->getUserId()) {
                             $allok = false;
+                        }
 
                         $cacheid = $r['cache_id'];
                         tpl_set_var('cacheid', $cacheid);
@@ -78,15 +82,16 @@ if (! $loggedUser) {
                         'SELECT `user_id`, `cache_id`, `name` FROM `caches`
                         WHERE `cache_id`= ? LIMIT 1', $objectid);
 
-                    if (! $r = XDb::xFetchArray($rs))
+                    if (! $r = XDb::xFetchArray($rs)) {
                         $allok = false;
-                    else {
+                    } else {
                         tpl_set_var('cachename', htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8'));
                         tpl_set_var('cacheid', $r['cache_id']);
                         tpl_set_var('mp3typedesc', $mp3typedesc_cache);
 
-                        if ($r['user_id'] != $loggedUser->getUserId())
+                        if ($r['user_id'] != $loggedUser->getUserId()) {
                             $allok = false;
+                        }
                     }
 
                     tpl_set_var('begin_cacheonly', '');
@@ -220,13 +225,14 @@ if (! $loggedUser) {
                     tpl_set_var('errnomp3givendesc', '');
                     tpl_set_var('errnotitledesc', '');
 
-                    if ($errnofilegiven == true)
+                    if ($errnofilegiven == true) {
                         tpl_set_var('errnomp3givendesc', $errnomp3givendesc);
+                    }
 
-                    if ($errnotitle == true)
+                    if ($errnotitle == true) {
                         tpl_set_var('errnotitledesc', $errnotitledesc);
-                }
-                else {
+                    }
+                } else {
                     $tplname = 'message';
                     tpl_set_var('messagetitle', $message_title_internal);
                     tpl_set_var('message_start', '');

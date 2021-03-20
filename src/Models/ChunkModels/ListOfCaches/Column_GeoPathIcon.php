@@ -16,7 +16,8 @@ class Column_GeoPathIcon extends AbstractColumn
         return 'listOfCaches/geoPathIconColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

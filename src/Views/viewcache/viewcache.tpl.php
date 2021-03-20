@@ -88,7 +88,7 @@ use src\Utils\Uri\SimpleRouter;
                     <img src="<?=$view->cacheMainIcon?>" class="icon32 lightTipped" alt="" title="">
                     <div class="lightTip">
                         <div class="currentuser-activity-logs-tooltip">
-                        <?php foreach($view->userActivityLogs as $log) { ?>
+                        <?php foreach ($view->userActivityLogs as $log) { ?>
                             <div class="currentuser-activity-logs-tooltip-line">
                                 <div class="currentuser-activity-logs-tooltip-item">
                                     <img src="<?=GeoCacheLogCommons::GetIconForType($log->getType())?>"
@@ -192,7 +192,7 @@ use src\Utils\Uri\SimpleRouter;
                       <?=tr('cache_belongs_to_geopath')?>!
                     </div>
 
-                    <?php foreach($view->geoPathsList as $geoPath) { ?>
+                    <?php foreach ($view->geoPathsList as $geoPath) { ?>
                       <div class="flex-container test" id="geoPath-content">
                         <img src="<?=$geoPath->img?>" alt="geopath">
                         <span id="geoPath-link" class="align-center">
@@ -466,7 +466,7 @@ use src\Utils\Uri\SimpleRouter;
               <div class="img-shadow">
                 <a data-fancybox data-type="iframe"
                    data-src="<?=SimpleRouter::getLink(MainMapController::class, 'fullScreen')?>?lat=<?=$view->geoCache->getCoordinates()->getLatitude()?>&lon=<?=$view->geoCache->getCoordinates()->getLongitude()?>&openPopup" href="javascript:;">
-                  <?php if(! empty($view->mapImgLink)) { ?>
+                  <?php if (! empty($view->mapImgLink)) { ?>
                   <img src="<?=$view->mapImgLink?>" alt="<?=tr('map')?>" title="<?=tr('map')?>">
                   <?php } //if-!empty($view->mapImgLink ?>
                  </a>
@@ -481,7 +481,7 @@ use src\Utils\Uri\SimpleRouter;
         <div id="links-to-ext-maps" class="">
             <?php if ($view->isUserAuthorized || $view->alwaysShowCoords) { ?>
                 <b>{{available_maps}}:</b>
-                <?php foreach($view->externalMaps as $mapName => $url) { ?>
+                <?php foreach ($view->externalMaps as $mapName => $url) { ?>
                   <a target="_blank" href="<?=$url?>" rel="noopener"><?=$mapName?></a>
                 <?php } //foreach ?>
             <?php } //else $view->isUserAuthorized || $view->alwaysShowCoords ?>
@@ -500,7 +500,7 @@ use src\Utils\Uri\SimpleRouter;
 
     <div class="content2-container">
         <p>
-            <?php foreach($view->geoCache->getCacheAttributesList() as $attr) { ?>
+            <?php foreach ($view->geoCache->getCacheAttributesList() as $attr) { ?>
               <img src="<?=$attr->iconLarge?>" title="<?=$attr->text?>" alt="<?=$attr->text?>">&nbsp;
 
             <?php } // foreach-attrib. ?>

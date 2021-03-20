@@ -21,7 +21,8 @@ class StatsController extends BaseController
     }
 
     public function index()
-    {}
+    {
+    }
 
     public function internalStats($year = null)
     {
@@ -34,7 +35,7 @@ class StatsController extends BaseController
             exit;
         }
 
-        if(is_null($year)) {
+        if (is_null($year)) {
             $year = Year::current();
         }
 

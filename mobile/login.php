@@ -5,11 +5,13 @@ use src\Utils\Database\XDb;
 require_once('./lib/common.inc.php');
 
 if (! isset($_SESSION['user_id'])) {
-    if (! isset($_SESSION['target']))
+    if (! isset($_SESSION['target'])) {
         $_SESSION['target'] = $_SERVER['HTTP_REFERER'];
+    }
 
-    if (empty($_SESSION['target']))
+    if (empty($_SESSION['target'])) {
         $_SESSION['target'] = './index.php';
+    }
 
     $cookie->set('test', '1');
     $cookie->header();
@@ -25,19 +27,20 @@ if (! isset($_SESSION['user_id'])) {
 
             $login->try_login($username, $pass, $remember);
 
-            if ($login->userid == '0')
+            if ($login->userid == '0') {
                 $tpl->assign('error', '1');
-            else {
+            } else {
                 $temp_target = $_SESSION['target'];
                 unset($_SESSION['target']);
                 header('Location: ' . $temp_target);
 
                 exit;
             }
-        } else
+        } else {
             $tpl->assign('error', '2');
+        }
     }
-}else {
+} else {
     header('Location: ./index.php');
 
     exit;

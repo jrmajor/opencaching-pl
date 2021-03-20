@@ -59,7 +59,7 @@ class CacheSetAdminController extends BaseController
 
         $csToArchive = CacheSet::getCacheSetsToArchive();
 
-        if(empty($csToArchive)){
+        if (empty($csToArchive)) {
             $this->view->setVar('noCsToArchive', true);
             $this->view->buildView();
 
@@ -72,7 +72,7 @@ class CacheSetAdminController extends BaseController
         $listModel = new ListOfCachesModel();
         $listModel->addColumn(
             new Column_CacheSetNameAndIcon(tr('admCs_cacheSet'),
-                function($row){
+                function($row) {
                     return [
                         'id' => $row['id'],
                         'type' => $row['type'],
@@ -80,12 +80,12 @@ class CacheSetAdminController extends BaseController
                     ];
                 }));
         $listModel->addColumn(
-            new Column_SimpleText(tr('admCs_currentRatio'), function($row){
+            new Column_SimpleText(tr('admCs_currentRatio'), function($row) {
                 return $row['activeCaches'] . ' ( ' . round($row['currentRatio']) . '% ) ';
             }));
 
         $listModel->addColumn(
-            new Column_SimpleText(tr('admCs_requiredRatio'), function($row){
+            new Column_SimpleText(tr('admCs_requiredRatio'), function($row) {
                 // find number of required caches
                 $requiredCachesNum = ceil($row['cacheCount'] * $row['ratioRequired'] / 100);
 
@@ -99,7 +99,7 @@ class CacheSetAdminController extends BaseController
         $this->view->addHeaderChunk('openLayers5');
 
         $mapModel = new DynamicMapModel();
-        $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $csToArchive, function($row){
+        $mapModel->addMarkersWithExtractor(CacheSetMarkerModel::class, $csToArchive, function($row) {
             $ratioTxt = round($row['currentRatio']) . '/' . $row['ratioRequired'] . '%';
 
             $marker = new CacheSetMarkerModel();
@@ -150,7 +150,8 @@ class CacheSetAdminController extends BaseController
         $this->view->buildView();
     }
 
-    public function removeDuplicatedCachesAjax($gpId, $cacheId) {
+    public function removeDuplicatedCachesAjax($gpId, $cacheId)
+    {
         $this->checkUserLoggedAjax();
 
         if (! is_numeric($gpId) || ! is_numeric($cacheId)) {

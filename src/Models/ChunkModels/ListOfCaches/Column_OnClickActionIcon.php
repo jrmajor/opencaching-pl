@@ -18,7 +18,8 @@ class Column_OnClickActionIcon extends AbstractColumn
         return 'listOfCaches/onClickActionIconColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

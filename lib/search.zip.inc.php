@@ -12,8 +12,9 @@ function call_okapi(User $loggedUser, $waypoints, $lang, $file_base_name, $zip_p
         'location_change_prefix' => '(F)',
     ];
     // TODO: limit log entries per geocache?
-    if (isset($_GET['format']))
+    if (isset($_GET['format'])) {
         $okapi_params['caches_format'] = $_GET['format'];
+    }
     $okapi_response = Facade::service_call('services/caches/formatters/garmin',
         $loggedUser->getUserId(), $okapi_params);
     // Modifying OKAPI's default HTTP Response headers.
@@ -24,10 +25,11 @@ function call_okapi(User $loggedUser, $waypoints, $lang, $file_base_name, $zip_p
 
 function generate_link_content($queryid, $file_base_name, $zip_part)
 {
-    if (isset($_GET['format']))
+    if (isset($_GET['format'])) {
         $format = '&format=' . $_GET['format'];
-    else
+    } else {
         $format = '';
+    }
     $zipname = 'ocpl' . $queryid . '.zip?startat=0&count=max&zippart=' . $zip_part . $format . (isset($_GET['okapidebug']) ? '&okapidebug' : '');
     $link_content = '<li><a class="links" href="' . $zipname . '" title="Garmin ZIP file (part ' . $zip_part . ')">' . $file_base_name . '-' . $zip_part . '.zip</a></li>';
 
@@ -37,10 +39,11 @@ function generate_link_content($queryid, $file_base_name, $zip_part)
 // reflect okapi limit of allowed geocache codes per invocation
 function get_max_caches_per_call()
 {
-    if (isset($_REQUEST['okapidebug']))
+    if (isset($_REQUEST['okapidebug'])) {
         return 500;
-    else
+    } else {
         return 50;
+    }
 }
 
 function get_pagination_template()

@@ -13,7 +13,7 @@ use src\Models\CacheSet\CacheSetCommon;
  *
 */
 
-return function (array $data){
+return function (array $data) {
     $iconSrc = CacheSetCommon::GetTypeIcon($data['type']);
     $iconTitle = tr(CacheSetCommon::GetTypeTranslationKey($data['type']));
     $cacheSetUrl = CacheSet::getCacheSetUrlById($data['id']);

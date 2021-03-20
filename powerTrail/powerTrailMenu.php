@@ -7,7 +7,8 @@ class powerTrailMenu
 {
     private $menu;
 
-    function __construct($user) {
+    function __construct($user)
+    {
         if ($user) {
             $this->menu = [
                 1 => [
@@ -32,7 +33,9 @@ class powerTrailMenu
                 ],
 
             ];
-        } else $this->menu = [];
+        } else {
+            $this->menu = [];
+        }
     }
 
     public function getPowerTrailsMenu()

@@ -9,8 +9,9 @@ require_once('./lib/common.inc.php');
 function check_wp($wpts)
 {
     foreach ($wpts as &$wp) {
-        if (! preg_match("/^O((\d)|([A-Z])){5}$/", $wp))
+        if (! preg_match("/^O((\d)|([A-Z])){5}$/", $wp)) {
             return false;
+        }
     }
 
     return true;
@@ -120,15 +121,17 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && isset($_GET['output']) && ! em
             $tpl->assign('time', date('H:i:s'));
             $tpl->assign('znalezione', $znalezione);
 
-            if ($i == 1)
+            if ($i == 1) {
                 $filename = $wpts[0] . '.';
-            else
+            } else {
                 $filename = 'results.';
+            }
 
-            if ($_GET['output'] == 'gpxgc')
+            if ($_GET['output'] == 'gpxgc') {
                 $filename .= 'gpx';
-            else
+            } else {
                 $filename .= $_GET['output'];
+            }
 
             header('Content-disposition: attachment; filename=' . $filename);
             header('Content-Type: application/force-download');

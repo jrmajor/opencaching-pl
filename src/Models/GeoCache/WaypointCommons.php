@@ -57,7 +57,8 @@ class WaypointCommons extends BaseObject
         }
     }
 
-    public static function getIcon($type){
+    public static function getIcon($type)
+    {
         self::ICONS[$type];
     }
 }

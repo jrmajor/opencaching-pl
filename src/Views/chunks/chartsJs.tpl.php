@@ -7,7 +7,7 @@
  *
  *     $this->view->addHeaderChunk('chartsJs')
  */
-return function (){
+return function () {
     //start of chunk
     ?>
 

@@ -38,7 +38,7 @@ class UserAuthorization extends BaseObject
     public static function verify()
     {
         // try to read sessionId stored in AUTH-cookie
-        if(! $cookieSession = self::getSessionFromAuthCookie()){
+        if (! $cookieSession = self::getSessionFromAuthCookie()) {
             // there is no such sessionId
             self::clearContextVars();
 
@@ -48,15 +48,15 @@ class UserAuthorization extends BaseObject
         // if $cookieSession is the same as sessionId stored in PHP session
         // and ApplicationContainer contains logged user:
         // user has been already verified
-        if($cookieSession === self::getLoggedUserSessionId() &&
-            $user = ApplicationContainer::GetAuthorizedUser()){
+        if ($cookieSession === self::getLoggedUserSessionId() &&
+            $user = ApplicationContainer::GetAuthorizedUser()) {
             // generally it shouldn't happen unless this method is calls again
             // in the same request
             return $user;
         }
 
         //find this session in DB
-        if(! $userId = self::getUserIdFromOcSession($cookieSession)){
+        if (! $userId = self::getUserIdFromOcSession($cookieSession)) {
             // there is no such session
             self::clearContextVars();
             self::destroyAuthCookie();
@@ -65,7 +65,7 @@ class UserAuthorization extends BaseObject
         }
 
         // there is proper session - find the user
-        if(! $user = User::fromUserIdFactory($userId)){
+        if (! $user = User::fromUserIdFactory($userId)) {
             //strange: session presents but there is no such user?!
             self::clearContextVars();
             self::destroyAuthCookie();
@@ -92,7 +92,7 @@ class UserAuthorization extends BaseObject
     public static function checkCredentials($username, $password)
     {
         // check if there is not too manby login tries
-        if(self::areTooManyLoginAttempts()){
+        if (self::areTooManyLoginAttempts()) {
             return self::LOGIN_TOOMUCHLOGINS;
         }
 
@@ -100,9 +100,9 @@ class UserAuthorization extends BaseObject
         $neededUserColumns = User::AUTH_COLUMNS;
 
         // try to find the user based on given username/email
-        if(($user = User::fromUsernameFactory($username, $neededUserColumns)) ||
-            ($user = User::fromEmailFactory($username, $neededUserColumns))){
-            if($user->isActive()){
+        if (($user = User::fromUsernameFactory($username, $neededUserColumns)) ||
+            ($user = User::fromEmailFactory($username, $neededUserColumns))) {
+            if ($user->isActive()) {
                 // user active - check password
                 if (PasswordManager::verifyPassword($user->getUserId(), $password)) {
                     //login OK, password OK
@@ -113,7 +113,7 @@ class UserAuthorization extends BaseObject
 
                     return self::LOGIN_OK;
                 }
-            }else{
+            } else {
                 // skip saving this login try - this is just inactive user
                 self::clearOcSession();
                 self::clearContextVars();
@@ -139,7 +139,8 @@ class UserAuthorization extends BaseObject
         self::clearContextVars();
     }
 
-    private static function initOcSession(User $user){
+    private static function initOcSession(User $user)
+    {
         // generate uniq, random sessionId
         $sessionId = self::generateSessionId();
 
@@ -154,9 +155,10 @@ class UserAuthorization extends BaseObject
             $sessionId, $user->getUserId(), $user->usePermanentLogin());
     }
 
-    private static function clearOcSession(){
+    private static function clearOcSession()
+    {
         // delete session from DB
-        if($sessionId = self::getLoggedUserSessionId()){
+        if ($sessionId = self::getLoggedUserSessionId()) {
             self::deleteOcSessionFromDb($sessionId);
         }
 
@@ -167,7 +169,8 @@ class UserAuthorization extends BaseObject
         self::destroyAuthCookie();
     }
 
-    private static function initContextVars(User $user){
+    private static function initContextVars(User $user)
+    {
         //init $user in ApplicationContainer
         ApplicationContainer::SetAuthorizedUser($user);
 
@@ -175,75 +178,84 @@ class UserAuthorization extends BaseObject
         $_SESSION['user_id'] = $user->getUserId();
     }
 
-    private static function clearContextVars(){
+    private static function clearContextVars()
+    {
         // clear AppContainer
         ApplicationContainer::SetAuthorizedUser(null);
 
         // set obsolete user_is in session
         unset($_SESSION['user_id']);
 
-        if(! session_id()){
+        if (! session_id()) {
             // there is initialized session - destroy it!
             session_destroy();
         }
     }
 
-    private static function getAuthCookieName(){
+    private static function getAuthCookieName()
+    {
         global $config;
 
         return $config['cookie']['name'] . '_auth';
     }
 
-    private static function initAuthCookie($sessionId){
+    private static function initAuthCookie($sessionId)
+    {
         $cookieExpiry = time() + self::PERMANENT_LOGIN_TIMEOUT;
 
         $result = CookieBase::setCookie(self::getAuthCookieName(), $sessionId, $cookieExpiry, '/',
             false, true, CookieBase::SAME_SITE_RESTRICTION_LAX);
 
-        if(! $result){
+        if (! $result) {
             Debug::errorLog(__METHOD__ . ": Can't set AUTH cookie");
         }
     }
 
-    private static function getSessionFromAuthCookie(){
-        if(isset($_COOKIE[self::getAuthCookieName()])){
+    private static function getSessionFromAuthCookie()
+    {
+        if (isset($_COOKIE[self::getAuthCookieName()])) {
             return $_COOKIE[self::getAuthCookieName()];
         }
 
         return null;
     }
 
-    private static function destroyAuthCookie(){
+    private static function destroyAuthCookie()
+    {
         unset($_COOKIE[self::getAuthCookieName()]);
 
         $result = CookieBase::deleteCookie(self::getAuthCookieName());
 
-        if(! $result){
+        if (! $result) {
             Debug::errorLog(__METHOD__ . ": Can't delete AUTH cookie");
         }
     }
 
-    public static function isAuthCookiePresent(){
+    public static function isAuthCookiePresent()
+    {
         return isset($_COOKIE[self::getAuthCookieName()]);
     }
 
-    private static function getLoggedUserSessionId(){
-        if(isset($_SESSION[self::SESSION_ID_KEY])){
+    private static function getLoggedUserSessionId()
+    {
+        if (isset($_SESSION[self::SESSION_ID_KEY])) {
             return $_SESSION[self::SESSION_ID_KEY];
-        }else{
+        } else {
             return null;
         }
     }
 
-    private static function setLoggedUserSessionId($sessionId){
-        if(! is_null($sessionId)){
+    private static function setLoggedUserSessionId($sessionId)
+    {
+        if (! is_null($sessionId)) {
             $_SESSION[self::SESSION_ID_KEY] = $sessionId;
-        }else{
+        } else {
             unset($_SESSION[self::SESSION_ID_KEY]);
         }
     }
 
-    private static function areTooManyLoginAttempts(){
+    private static function areTooManyLoginAttempts()
+    {
         $db = self::db();
 
         // remove login tries older that 1 HOUR
@@ -258,13 +270,15 @@ class UserAuthorization extends BaseObject
         return $lastHourLoginFails > self::MAX_LOGIN_TRIES_PER_HOUR;
     }
 
-    private static function insertOcSessionToDb($sessionId, $userId, $permanentSession){
+    private static function insertOcSessionToDb($sessionId, $userId, $permanentSession)
+    {
         self::db()->multiVariableQuery(
             'INSERT INTO sys_sessions (uuid, user_id, permanent, last_login)
              VALUES (:1, :2, :3, NOW())', $sessionId, $userId, ($permanentSession ? 1 : 0));
     }
 
-    private static function getUserIdFromOcSession($sessionId){
+    private static function getUserIdFromOcSession($sessionId)
+    {
         $db = self::db();
         $stmt = $db->multiVariableQuery(
             'SELECT user_id, permanent, TIMESTAMPDIFF(SECOND, last_login, NOW()) AS lastTouch
@@ -272,20 +286,20 @@ class UserAuthorization extends BaseObject
 
         $row = $db->dbResultFetchOneRowOnly($stmt);
 
-        if($row && is_array($row) && isset($row['user_id'])){
+        if ($row && is_array($row) && isset($row['user_id'])) {
             // check if session is not obsolete
-            if(
+            if (
                 ($row['permanent'] == 1 && $row['lastTouch'] > self::PERMANENT_LOGIN_TIMEOUT) ||
                 ($row['permanent'] == 0 && $row['lastTouch'] > self::LOGIN_TIMEOUT)
-              ){
-               // obsolete session found 0 delete this and other obsolete sessions
-               self::deleteObsoleteOcSessions();
+              ) {
+                // obsolete session found 0 delete this and other obsolete sessions
+                self::deleteObsoleteOcSessions();
 
-               return null;
+                return null;
             }
 
             // touch last_login from time-to-time
-            if($row['lastTouch'] > self::LOGIN_TIMEOUT / 10){
+            if ($row['lastTouch'] > self::LOGIN_TIMEOUT / 10) {
                 $db->multiVariableQuery(
                     'UPDATE sys_sessions SET last_login=NOW() WHERE uuid = :1', $sessionId);
 
@@ -299,13 +313,15 @@ class UserAuthorization extends BaseObject
         return null;
     }
 
-    private static function deleteOcSessionFromDb($sessionId){
+    private static function deleteOcSessionFromDb($sessionId)
+    {
         // delete oc-session from DB
         self::db()->multiVariableQuery(
             'DELETE FROM sys_sessions WHERE uuid = :1 LIMIT 1', $sessionId);
     }
 
-    private static function deleteObsoleteOcSessions(){
+    private static function deleteObsoleteOcSessions()
+    {
         $permLoginTimeout = self::PERMANENT_LOGIN_TIMEOUT;
         $loginTimeout = self::LOGIN_TIMEOUT;
 
@@ -335,20 +351,22 @@ class UserAuthorization extends BaseObject
 
         $result = [];
 
-        while($row = self::db()->dbResultFetch($stmt)){
+        while ($row = self::db()->dbResultFetch($stmt)) {
             $result[$row['user_id']] = $row['username'];
         }
 
         return $result;
     }
 
-    private static function saveLoginFail(){
+    private static function saveLoginFail()
+    {
         self::db()->multiVariableQuery(
             'INSERT INTO sys_logins (remote_addr, `timestamp`)
              VALUES (:1, NOW())', $_SERVER['REMOTE_ADDR']);
     }
 
-    private static function generateSessionId(){
+    private static function generateSessionId()
+    {
         return self::db()->simpleQueryValue('SELECT UUID()',null);
     }
 
@@ -402,7 +420,8 @@ class UserAuthorization extends BaseObject
      * @param string $code
      * @return boolean
      */
-    public static function checkPwCode(User $user, $code) {
+    public static function checkPwCode(User $user, $code)
+    {
         return (bool) self::db()->multiVariableQueryValue('
             SELECT COUNT(*)
             FROM `user`

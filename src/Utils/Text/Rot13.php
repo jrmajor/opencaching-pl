@@ -7,7 +7,8 @@ class Rot13
     /**
      * perform str_rot13 without renaming HTML-Tags
      */
-    public static function withoutHtml($str){
+    public static function withoutHtml($str)
+    {
         $delimiter[0][0] = '&'; // start-char
         $delimiter[0][1] = ';'; // end-char
         $delimiter[1][0] = '<';
@@ -24,11 +25,12 @@ class Rot13
             foreach ($delimiter as $del) {
                 $nThisStart = mb_strpos($str, $del[0], mb_strlen($retval));
 
-                if ($nThisStart !== false)
+                if ($nThisStart !== false) {
                     if (($nNextStart > $nThisStart) || ($nNextStart === false)) {
                         $nNextStart = $nThisStart;
                         $sNextEndChar = $del[1];
                     }
+                }
             }
 
             if ($nNextStart === false) {
@@ -40,10 +42,11 @@ class Rot13
                 // uncrypted part
                 $nNextEnd = mb_strpos($str, $sNextEndChar, $nNextStart);
 
-                if ($nNextEnd === false)
+                if ($nNextEnd === false) {
                     $retval .= mb_substr($str, $nNextStart, mb_strlen($str) - mb_strlen($retval));
-                    else
-                        $retval .= mb_substr($str, $nNextStart, $nNextEnd - $nNextStart + 1);
+                } else {
+                    $retval .= mb_substr($str, $nNextStart, $nNextEnd - $nNextStart + 1);
+                }
             }
         }
 

@@ -42,7 +42,7 @@ class CacheRecommendation extends BaseObject
             'DELETE FROM cache_rating
              WHERE cache_id = :1 AND user_id = :2 LIMIT 1', $cacheId, $userId);
 
-        if($stmt->rowCount() > 0) {
+        if ($stmt->rowCount() > 0) {
             if (self::OcConfig()->isMeritBadgesEnabled()) {
                 $ctrlMeritBadge = new MeritBadgeController;
                 $ctrlMeritBadge->updateTriggerCacheAuthor($cacheId);
@@ -59,7 +59,8 @@ class CacheRecommendation extends BaseObject
      * @param $userId
      * @return int count
      */
-    public static function getCountOfUserRecommendations($userId) {
+    public static function getCountOfUserRecommendations($userId)
+    {
         return self::db()->multiVariableQueryValue(
             'SELECT COUNT(cache_id) FROM cache_rating
                     WHERE user_id = :1', 0, $userId);

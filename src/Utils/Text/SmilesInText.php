@@ -5,7 +5,8 @@ namespace src\Utils\Text;
 class SmilesInText
 {
     // TODO: UTF-8 compatible str_replace (with arrays)
-    public static function process($text){
+    public static function process($text)
+    {
         return str_replace(self::$smileytext, self::getSmileyImages(), $text);
     }
 

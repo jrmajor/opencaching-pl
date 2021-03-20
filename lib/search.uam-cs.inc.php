@@ -126,8 +126,9 @@ if ($loggedUser || ! $hide_coords) {
         $rName = $dbcSearch->dbResultFetchOneRowOnly($s);
 
         $sFilebasename = $rName['wp_oc'];
-    } else
+    } else {
         $sFilebasename = 'search' . $options['queryid'];
+    }
 
     $bUseZip = ($rCount['count'] > 50);
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
@@ -195,7 +196,8 @@ if ($loggedUser || ! $hide_coords) {
 
 exit();
 
-function cs2cs_core2($lat, $lon, $to) {
+function cs2cs_core2($lat, $lon, $to)
+{
     $descriptorspec = [
         0 => ['pipe', 'r'],     // stdin is a pipe that the child will read from
         1 => ['pipe', 'w'],     // stdout is a pipe that the child will write to
@@ -241,6 +243,7 @@ function cs2cs_core2($lat, $lon, $to) {
     }
 }
 
-function cs2cs_1992($lat, $lon) {
+function cs2cs_1992($lat, $lon)
+{
     return cs2cs_core2($lat, $lon, '+proj=tmerc +k=0.9993 +ellps=GRS80 +lat_0=0 +lon_0=19 +x_0=500000 +y_0=-5300000 +units=m');
 }

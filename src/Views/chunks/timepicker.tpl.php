@@ -12,7 +12,7 @@
  * TODO: Change this timepicker to more beautiful one
  */
 
-return function (){
+return function () {
     //start of chunk
     ?>
 

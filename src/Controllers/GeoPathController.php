@@ -67,7 +67,7 @@ class GeoPathController extends BaseController
             $this->ajaxErrorResponse('User not authorized!');
         }
 
-        if (! $geoPath = CacheSet::fromCacheSetIdFactory($geoPathId)){
+        if (! $geoPath = CacheSet::fromCacheSetIdFactory($geoPathId)) {
             $this->ajaxErrorResponse('No such geopath!');
         }
 
@@ -80,7 +80,7 @@ class GeoPathController extends BaseController
         try {
             $tmpLogoFileArr = FileUploadMgr::processFileUpload($uploadModel);
             $tmpLogoFile = array_shift($tmpLogoFileArr);
-        } catch (RuntimeException $e){
+        } catch (RuntimeException $e) {
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }
@@ -110,36 +110,36 @@ class GeoPathController extends BaseController
 
         $geoPath = CacheSet::fromCacheSetIdFactory($geoPathId);
 
-        if(! $geoPath) {
+        if (! $geoPath) {
             $this->ajaxErrorResponse('No such geoPath!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if(! $geoPath->isOwner($this->loggedUser)){
+        if (! $geoPath->isOwner($this->loggedUser)) {
             $this->ajaxErrorResponse('Logged user is not a geopath owner!', self::HTTP_STATUS_FORBIDDEN);
         }
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
 
-        if(! $cache) {
+        if (! $cache) {
             $this->ajaxErrorResponse('No such cache!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if($cache->getOwnerId() != $this->loggedUser->getUserId()) {
+        if ($cache->getOwnerId() != $this->loggedUser->getUserId()) {
             $this->ajaxErrorResponse('Cache not belong to logged user!', self::HTTP_STATUS_CONFLICT);
         }
 
-        if($cache->isPowerTrailPart(true)){
+        if ($cache->isPowerTrailPart(true)) {
             $this->ajaxErrorResponse('Already part of GeoPath', self::HTTP_STATUS_CONFLICT);
         }
 
-        if(! CacheSet::isCacheStatusAllowedForGeoPathAdd($cache) ||
+        if (! CacheSet::isCacheStatusAllowedForGeoPathAdd($cache) ||
            ! CacheSet::isCacheTypeAllowedForGeoPath($cache)) {
             $this->ajaxErrorResponse('Cache of improper type/state!', self::HTTP_STATUS_CONFLICT);
         }
 
-        try{
+        try {
             $geoPath->addCache($cache);
-        }catch(RuntimeException $e){
+        } catch (RuntimeException $e) {
             $this->ajaxErrorResponse($e->getMessage());
         }
 
@@ -153,7 +153,7 @@ class GeoPathController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if(! $this->loggedUser->hasOcTeamRole()){
+        if (! $this->loggedUser->hasOcTeamRole()) {
             $this->ajaxErrorResponse(
                 'Logged user is not allowed to removed caches from geoPath!',
                 self::HTTP_STATUS_FORBIDDEN);
@@ -161,17 +161,17 @@ class GeoPathController extends BaseController
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
 
-        if(! $cache) {
+        if (! $cache) {
             $this->ajaxErrorResponse('No such cache!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if(! $cache->isPowerTrailPart(true)){
+        if (! $cache->isPowerTrailPart(true)) {
             $this->ajaxErrorResponse('This cache not belongs to geoPath!', self::HTTP_STATUS_CONFLICT);
         }
 
         $geoPath = CacheSet::fromCacheSetIdFactory($cache->getPowerTrail()->getId());
 
-        if(! $geoPath){
+        if (! $geoPath) {
             $this->ajaxErrorResponse('Cache belongs to unknown geoPath!', self::HTTP_STATUS_NOT_FOUND);
         }
 
@@ -193,21 +193,21 @@ class GeoPathController extends BaseController
 
         $geoPath = CacheSet::fromCacheSetIdFactory($geoPathId);
 
-        if(! $geoPath) {
+        if (! $geoPath) {
             $this->ajaxErrorResponse('No such geoPath!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if(! $geoPath->isOwner($this->loggedUser)){
+        if (! $geoPath->isOwner($this->loggedUser)) {
             $this->ajaxErrorResponse('Logged user is not a geopath owner!', self::HTTP_STATUS_FORBIDDEN);
         }
 
         $cache = GeoCache::fromCacheIdFactory($cacheId);
 
-        if(! $cache) {
+        if (! $cache) {
             $this->ajaxErrorResponse('No such cache!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if($cache->getOwnerId() == $this->loggedUser->getUserId()) {
+        if ($cache->getOwnerId() == $this->loggedUser->getUserId()) {
             $this->ajaxErrorResponse(
                 'Cache belongs to logged user! No need to create candidate.',
                 self::HTTP_STATUS_CONFLICT,
@@ -215,7 +215,7 @@ class GeoPathController extends BaseController
         }
 
         // check if this cache is not a part of geocache already
-        if($cache->isPowerTrailPart(true)) {
+        if ($cache->isPowerTrailPart(true)) {
             // this cache is already a part of some geoPath
             $this->ajaxErrorResponse(
                 'Already part of GeoPath',
@@ -224,8 +224,8 @@ class GeoPathController extends BaseController
         }
 
         // check if geocache is alredy a candidate
-        if(! $resendEmail && $geoPath->isCandidateExists($cache)){
-            if($geoPath->isCandidateExists($cache, true)){
+        if (! $resendEmail && $geoPath->isCandidateExists($cache)) {
+            if ($geoPath->isCandidateExists($cache, true)) {
                 // this cache is already a candidate to THIS geopath
                 $this->ajaxErrorResponse(
                     'This cache is already a candidate to this geopath!',
@@ -259,11 +259,11 @@ class GeoPathController extends BaseController
 
         $geoPath = CacheSet::fromCacheSetIdFactory($geoPathId);
 
-        if(! $geoPath) {
+        if (! $geoPath) {
             $this->ajaxErrorResponse('No such geoPath!', self::HTTP_STATUS_NOT_FOUND);
         }
 
-        if(! $geoPath->isOwner($this->loggedUser)){
+        if (! $geoPath->isOwner($this->loggedUser)) {
             $this->ajaxErrorResponse('Logged user is not a geopath owner!', self::HTTP_STATUS_FORBIDDEN);
         }
 
@@ -334,14 +334,14 @@ class GeoPathController extends BaseController
         // find candidate record
         $candidate = GeopathCandidate::fromCandidateIdFactory($candidateId);
 
-        if(! $candidate){
+        if (! $candidate) {
             $this->ajaxErrorResponse('No such candidate!');
         }
 
         // check if user is allowed to cancel offer (owner of geopath can cancel it)
         $geopath = $candidate->getGeopath();
 
-        if(! $geopath->isOwner($this->loggedUser)) {
+        if (! $geopath->isOwner($this->loggedUser)) {
             $this->ajaxErrorResponse('User is not owner of this geopath assign to offer!');
         }
 
@@ -390,7 +390,7 @@ class GeoPathController extends BaseController
             $this->ajaxErrorResponse('User is not owner of this geocache assign to offer!');
         }
 
-        try{
+        try {
             $candidate->acceptOffer();
         } catch (RuntimeException $e) {
             $this->displayCommonErrorPageAndExit($e->getMessage());
@@ -408,11 +408,11 @@ class GeoPathController extends BaseController
     {
         $this->redirectNotLoggedUsers();
 
-        if(! $geopath = CacheSet::fromCacheSetIdFactory($geopathId)){
+        if (! $geopath = CacheSet::fromCacheSetIdFactory($geopathId)) {
             $this->displayCommonErrorPageAndExit('No such geopath!');
         }
 
-        if(! $geopath->isOwner($this->loggedUser)){
+        if (! $geopath->isOwner($this->loggedUser)) {
             $this->displayCommonErrorPageAndExit('You are not an owner of this geopath!');
         }
 
@@ -428,7 +428,7 @@ class GeoPathController extends BaseController
 
         $userDict = [];
 
-        foreach($candidates as $candidate){
+        foreach ($candidates as $candidate) {
             $userDict[$candidate->getGeoCache()->getOwnerId()] = null;
         }
 
@@ -436,11 +436,11 @@ class GeoPathController extends BaseController
 
         $listModel->addDataRows(GeopathCandidate::getCacheCandidates($geopath));
 
-        $listModel->addColumn(new Column_SimpleText(tr('gpCandidates_submitedDate'), function(GeopathCandidate $candidate){
+        $listModel->addColumn(new Column_SimpleText(tr('gpCandidates_submitedDate'), function(GeopathCandidate $candidate) {
             return Formatter::date($candidate->getSubmitedDate());
         }, 'width15'));
 
-        $listModel->addColumn(new Column_CacheTypeIcon('', function(GeopathCandidate $candidate){
+        $listModel->addColumn(new Column_CacheTypeIcon('', function(GeopathCandidate $candidate) {
             $cache = $candidate->getGeoCache();
 
             return [
@@ -450,7 +450,7 @@ class GeoPathController extends BaseController
             ];
         }, 'width5'));
 
-        $listModel->addColumn(new Column_CacheName(tr('gpCandidates_cacheName'), function(GeopathCandidate $candidate){
+        $listModel->addColumn(new Column_CacheName(tr('gpCandidates_cacheName'), function(GeopathCandidate $candidate) {
             $cache = $candidate->getGeoCache();
 
             return [
@@ -461,7 +461,7 @@ class GeoPathController extends BaseController
             ];
         }));
 
-        $listModel->addColumn(new Column_UserName(tr('gpCandidates_cacheOwner'), function(GeopathCandidate $candidate) use($userDict){
+        $listModel->addColumn(new Column_UserName(tr('gpCandidates_cacheOwner'), function(GeopathCandidate $candidate) use ($userDict) {
             $userId = $candidate->getGeoCache()->getOwnerId();
 
             return [
@@ -470,7 +470,7 @@ class GeoPathController extends BaseController
             ];
         }));
 
-        $listModel->addColumn(new Column_OnClickActionIcon(tr('gpCandidates_action'), function(GeopathCandidate $candidate){
+        $listModel->addColumn(new Column_OnClickActionIcon(tr('gpCandidates_action'), function(GeopathCandidate $candidate) {
             return [
                 'icon' => '/images/log/16x16-trash.png',
                 'onClick' => 'cancelCandidateOffer(this, ' . $candidate->getId() . ')',
@@ -499,7 +499,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_SimpleText(
             tr('gpMyCandidates_submitedDate'),
-            function(GeopathCandidate $candidate){
+            function(GeopathCandidate $candidate) {
                 return Formatter::date($candidate->getSubmitedDate());
             },
             'width15'
@@ -507,7 +507,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheSetNameAndIcon(
             tr('gpMyCandidates_geopathName'),
-            function(GeopathCandidate $candidate){
+            function(GeopathCandidate $candidate) {
                 $gp = $candidate->getGeopath();
 
                 return [
@@ -520,7 +520,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheTypeIcon(
             '',
-            function(GeopathCandidate $candidate){
+            function(GeopathCandidate $candidate) {
                 $cache = $candidate->getGeoCache();
 
                 return [
@@ -534,7 +534,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_CacheName(
             tr('gpMyCandidates_cacheName'),
-            function(GeopathCandidate $candidate){
+            function(GeopathCandidate $candidate) {
                 $cache = $candidate->getGeoCache();
 
                 return [
@@ -548,7 +548,7 @@ class GeoPathController extends BaseController
 
         $listModel->addColumn(new Column_ActionButtons(
             tr('gpMyCandidates_actions'),
-            function(GeopathCandidate $candidate){
+            function(GeopathCandidate $candidate) {
                 return [
                     [
                         'btnClasses' => 'btn-primary',

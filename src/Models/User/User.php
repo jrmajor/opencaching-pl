@@ -828,7 +828,8 @@ class User extends UserCommons
     }
 
     public function updateCacheWatchEmailSettings(
-        $watchmail_mode, $watchmail_hour, $watchmail_day) {
+        $watchmail_mode, $watchmail_hour, $watchmail_day)
+    {
         $this->db->multiVariableQuery(
             'UPDATE user SET watchmail_mode=:1, watchmail_hour=:2, watchmail_day=:3
              WHERE user_id=:4 LIMIT 1',

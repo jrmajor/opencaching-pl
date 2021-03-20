@@ -15,15 +15,15 @@
  * [...], ...
  */
 
-return function (array $data){
-    if(empty($data)){
+return function (array $data) {
+    if (empty($data)) {
         // if there is no data - skip this data
         return;
     }
 
 ?>
   <?php foreach ($data as $btnData) {
-            if(empty($btnData['btnText']) || empty($btnData['onClick'])) {
+            if (empty($btnData['btnText']) || empty($btnData['onClick'])) {
                 continue;
             }
   ?>

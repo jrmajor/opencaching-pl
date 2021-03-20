@@ -31,13 +31,13 @@ $userCategories = $meritBadgeCtrl->buildArrayUserCategories($userid);
 
 $content = '';
 
-foreach($userCategories as $oneCategory){
+foreach ($userCategories as $oneCategory) {
     $category_table = mb_ereg_replace('{category}', $oneCategory->getName(), $content_table);
     $badgesInCategory = $meritBadgeCtrl->buildArrayUserMeritBadgesInCategory($userid, $oneCategory->getId());
 
     $content_badge = '';
 
-    foreach($badgesInCategory as $oneBadge){
+    foreach ($badgesInCategory as $oneBadge) {
         $element = $content_element;
         $element = mb_ereg_replace('{name}', $oneBadge->getOBadge()->getName(), $element);
 

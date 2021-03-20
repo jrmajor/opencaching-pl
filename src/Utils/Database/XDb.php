@@ -105,7 +105,8 @@ class XDb extends OcDb
      * @param unknown $sql
      * @param ... there can be optional list of params to bind with query
      */
-    public static function xSql($query){
+    public static function xSql($query)
+    {
         $db = self::instance();
 
         try {
@@ -165,7 +166,8 @@ class XDb extends OcDb
      * Remember, if you use a transaction you should use lastInsertId
      * BEFORE you commit otherwise it will return 0
      */
-    public static function xLastInsertId(){
+    public static function xLastInsertId()
+    {
         $db = self::instance();
 
         return $db->lastInsertId();
@@ -184,7 +186,7 @@ class XDb extends OcDb
 
         $stmt = XDb::xSql("SHOW COLUMNS FROM $tableName WHERE Field = '$columnName'");
 
-        while($column = XDb::xFetchArray($stmt)){
+        while ($column = XDb::xFetchArray($stmt)) {
             return true; //any result
         }
 

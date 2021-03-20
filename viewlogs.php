@@ -322,7 +322,7 @@ if ($cache_id != 0) {
         }
 
         $tmplog = $tmpSrcLog;
-//END: same code ->viewlogs.php / viewcache.php
+        //END: same code ->viewlogs.php / viewcache.php
         $tmplog_username = htmlspecialchars($record['username'], ENT_COMPAT, 'UTF-8');
         $tmplog_date = TextConverter::fixPlMonth(htmlspecialchars(strftime($GLOBALS['config']['dateformat'], strtotime($record['date'])), ENT_COMPAT, 'UTF-8'));
 
@@ -349,8 +349,9 @@ if ($cache_id != 0) {
         if (($record['type'] == 4) && ($record['mobile_latitude'] != 0) && ! $disable_spoiler_view) {
             $tmplog_kordy_mobilnej = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($record['mobile_latitude']), ENT_COMPAT, 'UTF-8')) . '&nbsp;' . mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($record['mobile_longitude']), ENT_COMPAT, 'UTF-8'));
             $tmplog = mb_ereg_replace('{kordy_mobilniaka}', $record['km'] . ' km [<img src="/images/blue/arrow_mobile.png" title="' . tr('viewlog_kordy') . '" />' . $tmplog_kordy_mobilnej . ']', $tmplog);
-        } else
+        } else {
             $tmplog = mb_ereg_replace('{kordy_mobilniaka}', ' ', $tmplog);
+        }
 
         if ($record['text_html'] == 0) {
             $processed_text = htmlspecialchars($processed_text, ENT_COMPAT, 'UTF-8');
@@ -393,10 +394,11 @@ if ($cache_id != 0) {
         $tmplog = mb_ereg_replace('{log_id}', $record['logid'], $tmplog);
 
         //$rating_picture
-        if ($record['recommended'] == 1 && $record['type'] == 1)
+        if ($record['recommended'] == 1 && $record['type'] == 1) {
             $tmplog = mb_ereg_replace('{ratingimage}', '<img src="images/rating-star.png" alt="' . tr('recommendation') . '" />', $tmplog);
-        else
+        } else {
             $tmplog = mb_ereg_replace('{ratingimage}', '', $tmplog);
+        }
 
         //user der owner
         $logfunctions = '';
@@ -481,15 +483,17 @@ if ($cache_id != 0) {
 
                     $thisfunctions = mb_ereg_replace('{uuid}', urlencode($pic_record['uuid']), $thisfunctions);
                     $thisline = mb_ereg_replace('{functions}', $thisfunctions, $thisline);
-                } else
+                } else {
                     $thisline = mb_ereg_replace('{functions}', '', $thisline);
+                }
 
                 $logpicturelines .= $thisline;
             }
             $logpicturelines = mb_ereg_replace('{lines}', $logpicturelines, $logpictures);
             $tmplog = mb_ereg_replace('{logpictures}', $logpicturelines, $tmplog);
-        } else
+        } else {
             $tmplog = mb_ereg_replace('{logpictures}', '', $tmplog);
+        }
 
         $logs .= $tmplog . "\n";
     }

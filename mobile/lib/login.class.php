@@ -25,8 +25,9 @@ class login
             $this->lastlogin = XDb::xEscape($cookie->get('lastlogin'));
             $this->sessionid = XDb::xEscape($cookie->get('sessionid'));
 
-            if (! isset($_SESSION['user_id']) && ! empty($this->username) && ! empty($this->userid) && ! empty($this->lastlogin) && ! empty($this->sessionid))
+            if (! isset($_SESSION['user_id']) && ! empty($this->username) && ! empty($this->userid) && ! empty($this->lastlogin) && ! empty($this->sessionid)) {
                 $this->verify();
+            }
         }
     }
 
@@ -52,8 +53,9 @@ class login
 
     function verify()
     {
-        if ($this->verified == true)
+        if ($this->verified == true) {
             return;
+        }
 
         if ($this->userid == 0) {
             $this->pClear();
@@ -89,7 +91,7 @@ class login
         if ($user_id) {
             /* User exists. Is the password correct? */
 
-            if(! PasswordManager::verifyPassword($user_id, $password)){
+            if (! PasswordManager::verifyPassword($user_id, $password)) {
                 $user_id = null;
             }
         }
@@ -113,8 +115,9 @@ class login
             $this->sessionid = $uuid;
             $this->verified = true;
 
-            if ($remember == 1)
+            if ($remember == 1) {
                 $this->pStoreCookie();
+            }
 
             $query = "update user set uuid_mobile ='" . $uuid . "', last_login_mobile='" . $dzis . "' where user_id='" . $user_id . "';";
             XDb::xSql($query);

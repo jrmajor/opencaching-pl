@@ -727,7 +727,7 @@ if (isset($_POST['submitform'])) {
         // insert cache_location
         $code1 = $sel_country;
 
-        if (I18n::isTranslationAvailable($code1)){
+        if (I18n::isTranslationAvailable($code1)) {
             $adm1 = tr($code1);
         } else {
             Debug::errorLog("Unknown country translation: $code1");
@@ -772,7 +772,7 @@ if (isset($_POST['submitform'])) {
 
         // insert cache-attributes
         foreach ($cache_attribs as $attr) {
-                XDb::xSql('INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
+            XDb::xSql('INSERT INTO `caches_attributes` (`cache_id`, `attrib_id`)
                             VALUES ( ?, ?)', $cache_id, $attr);
         }
 
@@ -872,8 +872,9 @@ function generateNextWaypoint($currentWP, $ocWP)
         // Old rule - use hexadecimal wp codes
         $nNext = dechex(hexdec($wpCode) + 1);
 
-        while (mb_strlen($nNext) < 4)
+        while (mb_strlen($nNext) < 4) {
             $nNext = '0' . $nNext;
+        }
         $wpCode = mb_strtoupper($nNext);
     } else {
         // New rule - use digits and (almost) full latin alphabet
@@ -898,10 +899,11 @@ function setCacheWaypoint($cacheid, $ocWP)
 {
     $r['maxwp'] = XDb::xSimpleQueryValue('SELECT MAX(`wp_oc`) `maxwp` FROM `caches`', null);
 
-    if ($r['maxwp'] == null)
+    if ($r['maxwp'] == null) {
         $sWP = $ocWP . '0001';
-    else
+    } else {
         $sWP = generateNextWaypoint($r['maxwp'], $ocWP);
+    }
 
     XDb::xSql('UPDATE `caches` SET `wp_oc`= ?
         WHERE `cache_id`= ? AND ISNULL(`wp_oc`)', $sWP, $cacheid);

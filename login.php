@@ -6,13 +6,13 @@ require_once(__DIR__ . '/lib/common.inc.php');
 
 $ctrl = new UserAuthorizationController();
 
-if(isset($_GET['action'])){
+if (isset($_GET['action'])) {
     $action = $_GET['action'];
-}else{
+} else {
     $action = '';
 }
 
-switch($action){
+switch ($action) {
     case 'login':
         $ctrl->login();
         break;

@@ -41,7 +41,7 @@ class UserWatchedCachesController extends BaseController
 
     public function mapOfWatches()
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
         }
         $this->view->setTemplate('userWatchedCaches/mapOfWatched');
@@ -57,7 +57,7 @@ class UserWatchedCachesController extends BaseController
         $mapModel->addMarkersWithExtractor(
             CacheWithLogMarkerModel::class,
             UserWatchedCache::getWatchedCachesWithLastLogs($this->loggedUser->getUserId()),
-            function($row){
+            function($row) {
                 $iconFile = GeoCacheCommons::CacheIconByType(
                     $row['type'], $row['status'], $row['user_sts']);
 
@@ -86,7 +86,7 @@ class UserWatchedCachesController extends BaseController
                 $m->log_date = Formatter::date($row['llog_date']);
 
                 return $m;
-        });
+            });
 
         $this->view->setVar('mapModel', $mapModel);
 
@@ -98,7 +98,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function listOfWatches()
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
         }
 
@@ -116,7 +116,7 @@ class UserWatchedCachesController extends BaseController
 
         $this->view->setVar('cachesCount', $watchedCachesCount);
 
-        if($watchedCachesCount > 0){
+        if ($watchedCachesCount > 0) {
             // prepare model for list of watched caches
             $model = new ListOfCachesModel();
 
@@ -130,7 +130,7 @@ class UserWatchedCachesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheLog(tr('usrWatch_lastLog'),
-                function($row){
+                function($row) {
                     return [
                         'logId' => $row['llog_id'],
                         'logType' => $row['llog_type'],
@@ -142,7 +142,7 @@ class UserWatchedCachesController extends BaseController
             ));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('usrWatch_actionRemove'),
-                function($row){
+                function($row) {
                     return [
                         'icon' => '/images/log/16x16-trash.png',
                         'onClick' => "removeFromWatched(this, '" . $row['wp_oc'] . "')",
@@ -177,7 +177,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function removeFromWatchesAjax($cacheWp)
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
 
             return;
@@ -186,10 +186,10 @@ class UserWatchedCachesController extends BaseController
         $resp = UserWatchedCache::removeFromWatched(
             $this->loggedUser->getUserId(), $cacheWp);
 
-        if($resp){
+        if ($resp) {
             $cache = GeoCache::fromWayPointFactory($cacheWp);
             $this->ajaxSuccessResponse($cache->getWatchingUsersCount());
-        }else{
+        } else {
             $this->ajaxErrorResponse('Unknown OKAPI error', 500);
         }
     }
@@ -202,7 +202,7 @@ class UserWatchedCachesController extends BaseController
      */
     public function addToWatchesAjax($cacheWp)
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
 
             return;
@@ -211,10 +211,10 @@ class UserWatchedCachesController extends BaseController
         $resp = UserWatchedCache::addCacheToWatched(
             $this->loggedUser->getUserId(), $cacheWp);
 
-        if($resp){
+        if ($resp) {
             $cache = GeoCache::fromWayPointFactory($cacheWp);
             $this->ajaxSuccessResponse($cache->getWatchingUsersCount());
-        }else{
+        } else {
             $this->ajaxErrorResponse('Unknown OKAPI error', 500);
         }
     }

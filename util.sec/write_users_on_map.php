@@ -48,6 +48,6 @@ function latlon_to_pix($lat, $lon)
             (1 - ($lon - $lon_min) / ($lon_max - $lon_min));
     $y = $y_max - ($y_max - $y_min) *
             (($lat - $lat_min) / ($lat_max - $lat_min));
-//  return array(intval($x),intval($y));
+    //  return array(intval($x),intval($y));
     return ['x' => round($x), 'y' => round($y)];
 }

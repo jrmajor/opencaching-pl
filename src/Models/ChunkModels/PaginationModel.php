@@ -31,19 +31,21 @@ class PaginationModel
     private $errorOccured = false;          // if error occured
     private $errorMsg;                      // error message to display
 
-    public function __construct($recordsPerPage = null){
+    public function __construct($recordsPerPage = null)
+    {
         $this->loadPaginationUrlParams();
 
-        if(! is_null($recordsPerPage)){
+        if (! is_null($recordsPerPage)) {
             $this->recordsPerPage = $recordsPerPage;
-        }else{
+        } else {
             $this->recordsPerPage = self::DEFAULT_STEP_VALUE;
         }
 
         $this->pagesListSize = self::DEFAULT_PAGES_LIST_SIZE;
     }
 
-    public function getQueryLimitAndOffset(){
+    public function getQueryLimitAndOffset()
+    {
         return [$this->getRecordsPerPageNum(), $this->getQueryOffset()];
     }
 
@@ -53,8 +55,9 @@ class PaginationModel
      *
      * @return number
      */
-    private function getQueryOffset(){
-        if(is_null($this->currentPage) || is_null($this->recordsPerPage)){
+    private function getQueryOffset()
+    {
+        if (is_null($this->currentPage) || is_null($this->recordsPerPage)) {
             // TODO: how to handle errors?
             Debug::errorLog('Pagination model used without initialization!');
 
@@ -70,8 +73,9 @@ class PaginationModel
      *
      * @return number
      */
-    private function getRecordsPerPageNum(){
-        if(is_null($this->currentPage) || is_null($this->recordsPerPage)){
+    private function getRecordsPerPageNum()
+    {
+        if (is_null($this->currentPage) || is_null($this->recordsPerPage)) {
             // TODO: how to handle errors?
             Debug::errorLog('Pagination model used without initialization!');
 
@@ -85,7 +89,8 @@ class PaginationModel
      * Set the number of pages which should be seen as numbers at the list
      * @param integer $size
      */
-    public function setPagesListSize($size){
+    public function setPagesListSize($size)
+    {
         $this->pagesListSize = $size;
     }
 
@@ -95,7 +100,8 @@ class PaginationModel
      *
      * @param integer $numberOfRecords
      */
-    public function setRecordsCount($numberOfRecords){
+    public function setRecordsCount($numberOfRecords)
+    {
         $this->recordsCount = intval($numberOfRecords);
     }
 
@@ -103,7 +109,8 @@ class PaginationModel
      * Set the name of the param set in URLw
      * @param String $pageParam
      */
-    public function setGetParamName($pageParam){
+    public function setGetParamName($pageParam)
+    {
         $this->pageParamName = $pageParam;
     }
 
@@ -111,7 +118,8 @@ class PaginationModel
      * Return true if pagination is broken (by misconfguration or improper values of arguments)
      * @return boolean
      */
-    public function error(){
+    public function error()
+    {
         return $this->errorOccured;
     }
 
@@ -119,7 +127,8 @@ class PaginationModel
      * Returns error for display.
      * @return string - error message
      */
-    public function getErrorMsg(){
+    public function getErrorMsg()
+    {
         return $this->errorMsg;
     }
 
@@ -127,7 +136,8 @@ class PaginationModel
      * Return list of PageModel objects to use in chunk template
      * It should be use in chunk template only!
      */
-    public function getPagesList(){
+    public function getPagesList()
+    {
         $result = [];
 
         //calculate the range of the list
@@ -136,25 +146,25 @@ class PaginationModel
 
         $lastPage = null;
 
-        if(! is_null($this->recordsCount)){
+        if (! is_null($this->recordsCount)) {
             $lastPage = ceil($this->recordsCount / $this->recordsPerPage);
         }
 
-        if($this->pagesListSize % 2 == 0){
+        if ($this->pagesListSize % 2 == 0) {
             // take one element from left
             $leftPage++;
         }
 
-        if($leftPage <= 0){
+        if ($leftPage <= 0) {
             $rightPage += 1 - $leftPage;
             $leftPage = 1;
         }
 
         // add "left markers" on the list
-        if($leftPage > 1){
+        if ($leftPage > 1) {
             $destPage = $this->currentPage - 1;
 
-            if($destPage <= 0){
+            if ($destPage <= 0) {
                 $destPage = 1;
             }
             // "<<" mark
@@ -167,8 +177,8 @@ class PaginationModel
         }
 
         // generate pages marks
-        for($i = $leftPage; $i <= $rightPage; $i++){
-            if(! is_null($lastPage) && $i > $lastPage){
+        for ($i = $leftPage; $i <= $rightPage; $i++) {
+            if (! is_null($lastPage) && $i > $lastPage) {
                 // last page found
                 break;
             }
@@ -181,10 +191,10 @@ class PaginationModel
         // calculate page number under '>' marker
         $destPage = $this->currentPage + 1;
 
-        if(! is_null($lastPage)){
-            if($lastPage > $rightPage){
+        if (! is_null($lastPage)) {
+            if ($lastPage > $rightPage) {
                 // add "right marker" - ">"
-                if($destPage > $lastPage){
+                if ($destPage > $lastPage) {
                     $destPage = $lastPage;
                 }
 
@@ -196,7 +206,7 @@ class PaginationModel
                 $result[] =
                 new PageModel('&gt;&gt;',false,$this->getLink($lastPage), tr('pagination_last'));
             }
-        }else{
+        } else {
             // ">" mark
             $result[] =
             new PageModel('&gt;',false,$this->getLink($destPage), tr('pagination_right'));
@@ -205,23 +215,25 @@ class PaginationModel
         return $result;
     }
 
-    private function getLink($pageNum){
+    private function getLink($pageNum)
+    {
         return Uri::setOrReplaceParamValue($this->pageParamName, $pageNum);
     }
 
-    private function loadPaginationUrlParams(){
+    private function loadPaginationUrlParams()
+    {
         //look for pagination param
-        if(! isset($_GET[$this->pageParamName])){
+        if (! isset($_GET[$this->pageParamName])) {
             //no such param - this is initial, first page
             $this->currentPage = 1;
-        }else{
+        } else {
             $this->currentPage = $_GET[$this->pageParamName];
 
             // check if currentPage has proper integer value
-            if(! is_numeric($this->currentPage) || $this->currentPage < 1){
+            if (! is_numeric($this->currentPage) || $this->currentPage < 1) {
                 $this->errorOccured = true;
                 $this->errorMsg = 'Improper page param value!';
-            }else{
+            } else {
                 $this->currentPage = intval($this->currentPage);
             }
         }
@@ -239,7 +251,8 @@ class PageModel
     public $link;
     public $tooltip;
 
-    public function __construct($text, $isActive, $link, $tooltip){
+    public function __construct($text, $isActive, $link, $tooltip)
+    {
         $this->isActive = $isActive;
         $this->link = $link;
         $this->text = $text;

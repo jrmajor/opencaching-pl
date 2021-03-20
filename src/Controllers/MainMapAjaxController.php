@@ -34,7 +34,8 @@ class MainMapAjaxController extends BaseController
         return true;
     }
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -48,7 +49,7 @@ class MainMapAjaxController extends BaseController
         // map is only for logged users
         $this->checkUserLoggedAjax();
 
-        if(! preg_match(self::BBOX_REGEX, $bboxStr)){
+        if (! preg_match(self::BBOX_REGEX, $bboxStr)) {
             $this->ajaxErrorResponse('Incorrect bbox!', 500);
 
             exit;
@@ -56,7 +57,7 @@ class MainMapAjaxController extends BaseController
 
         $cache = $this->getCache($userUuid, $bboxStr);
 
-        if(is_null($cache)){
+        if (is_null($cache)) {
             $this->ajaxJsonResponse(null);
         }
 
@@ -78,10 +79,10 @@ class MainMapAjaxController extends BaseController
             ? tr('not_available')
             : $cache->getRatingDesc();
 
-        if($cache->isEvent()){
+        if ($cache->isEvent()) {
             $resp->isEvent = true;
             $resp->eventStartDate = Formatter::date($cache->getDatePlaced());
-        }else{
+        } else {
             $resp->isEvent = false;
         }
 
@@ -94,7 +95,7 @@ class MainMapAjaxController extends BaseController
         $resp->cacheRatingVotes = $cache->getRatingVotes();
         $resp->cacheRecosNumber = $cache->getRecommendations();
 
-        if($cache->isTitled()) {
+        if ($cache->isTitled()) {
             global $titled_cache_period_prefix; //TODO: move it to the ocConfig
             $resp->titledDesc = tr($titled_cache_period_prefix . '_titled_cache');
         }
@@ -112,7 +113,7 @@ class MainMapAjaxController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        if($zoom > 21){ // OKAPI mapper max zoom
+        if ($zoom > 21) { // OKAPI mapper max zoom
             //TODO
             exit(); // zoom is too large
         }
@@ -137,7 +138,8 @@ class MainMapAjaxController extends BaseController
         );
     }
 
-    public function getPlaceLocalization($place) {
+    public function getPlaceLocalization($place)
+    {
         try {
             $placesDetails = GeoCode::fromOpenRouteService($place);
             $this->ajaxJsonResponse($placesDetails);
@@ -203,7 +205,7 @@ class MainMapAjaxController extends BaseController
 
         $iterator = $okapiResp->getIterator();
 
-        if(! $iterator->valid()){
+        if (! $iterator->valid()) {
             // no caches found - just return empty result
             return null;
         }
@@ -228,7 +230,7 @@ class MainMapAjaxController extends BaseController
     private function getSearchDataParam()
     {
         if (isset($_GET['searchdata']) &&
-            preg_match(self::SEARCHDATA_REGEX, $_GET['searchdata'])){
+            preg_match(self::SEARCHDATA_REGEX, $_GET['searchdata'])) {
             return $_GET['searchdata'];
         } else {
             return null;
@@ -248,7 +250,7 @@ class MainMapAjaxController extends BaseController
         // that was implemented only for this purpose.
         // See https://github.com/opencaching/okapi/issues/496.
 
-        if (isset($_GET['exIgnored'])){
+        if (isset($_GET['exIgnored'])) {
             $this->searchParams['not_ignored_by'] = $userUuid;
         }
 
@@ -306,14 +308,14 @@ class MainMapAjaxController extends BaseController
         }
 
         // min_score - convert to OKAPI's "rating" filter
-        if (isset($_GET['rating']) && preg_match(self::RATING_REGEX, $_GET['rating'])){
+        if (isset($_GET['rating']) && preg_match(self::RATING_REGEX, $_GET['rating'])) {
             $this->searchParams['rating'] = $_GET['rating'];
         }
 
         // min_score - convert to OKAPI's "rating" filter
-        if (isset($_GET['size2'])){
+        if (isset($_GET['size2'])) {
             //'none', 'nano', 'micro', 'small', 'regular', 'large', 'xlarge', 'other'.
-            switch($_GET['size2']){
+            switch ($_GET['size2']) {
                 case 'nano':
                     $this->searchParams['size2'] = 'micro|small|regular|large|xlarge|other';
                     break;
@@ -332,7 +334,7 @@ class MainMapAjaxController extends BaseController
         // powertrail_ids (only caches from powerTrails with id) - convert to OKAPI's "powertrail_ids" param.
         if (isset($_GET['csId']) &&
              preg_match(self::GEOPATH_ID_REGEX, $_GET['csId'])) {
-                $this->searchParams['powertrail_ids'] = $_GET['csId'];
+            $this->searchParams['powertrail_ids'] = $_GET['csId'];
         }
 
         // exclusion of types - convert to OKAPI's "type" filter
@@ -340,7 +342,7 @@ class MainMapAjaxController extends BaseController
         $types = ['Other', 'Traditional', 'Multi', 'Virtual', 'Webcam', 'Event', 'Quiz', 'Moving', 'Own'];
 
         foreach ($types as $type) {
-            if(isset($_GET['exType' . $type])){
+            if (isset($_GET['exType' . $type])) {
                 $typesToExclude[] = $type;
             }
         }

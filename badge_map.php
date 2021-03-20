@@ -64,15 +64,17 @@ fclose($f);
 tpl_redirect(SimpleRouter::getLink(MainMapController::class, 'fullscreen') .
     "?userid=$userid&searchdata=$hash&bbox=$minlon|$minlat|$maxlon|$maxlat");
 
-function getCachesList($positions){
-    foreach($positions as &$pos){
+function getCachesList($positions)
+{
+    foreach ($positions as &$pos) {
         $pos = '(' . $pos->getId() . ')';
     }
 
     return implode(',', iterator_to_array($positions));
 }
 
-function addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belongingList){
+function addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belongingList)
+{
     $db->simpleQuery(
         "CREATE TEMPORARY TABLE $tmp_badge_map(cache_id int(11)) ENGINE=MEMORY");
 
@@ -81,18 +83,18 @@ function addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belonging
     //N - not gained
     //Y - gained
 
-    if (! (strpos($show, 'N') === false)){ //not gained
-        if(! empty($belongingList)){
+    if (! (strpos($show, 'N') === false)) { //not gained
+        if (! empty($belongingList)) {
             $db->simpleQuery($insQuery . $belongingList);
         }
     }
 
-    if (strpos($show, 'Y') === false){ //only not gained
-        if(! empty($gainedList)){
+    if (strpos($show, 'Y') === false) { //only not gained
+        if (! empty($gainedList)) {
             $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList . ')');
         }
     } else { //gained
-        if(! empty($gainedList)){
+        if (! empty($gainedList)) {
             $db->simpleQuery($insQuery . $gainedList);
         }
     }

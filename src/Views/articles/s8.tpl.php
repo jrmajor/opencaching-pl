@@ -17,8 +17,7 @@ use src\Utils\I18n\I18n;
 $result = OcMemCache::getOrCreate(
     'articles_s8-' . I18n::getCurrentLang(),
     86400,
-function ()
-{
+function () {
     ob_start();
 
     $fCt['count'] = XDb::xSimpleQueryValue(

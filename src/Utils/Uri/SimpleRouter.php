@@ -53,10 +53,10 @@ class SimpleRouter
 
         $link = "/$ctrl";
 
-        if(! is_null($action)) {
+        if (! is_null($action)) {
             $link .= "/$action";
         } else {
-            if(! is_null($params)) {
+            if (! is_null($params)) {
                 // set default action only if $params are present
                 $link .= '/' . self::DEFAULT_ACTION;
             }
@@ -66,9 +66,9 @@ class SimpleRouter
          * TODO: There is still a problem of slashes in arg. content
          *  - default apache config prevents %2F in non-query part of URI
          */
-        if(! is_null($params)){
-            if(is_array($params)){
-                array_walk($params, function (&$val, $x){
+        if (! is_null($params)) {
+            if (is_array($params)) {
+                array_walk($params, function (&$val, $x) {
                     $val = urlencode($val);
                 });
                 $link .= '/' . implode('/',$params);
@@ -105,7 +105,7 @@ class SimpleRouter
         [$ctrlName, $actionName, $params] = self::parse();
 
         // first check the class filename
-        if(! file_exists(self::getClassFilePath($ctrlName))) {
+        if (! file_exists(self::getClassFilePath($ctrlName))) {
             self::displayErrorAndExit("No such file: $ctrlName", 403);
         }
 
@@ -122,7 +122,7 @@ class SimpleRouter
         }
 
         // check if this is the subclass of BaseController
-        if(! $ctrlReflection->isSubclassOf(self::CTRL_BASE_CLASS)){
+        if (! $ctrlReflection->isSubclassOf(self::CTRL_BASE_CLASS)) {
             self::displayErrorAndExit('Not instance of BaseController', 403);
         }
 
@@ -139,7 +139,7 @@ class SimpleRouter
             self::displayErrorAndExit('Wrong action', 403);
         }
 
-        if (! $actionReflection->isPublic()){
+        if (! $actionReflection->isPublic()) {
             self::displayErrorAndExit('Calling non-public method', 403);
         }
 
@@ -235,7 +235,7 @@ class SimpleRouter
         $ctrl = self::getControllerWithNamespace($routeParts[0]);
 
         // ctrl found, check the action
-        if(! isset($routeParts[1]) || empty($routeParts[1])){
+        if (! isset($routeParts[1]) || empty($routeParts[1])) {
             $action = self::DEFAULT_ACTION;
         } else {
             $action = $routeParts[1];
@@ -256,9 +256,9 @@ class SimpleRouter
         $ctrl = str_replace('\\', '/', $ctrl);
         $parts = explode('/', $ctrl);
 
-        if(count($parts) == 1){
+        if (count($parts) == 1) {
             return $parts[0]; // there is only ctrl name
-        }else{
+        } else {
             return implode('.',$parts);
         }
     }

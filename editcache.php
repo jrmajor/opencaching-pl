@@ -303,8 +303,9 @@ if (! $loggedUser) {
                 $name_not_ok = false;
 
                 if (isset($_POST['name'])) {
-                    if ($_POST['name'] == '')
+                    if ($_POST['name'] == '') {
                         $name_not_ok = true;
+                    }
                 }
 
                 if (isset($_POST['latNS'])) {
@@ -529,13 +530,13 @@ if (! $loggedUser) {
                     if (! $errors_occured) {
                         $cache_lat = $coords_lat_h + round($coords_lat_min, 3) / 60;
 
-                        if ($coords_latNS == 'S'){
+                        if ($coords_latNS == 'S') {
                             $cache_lat = -$cache_lat;
                         }
 
                         $cache_lon = $coords_lon_h + round($coords_lon_min, 3) / 60;
 
-                        if ($coords_lonEW == 'W'){
+                        if ($coords_lonEW == 'W') {
                             $cache_lon = -$cache_lon;
                         }
 
@@ -566,7 +567,7 @@ if (! $loggedUser) {
                              $cache_country, $sel_size, $cache_difficulty, $cache_terrain, $status,
                              $search_time, $way_length, $log_pw, $wp_gc, $wp_nc, $wp_ge, $wp_tc, $cache_id);
 
-                        if(I18n::isTranslationAvailable($cache_country)){
+                        if (I18n::isTranslationAvailable($cache_country)) {
                             $adm1 = tr($cache_country);
                         } else {
                             Debug::errorLog("Unknown country translation: $cache_country");
@@ -731,13 +732,13 @@ if (! $loggedUser) {
                     $line = mb_ereg_replace('{img_undef}', $record['icon_undef'], $line);
                     $line = mb_ereg_replace('{img_large}', $record['icon_large'], $line);
 
-                    if ($cache_attrib_array != ''){
+                    if ($cache_attrib_array != '') {
                         $cache_attrib_array .= ',';
                     }
                     $cache_attrib_array .= $line;
 
                     if (in_array($record['id'], $cache_attribs)) {
-                        if ($cache_attribs_string != ''){
+                        if ($cache_attribs_string != '') {
                             $cache_attribs_string .= ';';
                         }
                         $cache_attribs_string .= $record['id'];
@@ -1007,7 +1008,7 @@ if (! $loggedUser) {
 
                         $waypoints .= '<th width="32"><b>' . tr('symbol_wp') . '</b></th><th width="32"><b>' . tr('type_wp') . '</b></th><th width="32"><b>' . tr('coordinates_wp') . '</b></th><th><b>' . tr('describe_wp') . '</b></th><th width="22"><b>' . tr('status_wp') . '</b></th><th width="22"><b>' . tr('edit') . '</b></th><th width="22"><b>' . tr('delete') . '</b></th></tr>';
 
-                        while($wp_record = XDb::xFetchArray($wp_rs)){
+                        while ($wp_record = XDb::xFetchArray($wp_rs)) {
                             $tmpline1 = $wpline;
 
                             $coords_lat = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($wp_record['latitude']), ENT_COMPAT, 'UTF-8'));
@@ -1124,7 +1125,8 @@ tpl_BuildTemplate();
  * @param array $oldCacheRecord
  * @param integer $cacheId
  */
-function updateAltitudeIfNeeded($oldCacheRecord, $cacheId){
+function updateAltitudeIfNeeded($oldCacheRecord, $cacheId)
+{
     $geoCache = GeoCache::fromCacheIdFactory($cacheId);
     $oldCoords = Coordinates::FromCoordsFactory($oldCacheRecord['latitude'], $oldCacheRecord['longitude']);
     $newCoords = $geoCache->getCoordinates();

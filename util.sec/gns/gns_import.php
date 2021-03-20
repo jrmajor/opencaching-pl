@@ -99,8 +99,9 @@ sql("CREATE TABLE `gns_locations` (
 
 // TODO: The collate parameter should be instalation dependent.
 
-foreach ($importfiles as $filename)
+foreach ($importfiles as $filename) {
     importGns($filename);
+}
 
 function importGns($filename)
 {
@@ -119,8 +120,9 @@ function importGns($filename)
     $cnt = 0;
 
     while ($line = fgets($file, 4096)) {
-        if ($line_cnt++ == 0) // skip first line
+        if ($line_cnt++ == 0) { // skip first line
             continue;
+        }
         $gns = mb_split("\t", $line);
         $sql = 'INSERT IGNORE INTO gns_locations SET';
         $is_first = true;

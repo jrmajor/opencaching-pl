@@ -52,7 +52,8 @@ final class ApplicationContainer
      *
      * @return \src\Models\User\User
      */
-    public static function GetAuthorizedUser(){
+    public static function GetAuthorizedUser()
+    {
         return self::Instance()->getLoggedUser();
     }
 

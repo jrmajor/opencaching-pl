@@ -55,8 +55,9 @@ while ($rLocations = sql_fetch_array($rsLocations)) {
 
         $admtxt1 = landFromLocid($locid);
 
-        if ($admtxt1 == '0')
+        if ($admtxt1 == '0') {
             $admtxt1 = '';
+        }
 
         // determine state
         $rsAdm2 = sql("SELECT `full_name`, `short_form` FROM `gns_locations` WHERE `rc`='&1' AND `fc`='A' AND `dsg`='ADM1' AND `cc1`='&2' AND `adm1`='&3' AND `nt`='N' LIMIT 1", $rLocations['rc'], $rLocations['cc1'], $rLocations['adm1']);
@@ -65,24 +66,27 @@ while ($rLocations = sql_fetch_array($rsLocations)) {
             $rAdm2 = sql_fetch_array($rsAdm2);
             $admtxt2 = $rAdm2['short_form'];
 
-            if ($admtxt2 == '')
+            if ($admtxt2 == '') {
                 $admtxt2 = $rAdm2['full_name'];
-        } else
+            }
+        } else {
             $admtxt3 = '';
+        }
 
         $admtxt3 = regierungsbezirkFromLocid($locid);
 
-        if ($admtxt3 == '0')
+        if ($admtxt3 == '0') {
             $admtxt3 = '';
+        }
 
         $admtxt4 = landkreisFromLocid($locid);
 
-        if ($admtxt4 == '0')
+        if ($admtxt4 == '0') {
             $admtxt4 = '';
+        }
 
         sql("UPDATE `gns_locations` SET `admtxt1`='&1', `admtxt2`='&2', `admtxt3`='&3', `admtxt4`='&4' WHERE uni='&5'", $admtxt1, $admtxt2, $admtxt3, $admtxt4, $rLocations['uni']);
-    }
-    else {
+    } else {
         // what to do?
     }
 }

@@ -225,7 +225,7 @@ if ($_POST['spoiler_only'] == '&spoiler_only=1') {
         ?>
         <form action="printcache.php" method="POST">
             <?php
-            }else{
+            } else {
             ?>
             <form action="printcache.php?source=mywatches" method="POST">
                 <?php

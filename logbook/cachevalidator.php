@@ -86,7 +86,8 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
             $text = preg_replace('/&#x([a-fA-F0-7]{2,8});/ue', "utf8_entity_decode('&#'.hexdec('$1').';')", $text);
 
             //callback function for the regex
-            function utf8_entity_decode($entity){
+            function utf8_entity_decode($entity)
+            {
             $convmap = [0x0, 0x10000, 0, 0xfffff];
 
             return 'ż';
@@ -102,28 +103,31 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             echo '<br />Iterating over ' . $node->tagName . "\n";
 
-            if($node->tagName == 'span') {
-            echo "deleting\n";
-            array_push($removed, $node);
+            if ($node->tagName == 'span') {
+                echo "deleting\n";
+                array_push($removed, $node);
             }
 
-            if(! $node)
-            return;
-
-            if($node->hasAttributes()) {
-            $attributes = $node->attributes;
-
-            if(! is_null($attributes))
-            foreach ($attributes as $index => $attr)
-            echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
+            if (! $node) {
+                return;
             }
 
-            if($node->hasChildNodes()) {
-            $children = $node->childNodes;
+            if ($node->hasAttributes()) {
+                $attributes = $node->attributes;
 
-            foreach($children as $child) {
-            $removed = array_merge($removed, iterate_over($child, $array));
+                if (! is_null($attributes)) {
+                    foreach ($attributes as $index => $attr) {
+                        echo $attr->name . ' = ' . htmlspecialchars($attr->value) . "\n";
+                    }
+                }
             }
+
+            if ($node->hasChildNodes()) {
+                $children = $node->childNodes;
+
+                foreach ($children as $child) {
+                    $removed = array_merge($removed, iterate_over($child, $array));
+                }
             }
 
             return $removed;
@@ -142,31 +146,33 @@ $_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 
             function remove_node($domElement)
             {
-            if($domElement->hasChildNodes()) {
-            $children = $domElement->childNodes;
-            $toAppend = [];
+            if ($domElement->hasChildNodes()) {
+                $children = $domElement->childNodes;
+                $toAppend = [];
 
-            foreach($children as $child)
-            array_unshift($toAppend, $child);
+                foreach ($children as $child) {
+                    array_unshift($toAppend, $child);
+                }
 
-            foreach($toAppend as $child)
-            appendSibling($child, $domElement);
+                foreach ($toAppend as $child) {
+                    appendSibling($child, $domElement);
+                }
             }
             //  $domElement->parentNode->removeChild($domElement);
             }
 
             $str = (string) $tidy;
 
-            if($str) {
+            if ($str) {
             //  $str = str_replace("&amp;", "&", $str);
             $doc = DOMDocument::loadXML('<cache_description>' . $str . '</cache_description>');
             $doc->encoding = 'utf-8';
             $main = $doc->documentElement;
 
-            if($main) {
+            if ($main) {
             $for_removal = iterate_over($main);
 
-            foreach($for_removal as $domElement) {
+            foreach ($for_removal as $domElement) {
             echo "<br/>removing ..\n";
             remove_node($domElement);
             $domElement->parentNode->removeChild($domElement);

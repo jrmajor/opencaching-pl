@@ -37,13 +37,13 @@ $rs = $db->multiVariableQuery(
         AND altitude = 0
     LIMIT $limit", $cacheIdToStart);
 
-$cacheIds = $db->dbFetchAllAsObjects($rs, function($row){
+$cacheIds = $db->dbFetchAllAsObjects($rs, function($row) {
     return $row['cache_id'];
 });
 
 echo "Lets start altitude repair\n";
 
-foreach($cacheIds as $cacheId){
+foreach ($cacheIds as $cacheId) {
     $geocache = GeoCache::fromCacheIdFactory($cacheId);
 
     echo ' - repair for geocache id=' . $geocache->getCacheId() . ' old=' . $geocache->getAltitude();

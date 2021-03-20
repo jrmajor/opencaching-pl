@@ -31,30 +31,30 @@ $longopts = [
 ];
 $options = getopt($shortopts, $longopts);
 
-if(isset($options['h'])){
+if (isset($options['h'])) {
     printUsageAndExit();
 }
 
 $userName = isset($options['u']) ?            $options['u']     : null;
 $userId = isset($options['userId']) ? (int) $options['userId']: null;
 
-if(is_null($userId) && is_null($userName)){
+if (is_null($userId) && is_null($userName)) {
     echo "Error: No param given?!\n\n";
     printUsageAndExit();
 }
 
-if(! is_null($userId) && ! is_integer($userId)){
+if (! is_null($userId) && ! is_integer($userId)) {
     echo "Error: userId param has to be integer value!\n\n";
     printUsageAndExit();
 }
 
-if(! is_null($userId) && ! is_null($userName)){
+if (! is_null($userId) && ! is_null($userName)) {
     echo "Warning: Both username and userId params given - username will be skipped!\n\n";
     $userName = null;
 }
 
 // find userId
-if(is_null($userId)){
+if (is_null($userId)) {
     // Check that user exists
     $userId = $db->multiVariableQueryValue('SELECT user_id FROM user WHERE username = :1', 0, $userName);
 
@@ -82,7 +82,8 @@ foreach ($cache_watches as $watch) {
     remove_watch($watch['cache_id'], $userId);
 }
 
-function printUsageAndExit(){
+function printUsageAndExit()
+{
     echo "Usage: \n";
     echo " php clean_user_notifications.php -u <username>\n";
     echo "   or \n";
@@ -91,7 +92,8 @@ function printUsageAndExit(){
     exit(1);
 }
 
-function remove_watch($cache_id, $userId) {
+function remove_watch($cache_id, $userId)
+{
     global $db;
 
     printf("Watched cache ID: %s\n", $cache_id);

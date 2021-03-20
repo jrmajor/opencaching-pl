@@ -93,7 +93,8 @@ class StaticMap
     protected $zoom, $lat, $lon, $width, $height, $markers, $image, $maptype;
     protected $centerX, $centerY, $offsetX, $offsetY;
 
-    public static function displayPureMap (Coordinates $center, $zoom, array $size, $mapType) {
+    public static function displayPureMap (Coordinates $center, $zoom, array $size, $mapType)
+    {
         $map = new self();
         $map->lat = $center->getLatitude();
         $map->lon = $center->getLongitude();
@@ -435,7 +436,7 @@ class StaticMap
         $color = imagecolorallocate($img, 0, 0, 0);
         $ypos = 0;
 
-        for($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             // Position of the character horizontally
             $xpos = $i * imagefontwidth($font_size);
             // Draw character

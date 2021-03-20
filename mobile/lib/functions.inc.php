@@ -30,10 +30,11 @@ function zamiana($Nstopien, $Nminuty)
 {
     $Ntemp = (int) ($Nminuty * 1666.66);
 
-    if ($Nminuty < 10)
+    if ($Nminuty < 10) {
         $N = $Nstopien . '.0' . $Ntemp;
-    else
+    } else {
         $N = $Nstopien . '.' . $Ntemp;
+    }
 
     return $N;
 }

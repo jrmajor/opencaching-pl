@@ -8,7 +8,7 @@ use src\Utils\Uri\Uri;
  *
  * https://openlayers.org/
  */
-return function (){
+return function () {
     //start of chunk
 
 $url = '/js/libs/openlayers/5.2.0';

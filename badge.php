@@ -46,19 +46,19 @@ $contentLvl = '';
 $is_user_level = false;
 $prevThreshold = 1;
 
-foreach($levelsMeritBadge as $oneLevel){
+foreach ($levelsMeritBadge as $oneLevel) {
     $is_user_level = false;
 
     $pure_level = $oneLevel->getLevel();
 
-    if ($currUserLevel == $pure_level)
+    if ($currUserLevel == $pure_level) {
         $is_user_level = true;
+    }
 
-    if ($is_user_level){
+    if ($is_user_level) {
         $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold, $currUserThreshold, $cfg_period_threshold);
         $prevThreshold = $currUserThreshold;
-    }
-    else{
+    } else {
         $threshold = MeritBadge::preparePeriodOrThreshold($prevThreshold,  $oneLevel->getThreshold(), $cfg_period_threshold);
         $prevThreshold = $oneLevel->getThreshold();
     }
@@ -72,7 +72,7 @@ foreach($levelsMeritBadge as $oneLevel){
     $gain = $oneLevel->getGainCounter();
     $max_date = $oneLevel->getGainLastDate() ? Formatter::date($oneLevel->getGainLastDate()) : '';
 
-    if ($is_user_level){
+    if ($is_user_level) {
         $threshold = setAsSelectedBold($threshold);
         $gain = setAsSelectedBold($gain);
         $max_date = setAsSelectedBold($max_date);
@@ -94,10 +94,12 @@ $usersMeritBadge = $meritBadgeCtrl->buildArrayUsers($badge_id);
 $contentUsr = '';
 $level_id = '';
 
-foreach($usersMeritBadge as $oneUserBadge){
-    if ($level_id != $oneUserBadge->getLevelId()){
-        if ($level_id != '') $contentUsr .= '}
+foreach ($usersMeritBadge as $oneUserBadge) {
+    if ($level_id != $oneUserBadge->getLevelId()) {
+        if ($level_id != '') {
+            $contentUsr .= '}
                 ';
+        }
 
         $level_id = $oneUserBadge->getLevelId();
         $contentUsr .= "if (level== $level_id){";
@@ -114,7 +116,7 @@ foreach($usersMeritBadge as $oneUserBadge){
     $pure_ts = $oneUserBadge->getLevelDateTS();
     $curr_level_date = $oneUserBadge->getLevelDateTS() ? Formatter::date($oneUserBadge->getLevelDate()) : '';
 
-    if ($user_id == $userid){
+    if ($user_id == $userid) {
         $user_name = setAsSelected($user_name);
     }
 
@@ -147,18 +149,21 @@ tpl_set_var('contentUsr', $contentUsr);
 
 tpl_BuildTemplate();
 
-function setAsSelectedBold($value){
+function setAsSelectedBold($value)
+{
     $value = '<b>' . $value . '</b>';
 
     return $value;
 }
 
-function setAsSelectedColor($value){
+function setAsSelectedColor($value)
+{
     $value = "<span class='GCT-color-darkred'>" . $value . '</span>';
 
     return $value;
 }
 
-function setAsSelected($value){
+function setAsSelected($value)
+{
     return setAsSelectedColor(setAsSelectedBold($value));
 }

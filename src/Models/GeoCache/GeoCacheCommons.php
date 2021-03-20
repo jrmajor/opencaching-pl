@@ -374,13 +374,21 @@ class GeoCacheCommons extends BaseObject
     {
         // former score2ratingnum
 
-        if ($score >= self::MIN_SCORE_OF_RATING_5) return 5;
+        if ($score >= self::MIN_SCORE_OF_RATING_5) {
+            return 5;
+        }
 
-        if ($score >= self::MIN_SCORE_OF_RATING_4) return 4;
+        if ($score >= self::MIN_SCORE_OF_RATING_4) {
+            return 4;
+        }
 
-        if ($score >= self::MIN_SCORE_OF_RATING_3) return 3;
+        if ($score >= self::MIN_SCORE_OF_RATING_3) {
+            return 3;
+        }
 
-        if ($score >= self::MIN_SCORE_OF_RATING_2) return 2;
+        if ($score >= self::MIN_SCORE_OF_RATING_2) {
+            return 2;
+        }
 
         return 1;
     }
@@ -389,13 +397,21 @@ class GeoCacheCommons extends BaseObject
     {
         //former new2oldscore($score)
 
-        if ($ratingId == 5) return 3.0;
+        if ($ratingId == 5) {
+            return 3.0;
+        }
 
-        if ($ratingId == 4) return 1.7;
+        if ($ratingId == 4) {
+            return 1.7;
+        }
 
-        if ($ratingId == 3) return 0.7;
+        if ($ratingId == 3) {
+            return 0.7;
+        }
 
-        if ($ratingId == 2) return -0.5;
+        if ($ratingId == 2) {
+            return -0.5;
+        }
 
         return -2.0;
     }
@@ -429,7 +445,7 @@ class GeoCacheCommons extends BaseObject
      */
     public static function CacheRatingTranslationKey($ratingId)
     {
-        switch($ratingId) {
+        switch ($ratingId) {
             case 1: return 'rating_poor';
             case 2: return 'rating_mediocre';
             case 3: return 'rating_avarage';

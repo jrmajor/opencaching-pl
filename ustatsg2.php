@@ -106,8 +106,9 @@ $wyniki = XDb::xSql(
 while ($wynik = XDb::xFetchArray($wyniki)) {
     $text = $wynik['ilosc'];
 
-    if ($text != '0')
+    if ($text != '0') {
         imagettftext($im, 14, 0, $wojewodztwa[$wynik['wojewodztwo']][0], $wojewodztwa[$wynik['wojewodztwo']][1], $clrBlack, $fontfile, $text);
+    }
 }
 
 // write output

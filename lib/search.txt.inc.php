@@ -59,7 +59,7 @@ N|O|P|Q|R|S|T|U|V|W|X|Y|Z
 {{text}}
 ';
 
-if($loggedUser || ! $hide_coords) {
+if ($loggedUser || ! $hide_coords) {
     //prepare the output
     $caches_per_page = 20;
 
@@ -108,7 +108,7 @@ if($loggedUser || ! $hide_coords) {
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
-       $query .= ' ORDER BY date_created DESC';
+        $query .= ' ORDER BY date_created DESC';
     } else { // by name
         $query .= ' ORDER BY name ASC';
     }
@@ -175,7 +175,7 @@ if($loggedUser || ! $hide_coords) {
 
     $stmt = XDb::xSql('SELECT `txtcontent`.`cache_id` `cacheid`, `txtcontent`.`longitude` `longitude`, `txtcontent`.`latitude` `latitude`, `txtcontent`.cache_mod_cords_id, `caches`.`wp_oc` `waypoint`, `caches`.`date_hidden` `date_hidden`, `caches`.`name` `name`, `caches`.`country` `country`, `caches`.`terrain` `terrain`, `caches`.`difficulty` `difficulty`, `caches`.`desc_languages` `desc_languages`, `caches`.`size` `size`, `caches`.`type` `type_id`, `caches`.`status` `status`, `user`.`username` `username`, `cache_desc`.`desc` `desc`, `cache_desc`.`short_desc` `short_desc`, `cache_desc`.`hint` `hint`, `cache_desc`.`desc_html` `html`, `cache_desc`.`rr_comment`, `caches`.`logpw` FROM `txtcontent`, `caches`, `user`, `cache_desc` WHERE `txtcontent`.`cache_id`=`caches`.`cache_id` AND `caches`.`cache_id`=`cache_desc`.`cache_id` AND `caches`.`default_desclang`=`cache_desc`.`language` AND `txtcontent`.`user_id`=`user`.`user_id`');
 
-    while($r = XDb::xFetchArray($stmt)) {
+    while ($r = XDb::xFetchArray($stmt)) {
         if (@$enable_cache_access_logs) {
             $dbc = OcDb::instance();
 
@@ -257,7 +257,7 @@ if($loggedUser || ! $hide_coords) {
             $thisline = str_replace('{personal_cache_note}', '', $thisline);
         }
 
-        if($r['rr_comment'] == '') {
+        if ($r['rr_comment'] == '') {
             $thisline = str_replace('{rr_comment}', '', $thisline);
         } else {
             $thisline = str_replace('{rr_comment}', html2txt('<br /><br />--------<br />' . $r['rr_comment']), $thisline);
@@ -305,7 +305,7 @@ if($loggedUser || ! $hide_coords) {
 
         $thisline = lf2crlf($thisline);
 
-        if($bUseZip == false) {
+        if ($bUseZip == false) {
             echo $thisline;
         } else {
             $phpzip->add_data($r['waypoint'] . '.txt', $thisline);

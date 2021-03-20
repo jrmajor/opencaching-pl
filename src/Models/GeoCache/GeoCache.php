@@ -520,7 +520,7 @@ class GeoCache extends GeoCacheCommons
 
     public function getPowerTrail()
     {
-        if($this->isPowerTrailPart()){
+        if ($this->isPowerTrailPart()) {
             return $this->powerTrail;
         } else {
             return null;
@@ -658,8 +658,9 @@ class GeoCache extends GeoCacheCommons
      */
     public function getOwner()
     {
-        if (is_null($this->owner))
+        if (is_null($this->owner)) {
             $this->owner = User::fromUserIdFactory($this->getOwnerId());
+        }
 
         return $this->owner;
     }
@@ -938,7 +939,8 @@ class GeoCache extends GeoCacheCommons
         return $this->wayLength;
     }
 
-    public function getWayLenghtFormattedString() {
+    public function getWayLenghtFormattedString()
+    {
         return sprintf('%01.2f km', $this->getWayLenght());
     }
 
@@ -1251,7 +1253,8 @@ class GeoCache extends GeoCacheCommons
             AND `cache_logs`.`deleted`= ? ', $cacheId, 0);
     }
 
-    public static function updateLastModified ($cacheId) {
+    public static function updateLastModified ($cacheId)
+    {
         self::db()->multiVariableQuery(
             'UPDATE caches SET last_modified=NOW() WHERE cache_id= :1 ', $cacheId);
     }
@@ -1388,7 +1391,7 @@ class GeoCache extends GeoCacheCommons
      */
     public function getCacheDescription($descLang)
     {
-         return GeoCacheDesc::fromCacheIdFactory($this->id, $descLang);
+        return GeoCacheDesc::fromCacheIdFactory($this->id, $descLang);
     }
 
     /**

@@ -65,7 +65,7 @@ class CookieBase
     private static function buildCookieHeader(
         $name, $value = null, $expiryTime = 0, $path = null, $domain = null,
         $secureOnly = false, $httpOnly = false, $sameSiteRestriction = null
-    ){
+    ) {
         if (self::isNameValid($name)) {
             $name = (string) $name;
         } else {

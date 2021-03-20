@@ -61,8 +61,8 @@ class StaticMapModel
     public function addMarker(StaticMapMarker $m)
     {
         // filter out markers with coords outside of the map img
-        if($m->top < 0 || $m->top > $this->imgHeight ||
-            $m->left < 0 || $m->left > $this->imgWidth){
+        if ($m->top < 0 || $m->top > $this->imgHeight ||
+            $m->left < 0 || $m->left > $this->imgWidth) {
             return;
         }
 
@@ -75,7 +75,8 @@ class StaticMapModel
     }
 
     public function createMarker($id, Coordinates $coords, $color,
-        $tooltip = null, $link = null){
+        $tooltip = null, $link = null)
+    {
         [$left, $top] = Gis::positionAtMapImg(
             $coords, $this->mapCenter, $this->mapZoom, $this->imgWidth, $this->imgHeight);
 

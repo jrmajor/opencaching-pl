@@ -8,7 +8,7 @@ require_once __DIR__ . '/../lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (! $loggedUser){
+if (! $loggedUser) {
     echo 'User not authorized!';
 
     exit;
@@ -16,7 +16,7 @@ if (! $loggedUser){
 
 $text = htmlspecialchars($_REQUEST['text']);
 
-try{
+try {
     $dateTime = new DateTime($_REQUEST['datetime']);
 } catch (Exception $e) {
     // improper request

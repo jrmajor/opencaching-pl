@@ -78,7 +78,7 @@ class PowerTrail extends BaseObject
         $s = $this->db->multiVariableQuery($ptq, $this->id);
 
         if ($this->db->rowCount($s) != 1) {
-           //no such powertrail in DB?
+            //no such powertrail in DB?
            $this->dataLoaded = false; //mark object as NOT containing data
 
            return;
@@ -153,7 +153,7 @@ class PowerTrail extends BaseObject
                     WHERE `id` IN
                         ( SELECT `PowerTrailId` FROM `powerTrail_caches` WHERE `cacheId` =:1 )';
 
-        if(! $includeHiddenGeoPath){
+        if (! $includeHiddenGeoPath) {
             $queryPt .= ' AND status = 1 ';
         }
 

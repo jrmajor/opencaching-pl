@@ -49,10 +49,11 @@ function ftsearch_hash(&$str)
     $astr = ftsearch_split($str, true);
 
     foreach ($astr as $k => $s) {
-        if (strlen($s) > 2)
+        if (strlen($s) > 2) {
             $astr[$k] = sprintf('%u', crc32($s));
-        else
+        } else {
             unset($astr[$k]);
+        }
     }
 
     return $astr;
@@ -92,16 +93,16 @@ function ftsearch_split(&$str, $simple)
 
     for ($i = count($astr) - 1; $i >= 0; $i--) {
         // ignore?
-        if ($ftsearch_ignores != '' && array_search(mb_strtolower($astr[$i]), $ftsearch_ignores) !== false)
-        {
+        if ($ftsearch_ignores != '' && array_search(mb_strtolower($astr[$i]), $ftsearch_ignores) !== false) {
             unset($astr[$i]);
-        }
-        else {
-            if ($simple)
+        } else {
+            if ($simple) {
                 $astr[$i] = ftsearch_text2simple($astr[$i]);
+            }
 
-            if ($astr[$i] == '')
+            if ($astr[$i] == '') {
                 unset($astr[$i]);
+            }
         }
     }
 
@@ -116,8 +117,9 @@ function ftsearch_load_ignores()
     if ($ftsearch_ignores_loaded != true) {
         $rs = XDb::xSql('SELECT `word` FROM `search_ignore`');
 
-        while ($r = XDb::xFetchArray($rs))
+        while ($r = XDb::xFetchArray($rs)) {
             $ftsearch_ignores[] = $r['word'];
+        }
         XDb::xFreeResults($rs);
 
         $ftsearch_ignores_loaded = true;
@@ -230,8 +232,9 @@ function ftsearch_refresh_all_caches()
                 AND `caches`.`status`!=5 AND `caches`.`status`!=6
                 AND `caches`.`status`!=4');
 
-    while ($r = XDb::xFetchArray($rs))
+    while ($r = XDb::xFetchArray($rs)) {
         ftsearch_refresh_cache($r['cache_id']);
+    }
     XDb::xFreeResults($rs);
 }
 
@@ -265,8 +268,9 @@ function ftsearch_refresh_all_cache_desc()
                     AND `caches`.`status`!=5 AND `caches`.`status`!=6
                     AND `caches`.`status`!= 4');
 
-    while ($r = XDb::xFetchArray($rs))
+    while ($r = XDb::xFetchArray($rs)) {
         ftsearch_refresh_cache_desc($r['id']);
+    }
     XDb::xFreeResults($rs);
 }
 
@@ -296,8 +300,9 @@ function ftsearch_refresh_all_pictures()
                     AND `pictures`.`id`=`search_index_times`.`object_id`
             WHERE `pictures`.`last_modified`>`search_index_times`.`last_refresh`');
 
-    while ($r = XDb::xFetchArray($rs))
+    while ($r = XDb::xFetchArray($rs)) {
         ftsearch_refresh_picture($r['id']);
+    }
     XDb::xFreeResults($rs);
 }
 
@@ -338,8 +343,9 @@ function ftsearch_refresh_all_cache_logs()
         WHERE `cache_logs`.`last_modified`>`search_index_times`.`last_refresh`
             AND `cache_logs`.`deleted`=0');
 
-    while ($r = XDb::xFetchArray($rs))
+    while ($r = XDb::xFetchArray($rs)) {
         ftsearch_refresh_cache_logs($r['id']);
+    }
     XDb::xFreeResults($rs);
 }
 

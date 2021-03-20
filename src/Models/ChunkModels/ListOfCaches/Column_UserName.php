@@ -17,7 +17,8 @@ class Column_UserName extends AbstractColumn
         return 'listOfCaches/userNameColumn';
     }
 
-    public function getCssClass() {
+    public function getCssClass()
+    {
         return 'left';
     }
 }

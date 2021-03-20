@@ -19,8 +19,9 @@ function findColumn($name, $type = 'C')
     global $colNameSearch;
 
     for ($i = 0; $i < 20; $i++) {
-        if ($colNameSearch[$i][$type] == $name)
+        if ($colNameSearch[$i][$type] == $name) {
             return $i;
+        }
     }
 
     return -1;
@@ -39,11 +40,9 @@ function fHideColumn($nr, $set)
             OcCookie::set($sNameColumnsSearch, 1, true);
         }
     } else {
-        if (! isset($_REQUEST['notinit'])) // first ent.
-{
+        if (! isset($_REQUEST['notinit'])) { // first ent.
             $C = OcCookie::getOrDefault($sNameColumnsSearch, 0);
-        } else // next ent.
-{
+        } else { // next ent.
             if ($set) {
                 OcCookie::set($sNameColumnsSearch, 0, true);
             }
@@ -51,20 +50,22 @@ function fHideColumn($nr, $set)
         }
     }
 
-    if (! $set)
+    if (! $set) {
         return $C;
+    }
 
     if ($C == 1) {
-                    echo "
+        echo "
                     gct.hideColumns([$nr])";
     } else {
         $descCol = $colNameSearch[$nr]['O'];
         $NrColVisable++;
 
-        if ($NrColSortSearch != $NrColVisable)
+        if ($NrColSortSearch != $NrColVisable) {
             $selectList .= "<option value=$NrColVisable>$descCol</option>";
-        else
+        } else {
             $selectList .= "<option selected='selected' value=$NrColVisable>$descCol</option>";
+        }
     }
 
     return $C;
@@ -188,9 +189,9 @@ if (! OcCookie::contains($sDefCol4Search)) {
 }
 
 if (! isset($_REQUEST['NrColSort'])) {
-    if (OcCookie::contains($sNrColumnsSortSearch)){
+    if (OcCookie::contains($sNrColumnsSortSearch)) {
         $NrColSortSearch = OcCookie::get($sNrColumnsSortSearch);
-    }else{
+    } else {
         OcCookie::set($sNrColumnsSortSearch, 1);
     }
 } else {
@@ -201,9 +202,9 @@ if (! isset($_REQUEST['NrColSort'])) {
 // //////////////////////////////////
 
 if (! isset($_REQUEST['OrderSortSearch'])) {
-    if (OcCookie::contains($sOrderSortSearch)){
+    if (OcCookie::contains($sOrderSortSearch)) {
         $OrderSortSearch = OcCookie::get($sOrderSortSearch);
-    }else{
+    } else {
         OcCookie::set($sOrderSortSearch, 'M');
     }
 } else {
@@ -238,53 +239,63 @@ if ($resultcount <= 5000 && $NrColSortSearch != -1) {
     $cache_line = tpl_do_translate(file_get_contents(__DIR__ . '/../src/Views/search.result.caches.row.tpl.php')); // build lines
 }
 
-if ($resultcount)
+if ($resultcount) {
     $caches_output = '';
-else
+} else {
     $caches_output = '<div class="errormsg" style="font-size:13px;text-align:center;"><b>' . tr('CachesNotMatchCryteria') . '</b></br></br></br></div>';
+}
 
 $CalcDistance = true;
 
-if ($SearchWithSort && fHideColumn(findColumn(tr('Distance')), false) == 1)
+if ($SearchWithSort && fHideColumn(findColumn(tr('Distance')), false) == 1) {
     $CalcDistance = false;
+}
 
 $CalcCoordinates = true;
 
-if (fHideColumn(findColumn(tr('Coordinates')), false) == 1)
+if (fHideColumn(findColumn(tr('Coordinates')), false) == 1) {
     $CalcCoordinates = false;
+}
 
 $CalcSendToGPS = true;
 
-if (fHideColumn(findColumn(tr('srch_Send_to_GPS'), 'O'), false) == 1)
+if (fHideColumn(findColumn(tr('srch_Send_to_GPS'), 'O'), false) == 1) {
     $CalcSendToGPS = false;
+}
 
 $CalcFNC = true;
 
-if (fHideColumn(findColumn(tr('FNC')), false) == 1 && fHideColumn(findColumn(tr('F')), false) == 1 && fHideColumn(findColumn(tr('N')), false) == 1 && fHideColumn(findColumn(tr('C')), false) == 1)
+if (fHideColumn(findColumn(tr('FNC')), false) == 1 && fHideColumn(findColumn(tr('F')), false) == 1 && fHideColumn(findColumn(tr('N')), false) == 1 && fHideColumn(findColumn(tr('C')), false) == 1) {
     $CalcFNC = false;
+}
 
 $CalcEntry = true;
 
-if (fHideColumn(findColumn(tr('Entry')), false) == 1)
+if (fHideColumn(findColumn(tr('Entry')), false) == 1) {
     $CalcEntry = false;
+}
 
-if ($CalcSendToGPS)
+if ($CalcSendToGPS) {
     $CalcCoordinates = true;
+}
 
-if ($CalcDistance)
+if ($CalcDistance) {
     $CalcCoordinates = true;
+}
 
 $distance_unit = 'km';
 
 $query = 'SELECT ';
 
 if (isset($lat_rad, $lon_rad)) {
-    if ($CalcDistance)
+    if ($CalcDistance) {
         $query .= getCalcDistanceSqlFormula(is_object($loggedUser), $lon_rad * 180 / 3.14159, $lat_rad * 180 / 3.14159, 0, $multiplier[$distance_unit]) . ' `distance`, ';
+    }
 } else {
     if (! $loggedUser) {
-        if ($CalcDistance)
+        if ($CalcDistance) {
             $query .= '0 distance, ';
+        }
     } elseif ($CalcDistance) {
         // get the users home coords
         $s = $dbc->multiVariableQuery('SELECT `latitude`, `longitude` FROM `user` WHERE `user_id`=:1', $loggedUser->getUserId());
@@ -313,8 +324,9 @@ $query .= '   `caches`.`name` `name`, `caches`.`status` `status`, `caches`.`wp_o
                 `caches`.`founds` `founds`, `caches`.`topratings` `toprating`, cache_desc.short_desc short_desc ';
 
 if (! $loggedUser) {
-    if ($CalcCoordinates)
+    if ($CalcCoordinates) {
         $query .= ', `caches`.`longitude` `longitude`, `caches`.`latitude` `latitude`, 0 as cache_mod_cords_id ';
+    }
 
     $query .= ' FROM `caches` ';
 } else {
@@ -337,8 +349,7 @@ $query .= ' LEFT JOIN cache_desc ON cache_desc.cache_id=caches.cache_id AND cach
         AND `cache_type`.`id`=`caches`.`type` ';
 $sortby = $options['sort'];
 
-if (! $SearchWithSort) // without interactive sort
-{
+if (! $SearchWithSort) { // without interactive sort
     if (isset($lat_rad, $lon_rad) && ($sortby == 'bydistance')) {
         $query .= ' ORDER BY distance ASC';
     } elseif ($sortby == 'bycreated') {
@@ -381,7 +392,7 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
     }
     $tmpline = $cache_line;
 
-     [$iconname, $inactive] = getCacheIcon($loggedUser->getUserId(), $caches_record['cache_id'],
+    [$iconname, $inactive] = getCacheIcon($loggedUser->getUserId(), $caches_record['cache_id'],
             $caches_record['status'], $caches_record['user_id'], $caches_record['icon_large']);
 
     $tmpline = str_replace('{icon_large}', $iconname, $tmpline);
@@ -392,10 +403,11 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
 
     $ratingA = $caches_record['toprating'];
 
-    if ($ratingA > 0)
+    if ($ratingA > 0) {
         $ratingimg = '<img src="images/rating-star.png" alt="' . $tr_Recommended . '" title="' . $tr_Recommended . '" />';
-    else
+    } else {
         $ratingimg = '';
+    }
     $tmpline = str_replace('{toprating}', $ratingA, $tmpline);
     $tmpline = str_replace('{ratpic}', $ratingimg, $tmpline);
 
@@ -505,8 +517,9 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
                         $caches_record['latitude'],
                         $caches_record['longitude']), 1),
                     $tmpline);
-        } else
+        } else {
             $tmpline = str_replace('{direction}', '', $tmpline);
+        }
     }
 
     $availableDescLangs = '';
@@ -548,17 +561,19 @@ for ($i = 0; $i < $dbcSearch->rowCount($s); $i++) {
             $dist = htmlspecialchars(sprintf('%01.1f', $caches_record['distance']), ENT_COMPAT, 'UTF-8');
             $tmpline = str_replace('{distance}', $dist, $tmpline);
             $tmpline = str_replace('{distance_pad}', str_pad($dist, 5, 0, STR_PAD_LEFT), $tmpline);
-        } else
+        } else {
             $tmpline = str_replace('{distance}', '', $tmpline);
+        }
     }
 
     $tmpline = str_replace('{position}', $i + $startat + 1, $tmpline);
 
     // backgroundcolor of line
-    if (($i % 2) == 1)
+    if (($i % 2) == 1) {
         $bgcolor = $bgcolor2;
-    else
+    } else {
         $bgcolor = $bgcolor1;
+    }
 
     if ($inactive) {
         // $bgcolor = $bgcolor_inactive;
@@ -592,15 +607,17 @@ if ($startat > 0) {
 
 $frompage = ($startat / $caches_per_page) - 3;
 
-if ($frompage < 1)
+if ($frompage < 1) {
     $frompage = 1;
+}
 
 $maxpage = ceil($resultcount / $caches_per_page);
 
 $topage = $frompage + 8;
 
-if ($topage > $maxpage)
+if ($topage > $maxpage) {
     $topage = $maxpage;
+}
 
 if ($topage > 1) {
     for ($i = $frompage; $i <= $topage; $i++) {
@@ -635,26 +652,29 @@ $lhideColumns = 'search.php?queryid=' . $options['queryid'] . '&amp;startat=0';
 tpl_set_var('lhideColumns', $lhideColumns);
 
 // save-link
-if (! $loggedUser)
+if (! $loggedUser) {
     tpl_set_var('safelink', '');
-else
+} else {
     tpl_set_var('safelink', str_replace('{queryid}', $options['queryid'], $safelink));
+}
 
 // downloads
-    if ($loggedUser || ! $hide_coords)
-    tpl_set_var('queryid', $options['queryid']);
+    if ($loggedUser || ! $hide_coords) {
+        tpl_set_var('queryid', $options['queryid']);
+    }
     tpl_set_var('startat', $startat);
 
     tpl_set_var('startatp1', 1);
     tpl_set_var('endat', $resultcount);
 
     // compatibility!
-    if ($distance_unit == 'sm')
+    if ($distance_unit == 'sm') {
         tpl_set_var('distanceunit', 'mi');
-    elseif ($distance_unit == 'nm')
+    } elseif ($distance_unit == 'nm') {
         tpl_set_var('distanceunit', 'sm');
-    else
+    } else {
         tpl_set_var('distanceunit', $distance_unit);
+    }
 
     $view->addLocalCss(Uri::getLinkWithModificationTime('/css/GCT.css'));
     $view->addLocalCss(Uri::getLinkWithModificationTime('/css/GCTStats.css'));
@@ -707,18 +727,20 @@ function PrepareText($text)
 
 function icon_difficulty($what, $difficulty)
 {
-    if ($what != 'diff' && $what != 'terr')
+    if ($what != 'diff' && $what != 'terr') {
         exit('Wrong difficulty-identifier!');
+    }
 
-        $difficulty = (int) $difficulty;
+    $difficulty = (int) $difficulty;
 
-        if ($difficulty < 2 || $difficulty > 10)
-            exit("Wrong difficulty-value $what: $difficulty");
+    if ($difficulty < 2 || $difficulty > 10) {
+        exit("Wrong difficulty-value $what: $difficulty");
+    }
 
-            $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
-            $text = sprintf($what == 'diff' ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
+    $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
+    $text = sprintf($what == 'diff' ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
 
-            return "<img src='$icon' class='img-difficulty' width='19' height='16' alt='$text' title='$text'>";
+    return "<img src='$icon' class='img-difficulty' width='19' height='16' alt='$text' title='$text'>";
 }
 
 function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconname)

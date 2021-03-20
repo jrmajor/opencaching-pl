@@ -18,7 +18,8 @@ class Column_CacheName extends AbstractColumn
         return 'listOfCaches/cacheNameColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'left';
     }
 }

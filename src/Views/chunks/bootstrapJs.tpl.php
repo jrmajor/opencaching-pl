@@ -6,7 +6,7 @@
  * This chunk should be load to all new common layouts templates
  *
  */
-return function (){
+return function () {
     //start of chunk
 ?>
 

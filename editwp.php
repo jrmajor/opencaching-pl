@@ -107,10 +107,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_set_var('openchecker_checked', '');
         }
 
-        if (isset($_POST['openchecker']) && $config['module']['openchecker']['enabled'])
+        if (isset($_POST['openchecker']) && $config['module']['openchecker']['enabled']) {
             $OpenChecker_present = 1;
-        else
+        } else {
             $OpenChecker_present = 0;
+        }
         // ==== openchecker end ====================================================
 
         if (isset($_POST['latNS'])) {
@@ -205,8 +206,9 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         $descwp_not_ok = false;
 
         if (isset($_POST['desc'])) {
-            if ($_POST['desc'] == '')
+            if ($_POST['desc'] == '') {
                 $descwp_not_ok = true;
+            }
         }
 
         if (isset($_POST['back'])) {
@@ -220,19 +222,22 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         if (isset($_POST['submit'])) {
             //all validations ok?
             //check the entered data
-            if ($wp_type == '4' || $wp_type == '5' || $wp_type == '6')
+            if ($wp_type == '4' || $wp_type == '5' || $wp_type == '6') {
                 $wp_stage = '0';
+            }
 
             if (! ($lat_not_ok || $lon_not_ok || $descwp_not_ok)) {
                 $wp_lat = $coords_lat_h + $coords_lat_min / 60;
 
-                if ($coords_latNS == 'S')
+                if ($coords_latNS == 'S') {
                     $wp_lat = -$wp_lat;
+                }
 
                 $wp_lon = $coords_lon_h + $coords_lon_min / 60;
 
-                if ($coords_lonEW == 'W')
+                if ($coords_lonEW == 'W') {
                     $wp_lon = -$wp_lon;
+                }
 
 //                          $wp_desc=nl2br($wp_desc);
                 //save to DB
@@ -277,10 +282,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('lon_message', ($lon_not_ok == true) ? $error_coords_not_ok : '');
         tpl_set_var('lat_message', ($lat_not_ok == true) ? $error_coords_not_ok : '');
 
-        if ($lon_not_ok || $lat_not_ok || $descwp_not_ok)
+        if ($lon_not_ok || $lat_not_ok || $descwp_not_ok) {
             tpl_set_var('general_message', $error_general);
-        else
+        } else {
             tpl_set_var('general_message', '');
+        }
 
         tpl_set_var('desc', htmlspecialchars($wp_desc));
         tpl_set_var('type', htmlspecialchars($wp_type));

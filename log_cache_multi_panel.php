@@ -71,7 +71,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                             ) as x INNER JOIN `cache_logs` as c ON c.cache_id = x.cache_id
                                 AND c.date = x.date', $loggedUser->getUserId());
 
-                    while($record = XDb::xFetchArray($rs)){
+                    while ($record = XDb::xFetchArray($rs)) {
                         foreach ($dane as $k => $v) {
                             if ($v['cache_id'] == $record['cache_id']) {
                                 $v['got_last_activity'] = true;

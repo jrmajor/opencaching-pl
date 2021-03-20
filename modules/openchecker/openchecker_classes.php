@@ -21,7 +21,8 @@ class OpenCheckerSetup
     var $caches_on_page;
     var $show_wpt_desc;
 
-    function __construct() {
+    function __construct()
+    {
         $this->scriptname = 'openchecker.php';
 
         include __DIR__ . '/../../lib/settingsGlue.inc.php';
@@ -45,14 +46,16 @@ class convertLongLat
 {
     var $CoordsDecimal;
 
-    function __construct($degree, $minutes) {
+    function __construct($degree, $minutes)
+    {
         $this->CoordsDecimal = $degree + $minutes / 60;
     }
 }
 
 class OpenCheckerCore
 {
-    public function BruteForceCheck($OpenCheckerSetup) {
+    public function BruteForceCheck($OpenCheckerSetup)
+    {
         tpl_set_var('section_3_start', '');
         tpl_set_var('section_3_stop', '');
         tpl_set_var('section_2_start', '<!--');
@@ -121,7 +124,8 @@ class OpenCheckerCore
         }
     }
 
-    public function CoordsComparing($OpenCheckerSetup) {
+    public function CoordsComparing($OpenCheckerSetup)
+    {
         // get data from post.
         $lat = $_POST['guessedCoordsFinalLatitude'];
         $lon = $_POST['guessedCoordsFinalLongitude'];
@@ -268,7 +272,8 @@ class OpenCheckerCore
         // goto Finalize;
     }
 
-    public function DisplayAllOpenCheckerCaches($OpenCheckerSetup) {
+    public function DisplayAllOpenCheckerCaches($OpenCheckerSetup)
+    {
         /**
          * Displays initial form for cache waypoint (OXxxxx) input
          *
@@ -320,8 +325,9 @@ class OpenCheckerCore
                         $sort_column = '`caches`.`name`';
                         break;
                 }
-            } else
+            } else {
                 $sort_column = '`caches`.`name`';
+            }
 
             $openchecker_query = '
         SELECT `waypoints`.`cache_id`,
@@ -378,28 +384,33 @@ class OpenCheckerCore
 
             $pagination = ' ';
 
-            if (isset($_GET['sort']))
+            if (isset($_GET['sort'])) {
                 $sort = '&sort=' . $_GET['sort'];
-            else
+            } else {
                 $sort = '';
-
-            if (isset($_GET['page']))
-                $tPage = XDb::xEscape($_GET['page']);
-            else
-                $tPage = 1;
-
-            if ($tPage > 1)
-                $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . ($tPage - 1) . $sort . '">[&lt; ' . tr('openchecker_page_prev') . ']</a> ';
-
-            foreach ($numbers as $num) {
-                if ($num == $tPage)
-                    $pagination .= '<b>[' . $num . ']</b>';
-                else
-                    $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . $num . $sort . '">[' . $num . ']</a> ';
             }
 
-            if ($tPage < count($numbers))
+            if (isset($_GET['page'])) {
+                $tPage = XDb::xEscape($_GET['page']);
+            } else {
+                $tPage = 1;
+            }
+
+            if ($tPage > 1) {
+                $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . ($tPage - 1) . $sort . '">[&lt; ' . tr('openchecker_page_prev') . ']</a> ';
+            }
+
+            foreach ($numbers as $num) {
+                if ($num == $tPage) {
+                    $pagination .= '<b>[' . $num . ']</b>';
+                } else {
+                    $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . $num . $sort . '">[' . $num . ']</a> ';
+                }
+            }
+
+            if ($tPage < count($numbers)) {
                 $pagination .= '<a href="' . $OpenCheckerSetup->scriptname . '?page=' . ($tPage + 1) . $sort . '">[' . tr('openchecker_page_next') . ' &gt;]</a> ';
+            }
 
             $caches_table = '';
             $attempts = 0;
@@ -468,7 +479,8 @@ class OpenCheckerCore
         }
     }
 
-    public function Finalize() {
+    public function Finalize()
+    {
         tpl_BuildTemplate();
 
         exit;

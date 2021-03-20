@@ -36,7 +36,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function listOfIgnored()
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
         }
 
@@ -51,7 +51,7 @@ class UserIgnoredCachesController extends BaseController
 
         $this->view->setVar('cachesCount', $IgnoredCachesCount);
 
-        if($IgnoredCachesCount > 0){
+        if ($IgnoredCachesCount > 0) {
             // prepare model for list of ignored caches
             $model = new ListOfCachesModel();
 
@@ -65,7 +65,7 @@ class UserIgnoredCachesController extends BaseController
                     ];
                 }));
             $model->addColumn(new Column_CacheLog(tr('usrIgnore_lastLogColumn'),
-                function($row){
+                function($row) {
                     return [
                         'logId' => $row['llog_id'],
                         'logType' => $row['llog_type'],
@@ -77,7 +77,7 @@ class UserIgnoredCachesController extends BaseController
             ));
 
             $model->addColumn(new Column_OnClickActionIcon(tr('usrIgnore_actionRemoveColumn'),
-                function($row){
+                function($row) {
                     return [
                         'icon' => 'images/log/16x16-trash.png',
                         'onClick' => "removeFromIgnored(this, '" . $row['wp_oc'] . "')",
@@ -109,7 +109,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function removeFromIgnoredAjax($cacheWp)
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
 
             return;
@@ -131,7 +131,7 @@ class UserIgnoredCachesController extends BaseController
      */
     public function addToIgnoredAjax($cacheWp)
     {
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
 
             return;

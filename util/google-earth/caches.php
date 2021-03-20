@@ -21,20 +21,25 @@ require_once(__DIR__ . '/../../lib/format.kml.inc.php');
 $bbox = isset($_REQUEST['BBOX']) ? $_REQUEST['BBOX'] : '0,0,0,0';
 $abox = mb_split(',', $bbox);
 
-if (count($abox) != 4)
+if (count($abox) != 4) {
     exit;
+}
 
-if (! is_numeric($abox[0]))
+if (! is_numeric($abox[0])) {
     exit;
+}
 
-if (! is_numeric($abox[1]))
+if (! is_numeric($abox[1])) {
     exit;
+}
 
-if (! is_numeric($abox[2]))
+if (! is_numeric($abox[2])) {
     exit;
+}
 
-if (! is_numeric($abox[3]))
+if (! is_numeric($abox[3])) {
     exit;
+}
 
 $lat_from = $abox[1];
 $lon_from = $abox[0];
@@ -96,7 +101,7 @@ while ($r = XDb::xFetchArray($rs)) {
     }
 
     $thisline = str_replace('{icon}', $icon, $thisline);
-        $thisline = str_replace('{typeimgurl}', $thiskmlTypeIMG, $thisline);
+    $thisline = str_replace('{typeimgurl}', $thiskmlTypeIMG, $thisline);
     $thisline = str_replace('{status}', tr('cacheStatus_' . $r['status']), $thisline);
     $thisline = str_replace('{status-style}', $statusStyle, $thisline);
 

@@ -5,7 +5,7 @@
  * This text is print "as-is" so be carefull :)
  */
 
-return function ($text){
+return function ($text) {
 ?>
     <?=$text?>
 <?php

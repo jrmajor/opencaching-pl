@@ -6,7 +6,8 @@ use src\Utils\Debug\Debug;
 
 class sendEmail
 {
-    public static function emailOwners($ptId, $commentType, $commentDateTime, $commentText, $action, $commentOwnerId = false, $delReason = '') {
+    public static function emailOwners($ptId, $commentType, $commentDateTime, $commentText, $action, $commentOwnerId = false, $delReason = '')
+    {
         /*ugly, but we need this values from common.inc.php*/
         global $absolute_server_URI, $siteDateFormat, $siteDateTimeFormat;
         $siteDateFormat = 'Y-m-d';
@@ -76,10 +77,11 @@ class sendEmail
         $mailbody = mb_ereg_replace('{userName}', $username, $mailbody);
         $mailbody = mb_ereg_replace('{absolute_server_URI}', $absolute_server_URI, $mailbody);
 
-        if (isset($commentTypes[$commentType]['translate']))
+        if (isset($commentTypes[$commentType]['translate'])) {
             $mailbody = mb_ereg_replace('{commentType}', tr($commentTypes[$commentType]['translate']), $mailbody);
-        else
+        } else {
             $mailbody = mb_ereg_replace('{commentType}', '&nbsp;', $mailbody);
+        }
         $mailbody = mb_ereg_replace('{ptName}', $ptDbRow['name'], $mailbody);
         $mailbody = mb_ereg_replace('{ptId}', $ptId, $mailbody);
         $mailbody = mb_ereg_replace('{pt133}', tr('pt133'), $mailbody);
@@ -92,9 +94,9 @@ class sendEmail
         foreach ($owners as $owner) {
             $to = $owner['email'];
 
-            if($owner['power_trail_email'] == 1){
+            if ($owner['power_trail_email'] == 1) {
                 //TODO: Email class should be used here in future...
-                if(! mb_send_mail($to, $subject, $mailbody, $headers)){
+                if (! mb_send_mail($to, $subject, $mailbody, $headers)) {
                     Debug::errorLog('Mail sending failure: to:' . $to);
                 }
             }
@@ -107,8 +109,8 @@ class sendEmail
         if ($commentOwnerId && ! $doNotSendEmailToCommentAuthor) {
             $userDetails = powerTrailBase::getUserDetails($commentOwnerId);
 
-            if($userDetails['power_trail_email']) {
-                if(! mb_send_mail($userDetails['email'], $subject, $mailbody, $headers)){
+            if ($userDetails['power_trail_email']) {
+                if (! mb_send_mail($userDetails['email'], $subject, $mailbody, $headers)) {
                     Debug::errorLog('Mail sending failure: to:' . $userDetails['email']);
                 }
             }

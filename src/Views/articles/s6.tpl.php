@@ -42,10 +42,11 @@ while ($linia = XDb::xFetchArray($linie)) {
             AND status <> 6 AND type <> 6',
         0, $linia['user_id']);
 
-    if($y != 0)
+    if ($y != 0) {
         $xy = sprintf('%.u', ($x / $y) * 100);
-    else
+    } else {
         $xy = 0;
+    }
 
     if ($l2 != $l1) {
         $licznik++;

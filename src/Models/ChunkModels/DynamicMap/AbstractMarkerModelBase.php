@@ -13,7 +13,8 @@ abstract class AbstractMarkerModelBase
     public $lon;            // lon. of marker
     public $icon;           // icon of marker
 
-    public function getMarkerTypeName(){
+    public function getMarkerTypeName()
+    {
         $str = (new ReflectionClass(static::class))->getShortName();
 
         return preg_replace('/Model$/', '', lcfirst($str));

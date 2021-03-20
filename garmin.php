@@ -27,7 +27,7 @@ function convert($str)
     $str = mb_ereg_replace('ä', 'a', $str);
     $str = mb_ereg_replace('Ä', 'A', $str);
 
-// romanian characters
+    // romanian characters
     $str = mb_ereg_replace('ă', 'a', $str);
     $str = mb_ereg_replace('î', 'i', $str);
     $str = mb_ereg_replace('ş', 's', $str);
@@ -38,12 +38,12 @@ function convert($str)
     $str = mb_ereg_replace('Ş', 'S', $str);
     $str = mb_ereg_replace('Ţ', 'T', $str);
     $str = mb_ereg_replace('Â', 'A', $str);
-// romanian new keyboard
+    // romanian new keyboard
     $str = mb_ereg_replace('ș', 's', $str);
     $str = mb_ereg_replace('ț', 't', $str);
     $str = mb_ereg_replace('Ș', 'S', $str);
     $str = mb_ereg_replace('Ț', 'T', $str);
-// hungarian characters
+    // hungarian characters
     $str = mb_ereg_replace('é', 'e', $str);
     $str = mb_ereg_replace('á', 'a', $str);
     $str = mb_ereg_replace('ö', 'o', $str);
@@ -76,8 +76,8 @@ tpl_set_var('bodyMod', ' onload="load()"');
 
 $garminKeyStr = '';
 
-if (isset($config['garmin-key'])){
-    foreach($config['garmin-key'] as $k => $v){
+if (isset($config['garmin-key'])) {
+    foreach ($config['garmin-key'] as $k => $v) {
         $garminKeyStr .= '"' . $k . '", "' . $v . '", ';
     }
     $garminKeyStr = rtrim($garminKeyStr, ', ');

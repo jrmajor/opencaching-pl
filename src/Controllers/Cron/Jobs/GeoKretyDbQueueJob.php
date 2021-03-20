@@ -23,7 +23,7 @@ class GeoKretyDbQueueJob extends Job
         $gkCtrl = new GeoKretyLogController();
 
         // add debug var to url if debug messages are needed
-        if(isset($_REQUEST['debug'])){
+        if (isset($_REQUEST['debug'])) {
             $gkCtrl->enableDebugMsgs();
         }
 

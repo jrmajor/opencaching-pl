@@ -24,7 +24,8 @@ class Column_CacheLog extends AbstractColumn
         return 'listOfCaches/cacheLogColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'left';
     }
 

@@ -29,7 +29,8 @@ class DynamicMapModel
 
     private $markerModels = [];
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->ocConfig = OcConfig::instance();
 
         $this->coords = OcConfig::getMapDefaultCenter();
@@ -49,16 +50,16 @@ class DynamicMapModel
      */
     public function addMarkersWithExtractor($markerClass, array $dataRows, callable $rowExtractor)
     {
-        foreach($dataRows as $row){
+        foreach ($dataRows as $row) {
             $markerModel = call_user_func($rowExtractor, $row);
 
-            if(! ($markerModel instanceof $markerClass)) {
+            if (! ($markerModel instanceof $markerClass)) {
                 Debug::errorLog("Extractor returns something different than $markerClass");
 
                 return;
             }
 
-            if(! is_subclass_of($markerModel, AbstractMarkerModelBase::class)){
+            if (! is_subclass_of($markerModel, AbstractMarkerModelBase::class)) {
                 Debug::errorLog("Marker class $markerClass is not a child of " . AbstractMarkerModelBase::class);
 
                 return;
@@ -77,12 +78,12 @@ class DynamicMapModel
     {
         $type = $model->getMarkerTypeName();
 
-        if(! $model->checkMarkerData()){
+        if (! $model->checkMarkerData()) {
             $type = $model->getMarkerTypeName();
             Debug::errorLog("Marker of $type has incomplete data!");
         }
 
-        if(! isset($this->markerModels[$type])){
+        if (! isset($this->markerModels[$type])) {
             $this->markerModels[$type] = [];
         }
         $this->markerModels[$type][] = $model;
@@ -91,26 +92,31 @@ class DynamicMapModel
     /**
      * Read OC map config from config and return map config JS
      */
-    public static function getMapLayersJsConfig(){
+    public static function getMapLayersJsConfig()
+    {
         return OcConfig::getMapJsConfig();
     }
 
-    public function getMarkersDataJson(){
+    public function getMarkersDataJson()
+    {
         return json_encode($this->markerModels, JSON_PRETTY_PRINT);
     }
 
-    public function getMarkerTypes(){
+    public function getMarkerTypes()
+    {
         return array_keys($this->markerModels);
     }
 
     /**
      * @return Coordinates
      */
-    public function getCoords(){
+    public function getCoords()
+    {
         return $this->coords;
     }
 
-    public function getZoom(){
+    public function getZoom()
+    {
         return $this->zoom;
     }
 
@@ -119,7 +125,8 @@ class DynamicMapModel
         return $this->forceZoom;
     }
 
-    public function getSelectedLayerName(){
+    public function getSelectedLayerName()
+    {
         return $this->mapLayerName;
     }
 
@@ -129,7 +136,8 @@ class DynamicMapModel
         $this->forceZoom = true;
     }
 
-    public function setInitLayerName($name){
+    public function setInitLayerName($name)
+    {
         $this->mapLayerName = $name;
     }
 
@@ -152,12 +160,12 @@ class DynamicMapModel
 
     public function getStartExtentJson()
     {
-        if($this->startExtent){
+        if ($this->startExtent) {
             $sw = $this->swCorner->getAsOpenLayersFormat();
             $ne = $this->neCorner->getAsOpenLayersFormat();
 
             return "{ sw:$sw, ne:$ne }";
-        }else{
+        } else {
             return 'null';
         }
     }

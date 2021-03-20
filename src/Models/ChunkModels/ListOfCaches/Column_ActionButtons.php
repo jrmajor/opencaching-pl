@@ -24,7 +24,8 @@ class Column_ActionButtons extends AbstractColumn
         return 'listOfCaches/actionButtonsColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

@@ -27,25 +27,31 @@ require_once(__DIR__ . '/common.inc.php');
         $sDateTo = $_REQUEST['DT'];
         $sNameOfStat = $_REQUEST['stat'];
 
-        if ($sDateFrom != '')
+        if ($sDateFrom != '') {
             $sDateCondition .= "and date >='" . $sDateFrom . "'";
+        }
 
-        if ($sDateTo != '')
+        if ($sDateTo != '') {
             $sDateCondition .= " and date < '" . $sDateTo . "' ";
+        }
 
-        if ($sNameOfStat == 'NumberOfFinds')
+        if ($sNameOfStat == 'NumberOfFinds') {
             $sTypeCondition = ' and  cl.type=1 ';
+        }
 
-        if ($sNameOfStat == 'MaintenanceOfCaches')
+        if ($sNameOfStat == 'MaintenanceOfCaches') {
             $sTypeCondition = ' and  cl.type=6 ';
+        }
 
         $asUserID = explode(',', $sUserIDLine);
 
-        if (! strlen($sUserIDLine))
+        if (! strlen($sUserIDLine)) {
             $sEND = tr('SelectUsers');
+        }
 
-        if (count($asUserID) > 10)
+        if (count($asUserID) > 10) {
             $sEND = tr('more10');
+        }
 
         echo '<script>';
 
@@ -60,8 +66,9 @@ require_once(__DIR__ . '/common.inc.php');
         $aNrColumn = [];
 
         foreach ($asUserID as $sID) {
-            if (strlen($sCondition))
+            if (strlen($sCondition)) {
                 $sCondition = $sCondition . ' or ';
+            }
 
             $sCondition = $sCondition . "cl.user_id = '" . $sID . "'";
         }

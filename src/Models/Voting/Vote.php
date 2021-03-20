@@ -19,7 +19,7 @@ class Vote extends BaseObject
 
     public static function saveToDb (Election $election, User $user, array $votes)
     {
-        if(empty($votes)) {
+        if (empty($votes)) {
             // there is nothing to save
             return;
         }
@@ -52,7 +52,7 @@ class Vote extends BaseObject
             'SELECT optionId, date FROM vote_votes WHERE electionId = :1 ORDER BY date ASC',
             $election->getElectionId());
 
-        return self::db()->dbFetchAllAsObjects($rs, function ($row){
+        return self::db()->dbFetchAllAsObjects($rs, function ($row) {
             $vote = new self();
             $vote->optId = $row['optionId'];
             $vote->date = new DateTime($row['date']);

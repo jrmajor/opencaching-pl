@@ -43,7 +43,8 @@ class CacheController extends BaseController
             ->buildView();
     }
 
-    private function newCachesOneCountry() {
+    private function newCachesOneCountry()
+    {
         $newCachesCount = MultiCacheStats::getLatestNationalCachesCount();
 
         $pagination = new PaginationModel(self::CACHES_PER_NEW_CACHES_PAGE);
@@ -76,7 +77,8 @@ class CacheController extends BaseController
             ->setTemplate('cache/newCachesOneCountry');
     }
 
-    private function newCachesMultipleCountries() {
+    private function newCachesMultipleCountries()
+    {
         $cacheList = MultiCacheStats::getLatestNationalCachesForUserMultiCountries($this->loggedUser);
         $modelArray = [];
 

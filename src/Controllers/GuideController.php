@@ -16,7 +16,8 @@ class GuideController extends BaseController
     /** Maxiumum length of guide description passed to marker model */
     const MAX_DSCR_LEN = 100;
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
@@ -33,7 +34,7 @@ class GuideController extends BaseController
         $this->view->addLocalCss(
             Uri::getLinkWithModificationTime('/views/guide/guides.css'));
 
-        $guidesList = OcMemCache::getOrCreate('currentGuides', 8 * 3600, function(){
+        $guidesList = OcMemCache::getOrCreate('currentGuides', 8 * 3600, function() {
             return MultiUserQueries::getCurrentGuidesList();
         });
 
@@ -57,7 +58,7 @@ class GuideController extends BaseController
         }
 
         $mapModel->addMarkersWithExtractor(GuideMarkerModel::class, $guidesList,
-            function($row){
+            function($row) {
                 $marker = new GuideMarkerModel();
                 $marker->icon = '/images/guide_map_marker.png';
                 $marker->link = User::GetUserProfileUrl($row['user_id']);

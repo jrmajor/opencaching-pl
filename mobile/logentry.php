@@ -24,10 +24,11 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
             for update
         ");
 
-        if ($caches['type'] == 6)
+        if ($caches['type'] == 6) {
             $query = "select 1 from cache_logs where user_id = '" . $_SESSION['user_id'] . "' and type = '7' and deleted='0' and cache_id ='" . $caches['cache_id'] . "';";
-        else
+        } else {
             $query = "select 1 from cache_logs where user_id = '" . $_SESSION['user_id'] . "' and type = '1' and deleted='0' and cache_id ='" . $caches['cache_id'] . "';";
+        }
         $if_found = XDb::xSimpleQueryValue($query, 0);
 
         $is_mine = ($_SESSION['user_id'] == $caches['user_id']) ? 1 : 0;
@@ -44,10 +45,11 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
 
         $dowykorzystania = $dostepne[0] - $przyznanych[0];
 
-        if ($dowykorzystania > 0 && $caches['type'] != 6)
+        if ($dowykorzystania > 0 && $caches['type'] != 6) {
             $topratingav = 1;
-        else
+        } else {
             $topratingav = 0;
+        }
 
         if (isset($_POST['entry']) && $_POST['entry'] == 'true') {
             $rodzaj = XDb::xEscape($_POST['rodzaj']);
@@ -66,23 +68,23 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
             $datetime = @mktime($date_H, $date_i, 0, $date_m, $date_d, $date_Y);
             $dzis = date('Y-m-d H:i:00', $datetime);
 
-            if ($datetime == '')
+            if ($datetime == '') {
                 $tpl->assign('error', '2');
-            elseif ($datetime > time())
+            } elseif ($datetime > time()) {
                 $tpl->assign('error', '3');
-            elseif (($rodzaj < '1' || $rodzaj > '5') && $caches['type'] != 6)
+            } elseif (($rodzaj < '1' || $rodzaj > '5') && $caches['type'] != 6) {
                 $tpl->assign('error', '4');
-            elseif ($rodzaj != '3' && $rodzaj != '7' && $rodzaj != '8' && $caches['type'] == 6)
+            } elseif ($rodzaj != '3' && $rodzaj != '7' && $rodzaj != '8' && $caches['type'] == 6) {
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 0 && ! preg_match('/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/', $ocena))
+            } elseif ($temp_found == 0 && ! preg_match('/^((-4)|(-3)|(-1.5)|(0)|(1.5)|(3)){1}$/', $ocena)) {
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 1 && ($rodzaj == 1 || $rodzaj == 2 || $rodzaj == 7))
+            } elseif ($temp_found == 1 && ($rodzaj == 1 || $rodzaj == 2 || $rodzaj == 7)) {
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 1 && ! empty($rekomendacja))
+            } elseif ($temp_found == 1 && ! empty($rekomendacja)) {
                 $tpl->assign('error', '4');
-            elseif ($temp_found == 1 && ! empty($ocena))
+            } elseif ($temp_found == 1 && ! empty($ocena)) {
                 $tpl->assign('error', '4');
-            elseif (! empty($caches['logpw']) && $caches['logpw'] != $logpw && $rodzaj == 1) {
+            } elseif (! empty($caches['logpw']) && $caches['logpw'] != $logpw && $rodzaj == 1) {
                 $tpl->assign('error', '5');
             } else {
                 $uuid = mb_strtoupper(md5(uniqid(rand(), true)));
@@ -148,10 +150,10 @@ if (isset($_SESSION['user_id'], $_GET['wp']) && ! empty($_GET['wp'])) {
                 exit;
             }
         }
-    } else
+    } else {
         $tpl->assign('error', '1');
-}
-else {
+    }
+} else {
     header('Location: ./index.php');
 
     exit;

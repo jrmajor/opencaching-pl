@@ -63,7 +63,7 @@ class CacheAdditions extends BaseObject
 
         $row = $this->db->dbResultFetchOneRowOnly($rs);
 
-        if($row){
+        if ($row) {
             $this->altitude = $row['altitude'];
         }
     }

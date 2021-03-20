@@ -91,8 +91,8 @@ class Validator
      * @param string $code
      * @return string|boolean - optimized cache code, or false if invalid
      */
-     public static function gcWaypoint($code)
-     {
+    public static function gcWaypoint($code)
+    {
         // try to fix it
         $code = preg_replace('/\s/', '', $code);
         $code = strtoupper($code);
@@ -104,7 +104,7 @@ class Validator
         } else {
             return false;
         }
-     }
+    }
 
     /**
      * Verifies the syntax of a terracaching.com cache code.
@@ -118,8 +118,8 @@ class Validator
      * @param string $code
      * @return string|boolean - optimized cache code, or false if invalid
      */
-     public static function tcWaypoint($code)
-     {
+    public static function tcWaypoint($code)
+    {
         // try to fix it
         $code = preg_replace('/\s/', '', $code);
         $code = strtoupper($code);
@@ -130,7 +130,7 @@ class Validator
         } else {
             return false;
         }
-     }
+    }
 
     /**
      * Verifies the syntax of a gpsgames.org cache code.
@@ -139,8 +139,8 @@ class Validator
      * @param string $code
      * @return string|boolean - optimized cache code, or false if invalid
      */
-     public static function geWaypoint($code)
-     {
+    public static function geWaypoint($code)
+    {
         // try to fix it
         $code = preg_replace('/\s/', '', $code);
         $code = strtoupper($code);
@@ -151,7 +151,7 @@ class Validator
         } else {
             return false;
         }
-     }
+    }
 
     /**
      * Pro-forma validator for obsolete NC waypoints

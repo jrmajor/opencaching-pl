@@ -155,14 +155,14 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 
     $countCaches = $powerTrail->getCacheCount();
 
-    if($countCaches > 0) {
+    if ($countCaches > 0) {
         // filter-out absent types and sizes
         $typesToShow = [GeoCache::TYPE_TRADITIONAL, GeoCache::TYPE_MULTICACHE, GeoCache::TYPE_QUIZ, GeoCache::TYPE_OTHERTYPE];
         $typesNumberList = [];
         $typesLabelsList = [];
 
-        foreach($typesToShow as $type) {
-            if($cachetypes[$type] > 0) {
+        foreach ($typesToShow as $type) {
+            if ($cachetypes[$type] > 0) {
                 // there is at least one cache of such type
                 $typesNumberList[] = $cachetypes[$type];
                 $typesLabelsList[] = tr(GeoCache::CacheTypeTranslationKey($type)) . ' (' . round(($cachetypes[$type] * 100) / $countCaches) . '%)';
@@ -196,8 +196,8 @@ function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
         $sizesNumberList = [];
         $sizesLabelsList = [];
 
-        foreach($sizesToShow as $size) {
-            if($cacheSize[$size] > 0) {
+        foreach ($sizesToShow as $size) {
+            if ($cacheSize[$size] > 0) {
                 // there is at least one cache of such type
                 $sizesNumberList[] = $cacheSize[$size];
                 $sizesLabelsList[] = tr(GeoCache::CacheSizeTranslationKey($size)) . ' (' . round(($cacheSize[$size] * 100) / $countCaches) . '%)';

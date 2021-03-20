@@ -28,8 +28,9 @@ function getPictures($cacheid, $picturescount)
             WHERE object_id= ? AND object_type=2 AND display=1
             ORDER BY date_created', $cacheid);
 
-    if (! isset($retval))
+    if (! isset($retval)) {
         $retval = '';
+    }
 
     while ($r = XDb::xFetchArray($rs)) {
         $retval .= '&lt;img src="' . $r['url'] . '"&gt;&lt;br&gt;' . cleanup_text($r['title']) . '&lt;br&gt;';
@@ -360,10 +361,11 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
             WHERE `gpxcontent`.`cache_id`=`caches`.`cache_id` LIMIT 1');
         $rName = $dbcSearch->dbResultFetchOneRowOnly($s);
 
-        if (isset($_GET['realname']) && $_GET['realname'] == 1)
+        if (isset($_GET['realname']) && $_GET['realname'] == 1) {
             $sFilebasename = str_replace(' ', '', convert_string($rName['name']));
-        else
+        } else {
             $sFilebasename = $rName['wp_oc'];
+        }
     } else {
         if ($options['searchtype'] == 'bywatched') {
             $sFilebasename = 'watched_caches';
@@ -482,10 +484,11 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
             $thisline = str_replace('{mod_suffix}', '', $thisline);
         }
 
-        if ($r['hint'] == '')
+        if ($r['hint'] == '') {
             $thisline = str_replace('{hints}', '', $thisline);
-        else
+        } else {
             $thisline = str_replace('{hints}', '<hints>' . cleanup_text($r['hint']) . '</hints>', $thisline);
+        }
 
         $logpw = ($r['logpw'] == '' ? '' : '' . tr('search_gpxgc_01') . ' <br />');
         $thisline = str_replace('{shortdesc}', cleanup_text($r['short_desc']), $thisline);
@@ -580,7 +583,7 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
                 INNER JOIN `npa_areas` ON `cache_npa_areas`.`npa_id`=`npa_areas`.`id`
             WHERE `cache_npa_areas`.`cache_id`= ? AND `cache_npa_areas`.`npa_id`!='0'", $r['cacheid']);
 
-            if (XDb::xNumRows($rsArea) != 0){
+            if (XDb::xNumRows($rsArea) != 0) {
                 $thisextra .= "\nNATURA 2000: ";
 
                 while ($npa = XDb::xFetchArray($rsArea)) {
@@ -591,37 +594,43 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
         $thisline = str_replace('{extra_info}', $thisextra, $thisline);
         // end of extra info
 
-        if ($r['rr_comment'] == '')
+        if ($r['rr_comment'] == '') {
             $thisline = str_replace('{rr_comment}', '', $thisline);
-        else
+        } else {
             $thisline = str_replace('{rr_comment}', cleanup_text('<br /><br />--------<br />' . $r['rr_comment'] . '<br />'), $thisline);
+        }
 
         $thisline = str_replace('{{images}}', getPictures($r['cacheid'], false, $r['picturescount']), $thisline);
 
-        if (isset($gpxType[$r['type']]))
+        if (isset($gpxType[$r['type']])) {
             $thisline = str_replace('{type}', $gpxType[$r['type']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{type}', $gpxType[1], $thisline);
+        }
 
-        if (isset($gpxGeocacheType[$r['type']]))
+        if (isset($gpxGeocacheType[$r['type']])) {
             $thisline = str_replace('{geocache_type}', $gpxGeocacheType[$r['type']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{geocache_type}', $gpxGeocacheType[1], $thisline);
+        }
 
-        if (isset($gpxGeocacheTypeText[$r['type']]))
+        if (isset($gpxGeocacheTypeText[$r['type']])) {
             $thisline = str_replace('{type_text}', $gpxGeocacheTypeText[$r['type']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{type_text}', $gpxGeocacheTypeText[1], $thisline);
+        }
 
-        if (isset($gpxContainer[$r['size']]))
+        if (isset($gpxContainer[$r['size']])) {
             $thisline = str_replace('{container}', $gpxContainer[$r['size']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{container}', $gpxContainer[0], $thisline);
+        }
 
-        if (isset($gpxStatus[$r['status']]))
+        if (isset($gpxStatus[$r['status']])) {
             $thisline = str_replace('{status}', $gpxStatus[$r['status']], $thisline);
-        else
+        } else {
             $thisline = str_replace('{status}', $gpxStatus[0], $thisline);
+        }
 
         $difficulty = sprintf('%01.1f', $r['difficulty'] / 2);
         $difficulty = str_replace('.0', '', $difficulty); // garmin devices cannot handle .0 on integer values
@@ -663,10 +672,11 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
             $thislog = str_replace('{username}', xmlentities(convert_string($rLog['username'])), $thislog);
             $thislog = str_replace('{finder_id}', xmlentities($rLog['userid']), $thislog);
 
-            if (isset($gpxLogType[$rLog['type']]))
+            if (isset($gpxLogType[$rLog['type']])) {
                 $logtype = $gpxLogType[$rLog['type']];
-            else
+            } else {
                 $logtype = $gpxLogType[0];
+            }
 
             $thislog = str_replace('{type}', $logtype, $thislog);
             $thislog = str_replace('{text}', xmlencode_text($rLog['text']), $thislog);
@@ -690,8 +700,9 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
 
             $gk_wp = strtoupper(dechex($geokret['id']));
 
-            while (mb_strlen($gk_wp) < 4)
+            while (mb_strlen($gk_wp) < 4) {
                 $gk_wp = '0' . $gk_wp;
+            }
             $gkWP = 'GK' . mb_strtoupper($gk_wp);
             $thisGeoKret = str_replace('{geokret_id}', xmlentities($geokret['id']), $thisGeoKret);
             $thisGeoKret = str_replace('{geokret_ref}', $gkWP, $thisGeoKret);

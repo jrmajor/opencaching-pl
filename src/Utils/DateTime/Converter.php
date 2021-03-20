@@ -55,10 +55,11 @@ class Converter
             if ($char === '\\') { // PHP date format escaping character
                 $i++;
 
-                if ($escaping)
+                if ($escaping) {
                     $jqueryui_format .= $php_format[$i];
-                else
+                } else {
                     $jqueryui_format .= '\'' . $php_format[$i];
+                }
                 $escaping = true;
             } else {
                 if ($escaping) {
@@ -66,10 +67,11 @@ class Converter
                     $escaping = false;
                 }
 
-                if (isset($SYMBOLS_MATCHING[$char]))
+                if (isset($SYMBOLS_MATCHING[$char])) {
                     $jqueryui_format .= $SYMBOLS_MATCHING[$char];
-                else
+                } else {
                     $jqueryui_format .= $char;
+                }
             }
         }
 

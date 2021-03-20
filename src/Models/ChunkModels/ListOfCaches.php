@@ -13,35 +13,43 @@ class ListOfCaches
     private $recomendationColumn = false;
     private $logTooltipEnabled = false;
 
-    public function caches(){
+    public function caches()
+    {
         return $this->listOfCaches;
     }
 
-    public function recoCol(){
+    public function recoCol()
+    {
         return $this->recomendationColumn;
     }
 
-    public function getCacheModel(){
+    public function getCacheModel()
+    {
         return new ListOfCachesCacheModel();
     }
 
-    public function addCache(ListOfCachesCacheModel $c){
+    public function addCache(ListOfCachesCacheModel $c)
+    {
         array_push($this->listOfCaches, $c);
     }
 
-    public function enableRecoColumn(){
+    public function enableRecoColumn()
+    {
         $this->recomendationColumn = true;
     }
 
-    public function getCachesCount(){
+    public function getCachesCount()
+    {
         return count($this->listOfCaches);
     }
 
-    public function enableLogTooltip(){
+    public function enableLogTooltip()
+    {
         $this->logTooltipEnabled = true;
     }
 
-    public function logTooltipEnabled(){
+    public function logTooltipEnabled()
+    {
         return $this->logTooltipEnabled;
     }
 }

@@ -28,7 +28,8 @@ class Column_SimpleText extends AbstractColumn
         return 'listOfCaches/simpleTextColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

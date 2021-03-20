@@ -11,7 +11,8 @@ use src\Utils\Uri\Uri;
 
 class UserRegistrationController extends BaseController
 {
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 

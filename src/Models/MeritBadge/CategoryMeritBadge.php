@@ -11,11 +11,13 @@ class CategoryMeritBadge
     // getField functions
     //////////////////////////////////////////////////////////////////////
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
@@ -23,11 +25,14 @@ class CategoryMeritBadge
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow($rec){
-        if (isset($rec['badge_categories_id']))
+    public function setFromRow($rec)
+    {
+        if (isset($rec['badge_categories_id'])) {
             $this->id = $rec['badge_categories_id'];
+        }
 
-        if (isset($rec['badge_categories_name']))
+        if (isset($rec['badge_categories_name'])) {
             $this->name = $rec['badge_categories_name'];
+        }
     }
 }

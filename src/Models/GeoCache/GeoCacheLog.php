@@ -717,9 +717,8 @@ class GeoCacheLog extends GeoCacheLogCommons
      * @return array The set of GeoCacheLog objects, sorted by the `date` field.
      */
     public function getCacheLogsForUser(
-        int $cacheId, int $userId, ?array $types = null, ?int $limit = null
-    ): array
-    {
+        int $cacheId, int $userId, array $types = null, int $limit = null
+    ): array {
         $params = [$cacheId, $userId];
 
         if ($types != null) {

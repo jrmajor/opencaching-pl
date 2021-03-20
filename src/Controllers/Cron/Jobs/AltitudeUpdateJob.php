@@ -13,17 +13,17 @@ class AltitudeUpdateJob extends Job
     public function run()
     {
         // first find $recordsToRunAtOnce geocaches without altitude
-        for($i = 0; $i < self::RECORDS_TO_RUN_AT_ONCE; $i++){
+        for ($i = 0; $i < self::RECORDS_TO_RUN_AT_ONCE; $i++) {
             $cacheId = CacheAdditions::getRandomCacheIdWithoutAltitude();
 
-            if(! $cacheId){
+            if (! $cacheId) {
                 // there is no caches without altitude
                 return;
             }
 
             $geocache = GeoCache::fromCacheIdFactory($cacheId);
 
-            if(! $geocache){
+            if (! $geocache) {
                 Debug::errorLog("Cache Additions present but there is no such geocache (cacheId=$cacheId)");
 
                 continue;
@@ -31,10 +31,10 @@ class AltitudeUpdateJob extends Job
 
             $coords = $geocache->getCoordinates();
 
-            if($coords){
+            if ($coords) {
                 $altitude = Altitude::getAltitude($coords);
 
-                if(is_null($altitude)){
+                if (is_null($altitude)) {
                     Debug::errorLog("Can't find altitude for geocache (cacheId=$cacheId, coords={$coords->getAsText()})");
 
                     continue;

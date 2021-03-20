@@ -29,12 +29,14 @@ class MyRecommendationsController extends BaseController
         return true;
     }
 
-    public function index () {
+    public function index ()
+    {
         $this->recommendations();
     }
 
-    public function recommendations($userId = null) {
-        if(! $this->isUserLogged()){
+    public function recommendations($userId = null)
+    {
+        if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
 
             exit;
@@ -63,7 +65,8 @@ class MyRecommendationsController extends BaseController
         }
     }
 
-    private function userRecommendations($userId) {
+    private function userRecommendations($userId)
+    {
         if (is_null($user = User::fromUserIdFactory($userId))) {
             $this->displayCommonErrorPageAndExit('no such user');
         }
@@ -86,13 +89,13 @@ class MyRecommendationsController extends BaseController
             $model = new ListOfCachesModel();
 
             $model->addColumn(new Column_CacheTypeIcon(tr('myRecommendations_status'),
-                function($row){
+                function($row) {
                     return [
                         'type' => $row['type'],
                         'status' => $row['status'],
                         'user_sts' => isset($row['user_sts'])?$row['user_sts']:null,
                     ];
-            }));
+                }));
             $model->addColumn(new Column_CacheName(tr('myRecommendations_cacheName'),
                 function($row) {
                     return [
@@ -141,14 +144,14 @@ class MyRecommendationsController extends BaseController
      */
     public function removeRecommendation($cacheId)
     {
-        if(! $this->isUserLogged()) {
+        if (! $this->isUserLogged()) {
             $this->ajaxErrorResponse('User not logged', 401);
 
             return;
         }
 
         //check cacheId
-        if(! is_numeric($cacheId)) {
+        if (! is_numeric($cacheId)) {
             $this->ajaxErrorResponse('Invalid param', 400);
 
             exit;
@@ -158,7 +161,8 @@ class MyRecommendationsController extends BaseController
         $this->ajaxSuccessResponse();
     }
 
-    private function completeDataRows($userId, $limit = null, $offset = null) {
+    private function completeDataRows($userId, $limit = null, $offset = null)
+    {
         $results = CacheRecommendation::getCachesRecommendedByUser($userId, $limit, $offset);
 
         // find cache status for user (found/not-found)

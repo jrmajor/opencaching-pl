@@ -31,7 +31,7 @@ class UserUtilsController extends BaseController
     {
         global $config; //TODO: remove it from here
 
-        if(! $this->isUserLogged()){
+        if (! $this->isUserLogged()) {
             $this->redirectToLoginPage();
 
             exit;
@@ -46,7 +46,7 @@ class UserUtilsController extends BaseController
 
         $qrCodesDir = $this->ocConfig->getDynamicFilesPath() . $qrCodesDirName;
 
-        if (! file_exists($qrCodesDir)){
+        if (! file_exists($qrCodesDir)) {
             mkdir($qrCodesDir);
         }
 
@@ -56,7 +56,7 @@ class UserUtilsController extends BaseController
             $qrCodeText = trim($_REQUEST['qrCodeText']);
         }
 
-        if(empty($qrCodeText)){ // load default text value if neccessary
+        if (empty($qrCodeText)) { // load default text value if neccessary
             $qrCodeText = $config['qrCodeUrl'];
         }
 

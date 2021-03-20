@@ -208,7 +208,8 @@ class ReportLog extends BaseObject
      *
      * @return string
      */
-    public function getFormattedLog() {
+    public function getFormattedLog()
+    {
         if (! $this->dataLoaded) {
             return null;
         }
@@ -305,7 +306,8 @@ class ReportLog extends BaseObject
      * @param int $logId
      * @return string
      */
-    public static function getFormattedLogById($logId) {
+    public static function getFormattedLogById($logId)
+    {
         $log = new ReportLog(['logId' => $logId]);
         $output = $log->getFormattedLog();
         unset($log);
@@ -319,7 +321,8 @@ class ReportLog extends BaseObject
      * @param int $reportId
      * @return ReportLog[]
      */
-    public static function getLogs($reportId) {
+    public static function getLogs($reportId)
+    {
         $query = '
             SELECT *
             FROM `reports_log`
@@ -449,7 +452,8 @@ class ReportLog extends BaseObject
      *
      * @return int
      */
-    private function insertToDb() {
+    private function insertToDb()
+    {
         $query = '
             INSERT INTO `reports_log`
             (`report_id`, `type`, `content`, `user_id`, `poll_id`, `date_created`)

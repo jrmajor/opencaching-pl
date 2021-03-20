@@ -16,13 +16,15 @@ class GeoCode
 
     //
     private function __construct()
-    {}
+    {
+    }
 
     /**
      * function provides information whether any geocode service is available or not
      *
      */
-    public static function isGeocodeServiceAvailable() {
+    public static function isGeocodeServiceAvailable()
+    {
         return ! (empty(OcConfig::getMapKey('OpenRouteService')));
     }
 
@@ -112,7 +114,7 @@ class GeoCode
         $lat = $coords->getLatitude();
         $lon = $coords->getLongitude();
 
-        if(empty($googlemap_key)){
+        if (empty($googlemap_key)) {
             return null;
         }
 
@@ -123,24 +125,24 @@ class GeoCode
         $data = @file_get_contents($url);
         $resp = json_decode($data);
 
-        if($resp->status != 'OK'){
+        if ($resp->status != 'OK') {
             //error!
         }
 
         $instance = new self();
 
         // this JSON is a little bit complicated - find administrative_area_level_1 record
-        foreach($resp->results as $record){
-            if(in_array('administrative_area_level_1', $record->types)){
+        foreach ($resp->results as $record) {
+            if (in_array('administrative_area_level_1', $record->types)) {
                 $address = $record->address_components;
 
-                foreach($address as $level){
-                    if(in_array('administrative_area_level_1', $level->types)){
+                foreach ($address as $level) {
+                    if (in_array('administrative_area_level_1', $level->types)) {
                         $instance->admCode = $level->short_name;
                         $instance->admName = $level->long_name;
                     }
 
-                    if(in_array('country', $level->types)){
+                    if (in_array('country', $level->types)) {
                         $instance->countryCode = $level->short_name;
                         $instance->countryName = $level->long_name;
                     }
@@ -162,7 +164,7 @@ class GeoCode
         global $config;
         $key = $config['maps']['mapQuestKey'];
 
-        if(empty($key)){
+        if (empty($key)) {
             return null;
         }
 
@@ -177,10 +179,10 @@ class GeoCode
 
         $instance = new self();
 
-        if(is_array($resp->results) && ! empty($resp->results)){
+        if (is_array($resp->results) && ! empty($resp->results)) {
             $data = $resp->results[0];
 
-            if(is_array($data->locations) && ! empty($data->locations)){
+            if (is_array($data->locations) && ! empty($data->locations)) {
                 $data = $data->locations[0];
                 $instance->countryCode = $data->adminArea1;
                 $instance->admCode = $data->adminArea3;
@@ -193,32 +195,37 @@ class GeoCode
         return $instance;
     }
 
-    public function getCountryCode(){
+    public function getCountryCode()
+    {
         return $this->countryCode;
     }
 
-    public function getCountryName(){
+    public function getCountryName()
+    {
         return $this->countryName;
     }
 
-    public function getAdmCode(){
+    public function getAdmCode()
+    {
         return $this->admCode;
     }
 
-    public function getAdmName(){
+    public function getAdmName()
+    {
         return $this->admName;
     }
 
-    public function getDescription($separator = '-'){
-        if($this->countryName){
+    public function getDescription($separator = '-')
+    {
+        if ($this->countryName) {
             $country = $this->countryName;
-        }else{
+        } else {
             $country = '?';
         }
 
-        if($this->admName){
+        if ($this->admName) {
             $adm = $this->admName;
-        }else{
+        } else {
             $adm = '?';
         }
 

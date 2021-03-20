@@ -7,5 +7,6 @@ if (isset($_SESSION['user_id'])) {
     $action = $_SERVER['PHP_SELF'];
 
     require_once('./lib/findalgo.inc.php');
-} else
+} else {
     header('Location: ./index.php');
+}

@@ -48,11 +48,13 @@ if (isset($_REQUEST['errorMsg'])) {
 }
 
 if (isset($_REQUEST['save'])) {
-    if (isset($_REQUEST['checkBadges']))
+    if (isset($_REQUEST['checkBadges'])) {
         OcCookie::set('checkBadges', ! $_REQUEST['checkBadges']);
+    }
 
-    if (isset($_REQUEST['checkGeoPaths']))
+    if (isset($_REQUEST['checkGeoPaths'])) {
         OcCookie::set('checkGeoPaths', ! $_REQUEST['checkGeoPaths']);
+    }
 }
 
 $checkBadges = OcCookie::getOrDefault('checkBadges', 1);
@@ -232,8 +234,9 @@ $content .= '<br><p>&nbsp;</p><div class="content2-container bg-blue02"><p class
 if ($config['meritBadges']) {
     $content .= buildOpenCloseButton($user_id, $checkBadges, 'merit_badge.png', 'checkBadges', tr('merit_badges'), 'Merit badges');
 
-    if ($checkBadges)
+    if ($checkBadges) {
         $content .= buildMeritBadges($user_id);
+    }
 }
 ////////////////////////////////////////////////////////////////////////////
 
@@ -245,7 +248,7 @@ if ($powerTrailModuleSwitchOn) {
     $content .= buildOpenCloseButton($user_id, $checkGeoPaths, 'powerTrailGenericLogo.png', 'checkGeoPaths', tr('gp_mainTitile'), 'geoPaths');
 
     if ($checkGeoPaths) {
-    //geoPaths medals
+        //geoPaths medals
         $content .= buildPowerTrailIcons(UserStats::getGeoPathsCompleted($user->getUserId()));
         $content .= '<p><span class="content-title-noshade txt-blue08">' . tr('pt140') . '</span>:&nbsp;<strong>' . powerTrailBase::getUserPoints($user_id) . '</strong> (' . tr('pt093') . ' ' . powerTrailBase::getPoweTrailCompletedCountByUser($user_id) . ')</p>';
         $pointsEarnedForPlacedCaches = powerTrailBase::getOwnerPoints($user_id);
@@ -407,8 +410,7 @@ if ($seek == 0) {
 
         if ($found > 101) {
             $milestone = 100;
-        }
-        else {
+        } else {
             $milestone = 10;
         }
 
@@ -430,7 +432,7 @@ if ($seek == 0) {
 
         $rsms->nextRowset(); //to switch to second query results :)
 
-        while($rms = XDb::xFetchArray($rsms)) {
+        while ($rms = XDb::xFetchArray($rsms)) {
             $content .= '<tr> <td>' . ($rms['row'] - 1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['cache_wp'] . '</a></td></tr>';
         }
 
@@ -482,7 +484,7 @@ if ($seek == 0) {
         $content .= ' <a class="links" href="/rss/my_logs.xml?userid=' . $user_id . '"><img src="/images/misc/rss.svg" class="icon16" alt="RSS icon"></a>';
         $content .= '</p><br><div><ul style="margin: -0.9em 0px 0.9em 0px; padding: 0px 0px 0px 10px; list-style-type: none; line-height: 1.2em; font-size: 115%;">';
 
-        while($record_logs = XDb::xFetchArray($rs_logs)) {
+        while ($record_logs = XDb::xFetchArray($rs_logs)) {
             $tmp_log = $log_line;
 
             if ($record_logs['geokret_in'] != '0') {
@@ -564,10 +566,11 @@ if ($user->getHiddenGeocachesCount() == 0) {
             GROUP BY YEAR(`date_created`), MONTH(`date_created`), DAY(`date_created`)
         )AS COUNTS_IN_DAYS', 0, $user_id);
 
-    if ($num_rows > 0)
+    if ($num_rows > 0) {
         $aver2 = round(($user->getHiddenGeocachesCount() / $num_rows), 2);
-    else
+    } else {
         $aver2 = 0;
+    }
 
     StopWatch::click(__LINE__);
 
@@ -704,7 +707,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
 
         $rsms->nextRowset(); //to switch to second query results :)
 
-        while($rms = XDb::xFetchArray($rsms)) {
+        while ($rms = XDb::xFetchArray($rsms)) {
             $content .= '<tr> <td>' . ($rms['row'] - 1) . '</td><td>' . $rms['data'] . '</td><td><a class="links" href="viewcache.php?cacheid=' . $rms['cache_id'] . '">' . $rms['wp_oc'] . '</a></td></tr>';
         }
 
@@ -893,7 +896,8 @@ function buildGeocacheHtml(GeoCache $geocache, $html)
     return $html;
 }
 
-function buildMeritBadges($user_id) {
+function buildMeritBadges($user_id)
+{
 $meritBadgeCtrl = new MeritBadgeController();
 $userCategories = $meritBadgeCtrl->buildArrayUserCategories($user_id);
 
@@ -965,7 +969,8 @@ $content .= "<a class='links'  href='user_badges.php?user_id=999999'>[" . tr('me
 return $content;
 }
 
-function buildOpenCloseButton($userid, $check, $pic, $field, $txt, $title) {
+function buildOpenCloseButton($userid, $check, $pic, $field, $txt, $title)
+{
 $content = "<form action='/viewprofile.php' style='display:inline;'>";
 
 $content .= "<div class='content2-container bg-blue02'>

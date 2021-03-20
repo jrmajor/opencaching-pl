@@ -13,7 +13,8 @@ abstract class BaseObject
 
     protected $dataLoaded = false; //are data loaded to this object
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->db = self::db();
     }
 
@@ -36,11 +37,13 @@ abstract class BaseObject
         return OcConfig::instance();
     }
 
-    protected static function getCurrentUser(){
+    protected static function getCurrentUser()
+    {
         return ApplicationContainer::Instance()->getLoggedUser();
     }
 
-    protected static function callOkapi($service, $params){
+    protected static function callOkapi($service, $params)
+    {
         /** @var \src\Models\User\User */
         $user = self::getCurrentUser();
 

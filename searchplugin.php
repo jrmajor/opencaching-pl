@@ -107,8 +107,7 @@ if (($sourceid == 'mozilla-search') && ($userinput != '')) {
                         $record = XDb::xFetchArray($rs);
                         $targeturl = 'viewcache.php?cacheid=' . $record['cache_id'];
                         unset($record);
-                    }
-                    elseif ($count == 0) {
+                    } elseif ($count == 0) {
                         $tplname = 'searchplugin';
                         tpl_set_var('error_msg', mb_ereg_replace('{wp}', $searchfor, $errmsg_no_cache_found));
                         tpl_BuildTemplate();

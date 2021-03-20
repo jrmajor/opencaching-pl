@@ -2,7 +2,9 @@
 
 use src\Utils\Database\OcDb;
 
-if (! isset($_REQUEST['u'])) exit;
+if (! isset($_REQUEST['u'])) {
+    exit;
+}
 
 require_once __DIR__ . '/../lib/ClassPathDictionary.php';
 

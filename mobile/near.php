@@ -18,8 +18,9 @@ function wytnij($tab, $start, $end)
     $temp = [];
 
     for ($i = $start; $i < $end; $i++) {
-        if (! empty($tab[$i]))
+        if (! empty($tab[$i])) {
             $temp[] = $tab[$i];
+        }
     }
 
     return $temp;
@@ -31,9 +32,9 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
 
     $na_stronie = 10;
 
-    if ($ile <= $na_stronie)
+    if ($ile <= $na_stronie) {
         $znalezione = wytnij($znalezione, 0, $na_stronie);
-    else {
+    } else {
         if (! isset($page)) {
             $znalezione = wytnij($znalezione, 0, $na_stronie);
             $next_page = '2';
@@ -47,8 +48,9 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
 
                 exit;
             } else {
-                if (((($page - 1) * $na_stronie) + $na_stronie) < $ile)
+                if (((($page - 1) * $na_stronie) + $na_stronie) < $ile) {
                     $next_page = $page + 1;
+                }
                 $prev_page = $page - 1;
             }
         }
@@ -64,8 +66,9 @@ function stronicowanie($page, $address, $znalezione, $ile, $url)
 
     $max = ceil($ile / $na_stronie);
 
-    if ($max == '0')
+    if ($max == '0') {
         $max = '1';
+    }
 
     $tpl->assign('max', $max);
 
@@ -93,13 +96,15 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
     ) {
         $kord1 = zamiana($_GET['Nstopien'], $_GET['Nminuty']);
 
-        if ($_GET['ns'] == 'S')
+        if ($_GET['ns'] == 'S') {
             $kord1 = '-' . $kord1;
+        }
 
         $kord2 = zamiana($_GET['Estopien'], $_GET['Eminuty']);
 
-        if ($_GET['ew'] == 'W')
+        if ($_GET['ew'] == 'W') {
             $kord2 = '-' . $kord2;
+        }
 
         $jsonurl = "$absolute_server_URI/okapi/services/caches/search/nearest?&center=" . $kord1 . '|' . $kord2 . '&status=Available&radius=' . $_GET['radius'] . '&consumer_key=HpLvDvvjmG3HkeX8RsgU&limit=500 ';
 
@@ -144,9 +149,10 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
 
             if (($ilat1 == $ilat2) && ($ilon1 == $ilon2)) {
             } elseif ($ilon1 == $ilon2) {
-                if ($ilat1 > $ilat2)
+                if ($ilat1 > $ilat2) {
                     $result = 180.0;
-            }else {
+                }
+            } else {
                 $c = acos(sin($lat2) * sin($lat1) + cos($lat2) * cos($lat1) * cos(($lon2 - $lon1)));
                 $A = asin(cos($lat2) * sin(($lon2 - $lon1)) / sin($c));
                 $result = rad2deg($A);
@@ -163,29 +169,37 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
 
             $kier = round($result, 1);
 
-            if (($kier >= 337.5 && $kier < 360) || ($kier >= 0 && $kier < 22.5))
+            if (($kier >= 337.5 && $kier < 360) || ($kier >= 0 && $kier < 22.5)) {
                 $kier = 'N';
+            }
 
-            if ($kier >= 22.5 && $kier < 67.5)
+            if ($kier >= 22.5 && $kier < 67.5) {
                 $kier = 'NE';
+            }
 
-            if ($kier >= 67.5 && $kier < 112.5)
+            if ($kier >= 67.5 && $kier < 112.5) {
                 $kier = 'E';
+            }
 
-            if ($kier >= 112.5 && $kier < 157.5)
+            if ($kier >= 112.5 && $kier < 157.5) {
                 $kier = 'SE';
+            }
 
-            if ($kier >= 157.5 && $kier < 202.5)
+            if ($kier >= 157.5 && $kier < 202.5) {
                 $kier = 'S';
+            }
 
-            if ($kier >= 202.5 && $kier < 247.5)
+            if ($kier >= 202.5 && $kier < 247.5) {
                 $kier = 'SW';
+            }
 
-            if ($kier >= 247.5 && $kier < 292.5)
+            if ($kier >= 247.5 && $kier < 292.5) {
                 $kier = 'W';
+            }
 
-            if ($kier >= 292.5 && $kier < 337.5)
+            if ($kier >= 292.5 && $kier < 337.5) {
                 $kier = 'NW';
+            }
 
             $query = 'select ' . I18n::getCurrentLang() . " from cache_type where id = '" . $wiersz['type'] . "';";
             $wynik2 = XDb::xSql($query);
@@ -205,13 +219,15 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
             }
 
             if (isset($_GET['skip_mine'], $_SESSION['user_id'])) {
-                if ($wiersz['user_id'] == $_SESSION['user_id'])
+                if ($wiersz['user_id'] == $_SESSION['user_id']) {
                     continue;
+                }
             }
 
             if (isset($_GET['skip_found'], $_SESSION['user_id'])) {
-                if ($if_found == 1)
+                if ($if_found == 1) {
                     continue;
+                }
             }
 
             if (isset($_GET['skip_ignored'], $_SESSION['user_id'])) {
@@ -220,13 +236,15 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
                 $if_ignored = XDb::xFetchArray($wynik9);
                 $if_ignored = $if_ignored[0];
 
-                if ($if_ignored == 1)
+                if ($if_ignored == 1) {
                     continue;
+                }
             }
 
             if (isset($_GET['skip_inactive'])) {
-                if ($wiersz['status'] > 1)
+                if ($wiersz['status'] > 1) {
                     continue;
+                }
             }
 
             $rekord['user_id'] = $wiersz['user_id'];
@@ -258,9 +276,10 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
         stronicowanie($_GET['page'], 'viewcache', $znalezione, $i, $url);
 
         exit;
-    } else
+    } else {
         $tpl->assign('error', 1);
-}elseif (isset($_POST['city'], $_POST['radius'])) {
+    }
+} elseif (isset($_POST['city'], $_POST['radius'])) {
     if (! empty($_POST['city']) && ! empty($_POST['radius']) && preg_match("/^\d+$/", $_POST['radius']) && $_POST['radius'] >= 1 && $_POST['radius'] <= 25) {
         $city = makeUrl($_POST['city']);
 
@@ -275,16 +294,16 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
         $lon_h = intval($output[lng]);
         $lon_m = cords2($output[lng]);
 
-        if ($lat_h > 0)
+        if ($lat_h > 0) {
             $ns = 'N';
-        else {
+        } else {
             $ns = 'S';
             $lat_h = abs($lat_h);
         }
 
-        if ($lon_h > 0)
+        if ($lon_h > 0) {
             $ew = 'E';
-        else {
+        } else {
             $ew = 'W';
             $lon_h = abs($lon_h);
         }
@@ -310,8 +329,9 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
         header('Location: ' . $link);
 
         exit;
-    } else
+    } else {
         $tpl->assign('error', 2);
+    }
 }
 
 $tpl->display('./tpl/near.tpl');

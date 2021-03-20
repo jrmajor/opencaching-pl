@@ -109,55 +109,71 @@ class Gis
             return 'N/A';
         }
 
-        if ($bearing < 11.25 || $bearing > 348.75)
+        if ($bearing < 11.25 || $bearing > 348.75) {
             return tr($form . '_n');
+        }
 
-        if ($bearing < 33.75)
+        if ($bearing < 33.75) {
             return tr($form . '_nne');
+        }
 
-        if ($bearing < 56.25)
+        if ($bearing < 56.25) {
             return tr($form . '_ne');
+        }
 
-        if ($bearing < 78.75)
+        if ($bearing < 78.75) {
             return tr($form . '_ene');
+        }
 
-        if ($bearing < 101.25)
+        if ($bearing < 101.25) {
             return tr($form . '_e');
+        }
 
-        if ($bearing < 123.75)
+        if ($bearing < 123.75) {
             return tr($form . '_ese');
+        }
 
-        if ($bearing < 146.25)
+        if ($bearing < 146.25) {
             return tr($form . '_se');
+        }
 
-        if ($bearing < 168.75)
+        if ($bearing < 168.75) {
             return tr($form . '_sse');
+        }
 
-        if ($bearing < 191.25)
+        if ($bearing < 191.25) {
             return tr($form . '_s');
+        }
 
-        if ($bearing < 213.75)
+        if ($bearing < 213.75) {
             return tr($form . '_ssw');
+        }
 
-        if ($bearing < 236.25)
+        if ($bearing < 236.25) {
             return tr($form . '_sw');
+        }
 
-        if ($bearing < 258.75)
+        if ($bearing < 258.75) {
             return tr($form . '_wsw');
+        }
 
-        if ($bearing < 281.25)
+        if ($bearing < 281.25) {
             return tr($form . '_w');
+        }
 
-        if ($bearing < 303.75)
+        if ($bearing < 303.75) {
             return tr($form . '_wnw');
+        }
 
-        if ($bearing < 326.25)
+        if ($bearing < 326.25) {
             return tr($form . '_nw');
+        }
 
-        if ($bearing <= 348.75)
+        if ($bearing <= 348.75) {
             return tr($form . '_nnw');
-        else
+        } else {
             return 'N/A';
+        }
     }
 
     /**
@@ -169,16 +185,19 @@ class Gis
      * @param float $lon2
      * @return string|number
      */
-    public static function calcBearing($lat1, $lon1, $lat2, $lon2){
+    public static function calcBearing($lat1, $lon1, $lat2, $lon2)
+    {
         if ($lat1 == $lat2 && $lon1 == $lon2) {
             return '-';
         }
 
-        if ($lat1 == $lat2)
+        if ($lat1 == $lat2) {
             $lat1 += 0.0000166;
+        }
 
-        if ($lon1 == $lon2)
+        if ($lon1 == $lon2) {
             $lon1 += 0.0000166;
+        }
 
         $rad_lat1 = $lat1 / 180.0 * M_PI;
         $rad_lon1 = $lon1 / 180.0 * M_PI;
@@ -191,28 +210,34 @@ class Gis
         $bearing = 180.0 * $bearing / M_PI;
 
         // Calculated bearing is between <-180;180> degrees; normalize it ot the 0-360 deg form:
-        if ($bearing < 0.0)
+        if ($bearing < 0.0) {
             $bearing = $bearing + 360.0;
+        }
 
         return $bearing;
     }
 
-    public static function calcBearingBetween(Coordinates $c1, Coordinates $c2){
+    public static function calcBearingBetween(Coordinates $c1, Coordinates $c2)
+    {
         return self::calcBearing($c1->getLatitude(), $c1->getLongitude(), $c2->getLatitude(), $c2->getLongitude());
     }
 
-    public static function distance($latFrom, $lonFrom, $latTo, $lonTo, $distanceMultiplier = 1){
+    public static function distance($latFrom, $lonFrom, $latTo, $lonTo, $distanceMultiplier = 1)
+    {
         $distance = acos(
             cos((90 - $latFrom) * M_PI / 180) * cos((90 - $latTo) * M_PI / 180) +
             sin((90 - $latFrom) * M_PI / 180) * sin((90 - $latTo) * M_PI / 180) *
             cos(($lonFrom - $lonTo) * M_PI / 180)) * self::EQUATORIAL_RADIUS * $distanceMultiplier;
 
-        if ($distance < 0) $distance = 0;
+        if ($distance < 0) {
+            $distance = 0;
+        }
 
         return $distance;
     }
 
-    public static function distanceBetween(Coordinates $c1, Coordinates $c2){
+    public static function distanceBetween(Coordinates $c1, Coordinates $c2)
+    {
         return self::distance($c1->getLatitude(), $c1->getLongitude(), $c2->getLatitude(), $c2->getLongitude());
     }
 

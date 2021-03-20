@@ -31,11 +31,13 @@ $NEED_FIND_LIMIT = 10;
 $NEED_APPROVE_LIMIT = 3;
 
 //Debug?
-if (! isset($debug_page))
+if (! isset($debug_page)) {
     $debug_page = false;
+}
 
-if (! isset($debug))
+if (! isset($debug)) {
     $debug = false;
+}
 
 //if you are running this site on a other domain than staging.opencaching.de, you can set
 //this in private_db.inc.php, but don't forget the ending /
@@ -48,19 +50,23 @@ $absolute_server_URI = '//localhost/';
 $dynbasepath = '/var/www/ocpl-data/';
 
 // location of cache mp3 files
-if (! isset($mp3dir))
+if (! isset($mp3dir)) {
     $mp3dir = $dynbasepath . 'mp3';
+}
 
-if (! isset($mp3url))
+if (! isset($mp3url)) {
     $mp3url = '//localhost/mp3';
+}
 
 // maximal size of mp3 for PodCache 5 Mb ?
-if (! isset($maxmp3size))
+if (! isset($maxmp3size)) {
     $maxmp3size = 5000000;
+}
 
 // allowed extensions of images
-if (! isset($mp3extensions))
+if (! isset($mp3extensions)) {
     $mp3extensions = ';mp3;';
+}
 
 //local database settings
 $dbserver = 'localhost';

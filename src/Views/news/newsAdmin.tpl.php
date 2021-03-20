@@ -9,7 +9,7 @@ use src\Utils\Uri\SimpleRouter;
     <?=tr('news_menu_OCTeam')?>
   </div>
 
-  <?php foreach($view->newsList as $news) { ?>
+  <?php foreach ($view->newsList as $news) { ?>
     <div class="callout callout-news callout-<?=$news->getStatusBootstrapName()?>">
       <div class="callout-news-status">
         <span class="news-right">

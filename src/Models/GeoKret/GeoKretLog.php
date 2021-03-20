@@ -237,13 +237,14 @@ class GeoKretLog extends BaseObject
 
     public static function RemoveFromQueueByIds(array $ids)
     {
-        if(count($ids) > 0){
+        if (count($ids) > 0) {
             self::db()->query('DELETE FROM geokret_log WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
 
-    public static function UpdateLastTryForIds(array $ids){
-        if(count($ids) > 0){
+    public static function UpdateLastTryForIds(array $ids)
+    {
+        if (count($ids) > 0) {
             self::db()->query('UPDATE geokret_log SET last_try = NOW() WHERE id IN (' . implode(',', $ids) . ')');
         }
     }
@@ -258,7 +259,7 @@ class GeoKretLog extends BaseObject
 
         $result = [];
 
-        while($row = self::db()->dbResultFetch($stmt)){
+        while ($row = self::db()->dbResultFetch($stmt)) {
             $result[] = self::FromDbRowFactory($row);
         }
 

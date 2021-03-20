@@ -19,7 +19,7 @@ class ViewBadgeShowPositionsController extends BaseController
 
     public function index()
     {
-        if($this->loggedUser->getUserId() == null){
+        if ($this->loggedUser->getUserId() == null) {
             self::redirectToLoginPage();
 
             exit;
@@ -36,8 +36,9 @@ class ViewBadgeShowPositionsController extends BaseController
         $ctrlMeritBadge = new MeritBadgeController;
         $meritBadge = $ctrlMeritBadge->buildMeritBadge($badge_id);
 
-        if ($meritBadge->getCfgShowPositions() == '')
+        if ($meritBadge->getCfgShowPositions() == '') {
             return '';
+        }
 
         $this->prepareCode();
 
@@ -47,12 +48,14 @@ class ViewBadgeShowPositionsController extends BaseController
         return $this->sCode;
     }
 
-    private function prepareCode(){
+    private function prepareCode()
+    {
         $this->sCode = file_get_contents(__DIR__ . '/../../src/Views/badge_show_positions.tpl.php');
         $this->sCode = tpl_do_translate($this->sCode);
     }
 
-    private function setVar($name, $value){
+    private function setVar($name, $value)
+    {
         $this->sCode = mb_ereg_replace('{' . $name . '}', $value, $this->sCode);
     }
 }

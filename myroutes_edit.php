@@ -120,7 +120,7 @@ if (! $loggedUser) {
                     }
                 }
                 // end of read
-//we get the point data in to an array called $points:
+                //we get the point data in to an array called $points:
 
                 if (! $error) {
                     for ($i = 0; $i < count($coords) - 1; $i = $i + 2) {
@@ -132,7 +132,7 @@ if (! $loggedUser) {
                         }
                     }
                 }
-// add it to the route_points database:
+                // add it to the route_points database:
                 $point_num = 0;
 
                 foreach ($points as $point) {

@@ -224,11 +224,13 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
         foreach ($dane as $k => $v) {
             $listaKodowOP[] = XDb::xEscape($v['kod_str']);
 
-            if ($v['timestamp'] < $minTimeStamp)
+            if ($v['timestamp'] < $minTimeStamp) {
                 $minTimeStamp = $v['timestamp'];
+            }
 
-            if ($v['timestamp'] > $maxTimeStamp)
+            if ($v['timestamp'] > $maxTimeStamp) {
                 $maxTimeStamp = $v['timestamp'];
+            }
         }
 
         // lista identyfikatorow cache ktore znalazlem w bazie
@@ -241,7 +243,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                 FROM `caches` as c LEFT JOIN `user` as u ON u.`user_id` = c.`user_id`
                 WHERE c.`wp_oc` IN ('" . implode("','",$listaKodowOP) . "')");
 
-            while ($record = XDb::xFetchArray($rs)){
+            while ($record = XDb::xFetchArray($rs)) {
                 // dodanie dodatkowych info do odpowiedniej skrzynki:
                 foreach ($dane as $k => $v) {
                     if ($v['kod_str'] == $record['wp_oc']) {

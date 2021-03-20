@@ -4,7 +4,8 @@ namespace src\Utils\Text;
 
 class TextConverter
 {
-    public static function addHyperlinkToURL($text){
+    public static function addHyperlinkToURL($text)
+    {
         $texti = mb_strtolower($text);
         $retval = '';
         $curpos = 0;
@@ -14,42 +15,42 @@ class TextConverter
         while (($starthttp !== false) || ($endhttp >= mb_strlen($text))) {
             $endhttp1 = mb_strpos($text, ' ', $starthttp);
 
-            if ($endhttp1 === false){
+            if ($endhttp1 === false) {
                 $endhttp1 = mb_strlen($text);
             }
             $endhttp2 = mb_strpos($text, "\n", $starthttp);
 
-            if ($endhttp2 === false){
+            if ($endhttp2 === false) {
                 $endhttp2 = mb_strlen($text);
             }
 
             $endhttp3 = mb_strpos($text, "\r", $starthttp);
 
-            if ($endhttp3 === false){
+            if ($endhttp3 === false) {
                 $endhttp3 = mb_strlen($text);
             }
 
             $endhttp4 = mb_strpos($text, '<', $starthttp);
 
-            if ($endhttp4 === false){
+            if ($endhttp4 === false) {
                 $endhttp4 = mb_strlen($text);
             }
 
             $endhttp5 = mb_strpos($text, '] ', $starthttp);
 
-            if ($endhttp5 === false){
+            if ($endhttp5 === false) {
                 $endhttp5 = mb_strlen($text);
             }
 
             $endhttp6 = mb_strpos($text, ')', $starthttp);
 
-            if ($endhttp6 === false){
+            if ($endhttp6 === false) {
                 $endhttp6 = mb_strlen($text);
             }
 
             $endhttp7 = mb_strpos($text, '. ', $starthttp);
 
-            if ($endhttp7 === false){
+            if ($endhttp7 === false) {
                 $endhttp7 = mb_strlen($text);
             }
 
@@ -62,7 +63,7 @@ class TextConverter
 
             $curpos = $endhttp;
 
-            if ($curpos >= mb_strlen($text)){
+            if ($curpos >= mb_strlen($text)) {
                 break;
             }
             $starthttp = mb_strpos(mb_strtolower($text), 'http://', $curpos);
@@ -79,16 +80,18 @@ class TextConverter
      *
      * @param unknown $str
      */
-    public static function mb_trim($str){
+    public static function mb_trim($str)
+    {
         $bLoop = true;
 
         while ($bLoop == true) {
             $sPos = mb_substr($str, 0, 1);
 
-            if ($sPos == ' ' || $sPos == "\r" || $sPos == "\n" || $sPos == "\t" || $sPos == "\x0B" || $sPos == "\0")
+            if ($sPos == ' ' || $sPos == "\r" || $sPos == "\n" || $sPos == "\t" || $sPos == "\x0B" || $sPos == "\0") {
                 $str = mb_substr($str, 1, mb_strlen($str) - 1);
-                else
-                    $bLoop = false;
+            } else {
+                $bLoop = false;
+            }
         }
 
         $bLoop = true;
@@ -96,10 +99,11 @@ class TextConverter
         while ($bLoop == true) {
             $sPos = mb_substr($str, -1, 1);
 
-            if ($sPos == ' ' || $sPos == "\r" || $sPos == "\n" || $sPos == "\t" || $sPos == "\x0B" || $sPos == "\0")
+            if ($sPos == ' ' || $sPos == "\r" || $sPos == "\n" || $sPos == "\t" || $sPos == "\x0B" || $sPos == "\0") {
                 $str = mb_substr($str, 0, mb_strlen($str) - 1);
-                else
-                    $bLoop = false;
+            } else {
+                $bLoop = false;
+            }
         }
 
         return $str;
@@ -135,14 +139,14 @@ class TextConverter
     {
         $val = trim($val);
 
-        if (is_numeric($val)){
+        if (is_numeric($val)) {
             return $val;
         }
 
         $unit = strtolower($val[strlen($val) - 1]);
         $val = substr($val, 0, -1); // necessary since PHP 7.1; otherwise optional
 
-        switch($unit) {
+        switch ($unit) {
             // The 'G' modifier is available since PHP 5.1.0
             case 'g':
                 $val *= 1024;

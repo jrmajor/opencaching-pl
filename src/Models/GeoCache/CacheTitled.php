@@ -43,14 +43,15 @@ class CacheTitled extends BaseObject
      * @param int $cacheId
      * @return CacheTitled|null (null if no such CacheTitled entry in DB)
      */
-    public static function fromCacheIdFactory($cacheId){
+    public static function fromCacheIdFactory($cacheId)
+    {
         $result = new self();
 
         try {
             $result->loadByCacheId($cacheId);
 
             return $result;
-        } catch (Exception $e){
+        } catch (Exception $e) {
             return null;
         }
     }
@@ -86,12 +87,12 @@ class CacheTitled extends BaseObject
 
         $row = $db->dbResultFetchOneRowOnly($rs);
 
-        if(! empty($row)){
+        if (! empty($row)) {
             $obj = new self();
             $obj->loadFromRow($row);
 
             return $obj;
-        }else{
+        } else {
             // strange - titledCaches table is empty ?!
             return null;
         }

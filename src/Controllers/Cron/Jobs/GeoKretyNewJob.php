@@ -67,8 +67,9 @@ class GeoKretyNewJob extends Job
                 WHERE id='" . XDb::xEscape($id) . "'");
             $cache_codes = [];
 
-            while ($row = XDb::xFetchArray($rs))
+            while ($row = XDb::xFetchArray($rs)) {
                 $cache_codes[] = $row[0];
+            }
             Facade::schedule_geocache_check($cache_codes);
 
             /* waypoints update */
@@ -92,7 +93,7 @@ class GeoKretyNewJob extends Job
         $rs = XDb::xSql('SELECT distinct wp FROM gk_item_waypoint WHERE id NOT IN (SELECT id FROM gk_item)');
         $cache_codes = [];
 
-        while ($row = XDb::xFetchArray($rs)){
+        while ($row = XDb::xFetchArray($rs)) {
             $cache_codes[] = $row[0];
         }
 

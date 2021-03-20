@@ -76,7 +76,7 @@ abstract class OAuthSimpleUserBase
      */
     public function getErrorDescription()
     {
-        switch($this->error){
+        switch ($this->error) {
             case self::ERROR_EXT_DESC:
                 return $this->errorDesc;
             case self::ERROR_NO_CODE:
@@ -123,9 +123,9 @@ abstract class OAuthSimpleUserBase
     {
         self::checkSession();
 
-        if(! isset($_SESSION[static::SESSION_VAR]) ||
-            ! is_array($_SESSION[static::SESSION_VAR])){
-                $_SESSION[static::SESSION_VAR] = [];
+        if (! isset($_SESSION[static::SESSION_VAR]) ||
+            ! is_array($_SESSION[static::SESSION_VAR])) {
+            $_SESSION[static::SESSION_VAR] = [];
         }
         $_SESSION[static::SESSION_VAR][$var] = true;
     }
@@ -134,13 +134,13 @@ abstract class OAuthSimpleUserBase
     {
         self::checkSession();
 
-        if(isset($_SESSION[static::SESSION_VAR]) &&
+        if (isset($_SESSION[static::SESSION_VAR]) &&
             is_array($_SESSION[static::SESSION_VAR]) &&
-            isset($_SESSION[static::SESSION_VAR][$var])){
-                // state var is single-use only
-                unset($_SESSION[static::SESSION_VAR][$var]);
+            isset($_SESSION[static::SESSION_VAR][$var])) {
+            // state var is single-use only
+            unset($_SESSION[static::SESSION_VAR][$var]);
 
-                return true;
+            return true;
         }
 
         return false;
@@ -149,7 +149,7 @@ abstract class OAuthSimpleUserBase
     protected static function checkSession()
     {
         // be sure session is started
-        if(session_status() != PHP_SESSION_ACTIVE){
+        if (session_status() != PHP_SESSION_ACTIVE) {
             session_start();
         }
     }

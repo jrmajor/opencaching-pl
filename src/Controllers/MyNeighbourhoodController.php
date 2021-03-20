@@ -120,12 +120,12 @@ class MyNeighbourhoodController extends BaseController
                 }
             }
         }
-        $mapModel->addMarkersWithExtractor(CacheMarkerModel::class, $allCaches, function($row){
+        $mapModel->addMarkersWithExtractor(CacheMarkerModel::class, $allCaches, function($row) {
             return CacheMarkerModel::fromGeocacheFactory($row, $this->loggedUser);
         });
 
         if ($preferences['items'][Neighbourhood::ITEM_LATESTLOGS]['show']) {
-            $mapModel->addMarkersWithExtractor(LogMarkerModel::class, $latestLogs, function($row){
+            $mapModel->addMarkersWithExtractor(LogMarkerModel::class, $latestLogs, function($row) {
                 return LogMarkerModel::fromGeoCacheLogFactory($row, $this->loggedUser);
             });
         }

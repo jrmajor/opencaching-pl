@@ -1218,7 +1218,7 @@
 
     /* maps */
 </script>
-    <?php if(isset($view->dynamicMapModel)) { ?>
+    <?php if (isset($view->dynamicMapModel)) { ?>
       <?php $view->callChunk('dynamicMap/dynamicMap', $view->dynamicMapModel, 'map_canvas'); ?>
     <?php } //if-dynamicMap-present ?>
 
@@ -1260,7 +1260,7 @@
         <!-- map -->
         <div id="mapOuterdiv" style="display: {mapOuterdiv}" class="content2-container">
             <div class="align-right" style="height: 32px">
-                <?php if(isset($view->fullScreenMapPtLink)) { ?>
+                <?php if (isset($view->fullScreenMapPtLink)) { ?>
                 <a id="fullscreenOn" style="cursor: pointer"
                    href="<?=$view->fullScreenMapPtLink?>" >
                   <img src="images/fullscreen.png" alt="{{fullscreen}}" title="{{fullscreen}}">
@@ -1418,7 +1418,7 @@
                         <p id="toggleImageEditButton" style="text-align: center; display: {displayAddCachesButtons}">
                             <a id="uploadLogoBtn" href="javascript:void(0)" class="editPtDataButton">{{pt060}}</a>
                         </p>
-                        <?php if(isset($view->logoUploadModelJson)) {?>
+                        <?php if (isset($view->logoUploadModelJson)) {?>
                         <script>
                           $('#uploadLogoBtn').click( function(e){
 

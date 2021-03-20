@@ -28,7 +28,7 @@ class EmailSender
         $spamDomain = OcSpamDomain::GENERIC_ERRORS)
     {
         //first check if sending email is allowed
-        if(! OcSpamDomain::isEmailAllowed($spamDomain)){
+        if (! OcSpamDomain::isEmailAllowed($spamDomain)) {
             //skip email
             return;
         }
@@ -118,7 +118,8 @@ class EmailSender
     }
 
     public static function sendAdoptionOffer($emailTemplateFile, $cacheName, $newOwnerUserName,
-        $oldOwnerUserName, $userEmail) {
+        $oldOwnerUserName, $userEmail)
+    {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_26'));
         $formattedMessage->setVariable('userName', '<b>' . $oldOwnerUserName . '</b>');
@@ -137,7 +138,8 @@ class EmailSender
     }
 
     public static function sendAdoptionSuccessMessage($emailTemplateFile, $cacheName, $newOwnerUserName,
-        $oldOwnerUserName, $oldOwnerEmail) {
+        $oldOwnerUserName, $oldOwnerEmail)
+    {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_31'));
         $formattedMessage->setVariable('userName', '<b>' . $newOwnerUserName . '</b>');
@@ -156,7 +158,8 @@ class EmailSender
     }
 
     public static function sendAdoptionRefusedMessage($emailTemplateFile, $cacheName, $newOwnerUserName,
-        $oldOwnerUserName, $oldOwnerEmail) {
+        $oldOwnerUserName, $oldOwnerEmail)
+    {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('adopt01', tr('adopt_29'));
         $formattedMessage->setVariable('userName', '<b>' . $newOwnerUserName . '</b>');
@@ -175,7 +178,8 @@ class EmailSender
     }
 
     public static function sendNotifyAboutNewCacheToOcTeam($emailTemplateFile, User $owner, $newCacheName, $newCacheId,
-                                                           $region, $country) {
+                                                           $region, $country)
+    {
         $formattedMessage = new EmailFormatter($emailTemplateFile);
         $formattedMessage->setVariable('ocTeamNewCache_01', tr('ocTeamNewCache_01'));
         $formattedMessage->setVariable('ocTeamNewCache_02', tr('ocTeamNewCache_02'));

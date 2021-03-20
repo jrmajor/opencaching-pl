@@ -17,7 +17,8 @@ class Column_CacheTypeIcon extends AbstractColumn
         return 'listOfCaches/cacheTypeIconColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

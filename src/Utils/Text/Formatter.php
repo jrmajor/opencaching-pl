@@ -76,7 +76,7 @@ class Formatter
      */
     public static function dateTime($datetime = null)
     {
-        if(! $datetime){
+        if (! $datetime) {
             $datetime = new DateTime();
         }
 

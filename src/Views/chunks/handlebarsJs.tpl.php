@@ -4,7 +4,7 @@
  * This chunk is used to load handlebarsJs - JS templates system
  * https://handlebarsjs.com/
  */
-return function (){
+return function () {
     //start of chunk
 
 ?>

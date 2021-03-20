@@ -39,8 +39,9 @@ if (empty($user)) {
 
     $uuid = isset($_REQUEST['uuid']) ? $_REQUEST['uuid'] : 0;
 
-    if (! $uuid)
+    if (! $uuid) {
         $message = $message_mp3_not_found;
+    }
 
     if (! $message) {
         // read from database and check owner
@@ -114,10 +115,11 @@ if (empty($user)) {
 
             $row['display'] = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
 
-            if ($row['display'] == 0)
+            if ($row['display'] == 0) {
                 $row['display'] = 1;
-            else
+            } else {
                 $row['display'] = 0; // reverse
+            }
 
             $row['title'] = isset($_REQUEST['title']) ? stripslashes($_REQUEST['title']) : '';
 
@@ -155,10 +157,11 @@ if (empty($user)) {
         tpl_set_var('cachename', htmlspecialchars($row['name'], ENT_COMPAT, 'UTF-8'));
         tpl_set_var('title', htmlspecialchars($row['title'], ENT_COMPAT, 'UTF-8'));
 
-        if ($row['title'] <= '')
+        if ($row['title'] <= '') {
             tpl_set_var('errnotitledesc', $errnotitledesc);
-        else
+        } else {
             tpl_set_var('errnotitledesc', '');
+        }
         tpl_set_var('uuid', htmlspecialchars($uuid, ENT_COMPAT, 'UTF-8'));
         tpl_set_var('notdisplaychecked', $row['display'] == '0' ? 'checked' : '');
 

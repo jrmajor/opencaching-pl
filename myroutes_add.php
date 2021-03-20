@@ -98,7 +98,7 @@ if (! $loggedUser) {
             // add it to the route_points database:
             $point_num = 0;
 
-            if(isset($points)){
+            if (isset($points)) {
                 foreach ($points as $point) {
                     $point_num++;
                     $result = XDb::xSql(

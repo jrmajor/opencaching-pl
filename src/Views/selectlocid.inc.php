@@ -9,8 +9,9 @@ $secondlocationname = '&nbsp;<font size="1">({secondlocationname})</font>';
 
 function landFromLocid($locid)
 {
-    if (! is_numeric($locid))
+    if (! is_numeric($locid)) {
         return '';
+    }
 
     XDb::xMultiVariableQueryValue(
         "SELECT `ld`.`text_val` `land`
@@ -27,8 +28,9 @@ function landFromLocid($locid)
 
 function regierungsbezirkFromLocid($locid)
 {
-    if (! is_numeric($locid))
+    if (! is_numeric($locid)) {
         return '';
+    }
 
     return XDb::xMultiVariableQueryValue(
         'SELECT `rb`.`text_val` `regierungsbezirk`
@@ -44,8 +46,9 @@ function regierungsbezirkFromLocid($locid)
 
 function landkreisFromLocid($locid)
 {
-    if (! is_numeric($locid))
+    if (! is_numeric($locid)) {
         return '';
+    }
 
     return XDb::xMultiVariableQueryValue(
         'SELECT `rb`.`text_val` `regierungsbezirk`

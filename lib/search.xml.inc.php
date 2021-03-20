@@ -84,9 +84,9 @@ if (! $loggedUser) {
             . $loggedUser->getUserId();
 }
 
-if(! empty($queryFilter)){
+if (! empty($queryFilter)) {
     $query .= ' WHERE `caches`.`cache_id` IN (' . $queryFilter . ')';
-} else{
+} else {
     // empty $queryFilter == there is no results!
     $query .= ' WHERE FALSE';
 }
@@ -169,7 +169,7 @@ $stmt = XDb::xSql(
         AND `xmlcontent`.`user_id`=`user`.`user_id` AND `caches`.`type`=`cache_type`.`id`
         AND `caches`.`status`=`cache_status`.`id`');
 
-while($r = XDb::xFetchArray($stmt)) {
+while ($r = XDb::xFetchArray($stmt)) {
     if (@$enable_cache_access_logs) {
         $dbc = OcDb::instance();
 
@@ -272,7 +272,7 @@ function filterevilchars($str)
     ];
 
     foreach ($evilchars as $ascii) {
-            $str = str_replace(chr($ascii), '', $str);
+        $str = str_replace(chr($ascii), '', $str);
     }
     $str = mb_ereg_replace('/&([a-zA-Z]{1})caron;/', '\\1', $str);
     $str = mb_ereg_replace('/&([a-zA-Z]{1})acute;/', '\\1', $str);

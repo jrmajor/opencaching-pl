@@ -67,9 +67,9 @@ class GoogleOAuth extends OAuthSimpleUserBase
             '&response_type=code' .
             '&client_id=' . self::getClientId();
 
-        if($urlForHtml){
+        if ($urlForHtml) {
             return htmlspecialchars($url);
-        }else{
+        } else {
             return $url;
         }
     }
@@ -82,16 +82,16 @@ class GoogleOAuth extends OAuthSimpleUserBase
     {
         $instance = new self();
         // step 3: check if user is authorized by Google
-        if(! $instance->isUserAuthorizedByGoogle()){
+        if (! $instance->isUserAuthorizedByGoogle()) {
             return $instance;
         }
         // step 4: retrive access-token from Google
-        if(! $instance->isAccessTokenRetrived()){
+        if (! $instance->isAccessTokenRetrived()) {
             return $instance;
         }
 
         // step 5: retrive user data from Google
-        if(! $instance->isUserDataReady()){
+        if (! $instance->isUserDataReady()) {
             return $instance;
         }
 
@@ -103,20 +103,20 @@ class GoogleOAuth extends OAuthSimpleUserBase
      */
     private function isUserAuthorizedByGoogle()
     {
-        if(! isset($_GET['code'])){
+        if (! isset($_GET['code'])) {
             $this->error = self::ERROR_NO_CODE;
 
             return false;
         }
 
-        if(! isset($_GET['state'])){
+        if (! isset($_GET['state'])) {
             $this->error = self::ERROR_NO_STATE;
 
             return false;
         }
 
         // check state string
-        if(! self::checkStateSessionVar($_GET['state'])){
+        if (! self::checkStateSessionVar($_GET['state'])) {
             $this->error = self::ERROR_STATE_INVALID;
 
             return false;
@@ -153,7 +153,7 @@ class GoogleOAuth extends OAuthSimpleUserBase
         $context = stream_context_create($opts);
         $response = file_get_contents($tokenServiceUrl, false, $context);
 
-        if($response === false){
+        if ($response === false) {
             $this->error = self::ERROR_CANT_GET_TOKEN;
 
             return false;
@@ -161,7 +161,7 @@ class GoogleOAuth extends OAuthSimpleUserBase
 
         $respObj = json_decode($response);
 
-        if(is_null($respObj)){
+        if (is_null($respObj)) {
             $this->error = self::ERROR_INVALID_TOKEN_JSON;
 
             return false;
@@ -182,7 +182,7 @@ class GoogleOAuth extends OAuthSimpleUserBase
 
         $response = file_get_contents($url);
 
-        if($response === false){
+        if ($response === false) {
             $this->error = self::ERROR_CANT_RETRIVE_USER_DATA;
 
             return false;
@@ -190,12 +190,12 @@ class GoogleOAuth extends OAuthSimpleUserBase
 
         $respObj = json_decode($response);
 
-        if(is_null($respObj) || ! isset($respObj->name) ||
+        if (is_null($respObj) || ! isset($respObj->name) ||
             ! isset($respObj->id) || ! isset($respObj->email)
-            ){
-                $this->error = self::ERROR_INVALID_USER_DATA_JSON;
+            ) {
+            $this->error = self::ERROR_INVALID_USER_DATA_JSON;
 
-                return false;
+            return false;
         }
 
         $this->username = $respObj->name;

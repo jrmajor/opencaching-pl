@@ -14,7 +14,7 @@ $ptId = (int) $_REQUEST['ptId'];
 
 $ptTotalCacheesCount = powerTrailBase::getPtCacheCount($ptId);
 
-if($ptTotalCacheesCount == 0){ // power Trail has no caches!
+if ($ptTotalCacheesCount == 0) { // power Trail has no caches!
     echo tr('pt105');
 
     exit;
@@ -47,7 +47,7 @@ $db = OcDb::instance();
 $s = $db->multiVariableQuery($q, $ptId);
 $statsArr = $db->dbResultFetchAll($s);
 
-if(count($statsArr) == 0){ // no result!
+if (count($statsArr) == 0) { // no result!
     echo tr('pt105');
 
     exit;
@@ -56,7 +56,7 @@ if(count($statsArr) == 0){ // no result!
 foreach ($statsArr as $user) {
     $tmpDate = substr($user['date'], 0, -9);
 
-    if(! isset($sorted[$user['user_id']])) {
+    if (! isset($sorted[$user['user_id']])) {
         $sorted[$user['user_id']] = [
             'user_id' => $user['user_id'],
             'username' => $user['username'],
@@ -66,7 +66,7 @@ foreach ($statsArr as $user) {
     } else {
         $sorted[$user['user_id']]['FoundCount'] += $user['FoundCount'];
 
-        if(! in_array($tmpDate, $tmp[$user['user_id']]['dates'])){
+        if (! in_array($tmpDate, $tmp[$user['user_id']]['dates'])) {
             $tmp[$user['user_id']]['dates'][] = $tmpDate;
         }
     }
@@ -78,7 +78,7 @@ foreach ($tmp as $userId => $value) {
 
 $sort = [];
 
-foreach($sorted as $k => $v) {
+foreach ($sorted as $k => $v) {
     $sort['username'][$k] = $v['username'];
     $sort['FoundCount'][$k] = $v['FoundCount'];
 }
@@ -108,17 +108,20 @@ if ($ptTotalCacheesCount != 0) {
         if ($ptPercent >= $ptDbRow['perccentRequired']) {
             $fullPtFoundCount++;
 
-            if(isset($averageDaysSpent)) {
+            if (isset($averageDaysSpent)) {
                 $averageDaysSpent = (($averageDaysSpent * $totalNumber) + $user['daysSpent']) / ($totalNumber + 1);
                 $totalNumber++;
-            }
-            else {
+            } else {
                 $averageDaysSpent = $user['daysSpent'];
                 $totalNumber = 1;
             }
         }
 
-        if($bgcolor == '#eeeeff') $bgcolor = '#ffffff'; else $bgcolor = '#eeeeff';
+        if ($bgcolor == '#eeeeff') {
+            $bgcolor = '#ffffff';
+        } else {
+            $bgcolor = '#eeeeff';
+        }
         $stats2display .= '<tr style="background-color: ' . $bgcolor . ';">
             <td ><a href="viewprofile.php?userid=' . $user['user_id'] . '">' . $user['username'] . '</a></td>
             <td style="text-align: center;">' . $user['FoundCount'] . '</td>

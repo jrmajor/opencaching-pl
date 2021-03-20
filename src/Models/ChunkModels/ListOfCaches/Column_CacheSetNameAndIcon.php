@@ -18,7 +18,8 @@ class Column_CacheSetNameAndIcon extends AbstractColumn
         return 'listOfCaches/cacheSetNameAndIconColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'left';
     }
 }

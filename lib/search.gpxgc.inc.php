@@ -22,8 +22,8 @@ set_time_limit(1800);
 $user = ApplicationContainer::GetAuthorizedUser();
 
 if (! $user && $hide_coords) {
-  // user not logged + coords hidden for not logged
-  exit;
+    // user not logged + coords hidden for not logged
+    exit;
 }
 
 // prepare the output
@@ -116,7 +116,7 @@ if ($countGPX == 1) {
             $queryName = $dbcSearch->multiVariableQueryValue(
                 'SELECT name FROM queries WHERE id = :1 LIMIT 1', '', $options['queryid']);
 
-            if(empty($queryName)) {
+            if (empty($queryName)) {
                 $sFilebasename = 'search' . $options['queryid'];
             } else {
                 $sFilebasename = str_replace(' ', '_', trim($queryName));
@@ -136,7 +136,7 @@ $hasWaypoints = $dbcSearch->simpleQueryValue(
         AND cache_id IN (SELECT cache_id FROM gpxcontent)
      LIMIT 1', false);
 
-if($hasWaypoints) {
+if ($hasWaypoints) {
     $children = '(HasChildren)';
 } else {
     $children = '';
@@ -464,10 +464,11 @@ while ($r = XDb::xFetchArray($stmt)) {
         $thislog = str_replace('{id}', $rLog['id'], $thislog);
         $thislog = str_replace('{date}', date($gpxTimeFormat, strtotime($rLog['date'])), $thislog);
 
-        if (isset($gpxLogType[$rLog['type']]))
+        if (isset($gpxLogType[$rLog['type']])) {
             $logtype = $gpxLogType[$rLog['type']];
-        else
+        } else {
             $logtype = $gpxLogType[0];
+        }
 
         if ($logtype == 'OC Team Comment') {
             $rLog['username'] = xmlentities(convert_string(tr('cog_user_name')));
@@ -511,8 +512,9 @@ while ($r = XDb::xFetchArray($stmt)) {
         $thisGeoKret = $gpxGeoKrety;
         $gk_wp = strtoupper(dechex($geokret['id']));
 
-        while (mb_strlen($gk_wp) < 4)
+        while (mb_strlen($gk_wp) < 4) {
             $gk_wp = '0' . $gk_wp;
+        }
         $gkWP = 'GK' . mb_strtoupper($gk_wp);
         $thisGeoKret = str_replace('{geokret_id}', xmlentities($geokret['id']), $thisGeoKret);
         $thisGeoKret = str_replace('{geokret_ref}', $gkWP, $thisGeoKret);
@@ -552,10 +554,11 @@ while ($r = XDb::xFetchArray($stmt)) {
             }
             $thiswp = str_replace('{desc}', xmlentities(cleanup_text($rwp['desc'])), $thiswp);
 
-            if (isset($wptType[$rwp['type']]))
+            if (isset($wptType[$rwp['type']])) {
                 $thiswp = str_replace('{wp_type}', $wptType[$rwp['type']], $thiswp);
-            else
+            } else {
                 $thiswp = str_replace('{wp_type}', $wptType[0], $thiswp);
+            }
             $waypoints .= $thiswp;
         }
     }

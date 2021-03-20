@@ -25,8 +25,9 @@ function colorCacheStatus($text, $id)
 
 function nonEmptyCacheName($cacheName)
 {
-    if (str_replace(' ', '', $cacheName) == '')
+    if (str_replace(' ', '', $cacheName) == '') {
         return '[bez nazwy]';
+    }
 
     return $cacheName;
 }
@@ -73,8 +74,9 @@ function activateCache($cacheid)
     if (actionRequired($cacheid)) {
         if (XDb::xSql('UPDATE caches SET status = 5 WHERE cache_id= ? ', $cacheid)) {
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     return false;
@@ -86,8 +88,9 @@ function declineCache($cacheid)
     if (actionRequired($cacheid)) {
         if (XDb::xSql('UPDATE caches SET status = 6 WHERE cache_id= ? ', $cacheid)) {
             return true;
-        } else
+        } else {
             return false;
+        }
     }
 
     return false;
@@ -124,7 +127,7 @@ function notifyOwner($cacheid, $msgType)
 
     $user = ApplicationContainer::GetAuthorizedUser();
 
-    if(! $user) {
+    if (! $user) {
         return;
     }
 
@@ -298,10 +301,11 @@ while ($report = XDb::xFetchArray($stmt)) {
         $trstyle = '';
     }
 
-    if ($row_num % 2)
+    if ($row_num % 2) {
         $bgcolor = 'bgcolor1';
-    else
+    } else {
         $bgcolor = 'bgcolor2';
+    }
 
     $content .= "<tr class='" . $trstyle . "'>\n";
     $content .= "<td class='" . $bgcolor . "'>

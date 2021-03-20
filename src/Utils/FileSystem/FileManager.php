@@ -11,7 +11,8 @@ class FileManager
      * @param $filePattern - pattern of filenames to remove
      * @param $timeout - time period in seconds
      */
-    public static function removeFilesOlderThan($dir, $filePattern, $timeout){
+    public static function removeFilesOlderThan($dir, $filePattern, $timeout)
+    {
         $files = glob($dir . $filePattern);
         $now = time();
 

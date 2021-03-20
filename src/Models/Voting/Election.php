@@ -126,7 +126,7 @@ class Election extends BaseObject
         // save fact that user voted
         Voter::saveToDb($user, $this);
         // save votes
-        if(! empty($votes)) {
+        if (! empty($votes)) {
             Vote::saveToDb($this, $user, $votes);
         }
         $this->db->commit();
@@ -295,12 +295,13 @@ class ElectionRules
     public $disallowLessVotes = null;
     public $disallowNoVotes = null;
 
-    public function __construct ($jsonStr) {
+    public function __construct ($jsonStr)
+    {
         $arr = json_decode($jsonStr, true);
 
         if (is_array($arr)) {
             foreach ($arr as $key => $val) {
-                switch ($key){
+                switch ($key) {
                     case 'votesPerUser':
                         $this->votesPerUser = $val;
                         break;
@@ -362,12 +363,13 @@ class VoterCriteria
     public $founds = null;          // if user has at least this number of founds
     public $daysWithOc = null;      // if user signed up at least this number days before
 
-    public function __construct ($jsonStr) {
+    public function __construct ($jsonStr)
+    {
         $arr = json_decode($jsonStr, true);
 
         if (is_array($arr)) {
             foreach ($arr as $key => $val) {
-                switch ($key){
+                switch ($key) {
                     case 'founds':
                         $this->founds = $val;
                         break;
@@ -388,7 +390,8 @@ class VoterCriteria
      * @param Election $election
      * @return bool
      */
-    public function validateUser (User $user, Election $election): bool {
+    public function validateUser (User $user, Election $election): bool
+    {
         // validate founds
         if ($this->founds) {
             if ($user->getFoundGeocachesCount() < $this->founds) {

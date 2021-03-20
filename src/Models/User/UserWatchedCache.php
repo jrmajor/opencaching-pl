@@ -13,7 +13,8 @@ class UserWatchedCache extends BaseObject
             0, $cacheId, $userId);
     }
 
-    public static function addCacheToWatched($userId, $cacheWp){
+    public static function addCacheToWatched($userId, $cacheWp)
+    {
         $params = [
             'cache_code' => $cacheWp,
             'watched' => 'true', // true need to be a string!!!
@@ -24,7 +25,8 @@ class UserWatchedCache extends BaseObject
         return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
-    public static function removeFromWatched($userId, $cacheWp){
+    public static function removeFromWatched($userId, $cacheWp)
+    {
         $params = [
             'cache_code' => $cacheWp,
             'watched' => 'false', // false need to be a string!!!
@@ -35,7 +37,8 @@ class UserWatchedCache extends BaseObject
         return (isset($okapiResp['success']) && $okapiResp['success'] == true);
     }
 
-    public static function getWatchedCachesCount($userId){
+    public static function getWatchedCachesCount($userId)
+    {
         return self::db()->multiVariableQueryValue(
             'SELECT COUNT(*) FROM cache_watches
             WHERE user_id = :1  ', 0, $userId);
@@ -43,7 +46,7 @@ class UserWatchedCache extends BaseObject
 
     public static function getWatchedCachesWithLastLogs(
         $userId, $limit = null, $offset = null
-    ){
+    ) {
         $db = self::db();
 
         [$limit, $offset] = $db->quoteLimitOffset($limit, $offset);

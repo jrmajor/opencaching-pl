@@ -62,8 +62,9 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
         $desclang = $_POST['desclang'];
         $show_all_langs = isset($_POST['show_all_langs_value']) ? $_POST['show_all_langs_value'] : 0;
 
-        if (! is_numeric($show_all_langs))
+        if (! is_numeric($show_all_langs)) {
             $show_all_langs = 0;
+        }
 
         // Text from textarea
         $desc = $_POST['desc'];
@@ -77,7 +78,7 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
                 WHERE `cache_id`= :1 AND `id` != :2 AND `language`= :3 ',
                 0, $desc_record['cache_id'], $descid, $desclang);
 
-            if ($cacheLang > 0){
+            if ($cacheLang > 0) {
                 tpl_errorMsg('editdesc', 'There is such languages description for this cache...');
             }
 
@@ -122,8 +123,9 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
             "SELECT `list_default_$eLang` AS `list` FROM `languages`
             WHERE `short`= :1 LIMIT 1", 0, $desc_lang);
 
-        if ($r_list == 0)
+        if ($r_list == 0) {
             $show_all_langs = true;
+        }
     }
 
     $languages = '';
@@ -138,8 +140,9 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
         "ORDER BY `$eLang` ASC",
         $desc_record['cache_id'], $desc_lang);
 
-    while ($r = XDb::xFetchArray($rs))
+    while ($r = XDb::xFetchArray($rs)) {
         $languages .= '<option value="' . $r['short'] . '"' . (($r['short'] == $desc_lang) ? ' selected="selected"' : '') . '>' . htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
+    }
     XDb::xFreeResults($rs);
     tpl_set_var('desclangs', $languages);
 

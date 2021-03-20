@@ -1,6 +1,6 @@
 <?php
 
-switch($_GET['page']) {
+switch ($_GET['page']) {
 default:
 case 'logbook':
 include('logbook.php');

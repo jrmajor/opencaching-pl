@@ -47,7 +47,7 @@ class CacheVisits
 
         $result = [];
 
-        while($row = XDb::xFetchArray($s)){
+        while ($row = XDb::xFetchArray($s)) {
             $result[] = $row['user_id_ip'];
         }
 
@@ -77,15 +77,15 @@ class CacheVisits
     public static function CountCacheVisit($userIdOrIp, $cacheId)
     {
         //ocasionally clean table
-        if(0 == rand(0, 1000)){
+        if (0 == rand(0, 1000)) {
             self::clearOldUniqueVisits();
         }
 
         // check if this is unique visit
-        if(0 == XDb::xMultiVariableQueryValue(
+        if (0 == XDb::xMultiVariableQueryValue(
             'SELECT COUNT(*) FROM cache_visits2
             WHERE cache_id = :1 AND user_id_ip = :2 AND type = :3 AND visit_date > NOW() - :4 LIMIT 1',
-            0, $cacheId, $userIdOrIp, self::TYPE_LAST_USER_UNIQUE_VISIT, self::UNIQUE_VISIT_PERIOD)){
+            0, $cacheId, $userIdOrIp, self::TYPE_LAST_USER_UNIQUE_VISIT, self::UNIQUE_VISIT_PERIOD)) {
             // this is unique visit
 
             // add user-visit record

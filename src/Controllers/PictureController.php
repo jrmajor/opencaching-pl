@@ -24,7 +24,8 @@ class PictureController extends BaseController
     }
 
     public function index()
-    {}
+    {
+    }
 
     /**
      * This function handles file upload by AJAX.
@@ -51,10 +52,10 @@ class PictureController extends BaseController
         // use the same upload model and store the files in the right place on server
         $uploadModel = UploadModel::PicUploadFactory($parentType, $parentId);
 
-        try{
+        try {
             // save uploaded files
             $newFiles = FileUploadMgr::processFileUpload($uploadModel);
-        } catch (RuntimeException $e){
+        } catch (RuntimeException $e) {
             // some error occured on upload processing
             $this->ajaxErrorResponse($e->getMessage(), 500);
         }
@@ -113,7 +114,7 @@ class PictureController extends BaseController
         $pics = [];
         $orderIdx = 0;
 
-        foreach($uuids as $uuid) {
+        foreach ($uuids as $uuid) {
             if (! Uuid::isValidUuid($uuid)) {
                 $this->ajaxErrorResponse('Invalid UUID');
             }
@@ -162,7 +163,7 @@ class PictureController extends BaseController
 
         $title = strip_tags($title);
 
-        if($title == '') {
+        if ($title == '') {
             $title = '-';
         }
 
@@ -282,7 +283,7 @@ class PictureController extends BaseController
         $this->redirectNotLoggedUsers();
 
         // check the UUID param
-        if(! Uuid::isValidUuid($uuid)) {
+        if (! Uuid::isValidUuid($uuid)) {
             $this->displayCommonErrorPageAndExit('Improper UUID!');
         }
 
@@ -323,18 +324,20 @@ class PictureController extends BaseController
      * @param string $uuid
      * @param boolean $showSpoiler
      */
-    public function thumbSizeSmall($uuid, $showSpoiler = false) {
+    public function thumbSizeSmall($uuid, $showSpoiler = false)
+    {
         return $this->thumb($uuid, $showSpoiler, Thumbnail::SIZE_SMALL);
     }
 
-    public function thumbSizeMedium($uuid, $showSpoiler = false) {
+    public function thumbSizeMedium($uuid, $showSpoiler = false)
+    {
         return $this->thumb($uuid, $showSpoiler, Thumbnail::SIZE_MEDIUM);
     }
 
     private function thumb($uuid, $showSpoiler = false, $size = null)
     {
         // check the UUID param
-        if(! Uuid::isValidUuid($uuid)) {
+        if (! Uuid::isValidUuid($uuid)) {
             $this->view->redirectAndExit(Thumbnail::placeholderUri(Thumbnail::PHD_ERROR_404));
         }
 

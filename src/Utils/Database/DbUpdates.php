@@ -198,8 +198,8 @@ class DbUpdates
     /**
      * Update DB triggers, procedures and functions
      */
-     public static function updateRoutines()
-     {
+    public static function updateRoutines()
+    {
         $routines = self::getRoutineFileNames();
         $messages = '';
 

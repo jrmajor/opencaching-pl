@@ -71,7 +71,7 @@ class CacheSetOwner extends BaseObject
     {
         $db = self::db();
 
-        if(empty($cacheSetIds)){
+        if (empty($cacheSetIds)) {
             return [];
         }
 
@@ -86,7 +86,7 @@ class CacheSetOwner extends BaseObject
 
         $result = array_fill_keys($cacheSetIds, []);
 
-        while($row = $db->dbResultFetch($stmt)){
+        while ($row = $db->dbResultFetch($stmt)) {
             $cso = new self();
             $cso->setUserId($row['uId'])
                 ->setUserName($row['name'])
@@ -108,13 +108,13 @@ class CacheSetOwner extends BaseObject
     {
         $csIds = [];
 
-        foreach ($cacheSets as $cs){
+        foreach ($cacheSets as $cs) {
             $csIds[] = $cs->getId();
         }
 
         $owners = self::getOwnersOfCacheSets($csIds);
 
-        foreach ($cacheSets as $cs){
+        foreach ($cacheSets as $cs) {
             $cs->setOwners($owners[$cs->getId()]);
         }
 

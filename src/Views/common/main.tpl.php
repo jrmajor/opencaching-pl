@@ -31,14 +31,14 @@ use src\Utils\Uri\SimpleRouter as SRouter;
   <link rel="stylesheet" type="text/css" href="/css/typography.css">
 
   <?php if ($view->_showVideoBanner) {
-      foreach($view->_topBannerVideo as $key => $videoPath) {
+      foreach ($view->_topBannerVideo as $key => $videoPath) {
           if ($key !== 0) { ?>
               <link rel="prefetch" href="<?= $videoPath ?>">
           <?php }
       }
   } ?>
 
-  <?php foreach($view->getLocalCss() as $css) { ?>
+  <?php foreach ($view->getLocalCss() as $css) { ?>
       <link rel="stylesheet" type="text/css" href="<?=$css?>">
   <?php } //foreach-css ?>
 
@@ -175,7 +175,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
 
         <script>
             let topVideoSource = [];
-            <?php foreach($view->_topBannerVideo as $key => $val) { ?>
+            <?php foreach ($view->_topBannerVideo as $key => $val) { ?>
                 topVideoSource[<?=$key?>]='<?=$val?>';
             <?php } // foreach topBannerVideo ?>
             let topVideoIndex = 0;
@@ -213,8 +213,8 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                 <!-- Navigation - horizontal menu bar -->
                 <div id="nav2">
                     <ul class="rythm_nav2">
-                        <?php foreach($view->_menuBar as $key => $url) { ?>
-                          <?php if(is_array($url)) { //array="open in new window" ?>
+                        <?php foreach ($view->_menuBar as $key => $url) { ?>
+                          <?php if (is_array($url)) { //array="open in new window" ?>
                             <li><a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                           <?php } else { ?>
                             <li><a href="<?=$url?>" rel="noopener"><?=$key?></a>
@@ -230,14 +230,14 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                 <!-- Navigation Left menu -->
 
                 <div id="nav3">
-                    <?php if(! $view->_isUserLogged) { ?>
+                    <?php if (! $view->_isUserLogged) { ?>
                     <!-- non-authorized user menu -->
                     <ul class="rythm_nav3MainMenu">
                       <li class="title"><?=tr('main_menu')?></li>
 
-                      <?php foreach($view->_nonAuthUserMenu as $key => $url){ ?>
+                      <?php foreach ($view->_nonAuthUserMenu as $key => $url) { ?>
                         <li class="group">
-                            <?php if(is_array($url)) { //array="open in new window" ?>
+                            <?php if (is_array($url)) { //array="open in new window" ?>
                               <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                             <?php } else { // !is_array($url) ?>
                               <a href="<?=$url?>" rel="noopener"><?=$key?></a>
@@ -252,9 +252,9 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                     <!-- authorized menu -->
                     <ul class="rythm_nav3MainMenu">
                       <li class="title"><?=tr('main_menu')?></li>
-                      <?php foreach($view->_authUserMenu as $key => $url){ ?>
+                      <?php foreach ($view->_authUserMenu as $key => $url) { ?>
                         <li class="group">
-                            <?php if(is_array($url)) { //array="open in new window" ?>
+                            <?php if (is_array($url)) { //array="open in new window" ?>
                               <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                             <?php } else { // !is_array($url) ?>
                               <a href="<?=$url?>" rel="noopener"><?=$key?></a>
@@ -266,7 +266,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                     <!-- custom user menu -->
                     <ul class="rythm_nav3UserMenu">
                       <li class="title"><?=tr('user_menu')?></li>
-                      <?php foreach($view->_customUserMenu as $key => $url){ ?>
+                      <?php foreach ($view->_customUserMenu as $key => $url) { ?>
                         <li class="group">
                             <a href="<?=$url?>">
                               <?=$key?>
@@ -279,9 +279,9 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                     <!-- additional menu -->
                     <ul class="rythm_nav3AddsMenu">
                       <li class="title"><?=tr('mnu_additionalMenu')?></li>
-                      <?php foreach($view->_additionalMenu as $key => $url){ ?>
+                      <?php foreach ($view->_additionalMenu as $key => $url) { ?>
                         <li class="group">
-                            <?php if(is_array($url)) { //array="open in new window" ?>
+                            <?php if (is_array($url)) { //array="open in new window" ?>
                               <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                             <?php } else { // !is_array($url) ?>
                               <a href="<?=$url?>" rel="noopener"><?=$key?></a>
@@ -294,9 +294,9 @@ use src\Utils\Uri\SimpleRouter as SRouter;
                       <!-- admin menu -->
                       <ul>
                           <li class="title"><?=tr('administration')?></li>
-                          <?php foreach($view->_adminMenu as $key => $url){ ?>
+                          <?php foreach ($view->_adminMenu as $key => $url) { ?>
                             <li class="group">
-                                <?php if(is_array($url)) { //array="open in new window" ?>
+                                <?php if (is_array($url)) { //array="open in new window" ?>
                                   <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a>
                                 <?php } else { // !is_array($url) ?>
                                   <a href="<?=$url?>" rel="noopener"><?=$key?></a>
@@ -322,7 +322,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
             <p>
               <span class="txt-black">{{online_users}}:</span>
               <span class="txt-white">
-                <?php foreach($view->_onlineUsers as $userId => $username){ ?>
+                <?php foreach ($view->_onlineUsers as $userId => $username) { ?>
                     <a class="links-onlusers" href="/viewprofile.php?userid=<?=$userId?>"><?=$username?></a>&nbsp;
                 <?php } //foreach ?>
               </span>
@@ -332,8 +332,8 @@ use src\Utils\Uri\SimpleRouter as SRouter;
         <?php } // user-logged && displayOnlineUsers ?>
 
         <p>
-          <?php foreach($view->_footerMenu as $key => $url){ ?>
-              <?php if(is_array($url)) { //array="open in new window" ?>
+          <?php foreach ($view->_footerMenu as $key => $url) { ?>
+              <?php if (is_array($url)) { //array="open in new window" ?>
                   <a href="<?=$url[0]?>" target="_blank" rel="noopener"><?=$key?></a> &nbsp;
               <?php } else { // !is_array($url) ?>
                   <a href="<?=$url?>" rel="noopener"><?=$key?></a> &nbsp;
@@ -346,7 +346,7 @@ use src\Utils\Uri\SimpleRouter as SRouter;
 
           <?php if (! $view->_crowdinInContextEnabled) { ?>
               <span class="bottom-flags">
-                <?php foreach($view->_languageFlags as $langFlag){ ?>
+                <?php foreach ($view->_languageFlags as $langFlag) { ?>
                   <a rel="nofollow" href="<?=$langFlag['link']?>">
                     <img class="img-navflag" src="<?=$langFlag['img']?>"
                          alt="<?=$langFlag['name']?> version" title="<?=$langFlag['name']?> version">
@@ -397,11 +397,11 @@ use src\Utils\Uri\SimpleRouter as SRouter;
   </script>
   <?php
       // fancyBox js should be loaded at the end of page
-      if($view->isFancyBoxEnabled()) {
+      if ($view->isFancyBoxEnabled()) {
           $view->callChunk('fancyBoxLoader', false, true);
       }
       // load defer JS at the end
-      foreach($view->getLocalJs() as $js) {
+      foreach ($view->getLocalJs() as $js) {
           if ($js['defer']) {?>
             <script src="<?=$js['url']?>"<?=$js['async'] ? ' async' : ''?> defer></script>
   <?php   } //if

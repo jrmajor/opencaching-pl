@@ -23,15 +23,18 @@ class UserMeritBadge
     // build functions
     //////////////////////////////////////////////////////////////////////
 
-    public function buildOBadge(){
+    public function buildOBadge()
+    {
         $this->oBadge = new \src\Models\MeritBadge\MeritBadge();
     }
 
-    public function buildOLevel(){
+    public function buildOLevel()
+    {
         $this->oLevel = new \src\Models\MeritBadge\LevelMeritBadge();
     }
 
-    public function buildOCategory(){
+    public function buildOCategory()
+    {
         $this->oCategory = new \src\Models\MeritBadge\CategoryMeritBadge();
     }
 
@@ -39,50 +42,62 @@ class UserMeritBadge
     // getField functions
     //////////////////////////////////////////////////////////////////////
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getUserId(){
+    public function getUserId()
+    {
         return $this->user_id;
     }
 
-    public function getUserName(){
+    public function getUserName()
+    {
         return $this->user_name;
     }
 
-    public function getBadgeId(){
+    public function getBadgeId()
+    {
         return $this->badge_id;
     }
 
-    public function getLevelId(){
+    public function getLevelId()
+    {
         return $this->level_id;
     }
 
-    public function getCurrVal(){
+    public function getCurrVal()
+    {
         return $this->curr_val;
     }
 
-    public function getNextVal(){
+    public function getNextVal()
+    {
         return $this->next_val;
     }
 
-    public function getLevelDate(){
+    public function getLevelDate()
+    {
         return $this->level_date;
     }
 
     //timestamp
-    public function getLevelDateTS(){
+    public function getLevelDateTS()
+    {
         return $this->level_date_ts;
     }
 
-    public function getDescription(){
+    public function getDescription()
+    {
         return $this->description;
     }
 
-    public function getPicture(){
-        if ($this->getOLevel()->getPicture() != '')
+    public function getPicture()
+    {
+        if ($this->getOLevel()->getPicture() != '') {
             return $this->getOLevel()->getPicture();
+        }
 
         return $this->getOBadge()->getPicture();
     }
@@ -90,15 +105,18 @@ class UserMeritBadge
     //////////////////////////////////////////////////////////////////////
     // getObject functions
     //////////////////////////////////////////////////////////////////////
-    public function getOBadge(){
+    public function getOBadge()
+    {
         return $this->oBadge;
     }
 
-    public function getOLevel(){
+    public function getOLevel()
+    {
         return $this->oLevel;
     }
 
-    public function getOCategory(){
+    public function getOCategory()
+    {
         return $this->oCategory;
     }
 
@@ -106,35 +124,46 @@ class UserMeritBadge
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow($rec){
-        if (isset($rec['badge_user_id']))
+    public function setFromRow($rec)
+    {
+        if (isset($rec['badge_user_id'])) {
             $this->id = $rec['badge_user_id'];
+        }
 
-        if (isset($rec['badge_user_badge_id']))
+        if (isset($rec['badge_user_badge_id'])) {
             $this->badge_id = $rec['badge_user_badge_id'];
+        }
 
-        if (isset($rec['badge_user_user_id']))
+        if (isset($rec['badge_user_user_id'])) {
             $this->user_id = $rec['badge_user_user_id'];
+        }
 
-        if (isset($rec['badge_user_user_name']))
+        if (isset($rec['badge_user_user_name'])) {
             $this->user_name = $rec['badge_user_user_name'];
+        }
 
-        if (isset($rec['badge_user_level_date']))
+        if (isset($rec['badge_user_level_date'])) {
             $this->level_date = $rec['badge_user_level_date'];
+        }
 
-        if (isset($rec['badge_user_level_date_ts']))
+        if (isset($rec['badge_user_level_date_ts'])) {
             $this->level_date_ts = $rec['badge_user_level_date_ts'];
+        }
 
-        if (isset($rec['badge_user_level_id']))
+        if (isset($rec['badge_user_level_id'])) {
             $this->level_id = $rec['badge_user_level_id'];
+        }
 
-        if (isset($rec['badge_user_curr_val']))
+        if (isset($rec['badge_user_curr_val'])) {
             $this->curr_val = $rec['badge_user_curr_val'];
+        }
 
-        if (isset($rec['badge_user_next_val']))
+        if (isset($rec['badge_user_next_val'])) {
             $this->next_val = $rec['badge_user_next_val'];
+        }
 
-        if (isset($rec['badge_user_description']))
+        if (isset($rec['badge_user_description'])) {
             $this->description = $rec['badge_user_description'];
+        }
     }
 }

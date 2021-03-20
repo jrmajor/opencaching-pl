@@ -8,9 +8,9 @@
  * - title - title value for title html param of the icon
  */
 
-return function (array $data){
+return function (array $data) {
     // exit if there is no icon given
-    if(is_null($data['icon'])){
+    if (is_null($data['icon'])) {
         return '';
     }
 

@@ -9,7 +9,7 @@ $tplname = 'region';
 
 require_once(__DIR__ . '/lib/common.inc.php');
 
-if(! ApplicationContainer::GetAuthorizedUser()){
+if (! ApplicationContainer::GetAuthorizedUser()) {
     echo 'Not authorized!';
 
     exit;
@@ -31,7 +31,7 @@ if (isset($_REQUEST['lon'])) {
 
 $coords = Coordinates::FromCoordsFactory($lat, $lon);
 
-if(! is_null($coords)){
+if (! is_null($coords)) {
     tpl_set_var('coords_str', $coords->getAsText(Coordinates::COORDINATES_FORMAT_DEG_MIN));
 } else {
     tpl_set_var('coords_str', '');
@@ -44,17 +44,17 @@ tpl_set_var('nutsDesc', $nutsData->getDescription(' > '));
 // Google geocode
 $googleGeocode = GeoCode::fromGoogleApi($coords);
 
-if($googleGeocode){
+if ($googleGeocode) {
     tpl_set_var('googleDesc', $googleGeocode->getDescription(' > '));
-}else{
+} else {
     tpl_set_var('googleDesc', '-');
 }
 
 $mapQuestGeoCode = GeoCode::fromMapQuestApi($coords);
 
-if($mapQuestGeoCode){
+if ($mapQuestGeoCode) {
     tpl_set_var('mapQuestDesc', $mapQuestGeoCode->getDescription(' > '));
-}else{
+} else {
     tpl_set_var('mapQuestDesc', '-');
 }
 

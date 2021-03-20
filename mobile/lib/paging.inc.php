@@ -4,9 +4,9 @@ $page = null;
 $prev_page = null;
 $next_page = null;
 
-if ($ile <= $na_stronie)
+if ($ile <= $na_stronie) {
     find_news(0, $na_stronie);
-else {
+} else {
     if (! isset($_GET['page'])) {
         find_news(0, $na_stronie);
         $next_page = '2';
@@ -21,8 +21,9 @@ else {
 
             exit;
         } else {
-            if (((($_GET['page'] - 1) * $na_stronie) + $na_stronie) < $ile)
+            if (((($_GET['page'] - 1) * $na_stronie) + $na_stronie) < $ile) {
                 $next_page = $_GET['page'] + 1;
+            }
             $prev_page = $_GET['page'] - 1;
         }
     }

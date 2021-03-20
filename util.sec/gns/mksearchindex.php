@@ -71,9 +71,11 @@ echo "Processed $in_count rows, inserted $out_count index items";
 
 function nonalpha($str)
 {
-    for ($i = 0; $i < mb_strlen($str); $i++)
-        if (! ((ord(mb_substr($str, $i, 1)) >= ord('a')) && (ord(mb_substr($str, $i, 1)) <= ord('z'))))
+    for ($i = 0; $i < mb_strlen($str); $i++) {
+        if (! ((ord(mb_substr($str, $i, 1)) >= ord('a')) && (ord(mb_substr($str, $i, 1)) <= ord('z')))) {
             return true;
+        }
+    }
 
     return false;
 }

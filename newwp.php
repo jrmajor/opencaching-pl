@@ -92,24 +92,27 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             'SELECT COUNT(*) FROM `waypoints`
                      WHERE `cache_id`= :1 AND type = 3', false, $cache_id);
 
-        if ($wp_check_final_exist == 1)
+        if ($wp_check_final_exist == 1) {
             $pomin = 1;
-        else
+        } else {
             $pomin = 0;
+        }
 
         foreach (WaypointCommons::getTypesArray($cache_record['type']) as $type) {
             if ($type == $sel_type) {
                 if (($type == WaypointCommons::TYPE_FINAL) && ($pomin == 1)) {
                 } // if final waypoint alreday exist for this cache do not allow create new waypoint type "final location"
-                else
+                else {
                     $types .= '<option value="' . $type . '" selected="selected">' .
                         htmlspecialchars(tr(WaypointCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
+                }
             } else {
                 if (($type == WaypointCommons::TYPE_FINAL) && ($pomin == 1)) {
                 } //// if final waypoint already exist for this cache do not allow create new waypoint type "final location"
-                else
+                else {
                     $types .= '<option value="' . $type . '">' .
                         htmlspecialchars(tr(WaypointCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>';
+                }
             }
         }
 
@@ -164,10 +167,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             $OpenChecker_present = 0;
         }
         // hides or shows openchecker checkbox depend on type of waypoint
-        if ($sel_type == 3 && $config['module']['openchecker']['enabled'])
+        if ($sel_type == 3 && $config['module']['openchecker']['enabled']) {
             tpl_set_var('openchecker_display', 'block');
-        else
+        } else {
             tpl_set_var('openchecker_display', 'none');
+        }
         //================ openchecker end ===================================================
         //stage
         $wp_stage = isset($_POST['stage']) ? $_POST['stage'] : '0';
@@ -207,8 +211,9 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
         if (isset($_POST['submitform'])) {
             //check the entered data
-            if ($sel_type == '4' || $sel_type == '5' || $sel_type == '6')
+            if ($sel_type == '4' || $sel_type == '5' || $sel_type == '6') {
                 $wp_stage = 0;
+            }
             //check coordinates
             if ($lat_h != '' || $lat_min != '') {
                 if (! mb_ereg_match('^[0-9]{1,2}$', $lat_h)) {
@@ -241,8 +246,9 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
                 $latitude = $lat_h + $lat_min / 60;
 
-                if ($latNS == 'S')
+                if ($latNS == 'S') {
                     $latitude = -$latitude;
+                }
 
                 if ($latitude == 0) {
                     tpl_set_var('lon_message', $error_coords_not_ok);
@@ -286,8 +292,9 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
                 $longitude = $lon_h + $lon_min / 60;
 
-                if ($lonEW == 'W')
+                if ($lonEW == 'W') {
                     $longitude = -$longitude;
+                }
 
                 if ($longitude == 0) {
                     tpl_set_var('lon_message', $error_coords_not_ok);

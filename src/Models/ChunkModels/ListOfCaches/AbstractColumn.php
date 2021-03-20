@@ -24,12 +24,13 @@ abstract class AbstractColumn
     private $additionalClass = '';
     private $chunkFunction = null;
 
-    public final function __construct($header, callable $dataFromRowExtractor = null, $additionalClass = null){
-        if(! is_null($dataFromRowExtractor)){
+    public final function __construct($header, callable $dataFromRowExtractor = null, $additionalClass = null)
+    {
+        if (! is_null($dataFromRowExtractor)) {
             $this->dataExtractor = $dataFromRowExtractor;
         }
 
-        if(! empty($additionalClass)){
+        if (! empty($additionalClass)) {
             $this->additionalClass = ' ' . $additionalClass;
         }
 
@@ -38,31 +39,35 @@ abstract class AbstractColumn
 
     protected abstract function getChunkName();
 
-    public function __call($method, $args) {
+    public function __call($method, $args)
+    {
         if (property_exists($this, $method) && is_callable($this->$method)) {
             return call_user_func_array($this->$method, $args);
-        }else{
+        } else {
             Debug::errorLog(__METHOD__ . "Trying to call non-existed method: $method");
         }
     }
 
-    public final function callColumnChunk($row){
-        if(! $this->chunkFunction){
+    public final function callColumnChunk($row)
+    {
+        if (! $this->chunkFunction) {
             $this->chunkFunction = View::getChunkFunc($this->getChunkName());
         }
 
-        if(! is_null($this->dataExtractor)){
+        if (! is_null($this->dataExtractor)) {
             $this->chunkFunction($this->dataExtractor($row), $this);
-        }else{
+        } else {
             $this->chunkFunction($row, $this);
         }
     }
 
-    public function getHeader(){
+    public function getHeader()
+    {
         return $this->header;
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 

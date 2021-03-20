@@ -19,10 +19,12 @@ class cookie
             if ($decoded !== false) {
                 $this->values = @json_decode($decoded, true, 2);
 
-                if (! is_array($this->values))
+                if (! is_array($this->values)) {
                     $this->values = [];
-            } else
+                }
+            } else {
                 $this->values = [];
+            }
         }
     }
 
@@ -48,10 +50,11 @@ class cookie
     {
         global $config;
 
-        if (isset($_COOKIE[$config['cookie']['name'] . 'data']))
+        if (isset($_COOKIE[$config['cookie']['name'] . 'data'])) {
             return true;
-        else
+        } else {
             return false;
+        }
     }
 
     function un_set($name)

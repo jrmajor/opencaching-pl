@@ -142,7 +142,7 @@ class Uri
         // main domain or any its subdomain
         $domainRegex = "/([a-z0-9|-]+\.)*" . OcConfig::getSiteMainDomain() . '$/';
 
-        if(preg_match($domainRegex, $domain)){
+        if (preg_match($domainRegex, $domain)) {
             return $domain;
         } else {
             return null;
@@ -155,7 +155,8 @@ class Uri
      * @param uri $uri
      * @return string
      */
-    public static function getPathfromUrl($uri){
+    public static function getPathfromUrl($uri)
+    {
         return parse_url($uri, PHP_URL_PATH);
     }
 

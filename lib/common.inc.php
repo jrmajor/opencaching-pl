@@ -38,7 +38,8 @@ if (php_sapi_name() != 'cli') { // this is not neccesarry for command-line scrip
     I18n::init();
 }
 
-function initTemplateSystem(){
+function initTemplateSystem()
+{
     // create global view variable (used in templates)
     // TODO: it should be moved to context..
     if (! isset($GLOBALS['view'])) {
@@ -46,7 +47,7 @@ function initTemplateSystem(){
     }
 
     //by default, use start template
-    if (! isset($GLOBALS['tplname'])){
+    if (! isset($GLOBALS['tplname'])) {
         $GLOBALS['tplname'] = 'start';
     }
 
@@ -55,7 +56,7 @@ function initTemplateSystem(){
     tpl_set_var('contact_mail', OcConfig::getEmailAddrOcTeam(true));
 
     // set wikiLinks used in translations
-    foreach(OcConfig::getWikiLinks() as $key => $value){
+    foreach (OcConfig::getWikiLinks() as $key => $value) {
         tpl_set_var('wiki_link_' . $key, $value);
     }
 

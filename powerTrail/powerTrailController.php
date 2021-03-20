@@ -54,8 +54,8 @@ class powerTrailController
 
     private function mySeries()
     {
-        if(! isset($_SESSION['user_id'])){
-           return;
+        if (! isset($_SESSION['user_id'])) {
+            return;
         }
 
         // print $_SESSION['user_id'];

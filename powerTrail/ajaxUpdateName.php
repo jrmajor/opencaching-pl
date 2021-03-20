@@ -4,7 +4,7 @@ use src\Utils\Database\OcDb;
 // ajaxUpdateDemandPercent.php
 session_start();
 
-if(! isset($_SESSION['user_id'])){
+if (! isset($_SESSION['user_id'])) {
     echo 'no hacking please!';
 
     exit;
@@ -16,14 +16,14 @@ $ptAPI = new powerTrailBase;
 $powerTrailId = (int) $_REQUEST['projectId'];
 $newName = strip_tags($_REQUEST['newNamePt']);
 
-if($newName == '') {
+if ($newName == '') {
     echo 'error - no name was entered';
 
     exit;
 }
 
 // check if user is owner of selected power Trail
-if($ptAPI::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $powerTrailId) == 1) {
+if ($ptAPI::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $powerTrailId) == 1) {
     $query = 'UPDATE `PowerTrail` SET `name` = :1 WHERE `id` = :2';
     $db = OcDb::instance();
     $db->multiVariableQuery($query, $newName, $powerTrailId);

@@ -22,43 +22,50 @@ abstract class UserPreferencesBaseData
      * @param unknown $key - key must be one of ALLOWED_KEYS value from class UserPreferences
      *    Every implementation of UserPreferencesData should has its own key!
      */
-    public function __construct($key){
-        if(UserPreferences::isKeyAllowed($key)){
+    public function __construct($key)
+    {
+        if (UserPreferences::isKeyAllowed($key)) {
             $this->key = $key;
-        }else{
+        } else {
             $this->key = null;
         }
 
         $this->values = [];
     }
 
-    public final function getKey(){
+    public final function getKey()
+    {
         return $this->key;
     }
 
-    public function getValues(){
+    public function getValues()
+    {
         return $this->values;
     }
 
-    public function getJsonValues(){
+    public function getJsonValues()
+    {
         return json_encode($this->values);
     }
 
-    public function setValues($values){
-        foreach ($this->getDefaults() as $key => $default){
-            if(array_key_exists($key, $values)){
+    public function setValues($values)
+    {
+        foreach ($this->getDefaults() as $key => $default) {
+            if (array_key_exists($key, $values)) {
                 $this->values[$key] = $values[$key];
-            }else{
+            } else {
                 $this->values[$key] = $default;
             }
         }
     }
 
-    public function setJsonValues($jsonValues){
+    public function setJsonValues($jsonValues)
+    {
         $this->setValues(json_decode($jsonValues, true));
     }
 
-    public function loadDefaults(){
+    public function loadDefaults()
+    {
         $this->values = $this->getDefaults();
     }
 }

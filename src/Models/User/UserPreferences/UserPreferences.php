@@ -39,7 +39,8 @@ class UserPreferences extends BaseObject
      * @param string $key
      * @return UserPreferencesBaseData object or null on failure
      */
-    public static function getUserPrefsByKey($key){
+    public static function getUserPrefsByKey($key)
+    {
         return self::GetUserPrefsByKeys([$key])->getDataObject($key);
     }
 
@@ -52,14 +53,15 @@ class UserPreferences extends BaseObject
      * @param string[] $keys
      * @return UserPreferences
      */
-    public static function getUserPrefsByKeys(array $keys){
-        if(empty($keys)){
+    public static function getUserPrefsByKeys(array $keys)
+    {
+        if (empty($keys)) {
             return null;
         }
 
         // check keys
-        foreach ($keys as $key){
-            if(! self::isKeyAllowed($key)){
+        foreach ($keys as $key) {
+            if (! self::isKeyAllowed($key)) {
                 Debug::errorLog("Unknown UserPreferences key = $key");
 
                 return null;
@@ -79,8 +81,9 @@ class UserPreferences extends BaseObject
      *
      * @return true on success
      */
-    public static function savePreferencesJson($key, $json){
-        if(! self::isKeyAllowed($key)){
+    public static function savePreferencesJson($key, $json)
+    {
+        if (! self::isKeyAllowed($key)) {
             Debug::errorLog(__METHOD__ . ": Unknown key $key");
 
             return false;
@@ -92,7 +95,7 @@ class UserPreferences extends BaseObject
         // find current userId
         $user = self::getCurrentUser();
 
-        if(is_null($user)){
+        if (is_null($user)) {
             // user not logged!?
             return false;
         }
@@ -108,7 +111,8 @@ class UserPreferences extends BaseObject
     /**
      * Returns true if this key is allowed (defined in ALLOWED_KEYS)
      */
-    public static function isKeyAllowed($key){
+    public static function isKeyAllowed($key)
+    {
         return array_key_exists($key, self::ALLOWED_KEYS);
     }
 
@@ -119,7 +123,8 @@ class UserPreferences extends BaseObject
      * @param string $key
      * @return UserPreferencesBaseData object
      */
-    private static function getUserPrefObjForKey($key){
+    private static function getUserPrefObjForKey($key)
+    {
         if (array_key_exists($key, self::ALLOWED_KEYS)) {
             $className = self::ALLOWED_KEYS[$key];
 
@@ -131,19 +136,21 @@ class UserPreferences extends BaseObject
         }
     }
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
     }
 
-    private function loadByKeys($keys){
-        if(empty($keys)){
+    private function loadByKeys($keys)
+    {
+        if (empty($keys)) {
             return;
         }
 
         /** @var User */
         $user = self::getCurrentUser();
 
-        if(is_null($user)){
+        if (is_null($user)) {
             return;
         }
 
@@ -153,7 +160,7 @@ class UserPreferences extends BaseObject
 
         $quotedKeys = [];
 
-        foreach($keys as $k){
+        foreach ($keys as $k) {
             $quotedKeys[] = $db->quote($k);
         }
         $keysStr = implode(',', $quotedKeys);
@@ -162,7 +169,7 @@ class UserPreferences extends BaseObject
             "SELECT * FROM user_preferences
              WHERE user_id = :1 AND `key` IN ( $keysStr )", $userId);
 
-        while($row = $db->dbResultFetch($stmt)){
+        while ($row = $db->dbResultFetch($stmt)) {
             $key = $row['key'];
             $obj = self::getUserPrefObjForKey($key);
             $obj->setJsonValues($row['value']);
@@ -170,8 +177,8 @@ class UserPreferences extends BaseObject
         }
 
         // add keys not found in DB with default values
-        foreach ($keys as $key){
-            if(! array_key_exists($key, $this->dataObjects)){
+        foreach ($keys as $key) {
+            if (! array_key_exists($key, $this->dataObjects)) {
                 $obj = self::getUserPrefObjForKey($key);
                 $obj->loadDefaults();
                 $this->dataObjects[$key] = $obj;
@@ -179,7 +186,8 @@ class UserPreferences extends BaseObject
         }
     }
 
-    public function getDataObject($key){
+    public function getDataObject($key)
+    {
         return (array_key_exists($key, $this->dataObjects)) ? $this->dataObjects[$key] : null;
     }
 }

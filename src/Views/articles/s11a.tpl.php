@@ -11,8 +11,9 @@ use src\Utils\Database\XDb;
 <?php
 global $debug_page;
 
-if ($debug_page)
+if ($debug_page) {
     echo "<script>TimeTrack( 'DEBUG' );</script>";
+}
 ?>
 
 <table class="table" width="760" style="line-height: 1.6em; font-size: 10px;">
@@ -30,7 +31,7 @@ if ($debug_page)
                 'SELECT `code`, `name` FROM `nuts_codes`
                 WHERE (' . $config['provinceNutsCondition'] . ') ORDER BY `name` ASC');
 
-            while($record = XDb::xFetchArray($rs)){
+            while ($record = XDb::xFetchArray($rs)) {
                 echo '<tr class="bgcolor2">
             <td align="right">
                 <a class="links" href=articles.php?page=s11&region=' . $record['code'] . '>' . $record['name'] . '</a>

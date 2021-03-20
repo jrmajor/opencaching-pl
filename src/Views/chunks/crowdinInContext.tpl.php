@@ -5,7 +5,7 @@
  *
  * This chunk is autoloaded in View class
  */
-return function (){
+return function () {
     //start of chunk
 ?>
 <!-- Crowdin-in-context chunk -->

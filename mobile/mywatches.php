@@ -61,8 +61,9 @@ if (isset($_SESSION['user_id'])) {
     $ile = XDb::xNumRows($wynik);
     $lista = [];
 
-    while ($rekord = XDb::xFetchArray($wynik))
+    while ($rekord = XDb::xFetchArray($wynik)) {
         $lista[] = $rekord['wp_oc'];
+    }
 
     $tpl->assign('lista', $lista);
 
@@ -81,13 +82,15 @@ if (isset($_SESSION['user_id'])) {
 
     $max = ceil($ile / $na_stronie);
 
-    if ($max == '0')
+    if ($max == '0') {
         $max = '1';
+    }
 
     $tpl->assign('max', $max);
 
     $tpl->display('tpl/find2.tpl');
 
     exit;
-} else
+} else {
     header('Location: ./index.php');
+}

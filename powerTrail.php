@@ -78,10 +78,11 @@ include_once('powerTrail/powerTrailController.php');
 
 include_once('powerTrail/powerTrailMenu.php');
 
-if (isset($_SESSION['user_id']))
+if (isset($_SESSION['user_id'])) {
     tpl_set_var('displayAddCommentSection', 'block');
-else
+} else {
     tpl_set_var('displayAddCommentSection', 'none');
+}
 
 if (isset($_REQUEST['historicLimit']) && $_REQUEST['historicLimit'] == 1) {
     tpl_set_var('historicLimitHref', 'powerTrail.php');
@@ -126,7 +127,7 @@ tpl_set_var('demandPercentMinimum', src\Controllers\PowerTrailController::MINIMU
 tpl_set_var('powerTrailDemandPercent', '100');
 tpl_set_var('leadingUserId', '');
 
-if (! $loggedUser){
+if (! $loggedUser) {
     tpl_set_var('ptMenu', 'none');
 }
 $ptMenu = new powerTrailMenu($loggedUser);
@@ -189,10 +190,11 @@ switch ($actionPerformed) {
 
         tpl_set_var('displayPowerTrails', 'block');
 
-        if ($pt->getPowerTrailOwn() === false)
+        if ($pt->getPowerTrailOwn() === false) {
             tpl_set_var('statusOrPoints', tr('pt037'));
-        else
+        } else {
             tpl_set_var('statusOrPoints', tr('cs_status'));
+        }
         tpl_set_var('mapOuterdiv', 'block');
         tpl_set_var('mapInit', 1);
         tpl_set_var('fullCountryMap', '1');
@@ -228,10 +230,11 @@ switch ($actionPerformed) {
 
         tpl_set_var('displayPowerTrails', 'block');
 
-        if ($pt->getPowerTrailOwn() === false)
+        if ($pt->getPowerTrailOwn() === false) {
             tpl_set_var('statusOrPoints', tr('pt037'));
-        else
+        } else {
             tpl_set_var('statusOrPoints', tr('cs_status'));
+        }
         tpl_set_var('mapOuterdiv', 'block');
         tpl_set_var('mapInit', 1);
         tpl_set_var('fullCountryMap', '1');
@@ -429,10 +432,11 @@ function displayPTrails($pTrails, $areOwnSeries)
             ",'<a href=powerTrail.php?ptAction=showSerie&ptrail=" . $pTrail['id'] . '>' . $pTrail['name'] .
             "</a>','" . $ptTypes[$pTrail['type']]['icon'] . "','" . $pTrail['name'] . "'],";
 
-        if (! $areOwnSeries)
+        if (! $areOwnSeries) {
             $ownOrAll = round($pTrail['points'], 2);
-        else
+        } else {
             $ownOrAll = tr($ptStatus[$pTrail['status']]['translate']);
+        }
 
         if (strlen($pTrail['name']) > 40) {
             $pTrail['name'] = mb_substr($pTrail['name'], 0, 35) . ' (...)';
@@ -505,10 +509,11 @@ function displayPtTypesSelector($htmlid, $selectedId = 0, $witchZeroOption = fal
     }
 
     foreach ($ptTypesArr as $id => $type) {
-        if ($selectedId == $id)
+        if ($selectedId == $id) {
             $selected = 'selected';
-        else
+        } else {
             $selected = '';
+        }
         $selector .= '<option ' . $selected . ' value="' . $id . '">' . tr($type['translate']) . '</option>';
     }
     $selector .= '</select>';
@@ -639,10 +644,11 @@ function generateSelector($array, $sel, $name)
     $selector = '<select id="' . $name . '" name="' . $name . '">';
 
     foreach ($array as $opt) {
-        if ($opt['val'] == $sel)
+        if ($opt['val'] == $sel) {
             $selector .= '<option selected="selected" value="' . $opt['val'] . '">' . tr($opt['tr']) . '</option>';
-        else
+        } else {
             $selector .= '<option value="' . $opt['val'] . '">' . tr($opt['tr']) . '</option>';
+        }
     }
     $selector .= '</select>';
 
@@ -657,14 +663,16 @@ function generateStatusSelector($currStatus)
         $selector .= '<option value="3">' . tr('cs_statusClosed') . '</option>';
     } else {
         foreach (\src\Controllers\PowerTrailController::getPowerTrailStatus() as $val => $desc) {
-            if ($val == $currStatus)
+            if ($val == $currStatus) {
                 $selected = 'selected="selected"';
-            else
+            } else {
                 $selected = '';
+            }
 
             if ($val == 2 && $currStatus != 2) {
-            } else // (this status is only after new geoPath creation.)
+            } else { // (this status is only after new geoPath creation.)
                 $selector .= '<option ' . $selected . ' value="' . $val . '">' . tr($desc['translate']) . '</option>';
+            }
         }
     }
     $selector .= '</select>';

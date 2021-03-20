@@ -149,11 +149,13 @@ class Waypoint extends WaypointCommons
         return $this->iconNames[$this->type];
     }
 
-    public function isHidden(){
+    public function isHidden()
+    {
         return $this->status == self::STATUS_HIDDEN;
     }
 
-    public function areCoordsHidden(){
+    public function areCoordsHidden()
+    {
         return $this->status == self::STATUS_VISIBLE_HIDDEN_COORDS;
     }
 
@@ -167,8 +169,9 @@ class Waypoint extends WaypointCommons
         return nl2br($this->description);
     }
 
-    public static function GetWaypointsForCacheId(GeoCache $geoCache, $skipHiddenWps = true){
-        if($geoCache->getCacheType() == GeoCache::TYPE_MOVING){
+    public static function GetWaypointsForCacheId(GeoCache $geoCache, $skipHiddenWps = true)
+    {
+        if ($geoCache->getCacheType() == GeoCache::TYPE_MOVING) {
             // mobiles can't have waypoints...
             return [];
         }
@@ -182,10 +185,10 @@ class Waypoint extends WaypointCommons
 
         $results = [];
 
-        while($row = XDb::xFetchArray($s)){
+        while ($row = XDb::xFetchArray($s)) {
             $wp = Waypoint::FromDbRow($row);
 
-            if(! $wp->isHidden() || ! $skipHiddenWps){
+            if (! $wp->isHidden() || ! $skipHiddenWps) {
                 $results[] = $wp;
             }
         }

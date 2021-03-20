@@ -351,7 +351,7 @@ class AdminNote extends BaseObject
 
         $dbRow = $this->db->dbResultFetchOneRowOnly($s);
 
-        if(is_array($dbRow)) {
+        if (is_array($dbRow)) {
             $this->loadFromDbRow($dbRow);
         } else {
             throw new Exception('No such admin note');
@@ -379,7 +379,8 @@ class AdminNote extends BaseObject
      * @param string $message
      * @param int $cacheId
      */
-    public static function addAdminNote($adminId, $userId, $automatic, $message, $cacheId = null) {
+    public static function addAdminNote($adminId, $userId, $automatic, $message, $cacheId = null)
+    {
         $note = new AdminNote();
         $note->setAdminId($adminId);
         $note->setUserId($userId);

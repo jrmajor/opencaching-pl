@@ -16,10 +16,9 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
     $caches = XDb::xFetchArray($wynik);
 
     // dodałem sprawdzanie statusu
-    if (empty($caches) || $caches['status'] == 4 || $caches['status'] == 5 || $caches['status'] == 6)
+    if (empty($caches) || $caches['status'] == 4 || $caches['status'] == 5 || $caches['status'] == 6) {
         $tpl->assign('error', '1');
-
-    else {
+    } else {
         // detailed cache access logging
         global $enable_cache_access_logs;
 
@@ -65,16 +64,19 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
         $cache_desc['hint'] = '';
 
         while ($rekord = XDb::xFetchArray($wynik)) {
-            if ($i > 0)
+            if ($i > 0) {
                 $cache_desc['desc'] .= '<br/><br/>';
+            }
             $cache_desc['desc'] .= $rekord['desc'];
 
-            if ($i > 0)
+            if ($i > 0) {
                 $cache_desc['short_desc'] .= '<br/>';
+            }
             $cache_desc['short_desc'] .= $rekord['short_desc'];
 
-            if ($i > 0)
+            if ($i > 0) {
                 $cache_desc['hint'] .= '\\n\\n';
+            }
             $cache_desc['hint'] .= $rekord['hint'];
 
             $i++;
@@ -109,10 +111,11 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
 
         $cache_info['if_found'] = $if_found;
 
-        if ($caches['votes'] > 3)
+        if ($caches['votes'] > 3) {
             $cache_info['score'] = GeoCacheCommons::ScoreAsRatingNum($caches['score']);
-        else
+        } else {
             $cache_info['score'] = 5;
+        }
 
         if (isset($_SESSION['user_id'])) {
             $query3 = "select count(*) as c from cache_watches where user_id = '" . $_SESSION['user_id'] . "' and cache_id ='" . $caches['cache_id'] . "';";
@@ -120,10 +123,11 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
             $watched = XDb::xFetchArray($wynik3);
             $watched = $watched[0];
 
-            if ($watched > 0)
+            if ($watched > 0) {
                 $cache_info['watched'] = $watched;
-            else
+            } else {
                 $cache_info['watched'] = -1;
+            }
         } else {
             $cache_info['watched'] = -1;
         }
@@ -160,8 +164,9 @@ if (isset($_GET['wp']) && ! empty($_GET['wp']) && $_GET['wp'] != 'OP') {
 
             $znalezione = [];
 
-            while ($rekord = XDb::xFetchArray($wynik))
+            while ($rekord = XDb::xFetchArray($wynik)) {
                 $photos[] = $rekord;
+            }
 
             $tpl->assign('photos_list', $photos);
         }

@@ -83,12 +83,12 @@ class UserAdminController extends BaseController
 
             // Second try - submitted data is full username of existing user
             if (! is_null($user = User::fromUsernameFactory($userName))) {
-                    $this->view->redirect(SimpleRouter::getLink(
+                $this->view->redirect(SimpleRouter::getLink(
                         'Admin.UserAdmin',
                         'index',
                         $user->getUserId())
                         );
-                }
+            }
 
             // Third try - submitted data is substring of existing username
             // so display list of users

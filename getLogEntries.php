@@ -21,7 +21,7 @@ require(__DIR__ . '/src/Views/viewcache.inc.php');
 
 require(__DIR__ . '/src/Views/viewlogs.inc.php');
 
-if(isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != ''){
+if (isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != '') {
     $geocacheId = $_REQUEST['geocacheId'];
 } else {
     exit('error');
@@ -49,13 +49,13 @@ if (
     exit('error - cache is not available');
 }
 
-if(isset($_REQUEST['offset']) && $_REQUEST['offset'] != ''){
+if (isset($_REQUEST['offset']) && $_REQUEST['offset'] != '') {
     $offset = (int) $_REQUEST['offset'];
 } else {
     $offset = 0;
 }
 
-if(isset($_REQUEST['limit']) && $_REQUEST['limit'] != ''){
+if (isset($_REQUEST['limit']) && $_REQUEST['limit'] != '') {
     $limit = (int) $_REQUEST['limit'];
 } else {
     $limit = 5;
@@ -69,7 +69,7 @@ if (! $loggedUser && $hide_coords) {
     $disable_spoiler_view = false;
 }
 
-if(isset($_REQUEST['includeDeletedLogs']) && $_REQUEST['includeDeletedLogs'] == 1){
+if (isset($_REQUEST['includeDeletedLogs']) && $_REQUEST['includeDeletedLogs'] == 1) {
     $includeDeletedLogs = true;
 } else {
     $includeDeletedLogs = false;
@@ -178,7 +178,7 @@ foreach ($logEntries as $record) {
     }
 
     $tmplog = $tmpSrcLog;
-//END: same code ->viewlogs.php / viewcache.php
+    //END: same code ->viewlogs.php / viewcache.php
     $tmplog_username = htmlspecialchars($record['username'], ENT_COMPAT, 'UTF-8');
     $tmplog_date = TextConverter::fixPlMonth(htmlspecialchars(strftime(
         $GLOBALS['config']['dateformat'], strtotime($record['date'])), ENT_COMPAT, 'UTF-8'));
@@ -206,8 +206,9 @@ foreach ($logEntries as $record) {
     if (($record['type'] == 4) && ($record['mobile_latitude'] != 0) && ! $disable_spoiler_view) {
         $tmplog_kordy_mobilnej = mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_latToDegreeStr($record['mobile_latitude']), ENT_COMPAT, 'UTF-8')) . '&nbsp;' . mb_ereg_replace(' ', '&nbsp;', htmlspecialchars(Coordinates::donNotUse_lonToDegreeStr($record['mobile_longitude']), ENT_COMPAT, 'UTF-8'));
         $tmplog = mb_ereg_replace('{kordy_mobilniaka}', $record['km'] . ' km [<img src="/images/blue/arrow_mobile.png" title="' . tr('viewlog_kordy') . '" />' . $tmplog_kordy_mobilnej . ']', $tmplog);
-    } else
+    } else {
         $tmplog = mb_ereg_replace('{kordy_mobilniaka}', ' ', $tmplog);
+    }
 
     if ($record['text_html'] == 0) {
         $processed_text = htmlspecialchars($processed_text, ENT_COMPAT, 'UTF-8');
@@ -251,10 +252,11 @@ foreach ($logEntries as $record) {
     $tmplog = mb_ereg_replace('{log_id}', $record['logid'], $tmplog);
 
     //$rating_picture
-    if ($record['recommended'] == 1 && $record['type'] == 1)
+    if ($record['recommended'] == 1 && $record['type'] == 1) {
         $tmplog = mb_ereg_replace('{ratingimage}', '<img src="/images/rating-star.png" alt="' . tr('recommendation') . '">', $tmplog);
-    else
+    } else {
         $tmplog = mb_ereg_replace('{ratingimage}', '', $tmplog);
+    }
 
     //user der owner
     $logfunctions = '';
@@ -263,7 +265,7 @@ foreach ($logEntries as $record) {
     $tmpRevert = mb_ereg_replace('{logid}', $record['logid'], $revertLog);
     $tmpnewpic = mb_ereg_replace('{logid}', $record['logid'], $upload_picture);
 
-    if (! isset($record['deleted'])){
+    if (! isset($record['deleted'])) {
         $record['deleted'] = false;
     }
 
@@ -333,8 +335,9 @@ foreach ($logEntries as $record) {
                                   </span> ';
 
                 $thisline = mb_ereg_replace('{functions}', $thisfunctions, $thisline);
-            } else
+            } else {
                 $thisline = mb_ereg_replace('{functions}', '', $thisline);
+            }
 
             $logpicturelines .= $thisline;
         }
@@ -343,7 +346,7 @@ foreach ($logEntries as $record) {
     } else {
         $tmplog = mb_ereg_replace('{logpictures}', '', $tmplog);
     }
-        $result .= $tmplog;
+    $result .= $tmplog;
 }
 
 echo $result;

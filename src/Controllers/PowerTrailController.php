@@ -28,7 +28,8 @@ class PowerTrailController
         }
     }
 
-    public static function getEntryTypes(){
+    public static function getEntryTypes()
+    {
         return  [
             Log::TYPE_COMMENT => [ //comment
                 'translate' => 'pt056',
@@ -77,7 +78,7 @@ class PowerTrailController
             ->setText($text)
             ->storeInDb();
 
-        if($result){
+        if ($result) {
             sendEmail::emailOwners($powerTrail->getId(), $log->getType(), $dateTime->format('Y-m-d H:i'), $text, 'newComment');
         }
 
@@ -136,7 +137,8 @@ class PowerTrailController
     /**
      * here power Trail status
      */
-    public static function getPowerTrailStatus(){
+    public static function getPowerTrailStatus()
+    {
         return  [
             1 => [ // public
                 'translate' => 'cs_statusPublic',

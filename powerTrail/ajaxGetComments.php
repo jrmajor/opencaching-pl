@@ -8,7 +8,7 @@ require_once __DIR__ . '/../lib/common.inc.php';
 
 $appContainer = ApplicationContainer::Instance();
 
-if($appContainer->getLoggedUser() === null){
+if ($appContainer->getLoggedUser() === null) {
     $loggedUserId = null;
     $ocTeamUser = false;
 } else {
@@ -18,7 +18,7 @@ if($appContainer->getLoggedUser() === null){
 
 $commentsArr = PowerTrailController::getEntryTypes();
 
-if (! isset($_REQUEST['projectId'])){
+if (! isset($_REQUEST['projectId'])) {
     http_response_code(403);
     echo 'Unknown PT';
 
@@ -58,7 +58,7 @@ $params['variable4']['data_type'] = 'boolean';
 $s = $db->paramQuery($query, $params);
 $result = $db->dbResultFetchAll($s);
 
-if(count($result) == 0) {
+if (count($result) == 0) {
     echo '<p><br /><br />' . tr('pt118') . '</p><br /><br />';
 
     exit;
@@ -71,7 +71,7 @@ foreach ($result as $key => $dbEntry) {
 
     $logDateTime = explode(' ', $dbEntry['logDateTime']);
 
-    if(! array_key_exists($dbEntry['commentType'], $commentsArr)){
+    if (! array_key_exists($dbEntry['commentType'], $commentsArr)) {
         // skip unknown comments type entires
         continue;
     }
@@ -120,7 +120,9 @@ foreach ($result as $key => $dbEntry) {
 $toDisplay .= '</table>';
 $toDisplay .= '<div align="center">';
 
-if ($count > $nextSearchStart || $_REQUEST['start'] > 0) $toDisplay .= '<div style="padding:3px">' . paginate(ceil($count / $paginateCount), $_REQUEST['start']) . '</div>';
+if ($count > $nextSearchStart || $_REQUEST['start'] > 0) {
+    $toDisplay .= '<div style="padding:3px">' . paginate(ceil($count / $paginateCount), $_REQUEST['start']) . '</div>';
+}
 
 if ($_REQUEST['start'] - $paginateCount < 0) {
     $startNew = 0;
@@ -140,14 +142,18 @@ $toDisplay .= '</div>';
 
 echo $toDisplay;
 
-function paginate($totalPagesCount, $startNow){
+function paginate($totalPagesCount, $startNow)
+{
     $displayStr = '<br />';
 
     for ($i = 0; $i < $totalPagesCount; $i++) {
-        if(ceil($startNow / powerTrailBase::commentsPaginateCount) == $i) $btnStyle = 'currentPaginateButton';
-        else $btnStyle = 'paginateButton';
+        if (ceil($startNow / powerTrailBase::commentsPaginateCount) == $i) {
+            $btnStyle = 'currentPaginateButton';
+        } else {
+            $btnStyle = 'paginateButton';
+        }
         $displayStr .= '<a href="javascript:void(0)" onclick="ajaxGetComments(' . ($i * powerTrailBase::commentsPaginateCount) . ', ' . powerTrailBase::commentsPaginateCount . ');" class="' . $btnStyle . '">' . ($i + 1) . '</a>';
     }
 
-return $displayStr;
+    return $displayStr;
 }

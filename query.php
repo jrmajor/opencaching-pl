@@ -110,16 +110,16 @@ function viewqueries(User $loggedUser)
             $thisline = mb_ereg_replace('{queryname}', htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8'), $thisline);
             $thisline = mb_ereg_replace('{queryid}', htmlspecialchars($r['id'], ENT_COMPAT, 'UTF-8'), $thisline);
 
-            if (($i % 2) == 1)
+            if (($i % 2) == 1) {
                 $thisline = mb_ereg_replace('{bgcolor}', $bgcolor2, $thisline);
-            else
+            } else {
                 $thisline = mb_ereg_replace('{bgcolor}', $bgcolor1, $thisline);
+            }
 
             $content .= $thisline;
             $i++;
         }
-    }
-    else {
+    } else {
         $content = $noqueries;
     }
 
@@ -189,12 +189,13 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
         // form to enter the name
         $tplname = 'savequery';
 
-        if ($error_no_name == true)
+        if ($error_no_name == true) {
             tpl_set_var('nameerror', $error_empty_name);
-        elseif ($error_duplicate_name == true)
+        } elseif ($error_duplicate_name == true) {
             tpl_set_var('nameerror', $error_queryname_exists);
-        else
+        } else {
             tpl_set_var('nameerror', '');
+        }
 
         tpl_set_var('queryname', htmlspecialchars($queryname, ENT_COMPAT, 'UTF-8'));
         tpl_set_var('queryid', htmlspecialchars($queryid, ENT_COMPAT, 'UTF-8'));
@@ -211,12 +212,13 @@ function savequery($queryid, $queryname, $saveas, $submit, $saveas_queryid, User
         } else {
             tpl_set_var('selecttext', $saveastext);
 
-            do{
-                if ($r['id'] == $queryid)
+            do {
+                if ($r['id'] == $queryid) {
                     $options .= '<option value="' . $r['id'] . '" selected="selected">' . htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
-                else
+                } else {
                     $options .= '<option value="' . $r['id'] . '">' . htmlspecialchars($r['name'], ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
-            }while($r = XDb::xFetchArray($rs));
+                }
+            } while ($r = XDb::xFetchArray($rs));
             XDb::xFreeResults($rs);
             tpl_set_var('oldqueries', $options);
         }

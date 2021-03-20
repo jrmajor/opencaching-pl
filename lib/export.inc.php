@@ -39,7 +39,8 @@ function html2txt($html)
  * Replace reserved XML characters with entities
  * @param unknown $str
  */
-function xmlentities($str) {
+function xmlentities($str)
+{
     $from[0] = '&'; $to[0] = '&amp;';
     $from[1] = '<'; $to[1] = '&lt;';
     $from[2] = '>'; $to[2] = '&gt;';
@@ -47,8 +48,9 @@ function xmlentities($str) {
     $from[4] = '\''; $to[4] = '&apos;';
     $from[5] = ']]>'; $to[5] = ']] >';
 
-    for ($i = 0; $i <= 4; $i++)
+    for ($i = 0; $i <= 4; $i++) {
         $str = str_replace($from[$i], $to[$i], $str);
+    }
     $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
 
     return $str;
@@ -72,7 +74,8 @@ function xmlencode_text($str)
  * Cleanup textReplace reserved XML characters with entities
  * @param unknown $str
  */
-function cleanup_text($str) {
+function cleanup_text($str)
+{
     //$str= tidy_html_description($str);
     //$str = convert_lang('UTF-8','LATIN',$str);    // old implentation
     $str = convert_string($str);
@@ -99,8 +102,9 @@ function cleanup_text($str) {
     $from[] = ']]>'; $to[] = ']] >';
     $from[] = ''; $to[] = '';
 
-    for ($i = 0; $i < count($from); $i++)
+    for ($i = 0; $i < count($from); $i++) {
         $str = str_replace($from[$i], $to[$i], $str);
+    }
     $str = mb_ereg_replace('/[[:cntrl:]]/', '', $str);
 
     return $str;
@@ -130,7 +134,9 @@ function convert_lang($source,$dest,$str)
     $source = strtoupper($source);
     $dest = strtoupper($dest);
 
-    if($source == $dest) return $str;
+    if ($source == $dest) {
+        return $str;
+    }
     $chars['LATIN'] = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
     $chars['POLSKAWY'] = ['a', 'c', 'e', 'l', 'n', 'o', 's', 'z', 'z', 'A', 'C', 'E', 'L', 'N', 'O', 'S', 'Z', 'Z'];
     $chars['ISO-8859-2'] = ["\xB1", "\xE6", "\xEA", "\xB3", "\xF1", "\xF3", "\xB6", "\xBC", "\xBF", "\xA1", "\xC6", "\xCA", "\xA3", "\xD1", "\xD3", "\xA6", "\xAC", "\xAF"];
@@ -138,11 +144,15 @@ function convert_lang($source,$dest,$str)
     $chars['UTF-8'] = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'];
     $chars['ENTITIES'] = ['ą', 'ć', 'ę', 'ł', 'ń', 'ó', 'ś', 'ź', 'ż', 'Ą', 'Ć', 'Ę', 'Ł', 'Ń', 'Ó', 'Ś', 'Ź', 'Ż'];
 
-    if(! isset($chars[$source])) return false;
+    if (! isset($chars[$source])) {
+        return false;
+    }
 
-    if(! isset($chars[$dest])) return false;
-        $str = str_replace('a', 'a', $str);
-        $str = str_replace('é', 'e', $str);
+    if (! isset($chars[$dest])) {
+        return false;
+    }
+    $str = str_replace('a', 'a', $str);
+    $str = str_replace('é', 'e', $str);
 
     return str_replace($chars[$source],$chars[$dest],$str);
 }
@@ -152,8 +162,9 @@ function convert_lang($source,$dest,$str)
  * Replace regional characters with ASCII equivalent, using iconv
  * @param unknown $str
  */
-function convert_string($str) {
-   if (! empty($str)) {
+function convert_string($str)
+{
+    if (! empty($str)) {
         $str = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $str);
 
         if ($str === false) {

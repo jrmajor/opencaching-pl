@@ -33,7 +33,8 @@ class Column_EllipsedText extends AbstractColumn
         return 'listOfCaches/ellipsedTextColumn';
     }
 
-    public function getCssClass(){
+    public function getCssClass()
+    {
         return 'center';
     }
 }

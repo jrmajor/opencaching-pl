@@ -37,7 +37,8 @@ class OcDb extends OcPdo
      * {@inheritDoc}
      * @see OcPdo::beginTransaction()
      */
-    function beginTransaction() {
+    function beginTransaction()
+    {
         if ($this->hasActiveTransaction) {
             Debug::errorLog('DB transation already started - check the code!');
 
@@ -55,7 +56,8 @@ class OcDb extends OcPdo
      * {@inheritDoc}
      * @see OcPdo::commit()
      */
-    function commit () {
+    function commit ()
+    {
         parent::commit();
         $this->hasActiveTransaction = false;
     }
@@ -66,7 +68,8 @@ class OcDb extends OcPdo
      * {@inheritDoc}
      * @see OcPdo::commit()
      */
-    function rollback () {
+    function rollback ()
+    {
         parent::rollback();
         $this->hasActiveTransaction = false;
     }
@@ -614,7 +617,7 @@ class OcDb extends OcPdo
      */
     public static function quoteLimit($limit)
     {
-        if(is_null($limit)){
+        if (is_null($limit)) {
             // nulled limit means that there is no limit
             $limit = 'max';
         }

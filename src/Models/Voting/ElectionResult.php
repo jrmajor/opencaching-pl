@@ -37,7 +37,7 @@ class ElectionResult extends BaseObject
 
         foreach ($this->options as $optId => $opt) {
             $this->optionsColors[$optId] = array_pop($colorSet);
-         }
+        }
 
         // load votes
         $this->countOfVotes = 0;

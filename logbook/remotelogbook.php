@@ -6,37 +6,41 @@ include('commons.php');
 
 $logbook_type = validate_msg(decrypt($_POST['secret'], $secret));
 
-if(! $logbook_type)
-exit;
+if (! $logbook_type) {
+    exit;
+}
 
 // Where the file is going to be placed
 $target_path = 'work/';
 
 function file_begin($filename)
 {
-return begin(explode('.', $filename));
+    return begin(explode('.', $filename));
 }
 
 function replace_text_in_file($file, $search, $replace)
 {
-$f = fopen($file, 'r');
+    $f = fopen($file, 'r');
 
-if(! $f)
-return;
+    if (! $f) {
+        return;
+    }
 
-while(! feof($f))
-$text .= fread($f, 4096);
-fclose($f);
-$f = fopen($file, 'w');
+    while (! feof($f)) {
+        $text .= fread($f, 4096);
+    }
+    fclose($f);
+    $f = fopen($file, 'w');
 
-if(! $f)
-return;
-$text = str_replace($search, $replace, $text);
+    if (! $f) {
+        return;
+    }
+    $text = str_replace($search, $replace, $text);
 
-fwrite($f, $text, strlen($text));
-fclose($f);
+    fwrite($f, $text, strlen($text));
+    fclose($f);
 
-return;
+    return;
 }
 
 /* Add the original filename to our target path.
@@ -48,26 +52,26 @@ $ext2 = strtolower(substr(strrchr(basename($_FILES['bgimage_file']['name']), '.'
 $filename = $_FILES['image_file']['tmp_name'] . '.' . $ext;
 $shortname = crc32(uniqid());
 
-if(! move_uploaded_file($_FILES['image_file']['tmp_name'], "/tmp/$shortname.$ext")) {
-$ext = 'jpg';
-exec("cp logo.jpg /tmp/$shortname.jpg");
+if (! move_uploaded_file($_FILES['image_file']['tmp_name'], "/tmp/$shortname.$ext")) {
+    $ext = 'jpg';
+    exec("cp logo.jpg /tmp/$shortname.jpg");
 }
 
-if(! move_uploaded_file($_FILES['bgimage_file']['tmp_name'], '/tmp/' . $shortname . "2.$ext2")) {
-$ext2 = 'jpg';
-exec('cp logo.jpg /tmp/bg' . $shortname . '.jpg');
+if (! move_uploaded_file($_FILES['bgimage_file']['tmp_name'], '/tmp/' . $shortname . "2.$ext2")) {
+    $ext2 = 'jpg';
+    exec('cp logo.jpg /tmp/bg' . $shortname . '.jpg');
 }
 
-if($ext != 'png' && $ext != 'jpg' && $ext != 'jpeg' && $ext != 'gif' && $ext != 'bmp') {
-echo 'wrong format...';
+if ($ext != 'png' && $ext != 'jpg' && $ext != 'jpeg' && $ext != 'gif' && $ext != 'bmp') {
+    echo 'wrong format...';
 
-exit;
+    exit;
 }
 
-if($ext2 != 'png' && $ext2 != 'jpg' && $ext2 != 'jpeg' && $ext2 != 'gif' && $ext2 != 'bmp') {
-echo 'wrong format...';
+if ($ext2 != 'png' && $ext2 != 'jpg' && $ext2 != 'jpeg' && $ext2 != 'gif' && $ext2 != 'bmp') {
+    echo 'wrong format...';
 
-exit;
+    exit;
 }
 
 $pages = '';

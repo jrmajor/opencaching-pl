@@ -54,8 +54,9 @@ class LevelMeritBadge
 
     public function getLevelName()
     {
-        if ($this->getName() != '')
+        if ($this->getName() != '') {
             return $this->getName();
+        }
 
         return $this->getLevel();
     }
@@ -74,19 +75,24 @@ class LevelMeritBadge
             $this->level = $rec['badge_levels_level'];
         }
 
-        if (isset($rec['badge_levels_picture']))
+        if (isset($rec['badge_levels_picture'])) {
             $this->picture = $rec['badge_levels_picture'];
+        }
 
-        if (isset($rec['badge_levels_threshold']))
+        if (isset($rec['badge_levels_threshold'])) {
             $this->threshold = $rec['badge_levels_threshold'];
+        }
 
-        if (isset($rec['badge_levels_prev_threshold']))
+        if (isset($rec['badge_levels_prev_threshold'])) {
             $this->prev_threshold = $rec['badge_levels_prev_threshold'];
+        }
 
-        if (isset($rec['badge_levels_gain_counter']))
+        if (isset($rec['badge_levels_gain_counter'])) {
             $this->gain_counter = $rec['badge_levels_gain_counter'];
+        }
 
-        if (isset($rec['badge_levels_gain_last_date']))
+        if (isset($rec['badge_levels_gain_last_date'])) {
             $this->gain_last_date = $rec['badge_levels_gain_last_date'];
+        }
     }
 }

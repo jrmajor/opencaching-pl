@@ -219,8 +219,7 @@ class ReportsController extends BaseController
 
         $report = Report::fromIdFactory($_REQUEST['id']);
 
-        if ($newStatus != $report->getCache()->getStatus())
-        {
+        if ($newStatus != $report->getCache()->getStatus()) {
             $report->changeCacheStatus($newStatus);
         }
 
@@ -249,7 +248,8 @@ class ReportsController extends BaseController
         $this->ajaxSuccessResponse($content);
     }
 
-    private function paramAjaxCheck($paramName) {
+    private function paramAjaxCheck($paramName)
+    {
         if (! isset($_REQUEST[$paramName])) {
             $this->ajaxErrorResponse('No parameter: ' . $paramName, 400);
 
@@ -257,7 +257,8 @@ class ReportsController extends BaseController
         }
     }
 
-    private function reportIdAjaxCheck($reportId) {
+    private function reportIdAjaxCheck($reportId)
+    {
         if (! ReportCommons::isValidReportId($reportId)) {
             $this->ajaxErrorResponse('Incorrect report ID', 400);
 
@@ -291,7 +292,7 @@ class ReportsController extends BaseController
         $paginationModel = new PaginationModel(ReportCommons::REPORTS_PER_PAGE);
         $reportsCount = ReportCommons::getReportsCounts($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser']);
         $paginationModel->setRecordsCount($reportsCount);
-         [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $reports = ReportCommons::getReports($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser'], $offset, $limit);
         $this->view->setVar('paginationModel', $paginationModel);
         $this->view->setVar('reports', $reports);
@@ -351,7 +352,7 @@ class ReportsController extends BaseController
         $paginationModel = new PaginationModel(ReportCommons::REPORTS_PER_PAGE);
         $reportsCount = ReportCommons::getReportsCounts($this->loggedUser, $_SESSION['reportWp'], $_SESSION['reportType'], $_SESSION['reportStatus'], $_SESSION['reportUser']);
         $paginationModel->setRecordsCount($reportsCount);
-         [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
+        [$limit, $offset] = $paginationModel->getQueryLimitAndOffset();
         $reports = ReportCommons::getWatchedReports($this->loggedUser, $offset, $limit);
         $this->view->setVar('paginationModel', $paginationModel);
         $this->view->setVar('reports', $reports);
@@ -515,7 +516,8 @@ class ReportsController extends BaseController
         }
     }
 
-    private function checkSecurity($ajax = false) {
+    private function checkSecurity($ajax = false)
+    {
         if (! isset($_SERVER['HTTP_REFERER']) || (parse_url($_SERVER['HTTP_REFERER'], PHP_URL_HOST) != parse_url($this->ocConfig->getAbsolute_server_URI(), PHP_URL_HOST))) {
             if ($ajax) {
                 $this->ajaxErrorResponse('No hacking please!', 403);

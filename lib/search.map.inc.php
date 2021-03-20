@@ -17,8 +17,9 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-if (! $loggedUser && $hide_coords)
+if (! $loggedUser && $hide_coords) {
     exit();
+}
 
 $dbc = OcDb::instance();
 
@@ -93,7 +94,7 @@ $hash = uniqid();
 $f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
 
 while ($r = $dbcSearch->dbResultFetch($stmt)) {
-     $cnt++;
+    $cnt++;
     fprintf($f, "%s\n", $r['cache_id']);
 }
 fclose($f);

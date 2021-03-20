@@ -24,7 +24,8 @@ require_once __DIR__ . '/../../lib/common.inc.php';
 
 $db = OcDb::instance();
 
-function remove_watch($cache_id, $user_id) {
+function remove_watch($cache_id, $user_id)
+{
     printf("Watched cache ID: %s\n", $cache_id);
 
     // Remove watch

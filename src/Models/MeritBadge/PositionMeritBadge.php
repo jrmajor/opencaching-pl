@@ -15,27 +15,33 @@ class PositionMeritBadge
     // getField functions
     //////////////////////////////////////////////////////////////////////
 
-    public function getId(){
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function getName(){
+    public function getName()
+    {
         return $this->name;
     }
 
-    public function getType(){
+    public function getType()
+    {
         return $this->type;
     }
 
-    public function getGainDate(){
+    public function getGainDate()
+    {
         return $this->gain_date;
     }
 
-    public function getOwnerId(){
+    public function getOwnerId()
+    {
         return $this->owner_id;
     }
 
-    public function getOwnerName(){
+    public function getOwnerName()
+    {
         return $this->owner_name;
     }
 
@@ -43,23 +49,30 @@ class PositionMeritBadge
     // public functions
     //////////////////////////////////////////////////////////////////////
 
-    public function setFromRow($rec){
-        if (isset($rec['badge_position_id']))
+    public function setFromRow($rec)
+    {
+        if (isset($rec['badge_position_id'])) {
             $this->id = $rec['badge_position_id'];
+        }
 
-        if (isset($rec['badge_position_name']))
+        if (isset($rec['badge_position_name'])) {
             $this->name = $rec['badge_position_name'];
+        }
 
-        if (isset($rec['badge_position_type']))
+        if (isset($rec['badge_position_type'])) {
             $this->type = $rec['badge_position_type'];
+        }
 
-        if (isset($rec['badge_position_gain_date']))
+        if (isset($rec['badge_position_gain_date'])) {
             $this->gain_date = $rec['badge_position_gain_date'];
+        }
 
-        if (isset($rec['badge_position_owner_id']))
+        if (isset($rec['badge_position_owner_id'])) {
             $this->owner_id = $rec['badge_position_owner_id'];
+        }
 
-        if (isset($rec['badge_position_owner_name']))
+        if (isset($rec['badge_position_owner_name'])) {
             $this->owner_name = $rec['badge_position_owner_name'];
+        }
     }
 }

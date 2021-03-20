@@ -2,12 +2,14 @@
 
 sleep(3);
 // no term passed - just exit early with no response
-if (empty($_GET['term']))
+if (empty($_GET['term'])) {
     exit;
+}
 $q = strtolower($_GET['term']);
 // remove slashes if they were magically added
-if (get_magic_quotes_gpc())
+if (get_magic_quotes_gpc()) {
     $q = stripslashes($q);
+}
 
 $items = [
     'Great Bittern' => 'Botaurus stellaris',
@@ -583,8 +585,9 @@ foreach ($items as $key => $value) {
         array_push($result, ['id' => $value, 'label' => $key, 'value' => strip_tags($key)]);
     }
 
-    if (count($result) > 11)
+    if (count($result) > 11) {
         break;
+    }
 }
 
 // json_encode is available in PHP 5.2 and above, or you can install a PECL module in earlier versions
