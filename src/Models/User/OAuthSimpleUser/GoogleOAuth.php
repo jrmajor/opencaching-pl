@@ -62,8 +62,8 @@ class GoogleOAuth extends OAuthSimpleUserBase
         $url = 'https://accounts.google.com/o/oauth2/v2/auth?' .
             'scope=' . urlencode(self::USERINFO_SCOPE) .
             '&access_type=offline&include_granted_scopes=true' .
-            "&state=$stateStr" .
-            "&redirect_uri=$redirectUrl" .
+            "&state={$stateStr}" .
+            "&redirect_uri={$redirectUrl}" .
             '&response_type=code' .
             '&client_id=' . self::getClientId();
 

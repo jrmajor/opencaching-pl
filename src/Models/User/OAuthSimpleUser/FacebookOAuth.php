@@ -59,9 +59,9 @@ class FacebookOAuth extends OAuthSimpleUserBase
 
         $url = 'https://www.facebook.com/' . self::SDK_VER . '/dialog/oauth?' .
             'client_id=' . self::getAppId() .
-            "&redirect_uri=$redirectUrl" .
+            "&redirect_uri={$redirectUrl}" .
             '&scope=email' .
-            "&state=$stateStr";
+            "&state={$stateStr}";
 
         if ($urlForHtml) {
             return htmlspecialchars($url);
@@ -109,7 +109,7 @@ class FacebookOAuth extends OAuthSimpleUserBase
             $errReason = isset($_GET['error_reason'])?isset($_GET['error_reason']):'';
             $errDesc = isset($_GET['error_description'])?isset($_GET['error_description']):'';
 
-            $this->errorDesc = "Facebook says: $err ($errDesc - $errReason)";
+            $this->errorDesc = "Facebook says: {$err} ({$errDesc} - {$errReason})";
 
             return false;
         }
@@ -147,9 +147,9 @@ class FacebookOAuth extends OAuthSimpleUserBase
 
         $url = 'https://graph.facebook.com/' . self::SDK_VER . '/oauth/access_token?' .
                'client_id=' . self::getAppId() .
-               "&redirect_uri=$redirect" .
+               "&redirect_uri={$redirect}" .
                '&client_secret=' . self::getAppSecret() .
-               "&code=$code";
+               "&code={$code}";
 
         // send query
         $response = file_get_contents($url);

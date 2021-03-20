@@ -228,7 +228,7 @@ class GeoCache extends GeoCacheCommons
     {
         $wpColumn = self::getWpColumnName($wp);
 
-        $stmt = $this->db->multiVariableQuery("SELECT * FROM caches WHERE $wpColumn = :1 LIMIT 1", $wp);
+        $stmt = $this->db->multiVariableQuery("SELECT * FROM caches WHERE {$wpColumn} = :1 LIMIT 1", $wp);
         $cacheDbRow = $this->db->dbResultFetch($stmt);
 
         if (is_array($cacheDbRow)) {
@@ -348,7 +348,7 @@ class GeoCache extends GeoCacheCommons
                     $this->datePlaced = new DateTime($value);
                     break;
                 default:
-                    Debug::errorLog("Unknown field: $field (value: $value)");
+                    Debug::errorLog("Unknown field: {$field} (value: {$value})");
             }
         }
     }
@@ -1085,12 +1085,12 @@ class GeoCache extends GeoCacheCommons
         if (! is_null($typesArray)) {
             $typesArray = XDb::xEscape(implode(',', $typesArray));
         }
-        $typeFilterStr = (empty($typesStr))?'':"AND type IN ( $typesStr )";
+        $typeFilterStr = (empty($typesStr))?'':"AND type IN ( {$typesStr} )";
 
         $excludeDeletedStr = (! $includeDeleted)?'AND deleted=0':'';
 
         $s = Xdb::xSql(
-            "SELECT count(*) AS count, type FROM `cache_logs` WHERE cache_id = ? AND user_id = ? $typeFilterStr $excludeDeletedStr GROUP BY type",
+            "SELECT count(*) AS count, type FROM `cache_logs` WHERE cache_id = ? AND user_id = ? {$typeFilterStr} {$excludeDeletedStr} GROUP BY type",
             $this->id, $user->getUserId());
 
         $result = [];

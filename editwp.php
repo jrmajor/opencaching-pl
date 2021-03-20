@@ -251,7 +251,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                 // add/update active status to/in opensprawdzacz table
 
                 if (($OpenChecker_present == 1) && ($wp_type == 3)) {
-                    $proba = XDb::xSimpleQueryValue("SELECT count(*) FROM `opensprawdzacz` WHERE `cache_id` = '$cache_id'", '');
+                    $proba = XDb::xSimpleQueryValue("SELECT count(*) FROM `opensprawdzacz` WHERE `cache_id` = '{$cache_id}'", '');
 
                     if ($proba == 0) {
                         XDb::xSql("INSERT INTO `opensprawdzacz`(
@@ -259,7 +259,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
                                                                     `cache_id`,
                                                                     `proby`,
                                                                     `sukcesy`)
-                                                      VALUES ('', '$cache_id',   0,       0)");
+                                                      VALUES ('', '{$cache_id}',   0,       0)");
                     }
                 }
                 // ==== openchecker end ===========================================

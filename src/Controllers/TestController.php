@@ -66,7 +66,7 @@ class TestController extends BaseController
                     break;
                 default:
                     $link = SimpleRouter::getLink(self::class, $method);
-                    echo "<a href='$link'>$method</a> <br/>";
+                    echo "<a href='{$link}'>{$method}</a> <br/>";
             }
         }
     }
@@ -443,7 +443,7 @@ class TestController extends BaseController
         d($arg2);
 
         $link = SimpleRouter::getLink(self::class, 'routerTester',[$arg1, $arg2]);
-        echo "<a href='$link'>GO</a>";
+        echo "<a href='{$link}'>GO</a>";
     }
 
     public function altitudeTest($lat = null, $lon = null)
@@ -491,7 +491,7 @@ class TestController extends BaseController
 
         $electionId = $db->lastInsertId();
 
-        echo "ElectionId: $electionId<br>";
+        echo "ElectionId: {$electionId}<br>";
 
         // generate list of random users
         $users = [];
@@ -544,7 +544,7 @@ class TestController extends BaseController
 
         // generate voters and votes
         $votersCount = $db->quoteLimit($votersCount);
-        $rs = $db->simpleQuery("SELECT user_id FROM user WHERE is_active_flag=1 ORDER BY RAND() LIMIT $votersCount");
+        $rs = $db->simpleQuery("SELECT user_id FROM user WHERE is_active_flag=1 ORDER BY RAND() LIMIT {$votersCount}");
         $votersIds = $db->dbFetchOneColumnArray($rs, 'user_id');
 
         foreach ($votersIds as $userId) {
@@ -564,6 +564,6 @@ class TestController extends BaseController
                     $electionId, $optionIds[$voteOpt], $voteDateTs);
             }
         }
-        echo "- $votersCount voters generated<br>";
+        echo "- {$votersCount} voters generated<br>";
     }
 }

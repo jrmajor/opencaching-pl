@@ -100,7 +100,7 @@ class Uri
                 // there is such file in '/public'
                 $realPath = $ROOT . '/public' . $rootPath;
             } else {
-                throw new Exception("No such file: $rootPath");
+                throw new Exception("No such file: {$rootPath}");
             }
         }
 

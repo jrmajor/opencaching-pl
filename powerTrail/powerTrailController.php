@@ -106,7 +106,7 @@ class powerTrailController
                     $filter = ' ';
                     break;
                 default:
-                    $filter = " AND type = $filterValue ";
+                    $filter = " AND type = {$filterValue} ";
                     break;
             }
         } else {
@@ -137,14 +137,14 @@ class powerTrailController
 
         if (isset($_REQUEST['myPowerTrailsBool'], $userid) && $_REQUEST['myPowerTrailsBool'] === 'yes') {
             $myTrailsCondition = "and `id` NOT IN (SELECT `PowerTrailId` FROM `PowerTrail_owners`
-            WHERE `userId` = $userid)";
+            WHERE `userId` = {$userid})";
         } else {
             $myTrailsCondition = '';
         }
 
         if (isset($_REQUEST['gainedPowerTrailsBool'], $userid) && $_REQUEST['gainedPowerTrailsBool'] === 'yes') {
             $gainedTrailsCondition = "and `id` NOT IN (SELECT `PowerTrailId` FROM `PowerTrail_comments`
-            WHERE `userId` = $userid and `commentType` = 2)";
+            WHERE `userId` = {$userid} and `commentType` = 2)";
         } else {
             $gainedTrailsCondition = '';
         }
@@ -215,7 +215,7 @@ class powerTrailController
             $logQuery = 'INSERT INTO `PowerTrail_actionsLog`(`PowerTrailId`, `userId`, `actionDateTime`, `actionType`, `description`) VALUES (:1,:2,NOW(),1,:3)';
             $db->multiVariableQuery($logQuery, $newProjectId, $this->user->getUserId(),
                 $this->ptAPI->logActionTypes[1]['type']);
-            header("location: powerTrail.php?ptAction=showSerie&ptrail=$newProjectId");
+            header("location: powerTrail.php?ptAction=showSerie&ptrail={$newProjectId}");
 
             return true;
         } else {
@@ -252,7 +252,7 @@ class powerTrailController
     public function debug($var, $name = null, $line = null)
     {
         //if($this->debug === false) return;
-        echo '<font color=green><b>#' . $line . "</b> $name, </font>(" . __FILE__ . ') <pre>';
+        echo '<font color=green><b>#' . $line . "</b> {$name}, </font>(" . __FILE__ . ') <pre>';
         print_r($var);
         echo '</pre>';
     }

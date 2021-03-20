@@ -360,7 +360,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
                     if ($proba == 0) {
                         XDb::xSql("INSERT INTO `opensprawdzacz`(`cache_id`, `proby`, `sukcesy`)
-                                                     VALUES ('$cache_id', 0, 0)");
+                                                     VALUES ('{$cache_id}', 0, 0)");
                     }
                 }
                 // ==== openchecker end ===========================================

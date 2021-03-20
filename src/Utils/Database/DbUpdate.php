@@ -178,7 +178,7 @@ class DbUpdate
         echo $action . ' ' . $this->name . "\n";
 
         $this->db->beginTransaction();
-        $this->script->$action();
+        $this->script->{$action}();
 
         if ($action == 'run') {
             DbUpdateHistory::addOrReplace($this->uuid, $this->name);

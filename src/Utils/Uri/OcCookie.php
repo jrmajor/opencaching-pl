@@ -23,7 +23,7 @@ class OcCookie
     public static function set($key, $value, $saveToHeaderNow = false)
     {
         $data = self::getOcCookieData(); // init oc data
-        $data->$key = $value;
+        $data->{$key} = $value;
         self::$ocData = $data;
 
         if ($saveToHeaderNow) {
@@ -44,11 +44,11 @@ class OcCookie
     {
         $data = self::getOcCookieData(); // init oc data
 
-        if (isset($data->$key)) {
+        if (isset($data->{$key})) {
             if (! $skipPurifying) {
-                return UserInputFilter::purifyHtmlString($data->$key);
+                return UserInputFilter::purifyHtmlString($data->{$key});
             } else {
-                return $data->$key;
+                return $data->{$key};
             }
         } else {
             return null;
@@ -73,7 +73,7 @@ class OcCookie
     {
         $data = self::getOcCookieData();
 
-        return isset($data->$key);
+        return isset($data->{$key});
     }
 
     /**
@@ -84,7 +84,7 @@ class OcCookie
     public static function delete($key, $saveToHeaderNow = false)
     {
         $data = self::getOcCookieData();
-        unset($data->$key);
+        unset($data->{$key});
         self::$ocData = $data;
 
         if ($saveToHeaderNow) {

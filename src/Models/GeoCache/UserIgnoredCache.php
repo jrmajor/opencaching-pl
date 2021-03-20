@@ -92,7 +92,7 @@ class UserIgnoredCache extends BaseObject
                 ) sts ON sts.cache_id = cw.cache_id
                 WHERE cw.user_id = :1
                 ORDER BY c.name
-                LIMIT $limit OFFSET $offset", $userId);
+                LIMIT {$limit} OFFSET {$offset}", $userId);
 
         return $db->dbResultFetchAll($stmt);
     }

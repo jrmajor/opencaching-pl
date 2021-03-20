@@ -25,7 +25,7 @@ $lang_db = I18n::getLangForDbTranslations('log_types');
 
 // Ustawic sprawdzanie jezyka w cache_type.pl !!!!
 $rsCSF = XDb::xSql(
-    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`$lang_db` AS `type`
+    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`{$lang_db}` AS `type`
     FROM `cache_logs` INNER JOIN `log_types` ON (`cache_logs`.`type`=`log_types`.`id`)
     WHERE type=1 AND cache_logs.deleted=0 AND cache_logs.cache_id= ?
     GROUP BY `cache_logs`.`type`
@@ -42,7 +42,7 @@ if ($ry !== false) {
 }
 
 $rsCSNF = XDb::xSql(
-    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`$lang_db` AS `type`
+    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`{$lang_db}` AS `type`
     FROM `cache_logs` INNER JOIN `log_types` ON (`cache_logs`.`type`=`log_types`.`id`)
     WHERE type=2 AND cache_logs.deleted=0 AND cache_logs.cache_id= ?
     GROUP BY `cache_logs`.`type`
@@ -59,7 +59,7 @@ if ($ry !== false) {
 }
 
 $rsCSC = XDb::xSql(
-    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`$lang_db` AS `type`
+    "SELECT COUNT(`cache_logs`.`type`) `count`, `log_types`.`{$lang_db}` AS `type`
     FROM `cache_logs` INNER JOIN `log_types` ON (`cache_logs`.`type`=`log_types`.`id`)
     WHERE type=3 AND cache_logs.deleted=0 AND cache_logs.cache_id= ?
     GROUP BY `cache_logs`.`type`

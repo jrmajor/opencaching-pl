@@ -165,7 +165,7 @@ if ($loggedUser || ! $hide_coords) {
         $terrain = sprintf('%01.1f', $r['terrain'] / 2);
         $cacheid = convert_string($r['wp_oc']);
 
-        $line = "$cacheid - $name by $username, $type ($difficulty/$terrain)";
+        $line = "{$cacheid} - {$name} by {$username}, {$type} ({$difficulty}/{$terrain})";
         $record = pack('CLllA*x', 2, 1 + 4 + 4 + 4 + strlen($line) + 1, (int) $lon, (int) $lat, $line);
 
         echo $record;

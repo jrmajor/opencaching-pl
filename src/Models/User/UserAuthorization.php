@@ -329,10 +329,10 @@ class UserAuthorization extends BaseObject
             "DELETE FROM sys_sessions
              WHERE (
                 permanent = 0
-                AND last_login < DATE_SUB( NOW(), INTERVAL $loginTimeout SECOND)
+                AND last_login < DATE_SUB( NOW(), INTERVAL {$loginTimeout} SECOND)
                 ) OR (
                 permanent = 1
-                AND last_login < DATE_SUB( NOW(), INTERVAL $permLoginTimeout SECOND)
+                AND last_login < DATE_SUB( NOW(), INTERVAL {$permLoginTimeout} SECOND)
                 )");
     }
 

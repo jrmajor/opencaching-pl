@@ -40,7 +40,7 @@ class CacheSetCommon extends BaseObject
             case self::TYPE_NATURE:     return 'cs_typeNature';
             case self::TYPE_THEMATIC:   return 'cs_typeThematic';
             default:
-                Debug::errorLog("Unknown type: $type");
+                Debug::errorLog("Unknown type: {$type}");
 
                 return '';
         }
@@ -56,7 +56,7 @@ class CacheSetCommon extends BaseObject
             case self::TYPE_NATURE:     return $iconPath . 'footprintGreen.png';
             case self::TYPE_THEMATIC:   return $iconPath . 'footprintYellow.png';
             default:
-                Debug::errorLog("Unknown type: $type");
+                Debug::errorLog("Unknown type: {$type}");
 
                 return '';
         }
@@ -70,7 +70,7 @@ class CacheSetCommon extends BaseObject
             case self::STATUS_CLOSED:           return 'cs_statusClosed';
             case self::STATUS_INSERVICE:        return 'cs_statusInService';
             default:
-                Debug::errorLog("Unknown status: $status");
+                Debug::errorLog("Unknown status: {$status}");
 
                 return '';
         }

@@ -544,7 +544,7 @@ class ReportPoll extends BaseObject
                     $this->ans3 = $val;
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }

@@ -77,7 +77,7 @@ class Notify extends BaseObject
                     $this->userId = $val;
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }

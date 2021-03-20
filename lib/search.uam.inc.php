@@ -188,8 +188,8 @@ if ($loggedUser || ! $hide_coords) {
         $terrain = sprintf('%01.1f', $r['terrain'] / 2);
         $cacheid = $r['wp_oc'];
 
-        $descr = "$name by $username [$difficulty/$terrain]";
-        $poiname = "$cacheid $type$size";
+        $descr = "{$name} by {$username} [{$difficulty}/{$terrain}]";
+        $poiname = "{$cacheid} {$type}{$size}";
 
         $record = pack('llca64a255cca32', $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
 

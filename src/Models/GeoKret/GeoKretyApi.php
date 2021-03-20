@@ -39,7 +39,7 @@ class GeoKretyApi extends BaseObject
      */
     private function TakeUserGeokrets()
     {
-        $url = self::GEOKRETY_URL . "/export2.php?secid=$this->secId&inventory=1";
+        $url = self::GEOKRETY_URL . "/export2.php?secid={$this->secId}&inventory=1";
         $xml = $this->connect($url, self::OPERATION_TAKE_USER_GEOKRETS);
         libxml_use_internal_errors(true);
 
@@ -65,7 +65,7 @@ class GeoKretyApi extends BaseObject
      */
     private function TakeGeoKretsInCache()
     {
-        $url = self::GEOKRETY_URL . "/export2.php?wpt=$this->cacheWpt";
+        $url = self::GEOKRETY_URL . "/export2.php?wpt={$this->cacheWpt}";
         $xml = $this->connect($url, self::OPERATION_TAKE_GEOKRETS_IN_CACHE);
 
         if ($xml) {

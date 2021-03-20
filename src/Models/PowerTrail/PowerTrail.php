@@ -74,7 +74,7 @@ class PowerTrail extends BaseObject
             $fields = '*';
         }
 
-        $ptq = "SELECT $fields FROM `PowerTrail` WHERE `id` = :1 LIMIT 1";
+        $ptq = "SELECT {$fields} FROM `PowerTrail` WHERE `id` = :1 LIMIT 1";
         $s = $this->db->multiVariableQuery($ptq, $this->id);
 
         if ($this->db->rowCount($s) != 1) {
@@ -134,7 +134,7 @@ class PowerTrail extends BaseObject
                 case 'uuid': //uuid is not supportet yet
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
 

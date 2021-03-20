@@ -3,9 +3,9 @@
 function run_in_bg($Command, $Priority = 0)
 {
     if ($Priority) {
-        $PID = shell_exec("nohup nice -n $Priority $Command 2> /dev/null & echo $!");
+        $PID = shell_exec("nohup nice -n {$Priority} {$Command} 2> /dev/null & echo $!");
     } else {
-        $PID = shell_exec("nohup $Command 2> /dev/null & echo $!");
+        $PID = shell_exec("nohup {$Command} 2> /dev/null & echo $!");
     }
 
     return($PID);
@@ -13,7 +13,7 @@ function run_in_bg($Command, $Priority = 0)
 
 function is_running($PID)
 {
-    exec("ps $PID", $ProcessState);
+    exec("ps {$PID}", $ProcessState);
 
     return(count($ProcessState) >= 2);
 }

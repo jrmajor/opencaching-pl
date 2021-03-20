@@ -40,7 +40,7 @@ class MultiCacheStats extends BaseObject
             ORDER BY
                 date_published DESC,
                 c.cache_id DESC
-            LIMIT $offset, $limit", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
+            LIMIT {$offset}, {$limit}", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
 
         $result = [];
 
@@ -72,7 +72,7 @@ class MultiCacheStats extends BaseObject
                 AND c.date_hidden >= DATE(NOW())
             ORDER BY
                 c.date_hidden ASC
-            LIMIT $offset, $limit", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
+            LIMIT {$offset}, {$limit}", GeoCache::TYPE_EVENT, GeoCache::STATUS_READY);
 
         $result = [];
 
@@ -100,7 +100,7 @@ class MultiCacheStats extends BaseObject
 
         return self::db()->multiVariableQueryValue(
             "SELECT COUNT(*) FROM caches
-            WHERE status IN ($countedStatuses)
+            WHERE status IN ({$countedStatuses})
             AND score >= :1", 0, GeoCache::MIN_SCORE_OF_RATING_5);
     }
 
@@ -119,7 +119,7 @@ class MultiCacheStats extends BaseObject
         }
 
         return self::db()->simpleQueryValue(
-            "SELECT COUNT(*) FROM caches WHERE status IN ($countedStatuses)", 0);
+            "SELECT COUNT(*) FROM caches WHERE status IN ({$countedStatuses})", 0);
     }
 
     public static function getNewCachesCount($fromLastDays)
@@ -134,9 +134,9 @@ class MultiCacheStats extends BaseObject
 
         return self::db()->simpleQueryValue(
             "SELECT COUNT(*) FROM caches
-            WHERE status IN ($countedStatuses)
+            WHERE status IN ({$countedStatuses})
             AND (
-                date_published > DATE_SUB(NOW(), INTERVAL $days day)
+                date_published > DATE_SUB(NOW(), INTERVAL {$days} day)
             )", 0);
     }
 
@@ -154,7 +154,7 @@ class MultiCacheStats extends BaseObject
         $rs = $db->multiVariableQuery(
             "SELECT COUNT(*) AS newCaches, adm3 AS region
             FROM caches JOIN cache_location USING (cache_id)
-            WHERE status IN ($countedStatuses)
+            WHERE status IN ({$countedStatuses})
             AND YEAR(date_published) = :1
             GROUP BY adm3
             ORDER BY newCaches DESC", $year);
@@ -187,8 +187,8 @@ class MultiCacheStats extends BaseObject
         $fields = implode(',', $fieldsArr);
 
         $rs = $db->simpleQuery(
-            "SELECT $fields
-            FROM caches WHERE cache_id IN ($cacheIdsStr)");
+            "SELECT {$fields}
+            FROM caches WHERE cache_id IN ({$cacheIdsStr})");
 
         return $db->dbResultFetchAll($rs);
     }
@@ -205,7 +205,7 @@ class MultiCacheStats extends BaseObject
         $limit = count($cacheIds);
 
         $rs = $db->simpleQuery(
-            "SELECT * FROM caches WHERE cache_id IN ($cacheIdsStr) LIMIT $limit");
+            "SELECT * FROM caches WHERE cache_id IN ({$cacheIdsStr}) LIMIT {$limit}");
 
         $result = [];
 
@@ -237,7 +237,7 @@ class MultiCacheStats extends BaseObject
             ORDER BY
                 `date_published` DESC,
                 `cache_id` DESC
-            LIMIT $offset, $limit", GeoCache::STATUS_READY);
+            LIMIT {$offset}, {$limit}", GeoCache::STATUS_READY);
 
         return self::db()->dbFetchAllAsObjects($stmt, function ($row) {
             return GeoCache::fromCacheIdFactory($row['cache_id']);

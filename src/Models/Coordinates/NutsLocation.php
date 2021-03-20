@@ -58,8 +58,8 @@ class NutsLocation extends BaseObject
 
         $rs = $this->db->simpleQuery(
             "SELECT code, name FROM nuts_codes
-            WHERE code IN ( '$codesStr' )
-            LIMIT $limit");
+            WHERE code IN ( '{$codesStr}' )
+            LIMIT {$limit}");
 
         $nutsNames = [];
 
@@ -129,7 +129,7 @@ class NutsLocation extends BaseObject
     {
         if (! isset($this->codes[self::LEVEL_COUNTRY])) {
             // location is unknown
-            return "? $separator ?";
+            return "? {$separator} ?";
         }
 
         return $this->getCountryName() . $separator . $this->getRegionName();

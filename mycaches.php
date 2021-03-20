@@ -37,7 +37,7 @@ if (! $loggedUser) {
     $eLang = I18n::getLangForDbTranslations('cache_status');
 
     $rs_stat = XDb::xMultiVariableQueryValue(
-        "SELECT cache_status.$eLang FROM cache_status WHERE `cache_status`.`id` = :1 ", 0, $stat_cache);
+        "SELECT cache_status.{$eLang} FROM cache_status WHERE `cache_status`.`id` = :1 ", 0, $stat_cache);
     tpl_set_var('cache_stat', $rs_stat);
 
     $ran = XDb::xMultiVariableQueryValue(
@@ -98,7 +98,7 @@ if (! $loggedUser) {
         $sort_txt = 'DESC';
         $sort_neg = 1;
     }
-    $my_cache_sort = "&start=$start&status=$stat_cache&sort=$sort_neg";
+    $my_cache_sort = "&start={$start}&status={$stat_cache}&sort={$sort_neg}";
     tpl_set_var('my_cache_sort', $my_cache_sort);
 
     switch ($sort_col) {
@@ -189,7 +189,7 @@ if (! $loggedUser) {
                 AND `cache_status`.`id`=`caches`.`status`
                 AND `caches`.`status` = :stat_cache
             GROUP BY `caches`.`cache_id`
-            ORDER BY `$sort_warunek` $sort_txt
+            ORDER BY `{$sort_warunek}` {$sort_txt}
             LIMIT " . intval($start) . ', ' . intval($LOGS_PER_PAGE);
 
     $params['user_id']['value'] = (int) $user_id;

@@ -41,10 +41,10 @@ abstract class AbstractColumn
 
     public function __call($method, $args)
     {
-        if (property_exists($this, $method) && is_callable($this->$method)) {
-            return call_user_func_array($this->$method, $args);
+        if (property_exists($this, $method) && is_callable($this->{$method})) {
+            return call_user_func_array($this->{$method}, $args);
         } else {
-            Debug::errorLog(__METHOD__ . "Trying to call non-existed method: $method");
+            Debug::errorLog(__METHOD__ . "Trying to call non-existed method: {$method}");
         }
     }
 

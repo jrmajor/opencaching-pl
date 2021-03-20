@@ -82,7 +82,7 @@ class CacheSetOwner extends BaseObject
                 u.user_id AS uId, username AS name
             FROM PowerTrail_owners AS pto
                 LEFT JOIN user AS u ON u.user_id = pto.userId
-            WHERE PowerTrailId IN ($csIdsStr)");
+            WHERE PowerTrailId IN ({$csIdsStr})");
 
         $result = array_fill_keys($cacheSetIds, []);
 

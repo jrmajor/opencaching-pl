@@ -67,7 +67,7 @@ class GeoCacheDesc extends BaseObject
         if (is_array($descDbRow)) {
             $this->loadFromRow($descDbRow);
         } else {
-            throw new Exception("Description not found for cacheId=$cacheId");
+            throw new Exception("Description not found for cacheId={$cacheId}");
         }
     }
 
@@ -143,7 +143,7 @@ class GeoCacheDesc extends BaseObject
         $comment = UserInputFilter::purifyHtmlString(nl2br($comment));
         $date = Formatter::dateTime(); //current formated date+time
 
-        $formattedComment = '<span class="ocTeamCommentHeader">' . tr('date') . ": $date, " . tr('add_by') . " $userName:</span>" .
+        $formattedComment = '<span class="ocTeamCommentHeader">' . tr('date') . ": {$date}, " . tr('add_by') . " {$userName}:</span>" .
                             '<span class="ocTeamComment">' . $comment . '</span>';
 
         self::db()->multiVariableQuery(

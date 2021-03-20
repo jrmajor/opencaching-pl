@@ -76,7 +76,7 @@ class UploadModel
         $uploadModel->setMaxFileSize(OcConfig::getPicMaxSize());                      // max pic size
         $uploadModel->setMaxFileNumber(5);                                            // max 5 pics at once
         $uploadModel->allowedTypesRegex = UploadModel::MIME_IMAGE;                    // allowed img mime types
-        $uploadModel->submitUrl = "/picture/uploadPicsAjax/$parentType/$parentId";    // server API to store the files over AJAX
+        $uploadModel->submitUrl = "/picture/uploadPicsAjax/{$parentType}/{$parentId}";    // server API to store the files over AJAX
         $uploadModel->setDirs(OcConfig::getPicUploadFolderInDynBaseDir());            // where to store files on server
 
         return $uploadModel;
@@ -150,7 +150,7 @@ class UploadModel
         $phpMaxFilesize = TextConverter::bytesNumberWithUnitToBytes(ini_get('upload_max_filesize'));
 
         if ($this->maxFileSize > $phpMaxFilesize) {
-            throw new Exception("Uploaded size in model {$this->maxFileSize} > php.ini::upload_max_filesize ($phpMaxFilesize)");
+            throw new Exception("Uploaded size in model {$this->maxFileSize} > php.ini::upload_max_filesize ({$phpMaxFilesize})");
         }
     }
 

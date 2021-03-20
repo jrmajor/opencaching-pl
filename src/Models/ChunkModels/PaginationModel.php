@@ -184,7 +184,7 @@ class PaginationModel
             }
             $page = new PageModel(
                 $i, ($i == $this->currentPage),
-                $this->getLink($i), tr('pagination_page') . " $i.");
+                $this->getLink($i), tr('pagination_page') . " {$i}.");
             $result[] = $page;
         }
 

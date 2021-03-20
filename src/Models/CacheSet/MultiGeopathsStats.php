@@ -38,8 +38,8 @@ class MultiGeopathsStats extends BaseObject
                     ptc.cacheId
              FROM PowerTrail AS pt
                 JOIN powerTrail_caches AS ptc ON pt.id = ptc.PowerTrailId
-             WHERE ptc.cacheId IN ($cacheIdsStr)
-                AND pt.status IN ($allowedGeopathStatus)");
+             WHERE ptc.cacheId IN ({$cacheIdsStr})
+                AND pt.status IN ({$allowedGeopathStatus})");
 
         return $db->dbResultFetchAll($rs);
     }
@@ -61,7 +61,7 @@ class MultiGeopathsStats extends BaseObject
         $limit = count($geopathIds);
 
         $rs = $db->simpleQuery(
-            "SELECT * FROM  PowerTrail WHERE id IN ($gpIdsStr) LIMIT $limit");
+            "SELECT * FROM  PowerTrail WHERE id IN ({$gpIdsStr}) LIMIT {$limit}");
 
         $result = [];
 

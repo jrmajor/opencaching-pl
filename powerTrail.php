@@ -29,7 +29,7 @@ require_once(__DIR__ . '/lib/common.inc.php');
 $ocConfig = OcConfig::instance();
 
 if ($ocConfig->isPowerTrailModuleSwitchOn() === false) {
-    header("location: $absolute_server_URI");
+    header("location: {$absolute_server_URI}");
 }
 
 $loggedUser = ApplicationContainer::Instance()->getLoggedUser();
@@ -327,7 +327,7 @@ switch ($actionPerformed) {
 
             $ptId = $powerTrail->getId();
             $view->setVar('fullScreenMapPtLink',
-                SimpleRouter::getLink(MainMapController::class, 'fullScreen') . "?cs=$ptId");
+                SimpleRouter::getLink(MainMapController::class, 'fullScreen') . "?cs={$ptId}");
 
             $mapModel = new DynamicMapModel();
 

@@ -81,17 +81,17 @@ class RepairUserScores
             $s = $db->paramQuery($sql, $params);
 
             if ($db->rowCount($s) > 0) {
-                echo "<b>user_id=$user_id</b><br>";
-                echo "hidden_count=$hidden_count<br>cache_ignores=$cache_ignores<br>";
-                echo "log_notes_count=$log_notes_count<br>founds_count=$founds_count<br>";
-                echo "notfounds_count=$notfounds_count<br>";
+                echo "<b>user_id={$user_id}</b><br>";
+                echo "hidden_count={$hidden_count}<br>cache_ignores={$cache_ignores}<br>";
+                echo "log_notes_count={$log_notes_count}<br>founds_count={$founds_count}<br>";
+                echo "notfounds_count={$notfounds_count}<br>";
                 $total_touched++;
             }
         }
 
         set_time_limit(60);
         unset($db);
-        echo "-----------------------------------<br>total_touched=$total_touched<br>";
+        echo "-----------------------------------<br>total_touched={$total_touched}<br>";
     }
 }
 

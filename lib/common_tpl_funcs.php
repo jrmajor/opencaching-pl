@@ -91,8 +91,8 @@ function tpl_do_replace($str, $noeval = false)
             } else {
                 $replave_var_name = 'tpl_replace_var_' . $varname;
 
-                global $$replave_var_name;
-                $$replave_var_name = $varvalue;
+                global ${$replave_var_name};
+                ${$replave_var_name} = $varvalue;
 
                 //replace using php-echo
                 $str = mb_ereg_replace('{' . $varname . '}', '<?php global $' . $replave_var_name . '; echo $tpl_replace_var_' . $varname . '; ?>', $str);

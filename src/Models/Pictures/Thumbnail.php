@@ -106,7 +106,7 @@ class Thumbnail extends BaseObject
                 $maxSize = OcConfig::getPicMediumThumbnailSize();
                 break;
             default:
-                Debug::errorLog("Unknown thumbnail size: $thumbSize");
+                Debug::errorLog("Unknown thumbnail size: {$thumbSize}");
 
                 return null;
         }
@@ -128,7 +128,7 @@ class Thumbnail extends BaseObject
 
         try {
             //ddd($orginalImagePath, $outPath, $maxSize);
-            $outPath = OcImage::createThumbnail($orginalImagePath, "$outPath/$uuid", $maxSize);
+            $outPath = OcImage::createThumbnail($orginalImagePath, "{$outPath}/{$uuid}", $maxSize);
         } catch (Exception $e) {
             Debug::logException($e);
 
@@ -153,7 +153,7 @@ class Thumbnail extends BaseObject
             foreach ($spoilerDirs as $spoiler) {
                 $path = self::buildPath($uuid, $spoiler, $size);
 
-                if ($result = glob("$basePath$path/$uuid.*")) {
+                if ($result = glob("{$basePath}{$path}/{$uuid}.*")) {
                     if (! empty($result) || ! is_array($result)) {
                         // thumbnail found
                         foreach ($result as $thumb) {
@@ -181,7 +181,7 @@ class Thumbnail extends BaseObject
 
         $path = self::buildPath($uuid, $spoiler, $size);
 
-        if ($result = glob("$basePath$path/$uuid.*")) {
+        if ($result = glob("{$basePath}{$path}/{$uuid}.*")) {
             if (! empty($result)) {
                 // thumbnail found
                 return $baseUrl . $path . '/' . basename($result[0]);

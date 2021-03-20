@@ -144,7 +144,7 @@ class News extends BaseObject
                 case 'no-date-mainpageexp':
                     break;
                 default:
-                    Debug::errorLog("Unknown field: $key");
+                    Debug::errorLog("Unknown field: {$key}");
             }
         }
     }
@@ -238,7 +238,7 @@ class News extends BaseObject
                     $this->date_lastmod = new DateTime($val);
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
         $this->dataLoaded = true;

@@ -74,7 +74,7 @@ class OcImage
     {
         // check if input file exists
         if (! is_file($inputImagePath)) {
-            throw new Exception("Image not found: $inputImagePath");
+            throw new Exception("Image not found: {$inputImagePath}");
         }
 
         // load img type
@@ -217,7 +217,7 @@ class OcImage
         }
 
         if (! $result) {
-            throw new Exception("Can't save the output file: $outputPath");
+            throw new Exception("Can't save the output file: {$outputPath}");
         }
 
         return $outputPath;

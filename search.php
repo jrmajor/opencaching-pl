@@ -1418,14 +1418,14 @@ function outputSearchForm($options, User $loggedUser)
         if (I18n::isTranslationAvailable($countryCode)) {
             $countryName = tr($countryCode);
         } else {
-            Debug::errorLog("Unknown translation for country code: $countryCode");
+            Debug::errorLog("Unknown translation for country code: {$countryCode}");
             $countryName = $countryCode;
         }
 
         if ($countryCode == $options['country']) {
-            $countriesoptions .= "<option value='$countryCode' selected='selected'>$countryName</option>";
+            $countriesoptions .= "<option value='{$countryCode}' selected='selected'>{$countryName}</option>";
         } else {
-            $countriesoptions .= "<option value='$countryCode'>$countryName</option>";
+            $countriesoptions .= "<option value='{$countryCode}'>{$countryName}</option>";
         }
 
         $countriesoptions .= "\n";
@@ -1440,7 +1440,7 @@ function outputSearchForm($options, User $loggedUser)
 
     $lang_db = I18n::getLangForDbTranslations('cache_type');
 
-    $rs = XDb::xSql("SELECT `id`, `$lang_db`, `icon_large` FROM `cache_type` ORDER BY `sort`");
+    $rs = XDb::xSql("SELECT `id`, `{$lang_db}`, `icon_large` FROM `cache_type` ORDER BY `sort`");
 
     for ($i = 0; $i < XDb::xNumRows($rs); $i++) {
         $record = XDb::xFetchArray($rs);

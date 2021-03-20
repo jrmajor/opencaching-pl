@@ -103,8 +103,8 @@ class AutoArch
         $email_content = mb_ereg_replace('{cacheid}', $cacheid, $email_content);
         $email_content = mb_ereg_replace('{octeamEmailsSignature}', OcConfig::getOcteamEmailsSignature(), $email_content);
         $emailheaders = "Content-Type: text/plain; charset=utf-8\r\n";
-        $emailheaders .= "From: $siteName <$octeamEmailAddress>\r\n";
-        $emailheaders .= "Reply-To: $siteName <$octeamEmailAddress>";
+        $emailheaders .= "From: {$siteName} <{$octeamEmailAddress}>\r\n";
+        $emailheaders .= "Reply-To: {$siteName} <{$octeamEmailAddress}>";
         $status = mb_send_mail($cache->getOwner()->getEmail(), tr('autoArchive_11'), $email_content, $emailheaders);
 
         if (! $status) {

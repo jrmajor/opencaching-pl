@@ -24,7 +24,7 @@ class AltitudeUpdateJob extends Job
             $geocache = GeoCache::fromCacheIdFactory($cacheId);
 
             if (! $geocache) {
-                Debug::errorLog("Cache Additions present but there is no such geocache (cacheId=$cacheId)");
+                Debug::errorLog("Cache Additions present but there is no such geocache (cacheId={$cacheId})");
 
                 continue;
             }
@@ -35,7 +35,7 @@ class AltitudeUpdateJob extends Job
                 $altitude = Altitude::getAltitude($coords);
 
                 if (is_null($altitude)) {
-                    Debug::errorLog("Can't find altitude for geocache (cacheId=$cacheId, coords={$coords->getAsText()})");
+                    Debug::errorLog("Can't find altitude for geocache (cacheId={$cacheId}, coords={$coords->getAsText()})");
 
                     continue;
                 }

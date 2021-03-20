@@ -65,7 +65,7 @@ class GeoKretyLogController extends BaseController
         $logsProcessed = 0;
         $queueLen = GeoKretLog::GetDbQueueLength();
 
-        $this->debug(" GK logs in queue: $queueLen");
+        $this->debug(" GK logs in queue: {$queueLen}");
 
         while ($logsProcessed < $queueLen &&
             0 < count($geoKretyLogs = GeoKretLog::GetLast50LogsFromDb())) {

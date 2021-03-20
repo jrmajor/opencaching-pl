@@ -16,7 +16,7 @@ class CleanupAccessLogs
 
         set_time_limit(60);
         unset($db);
-        echo "total_deleted=$total_deleted\n";
+        echo "total_deleted={$total_deleted}\n";
     }
 }
 

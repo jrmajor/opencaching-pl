@@ -58,7 +58,7 @@ class Email
             // is needed.
             $to = implode(',', $this->toAddr);
 
-            throw new RuntimeException("Invalid recipient/sender address! $to/{$this->fromAddr}");
+            throw new RuntimeException("Invalid recipient/sender address! {$to}/{$this->fromAddr}");
         }
         $headers = [];
 

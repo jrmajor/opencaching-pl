@@ -936,7 +936,7 @@ class Report extends BaseObject
                     $this->secret = $val;
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
         $this->isDataComplete(true);

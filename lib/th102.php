@@ -56,7 +56,7 @@ require_once(__DIR__ . '/common.inc.php');
         echo '<script>';
 
         if ($sEND != '') {
-            echo "alert( '$sEND' );";
+            echo "alert( '{$sEND}' );";
             $asUserID = explode(',', '');
         }
         echo '</script>';
@@ -103,7 +103,7 @@ require_once(__DIR__ . '/common.inc.php');
         foreach ($asUserID as $sID) {
             $sName = $aUserName[$sID];
             $sName = str_replace("'", '`', $sName);
-            echo "gcl.addColumn('number', '$sName');";
+            echo "gcl.addColumn('number', '{$sName}');";
             $aNrColumn[$sID] = $i;
             $i++;
         }
@@ -147,7 +147,7 @@ require_once(__DIR__ . '/common.inc.php');
             $nMonth = $record['month'] - 1;
             $nDay = $record['day'];
 
-            $sNewDate = "new Date( $nYear, $nMonth, $nDay )";
+            $sNewDate = "new Date( {$nYear}, {$nMonth}, {$nDay} )";
             $sUserName = $record['username'];
             $nUserId = $record['user_id'];
 
@@ -155,12 +155,12 @@ require_once(__DIR__ . '/common.inc.php');
 
             echo "
             gcl.addEmptyRow();
-            gcl.addToLastRow( 0, $sNewDate );
+            gcl.addToLastRow( 0, {$sNewDate} );
         ";
 
             $nrCol = $aNrColumn[$nUserId];
             $val = $anCount[$nUserId];
-            echo "gcl.addToLastRow( $nrCol+1 , $val );";
+            echo "gcl.addToLastRow( {$nrCol}+1 , {$val} );";
         }
 
         echo '</script>';

@@ -64,10 +64,10 @@ foreach ($levelsMeritBadge as $oneLevel) {
     }
 
     $color = MeritBadge::getColor($pure_level, $noLevels);
-    $level = "<b style=\'color:$color\'> " . intval($pure_level + 1) . '</b>';
+    $level = "<b style=\'color:{$color}\'> " . intval($pure_level + 1) . '</b>';
 
     $name = $oneLevel->getLevelName();
-    $name = "<b style=\'color:$color\'>$name</b>";
+    $name = "<b style=\'color:{$color}\'>{$name}</b>";
 
     $gain = $oneLevel->getGainCounter();
     $max_date = $oneLevel->getGainLastDate() ? Formatter::date($oneLevel->getGainLastDate()) : '';
@@ -81,12 +81,12 @@ foreach ($levelsMeritBadge as $oneLevel) {
     $contentLvl .= "
             gct.addEmptyRow();
 
-            gct.addToLastRow( 0, \"$pure_level\" );
-            gct.addToLastRow( 1, \"$level\" );
-            gct.addToLastRow( 2, \"$name\" );
-            gct.addToLastRow( 3, \"$threshold\" );
-            gct.addToLastRow( 4, \"$gain\" );
-            gct.addToLastRow( 5, \"$max_date\" ); ";
+            gct.addToLastRow( 0, \"{$pure_level}\" );
+            gct.addToLastRow( 1, \"{$level}\" );
+            gct.addToLastRow( 2, \"{$name}\" );
+            gct.addToLastRow( 3, \"{$threshold}\" );
+            gct.addToLastRow( 4, \"{$gain}\" );
+            gct.addToLastRow( 5, \"{$max_date}\" ); ";
 }
 
 $usersMeritBadge = $meritBadgeCtrl->buildArrayUsers($badge_id);
@@ -102,7 +102,7 @@ foreach ($usersMeritBadge as $oneUserBadge) {
         }
 
         $level_id = $oneUserBadge->getLevelId();
-        $contentUsr .= "if (level== $level_id){";
+        $contentUsr .= "if (level== {$level_id}){";
     }
 
     $user_id = $oneUserBadge->getUserId();
@@ -121,15 +121,15 @@ foreach ($usersMeritBadge as $oneUserBadge) {
     }
 
     $pure_user_name = strtoupper($pure_user_name);
-    $user_name = "<a $pure_user_name href='viewprofile.php?userid=$user_id'>$user_name</a>";
-    $curr_level_date = "<spam $pure_ts>$curr_level_date</spam>";
+    $user_name = "<a {$pure_user_name} href='viewprofile.php?userid={$user_id}'>{$user_name}</a>";
+    $curr_level_date = "<spam {$pure_ts}>{$curr_level_date}</spam>";
 
     $contentUsr .= "
         gctU.addEmptyRow();
 
-        gctU.addToLastRow( 0, \"$user_name\" );
-        gctU.addToLastRow( 1, \"$curr_val\" );
-        gctU.addToLastRow( 2, \"$curr_level_date\" );";
+        gctU.addToLastRow( 0, \"{$user_name}\" );
+        gctU.addToLastRow( 1, \"{$curr_val}\" );
+        gctU.addToLastRow( 2, \"{$curr_level_date}\" );";
 }
 
 $contentUsr .= '}';

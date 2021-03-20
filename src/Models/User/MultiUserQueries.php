@@ -31,7 +31,7 @@ class MultiUserQueries extends BaseObject
              FROM (
                     SELECT DISTINCT user_id
                     FROM cache_logs
-                    WHERE type IN ($countedTypes) AND deleted=0
+                    WHERE type IN ({$countedTypes}) AND deleted=0
                 UNION DISTINCT
                     SELECT DISTINCT user_id FROM caches
             ) AS activeUsers", 0);
@@ -61,7 +61,7 @@ class MultiUserQueries extends BaseObject
 
         return self::db()->simpleQueryValue(
             "SELECT COUNT(*) FROM user
-             WHERE date_created > DATE_SUB(NOW(), INTERVAL $days day) ", 0);
+             WHERE date_created > DATE_SUB(NOW(), INTERVAL {$days} day) ", 0);
     }
 
     /**
@@ -82,7 +82,7 @@ class MultiUserQueries extends BaseObject
 
         $s = $db->simpleQuery(
             "SELECT user_id, username FROM user
-            WHERE user_id IN ( $userIdsStr )");
+            WHERE user_id IN ( {$userIdsStr} )");
 
         return $db->dbFetchAsKeyValArray($s, 'user_id', 'username');
     }
@@ -117,13 +117,13 @@ class MultiUserQueries extends BaseObject
                      user_id IN (
                          SELECT DISTINCT user_id FROM cache_logs
                          WHERE type = ' . GeoCacheLogCommons::LOGTYPE_FOUNDIT . "
-                             AND date_created > DATE_ADD(NOW(), INTERVAL -$guideActivePeriod DAY)
+                             AND date_created > DATE_ADD(NOW(), INTERVAL -{$guideActivePeriod} DAY)
                      )
                      OR
                      user_id IN (
                          SELECT DISTINCT user_id FROM caches
-                         WHERE status IN ($cacheActiveStatusList)
-                             AND date_created > DATE_ADD(NOW(), INTERVAL -$guideActivePeriod DAY)
+                         WHERE status IN ({$cacheActiveStatusList})
+                             AND date_created > DATE_ADD(NOW(), INTERVAL -{$guideActivePeriod} DAY)
                      )
                  )"
         );
@@ -141,11 +141,11 @@ class MultiUserQueries extends BaseObject
         $s = $db->simpleQuery(
             "SELECT user_id, SUM(topratings) AS recos
             FROM caches
-            WHERE user_id IN ($userIds)
+            WHERE user_id IN ({$userIds})
                 AND type <> " . GeoCache::TYPE_EVENT . "
-            AND status IN ($cacheActiveStatusList)
+            AND status IN ({$cacheActiveStatusList})
             GROUP BY user_id
-            HAVING recos >= $guideGotRecommendations");
+            HAVING recos >= {$guideGotRecommendations}");
 
         $result = [];
 

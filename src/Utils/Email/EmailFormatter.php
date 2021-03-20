@@ -79,7 +79,7 @@ class EmailFormatter
         if (preg_match_all('/{{[^}]*}}/u', $this->emailContent, $matches)) {
             foreach ($matches[0] as $translationPhase) {
                 $translationKey = substr($translationPhase, 2, -2);
-                $this->emailContent = preg_replace("/$translationPhase/u", tr($translationKey), $this->emailContent);
+                $this->emailContent = preg_replace("/{$translationPhase}/u", tr($translationKey), $this->emailContent);
             }
         }
     }

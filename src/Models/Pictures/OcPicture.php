@@ -97,7 +97,7 @@ class OcPicture extends BaseObject
         $db = self::db();
         $cols = implode(',',self::DB_COLS);
         $rs = $db->multiVariableQuery(
-            "SELECT $cols FROM pictures
+            "SELECT {$cols} FROM pictures
                 WHERE object_id = :1 AND object_type = :2
                 ORDER BY seq ASC, date_created DESC", $parentId, $parentType);
 
@@ -228,7 +228,7 @@ class OcPicture extends BaseObject
     {
         $cols = implode(',', self::DB_COLS);
         $s = $this->db->multiVariableQuery(
-            "SELECT $cols FROM pictures WHERE uuid = :1 LIMIT 1", $uuid);
+            "SELECT {$cols} FROM pictures WHERE uuid = :1 LIMIT 1", $uuid);
 
         $row = $this->db->dbResultFetchOneRowOnly($s);
 
@@ -283,7 +283,7 @@ class OcPicture extends BaseObject
                     $this->order = $val;
                     break;
                 default:
-                    Debug::errorLog("Column $col not supported ?");
+                    Debug::errorLog("Column {$col} not supported ?");
             }
         } // foreach
     }
@@ -319,7 +319,7 @@ class OcPicture extends BaseObject
     {
         $path = OcConfig::getPicUploadFolder();
 
-        if ($result = glob("$path/{$this->uuid}.*")) {
+        if ($result = glob("{$path}/{$this->uuid}.*")) {
             if (! empty($result)) {
                 // thumbnail found
                 return $path . '/' . basename($result[0]);

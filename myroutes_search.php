@@ -1000,7 +1000,7 @@ if (isset($_POST['submit_gpx'])) {
         $rsAttributes = XDb::xSql("SELECT `cache_attrib`.`id`, `caches_attributes`.`attrib_id`, `cache_attrib`.`text_long`
                             FROM `caches_attributes`, `cache_attrib`
                             WHERE `caches_attributes`.`cache_id`= ? AND `caches_attributes`.`attrib_id` = `cache_attrib`.`id`
-                                AND `cache_attrib`.`language` = '$language'
+                                AND `cache_attrib`.`language` = '{$language}'
                             ORDER BY `caches_attributes`.`attrib_id`", $r['cacheid']);
 
         if (($r['votes'] > 3) || ($r['topratings'] > 0) || (XDb::xNumRows($rsAttributes) > 0)) {
@@ -1470,7 +1470,7 @@ function cache_distances($lat1, $lon1, $lat2, $lon2)
         $earth_radius = 6378;
 
         foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate) {
-            $$ordinate = $$ordinate * (pi() / 180);
+            ${$ordinate} = ${$ordinate} * (pi() / 180);
         }
         $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +

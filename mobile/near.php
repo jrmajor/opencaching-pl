@@ -106,7 +106,7 @@ if (isset($_GET['ns'], $_GET['ew'], $_GET['radius'], $_GET['Nstopien'], $_GET['N
             $kord2 = '-' . $kord2;
         }
 
-        $jsonurl = "$absolute_server_URI/okapi/services/caches/search/nearest?&center=" . $kord1 . '|' . $kord2 . '&status=Available&radius=' . $_GET['radius'] . '&consumer_key=HpLvDvvjmG3HkeX8RsgU&limit=500 ';
+        $jsonurl = "{$absolute_server_URI}/okapi/services/caches/search/nearest?&center=" . $kord1 . '|' . $kord2 . '&status=Available&radius=' . $_GET['radius'] . '&consumer_key=HpLvDvvjmG3HkeX8RsgU&limit=500 ';
 
         $input = file_get_contents($jsonurl);
         $output = json_decode($input, true);

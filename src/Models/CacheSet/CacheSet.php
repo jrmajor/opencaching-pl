@@ -67,7 +67,7 @@ class CacheSet extends CacheSetCommon
         }
 
         $s = $this->db->multiVariableQuery(
-            "SELECT $fields FROM PowerTrail WHERE id=:1 LIMIT 1", $this->id);
+            "SELECT {$fields} FROM PowerTrail WHERE id=:1 LIMIT 1", $this->id);
 
         if ($row = $this->db->dbResultFetch($s)) {
             $this->loadFromDbRow($row);
@@ -127,7 +127,7 @@ class CacheSet extends CacheSetCommon
                     // cords are handled below...
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
 
@@ -348,7 +348,7 @@ class CacheSet extends CacheSetCommon
             FROM PowerTrail
             WHERE status = :1
             ORDER BY dateCreated DESC
-            LIMIT $limit", self::STATUS_OPEN);
+            LIMIT {$limit}", self::STATUS_OPEN);
 
         $result = [];
 

@@ -78,7 +78,7 @@ require_once(__DIR__ . '/common.inc.php');
 
         if ($sEND != '') {
             echo '<script>';
-            echo "alert( '$sEND' );";
+            echo "alert( '{$sEND}' );";
             //$asUserID = explode(",", "");
             echo '</script>';
         }
@@ -131,7 +131,7 @@ require_once(__DIR__ . '/common.inc.php');
             $aNrColumn[$nPeriod] = $i;
 
             $sPN = $nPeriod . $sPeriodName;
-            echo "gcb.addColumn('number', '$sPN');";
+            echo "gcb.addColumn('number', '{$sPN}');";
 
             $i = $i + 1;
         }
@@ -179,14 +179,14 @@ require_once(__DIR__ . '/common.inc.php');
 
                     echo "
             gcb.addEmptyRow();
-            gcb.addToLastRow( 0, '$sUserName' );
+            gcb.addToLastRow( 0, '{$sUserName}' );
             ";
 
                     $nStart = 0;
                 }
 
                 $nrCol = $aNrColumn[$nPeriod];
-                echo "gcb.addToLastRow( $nrCol+1 , $nVal );";
+                echo "gcb.addToLastRow( {$nrCol}+1 , {$nVal} );";
             }
 
             echo '</script>';

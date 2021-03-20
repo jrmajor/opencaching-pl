@@ -428,7 +428,7 @@ if ($seek == 0) {
 
             ) B
         ) A
-        WHERE row=2 OR row % $milestone =1 ORDER BY row ASC", $user_id);
+        WHERE row=2 OR row % {$milestone} =1 ORDER BY row ASC", $user_id);
 
         $rsms->nextRowset(); //to switch to second query results :)
 
@@ -703,7 +703,7 @@ if ($user->getHiddenGeocachesCount() == 0) {
 
                 ) B
             ) A
-            WHERE row=2 OR row % $milestone =1 ORDER BY row ASC", $user_id);
+            WHERE row=2 OR row % {$milestone} =1 ORDER BY row ASC", $user_id);
 
         $rsms->nextRowset(); //to switch to second query results :)
 
@@ -963,7 +963,7 @@ function buildMeritBadges($user_id)
                     </tbody>
                 </table>
                 <br>');
-    $content .= "<a class='links'  href='user_badges.php?user_id=$user_id'>[" . tr('merit_badge_show_details') . ']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
+    $content .= "<a class='links'  href='user_badges.php?user_id={$user_id}'>[" . tr('merit_badge_show_details') . ']</a>&nbsp;&nbsp;&nbsp;&nbsp;';
     $content .= "<a class='links'  href='user_badges.php?user_id=999999'>[" . tr('merit_badge_show_list') . ']</a><br><br>';
 
     return $content;
@@ -976,7 +976,7 @@ function buildOpenCloseButton($userid, $check, $pic, $field, $txt, $title)
     $content .= "<div class='content2-container bg-blue02'>
                                 <table style='width: 100%; padding: 5px;'><tr><td>
                                 <p class='content-title-noshade-size1'>
-                                <img src='/images/blue/$pic' width='33' class='icon32' alt='$title' title='$title'>&nbsp;$txt" .
+                                <img src='/images/blue/{$pic}' width='33' class='icon32' alt='{$title}' title='{$title}'>&nbsp;{$txt}" .
                                 '</p></td>';
 
     $content .= "<td style='text-align: right'>
@@ -989,9 +989,9 @@ function buildOpenCloseButton($userid, $check, $pic, $field, $txt, $title)
     }
     $content .= '</td></tr></table>';
     $content .= "
-<input type='hidden' name='userid' value='$userid' >
+<input type='hidden' name='userid' value='{$userid}' >
 <input type='hidden' name='save' value='true' >
-<input type='hidden' name='$field' value='$check'>
+<input type='hidden' name='{$field}' value='{$check}'>
 </div></form>";
 
     return $content;

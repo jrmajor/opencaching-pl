@@ -41,7 +41,7 @@ addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belongingList);
 
 $borderQuery = "SELECT MAX(caches.longitude) AS maxlongitude, MAX(caches.latitude) AS maxlatitude,
 MIN(caches.longitude) AS minlongitude, MIN(caches.latitude) AS minlatitude
-FROM $tmp_badge_map
+FROM {$tmp_badge_map}
 join caches on caches.cache_id = tmp_badge_map.cache_id";
 
 $stmt = $db->simpleQuery($borderQuery);
@@ -51,7 +51,7 @@ $minlon = $r['minlongitude'];
 $maxlat = $r['maxlatitude'];
 $maxlon = $r['maxlongitude'];
 
-$cacheQuery = "SELECT cache_id FROM $tmp_badge_map";
+$cacheQuery = "SELECT cache_id FROM {$tmp_badge_map}";
 $stmt = $db->simpleQuery($cacheQuery);
 $hash = uniqid();
 $f = fopen(OcConfig::getDynFilesPath() . 'searchdata/' . $hash, 'w');
@@ -62,7 +62,7 @@ while ($r = $db->dbResultFetch($stmt)) {
 fclose($f);
 
 tpl_redirect(SimpleRouter::getLink(MainMapController::class, 'fullscreen') .
-    "?userid=$userid&searchdata=$hash&bbox=$minlon|$minlat|$maxlon|$maxlat");
+    "?userid={$userid}&searchdata={$hash}&bbox={$minlon}|{$minlat}|{$maxlon}|{$maxlat}");
 
 function getCachesList($positions)
 {
@@ -76,9 +76,9 @@ function getCachesList($positions)
 function addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belongingList)
 {
     $db->simpleQuery(
-        "CREATE TEMPORARY TABLE $tmp_badge_map(cache_id int(11)) ENGINE=MEMORY");
+        "CREATE TEMPORARY TABLE {$tmp_badge_map}(cache_id int(11)) ENGINE=MEMORY");
 
-    $insQuery = "INSERT INTO $tmp_badge_map values ";
+    $insQuery = "INSERT INTO {$tmp_badge_map} values ";
 
     //N - not gained
     //Y - gained
@@ -91,7 +91,7 @@ function addCachesToTmpTable($db, $tmp_badge_map, $show, $gainedList, $belonging
 
     if (strpos($show, 'Y') === false) { //only not gained
         if (! empty($gainedList)) {
-            $db->simpleQuery("DELETE FROM $tmp_badge_map WHERE cache_id IN (" . $gainedList . ')');
+            $db->simpleQuery("DELETE FROM {$tmp_badge_map} WHERE cache_id IN (" . $gainedList . ')');
         }
     } else { //gained
         if (! empty($gainedList)) {

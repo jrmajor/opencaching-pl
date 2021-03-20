@@ -101,7 +101,7 @@ class CacheNote extends BaseObject
                 SELECT cache_id FROM cache_mod_cords WHERE user_id = :1
             ) x LEFT JOIN caches USING (cache_id)
             ORDER BY caches.name
-            LIMIT $limit OFFSET $offset", $userId);
+            LIMIT {$limit} OFFSET {$offset}", $userId);
 
         return $db->dbFetchOneColumnArray($stmt, 'cache_id');
     }
@@ -117,7 +117,7 @@ class CacheNote extends BaseObject
 
         $rs = $db->multiVariableQuery(
                 "SELECT * FROM cache_notes
-                WHERE user_id = :1 AND cache_id IN ($cacheIdsStr)", $userId);
+                WHERE user_id = :1 AND cache_id IN ({$cacheIdsStr})", $userId);
 
         return $db->dbResultFetchAll($rs);
     }

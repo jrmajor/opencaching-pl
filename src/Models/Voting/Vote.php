@@ -33,7 +33,7 @@ class Vote extends BaseObject
         $values = [];
 
         foreach ($votes as $optionId) {
-            $values[] = "($electionId, $optionId, FROM_UNIXTIME($date), '$hash')";
+            $values[] = "({$electionId}, {$optionId}, FROM_UNIXTIME({$date}), '{$hash}')";
         }
         $query .= implode(',', $values);
 

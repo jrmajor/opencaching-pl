@@ -730,7 +730,7 @@ if (isset($_POST['submitform'])) {
         if (I18n::isTranslationAvailable($code1)) {
             $adm1 = tr($code1);
         } else {
-            Debug::errorLog("Unknown country translation: $code1");
+            Debug::errorLog("Unknown country translation: {$code1}");
             $adm1 = $code1;
         }
 

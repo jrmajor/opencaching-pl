@@ -166,8 +166,8 @@ if ($loggedUser || ! $hide_coords) {
         $terrain = sprintf('%01.1f', $r['terrain'] / 2);
         $cacheid = $r['wp_oc'];
 
-        $descr = "$name by $username [$difficulty/$terrain]";
-        $poiname = "$cacheid $type$size";
+        $descr = "{$name} by {$username} [{$difficulty}/{$terrain}]";
+        $poiname = "{$cacheid} {$type}{$size}";
 
         $record = pack('llca64a255cca32', $x, $y, 2, $poiname, $descr, 1, 99, 'Geocaching');
 
@@ -232,14 +232,14 @@ function cs2cs_core2($lat, $lon, $to)
         // (Vinnie, 2006-02-09)
 
         if ($stderr) {
-            exit("proc_open() failed:<br />command='$command'<br />stderr='" . $stderr . "'");
+            exit("proc_open() failed:<br />command='{$command}'<br />stderr='" . $stderr . "'");
         }
 
         proc_close($process);
 
         return mb_split("\t|\n| ", TextConverter::mb_trim($stdout));
     } else {
-        exit("proc_open() failed, command=$command\n");
+        exit("proc_open() failed, command={$command}\n");
     }
 }
 

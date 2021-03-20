@@ -62,17 +62,17 @@ class View
             return $this;
         }
 
-        $this->$varName = $varValue;
+        $this->{$varName} = $varValue;
 
         return $this;
     }
 
     public function __call($method, $args)
     {
-        if (property_exists($this, $method) && is_callable($this->$method)) {
-            return call_user_func_array($this->$method, $args);
+        if (property_exists($this, $method) && is_callable($this->{$method})) {
+            return call_user_func_array($this->{$method}, $args);
         } else {
-            $this->error("Trying to call non-existed method of View: $method");
+            $this->error("Trying to call non-existed method of View: {$method}");
         }
     }
 
@@ -92,13 +92,13 @@ class View
 
         if (! property_exists($this, $method)) {
             $func = self::getChunkFunc($chunkName);
-            $this->$method = $func;
+            $this->{$method} = $func;
         }
 
-        if (is_callable($this->$method)) {
-            $this->$method(...$args);
+        if (is_callable($this->{$method})) {
+            $this->{$method}(...$args);
         } else {
-            $this->error("Can't call chunk: $chunkName");
+            $this->error("Can't call chunk: {$chunkName}");
         }
     }
 
@@ -131,7 +131,7 @@ class View
         $subTplFile = self::TPL_DIR . $subTplPath . '.tpl.php';
 
         if (! is_file($subTplFile)) {
-            $this->errorLog("Trying to call unknown sub-template: $subTplFile");
+            $this->errorLog("Trying to call unknown sub-template: {$subTplFile}");
 
             return '';
         }
@@ -237,7 +237,7 @@ class View
 
     public function errorLog($message)
     {
-        Debug::errorLog("Template Error: $message", false);
+        Debug::errorLog("Template Error: {$message}", false);
     }
 
     /**

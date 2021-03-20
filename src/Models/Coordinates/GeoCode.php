@@ -43,7 +43,7 @@ class GeoCode
         }
 
         $input = urlencode($place);
-        $url = "https://api.openrouteservice.org/geocode/search?api_key=$ors_key&text=$input";
+        $url = "https://api.openrouteservice.org/geocode/search?api_key={$ors_key}&text={$input}";
         $data = @file_get_contents($url);
 
         if (! $data) {
@@ -119,8 +119,8 @@ class GeoCode
         }
 
         $language = I18n::getCurrentLang();
-        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon" .
-        "&key=$googlemap_key&language=$language&result_type=administrative_area_level_1";
+        $url = "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$lon}" .
+        "&key={$googlemap_key}&language={$language}&result_type=administrative_area_level_1";
 
         $data = @file_get_contents($url);
         $resp = json_decode($data);
@@ -171,8 +171,8 @@ class GeoCode
         $lat = $coords->getLatitude();
         $lon = $coords->getLongitude();
 
-        $url = "https://www.mapquestapi.com/geocoding/v1/reverse?key=$key" .
-        "&location=$lat%2C$lon&outFormat=json&thumbMaps=false";
+        $url = "https://www.mapquestapi.com/geocoding/v1/reverse?key={$key}" .
+        "&location={$lat}%2C{$lon}&outFormat=json&thumbMaps=false";
 
         $data = @file_get_contents($url);
         $resp = json_decode($data);

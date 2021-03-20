@@ -184,7 +184,7 @@ class XDb extends OcDb
         $tableName = self::xEscape($tableName);
         $columnName = self::xEscape($columnName);
 
-        $stmt = XDb::xSql("SHOW COLUMNS FROM $tableName WHERE Field = '$columnName'");
+        $stmt = XDb::xSql("SHOW COLUMNS FROM {$tableName} WHERE Field = '{$columnName}'");
 
         while ($column = XDb::xFetchArray($stmt)) {
             return true; //any result

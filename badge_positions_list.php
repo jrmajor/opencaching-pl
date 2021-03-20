@@ -61,10 +61,10 @@ foreach ($positionsMeritBadge as $onePositionBadge) {
 
     $content .= "
     gct.addEmptyRow();
-    gct.addToLastRow( 0, '$typeIcon' );
-    gct.addToLastRow( 1, '$cacheNameRef' );
-    gct.addToLastRow( 2, '$userNameRef' );
-    gct.addToLastRow( 3, '<span $dateSort/> $date' );
+    gct.addToLastRow( 0, '{$typeIcon}' );
+    gct.addToLastRow( 1, '{$cacheNameRef}' );
+    gct.addToLastRow( 2, '{$userNameRef}' );
+    gct.addToLastRow( 3, '<span {$dateSort}/> {$date}' );
     ";
 }
 

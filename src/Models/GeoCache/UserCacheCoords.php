@@ -55,7 +55,7 @@ class UserCacheCoords extends BaseObject
         $rs = $db->multiVariableQuery(
             "SELECT cache_id, latitude AS lat, longitude AS lot, date
             FROM cache_mod_cords
-            WHERE user_id = :1 AND cache_id IN ($cacheIdsStr)", $userId);
+            WHERE user_id = :1 AND cache_id IN ({$cacheIdsStr})", $userId);
 
         return $db->dbResultFetchAll($rs);
     }

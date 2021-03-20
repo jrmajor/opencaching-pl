@@ -20,7 +20,7 @@ class MultiLogStats extends BaseObject
 
         return self::db()->simpleQueryValue(
             "SELECT COUNT(*) FROM cache_logs
-            WHERE type IN ($countedTypes)
+            WHERE type IN ({$countedTypes})
                 AND deleted = 0", 0);
     }
 
@@ -35,9 +35,9 @@ class MultiLogStats extends BaseObject
 
         return self::db()->simpleQueryValue(
             "SELECT COUNT(*) FROM cache_logs
-            WHERE type IN ($countedTypes)
+            WHERE type IN ({$countedTypes})
                 AND deleted = 0
-                AND date_created > DATE_SUB(NOW(), INTERVAL $days day)", 0);
+                AND date_created > DATE_SUB(NOW(), INTERVAL {$days} day)", 0);
     }
 
     public static function getLastRecommendationsCount($fromLastDays)
@@ -49,7 +49,7 @@ class MultiLogStats extends BaseObject
             INNER JOIN cache_rating USING (cache_id, user_id)
             WHERE type = :1
                 AND deleted = 0
-                AND date_created > DATE_SUB(NOW(), INTERVAL $days day)",
+                AND date_created > DATE_SUB(NOW(), INTERVAL {$days} day)",
             0, GeoCacheLog::LOGTYPE_FOUNDIT);
     }
 
@@ -76,12 +76,12 @@ class MultiLogStats extends BaseObject
         $fieldsStr = $db->quoteString(implode(',', $logFields));
 
         $rs = $db->multiVariableQuery(
-            "SELECT $fieldsStr
+            "SELECT {$fieldsStr}
              FROM cache_logs
              INNER JOIN (
                 SELECT MAX(id) as id
                 FROM cache_logs
-                WHERE cache_id IN ($cacheIdsStr) AND deleted = 0
+                WHERE cache_id IN ({$cacheIdsStr}) AND deleted = 0
                 GROUP BY cache_id) x
              USING (id) ");
 
@@ -110,7 +110,7 @@ class MultiLogStats extends BaseObject
             FROM cache_logs AS cl
                 STRAIGHT_JOIN caches AS c ON cl.cache_id = c.cache_id
             WHERE cl.deleted = 0
-                AND c.status IN ($allowedCacheStatuses)",0);
+                AND c.status IN ({$allowedCacheStatuses})",0);
     }
 
     public static function getLastLogs($numberOfLogs = 100, $offset = 0)
@@ -138,9 +138,9 @@ class MultiLogStats extends BaseObject
                     AND cr.user_id = cl.user_id
                     AND cl.type = 1
             WHERE cl.deleted = 0
-                AND c.status IN ($allowedCacheStatuses)
+                AND c.status IN ({$allowedCacheStatuses})
             ORDER BY  cl.date_created DESC
-            LIMIT $limit OFFSET $offset");
+            LIMIT {$limit} OFFSET {$offset}");
 
         return $db->dbResultFetchAll($stmt);
     }
@@ -168,9 +168,9 @@ class MultiLogStats extends BaseObject
              INNER JOIN (
                 SELECT MAX(id) as id
                 FROM cache_logs
-                WHERE cache_id IN ($cacheIdsStr) AND deleted = 0
+                WHERE cache_id IN ({$cacheIdsStr}) AND deleted = 0
                     AND user_id = :1
-                    AND type IN ($logTypes)
+                    AND type IN ({$logTypes})
                 GROUP BY cache_id) x
              USING (id)", $userId);
 
@@ -195,7 +195,7 @@ class MultiLogStats extends BaseObject
             WHERE `cache_logs`.`deleted` = 0
                 AND `caches`.`status` IN (:1, :2, :3)
             ORDER BY `cache_logs`.`date_created` DESC
-            LIMIT $offset, $limit",
+            LIMIT {$offset}, {$limit}",
             GeoCache::STATUS_ARCHIVED,
             GeoCache::STATUS_READY,
             GeoCache::STATUS_UNAVAILABLE);
@@ -226,7 +226,7 @@ class MultiLogStats extends BaseObject
                 AND `caches`.`status` IN (:2, :3, :4)
                 AND `cache_logs`.`type` != :5
             ORDER BY `cache_logs`.`date_created` DESC
-            LIMIT $offset, $limit",
+            LIMIT {$offset}, {$limit}",
             $user->getUserId(),
             GeoCache::STATUS_ARCHIVED,
             GeoCache::STATUS_READY,
@@ -251,7 +251,7 @@ class MultiLogStats extends BaseObject
                 AND `caches`.`status` IN (:2, :3, :4)
                 AND `cache_logs`.`type` != :5
             ORDER BY `cache_logs`.`date_created` DESC
-            LIMIT $offset, $limit",
+            LIMIT {$offset}, {$limit}",
             $user->getUserId(),
             GeoCache::STATUS_ARCHIVED,
             GeoCache::STATUS_READY,

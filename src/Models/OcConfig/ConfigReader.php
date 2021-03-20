@@ -108,7 +108,7 @@ abstract class ConfigReader
             include $localConfigFile;
         }
 
-        return $$variable;
+        return ${$variable};
     }
 
     /**

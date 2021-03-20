@@ -223,7 +223,7 @@ class User extends UserCommons
                     $this->profileUrl = $value;
                     break;
                 default:
-                    Debug::errorLog("Unknown field: $field (value: $value)");
+                    Debug::errorLog("Unknown field: {$field} (value: {$value})");
             }
         }
 
@@ -233,7 +233,7 @@ class User extends UserCommons
     private function loadDataFromDb($fields)
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT $fields FROM `user` WHERE `user_id`=:1 LIMIT 1", $this->userId);
+            "SELECT {$fields} FROM `user` WHERE `user_id`=:1 LIMIT 1", $this->userId);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
@@ -247,7 +247,7 @@ class User extends UserCommons
     private function loadDataFromDbByUuid($fields)
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT $fields FROM `user` WHERE `uuid`=:1 LIMIT 1", $this->userUuid);
+            "SELECT {$fields} FROM `user` WHERE `uuid`=:1 LIMIT 1", $this->userUuid);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
@@ -261,7 +261,7 @@ class User extends UserCommons
     private function loadDataFromDbByUsername($username, $fields)
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT $fields FROM `user` WHERE `username`=:1 LIMIT 1", $username);
+            "SELECT {$fields} FROM `user` WHERE `username`=:1 LIMIT 1", $username);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
@@ -275,7 +275,7 @@ class User extends UserCommons
     private function loadDataFromDbByEmail($email, $fields)
     {
         $stmt = $this->db->multiVariableQuery(
-            "SELECT $fields FROM `user` WHERE `email`=:1 LIMIT 1", $email);
+            "SELECT {$fields} FROM `user` WHERE `email`=:1 LIMIT 1", $email);
 
         if ($row = $this->db->dbResultFetchOneRowOnly($stmt)) {
             $this->setUserFieldsByUsedDbRow($row);
@@ -381,7 +381,7 @@ class User extends UserCommons
                     // just skip it...
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
 

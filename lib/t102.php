@@ -231,12 +231,12 @@ while ($record = $dbc->dbResultFetch($s)) {
 
     $contentUsr .= "
             gct.addEmptyRow();
-            gct.addToLastRow( 0, $nRanking );
-            gct.addToLastRow( 1, $nCount );
-            gct.addToLastRow( 2, '$sUsername' );
-            gct.addToLastRow( 3, '$sOpis' );
-            gct.addToLastRow( 4, \"$sUUN\" );
-            gct.addToLastRow( 5, '$sUserID' );
+            gct.addToLastRow( 0, {$nRanking} );
+            gct.addToLastRow( 1, {$nCount} );
+            gct.addToLastRow( 2, '{$sUsername}' );
+            gct.addToLastRow( 3, '{$sOpis}' );
+            gct.addToLastRow( 4, \"{$sUUN}\" );
+            gct.addToLastRow( 5, '{$sUserID}' );
         ";
 
     if (! empty($user) && $user->getUserId() == $record['user_id']) {

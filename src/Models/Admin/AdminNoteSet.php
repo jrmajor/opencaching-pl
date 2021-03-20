@@ -36,7 +36,7 @@ class AdminNoteSet extends BaseObject
             FROM `admin_user_notes`
             WHERE `user_id` = :1
             ORDER BY `datetime` DESC
-            LIMIT $offset, $limit";
+            LIMIT {$offset}, {$limit}";
 
         $stmt = self::db()->multiVariableQuery($query, $user->getUserId());
 

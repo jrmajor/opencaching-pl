@@ -140,13 +140,13 @@ class ElectionResult extends BaseObject
         $currentVotes = 0;
 
         $ts = $this->election->getStartDate()->getTimestamp();
-        $result[] = ['x' => "$ts", 'y' => $currentVotes];
+        $result[] = ['x' => "{$ts}", 'y' => $currentVotes];
 
         /** @var $vote Vote */
         foreach ($this->votes[$opt->getOptionId()] as $vote) {
             $currentVotes++;
             $ts = $vote->getDate()->getTimestamp();
-            $result[] = ['x' => "$ts", 'y' => $currentVotes];
+            $result[] = ['x' => "{$ts}", 'y' => $currentVotes];
         }
 
         return json_encode(array_values($result));

@@ -76,7 +76,7 @@ class GeopathCandidate extends BaseObject
                     // there is nothing to do with it.
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }

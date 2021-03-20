@@ -52,12 +52,12 @@ $ext2 = strtolower(substr(strrchr(basename($_FILES['bgimage_file']['name']), '.'
 $filename = $_FILES['image_file']['tmp_name'] . '.' . $ext;
 $shortname = crc32(uniqid());
 
-if (! move_uploaded_file($_FILES['image_file']['tmp_name'], "/tmp/$shortname.$ext")) {
+if (! move_uploaded_file($_FILES['image_file']['tmp_name'], "/tmp/{$shortname}.{$ext}")) {
     $ext = 'jpg';
-    exec("cp logo.jpg /tmp/$shortname.jpg");
+    exec("cp logo.jpg /tmp/{$shortname}.jpg");
 }
 
-if (! move_uploaded_file($_FILES['bgimage_file']['tmp_name'], '/tmp/' . $shortname . "2.$ext2")) {
+if (! move_uploaded_file($_FILES['bgimage_file']['tmp_name'], '/tmp/' . $shortname . "2.{$ext2}")) {
     $ext2 = 'jpg';
     exec('cp logo.jpg /tmp/bg' . $shortname . '.jpg');
 }

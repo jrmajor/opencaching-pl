@@ -28,7 +28,7 @@ $lang_db = I18n::getLangForDbTranslations('cache_type');
 if ($tit == 'cc') {
     // Ustawic sprawdzanie jezyka  w cache_type.pl !!!!
     $rsCreateCachesYear = XDb::xSql(
-        "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`$lang_db` `type`
+        "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`{$lang_db}` `type`
         FROM `caches` INNER JOIN `cache_type` ON (`caches`.`type`=`cache_type`.`id`)
         WHERE `user_id`= ? AND status <> 4 AND status <>5
         GROUP BY `caches`.`type`
@@ -47,7 +47,7 @@ if ($tit == 'cc') {
 
 if ($tit == 'cf') {
     $rsCachesFindYear = XDb::xSql(
-        "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`$lang_db` AS `type`
+        "SELECT COUNT(`caches`.`type`) `count`, `cache_type`.`{$lang_db}` AS `type`
         FROM `cache_logs`, caches INNER JOIN `cache_type` ON (`caches`.`type`=`cache_type`.`id`)
         WHERE cache_logs.`deleted`=0 AND cache_logs.user_id=? AND cache_logs.`type`='1' AND cache_logs.`cache_id` = caches.cache_id
         GROUP BY `caches`.`type`

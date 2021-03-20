@@ -109,7 +109,7 @@ class CacheSetAdminController extends BaseController
             $marker->icon = CacheSet::GetTypeIcon($row['type']);
 
             $marker->link = CacheSet::getCacheSetUrlById($row['id']);
-            $marker->name = $row['name'] . " ($ratioTxt)";
+            $marker->name = $row['name'] . " ({$ratioTxt})";
 
             return $marker;
         });
@@ -161,7 +161,7 @@ class CacheSetAdminController extends BaseController
         $cache = GeoCache::fromCacheIdFactory($cacheId);
 
         if (! $cache) {
-            $this->ajaxErrorResponse("No such geocache: $cacheId");
+            $this->ajaxErrorResponse("No such geocache: {$cacheId}");
         }
 
         if (! $this->loggedUser->hasOcTeamRole() &&

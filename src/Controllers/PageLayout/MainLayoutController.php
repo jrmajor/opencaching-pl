@@ -222,7 +222,7 @@ class MainLayoutController extends BaseController
                 // add new/active reports counters
                 $new_reports = ReportCommons::getReportsCountByStatus(ReportCommons::STATUS_NEW);
                 $active_reports = ReportCommons::getReportsCountByStatus(ReportCommons::STATUS_OPEN);
-                $key = tr($key) . " ($new_reports/$active_reports)";
+                $key = tr($key) . " ({$new_reports}/{$active_reports})";
 
                 break;
             case 'mnu_pendings':
@@ -231,7 +231,7 @@ class MainLayoutController extends BaseController
                 if ($new_pendings > 0) {
                     $in_review_count = GeoCacheApproval::getInReviewCount();
                     $waitingForAssigne = $new_pendings - $in_review_count;
-                    $key = tr($key) . " ($waitingForAssigne/$new_pendings)";
+                    $key = tr($key) . " ({$waitingForAssigne}/{$new_pendings})";
                 } else {
                     $key = tr($key);
                 }
@@ -253,7 +253,7 @@ class MainLayoutController extends BaseController
                 // add number of caches in clipboard
                 if (! empty(PrintList::GetContent())) {
                     $cachesInClipboard = count(PrintList::GetContent());
-                    $key = tr($key) . " ($cachesInClipboard)";
+                    $key = tr($key) . " ({$cachesInClipboard})";
                 } else {
                     $key = ''; //empty link
                     $url = '';

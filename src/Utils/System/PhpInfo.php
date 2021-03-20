@@ -10,6 +10,6 @@ class PhpInfo
 {
     public static function versionAtLeast($mainNum, $minNum = 0, $relNum = 0)
     {
-        return  (version_compare(PHP_VERSION, "$mainNum.$minNum.$relNum") >= 0);
+        return  (version_compare(PHP_VERSION, "{$mainNum}.{$minNum}.{$relNum}") >= 0);
     }
 }

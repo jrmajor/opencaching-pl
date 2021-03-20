@@ -117,7 +117,7 @@ if ($userRecoCountForThisCache == 0) { //not-yet-recommended
 
         $top_cache = 0;
         $recommendationsNr = 100 / GeoCacheCommons::RECOMENDATION_RATIO - $user_founds;
-        $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
+        $rating_msg = mb_ereg_replace('{recommendationsNr}', "{$recommendationsNr}", $rating_too_few_founds);
     } elseif ($user_tops < floor($user_founds * GeoCacheCommons::RECOMENDATION_RATIO / 100)) {
         // this user can recommend this cache
         if ($user->getUserId() != $geoCache->getOwnerId()) {
@@ -135,7 +135,7 @@ if ($userRecoCountForThisCache == 0) { //not-yet-recommended
         // user needs more caches for next recommendation
         $top_cache = 0;
         $recommendationsNr = ((1 + $user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO) - $user_founds;
-        $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
+        $rating_msg = mb_ereg_replace('{recommendationsNr}', "{$recommendationsNr}", $rating_too_few_founds);
 
         $rating_msg .= '<br />' . $rating_maxreached;
     }
@@ -1037,7 +1037,7 @@ function recalculateCacheStats($cacheId, $cacheType, $lastFoundQueryString)
             SET `founds`   = (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =7 AND `deleted` =0 ),
                 `notfounds`= (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =8 AND `deleted` =0 ),
                 `notes`= (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =3 AND `deleted` =0 )
-            $lastFoundQueryString
+            {$lastFoundQueryString}
             WHERE `cache_id` =:1
         ";
     } else {
@@ -1046,7 +1046,7 @@ function recalculateCacheStats($cacheId, $cacheType, $lastFoundQueryString)
             SET `founds`   = (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =1 AND `deleted` =0 ),
                 `notfounds`= (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =2 AND `deleted` =0 ),
                 `notes`= (SELECT count(*) FROM `cache_logs` WHERE `cache_id` =:1 AND TYPE =3 AND `deleted` =0 )
-            $lastFoundQueryString
+            {$lastFoundQueryString}
             WHERE `cache_id` =:1
         ";
     }

@@ -25,7 +25,7 @@ class CacheRecommendation extends BaseObject
             WHERE cr.cache_id = c.cache_id
             AND c.user_id = u.user_id
             AND cr.user_id = :1 ORDER BY c.name ASC
-            LIMIT $offset, $limit", $userId);
+            LIMIT {$offset}, {$limit}", $userId);
 
         return self::db()->dbResultFetchAllAsDict($stmt);
     }

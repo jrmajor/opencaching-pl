@@ -65,7 +65,7 @@ while ($r = sql_fetch_array($rs)) {
 }
 mysql_free_result($rs);
 
-echo "Processed $in_count rows, inserted $out_count index items";
+echo "Processed {$in_count} rows, inserted {$out_count} index items";
 
 /* end search index rebuild */
 

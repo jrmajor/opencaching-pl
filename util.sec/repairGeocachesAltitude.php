@@ -35,7 +35,7 @@ $rs = $db->multiVariableQuery(
     "SELECT cache_id FROM caches_additions
     WHERE cache_id > :1
         AND altitude = 0
-    LIMIT $limit", $cacheIdToStart);
+    LIMIT {$limit}", $cacheIdToStart);
 
 $cacheIds = $db->dbFetchAllAsObjects($rs, function ($row) {
     return $row['cache_id'];

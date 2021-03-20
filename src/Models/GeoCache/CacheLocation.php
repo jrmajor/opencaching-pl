@@ -216,6 +216,6 @@ class CacheLocation extends BaseObject
             d($location);
         }
 
-        echo __METHOD__ . ": done: FOUND/FIX/NOFIX: $found/$fixed/$notFixed";
+        echo __METHOD__ . ": done: FOUND/FIX/NOFIX: {$found}/{$fixed}/{$notFixed}";
     }
 }

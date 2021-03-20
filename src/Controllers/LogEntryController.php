@@ -97,7 +97,7 @@ class LogEntryController
             $showOneLogSql = '';
         }
 
-        return "SELECT `cache_logs`.`user_id` `userid`, $showDeletedLogsSql
+        return "SELECT `cache_logs`.`user_id` `userid`, {$showDeletedLogsSql}
             `cache_logs`.`id` `logid`,
             `cache_logs`.`date` `date`,
             `cache_logs`.`type` `type`,
@@ -133,7 +133,7 @@ class LogEntryController
             LEFT JOIN `user` `u2` ON `cache_logs`.`del_by_user_id`=`u2`.`user_id`
             LEFT JOIN `user` `u3` ON `cache_logs`.`edit_by_user_id`=`u3`.`user_id`
             WHERE `cache_logs`.`cache_id`=:v1
-                   $showDeletedLogsSql2 $showOneLogSql
+                   {$showDeletedLogsSql2} {$showOneLogSql}
             ORDER BY `cache_logs`.`date` DESC, `cache_logs`.`id` DESC
             LIMIT :v2 OFFSET :v3";
     }

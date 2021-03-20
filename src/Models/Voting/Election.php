@@ -160,7 +160,7 @@ class Election extends BaseObject
                     $this->description = $value;
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }
@@ -312,7 +312,7 @@ class ElectionRules
                         $this->disallowNoVotes = $val;
                         break;
                     default:
-                        Debug::errorLog("Unknown key: $key");
+                        Debug::errorLog("Unknown key: {$key}");
                 }
             }// foreach
         }
@@ -377,7 +377,7 @@ class VoterCriteria
                         $this->daysWithOc = $val;
                         break;
                     default:
-                        Debug::errorLog("Unknown key: $key");
+                        Debug::errorLog("Unknown key: {$key}");
                 }
             }// foreach
         }

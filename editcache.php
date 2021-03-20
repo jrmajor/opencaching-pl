@@ -478,7 +478,7 @@ if (! $loggedUser) {
                         tpl_set_var($wpMessageVar,
                             '<img src="tpl/stdstyle/images/misc/32x32-impressum.png" class="icon32" alt=""  />' .
                             '&nbsp;&nbsp;<span class="errormsg">' .
-                            tr("invalid_wp_$wpType") .
+                            tr("invalid_wp_{$wpType}") .
                             '</span>');
                         $all_wp_ok = false;
                     }
@@ -560,7 +560,7 @@ if (! $loggedUser) {
                                  `country`=?, `size`=?, `difficulty`=?, `terrain`=?,
                                  `status`=?, `search_time`=?, `way_length`=?,
                                  `logpw`=?, `wp_gc`=?, `wp_nc`=?, `wp_ge`=?,
-                                 `wp_tc`=?,`date_activate` = $activation_date
+                                 `wp_tc`=?,`date_activate` = {$activation_date}
                              WHERE `cache_id`=?",
                              $cache_name, $cache_lon, $cache_lat, $cache_type,
                              date('Y-m-d', mktime(0, 0, 0, $cache_hidden_month, $cache_hidden_day, $cache_hidden_year)),
@@ -570,7 +570,7 @@ if (! $loggedUser) {
                         if (I18n::isTranslationAvailable($cache_country)) {
                             $adm1 = tr($cache_country);
                         } else {
-                            Debug::errorLog("Unknown country translation: $cache_country");
+                            Debug::errorLog("Unknown country translation: {$cache_country}");
                             $adm1 = $cache_country;
                         }
 
@@ -691,9 +691,9 @@ if (! $loggedUser) {
 
                 foreach (Countries::getCountriesList($show_all_countries == 0) as $countryCode) {
                     if ($countryCode == $cache_country) { // this is cache country - select it
-                        $countriesoptions .= "<option value='$countryCode' selected='selected'>" . tr($countryCode) . '</option>';
+                        $countriesoptions .= "<option value='{$countryCode}' selected='selected'>" . tr($countryCode) . '</option>';
                     } else {
-                        $countriesoptions .= "<option value='$countryCode'>" . tr($countryCode) . '</option>';
+                        $countriesoptions .= "<option value='{$countryCode}'>" . tr($countryCode) . '</option>';
                     }
                     $countriesoptions .= "\n";
                 }
@@ -992,7 +992,7 @@ if (! $loggedUser) {
                     $eLang = XDb::xEscape($lang_db);
                     $wp_rs = XDb::xSql(
                         "SELECT `wp_id`, `type`, `longitude`, `latitude`,  `desc`, `status`, `stage`,
-                                `waypoint_type`.`$eLang` wp_type, waypoint_type.icon wp_icon
+                                `waypoint_type`.`{$eLang}` wp_type, waypoint_type.icon wp_icon
                          FROM `waypoints` INNER JOIN waypoint_type ON (waypoints.type = waypoint_type.id)
                          WHERE `cache_id`=? ORDER BY `stage`,`wp_id`", $cache_id);
 

@@ -33,9 +33,9 @@ if (isset($_REQUEST['showGained'])) {
 }
 
 if ($sel_pos == 'l') { //list
-    tpl_redirect("badge_positions_list.php?user_id=$userid&badge_id=$badge_id");
+    tpl_redirect("badge_positions_list.php?user_id={$userid}&badge_id={$badge_id}");
 }
 
 if ($sel_pos == 'm') { //map
-    tpl_redirect("badge_map.php?user_id=$userid&badge_id=$badge_id&show=$show");
+    tpl_redirect("badge_map.php?user_id={$userid}&badge_id={$badge_id}&show={$show}");
 }

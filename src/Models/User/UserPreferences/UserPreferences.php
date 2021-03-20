@@ -62,7 +62,7 @@ class UserPreferences extends BaseObject
         // check keys
         foreach ($keys as $key) {
             if (! self::isKeyAllowed($key)) {
-                Debug::errorLog("Unknown UserPreferences key = $key");
+                Debug::errorLog("Unknown UserPreferences key = {$key}");
 
                 return null;
             }
@@ -84,7 +84,7 @@ class UserPreferences extends BaseObject
     public static function savePreferencesJson($key, $json)
     {
         if (! self::isKeyAllowed($key)) {
-            Debug::errorLog(__METHOD__ . ": Unknown key $key");
+            Debug::errorLog(__METHOD__ . ": Unknown key {$key}");
 
             return false;
         }
@@ -130,7 +130,7 @@ class UserPreferences extends BaseObject
 
             return new $className($key);
         } else {
-            Debug::errorLog(__METHOD__ . ": Unknown class for key: $key");
+            Debug::errorLog(__METHOD__ . ": Unknown class for key: {$key}");
 
             return null;
         }
@@ -167,7 +167,7 @@ class UserPreferences extends BaseObject
 
         $stmt = $db->multiVariableQuery(
             "SELECT * FROM user_preferences
-             WHERE user_id = :1 AND `key` IN ( $keysStr )", $userId);
+             WHERE user_id = :1 AND `key` IN ( {$keysStr} )", $userId);
 
         while ($row = $db->dbResultFetch($stmt)) {
             $key = $row['key'];

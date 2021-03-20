@@ -103,7 +103,7 @@ if (! $loggedUser) {
                     if (($user_founds * GeoCacheCommons::RECOMENDATION_RATIO / 100) < 1) {
                         $top_cache = 0;
                         $recommendationsNr = 100 / GeoCacheCommons::RECOMENDATION_RATIO - $user_founds;
-                        $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
+                        $rating_msg = mb_ereg_replace('{recommendationsNr}', "{$recommendationsNr}", $rating_too_few_founds);
                     } elseif ($user_tops < floor($user_founds * GeoCacheCommons::RECOMENDATION_RATIO / 100)) {
                         if ($cache_user_id != $loggedUser->getUserId()) {
                             $rating_msg = mb_ereg_replace('{chk_sel}', '', $rating_allowed . '<br />' . $rating_stat);
@@ -115,7 +115,7 @@ if (! $loggedUser) {
                     } else {
                         $top_cache = 0;
                         $recommendationsNr = ((1 + $user_tops) * 100 / GeoCacheCommons::RECOMENDATION_RATIO) - $user_founds;
-                        $rating_msg = mb_ereg_replace('{recommendationsNr}', "$recommendationsNr", $rating_too_few_founds);
+                        $rating_msg = mb_ereg_replace('{recommendationsNr}', "{$recommendationsNr}", $rating_too_few_founds);
 
                         $rating_msg .= '<br />' . $rating_maxreached;
                     }

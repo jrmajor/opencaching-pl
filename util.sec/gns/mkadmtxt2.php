@@ -45,5 +45,5 @@ while ($rLocations = sql_fetch_array($rsLocations)) {
     }
 }
 mysql_free_result($rsLocations);
-echo "Updated $count rows";
+echo "Updated {$count} rows";
 /* end search index rebuild */

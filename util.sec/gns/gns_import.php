@@ -108,7 +108,7 @@ function importGns($filename)
     if (isset($_GET['basepath'])) {
         $filename = $_GET['basepath'] . '/' . $filename;
     }
-    echo "Importing '$filename'...\n";
+    echo "Importing '{$filename}'...\n";
     $file = fopen($filename, 'r');
 
     if (! $file) {
@@ -140,7 +140,7 @@ function importGns($filename)
 
                 $column_name = $columns[$i];
                 $is_utf8 = in_array($column_name, $utf_columns) ? '_utf8' : '';
-                $sql .= "\t`$column_name` = $is_utf8'" . mysql_real_escape_string($item) . "'";
+                $sql .= "\t`{$column_name}` = {$is_utf8}'" . mysql_real_escape_string($item) . "'";
             }
         }
 
@@ -153,5 +153,5 @@ function importGns($filename)
     }
     fclose($file);
 
-    echo "$line_cnt lines, $cnt records imported\n";
+    echo "{$line_cnt} lines, {$cnt} records imported\n";
 }

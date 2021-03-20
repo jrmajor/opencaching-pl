@@ -70,7 +70,7 @@ class QueryBuilder
 
     public function join($tableName, $onStr = null)
     {
-        $this->joins[] = "$tableName ON $onStr";
+        $this->joins[] = "{$tableName} ON {$onStr}";
 
         return $this;
     }
@@ -86,7 +86,7 @@ class QueryBuilder
 
     public function eq($column, $value)
     {
-        $str = "$column = $value";
+        $str = "{$column} = {$value}";
         $this->wheres[] = self::escapeStr($str);
 
         return $this;
@@ -96,7 +96,7 @@ class QueryBuilder
     {
         if (! empty($arrayOfValues)) {
             $queryStr = self::escapeStr(implode(',',$arrayOfValues));
-            $this->wheres[] = "$column IN ($queryStr)";
+            $this->wheres[] = "{$column} IN ({$queryStr})";
         }
 
         return $this;
@@ -120,7 +120,7 @@ class QueryBuilder
         $result = ' FROM ' . $this->fromTable;
 
         foreach ($this->joins as $join) {
-            $result .= " JOIN $join";
+            $result .= " JOIN {$join}";
         }
 
         return $result;

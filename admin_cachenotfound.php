@@ -80,7 +80,7 @@ if (isset($_REQUEST['regionSel'])) {
         $regionCondition = '';
         $countryCondition = "AND loc.code1 <> 'PL'";
     } else {
-        $regionCondition = "AND loc.code3 = '$region'";
+        $regionCondition = "AND loc.code3 = '{$region}'";
         $countryCondition = '';
     }
 } else {
@@ -96,12 +96,12 @@ if (isset($_REQUEST['regionSel'])) {
 }
 
 $query = "
-        SELECT COUNT( $distinct(cl.date) ) ilosc, c.cache_id, c.name
+        SELECT COUNT( {$distinct}(cl.date) ) ilosc, c.cache_id, c.name
         FROM cache_logs cl, caches c, cache_location loc
         WHERE c.cache_id = cl.cache_id
             AND c.cache_id = loc.cache_id
-            $regionCondition    /* cache location region - for example: 'AND loc.code3 = NULL' */
-            $countryCondition   /* cache location country - for example: 'AND loc.code1 <> PL' */
+            {$regionCondition}    /* cache location region - for example: 'AND loc.code3 = NULL' */
+            {$countryCondition}   /* cache location country - for example: 'AND loc.code1 <> PL' */
             AND c.status = 1    /* status:active */
             AND cl.deleted = 0
             AND cl.type = 2     /* type=not-found*/
@@ -121,10 +121,10 @@ $query = "
                       AND ((cl1.user_id = c.user_id AND cl1.type = 3) /* owner log-comment */
                       OR cl1.type = 6) /* cache-fixed comment */
                 )
-            $skipReported /* = skip reported caches:
+            {$skipReported} /* = skip reported caches:
             AND c.cache_id NOT IN ( SELECT r.cache_id FROM reports r WHERE r.status <> 2 ) */
 
-        GROUP BY cl.cache_id HAVING COUNT( $distinct(cl.date) ) > 2
+        GROUP BY cl.cache_id HAVING COUNT( {$distinct}(cl.date) ) > 2
         ORDER BY ilosc DESC, cache_id DESC ";
 
 $rs = XDb::xSql($query);

@@ -51,10 +51,10 @@ class SimpleRouter
         // remove "src." from begining of class (if added)
         $ctrl = preg_replace('/^src./i','',$ctrl);
 
-        $link = "/$ctrl";
+        $link = "/{$ctrl}";
 
         if (! is_null($action)) {
-            $link .= "/$action";
+            $link .= "/{$action}";
         } else {
             if (! is_null($params)) {
                 // set default action only if $params are present
@@ -106,7 +106,7 @@ class SimpleRouter
 
         // first check the class filename
         if (! file_exists(self::getClassFilePath($ctrlName))) {
-            self::displayErrorAndExit("No such file: $ctrlName", 403);
+            self::displayErrorAndExit("No such file: {$ctrlName}", 403);
         }
 
         // create class reflection
@@ -172,7 +172,7 @@ class SimpleRouter
             $uri = '//' . $_SERVER['HTTP_HOST'] . $uri;
         }
 
-        header("Location: $uri");
+        header("Location: {$uri}");
 
         exit;
     }

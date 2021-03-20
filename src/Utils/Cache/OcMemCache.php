@@ -101,7 +101,7 @@ class OcMemCache
         }
 
         if (self::$debug) {
-            echo "$key: ";
+            echo "{$key}: ";
             var_dump($value);
             echo '<br />';
         }

@@ -291,7 +291,7 @@ while ($r = XDb::xFetchArray($stmt)) {
         "SELECT `cache_attrib`.`id`, `caches_attributes`.`attrib_id`, `cache_attrib`.`text_long`
         FROM `caches_attributes`, `cache_attrib`
         WHERE `caches_attributes`.`cache_id`= ? AND `caches_attributes`.`attrib_id` = `cache_attrib`.`id`
-            AND `cache_attrib`.`language` = '$language'
+            AND `cache_attrib`.`language` = '{$language}'
         ORDER BY `caches_attributes`.`attrib_id`", $r['cacheid']);
 
     if (($r['votes'] > 3) || ($r['topratings'] > 0) || (XDb::xNumRows($rsAttributes) > 0)) {

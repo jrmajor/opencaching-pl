@@ -120,7 +120,7 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
 
     if ($show_all_langs == false) {
         $r_list = XDb::xMultiVariableQueryValue(
-            "SELECT `list_default_$eLang` AS `list` FROM `languages`
+            "SELECT `list_default_{$eLang}` AS `list` FROM `languages`
             WHERE `short`= :1 LIMIT 1", 0, $desc_lang);
 
         if ($r_list == 0) {
@@ -131,13 +131,13 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
     $languages = '';
 
     $rs = XDb::xSql(
-        "SELECT `$eLang` `name`, `short` `short` FROM `languages`
+        "SELECT `{$eLang}` `name`, `short` `short` FROM `languages`
         WHERE `short` NOT IN (
             SELECT `language` FROM `cache_desc`
             WHERE `cache_id`= ? AND `language` != ?
         ) " .
-        (($show_all_langs == false) ? " AND `list_default_$eLang`=1 " : '') .
-        "ORDER BY `$eLang` ASC",
+        (($show_all_langs == false) ? " AND `list_default_{$eLang}`=1 " : '') .
+        "ORDER BY `{$eLang}` ASC",
         $desc_record['cache_id'], $desc_lang);
 
     while ($r = XDb::xFetchArray($rs)) {

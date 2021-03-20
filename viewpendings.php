@@ -13,13 +13,13 @@ function colorCacheStatus($text, $id)
 {
     switch ($id) {
         case '1':
-            return "<font color='green'>$text</font>";
+            return "<font color='green'>{$text}</font>";
         case '2':
-            return "<font color='orange'>$text</font>";
+            return "<font color='orange'>{$text}</font>";
         case '3':
-            return "<font color='red'>$text</font>";
+            return "<font color='red'>{$text}</font>";
         default:
-            return "<font color='gray'>$text</font>";
+            return "<font color='gray'>{$text}</font>";
     }
 }
 

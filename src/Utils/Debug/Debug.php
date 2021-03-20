@@ -24,7 +24,7 @@ class Debug
             $func = $trace['function'] ?? '?';
             $class = isset($trace['class']) ? $trace['class'] . '::' : '';
 
-            $traceStr .= "\n  #$i: $file:$line [$class$func()]";
+            $traceStr .= "\n  #{$i}: {$file}:{$line} [{$class}{$func}()]";
             $i++;
         }
 

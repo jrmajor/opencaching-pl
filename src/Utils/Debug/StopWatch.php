@@ -63,7 +63,7 @@ class StopWatch
                 $fromLast = number_format($ms - $last, 4);
             }
 
-            $result[$stageName] = "$fromStart s. [$fromLast s.]";
+            $result[$stageName] = "{$fromStart} s. [{$fromLast} s.]";
             $last = $ms;
         }
 

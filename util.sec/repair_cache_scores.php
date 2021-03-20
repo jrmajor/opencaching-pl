@@ -108,16 +108,16 @@ class RepairCacheScores
             $s = $db->paramQuery($sql, $params);
 
             if ($db->rowCount($s) > 0) {
-                echo "<b>cache_id=$cache_id</b> ";
-                echo "ratings=$votes rating=$average ";
-                echo "founds=$founds notfounds=$notfounds ";
-                echo "notes=$notes watchers=$watchers ";
-                echo "ignorers=$ignorers last_found=$last_found<br>";
+                echo "<b>cache_id={$cache_id}</b> ";
+                echo "ratings={$votes} rating={$average} ";
+                echo "founds={$founds} notfounds={$notfounds} ";
+                echo "notes={$notes} watchers={$watchers} ";
+                echo "ignorers={$ignorers} last_found={$last_found}<br>";
                 $total_touched++;
             }
         }
         set_time_limit(60);
-        echo "-----------------------------------<br>total_touched=$total_touched";
+        echo "-----------------------------------<br>total_touched={$total_touched}";
     }
 }
 

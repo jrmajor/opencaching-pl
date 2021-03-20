@@ -216,9 +216,9 @@ if ($loggedUser || ! $hide_coords) {
         }
         // remove double slashes
         $attach = str_replace('\\\\', '\\', $attach);
-        $line = "$cacheid / D:$difficulty / T:$terrain / Size:$size";
+        $line = "{$cacheid} / D:{$difficulty} / T:{$terrain} / Size:{$size}";
 
-        $record = "-1,$name,$lat,$lon,,117,1,4,0,$kolor,$line,0,0,0, -777,8,0,17,0,10.0,2,$attach,,\r\n";
+        $record = "-1,{$name},{$lat},{$lon},,117,1,4,0,{$kolor},{$line},0,0,0, -777,8,0,17,0,10.0,2,{$attach},,\r\n";
 
         echo $record;
         // DO NOT USE HERE:

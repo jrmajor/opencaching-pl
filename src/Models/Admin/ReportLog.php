@@ -418,7 +418,7 @@ class ReportLog extends BaseObject
                     $this->dateCreated = new DateTime($val);
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }

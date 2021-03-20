@@ -34,7 +34,7 @@ class Altitude
 
         $url = 'https://maps.googleapis.com/maps/api/elevation/json?' .
                 "locations={$coords->getLatitude()},{$coords->getLongitude()}" .
-                "&key=$googlemap_key";
+                "&key={$googlemap_key}";
 
         $resp = @file_get_contents($url);
         $data = json_decode($resp);
@@ -109,7 +109,7 @@ class Altitude
             if ($stats->units == 'meters') {
                 if (! is_numeric($stats->value)) {
                     Debug::errorLog('External service: datasciencetoolkit returns unexpected' .
-                                    " non numeric value for coords: $coords->getAsText()?!");
+                                    " non numeric value for coords: {$coords->getAsText}()?!");
                 }
 
                 return $stats->value;

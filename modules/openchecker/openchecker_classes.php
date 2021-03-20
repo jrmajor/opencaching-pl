@@ -176,7 +176,7 @@ class OpenCheckerCore
         `opensprawdzacz`.`sukcesy`,
         `caches`.`type` as `cache_type`
         FROM   `waypoints`, `opensprawdzacz`, `caches`
-        WHERE  `waypoints`.`cache_id`='$cache_id'
+        WHERE  `waypoints`.`cache_id`='{$cache_id}'
         AND `waypoints`.`opensprawdzacz` = 1
         AND `waypoints`.`type` = " . Waypoint::TYPE_FINAL . '
         AND `waypoints`.`cache_id`= `opensprawdzacz`.`cache_id`
@@ -200,7 +200,7 @@ class OpenCheckerCore
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $updateCounters = $pdo->exec('UPDATE `opensprawdzacz` SET `proby`=' . $attempts_counter . ',`sukcesy`=' . $hits_counter . '  WHERE `cache_id` = ' . $cache_id);
             } catch (PDOException $e) {
-                echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
+                echo "Error PDO Library: ({$OpenCheckerSetup->scriptname}) " . $e->getMessage();
 
                 exit;
             }
@@ -246,10 +246,10 @@ class OpenCheckerCore
                 $pdo = XDb::instance();
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $updateCounters = $pdo->exec(
-                    "UPDATE `opensprawdzacz` SET `proby`='$attempts_counter'
-                    WHERE `cache_id` = $cache_id");
+                    "UPDATE `opensprawdzacz` SET `proby`='{$attempts_counter}'
+                    WHERE `cache_id` = {$cache_id}");
             } catch (PDOException $e) {
-                echo "Error PDO Library: ($OpenCheckerSetup->scriptname) " . $e->getMessage();
+                echo "Error PDO Library: ({$OpenCheckerSetup->scriptname}) " . $e->getMessage();
 
                 exit;
             }
@@ -354,7 +354,7 @@ class OpenCheckerCore
             `waypoints`.`opensprawdzacz` = 1
             AND `waypoints`.`type` = ' . Waypoint::TYPE_FINAL . '
             and (`caches`.`status` = ' . GeoCache::STATUS_READY . ' || `caches`.`status` = ' . GeoCache::STATUS_UNAVAILABLE . ")
-        ORDER BY   $sort_column
+        ORDER BY   {$sort_column}
         LIMIT   0, 1000
         ";
 

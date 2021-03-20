@@ -36,7 +36,7 @@ AND `deleted` =0
 AND `type` =1
 AND `cache_logs`.`user_id` = `user`.`user_id`
 
-$o1 $o2
+{$o1} {$o2}
 
 GROUP BY `user_id`, `date`
 ORDER BY `FoundCount` DESC, `username` ASC

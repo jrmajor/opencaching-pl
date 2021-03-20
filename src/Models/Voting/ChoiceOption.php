@@ -89,7 +89,7 @@ class ChoiceOption extends BaseObject
                     $this->description = $value;
                     break;
                 default:
-                    Debug::errorLog("Unknown column: $key");
+                    Debug::errorLog("Unknown column: {$key}");
             }
         }
     }

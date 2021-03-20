@@ -66,7 +66,7 @@ class FileUploadMgr
 
         foreach ($_FILES[$model->formVarName]['name'] as $i => $name) {
             $extension = pathinfo($name, PATHINFO_EXTENSION);
-            $fileName = Uuid::create() . ".$extension";
+            $fileName = Uuid::create() . ".{$extension}";
             $fullPath = $model->getDirAtServer() . '/' . $fileName;
 
             move_uploaded_file($_FILES[$model->formVarName]['tmp_name'][$i], $fullPath);
@@ -93,7 +93,7 @@ class FileUploadMgr
     {
         foreach ($_FILES[$model->formVarName]['type'] as $type) {
             if (! self::compareMimeType($type, $model->allowedTypesRegex)) {
-                throw new RuntimeException("Not allowed mime type: $type != {$model->allowedTypesRegex}");
+                throw new RuntimeException("Not allowed mime type: {$type} != {$model->allowedTypesRegex}");
             }
         }
     }
@@ -141,7 +141,7 @@ class FileUploadMgr
         $uploadedFiles = count($_FILES[$model->formVarName]['name']);
 
         if ($uploadedFiles > $model->maxFilesNumber) {
-            throw new RuntimeException("Too many file uploaded at once: $uploadedFiles > {$model->maxFilesNumber}");
+            throw new RuntimeException("Too many file uploaded at once: {$uploadedFiles} > {$model->maxFilesNumber}");
         }
     }
 
@@ -156,7 +156,7 @@ class FileUploadMgr
     {
         foreach ($_FILES[$model->formVarName]['size'] as $size) {
             if ($size > $model->maxFileSize) {
-                throw new RuntimeException("Too large file uploaded: $size > {$model->maxFileSize}.");
+                throw new RuntimeException("Too large file uploaded: {$size} > {$model->maxFileSize}.");
             }
         }
     }

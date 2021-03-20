@@ -425,11 +425,11 @@ class OcDb extends OcPdo
             $stmt->setFetchMode(self::FETCH_ASSOC);
             $stmt->execute();
         } catch (PDOException $e) {
-            $this->error("Query:\n$query\n\nParams:\n" . implode(' | ', $params), $e);
+            $this->error("Query:\n{$query}\n\nParams:\n" . implode(' | ', $params), $e);
         }
 
         if ($this->debug) {
-            self::debugOut(__METHOD__ . ":\n\nQuery:\n$query\n\nParams:\n" . implode(' | ', $params));
+            self::debugOut(__METHOD__ . ":\n\nQuery:\n{$query}\n\nParams:\n" . implode(' | ', $params));
         }
 
         return $stmt;
@@ -497,7 +497,7 @@ class OcDb extends OcPdo
         }
 
         if ($this->debug) {
-            self::debugOut(__METHOD__ . ":\n\nQuery|Params: $query | " . implode(' | ', $argList));
+            self::debugOut(__METHOD__ . ":\n\nQuery|Params: {$query} | " . implode(' | ', $argList));
         }
 
         return $stmt;
@@ -548,7 +548,7 @@ class OcDb extends OcPdo
 
         if (($key = array_search('STRICT_ALL_TABLES', $modes)) !== false) {
             $trace = Debug::getTraceStr();
-            Debug::errorLog("Sql Strict-mode already enabled! ($trace)");
+            Debug::errorLog("Sql Strict-mode already enabled! ({$trace})");
 
             return;
         }
@@ -556,7 +556,7 @@ class OcDb extends OcPdo
         $modes[] = 'STRICT_ALL_TABLES';
         $sqlMode = implode(',', $modes);
 
-        $this->simpleQuery("SET sql_mode = '$sqlMode'");
+        $this->simpleQuery("SET sql_mode = '{$sqlMode}'");
     }
 
     /**
@@ -572,13 +572,13 @@ class OcDb extends OcPdo
             unset($modes[$key]);
         } else {
             $trace = Debug::getTraceStr();
-            Debug::errorLog("Sql Strict-mode already disabled! ($trace)");
+            Debug::errorLog("Sql Strict-mode already disabled! ({$trace})");
 
             return;
         }
 
         $sqlMode = implode(',', $modes);
-        $this->simpleQuery("SET sql_mode = '$sqlMode'");
+        $this->simpleQuery("SET sql_mode = '{$sqlMode}'");
     }
 
     /**

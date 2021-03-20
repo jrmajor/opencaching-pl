@@ -29,7 +29,7 @@ class UserCommons extends BaseObject
 
     public static function GetUserProfileUrl($userId)
     {
-        return "/viewprofile.php?userid=$userId";
+        return "/viewprofile.php?userid={$userId}";
     }
 
     public static function deleteStatpic($userId)

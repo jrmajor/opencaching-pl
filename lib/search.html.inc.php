@@ -56,15 +56,15 @@ function fHideColumn($nr, $set)
 
     if ($C == 1) {
         echo "
-                    gct.hideColumns([$nr])";
+                    gct.hideColumns([{$nr}])";
     } else {
         $descCol = $colNameSearch[$nr]['O'];
         $NrColVisable++;
 
         if ($NrColSortSearch != $NrColVisable) {
-            $selectList .= "<option value=$NrColVisable>$descCol</option>";
+            $selectList .= "<option value={$NrColVisable}>{$descCol}</option>";
         } else {
-            $selectList .= "<option selected='selected' value=$NrColVisable>$descCol</option>";
+            $selectList .= "<option selected='selected' value={$NrColVisable}>{$descCol}</option>";
         }
     }
 
@@ -734,13 +734,13 @@ function icon_difficulty($what, $difficulty)
     $difficulty = (int) $difficulty;
 
     if ($difficulty < 2 || $difficulty > 10) {
-        exit("Wrong difficulty-value $what: $difficulty");
+        exit("Wrong difficulty-value {$what}: {$difficulty}");
     }
 
-    $icon = sprintf("/images/difficulty/$what-%d.gif", $difficulty);
+    $icon = sprintf("/images/difficulty/{$what}-%d.gif", $difficulty);
     $text = sprintf($what == 'diff' ? tr('task_difficulty') : tr('terrain_difficulty'), $difficulty / 2);
 
-    return "<img src='$icon' class='img-difficulty' width='19' height='16' alt='$text' title='$text'>";
+    return "<img src='{$icon}' class='img-difficulty' width='19' height='16' alt='{$text}' title='{$text}'>";
 }
 
 function getCacheIcon($user_id, $cache_id, $cache_status, $cache_userid, $iconname)

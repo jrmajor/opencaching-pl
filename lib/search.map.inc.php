@@ -100,4 +100,4 @@ while ($r = $dbcSearch->dbResultFetch($stmt)) {
 fclose($f);
 
 tpl_redirect(
-    "/MainMap/embeded?searchdata=$hash&bbox=$minlon|$minlat|$maxlon|$maxlat");
+    "/MainMap/embeded?searchdata={$hash}&bbox={$minlon}|{$minlat}|{$maxlon}|{$maxlat}");

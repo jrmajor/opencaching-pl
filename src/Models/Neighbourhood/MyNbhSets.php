@@ -310,7 +310,7 @@ class MyNbhSets extends BaseObject
                     `founds`, `date_hidden`, `date_published`, `topratings`
                 FROM `caches`
                 WHERE `cache_id` NOT IN (SELECT `cache_ignore`.`cache_id` FROM `cache_ignore` WHERE `cache_ignore`.`user_id`= :userid)
-                AND caches.status NOT IN ($excludedstatus)
+                AND caches.status NOT IN ({$excludedstatus})
                 AND (acos(cos((90 - `latitude` ) * PI() / 180) * cos((90- :lat) * PI() / 180) +
                     sin((90-`latitude`) * PI() / 180) * sin((90-:lat) * PI() / 180) * cos(( `longitude` - :lon) *
                     PI() / 180)) * 6370) <= :radius

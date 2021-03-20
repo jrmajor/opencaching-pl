@@ -71,7 +71,7 @@ class GeoCacheLogCommons extends BaseObject
                 $icon = 'octeam.svg';
                 break;
             default:
-                Debug::errorLog("Unknown log type: $logType");
+                Debug::errorLog("Unknown log type: {$logType}");
                 $icon = 'found.svg';
                 break;
         }
@@ -99,7 +99,7 @@ class GeoCacheLogCommons extends BaseObject
             case self::LOGTYPE_TEMPORARYUNAVAILABLE: return 'logType11';
             case self::LOGTYPE_ADMINNOTE:       return 'logType12';
             default:
-                Debug::errorLog("Unknown log type: $logType");
+                Debug::errorLog("Unknown log type: {$logType}");
 
                 return '';
         }
@@ -141,7 +141,7 @@ class GeoCacheLogCommons extends BaseObject
             case GeoCache::STATUS_BLOCKED:
                 return 'blocked_by_octeam';
             default:
-                Debug::errorLog("Unknown cache status: $status");
+                Debug::errorLog("Unknown cache status: {$status}");
 
                 return '';
         }
@@ -192,7 +192,7 @@ class GeoCacheLogCommons extends BaseObject
 
     public static function getLogUrlByLogId($logId)
     {
-        return "/viewlogs.php?logid=$logId";
+        return "/viewlogs.php?logid={$logId}";
     }
 
     /**

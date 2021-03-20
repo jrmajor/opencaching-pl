@@ -126,7 +126,7 @@ class VotingController extends BaseController
 
         $electionId = $election->getElectionId();
 
-        $results = OcMemCache::getOrCreate(__METHOD__ . "($electionId)", 3600, function () use ($election) {
+        $results = OcMemCache::getOrCreate(__METHOD__ . "({$electionId})", 3600, function () use ($election) {
             $elResults = new ElectionResult($election);
             $elResults->prepareForSerialization();
 
