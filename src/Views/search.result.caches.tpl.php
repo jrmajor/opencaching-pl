@@ -130,7 +130,9 @@ function searchCB(){
     if ($SearchWithSort)
     {
         echo "gct.addOption('sortColumn', $NrColSortToSet );";
-        echo "gct.addOption('sortAscending',"; if ($OrderSortSearch == 'M') echo 'false'; else echo 'true'; echo' );';
+        echo "gct.addOption('sortAscending',";
+        echo $OrderSortSearch == 'M' ? 'false' : 'true';
+        echo ' );';
         echo "gct.addOption('pageSize', 20);";
     }
     else
@@ -282,40 +284,35 @@ echo"
             <td colspan=3 style='color:green;'>{{HideCols}}</td>
         </tr>
         <tr>
-            <td><input type='checkbox' name='C1' value='1' "; if($C1 == 1) echo 'checked'; echo'> '; echo $colNameSearch[1]['O']; echo" </td>
-            <td><input type='checkbox' name='C2' value='1' "; if($C2 == 1) echo 'checked'; echo'> '; echo $colNameSearch[2]['O']; echo" </td>
-            <td><input type='checkbox' name='C3' value='1' "; if($C3 == 1) echo 'checked'; echo'> '; echo $colNameSearch[3]['O']; echo" </td>
+            <td><input type='checkbox' name='C1' value='1' " . ($C1 == 1 ? 'checked> ' : '>') . $colNameSearch[1]['O'] . " </td>
+            <td><input type='checkbox' name='C2' value='1' " . ($C2 == 1 ? 'checked> ' : '>') . $colNameSearch[2]['O'] . " </td>
+            <td><input type='checkbox' name='C3' value='1' " . ($C3 == 1 ? 'checked> ' : '>') . $colNameSearch[3]['O'] . " </td>
         </tr>
         <tr>
-            <td><input type='checkbox' name='C4' value='1' "; if($C4 == 1) echo 'checked'; echo'> '; echo $colNameSearch[4]['O']; echo" </td>
-            <td><input type='checkbox' name='C5' value='1' "; if($C5 == 1) echo 'checked'; echo'> '; echo $colNameSearch[5]['O']; echo" </td>
-            <td><input type='checkbox' name='C6' value='1' "; if($C6 == 1) echo 'checked'; echo'> '; echo $colNameSearch[6]['O']; echo" </td>
+            <td><input type='checkbox' name='C4' value='1' " . ($C4 == 1 ? 'checked> ' : '>') . $colNameSearch[4]['O'] . " </td>
+            <td><input type='checkbox' name='C5' value='1' " . ($C5 == 1 ? 'checked> ' : '>') . $colNameSearch[5]['O'] . " </td>
+            <td><input type='checkbox' name='C6' value='1' " . ($C6 == 1 ? 'checked> ' : '>') . $colNameSearch[6]['O'] . " </td>
         </tr>
-
         <tr>
-            <td><input type='checkbox' name='C7' value='1' "; if($C7 == 1) echo 'checked'; echo'> '; echo $colNameSearch[7]['O']; echo" </td>
-            <td><input type='checkbox' name='C8' value='1' "; if($C8 == 1) echo 'checked'; echo'> '; echo $colNameSearch[8]['O']; echo" </td>
-            <td><input type='checkbox' name='C9' value='1' "; if($C9 == 1) echo 'checked'; echo'> '; echo $colNameSearch[9]['O']; echo" </td>
+            <td><input type='checkbox' name='C7' value='1' " . ($C7 == 1 ? 'checked> ' : '>') . $colNameSearch[7]['O'] . " </td>
+            <td><input type='checkbox' name='C8' value='1' " . ($C8 == 1 ? 'checked> ' : '>') . $colNameSearch[8]['O'] . " </td>
+            <td><input type='checkbox' name='C9' value='1' " . ($C9 == 1 ? 'checked> ' : '>') . $colNameSearch[9]['O'] . " </td>
         </tr>
-
         <tr>
-            <td><input type='checkbox' name='C10' value='1' "; if($C10 == 1) echo 'checked'; echo'> '; echo $colNameSearch[10]['O']; echo" </td>
-            <td><input type='checkbox' name='C11' value='1' "; if($C11 == 1) echo 'checked'; echo'> '; echo $colNameSearch[11]['O']; echo" </td>
-            <td><input type='checkbox' name='C12' value='1' "; if($C12 == 1) echo 'checked'; echo'> '; echo $colNameSearch[12]['O']; echo" </td>
+            <td><input type='checkbox' name='C10' value='1' " . ($C10 == 1 ? 'checked> ' : '>') . $colNameSearch[10]['O'] . " </td>
+            <td><input type='checkbox' name='C11' value='1' " . ($C11 == 1 ? 'checked> ' : '>') . $colNameSearch[11]['O'] . " </td>
+            <td><input type='checkbox' name='C12' value='1' " . ($C12 == 1 ? 'checked> ' : '>') . $colNameSearch[12]['O'] . " </td>
         </tr>
-
         <tr>
-            <td><input type='checkbox' name='C13' value='1' "; if($C13 == 1) echo 'checked'; echo'> '; echo $colNameSearch[13]['O']; echo" </td>
-            <td><input type='checkbox' name='C14' value='1' "; if($C14 == 1) echo 'checked'; echo'> '; echo $colNameSearch[14]['O']; echo" </td>
-            <td><input type='checkbox' name='C15' value='1' "; if($C15 == 1) echo 'checked'; echo'> '; echo $colNameSearch[15]['O']; echo" </td>
-         </tr>
-
+            <td><input type='checkbox' name='C13' value='1' " . ($C13 == 1 ? 'checked> ' : '>') . $colNameSearch[13]['O'] . " </td>
+            <td><input type='checkbox' name='C14' value='1' " . ($C14 == 1 ? 'checked> ' : '>') . $colNameSearch[14]['O'] . " </td>
+            <td><input type='checkbox' name='C15' value='1' " . ($C15 == 1 ? 'checked> ' : '>') . $colNameSearch[15]['O'] . " </td>
+        </tr>
         <tr>
-            <td><input type='checkbox' name='C16' value='1' "; if($C16 == 1) echo 'checked'; echo'> '; echo $colNameSearch[16]['O']; echo" </td>
-            <td><input type='checkbox' name='C17' value='1' "; if($C17 == 1) echo 'checked'; echo'> '; echo $colNameSearch[17]['O']; echo" </td>
-            <td><input type='checkbox' name='C18' value='1' "; if($C18 == 1) echo 'checked'; echo'> '; echo $colNameSearch[18]['O']; echo" </td>
-         </tr>
-
+            <td><input type='checkbox' name='C16' value='1' " . ($C16 == 1 ? 'checked> ' : '>') . $colNameSearch[16]['O'] . " </td>
+            <td><input type='checkbox' name='C17' value='1' " . ($C17 == 1 ? 'checked> ' : '>') . $colNameSearch[17]['O'] . " </td>
+            <td><input type='checkbox' name='C18' value='1' " . ($C18 == 1 ? 'checked> ' : '>') . $colNameSearch[18]['O'] . " </td>
+        </tr>
 
         <tr>
             <td colspan=\"3\">&nbsp;</td>
@@ -331,8 +328,8 @@ echo"
                     $selectList
                 </select>
 
-                &nbsp; <input type='radio' name='OrderSortSearch' value='M'"; if ($OrderSortSearch == 'M') echo "checked='checked'"; echo "/> {{Descending}}
-                &nbsp; <input type='radio' name='OrderSortSearch' value='R'"; if ($OrderSortSearch == 'R') echo "checked='checked'"; echo " /> {{Ascending}}
+                &nbsp; <input type='radio' name='OrderSortSearch' value='M'" . ($OrderSortSearch == 'M' ? " checked='checked'" : '') . "/> {{Descending}}
+                &nbsp; <input type='radio' name='OrderSortSearch' value='R'" . ($OrderSortSearch == 'R' ? " checked='checked'" : '') . "/> {{Ascending}}
 
          </td>
          <td class='align-right'> <button type='submit' name='bHideColumns' class='btn btn-primary'>{{save}}</td>
