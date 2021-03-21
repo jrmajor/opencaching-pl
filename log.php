@@ -91,14 +91,14 @@ $log_date_hour = isset($_POST['loghour']) ? ($_POST['loghour']) : $proposedDateT
 $log_date_day = isset($_POST['logday']) ? ($_POST['logday']) : $proposedDateTime->format('d');
 $log_date_month = isset($_POST['logmonth']) ? ($_POST['logmonth']) : $proposedDateTime->format('m');
 $log_date_year = isset($_POST['logyear']) ? ($_POST['logyear']) : $proposedDateTime->format('Y');
-$top_cache = isset($_POST['rating']) ? $_POST['rating'] : 0;
+$top_cache = $_POST['rating'] ?? 0;
 
-$wybor_NS = isset($_POST['wybor_NS']) ? $_POST['wybor_NS'] : 0;
-$wsp_NS_st = isset($_POST['wsp_NS_st']) ? $_POST['wsp_NS_st'] : null;
-$wsp_NS_min = isset($_POST['wsp_NS_min']) ? $_POST['wsp_NS_min'] : null;
-$wybor_WE = isset($_POST['wybor_WE']) ? $_POST['wybor_WE'] : 0;
-$wsp_WE_st = isset($_POST['wsp_WE_st']) ? $_POST['wsp_WE_st'] : null;
-$wsp_WE_min = isset($_POST['wsp_WE_min']) ? $_POST['wsp_WE_min'] : null;
+$wybor_NS = $_POST['wybor_NS'] ?? 0;
+$wsp_NS_st = $_POST['wsp_NS_st'] ?? null;
+$wsp_NS_min = $_POST['wsp_NS_min'] ?? null;
+$wybor_WE = $_POST['wybor_WE'] ?? 0;
+$wsp_WE_st = $_POST['wsp_WE_st'] ?? null;
+$wsp_WE_min = $_POST['wsp_WE_min'] ?? null;
 
 $userRecoCountForThisCache = XDb::xMultiVariableQueryValue(
     'SELECT COUNT(*) FROM cache_rating

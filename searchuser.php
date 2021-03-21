@@ -18,7 +18,7 @@ if (! $loggedUser) {
 }
 
         $tplname = 'searchuser';
-        $options['username'] = isset($_REQUEST['username']) ? $_REQUEST['username'] : '';
+        $options['username'] = $_REQUEST['username'] ?? '';
 
         if (! isset($options['username'])) {
             $options['username'] = '';

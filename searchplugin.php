@@ -25,9 +25,9 @@ $keyword_wp = 'wp';
 $searchurl = 'search.php';
 
 # get parameter from URL
-$userinput = isset($_REQUEST['userinput']) ? $_REQUEST['userinput'] : '';
+$userinput = $_REQUEST['userinput'] ?? '';
 //  $wp = isset($_REQUEST['wp']) ? $_REQUEST['wp'] : '';
-$sourceid = isset($_REQUEST['sourceid']) ? $_REQUEST['sourceid'] : 0;
+$sourceid = $_REQUEST['sourceid'] ?? 0;
 
 if (($sourceid == 'waypoint-search') && ($userinput != '')) {
     $sourceid = 'mozilla-search';

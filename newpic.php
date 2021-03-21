@@ -38,16 +38,16 @@ if (! $loggedUser) {
         $message_title_wrongext = tr('image_bad_format');
         $message_wrongext = tr('image_bad_format_info');
 
-        $objectid = isset($_REQUEST['objectid']) ? $_REQUEST['objectid'] : 0;
-        $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : -1;
-        $def_seq = isset($_REQUEST['def_seq']) ? $_REQUEST['def_seq'] : 1; // set up default seq for newly added picture
+        $objectid = $_REQUEST['objectid'] ?? 0;
+        $type = $_REQUEST['type'] ?? -1;
+        $def_seq = $_REQUEST['def_seq'] ?? 1; // set up default seq for newly added picture
 
-        $bSpoiler = isset($_REQUEST['spoiler']) ? $_REQUEST['spoiler'] : 0;
+        $bSpoiler = $_REQUEST['spoiler'] ?? 0;
 
         if (($bSpoiler != 0) && ($bSpoiler != 1)) {
             $bSpoiler = 0;
         }
-        $bNoDisplay = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
+        $bNoDisplay = $_REQUEST['notdisplay'] ?? 0;
 
         if (($bNoDisplay != 0) && ($bNoDisplay != 1)) {
             $bNoDisplay = 0;
@@ -151,7 +151,7 @@ if (! $loggedUser) {
                         tpl_BuildTemplate();
 
                         exit;
-                    } else {
+                    }
                         $fna = mb_split('\\.', $_FILES['file']['name']);
                         $extension = mb_strtolower($fna[count($fna) - 1]);
 
@@ -223,7 +223,6 @@ if (! $loggedUser) {
                         tpl_redirect_absolute(OcConfig::getPicBaseUrl() . '/' . $uuid . '.' . $extension);
 
                         exit;
-                    }
                 }
 
                 tpl_set_var('notdisplaychecked', ($bNoDisplay == 1) ? ' checked="checked"' : '');

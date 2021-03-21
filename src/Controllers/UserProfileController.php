@@ -160,9 +160,9 @@ class UserProfileController extends BaseController
     {
         $this->checkUserLoggedAjax();
 
-        $watchmailMode = isset($_POST['watchmail_mode']) ? $_POST['watchmail_mode'] : '';
-        $watchmailHour = isset($_POST['watchmail_hour']) ? $_POST['watchmail_hour'] : '';
-        $watchmailDay = isset($_POST['watchmail_day']) ? $_POST['watchmail_day'] : '';
+        $watchmailMode = $_POST['watchmail_mode'] ?? '';
+        $watchmailHour = $_POST['watchmail_hour'] ?? '';
+        $watchmailDay = $_POST['watchmail_day'] ?? '';
 
         if ($this->areEmailSettingsInScope($watchmailMode, $watchmailHour, $watchmailDay)) {
             $this->loggedUser->updateCacheWatchEmailSettings($watchmailMode, $watchmailHour, $watchmailDay);

@@ -83,7 +83,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('stage_message', '');
 
         //build typeoptions
-        $sel_type = isset($_POST['type']) ? $_POST['type'] : -1;
+        $sel_type = $_POST['type'] ?? -1;
 
         $types = '<option disabled selected="selected">' . tr('choose_waypoint_type') . '</options>';
 //                  if ($cache_record['type'] == '2' || $cache_record['type'] == '6' || $cache_record['type'] == '8' || $cache_record['type'] == '9')
@@ -119,7 +119,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('typeoptions', $types);
 
         //coords
-        $lonEW = isset($_POST['lonEW']) ? $_POST['lonEW'] : $default_EW;
+        $lonEW = $_POST['lonEW'] ?? $default_EW;
 
         if ($lonEW == 'E') {
             tpl_set_var('lonEsel', ' selected="selected"');
@@ -128,13 +128,13 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_set_var('lonEsel', '');
             tpl_set_var('lonWsel', ' selected="selected"');
         }
-        $lon_h = isset($_POST['lon_h']) ? $_POST['lon_h'] : '0';
+        $lon_h = $_POST['lon_h'] ?? '0';
         tpl_set_var('lon_h', htmlspecialchars($lon_h, ENT_COMPAT, 'UTF-8'));
 
-        $lon_min = isset($_POST['lon_min']) ? $_POST['lon_min'] : '00.000';
+        $lon_min = $_POST['lon_min'] ?? '00.000';
         tpl_set_var('lon_min', htmlspecialchars($lon_min, ENT_COMPAT, 'UTF-8'));
 
-        $latNS = isset($_POST['latNS']) ? $_POST['latNS'] : $default_NS;
+        $latNS = $_POST['latNS'] ?? $default_NS;
 
         if ($latNS == 'N') {
             tpl_set_var('latNsel', ' selected="selected"');
@@ -143,10 +143,10 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
             tpl_set_var('latNsel', '');
             tpl_set_var('latSsel', ' selected="selected"');
         }
-        $lat_h = isset($_POST['lat_h']) ? $_POST['lat_h'] : '0';
+        $lat_h = $_POST['lat_h'] ?? '0';
         tpl_set_var('lat_h', htmlspecialchars($lat_h, ENT_COMPAT, 'UTF-8'));
 
-        $lat_min = isset($_POST['lat_min']) ? $_POST['lat_min'] : '00.000';
+        $lat_min = $_POST['lat_min'] ?? '00.000';
         tpl_set_var('lat_min', htmlspecialchars($lat_min, ENT_COMPAT, 'UTF-8'));
 
         // =============== openchecker =======================================================
@@ -174,13 +174,13 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         }
         //================ openchecker end ===================================================
         //stage
-        $wp_stage = isset($_POST['stage']) ? $_POST['stage'] : '0';
+        $wp_stage = $_POST['stage'] ?? '0';
 
         //status
         $status1 = '';
         $status2 = '';
         $status3 = '';
-        $wp_status = isset($_POST['status']) ? $_POST['status'] : '1';
+        $wp_status = $_POST['status'] ?? '1';
 
         if ($wp_status == 1) {
             $status1 = 'checked';
@@ -197,7 +197,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('checked2', $status2);
         tpl_set_var('checked3', $status3);
         //desc
-        $wp_desc = isset($_POST['desc']) ? $_POST['desc'] : '';
+        $wp_desc = $_POST['desc'] ?? '';
 //              $wp_desc = nl2br($wp_desc);
         tpl_set_var('desc', htmlspecialchars($wp_desc, ENT_COMPAT, 'UTF-8'));
 

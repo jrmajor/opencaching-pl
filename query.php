@@ -46,23 +46,23 @@ $nosaveastext = tr('no_queries');
 $bgcolor1 = '#eeeeee';
 $bgcolor2 = '#ffffff';
 
-$action = isset($_REQUEST['action']) ? $_REQUEST['action'] : 'view';
+$action = $_REQUEST['action'] ?? 'view';
 
     if ($action == 'save') {
-        $queryid = isset($_REQUEST['queryid']) ? $_REQUEST['queryid'] : 0;
-        $queryname = isset($_REQUEST['queryname']) ? $_REQUEST['queryname'] : '';
+        $queryid = $_REQUEST['queryid'] ?? 0;
+        $queryname = $_REQUEST['queryname'] ?? '';
         $submit = isset($_REQUEST['submit']) ? ($_REQUEST['submit'] == '1') : false;
 
         savequery($queryid, $queryname, false, $submit, 0, $loggedUser);
     } elseif ($action == 'saveas') {
-        $queryid = isset($_REQUEST['queryid']) ? $_REQUEST['queryid'] : 0;
-        $queryname = isset($_REQUEST['queryname']) ? $_REQUEST['queryname'] : '';
+        $queryid = $_REQUEST['queryid'] ?? 0;
+        $queryname = $_REQUEST['queryname'] ?? '';
         $submit = isset($_REQUEST['submit']) ? ($_REQUEST['submit'] == '1') : false;
-        $oldqueryid = isset($_REQUEST['oldqueryid']) ? $_REQUEST['oldqueryid'] : 0;
+        $oldqueryid = $_REQUEST['oldqueryid'] ?? 0;
 
         savequery($queryid, $queryname, true, $submit, $oldqueryid, $loggedUser);
     } elseif ($action == 'delete') {
-        $queryid = isset($_REQUEST['queryid']) ? $_REQUEST['queryid'] : 0;
+        $queryid = $_REQUEST['queryid'] ?? 0;
         deletequery($queryid, $loggedUser);
     } else { // default: view
         viewqueries($loggedUser);

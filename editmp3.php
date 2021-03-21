@@ -37,7 +37,7 @@ if (empty($user)) {
 
     $message_mp3_not_found = tr('editmp3_15');
 
-    $uuid = isset($_REQUEST['uuid']) ? $_REQUEST['uuid'] : 0;
+    $uuid = $_REQUEST['uuid'] ?? 0;
 
     if (! $uuid) {
         $message = $message_mp3_not_found;
@@ -113,7 +113,7 @@ if (empty($user)) {
 
             // store
 
-            $row['display'] = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
+            $row['display'] = $_REQUEST['notdisplay'] ?? 0;
 
             if ($row['display'] == 0) {
                 $row['display'] = 1;

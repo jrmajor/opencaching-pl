@@ -23,11 +23,11 @@ if (! $loggedUser) {
 
         require_once __DIR__ . '/src/Views/newmp3.inc.php';
 
-        $objectid = isset($_REQUEST['objectid']) ? $_REQUEST['objectid'] : 0;
-        $type = isset($_REQUEST['type']) ? $_REQUEST['type'] : -1;
-        $def_seq_m = isset($_REQUEST['def_seq_m']) ? $_REQUEST['def_seq_m'] : 1; // set up default seq for newly added mp3
+        $objectid = $_REQUEST['objectid'] ?? 0;
+        $type = $_REQUEST['type'] ?? -1;
+        $def_seq_m = $_REQUEST['def_seq_m'] ?? 1; // set up default seq for newly added mp3
 
-        $bNoDisplay = isset($_REQUEST['notdisplay']) ? $_REQUEST['notdisplay'] : 0;
+        $bNoDisplay = $_REQUEST['notdisplay'] ?? 0;
 
         if (($bNoDisplay != 0) && ($bNoDisplay != 1)) {
             $bNoDisplay = 0;

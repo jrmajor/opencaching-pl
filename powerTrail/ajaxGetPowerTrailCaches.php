@@ -19,7 +19,7 @@ displayAllCachesOfPowerTrail($powerTrail, $choseFinalCaches);
 
 function displayAllCachesOfPowerTrail(PowerTrail $powerTrail, $choseFinalCaches)
 {
-    $userId = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : -9999;
+    $userId = $_SESSION['user_id'] ?? -9999;
     $powerTrailCachesUserLogsByCache = $powerTrail->getFoundCachsByUser($userId);
     $geocacheFoundArr = [];
 

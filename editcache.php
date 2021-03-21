@@ -150,8 +150,8 @@ if (! $loggedUser) {
                     }
                 }
 
-                $cache_name = isset($_POST['name']) ? $_POST['name'] : $cache_record['name'];
-                $cache_type = isset($_POST['type']) ? $_POST['type'] : $cache_record['type'];
+                $cache_name = $_POST['name'] ?? $cache_record['name'];
+                $cache_type = $_POST['type'] ?? $cache_record['type'];
 
                 $pic_count_check = $cache_record['picturescount'];
 
@@ -209,37 +209,37 @@ if (! $loggedUser) {
                         $sel_size = $cache_record['size'];
                     }
                 } else {
-                    $sel_size = isset($_POST['size']) ? $_POST['size'] : $cache_record['size'];
+                    $sel_size = $_POST['size'] ?? $cache_record['size'];
 
                     if ($cache_type == GeoCache::TYPE_VIRTUAL || $cache_type == GeoCache::TYPE_WEBCAM || $cache_type == GeoCache::TYPE_EVENT) {
                         $sel_size = GeoCache::SIZE_NONE;
                     }
                 }
-                $cache_hidden_day = isset($_POST['hidden_day']) ? $_POST['hidden_day'] : date('d', strtotime($cache_record['date_hidden']));
-                $cache_hidden_month = isset($_POST['hidden_month']) ? $_POST['hidden_month'] : date('m', strtotime($cache_record['date_hidden']));
-                $cache_hidden_year = isset($_POST['hidden_year']) ? $_POST['hidden_year'] : date('Y', strtotime($cache_record['date_hidden']));
+                $cache_hidden_day = $_POST['hidden_day'] ?? date('d', strtotime($cache_record['date_hidden']));
+                $cache_hidden_month = $_POST['hidden_month'] ?? date('m', strtotime($cache_record['date_hidden']));
+                $cache_hidden_year = $_POST['hidden_year'] ?? date('Y', strtotime($cache_record['date_hidden']));
 
                 if (is_null($cache_record['date_activate']) || $cache_record['date_activate'] == 0) {
-                    $cache_activate_day = isset($_POST['activate_day']) ? $_POST['activate_day'] : date('d');
-                    $cache_activate_month = isset($_POST['activate_month']) ? $_POST['activate_month'] : date('m');
-                    $cache_activate_year = isset($_POST['activate_year']) ? $_POST['activate_year'] : date('Y');
-                    $cache_activate_hour = isset($_POST['activate_hour']) ? $_POST['activate_hour'] : date('H');
+                    $cache_activate_day = $_POST['activate_day'] ?? date('d');
+                    $cache_activate_month = $_POST['activate_month'] ?? date('m');
+                    $cache_activate_year = $_POST['activate_year'] ?? date('Y');
+                    $cache_activate_hour = $_POST['activate_hour'] ?? date('H');
                 } else {
-                    $cache_activate_day = isset($_POST['activate_day']) ? $_POST['activate_day'] : date('d', strtotime($cache_record['date_activate']));
-                    $cache_activate_month = isset($_POST['activate_month']) ? $_POST['activate_month'] : date('m', strtotime($cache_record['date_activate']));
-                    $cache_activate_year = isset($_POST['activate_year']) ? $_POST['activate_year'] : date('Y', strtotime($cache_record['date_activate']));
-                    $cache_activate_hour = isset($_POST['activate_hour']) ? $_POST['activate_hour'] : date('H', strtotime($cache_record['date_activate']));
+                    $cache_activate_day = $_POST['activate_day'] ?? date('d', strtotime($cache_record['date_activate']));
+                    $cache_activate_month = $_POST['activate_month'] ?? date('m', strtotime($cache_record['date_activate']));
+                    $cache_activate_year = $_POST['activate_year'] ?? date('Y', strtotime($cache_record['date_activate']));
+                    $cache_activate_hour = $_POST['activate_hour'] ?? date('H', strtotime($cache_record['date_activate']));
                 }
 
-                $cache_difficulty = isset($_POST['difficulty']) ? $_POST['difficulty'] : $cache_record['difficulty'];
-                $cache_terrain = isset($_POST['terrain']) ? $_POST['terrain'] : $cache_record['terrain'];
-                $cache_country = isset($_POST['country']) ? $_POST['country'] : $cache_record['country'];
-                $cache_region = isset($_POST['region']) ? $_POST['region'] : $cache_record['region'];
-                $show_all_countries = isset($_POST['show_all_countries']) ? $_POST['show_all_countries'] : 0;
-                $status = isset($_POST['status']) ? $_POST['status'] : $cache_record['status'];
+                $cache_difficulty = $_POST['difficulty'] ?? $cache_record['difficulty'];
+                $cache_terrain = $_POST['terrain'] ?? $cache_record['terrain'];
+                $cache_country = $_POST['country'] ?? $cache_record['country'];
+                $cache_region = $_POST['region'] ?? $cache_record['region'];
+                $show_all_countries = $_POST['show_all_countries'] ?? 0;
+                $status = $_POST['status'] ?? $cache_record['status'];
                 $status_old = $cache_record['status'];
-                $search_time = isset($_POST['search_time']) ? $_POST['search_time'] : $cache_record['search_time'];
-                $way_length = isset($_POST['way_length']) ? $_POST['way_length'] : $cache_record['way_length'];
+                $search_time = $_POST['search_time'] ?? $cache_record['search_time'];
+                $way_length = $_POST['way_length'] ?? $cache_record['way_length'];
 
                 if ($status_old == GeoCache::STATUS_NOTYETAVAILABLE &&
                         $status == GeoCache::STATUS_NOTYETAVAILABLE) {
@@ -258,7 +258,7 @@ if (! $loggedUser) {
                         }
                     }
                 } else {
-                    $publish = isset($_POST['publish']) ? $_POST['publish'] : 'now';
+                    $publish = $_POST['publish'] ?? 'now';
 
                     if (! ($publish == 'now' || $publish == 'later' || $publish == 'notnow')) {
                         // somebody messed up the POST-data, so the cache has to be published (status<5)
@@ -459,7 +459,7 @@ if (! $loggedUser) {
                     $wpVar = 'wp_' . $wpType;
                     $wpMessageVar = 'wp_' . $wpType . '_message';
 
-                    ${$wpVar} = isset($_POST[$wpVar]) ? $_POST[$wpVar] : $cache_record[$wpVar];
+                    ${$wpVar} = $_POST[$wpVar] ?? $cache_record[$wpVar];
 
                     if (${$wpVar} == '') {
                         $wpOk = true;
@@ -948,7 +948,7 @@ if (! $loggedUser) {
                         $max_seq_record = $dbc->dbResultFetch($s);
                         unset($params);  //clear to avoid overlaping on next paramQuery (if any))
 
-                        $max_seq_number = (isset($max_seq_record['seq']) ? $max_seq_record['seq'] : 0);
+                        $max_seq_number = $max_seq_record['seq'] ?? 0;
 
                         if ($max_seq_number < $mp3_count) {
                             $max_seq_number = $mp3_count;

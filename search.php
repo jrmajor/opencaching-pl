@@ -237,15 +237,15 @@ if (! $loggedUser) {
             }
 
             //get the taken search options and backup them in the queries table (to view "the next page")
-            $options['f_userowner'] = isset($_REQUEST['f_userowner']) ? $_REQUEST['f_userowner'] : 1;
-            $options['f_userfound'] = isset($_REQUEST['f_userfound']) ? $_REQUEST['f_userfound'] : 1;
-            $options['f_inactive'] = isset($_REQUEST['f_inactive']) ? $_REQUEST['f_inactive'] : 1;
-            $options['f_ignored'] = isset($_REQUEST['f_ignored']) ? $_REQUEST['f_ignored'] : 1;
-            $options['f_watched'] = isset($_REQUEST['f_watched']) ? $_REQUEST['f_watched'] : 0;
-            $options['f_geokret'] = isset($_REQUEST['f_geokret']) ? $_REQUEST['f_geokret'] : 0;
-            $options['expert'] = isset($_REQUEST['expert']) ? $_REQUEST['expert'] : 0;
-            $options['showresult'] = isset($_REQUEST['showresult']) ? $_REQUEST['showresult'] : 0;
-            $options['output'] = isset($_REQUEST['output']) ? $_REQUEST['output'] : 'HTML';
+            $options['f_userowner'] = $_REQUEST['f_userowner'] ?? 1;
+            $options['f_userfound'] = $_REQUEST['f_userfound'] ?? 1;
+            $options['f_inactive'] = $_REQUEST['f_inactive'] ?? 1;
+            $options['f_ignored'] = $_REQUEST['f_ignored'] ?? 1;
+            $options['f_watched'] = $_REQUEST['f_watched'] ?? 0;
+            $options['f_geokret'] = $_REQUEST['f_geokret'] ?? 0;
+            $options['expert'] = $_REQUEST['expert'] ?? 0;
+            $options['showresult'] = $_REQUEST['showresult'] ?? 0;
+            $options['output'] = $_REQUEST['output'] ?? 'HTML';
             $options['gpxLogLimit'] = isset($_REQUEST['gpxLogLimit']) ? (int) $_REQUEST['gpxLogLimit'] : false;
 
             if (isset($_REQUEST['showonmap'])) {
@@ -253,7 +253,7 @@ if (! $loggedUser) {
                 $options['output'] = 'MAP';
             }
 
-            $options['logtype'] = isset($_REQUEST['logtype']) ? $_REQUEST['logtype'] : '';
+            $options['logtype'] = $_REQUEST['logtype'] ?? '';
 
             if (isset($_REQUEST['cache_attribs'])) {
                 if ($_REQUEST['cache_attribs'] != '') {
@@ -291,39 +291,39 @@ if (! $loggedUser) {
             } elseif (isset($_REQUEST['searchbyowner'])) {
                 $options['searchtype'] = 'byowner';
 
-                $options['ownerid'] = isset($_REQUEST['ownerid']) ? $_REQUEST['ownerid'] : 0;
+                $options['ownerid'] = $_REQUEST['ownerid'] ?? 0;
                 $options['owner'] = isset($_REQUEST['owner']) ? stripslashes($_REQUEST['owner']) : '';
             } elseif (isset($_REQUEST['searchbyfinder'])) {
                 $options['searchtype'] = 'byfinder';
 
-                $options['finderid'] = isset($_REQUEST['finderid']) ? $_REQUEST['finderid'] : 0;
+                $options['finderid'] = $_REQUEST['finderid'] ?? 0;
                 $options['finder'] = isset($_REQUEST['finder']) ? stripslashes($_REQUEST['finder']) : '';
             } elseif (isset($_REQUEST['searchbyort'])) {
                 $options['searchtype'] = 'byort';
 
                 $options['ort'] = isset($_REQUEST['ort']) ? stripslashes($_REQUEST['ort']) : '';
-                $options['locid'] = isset($_REQUEST['locid']) ? $_REQUEST['locid'] : 0;
+                $options['locid'] = $_REQUEST['locid'] ?? 0;
                 $options['locid'] = $options['locid'] + 0;
 
-                $options['distance'] = isset($_REQUEST['distance']) ? $_REQUEST['distance'] : 0;
+                $options['distance'] = $_REQUEST['distance'] ?? 0;
             } elseif (isset($_REQUEST['searchbyplz'])) {
                 $options['searchtype'] = 'byplz';
 
                 $options['plz'] = isset($_REQUEST['plz']) ? stripslashes($_REQUEST['plz']) : '';
-                $options['locid'] = isset($_REQUEST['locid']) ? $_REQUEST['locid'] : 0;
+                $options['locid'] = $_REQUEST['locid'] ?? 0;
                 $options['locid'] = $options['locid'] + 0;
             } elseif (isset($_REQUEST['searchbydistance'])) {
                 $options['searchtype'] = 'bydistance';
 
-                $options['latNS'] = isset($_REQUEST['latNS']) ? $_REQUEST['latNS'] : 'N';
-                $options['lonEW'] = isset($_REQUEST['lonEW']) ? $_REQUEST['lonEW'] : 'E';
+                $options['latNS'] = $_REQUEST['latNS'] ?? 'N';
+                $options['lonEW'] = $_REQUEST['lonEW'] ?? 'E';
 
-                $options['lat_h'] = isset($_REQUEST['lat_h']) ? $_REQUEST['lat_h'] : 0;
-                $options['lon_h'] = isset($_REQUEST['lon_h']) ? $_REQUEST['lon_h'] : 0;
-                $options['lat_min'] = isset($_REQUEST['lat_min']) ? $_REQUEST['lat_min'] : 0;
-                $options['lon_min'] = isset($_REQUEST['lon_min']) ? $_REQUEST['lon_min'] : 0;
+                $options['lat_h'] = $_REQUEST['lat_h'] ?? 0;
+                $options['lon_h'] = $_REQUEST['lon_h'] ?? 0;
+                $options['lat_min'] = $_REQUEST['lat_min'] ?? 0;
+                $options['lon_min'] = $_REQUEST['lon_min'] ?? 0;
 
-                $options['distance'] = isset($_REQUEST['distance']) ? $_REQUEST['distance'] : 0;
+                $options['distance'] = $_REQUEST['distance'] ?? 0;
             } elseif (isset($_REQUEST['searchbyfulltext'])) {
                 $options['searchtype'] = 'byfulltext';
 
@@ -332,10 +332,10 @@ if (! $loggedUser) {
                 $options['ft_logs'] = isset($_REQUEST['ft_logs']) ? $_REQUEST['ft_logs'] + 0 : 0;
                 $options['ft_pictures'] = isset($_REQUEST['ft_pictures']) ? $_REQUEST['ft_pictures'] + 0 : 0;
 
-                $options['fulltext'] = isset($_REQUEST['fulltext']) ? $_REQUEST['fulltext'] : '';
+                $options['fulltext'] = $_REQUEST['fulltext'] ?? '';
             } elseif (isset($_REQUEST['searchbycacheid'])) {
                 $options['searchtype'] = 'bycacheid';
-                $options['cacheid'] = isset($_REQUEST['cacheid']) ? $_REQUEST['cacheid'] : 0;
+                $options['cacheid'] = $_REQUEST['cacheid'] ?? 0;
 
                 if (! is_numeric($options['cacheid'])) {
                     $options['cacheid'] = 0;
@@ -344,10 +344,10 @@ if (! $loggedUser) {
                 if (isset($_REQUEST['searchbywaypointname'])) {
                     $options['searchtype'] = 'bywaypointname';
                     $options['cachename'] = isset($_REQUEST['waypointname']) ? stripslashes($_REQUEST['waypointname']) : '';
-                    $options['waypoint'] = isset($_REQUEST['waypointname']) ? $_REQUEST['waypointname'] : '';
+                    $options['waypoint'] = $_REQUEST['waypointname'] ?? '';
                 } else {
                     $options['searchtype'] = 'bywaypoint';
-                    $options['waypoint'] = isset($_REQUEST['waypoint']) ? $_REQUEST['waypoint'] : '';
+                    $options['waypoint'] = $_REQUEST['waypoint'] ?? '';
                 }
                 $options['waypoint'] = TextConverter::mb_trim($options['waypoint']);
                 $options['waypointtype'] = mb_strtolower(mb_substr($options['waypoint'], 0, 2));
@@ -378,31 +378,31 @@ if (! $loggedUser) {
                 }
             }
 
-            $options['sort'] = isset($_REQUEST['sort']) ? $_REQUEST['sort'] : 'bydistance';
-            $options['country'] = isset($_REQUEST['country']) ? $_REQUEST['country'] : '';
-            $options['region'] = isset($_REQUEST['region']) ? $_REQUEST['region'] : '';
-            $options['cachetype'] = isset($_REQUEST['cachetype']) ? $_REQUEST['cachetype'] : '111111111';
+            $options['sort'] = $_REQUEST['sort'] ?? 'bydistance';
+            $options['country'] = $_REQUEST['country'] ?? '';
+            $options['region'] = $_REQUEST['region'] ?? '';
+            $options['cachetype'] = $_REQUEST['cachetype'] ?? '111111111';
 
-            $options['cachesize_1'] = isset($_REQUEST['cachesize_1']) ? $_REQUEST['cachesize_1'] : 1;
-            $options['cachesize_2'] = isset($_REQUEST['cachesize_2']) ? $_REQUEST['cachesize_2'] : 1;
-            $options['cachesize_3'] = isset($_REQUEST['cachesize_3']) ? $_REQUEST['cachesize_3'] : 1;
-            $options['cachesize_4'] = isset($_REQUEST['cachesize_4']) ? $_REQUEST['cachesize_4'] : 1;
-            $options['cachesize_5'] = isset($_REQUEST['cachesize_5']) ? $_REQUEST['cachesize_5'] : 1;
-            $options['cachesize_6'] = isset($_REQUEST['cachesize_6']) ? $_REQUEST['cachesize_6'] : 1;
-            $options['cachesize_7'] = isset($_REQUEST['cachesize_7']) ? $_REQUEST['cachesize_7'] : 1;
-            $options['cachesize_8'] = isset($_REQUEST['cachesize_8']) ? $_REQUEST['cachesize_8'] : 1;
+            $options['cachesize_1'] = $_REQUEST['cachesize_1'] ?? 1;
+            $options['cachesize_2'] = $_REQUEST['cachesize_2'] ?? 1;
+            $options['cachesize_3'] = $_REQUEST['cachesize_3'] ?? 1;
+            $options['cachesize_4'] = $_REQUEST['cachesize_4'] ?? 1;
+            $options['cachesize_5'] = $_REQUEST['cachesize_5'] ?? 1;
+            $options['cachesize_6'] = $_REQUEST['cachesize_6'] ?? 1;
+            $options['cachesize_7'] = $_REQUEST['cachesize_7'] ?? 1;
+            $options['cachesize_8'] = $_REQUEST['cachesize_8'] ?? 1;
 
-            $options['cachevote_1'] = isset($_REQUEST['cachevote_1']) ? $_REQUEST['cachevote_1'] : '';
-            $options['cachevote_2'] = isset($_REQUEST['cachevote_2']) ? $_REQUEST['cachevote_2'] : '';
-            $options['cachenovote'] = isset($_REQUEST['cachenovote']) ? $_REQUEST['cachenovote'] : 1;
+            $options['cachevote_1'] = $_REQUEST['cachevote_1'] ?? '';
+            $options['cachevote_2'] = $_REQUEST['cachevote_2'] ?? '';
+            $options['cachenovote'] = $_REQUEST['cachenovote'] ?? 1;
 
-            $options['cachedifficulty_1'] = isset($_REQUEST['cachedifficulty_1']) ? $_REQUEST['cachedifficulty_1'] : '';
-            $options['cachedifficulty_2'] = isset($_REQUEST['cachedifficulty_2']) ? $_REQUEST['cachedifficulty_2'] : '';
+            $options['cachedifficulty_1'] = $_REQUEST['cachedifficulty_1'] ?? '';
+            $options['cachedifficulty_2'] = $_REQUEST['cachedifficulty_2'] ?? '';
 
-            $options['cacheterrain_1'] = isset($_REQUEST['cacheterrain_1']) ? $_REQUEST['cacheterrain_1'] : '';
-            $options['cacheterrain_2'] = isset($_REQUEST['cacheterrain_2']) ? $_REQUEST['cacheterrain_2'] : '';
+            $options['cacheterrain_1'] = $_REQUEST['cacheterrain_1'] ?? '';
+            $options['cacheterrain_2'] = $_REQUEST['cacheterrain_2'] ?? '';
 
-            $options['cacherating'] = isset($_REQUEST['cacherating']) ? $_REQUEST['cacherating'] : 0;
+            $options['cacherating'] = $_REQUEST['cacherating'] ?? 0;
 
             if ($options['showresult'] != 0) {
                 //save the search-options in the database
@@ -1168,7 +1168,7 @@ if (! $loggedUser) {
                 exit;
             }
         } else {
-            $options['show_all_countries'] = isset($_REQUEST['show_all_countries']) ? $_REQUEST['show_all_countries'] : 0;
+            $options['show_all_countries'] = $_REQUEST['show_all_countries'] ?? 0;
 
             if (isset($_REQUEST['show_all_countries_submit'])) {
                 $options['show_all_countries'] = 1;
@@ -1360,10 +1360,10 @@ function outputSearchForm($options, User $loggedUser)
         tpl_set_var('lat_min', sprintf('%02.3f', $lat_min));
         tpl_set_var('lon_min', sprintf('%02.3f', $lon_min));
     } else {
-        tpl_set_var('lat_h', isset($options['lat_h']) ? $options['lat_h'] : '00');
-        tpl_set_var('lon_h', isset($options['lon_h']) ? $options['lon_h'] : '000');
-        tpl_set_var('lat_min', isset($options['lat_min']) ? $options['lat_min'] : '00.000');
-        tpl_set_var('lon_min', isset($options['lon_min']) ? $options['lon_min'] : '00.000');
+        tpl_set_var('lat_h', $options['lat_h'] ?? '00');
+        tpl_set_var('lon_h', $options['lon_h'] ?? '000');
+        tpl_set_var('lat_min', $options['lat_min'] ?? '00.000');
+        tpl_set_var('lon_min', $options['lon_min'] ?? '00.000');
 
         if ($options['lonEW'] == 'W') {
             tpl_set_var('lonE_sel', '');
@@ -1381,7 +1381,7 @@ function outputSearchForm($options, User $loggedUser)
             tpl_set_var('latN_sel', 'selected="selected"');
         }
     }
-    tpl_set_var('distance', isset($options['distance']) ? $options['distance'] : 20);
+    tpl_set_var('distance', $options['distance'] ?? 20);
 
     if (! isset($options['unit'])) {
         $options['unit'] = 'km';
@@ -1715,7 +1715,7 @@ function outputUniidSelectionForm($uniSql, $urlparams)
     XDb::xSql('ALTER TABLE `uniids` ADD PRIMARY KEY (`uni_id`)');
 
     // locidsite
-    $locidsite = isset($_REQUEST['locidsite']) ? $_REQUEST['locidsite'] : 0;
+    $locidsite = $_REQUEST['locidsite'] ?? 0;
 
     if (! is_numeric($locidsite)) {
         $locidsite = 0;

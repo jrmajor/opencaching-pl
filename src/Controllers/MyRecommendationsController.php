@@ -93,7 +93,7 @@ class MyRecommendationsController extends BaseController
                     return [
                         'type' => $row['type'],
                         'status' => $row['status'],
-                        'user_sts' => isset($row['user_sts'])?$row['user_sts']:null,
+                        'user_sts' => $row['user_sts'] ?? null,
                     ];
                 }));
             $model->addColumn(new Column_CacheName(tr('myRecommendations_cacheName'),

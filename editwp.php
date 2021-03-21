@@ -74,7 +74,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
         require __DIR__ . '/src/Views/newcache.inc.php';
 
-        $wp_type = isset($_POST['type']) ? $_POST['type'] : $wp_record['type'];
+        $wp_type = $_POST['type'] ?? $wp_record['type'];
         //build typeoptions
         $types = '<option disabled selected="selected">' . tr('choose_waypoint_type') . '</options>';
 
@@ -180,11 +180,11 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         } else {
             $lat_not_ok = true;
         }
-        $wp_stage = isset($_POST['stage']) ? $_POST['stage'] : $wp_record['stage'];
+        $wp_stage = $_POST['stage'] ?? $wp_record['stage'];
         $status1 = '';
         $status2 = '';
         $status3 = '';
-        $wp_status = isset($_POST['status']) ? $_POST['status'] : $wp_record['status'];
+        $wp_status = $_POST['status'] ?? $wp_record['status'];
 
         if ($wp_status == 1) {
             $status1 = 'checked';
@@ -201,7 +201,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
         tpl_set_var('checked2', $status2);
         tpl_set_var('checked3', $status3);
 
-        $wp_desc = isset($_POST['desc']) ? $_POST['desc'] : $wp_record['desc'];
+        $wp_desc = $_POST['desc'] ?? $wp_record['desc'];
 //                  $wp_desc = nl2br($wp_desc);
         $descwp_not_ok = false;
 

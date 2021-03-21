@@ -177,15 +177,15 @@ switch ($actionPerformed) {
         $view->setVar('dynamicMapModel', $mapModel);
 
         tpl_set_var('filtersTrDisplay', 'table-row');
-        tpl_set_var('ptTypeSelector2', displayPtTypesSelector('filter', isset($_REQUEST['filter']) ? $_REQUEST['filter'] : 0, true));
+        tpl_set_var('ptTypeSelector2', displayPtTypesSelector('filter', $_REQUEST['filter'] ?? 0, true));
         tpl_set_var('sortSelector', getSortBySelector($_REQUEST['sortBy']));
         tpl_set_var('sortDirSelector', getSortDirSelector($_REQUEST['sortDir']));
         tpl_set_var('myPowerTrailsBool', getMyPowerTrailsSelector(
-            isset($_REQUEST['myPowerTrailsBool']) ? $_REQUEST['myPowerTrailsBool'] : 'no'));
+            $_REQUEST['myPowerTrailsBool'] ?? 'no'));
         tpl_set_var('gainedPowerTrailsBool', getGainedPowerTrailsSelector(
-            isset($_REQUEST['gainedPowerTrailsBool']) ? $_REQUEST['gainedPowerTrailsBool'] : 0));
+            $_REQUEST['gainedPowerTrailsBool'] ?? 0));
         tpl_set_var('historicLimitBool', getMiniPowerTrailSelector(
-            isset($_REQUEST['historicLimitBool']) ? $_REQUEST['historicLimitBool'] : 'no'));
+            $_REQUEST['historicLimitBool'] ?? 'no'));
         tpl_set_var('displayedPowerTrailsCount', $pt->getDisplayedPowerTrailsCount());
 
         tpl_set_var('displayPowerTrails', 'block');

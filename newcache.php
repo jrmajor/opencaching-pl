@@ -111,7 +111,7 @@ $view->loadJQueryUI();
 if (! isset($cache_type)) {
     $cache_type = -1;
 }
-$sel_type = isset($_POST['type']) ? $_POST['type'] : -1;
+$sel_type = $_POST['type'] ?? -1;
 
 if (! isset($_POST['size'])) {
     if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM || $sel_type == GeoCache::TYPE_EVENT) {
@@ -120,20 +120,20 @@ if (! isset($_POST['size'])) {
         $sel_size = -1;
     }
 } else {
-    $sel_size = isset($_POST['size']) ? $_POST['size'] : -1;
+    $sel_size = $_POST['size'] ?? -1;
 
     if ($sel_type == GeoCache::TYPE_VIRTUAL || $sel_type == GeoCache::TYPE_WEBCAM || $sel_type == GeoCache::TYPE_EVENT) {
         $sel_size = GeoCache::SIZE_NONE;
     }
 }
-$sel_lang = isset($_POST['desc_lang']) ? $_POST['desc_lang'] : I18n::getCurrentLang();
-$sel_country = isset($_POST['country']) ? $_POST['country'] : strtoupper(I18n::getCurrentLang());
-$sel_region = isset($_POST['region']) ? $_POST['region'] : $default_region;
-$show_all_countries = isset($_POST['show_all_countries']) ? $_POST['show_all_countries'] : 0;
-$show_all_langs = isset($_POST['show_all_langs']) ? $_POST['show_all_langs'] : 0;
+$sel_lang = $_POST['desc_lang'] ?? I18n::getCurrentLang();
+$sel_country = $_POST['country'] ?? strtoupper(I18n::getCurrentLang());
+$sel_region = $_POST['region'] ?? $default_region;
+$show_all_countries = $_POST['show_all_countries'] ?? 0;
+$show_all_langs = $_POST['show_all_langs'] ?? 0;
 
 // coords
-$lonEW = isset($_POST['lonEW']) ? $_POST['lonEW'] : $default_EW;
+$lonEW = $_POST['lonEW'] ?? $default_EW;
 
 if ($lonEW == 'E') {
     tpl_set_var('lonWsel', '');
@@ -142,13 +142,13 @@ if ($lonEW == 'E') {
     tpl_set_var('lonE_sel', '');
     tpl_set_var('lonWsel', ' selected="selected"');
 }
-$lon_h = isset($_POST['lon_h']) ? $_POST['lon_h'] : '';
+$lon_h = $_POST['lon_h'] ?? '';
 tpl_set_var('lon_h', htmlspecialchars($lon_h, ENT_COMPAT, 'UTF-8'));
 
-$lon_min = isset($_POST['lon_min']) ? $_POST['lon_min'] : '';
+$lon_min = $_POST['lon_min'] ?? '';
 tpl_set_var('lon_min', htmlspecialchars($lon_min, ENT_COMPAT, 'UTF-8'));
 
-$latNS = isset($_POST['latNS']) ? $_POST['latNS'] : $default_NS;
+$latNS = $_POST['latNS'] ?? $default_NS;
 
 if ($latNS == 'N') {
     tpl_set_var('latNsel', ' selected="selected"');
@@ -157,22 +157,22 @@ if ($latNS == 'N') {
     tpl_set_var('latNsel', '');
     tpl_set_var('latSsel', ' selected="selected"');
 }
-$lat_h = isset($_POST['lat_h']) ? $_POST['lat_h'] : '';
+$lat_h = $_POST['lat_h'] ?? '';
 tpl_set_var('lat_h', htmlspecialchars($lat_h, ENT_COMPAT, 'UTF-8'));
 
-$lat_min = isset($_POST['lat_min']) ? $_POST['lat_min'] : '';
+$lat_min = $_POST['lat_min'] ?? '';
 tpl_set_var('lat_min', htmlspecialchars($lat_min, ENT_COMPAT, 'UTF-8'));
 
 // name
-$name = isset($_POST['name']) ? $_POST['name'] : '';
+$name = $_POST['name'] ?? '';
 tpl_set_var('name', htmlspecialchars($name, ENT_COMPAT, 'UTF-8'));
 
 // shortdesc
-$short_desc = isset($_POST['short_desc']) ? $_POST['short_desc'] : '';
+$short_desc = $_POST['short_desc'] ?? '';
 tpl_set_var('short_desc', htmlspecialchars($short_desc, ENT_COMPAT, 'UTF-8'));
 
 // desc
-$desc = isset($_POST['desc']) ? $_POST['desc'] : '';
+$desc = $_POST['desc'] ?? '';
 tpl_set_var('desc', htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'));
 
 // for old versions of OCProp
@@ -185,8 +185,8 @@ if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
 }
 
 // effort
-$search_time = isset($_POST['search_time']) ? $_POST['search_time'] : '0';
-$way_length = isset($_POST['way_length']) ? $_POST['way_length'] : '0';
+$search_time = $_POST['search_time'] ?? '0';
+$way_length = $_POST['way_length'] ?? '0';
 
 $search_time = mb_ereg_replace(',', '.', $search_time);
 $way_length = mb_ereg_replace(',', '.', $way_length);
@@ -209,7 +209,7 @@ tpl_set_var('search_time', $st_hours . ':' . $st_minutes);
 tpl_set_var('way_length', $way_length);
 
 // hints
-$hints = isset($_POST['hints']) ? $_POST['hints'] : '';
+$hints = $_POST['hints'] ?? '';
 tpl_set_var('hints', htmlspecialchars($hints, ENT_COMPAT, 'UTF-8'));
 
 // for old versions of OCProp
@@ -218,17 +218,17 @@ if (isset($_POST['submit']) && ! isset($_POST['version2'])) {
 }
 
 // hidden_since
-$hidden_day = isset($_POST['hidden_day']) ? $_POST['hidden_day'] : date('d');
-$hidden_month = isset($_POST['hidden_month']) ? $_POST['hidden_month'] : date('m');
-$hidden_year = isset($_POST['hidden_year']) ? $_POST['hidden_year'] : date('Y');
+$hidden_day = $_POST['hidden_day'] ?? date('d');
+$hidden_month = $_POST['hidden_month'] ?? date('m');
+$hidden_year = $_POST['hidden_year'] ?? date('Y');
 tpl_set_var('hidden_day', htmlspecialchars($hidden_day, ENT_COMPAT, 'UTF-8'));
 tpl_set_var('hidden_month', htmlspecialchars($hidden_month, ENT_COMPAT, 'UTF-8'));
 tpl_set_var('hidden_year', htmlspecialchars($hidden_year, ENT_COMPAT, 'UTF-8'));
 
 // activation date
-$activate_day = isset($_POST['activate_day']) ? $_POST['activate_day'] : date('d');
-$activate_month = isset($_POST['activate_month']) ? $_POST['activate_month'] : date('m');
-$activate_year = isset($_POST['activate_year']) ? $_POST['activate_year'] : date('Y');
+$activate_day = $_POST['activate_day'] ?? date('d');
+$activate_month = $_POST['activate_month'] ?? date('m');
+$activate_year = $_POST['activate_year'] ?? date('Y');
 tpl_set_var('activate_day', htmlspecialchars($activate_day, ENT_COMPAT, 'UTF-8'));
 tpl_set_var('activate_month', htmlspecialchars($activate_month, ENT_COMPAT, 'UTF-8'));
 tpl_set_var('activate_year', htmlspecialchars($activate_year, ENT_COMPAT, 'UTF-8'));
@@ -279,20 +279,20 @@ $log_pw = (isset($_POST['log_pw']) && $sel_type != 2) ? mb_substr($_POST['log_pw
 tpl_set_var('log_pw', htmlspecialchars($log_pw, ENT_COMPAT, 'UTF-8'));
 
 // gc- and nc-waypoints
-$wp_gc = isset($_POST['wp_gc']) ? $_POST['wp_gc'] : '';
+$wp_gc = $_POST['wp_gc'] ?? '';
 tpl_set_var('wp_gc', htmlspecialchars($wp_gc, ENT_COMPAT, 'UTF-8'));
 
-$wp_ge = isset($_POST['wp_ge']) ? $_POST['wp_ge'] : '';
+$wp_ge = $_POST['wp_ge'] ?? '';
 tpl_set_var('wp_ge', htmlspecialchars($wp_ge, ENT_COMPAT, 'UTF-8'));
 
-$wp_tc = isset($_POST['wp_tc']) ? $_POST['wp_tc'] : '';
+$wp_tc = $_POST['wp_tc'] ?? '';
 tpl_set_var('wp_tc', htmlspecialchars($wp_tc, ENT_COMPAT, 'UTF-8'));
 
-$wp_nc = isset($_POST['wp_nc']) ? $_POST['wp_nc'] : '';
+$wp_nc = $_POST['wp_nc'] ?? '';
 tpl_set_var('wp_nc', htmlspecialchars($wp_nc, ENT_COMPAT, 'UTF-8'));
 
 // difficulty
-$difficulty = isset($_POST['difficulty']) ? $_POST['difficulty'] : 1;
+$difficulty = $_POST['difficulty'] ?? 1;
 $difficulty_options = '<option value="1" disabled selected="selected">' . $sel_message . '</option>';
 
 for ($i = 2; $i <= 10; $i++) {
@@ -306,7 +306,7 @@ for ($i = 2; $i <= 10; $i++) {
 tpl_set_var('difficulty_options', $difficulty_options);
 
 // terrain
-$terrain = isset($_POST['terrain']) ? $_POST['terrain'] : 1;
+$terrain = $_POST['terrain'] ?? 1;
 $terrain_options = '<option value="1" disabled selected="selected">' . $sel_message . '</option>';
 
 for ($i = 2; $i <= 10; $i++) {

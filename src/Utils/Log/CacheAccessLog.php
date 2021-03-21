@@ -32,8 +32,8 @@ class CacheAccessLog
                 VALUES
                     ( NOW(), :1, :2, :3, :4, :5, :6, :7)',
                 $cacheId, $userId, $source, $event, $_SERVER['REMOTE_ADDR'],
-                (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''),
-                (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
+                $_SERVER['HTTP_USER_AGENT'] ?? '',
+                $_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''
             );
             $accessLog[$cacheId] = true;
             $_SESSION['CACHE_ACCESS_LOG_VC_' . $userId] = $accessLog;

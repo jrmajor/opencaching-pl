@@ -100,7 +100,7 @@ class OpenCheckerCore
             } else {
                 tpl_set_var('section_4_start', '<!--');
                 tpl_set_var('section_4_stop', '-->');
-                $last_attempt = isset($_SESSION['openchecker_time'])?$_SESSION['openchecker_time']:0;
+                $last_attempt = $_SESSION['openchecker_time'] ?? 0;
                 $elapsed_time = $now - $last_attempt;
 
                 if ($elapsed_time > $OpenCheckerSetup->time_limit * 60) {

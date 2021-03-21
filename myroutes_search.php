@@ -110,90 +110,90 @@ if (isset($_POST['cache_attribs'])) {
 }
 
 if (isset($_POST['submit']) || isset($_POST['submit_map'])) {
-    $options['f_userowner'] = isset($_POST['f_userowner']) ? $_POST['f_userowner'] : '';
-    $options['f_userfound'] = isset($_POST['f_userfound']) ? $_POST['f_userfound'] : '';
-    $options['f_inactive'] = isset($_POST['f_inactive']) ? $_POST['f_inactive'] : '';
-    $options['f_ignored'] = isset($_POST['f_ignored']) ? $_POST['f_ignored'] : '';
+    $options['f_userowner'] = $_POST['f_userowner'] ?? '';
+    $options['f_userfound'] = $_POST['f_userfound'] ?? '';
+    $options['f_inactive'] = $_POST['f_inactive'] ?? '';
+    $options['f_ignored'] = $_POST['f_ignored'] ?? '';
 
-    $options['cachetype1'] = isset($_POST['cachetype1']) ? $_POST['cachetype1'] : '';
-    $options['cachetype2'] = isset($_POST['cachetype2']) ? $_POST['cachetype2'] : '';
-    $options['cachetype3'] = isset($_POST['cachetype3']) ? $_POST['cachetype3'] : '';
-    $options['cachetype4'] = isset($_POST['cachetype4']) ? $_POST['cachetype4'] : '';
-    $options['cachetype5'] = isset($_POST['cachetype5']) ? $_POST['cachetype5'] : '';
-    $options['cachetype6'] = isset($_POST['cachetype6']) ? $_POST['cachetype6'] : '';
-    $options['cachetype7'] = isset($_POST['cachetype7']) ? $_POST['cachetype7'] : '';
-    $options['cachetype8'] = isset($_POST['cachetype8']) ? $_POST['cachetype8'] : '';
-    $options['cachetype9'] = isset($_POST['cachetype9']) ? $_POST['cachetype9'] : '';
-    $options['cachetype10'] = isset($_POST['cachetype10']) ? $_POST['cachetype10'] : '';
+    $options['cachetype1'] = $_POST['cachetype1'] ?? '';
+    $options['cachetype2'] = $_POST['cachetype2'] ?? '';
+    $options['cachetype3'] = $_POST['cachetype3'] ?? '';
+    $options['cachetype4'] = $_POST['cachetype4'] ?? '';
+    $options['cachetype5'] = $_POST['cachetype5'] ?? '';
+    $options['cachetype6'] = $_POST['cachetype6'] ?? '';
+    $options['cachetype7'] = $_POST['cachetype7'] ?? '';
+    $options['cachetype8'] = $_POST['cachetype8'] ?? '';
+    $options['cachetype9'] = $_POST['cachetype9'] ?? '';
+    $options['cachetype10'] = $_POST['cachetype10'] ?? '';
 
-    $options['cachesize_1'] = isset($_POST['cachesize_1']) ? $_POST['cachesize_1'] : '';
-    $options['cachesize_2'] = isset($_POST['cachesize_2']) ? $_POST['cachesize_2'] : '';
-    $options['cachesize_3'] = isset($_POST['cachesize_3']) ? $_POST['cachesize_3'] : '';
-    $options['cachesize_4'] = isset($_POST['cachesize_4']) ? $_POST['cachesize_4'] : '';
-    $options['cachesize_5'] = isset($_POST['cachesize_5']) ? $_POST['cachesize_5'] : '';
-    $options['cachesize_6'] = isset($_POST['cachesize_6']) ? $_POST['cachesize_6'] : '';
-    $options['cachesize_7'] = isset($_POST['cachesize_7']) ? $_POST['cachesize_7'] : '';
-    $options['cachesize_8'] = isset($_POST['cachesize_8']) ? $_POST['cachesize_8'] : '';
+    $options['cachesize_1'] = $_POST['cachesize_1'] ?? '';
+    $options['cachesize_2'] = $_POST['cachesize_2'] ?? '';
+    $options['cachesize_3'] = $_POST['cachesize_3'] ?? '';
+    $options['cachesize_4'] = $_POST['cachesize_4'] ?? '';
+    $options['cachesize_5'] = $_POST['cachesize_5'] ?? '';
+    $options['cachesize_6'] = $_POST['cachesize_6'] ?? '';
+    $options['cachesize_7'] = $_POST['cachesize_7'] ?? '';
+    $options['cachesize_8'] = $_POST['cachesize_8'] ?? '';
 
-    $options['cachevote_1'] = isset($_POST['cachevote_1']) ? $_POST['cachevote_1'] : '';
-    $options['cachevote_2'] = isset($_POST['cachevote_2']) ? $_POST['cachevote_2'] : '';
-    $options['cachenovote'] = isset($_POST['cachenovote']) ? $_POST['cachenovote'] : '';
+    $options['cachevote_1'] = $_POST['cachevote_1'] ?? '';
+    $options['cachevote_2'] = $_POST['cachevote_2'] ?? '';
+    $options['cachenovote'] = $_POST['cachenovote'] ?? '';
 
-    $options['cachedifficulty_1'] = isset($_POST['cachedifficulty_1']) ? $_POST['cachedifficulty_1'] : '';
-    $options['cachedifficulty_2'] = isset($_POST['cachedifficulty_2']) ? $_POST['cachedifficulty_2'] : '';
+    $options['cachedifficulty_1'] = $_POST['cachedifficulty_1'] ?? '';
+    $options['cachedifficulty_2'] = $_POST['cachedifficulty_2'] ?? '';
 
-    $options['cacheterrain_1'] = isset($_POST['cacheterrain_1']) ? $_POST['cacheterrain_1'] : '';
-    $options['cacheterrain_2'] = isset($_POST['cacheterrain_2']) ? $_POST['cacheterrain_2'] : '';
+    $options['cacheterrain_1'] = $_POST['cacheterrain_1'] ?? '';
+    $options['cacheterrain_2'] = $_POST['cacheterrain_2'] ?? '';
 
-    $options['cacherating'] = isset($_POST['cacherating']) ? $_POST['cacherating'] : '';
+    $options['cacherating'] = $_POST['cacherating'] ?? '';
 //          $options['cache_attribs'] = isset($_POST['cache_attribs']) ? $_POST['cache_attribs'] : '';
     //          $options['cache_attribs_not'] = isset($_POST['cache_attribs_not']) ? $_POST['cache_attribs_not'] : '';
 } elseif (! empty($optsize) || isset($_POST['back'])) {
     $options = unserialize($rec['options']);
 } else {
-    $options['f_userowner'] = isset($_POST['f_userowner']) ? $_POST['f_userowner'] : '1';
-    $options['f_userfound'] = isset($_POST['f_userfound']) ? $_POST['f_userfound'] : '1';
-    $options['f_inactive'] = isset($_POST['f_inactive']) ? $_POST['f_inactive'] : '1';
-    $options['f_ignored'] = isset($_POST['f_ignored']) ? $_POST['f_ignored'] : '1';
+    $options['f_userowner'] = $_POST['f_userowner'] ?? '1';
+    $options['f_userfound'] = $_POST['f_userfound'] ?? '1';
+    $options['f_inactive'] = $_POST['f_inactive'] ?? '1';
+    $options['f_ignored'] = $_POST['f_ignored'] ?? '1';
 
-    $options['cachetype1'] = isset($_POST['cachetype1']) ? $_POST['cachetype1'] : '1';
-    $options['cachetype2'] = isset($_POST['cachetype2']) ? $_POST['cachetype2'] : '1';
-    $options['cachetype3'] = isset($_POST['cachetype3']) ? $_POST['cachetype3'] : '1';
-    $options['cachetype4'] = isset($_POST['cachetype4']) ? $_POST['cachetype4'] : '1';
-    $options['cachetype5'] = isset($_POST['cachetype5']) ? $_POST['cachetype5'] : '1';
-    $options['cachetype6'] = isset($_POST['cachetype6']) ? $_POST['cachetype6'] : '1';
-    $options['cachetype7'] = isset($_POST['cachetype7']) ? $_POST['cachetype7'] : '1';
-    $options['cachetype8'] = isset($_POST['cachetype8']) ? $_POST['cachetype8'] : '1';
-    $options['cachetype9'] = isset($_POST['cachetype9']) ? $_POST['cachetype9'] : '1';
-    $options['cachetype10'] = isset($_POST['cachetype10']) ? $_POST['cachetype10'] : '1';
+    $options['cachetype1'] = $_POST['cachetype1'] ?? '1';
+    $options['cachetype2'] = $_POST['cachetype2'] ?? '1';
+    $options['cachetype3'] = $_POST['cachetype3'] ?? '1';
+    $options['cachetype4'] = $_POST['cachetype4'] ?? '1';
+    $options['cachetype5'] = $_POST['cachetype5'] ?? '1';
+    $options['cachetype6'] = $_POST['cachetype6'] ?? '1';
+    $options['cachetype7'] = $_POST['cachetype7'] ?? '1';
+    $options['cachetype8'] = $_POST['cachetype8'] ?? '1';
+    $options['cachetype9'] = $_POST['cachetype9'] ?? '1';
+    $options['cachetype10'] = $_POST['cachetype10'] ?? '1';
 
-    $options['cachesize_1'] = isset($_POST['cachesize_1']) ? $_POST['cachesize_1'] : '1';
-    $options['cachesize_2'] = isset($_POST['cachesize_2']) ? $_POST['cachesize_2'] : '1';
-    $options['cachesize_3'] = isset($_POST['cachesize_3']) ? $_POST['cachesize_3'] : '1';
-    $options['cachesize_4'] = isset($_POST['cachesize_4']) ? $_POST['cachesize_4'] : '1';
-    $options['cachesize_5'] = isset($_POST['cachesize_5']) ? $_POST['cachesize_5'] : '1';
-    $options['cachesize_6'] = isset($_POST['cachesize_6']) ? $_POST['cachesize_6'] : '1';
-    $options['cachesize_7'] = isset($_POST['cachesize_7']) ? $_POST['cachesize_7'] : '1';
-    $options['cachesize_8'] = isset($_POST['cachesize_8']) ? $_POST['cachesize_8'] : '1';
+    $options['cachesize_1'] = $_POST['cachesize_1'] ?? '1';
+    $options['cachesize_2'] = $_POST['cachesize_2'] ?? '1';
+    $options['cachesize_3'] = $_POST['cachesize_3'] ?? '1';
+    $options['cachesize_4'] = $_POST['cachesize_4'] ?? '1';
+    $options['cachesize_5'] = $_POST['cachesize_5'] ?? '1';
+    $options['cachesize_6'] = $_POST['cachesize_6'] ?? '1';
+    $options['cachesize_7'] = $_POST['cachesize_7'] ?? '1';
+    $options['cachesize_8'] = $_POST['cachesize_8'] ?? '1';
 
-    $options['cachevote_1'] = isset($_POST['cachevote_1']) ? $_POST['cachevote_1'] : '-3';
-    $options['cachevote_2'] = isset($_POST['cachevote_2']) ? $_POST['cachevote_2'] : '3';
-    $options['cachenovote'] = isset($_POST['cachenovote']) ? $_POST['cachenovote'] : '1';
+    $options['cachevote_1'] = $_POST['cachevote_1'] ?? '-3';
+    $options['cachevote_2'] = $_POST['cachevote_2'] ?? '3';
+    $options['cachenovote'] = $_POST['cachenovote'] ?? '1';
 
-    $options['cachedifficulty_1'] = isset($_POST['cachedifficulty_1']) ? $_POST['cachedifficulty_1'] : '1';
-    $options['cachedifficulty_2'] = isset($_POST['cachedifficulty_2']) ? $_POST['cachedifficulty_2'] : '5';
+    $options['cachedifficulty_1'] = $_POST['cachedifficulty_1'] ?? '1';
+    $options['cachedifficulty_2'] = $_POST['cachedifficulty_2'] ?? '5';
 
-    $options['cacheterrain_1'] = isset($_POST['cacheterrain_1']) ? $_POST['cacheterrain_1'] : '1';
-    $options['cacheterrain_2'] = isset($_POST['cacheterrain_2']) ? $_POST['cacheterrain_2'] : '5';
+    $options['cacheterrain_1'] = $_POST['cacheterrain_1'] ?? '1';
+    $options['cacheterrain_2'] = $_POST['cacheterrain_2'] ?? '5';
 
-    $options['cacherating'] = isset($_POST['cacherating']) ? $_POST['cacherating'] : '0';
+    $options['cacherating'] = $_POST['cacherating'] ?? '0';
     //$options['cache_attribs'] = isset($_POST['cache_attribs']) ? $_POST['cache_attribs'] : '';
     //$options['cache_attribs_not'] = isset($_POST['cache_attribs_not']) ? $_POST['cache_attribs_not'] : '';
 }
 
 // for myroute_result
-$logs = isset($_POST['nrlogs']) ? $_POST['nrlogs'] : '';
-$cache_logs = isset($_POST['cache_log']) ? $_POST['cache_log'] : '0';
+$logs = $_POST['nrlogs'] ?? '';
+$cache_logs = $_POST['cache_log'] ?? '0';
 tpl_set_var('all_logs_caches', ($logs == 0) ? ' checked="checked"' : '');
 tpl_set_var('min_logs_caches', ($logs > 0) ? ' checked="checked"' : '');
 tpl_set_var('nrlogs', ($logs > 0) ? $logs : 0);
@@ -916,7 +916,7 @@ if (isset($_POST['submit_gpx'])) {
                                  VALUES
                                     (NOW(), :1, :2, \'B\', \'download_gpxgc\', :3, :4, :5)',
                                 $cache_id, $user_id, $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                                (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
+                                $_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''
                 );
                 $access_log[$cache_id] = true;
                 $_SESSION['CACHE_ACCESS_LOG_GPX_' . $user_id] = $access_log;

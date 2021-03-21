@@ -52,7 +52,7 @@ class UserInputFilter
         $config->set('CSS.AllowedFonts', null);
 
         // this is ony for debug purpose - don't turn it on at production!
-        $config->set('Core.CollectErrors', isset($debug_page) ? $debug_page : false);
+        $config->set('Core.CollectErrors', $debug_page ?? false);
 
         $config->set('Attr.AllowedFrameTargets', ['_blank']);
 

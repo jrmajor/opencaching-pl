@@ -18,13 +18,13 @@ if (! $loggedUser) {
         $tplname = 'myroutes_add';
         $user_id = $loggedUser->getUserId();
 
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $name = $_POST['name'] ?? '';
         tpl_set_var('name', htmlspecialchars($name, ENT_COMPAT, 'UTF-8'));
 
-        $desc = isset($_POST['desc']) ? $_POST['desc'] : '';
+        $desc = $_POST['desc'] ?? '';
         tpl_set_var('desc', htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'));
 
-        $radius = isset($_POST['radius']) ? $_POST['radius'] : '0';
+        $radius = $_POST['radius'] ?? '0';
         tpl_set_var('radius', $radius);
 
         if (isset($_POST['back'])) {

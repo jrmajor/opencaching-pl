@@ -40,8 +40,7 @@ class View
     public function __construct()
     {
         // load google analytics key from the config
-        $this->_googleAnalyticsKey = isset($GLOBALS['googleAnalytics_key']) ?
-            $GLOBALS['googleAnalytics_key'] : '';
+        $this->_googleAnalyticsKey = $GLOBALS['googleAnalytics_key'] ?? '';
 
         $this->handleCrowdinInContextMode();
     }

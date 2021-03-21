@@ -35,7 +35,7 @@ if (isset($options['h'])) {
     printUsageAndExit();
 }
 
-$userName = isset($options['u']) ?            $options['u']     : null;
+$userName = $options['u'] ?? null;
 $userId = isset($options['userId']) ? (int) $options['userId']: null;
 
 if (is_null($userId) && is_null($userName)) {

@@ -55,9 +55,9 @@ if (! $loggedUser) {
         $record = XDb::xFetchArray($route_rs);
         tpl_set_var('routes_name', $record['name']);
 
-        $rname = isset($_POST['name']) ? $_POST['name'] : '';
-        $rdesc = isset($_POST['desc']) ? $_POST['desc'] : '';
-        $rradius = isset($_POST['radius']) ? $_POST['radius'] : '';
+        $rname = $_POST['name'] ?? '';
+        $rdesc = $_POST['desc'] ?? '';
+        $rradius = $_POST['radius'] ?? '';
 
         tpl_set_var('cachemap_header',
             '<script src="https://maps.googleapis.com/maps/api/js?libraries=geometry&amp;key=' . $googlemap_key .

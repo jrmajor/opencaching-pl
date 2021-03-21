@@ -92,10 +92,10 @@ if (! ApplicationContainer::GetAuthorizedUser() && $hide_coords) {
     exit;
 }
 
-$lat = isset($_REQUEST['lat']) ? $_REQUEST['lat'] : '';
-$long = isset($_REQUEST['long']) ? $_REQUEST['long'] : '';
-$wp = isset($_REQUEST['wp']) ? $_REQUEST['wp'] : '';
-$name = isset($_REQUEST['name']) ? $_REQUEST['name'] : '';
+$lat = $_REQUEST['lat'] ?? '';
+$long = $_REQUEST['long'] ?? '';
+$wp = $_REQUEST['wp'] ?? '';
+$name = $_REQUEST['name'] ?? '';
 
 $str = convert($name);
 

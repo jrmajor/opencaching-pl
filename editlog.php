@@ -69,12 +69,12 @@ if (! $loggedUser) {
                 $cache_name = $log_record['cachename'];
                 $cache_type = $log_record['cachetype'];
                 $cache_user_id = $log_record['cache_user_id'];
-                $log_type = isset($_POST['logtype']) ? $_POST['logtype'] : $log_record['logtype'];
-                $log_date_min = isset($_POST['logmin']) ? $_POST['logmin'] : date('i', strtotime($log_record['date']));
-                $log_date_hour = isset($_POST['loghour']) ? $_POST['loghour'] : date('H', strtotime($log_record['date']));
-                $log_date_day = isset($_POST['logday']) ? $_POST['logday'] : date('d', strtotime($log_record['date']));
-                $log_date_month = isset($_POST['logmonth']) ? $_POST['logmonth'] : date('m', strtotime($log_record['date']));
-                $log_date_year = isset($_POST['logyear']) ? $_POST['logyear'] : date('Y', strtotime($log_record['date']));
+                $log_type = $_POST['logtype'] ?? $log_record['logtype'];
+                $log_date_min = $_POST['logmin'] ?? date('i', strtotime($log_record['date']));
+                $log_date_hour = $_POST['loghour'] ?? date('H', strtotime($log_record['date']));
+                $log_date_day = $_POST['logday'] ?? date('d', strtotime($log_record['date']));
+                $log_date_month = $_POST['logmonth'] ?? date('m', strtotime($log_record['date']));
+                $log_date_year = $_POST['logyear'] ?? date('Y', strtotime($log_record['date']));
                 $top_cache = isset($_POST['rating']) ? $_POST['rating'] + 0 : 0;
 
                 $log_pw = '';

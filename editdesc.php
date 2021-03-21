@@ -60,7 +60,7 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
         $short_desc = $_POST['short_desc'];
         $hints = $_POST['hints'];
         $desclang = $_POST['desclang'];
-        $show_all_langs = isset($_POST['show_all_langs_value']) ? $_POST['show_all_langs_value'] : 0;
+        $show_all_langs = $_POST['show_all_langs_value'] ?? 0;
 
         if (! is_numeric($show_all_langs)) {
             $show_all_langs = 0;

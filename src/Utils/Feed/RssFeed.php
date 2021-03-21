@@ -187,6 +187,7 @@ class RssFeed
         if ($xml = $this->getCacheXML()) {
             return $xml;
         }
+
         if ($xml = $this->getURLXML()) {
             return $xml;
         }

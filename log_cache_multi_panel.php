@@ -116,7 +116,7 @@ if (! $loggedUser || (! isset($_FILES['userfile']) && ! isset($_SESSION['log_cac
                                 echo isset($v['got_last_activity']) ? str_replace(' ', '<br />', $v['last_date']) . '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' . (isset($v['last_status']) ? '<img src="' . GeoCacheLogCommons::GetIconForType($v['last_status']) . '" />' : ' ') : ' ';
                                     ?></td>
                             </tr><tr class="<?php echo $styl; ?>">
-                                <td width="280" colspan=2><?php echo isset($v['koment']) ? $v['koment'] : ' '; ?>&nbsp;</td>
+                                <td width="280" colspan=2><?php echo $v['koment'] ?? ' '; ?>&nbsp;</td>
                                 <td style="text-align: center"><?php
                                     if (isset($v['cache_id']) && (! $zgodne)) {
                                         echo "<input type=\"submit\" value=\"Log\" style=\"width: 50px\" onclick=\"parent.cachePreview.location.href='viewcache.php?cacheid=" . $v['cache_id'] . "'; return true;\"/>";

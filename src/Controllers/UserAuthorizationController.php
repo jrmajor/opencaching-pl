@@ -253,7 +253,7 @@ class UserAuthorizationController extends BaseController
         $this->view->setTemplate('userAuth/loginPage');
         $this->view->loadJQuery();
         $this->view->addLocalCss(Uri::getLinkWithModificationTime('/views/userAuth/userAuth.css'));
-        $this->view->setVar('prevEmail', (isset($_POST['email']) ? $_POST['email'] : ''));
+        $this->view->setVar('prevEmail', $_POST['email'] ?? '');
         $this->view->setVar('target', $this->getRedirectTarget());
         $this->view->setVar('errorMsg', $error);
 

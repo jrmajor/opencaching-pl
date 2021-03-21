@@ -69,7 +69,7 @@ class CacheNotesController extends BaseController
                     return [
                         'type' => $row['type'],
                         'status' => $row['status'],
-                        'user_sts' => isset($row['user_sts'])?$row['user_sts']:null,
+                        'user_sts' => $row['user_sts'] ?? null,
                     ];
                 }));
             $model->addColumn(new Column_CacheName(tr('myNotes_cacheName'),
@@ -95,7 +95,7 @@ class CacheNotesController extends BaseController
             // column with notes (+id of this col.)
             $model->addColumn(new Column_EllipsedText(tr('myNotes_note'),function ($row) {
                 return [
-                    'text' => isset($row['noteTxt'])?$row['noteTxt']:'-',
+                    'text' => $row['noteTxt'] ?? '-',
                     'maxChars' => 10,
                     'labelShow' => tr('myNotes_showFullNote'),
                     'labelHide' => tr('myNotes_hideFullNote'),

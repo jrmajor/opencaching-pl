@@ -79,7 +79,7 @@ if ($db->rowCount($s) > 0) {
 }
 $GKAPIKeyrecord = $db->dbResultFetchOneRowOnly($s);
 
-tpl_set_var('GeoKretyApiSecid', isset($GKAPIKeyrecord['secid']) ? $GKAPIKeyrecord['secid'] : '');
+tpl_set_var('GeoKretyApiSecid', $GKAPIKeyrecord['secid'] ?? '');
 
 // misc user options
 $using_permantent_login = $record['permanent_login_flag'];

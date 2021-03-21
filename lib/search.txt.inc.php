@@ -196,7 +196,7 @@ if ($loggedUser || ! $hide_coords) {
                     (NOW(), :1, :2, \'B\', \'download_txt\', :3, :4, :5)',
                     $cache_id, $user_id,
                     $_SERVER['REMOTE_ADDR'], $_SERVER['HTTP_USER_AGENT'],
-                    (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
+                    $_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''
                     );
                 $access_log[$cache_id] = true;
                 $_SESSION['CACHE_ACCESS_LOG_TXT_' . $user_id] = $access_log;

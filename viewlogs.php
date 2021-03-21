@@ -134,8 +134,8 @@ if ($cache_id != 0) {
                          VALUES
                             (NOW(), :1, :2, \'B\', \'view_logs\', :3, :4, :5)',
                 $cache_id, $user_id, $_SERVER['REMOTE_ADDR'],
-                (isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : ''),
-                (isset($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['HTTP_X_FORWARDED_FOR'] : '')
+                $_SERVER['HTTP_USER_AGENT'] ?? '',
+                $_SERVER['HTTP_X_FORWARDED_FOR'] ?? ''
             );
             $access_log[$cache_id] = true;
             $_SESSION['CACHE_ACCESS_LOG_VL_' . $user_id] = $access_log;

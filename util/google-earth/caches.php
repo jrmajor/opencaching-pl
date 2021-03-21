@@ -18,7 +18,7 @@ require __DIR__ . '/../../lib/export.inc.php';
 
 require_once __DIR__ . '/../../lib/format.kml.inc.php';
 
-$bbox = isset($_REQUEST['BBOX']) ? $_REQUEST['BBOX'] : '0,0,0,0';
+$bbox = $_REQUEST['BBOX'] ?? '0,0,0,0';
 $abox = mb_split(',', $bbox);
 
 if (count($abox) != 4) {

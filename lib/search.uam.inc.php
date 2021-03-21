@@ -164,7 +164,7 @@ if ($loggedUser || ! $hide_coords) {
             AND `wptcontent`.`type`=`cache_type`.`id`
             AND `wptcontent`.`user_id`=`user`.`user_id`');
 
-    echo pack('ccccl', 0xBB, 0x22, 0xD5, 0x3F, isset($rCount['count']) ? $rCount['count'] : 0);
+    echo pack('ccccl', 0xBB, 0x22, 0xD5, 0x3F, $rCount['count'] ?? 0);
 
     while ($r = $dbcSearch->dbResultFetch($s)) {
         $lat = $r['latitude'];

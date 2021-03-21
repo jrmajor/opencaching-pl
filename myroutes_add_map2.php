@@ -33,13 +33,13 @@ if (! $loggedUser) {
         tpl_set_var('map_zoom', OcConfig::getStartPageMapZoom() + 1);
 
         $user_id = $loggedUser->getUserId();
-        $name = isset($_POST['name']) ? $_POST['name'] : '';
+        $name = $_POST['name'] ?? '';
         tpl_set_var('name', htmlspecialchars($name, ENT_COMPAT, 'UTF-8'));
 
-        $desc = isset($_POST['desc']) ? $_POST['desc'] : '';
+        $desc = $_POST['desc'] ?? '';
         tpl_set_var('desc', htmlspecialchars($desc, ENT_COMPAT, 'UTF-8'));
 
-        $radius = isset($_POST['radius']) ? $_POST['radius'] : '0';
+        $radius = $_POST['radius'] ?? '0';
         tpl_set_var('radius', $radius);
 
         if (isset($_POST['back'])) {
@@ -49,7 +49,7 @@ if (! $loggedUser) {
         }
 
         if (isset($_POST['submitform'])) {
-            $length = isset($_POST['distance']) ? $_POST['distance'] : '0';
+            $length = $_POST['distance'] ?? '0';
             $route_points = isset($_POST['route_points']) ? explode(' ', $_POST['route_points']) : [];
 
             // insert route name
