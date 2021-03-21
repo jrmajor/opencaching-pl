@@ -301,7 +301,7 @@ class Neighbourhood extends BaseObject
               `notify` = :7
             ';
 
-        return (self::db()->multiVariableQuery($query, $user->getUserId(), (int) $seq, $name, $coords->getLongitude(), $coords->getLatitude(), (int) $radius, boolval($notify)) !== null);
+        return self::db()->multiVariableQuery($query, $user->getUserId(), (int) $seq, $name, $coords->getLongitude(), $coords->getLatitude(), (int) $radius, boolval($notify)) !== null;
     }
 
     /**
@@ -324,7 +324,7 @@ class Neighbourhood extends BaseObject
             return false;
         }
 
-        return (self::db()->rowCount($stmt) == 1);
+        return self::db()->rowCount($stmt) == 1;
     }
 
     /**
@@ -337,13 +337,13 @@ class Neighbourhood extends BaseObject
      */
     public static function setNeighbourhoodNotify(User $user, $seq, $state)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user_neighbourhoods`
             SET `notify` = :1
             WHERE `user_id` = :2
                 AND `seq` = :3
             LIMIT 1
-        ', boolval($state), $user->getUserId(), $seq));
+        ', boolval($state), $user->getUserId(), $seq);
     }
 
     /**

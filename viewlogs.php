@@ -13,7 +13,7 @@ use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 //set here the template to process
 $view = tpl_getView();
@@ -22,11 +22,11 @@ $view->setTemplate('viewlogs');
 
 tpl_set_var('viewcache_js', Uri::getLinkWithModificationTime('/views/viewcache/viewcache.js'));
 
-require(__DIR__ . '/src/Views/lib/icons.inc.php');
+require __DIR__ . '/src/Views/lib/icons.inc.php';
 
-require(__DIR__ . '/src/Views/viewcache.inc.php');
+require __DIR__ . '/src/Views/viewcache.inc.php';
 
-require(__DIR__ . '/src/Views/viewlogs.inc.php');
+require __DIR__ . '/src/Views/viewlogs.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 

@@ -7,7 +7,7 @@ use src\Models\Pictures\Thumbnail;
 use src\Utils\Uri\SimpleRouter;
 use src\Utils\Uri\Uri;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 global $hide_coords;
 

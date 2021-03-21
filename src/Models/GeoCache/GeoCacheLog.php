@@ -671,7 +671,7 @@ class GeoCacheLog extends GeoCacheLogCommons
             GeoCacheLog::LOGTYPE_WILLATTENDED,
         ])) {
             // There can be only one log "found", "attended", "will attend"
-            return (! $this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType()));
+            return ! $this->getGeoCache()->hasUserLogByType($this->getUser(), $this->getType());
         }
 
         return true;

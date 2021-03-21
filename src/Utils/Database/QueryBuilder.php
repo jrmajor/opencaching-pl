@@ -173,7 +173,7 @@ class QueryBuilder
 
     private static function getNonNegativeIntValOrNull($var)
     {
-        return (is_int($var)?max(0, intval($var)):null);
+        return is_int($var)?max(0, intval($var)):null;
     }
 
     private static function escapeStr($str)

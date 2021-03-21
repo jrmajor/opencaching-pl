@@ -197,7 +197,7 @@ class Election extends BaseObject
      */
     public function getMaxAllowedNumOfVotes()
     {
-        return  $this->electionRules->votesPerUser;
+        return $this->electionRules->votesPerUser;
     }
 
     /**

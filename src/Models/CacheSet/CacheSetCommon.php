@@ -155,6 +155,6 @@ class CacheSetCommon extends BaseObject
         $difficPoint = round($cache->getDifficulty() / 3, 2);
         $terrainPoints = round($cache->getTerrain() / 3, 2);
 
-        return ($altPoints + $typePoints + $sizePoints + $difficPoint + $terrainPoints);
+        return $altPoints + $typePoints + $sizePoints + $difficPoint + $terrainPoints;
     }
 }

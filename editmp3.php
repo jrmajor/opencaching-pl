@@ -5,7 +5,7 @@ use src\Models\OcConfig\OcConfig;
 use src\Utils\Database\XDb;
 
 //prepare the templates and include all necessary
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $message = false;
 $view = tpl_getView();

@@ -448,7 +448,7 @@ class UserAuthorization extends BaseObject
             WHERE `user_id` = :1',
             $user->getUserId());
 
-        return (! is_null($result));
+        return ! is_null($result);
     }
 
     /**
@@ -459,7 +459,7 @@ class UserAuthorization extends BaseObject
      */
     public static function removeUserSessions(User $user)
     {
-        return (null !== self::db()->multiVariableQuery(
-            'DELETE FROM sys_sessions WHERE user_id = :1', $user->getUserId()));
+        return null !== self::db()->multiVariableQuery(
+            'DELETE FROM sys_sessions WHERE user_id = :1', $user->getUserId());
     }
 }

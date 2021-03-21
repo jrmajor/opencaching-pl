@@ -12,9 +12,9 @@ use src\Utils\I18n\I18n;
 
 global $absolute_server_URI, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
 
-require_once(__DIR__ . '/format.kml.inc.php');
+require_once __DIR__ . '/format.kml.inc.php';
 
-require_once(__DIR__ . '/calculation.inc.php');
+require_once __DIR__ . '/calculation.inc.php';
 
 set_time_limit(1800);
 
@@ -134,7 +134,7 @@ if ($loggedUser || ! $hide_coords) {
     $bUseZip = $bUseZip || (isset($_REQUEST['zip']) && ($_REQUEST['zip'] == '1'));
     // $bUseZip = false;
     if ($bUseZip == true) {
-        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('', 6);
     }
 

@@ -1,7 +1,7 @@
 <?php
 $secret = 'dupa231';
 
-include('commons.php');
+include 'commons.php';
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
 echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
@@ -67,7 +67,7 @@ stripslashes($value);
         <div id="navibar">
     <!--<span><a href="">Strona Główna</a></span>-->
             <?php
-            include('menu.inc');
+            include 'menu.inc';
             ?>
         </div>
         <p>

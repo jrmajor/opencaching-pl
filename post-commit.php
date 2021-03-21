@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__ . '/lib/settingsGlue.inc.php');
+require_once __DIR__ . '/lib/settingsGlue.inc.php';
 
 # This script is called by GitHub after each commit. All changes commited to
 # the master branch are immediately checked out at the production server.

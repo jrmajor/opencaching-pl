@@ -400,7 +400,9 @@ class StartPageController extends BaseController
         if ($onlyIfReady) {
             return OcMemCache::get($feedsKey);
         } else {
-            return OcMemCache::getOrCreate($feedsKey, 60 * 60 /*1h*/,
+            return OcMemCache::getOrCreate(
+                $feedsKey,
+                60 * 60, // 1 hour
                 function () {
                     global $config; //TODO
 

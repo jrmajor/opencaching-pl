@@ -24,7 +24,7 @@ use src\Utils\Uri\Uri;
 
 global $absolute_server_URI;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $ocConfig = OcConfig::instance();
 
@@ -74,9 +74,9 @@ if (! $loggedUser) {
     tpl_set_var('statsOptionsDisplay', '');
 }
 
-include_once('powerTrail/powerTrailController.php');
+include_once 'powerTrail/powerTrailController.php';
 
-include_once('powerTrail/powerTrailMenu.php');
+include_once 'powerTrail/powerTrailMenu.php';
 
 if (isset($_SESSION['user_id'])) {
     tpl_set_var('displayAddCommentSection', 'block');

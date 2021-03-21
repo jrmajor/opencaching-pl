@@ -38,6 +38,6 @@ class Year
     {
         $month = date('m');
 
-        return ($month == 12 || $month == 1);
+        return $month == 12 || $month == 1;
     }
 }

@@ -1,7 +1,7 @@
 <?php
 use src\Utils\Database\OcDb;
 
-require_once(__DIR__ . '/common.inc.php');
+require_once __DIR__ . '/common.inc.php';
 
 ?>
 <html>

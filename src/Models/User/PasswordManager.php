@@ -99,7 +99,7 @@ class PasswordManager
             $this->performUpgrade();
         }
 
-        return ($this->correctPassword !== null);
+        return $this->correctPassword !== null;
     }
 
     /**

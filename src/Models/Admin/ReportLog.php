@@ -371,7 +371,7 @@ class ReportLog extends BaseObject
      */
     public static function getTypeArray()
     {
-        return ([
+        return [
             self::TYPE_NOTE,
             self::TYPE_CHANGESTATUS,
             self::TYPE_CHANGELEADER,
@@ -382,7 +382,7 @@ class ReportLog extends BaseObject
             self::TYPE_POLL_CANCEL,
             self::TYPE_CACHELOG_ADD,
             self::TYPE_CHANGE_CACHE_STATUS,
-        ]);
+        ];
     }
 
     private function loadFromDbRow(array $dbRow)

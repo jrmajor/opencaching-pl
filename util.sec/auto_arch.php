@@ -11,7 +11,7 @@ use src\Utils\Debug\Debug;
 use src\Utils\Generators\Uuid;
 use src\Utils\Log\Log;
 
-require_once(__DIR__ . '/../lib/common.inc.php');
+require_once __DIR__ . '/../lib/common.inc.php';
 
 class AutoArch
 {

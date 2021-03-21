@@ -379,7 +379,7 @@ class News extends BaseObject
 
     public function isAuthorHidden()
     {
-        return ($this->hide_author || $this->author == null);
+        return $this->hide_author || $this->author == null;
     }
 
     public function getShowOnMainpage()

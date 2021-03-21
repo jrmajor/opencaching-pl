@@ -69,9 +69,9 @@ class CacheTitled extends BaseObject
 
     public static function isTitled($cacheId)
     {
-        return (1 == self::db()->multiVariableQueryValue(
+        return 1 == self::db()->multiVariableQueryValue(
             'SELECT COUNT(*) FROM cache_titled WHERE cache_id= :1 LIMIT 1',
-            0, $cacheId));
+            0, $cacheId);
     }
 
     /**

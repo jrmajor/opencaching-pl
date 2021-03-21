@@ -30,7 +30,7 @@ class PowerTrailController
 
     public static function getEntryTypes()
     {
-        return  [
+        return [
             Log::TYPE_COMMENT => [ //comment
                 'translate' => 'pt056',
                 'color' => '#000000',
@@ -139,7 +139,7 @@ class PowerTrailController
      */
     public static function getPowerTrailStatus()
     {
-        return  [
+        return [
             1 => [ // public
                 'translate' => 'cs_statusPublic',
             ],

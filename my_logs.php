@@ -6,7 +6,7 @@ use src\Utils\Database\XDb;
 use src\Utils\Text\Formatter;
 
 //include template handling
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -38,7 +38,7 @@ if (! $loggedUser) {
     $tplname = 'my_logs';
     tpl_set_var('latest_logs_cache', tr('latest_logs'));
 
-    require(__DIR__ . '/src/Views/newlogs.inc.php');
+    require __DIR__ . '/src/Views/newlogs.inc.php';
 
     $username = XDb::xMultiVariableQueryValue(
         'SELECT username FROM user WHERE user_id= :1 LIMIT 1', '', $user_id);

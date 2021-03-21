@@ -82,9 +82,9 @@ class Gis
         } // end of While each polygon
 
         if ($counter % 2 == 0) {
-            return (false); // outside
+            return false; // outside
         } else {
-            return (true); // inside
+            return true; // inside
         }
 
         return true;

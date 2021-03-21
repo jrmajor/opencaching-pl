@@ -196,8 +196,8 @@ class NutsLocation extends BaseObject
      */
     public static function checkProvinceCode($code)
     {
-        return (0 < self::db()->multiVariableQueryValue(
-                'SELECT COUNT(*) FROM nuts_codes WHERE code= :1 LIMIT 1', 0, $code)
+        return 0 < self::db()->multiVariableQueryValue(
+            'SELECT COUNT(*) FROM nuts_codes WHERE code= :1 LIMIT 1', 0, $code
         );
     }
 

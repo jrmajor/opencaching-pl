@@ -704,7 +704,7 @@ class Report extends BaseObject
         $params['node']['value'] = OcConfig::getSiteNodeId();
         $params['node']['data_type'] = 'string';
 
-        return (self::db()->paramQuery($query, $params) !== null);
+        return self::db()->paramQuery($query, $params) !== null;
     }
 
     /**
@@ -802,7 +802,7 @@ class Report extends BaseObject
         $params['id']['value'] = (int) $this->id;
         $params['id']['data_type'] = 'integer';
 
-        return (self::db()->paramQuery($query, $params) !== null);
+        return self::db()->paramQuery($query, $params) !== null;
     }
 
     /**

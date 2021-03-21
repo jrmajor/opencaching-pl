@@ -197,7 +197,7 @@ function notifyOwner($cacheid, $msgType)
     }
 }
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $view = tpl_getView();
 $user = ApplicationContainer::Instance()->getLoggedUser();

@@ -15,9 +15,9 @@ use src\Utils\I18n\I18n;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch, $queryFilter;
 
-require_once(__DIR__ . '/common.inc.php');
+require_once __DIR__ . '/common.inc.php';
 
-require_once(__DIR__ . '/calculation.inc.php');
+require_once __DIR__ . '/calculation.inc.php';
 set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -394,7 +394,7 @@ $gpxAttribID[999] = '999'; $gpxAttribName[999] = 'Log password';
     if ($bUseZip == true) {
         $content = '';
 
-        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('', 6);
     }
 

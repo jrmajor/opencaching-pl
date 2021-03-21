@@ -7,7 +7,7 @@ use src\Utils\I18n\I18n;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 /** @var View $view */
 $view = tpl_getView();

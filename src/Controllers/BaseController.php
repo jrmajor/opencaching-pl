@@ -8,7 +8,7 @@ use src\Models\User\User;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 
-require_once(__DIR__ . '/../../lib/common.inc.php');
+require_once __DIR__ . '/../../lib/common.inc.php';
 
 abstract class BaseController
 {
@@ -80,7 +80,7 @@ abstract class BaseController
         }
         http_response_code($statusCode);
         header('Content-Type: application/json; charset=UTF-8');
-        echo(json_encode($response));
+        echo json_encode($response);
 
         exit;
     }

@@ -28,7 +28,7 @@ class UpdateController extends BaseController
         // However, it may not be safe to run only parts of update. Therefore only
         // the full update is runnable by router:
 
-        return ($actionName == 'index');
+        return $actionName == 'index';
     }
 
     /**

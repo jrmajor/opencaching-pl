@@ -16,7 +16,7 @@ use src\Utils\Text\InputFilter;
 use src\Utils\Text\UserInputFilter;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 global $config;
 
 //logid
@@ -49,9 +49,9 @@ if (! $loggedUser) {
         $log_record = XDb::xFetchArray($log_rs);
 
         if ($log_record) {
-            require(__DIR__ . '/src/Views/editlog.inc.php');
+            require __DIR__ . '/src/Views/editlog.inc.php';
 
-            require(__DIR__ . '/src/Views/rating.inc.php');
+            require __DIR__ . '/src/Views/rating.inc.php';
 
             if ($log_record['node'] != OcConfig::getSiteNodeId()) {
                 tpl_errorMsg('editlog', $error_wrong_node);
@@ -247,20 +247,20 @@ if (! $loggedUser) {
                         SET `type`=?, `date`=?, `text`=?, `text_html`=?, `last_modified`=NOW(),
                             `edit_by_user_id` = ?
                         WHERE `id`=?',
-                            /*1*/$log_type,
-                            /*2*/date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
-                            /*3*/UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
-                            /*4*/2, $loggedUser->getUserId(), $log_id);
+                            /*1*/ $log_type,
+                            /*2*/ date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
+                            /*3*/ UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
+                            /*4*/ 2, $loggedUser->getUserId(), $log_id);
                     } else {
                         XDb::xSql(
                             'UPDATE `cache_logs`
                         SET `type`=?, `date`=?, `text`=?, `text_html`=?, `last_modified`=NOW(),
                             `edit_by_user_id` = ?, `edit_count`= edit_count + 1
                         WHERE `id`=?',
-                            /*1*/$log_type,
-                            /*2*/date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
-                            /*3*/UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
-                            /*4*/2, $loggedUser->getUserId(), $log_id);
+                            /*1*/ $log_type,
+                            /*2*/ date('Y-m-d H:i:s', mktime($log_date_hour, $log_date_min, 0, $log_date_month, $log_date_day, $log_date_year)),
+                            /*3*/ UserInputFilter::purifyHtmlString(((true) ? $log_text : nl2br($log_text))),
+                            /*4*/ 2, $loggedUser->getUserId(), $log_id);
                     }
 
                     //update user-stat if type changed

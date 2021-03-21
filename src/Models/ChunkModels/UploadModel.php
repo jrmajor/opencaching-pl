@@ -140,7 +140,7 @@ class UploadModel
         $this->dirAtServer = OcConfig::getDynFilesPath(true) . $dirInDirBasePath;
 
         if (! is_dir($this->dirAtServer)) {
-            throw(new Exception("Improper path to save uploaded files! ({$this->dirAtServer})"));
+            throw new Exception("Improper path to save uploaded files! ({$this->dirAtServer})");
         }
     }
 

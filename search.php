@@ -12,11 +12,11 @@ use src\Utils\I18n\I18n;
 use src\Utils\Text\TextConverter;
 use src\Utils\Uri\OcCookie;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
-require_once(__DIR__ . '/lib/export.inc.php');
+require_once __DIR__ . '/lib/export.inc.php';
 
-require_once(__DIR__ . '/lib/calculation.inc.php');
+require_once __DIR__ . '/lib/calculation.inc.php';
 
 global $dbcSearch, $TestStartTime;
 
@@ -574,7 +574,7 @@ if (! $loggedUser) {
                         }
                     } elseif ($options['searchtype'] == 'byort') {
                         if ($locid == 0) {
-                            require_once(__DIR__ . '/lib/search.inc.php');
+                            require_once __DIR__ . '/lib/search.inc.php';
 
                             $ort = trim($options['ort']);
                             $simpletexts = search_text2sort($ort);
@@ -874,7 +874,7 @@ if (! $loggedUser) {
                         $sql_where[] = '`caches`.`name` LIKE \'%' . XDb::xEscape($options['cachename']) . '%\' OR `caches`.`wp_' . XDb::xEscape($options['waypointtype']) . '`=\'' . XDb::xEscape($options['waypoint']) . '\'';
                     }
                 } elseif ($options['searchtype'] == 'byfulltext') {
-                    require_once(__DIR__ . '/lib/ftsearch.inc.php');
+                    require_once __DIR__ . '/lib/ftsearch.inc.php';
 
                     $fulltext = $options['fulltext'];
                     $hashes = ftsearch_hash($fulltext);
@@ -1160,7 +1160,7 @@ if (! $loggedUser) {
                 tpl_set_var('error_msg', $outputformat_notexist);
             } else {
                 //process and output the search result
-                require(__DIR__ . '/lib/search.' . mb_strtolower($options['output']) . '.inc.php');
+                require __DIR__ . '/lib/search.' . mb_strtolower($options['output']) . '.inc.php';
 
                 exit;
             }
@@ -1672,7 +1672,7 @@ function outputUniidSelectionForm($uniSql, $urlparams)
     global $next_img_inactive, $prev_img_inactive, $last_img_inactive, $first_img_inactive;
     global $secondlocationname;
 
-    require_once(__DIR__ . '/src/Views/selectlocid.inc.php');
+    require_once __DIR__ . '/src/Views/selectlocid.inc.php';
 
     unset($urlparams['queryid'], $urlparams['locid']);
 
@@ -1857,7 +1857,7 @@ function outputLocidSelectionForm($locSql, $urlparams)
 {
     global $tplname, $locline, $bgcolor1, $bgcolor2;
 
-    require_once(__DIR__ . '/src/Views/selectlocid.inc.php');
+    require_once __DIR__ . '/src/Views/selectlocid.inc.php';
 
     unset($urlparams['queryid'], $urlparams['locid']);
 

@@ -41,7 +41,7 @@ echo '</script>';
 
 use src\Utils\Database\OcDb;
 
-require_once(__DIR__ . '/ClassPathDictionary.php');
+require_once __DIR__ . '/ClassPathDictionary.php';
 $sRok = '';
 $sMc = '';
 

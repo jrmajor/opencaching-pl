@@ -7,7 +7,7 @@ use src\Models\Coordinates\NutsLocation;
 
 $tplname = 'region';
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 if (! ApplicationContainer::GetAuthorizedUser()) {
     echo 'Not authorized!';

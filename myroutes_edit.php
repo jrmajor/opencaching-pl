@@ -6,7 +6,7 @@ use src\Utils\I18n\I18n;
 
 global $googlemap_key;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();

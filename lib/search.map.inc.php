@@ -9,9 +9,9 @@ use src\Utils\Database\OcDb;
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
-require_once(__DIR__ . '/../lib/common.inc.php');
+require_once __DIR__ . '/../lib/common.inc.php';
 
-require_once(__DIR__ . '/../lib/calculation.inc.php');
+require_once __DIR__ . '/../lib/calculation.inc.php';
 
 set_time_limit(1800);
 

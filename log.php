@@ -21,7 +21,7 @@ use src\Utils\Text\InputFilter;
 /*
  * todo: create and set up 4 template selector with wybor_WE wybor_NS.
  */
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $user = ApplicationContainer::Instance()->getLoggedUser();
 
@@ -38,7 +38,7 @@ $view = tpl_getView();
 $view->setTemplate('log_cache');
 $view->loadJquery();
 
-require(__DIR__ . '/src/Views/rating.inc.php');
+require __DIR__ . '/src/Views/rating.inc.php';
 
 if (! isset($_REQUEST['cacheid'])) {
     tpl_errorMsg('log_cache', 'No cacheid param!');
@@ -1015,7 +1015,7 @@ function validate_coords($lat_h, $lat_min, $lon_h, $lon_min, $lonEW, $latNS)
       exit;
      */
 
-    return ($error);
+    return $error;
 }
 
 /**

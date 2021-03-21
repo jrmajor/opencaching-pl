@@ -13,7 +13,7 @@ header('Content-Type: text/javascript');
 
 var GCT_lang = new Array();
 GCT_lang = {
-    "prev"                  : "<?=tr('pagination_left')?>",
-    "next"                  : "<?=tr('pagination_right')?>",
-    "number_of_caches"      : "<?=tr('number_of_caches')?>",
+    "prev"                  : "<?= tr('pagination_left')?>",
+    "next"                  : "<?= tr('pagination_right')?>",
+    "number_of_caches"      : "<?= tr('number_of_caches')?>",
 };

@@ -37,12 +37,12 @@ class UserNotify extends BaseObject
      */
     public static function setUserCachesNotify(User $user, $state)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user`
             SET `notify_caches` = :1
             WHERE `user_id` = :2
             LIMIT 1
-        ', boolval($state), $user->getUserId()));
+        ', boolval($state), $user->getUserId());
     }
 
     /**
@@ -54,11 +54,11 @@ class UserNotify extends BaseObject
      */
     public static function setUserLogsNotify(User $user, $state)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user`
             SET `notify_logs` = :1
             WHERE `user_id` = :2
             LIMIT 1
-        ', boolval($state), $user->getUserId()));
+        ', boolval($state), $user->getUserId());
     }
 }

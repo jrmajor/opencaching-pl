@@ -2,7 +2,7 @@
 
 $secret = 'dupa231';
 
-include('commons.php');
+include 'commons.php';
 
 $logbook_type = validate_msg(decrypt($_POST['secret'], $secret));
 

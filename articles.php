@@ -4,7 +4,7 @@ use src\Models\Stats\CacheStats;
 use src\Utils\I18n\I18n;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 // get the article name to display
 if (isset($_REQUEST['page']) &&

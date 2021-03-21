@@ -20,7 +20,7 @@ use src\Utils\Database\XDb;
 
  * ************************************************************************* */
 
-require_once(__DIR__ . '/../../lib/ClassPathDictionary.php');
+require_once __DIR__ . '/../../lib/ClassPathDictionary.php';
 
 /* last synchro check */
 $last_updated = XDb::xSimpleQueryValue(

@@ -7,7 +7,7 @@ use src\Utils\Text\Validator;
 
 global $absolute_server_URI;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $user = ApplicationContainer::GetAuthorizedUser();
 
@@ -20,7 +20,7 @@ if (! $user) {
 $tplname = 'newemail';
 
 //load language specific variables
-require_once(__DIR__ . '/src/Views/' . $tplname . '.inc.php');
+require_once __DIR__ . '/src/Views/' . $tplname . '.inc.php';
 
 tpl_set_var('new_email', '');
 tpl_set_var('message', '');

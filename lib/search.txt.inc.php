@@ -19,7 +19,7 @@ set_time_limit(1800);
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 
-require_once(__DIR__ . '/../lib/calculation.inc.php');
+require_once __DIR__ . '/../lib/calculation.inc.php';
 
     $txtLine = chr(239) . chr(187) . chr(191) . tr('search_text_01') . ' {mod_suffix}{cachename} ' . tr('search_text_02') . ' {owner}
 ' . tr('search_text_03') . ' {lat} {lon}
@@ -169,7 +169,7 @@ if ($loggedUser || ! $hide_coords) {
     if ($bUseZip == true) {
         $content = '';
 
-        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('',6);
     }
 

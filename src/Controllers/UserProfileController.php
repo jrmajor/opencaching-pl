@@ -91,11 +91,13 @@ class UserProfileController extends BaseController
      */
     private function areEmailSettingsInScope($watchmailMode, $watchmailHour, $watchmailDay)
     {
-        return (is_numeric($watchmailMode) && in_array($watchmailMode, [
+        return is_numeric($watchmailMode) && in_array($watchmailMode, [
             UserNotify::SEND_NOTIFICATION_DAILY,
             UserNotify::SEND_NOTIFICATION_HOURLY,
             UserNotify::SEND_NOTIFICATION_WEEKLY,
-        ]) && is_numeric($watchmailHour) && $watchmailHour >= 0 && $watchmailHour <= 23 && is_numeric($watchmailDay) && $watchmailDay >= 1 && $watchmailDay <= 7);
+        ])
+            && is_numeric($watchmailHour) && $watchmailHour >= 0 && $watchmailHour <= 23
+            && is_numeric($watchmailDay) && $watchmailDay >= 1 && $watchmailDay <= 7;
     }
 
     /**

@@ -182,7 +182,7 @@ class ReportPoll extends BaseObject
         $params['date_end']['value'] = $this->dateEnd->format(OcConfig::instance()->getDbDateTimeFormat());
         $params['date_end']['data_type'] = 'string';
 
-        return (self::db()->paramQuery($query, $params) !== null);
+        return self::db()->paramQuery($query, $params) !== null;
     }
 
     /**
@@ -224,7 +224,7 @@ class ReportPoll extends BaseObject
         $params['user_id']['value'] = self::getCurrentUser()->getUserId();
         $params['user_id']['data_type'] = 'integer';
 
-        return (self::db()->paramQueryValue($query, 0, $params) > 0);
+        return self::db()->paramQueryValue($query, 0, $params) > 0;
     }
 
     /**

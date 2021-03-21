@@ -1,7 +1,7 @@
 #!/usr/bin/php -q
 <?php
 
-require(__DIR__ . '/../../lib/common.inc.php');
+require __DIR__ . '/../../lib/common.inc.php';
 sql('USE `ocpl`');
 
 $rsArea = sql("SELECT `OGR_FID`, `sitename` AS `sitename`, `sitetype` AS `sitetype`, `sitecode` AS `sitecode`, `SHAPE` AS `shape` FROM `gis`.`n2k100k_laea_wgs84` WHERE `sitecode` LIKE 'PL%'");

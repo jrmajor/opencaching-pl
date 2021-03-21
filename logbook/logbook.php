@@ -1,7 +1,7 @@
 <?php
 $secret = 'dupa231';
 
-include('commons.php');
+include 'commons.php';
 header('Content-Type: application/xhtml+xml; charset=utf-8');
 echo '<?xml version="1.0" encoding="utf-8"?' . ">\n";
 echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
@@ -97,7 +97,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
         <div id="navibar">
     <!--<span><a href="">Strona Główna</a></span>-->
             <?php
-            include('menu.inc');
+            include 'menu.inc';
             ?>
         </div>
         <p>
@@ -136,8 +136,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 if ($_GET['logbook_type'] == 0) {
                     echo 'Proszę wybrać typ logbooku.';
                 } elseif ($_GET['logbook_type'] == 1) {
-                    echo
-                '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
+                    echo '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
                 <input type="hidden" name="secret" value="' . encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />
@@ -164,8 +163,7 @@ echo '<?xml-stylesheet type="text/css" href="style.css"?' . ">\n";
                 </form>
                 ';
                 } elseif ($_GET['logbook_type'] == 2) {
-                    echo
-                '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
+                    echo '<span class="note">Zostaw puste pola jeśli chcesz je wspisać później ręcznie lub też zostawić wartości standardowe.</span>
                 <form id="logbookopts" action="remotelogbook.php" method="post" onsubmit="return onSubmit(this);" enctype="multipart/form-data">
                 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
                 <input type="hidden" name="secret" value="' . encrypt($_GET['logbook_type'] . ' This is a secret message', $secret) . '" />

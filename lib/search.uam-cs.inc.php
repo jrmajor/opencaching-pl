@@ -25,7 +25,7 @@ use src\Utils\Text\TextConverter;
 
 ob_start();
 
-require_once(__DIR__ . '/../lib/calculation.inc.php');
+require_once __DIR__ . '/../lib/calculation.inc.php';
 
 set_time_limit(1800);
 global $content, $bUseZip, $hide_coords, $dbcSearch;
@@ -137,7 +137,7 @@ if ($loggedUser || ! $hide_coords) {
     if ($bUseZip == true) {
         $content = '';
 
-        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('', 6);
     }
 

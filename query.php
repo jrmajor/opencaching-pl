@@ -6,7 +6,7 @@ use src\Utils\Database\OcDb;
 use src\Utils\Database\XDb;
 use src\Utils\Generators\Uuid;
 
-require(__DIR__ . '/lib/common.inc.php');
+require __DIR__ . '/lib/common.inc.php';
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();

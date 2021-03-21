@@ -272,7 +272,7 @@ class AtomFeed
             $this->addError('ERROR: No feed updated date');
         }
 
-        return (! $this->hasErrors());
+        return ! $this->hasErrors();
     }
 
     /**
@@ -292,7 +292,7 @@ class AtomFeed
      */
     private function hasErrors()
     {
-        return (count($this->errors) > 0);
+        return count($this->errors) > 0;
     }
 
     /**

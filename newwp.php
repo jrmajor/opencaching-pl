@@ -4,7 +4,7 @@ use src\Models\ApplicationContainer;
 use src\Models\GeoCache\WaypointCommons;
 use src\Utils\Database\XDb;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $no_tpl_build = false;
 
@@ -72,7 +72,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
     if ($cache_record['user_id'] == $loggedUser->getUserId() || $loggedUser->hasOcTeamRole()) {
         $tplname = 'newwp';
 
-        require_once(__DIR__ . '/src/Views/newcache.inc.php');
+        require_once __DIR__ . '/src/Views/newcache.inc.php';
 
         //set template replacements
         tpl_set_var('lon_message', '');

@@ -4,7 +4,7 @@ use src\Models\ApplicationContainer;
 use src\Models\GeoCache\GeoCache;
 use src\Utils\Database\OcDb;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 

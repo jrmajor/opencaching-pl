@@ -6,7 +6,7 @@ use src\Models\ApplicationContainer;
 use src\Models\MeritBadge\MeritBadge;
 use src\Utils\Text\Formatter;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 global $content_table, $config;
 

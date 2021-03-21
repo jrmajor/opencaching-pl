@@ -14,13 +14,13 @@ session_start();
 
 ob_start();
 
-require_once(__DIR__ . '/settingsGlue.inc.php');
+require_once __DIR__ . '/settingsGlue.inc.php';
 
 // TODO: kojoty: it should be removed after config refactoring
 // now if common.inc.php is not loaded in global context settings are not accessible
 $GLOBALS['config'] = $config;
 
-require_once(__DIR__ . '/common_tpl_funcs.php'); // template engine
+require_once __DIR__ . '/common_tpl_funcs.php'; // template engine
 
 // yepp, we will use UTF-8
 mb_internal_encoding('UTF-8');

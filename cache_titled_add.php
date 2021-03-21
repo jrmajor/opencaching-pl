@@ -7,7 +7,7 @@ use src\Utils\Generators\Uuid;
 
 global $titled_cache_nr_found, $titled_cache_period_prefix;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 if (! isset($_REQUEST['CRON'])) {
     exit;

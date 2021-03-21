@@ -3,9 +3,9 @@
 switch ($_GET['page']) {
 default:
 case 'logbook':
-include('logbook.php');
+include 'logbook.php';
 break;
 case 'cachevalidator':
-include('cachevalidator.php');
+include 'cachevalidator.php';
 break;
 }

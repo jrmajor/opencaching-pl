@@ -13,13 +13,13 @@ use src\Utils\Text\TextConverter;
 use src\Utils\Text\UserInputFilter;
 use src\Utils\Uri\SimpleRouter;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
-require(__DIR__ . '/src/Views/lib/icons.inc.php');
+require __DIR__ . '/src/Views/lib/icons.inc.php';
 
-require(__DIR__ . '/src/Views/viewcache.inc.php');
+require __DIR__ . '/src/Views/viewcache.inc.php';
 
-require(__DIR__ . '/src/Views/viewlogs.inc.php');
+require __DIR__ . '/src/Views/viewlogs.inc.php';
 
 if (isset($_REQUEST['geocacheId']) && $_REQUEST['geocacheId'] != '') {
     $geocacheId = $_REQUEST['geocacheId'];

@@ -17,7 +17,7 @@ use src\Utils\I18n\I18n;
 use src\Utils\I18n\Languages;
 use src\Utils\Text\Validator;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $view->loadJQuery();
 $view->loadJQueryUI();

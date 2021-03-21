@@ -22,7 +22,7 @@ use src\Utils\View\View;
 
 const ADMINNOTES_PER_PAGE = 10;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 StopWatch::click('start');
 
@@ -72,7 +72,7 @@ if (isset($_REQUEST['userid'])) {
     $user_id = $loggedUser->getUserId();
 }
 
-require(__DIR__ . '/src/Views/lib/icons.inc.php');
+require __DIR__ . '/src/Views/lib/icons.inc.php';
 $tplname = 'viewprofile';
 
 /** @var View */

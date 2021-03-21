@@ -2,7 +2,7 @@
 
 use src\Models\OcConfig\OcConfig;
 
-require_once(__DIR__ . '/common.inc.php');
+require_once __DIR__ . '/common.inc.php';
 
 $kmlHead = '<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.0">

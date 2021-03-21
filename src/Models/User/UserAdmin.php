@@ -16,12 +16,12 @@ class UserAdmin extends BaseObject
      */
     public static function setBanStatus(User $user, $state)
     {
-        return (null !== self::db()->multiVariableQuery("
+        return null !== self::db()->multiVariableQuery("
             UPDATE `user`
             SET `is_active_flag` = :1, `activation_code` = ''
             WHERE `user_id` = :2
             LIMIT 1
-        ", ! boolval($state), $user->getUserId()));
+        ", ! boolval($state), $user->getUserId());
     }
 
     /**
@@ -34,12 +34,12 @@ class UserAdmin extends BaseObject
      */
     public static function setStatBanStatus(User $user, $state)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user`
             SET `stat_ban` = :1
             WHERE `user_id` = :2
             LIMIT 1
-        ', boolval($state), $user->getUserId()));
+        ', boolval($state), $user->getUserId());
     }
 
     /**
@@ -52,12 +52,12 @@ class UserAdmin extends BaseObject
      */
     public static function setVerifyAllStatus(User $user, $state)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user`
             SET `verify_all` = :1
             WHERE `user_id` = :2
             LIMIT 1
-        ', boolval($state), $user->getUserId()));
+        ', boolval($state), $user->getUserId());
     }
 
     /**
@@ -71,10 +71,10 @@ class UserAdmin extends BaseObject
     public static function setCreateWithoutLimitStatus(User $user, $state)
     {
         // INSERT INTO user_settings (user_id, newcaches_no_limit) VALUES (:2, :1)
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             INSERT INTO `user_settings` (`user_id`, `newcaches_no_limit`)
             VALUES (:2, :1)
             ON DUPLICATE KEY UPDATE `newcaches_no_limit` = :1
-        ', boolval($state), $user->getUserId()));
+        ', boolval($state), $user->getUserId());
     }
 }

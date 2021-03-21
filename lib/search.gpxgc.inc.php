@@ -13,9 +13,9 @@ use src\Utils\Text\Validator;
 
 global $hide_coords, $dbcSearch, $queryFilter;
 
-require_once(__DIR__ . '/format.gpx.inc.php');
+require_once __DIR__ . '/format.gpx.inc.php';
 
-require_once(__DIR__ . '/calculation.inc.php');
+require_once __DIR__ . '/calculation.inc.php';
 
 set_time_limit(1800);
 

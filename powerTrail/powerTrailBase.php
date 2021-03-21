@@ -94,7 +94,7 @@ class powerTrailBase
      */
     public static function getPowerTrailTypes()
     {
-        return  [
+        return [
             self::GEODRAW => [
                 'geopathTypeName' => self::getConstName(self::GEODRAW),
                 'translate' => 'cs_typeGeoDraw',
@@ -149,7 +149,7 @@ class powerTrailBase
 
     public static function cacheSizePoints()
     {
-        return  [
+        return [
             2 => 2.5,   # Micro
             3 => 2, # Small
             4 => 1.5,   # Normal [from 1 to 3 litres]
@@ -161,7 +161,7 @@ class powerTrailBase
 
     public static function cacheTypePoints()
     {
-        return  [
+        return [
             1 => 2, #Other
             2 => 2, #Trad.
             3 => 3, #Multi

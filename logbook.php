@@ -4,7 +4,7 @@ use src\Models\ApplicationContainer;
 
 // logbook generator...
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 //user logged in?
 if (! ApplicationContainer::GetAuthorizedUser()) {

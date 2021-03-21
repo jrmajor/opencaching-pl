@@ -8,14 +8,14 @@ function run_in_bg($Command, $Priority = 0)
         $PID = shell_exec("nohup {$Command} 2> /dev/null & echo $!");
     }
 
-    return($PID);
+    return $PID;
 }
 
 function is_running($PID)
 {
     exec("ps {$PID}", $ProcessState);
 
-    return(count($ProcessState) >= 2);
+    return count($ProcessState) >= 2;
 }
 
 function wait_for_pid($pid)

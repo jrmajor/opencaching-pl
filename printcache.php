@@ -8,7 +8,7 @@ use src\Utils\I18n\I18n;
 use src\Utils\Uri\Uri;
 use src\Utils\View\View;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 if (isset($_POST['flush_print_list'])) {
     PrintList::Flush();
@@ -148,12 +148,12 @@ if ($_POST['spoiler_only'] == '&spoiler_only=1') {
 ?>
 
 <!DOCTYPE html>
-<html lang="<?=I18n::getCurrentLang()?>">
+<html lang="<?= I18n::getCurrentLang()?>">
 <head>
     <meta charset="utf-8">
     <title><?php echo OcConfig::getSitePageTitle();
         echo ' - ' . tr('pagetitle_print'); ?></title>
-    <link rel="shortcut icon" href="<?=OcConfig::getSiteMainViewIcon('shortcutIcon')?>">
+    <link rel="shortcut icon" href="<?= OcConfig::getSiteMainViewIcon('shortcutIcon')?>">
     <link rel="stylesheet" type="text/css"
           href="<?= Uri::getLinkWithModificationTime('/css/style_print.css') ?>">
 </head>

@@ -5,7 +5,7 @@ use src\Models\GeoCache\WaypointCommons;
 use src\Utils\Database\XDb;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -72,7 +72,7 @@ if ($cache_record = XDb::xFetchArray($cache_rs)) {
 
         $tplname = 'editwp';
 
-        require(__DIR__ . '/src/Views/newcache.inc.php');
+        require __DIR__ . '/src/Views/newcache.inc.php';
 
         $wp_type = isset($_POST['type']) ? $_POST['type'] : $wp_record['type'];
         //build typeoptions

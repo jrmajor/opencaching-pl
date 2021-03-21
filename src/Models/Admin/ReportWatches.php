@@ -68,7 +68,7 @@ class ReportWatches extends BaseObject
         $params['userId']['value'] = $userId;
         $params['userId']['data_type'] = 'integer';
 
-        return (self::db()->paramQueryValue($query, 0, $params) > 0);
+        return self::db()->paramQueryValue($query, 0, $params) > 0;
     }
 
     /**
@@ -87,6 +87,6 @@ class ReportWatches extends BaseObject
         $params['reportId']['data_type'] = 'integer';
         $stmt = self::db()->paramQuery($query, $params);
 
-        return (self::db()->dbResultFetchAll($stmt));
+        return self::db()->dbResultFetchAll($stmt);
     }
 }

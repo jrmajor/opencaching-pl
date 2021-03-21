@@ -8,9 +8,9 @@ use src\Utils\I18n\I18n;
 use src\Utils\Text\Formatter;
 
 //include template handling
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
-require_once(__DIR__ . '/src/Views/lib/icons.inc.php');
+require_once __DIR__ . '/src/Views/lib/icons.inc.php';
 
 //user logged in?
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
@@ -32,7 +32,7 @@ if (! $loggedUser) {
     //get the news
     $tplname = 'mycaches';
 
-    require(__DIR__ . '/src/Views/newlogs.inc.php');
+    require __DIR__ . '/src/Views/newlogs.inc.php';
 
     $eLang = I18n::getLangForDbTranslations('cache_status');
 

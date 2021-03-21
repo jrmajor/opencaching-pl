@@ -12,7 +12,7 @@ use src\Utils\I18n\I18n;
 
 global $content, $bUseZip, $dbcSearch;
 
-require_once(__DIR__ . '/../lib/calculation.inc.php');
+require_once __DIR__ . '/../lib/calculation.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 

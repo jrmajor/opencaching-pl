@@ -10,15 +10,15 @@ use src\Utils\Database\XDb;
 use src\Utils\I18n\I18n;
 use src\Utils\Text\Formatter;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
-require_once(__DIR__ . '/lib/export.inc.php');
+require_once __DIR__ . '/lib/export.inc.php';
 
-require_once(__DIR__ . '/lib/format.gpx.inc.php');
+require_once __DIR__ . '/lib/format.gpx.inc.php';
 
-require_once(__DIR__ . '/lib/calculation.inc.php');
+require_once __DIR__ . '/lib/calculation.inc.php';
 
-require_once(__DIR__ . '/src/Views/lib/icons.inc.php');
+require_once __DIR__ . '/src/Views/lib/icons.inc.php';
 
 global $content, $bUseZip, $config;
 global $cache_attrib_jsarray_line, $cache_attrib_img_line;
@@ -853,7 +853,7 @@ if (isset($_POST['submit_gpx'])) {
     if ($bUseZip == true) {
         $content = '';
 
-        require_once(__DIR__ . '/src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('', 6);
     }
 
@@ -1465,7 +1465,7 @@ function cleanup_text2($str)
 function cache_distances($lat1, $lon1, $lat2, $lon2)
 {
     if (($lon1 == $lon2) and ($lat1 == $lat2)) {
-        return(0);
+        return 0;
     } else {
         $earth_radius = 6378;
 
@@ -1476,6 +1476,6 @@ function cache_distances($lat1, $lon1, $lat2, $lon2)
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +
                 sin($lat1) * sin($lat2)) * $earth_radius;
 
-        return($dist);
+        return $dist;
     }
 }

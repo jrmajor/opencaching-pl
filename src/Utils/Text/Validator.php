@@ -28,7 +28,7 @@ class Validator
             return false;
         }
 
-        return (false !== filter_var($email, FILTER_VALIDATE_EMAIL));
+        return false !== filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
     /**
@@ -44,7 +44,7 @@ class Validator
             return false;
         }
 
-        return (mb_ereg_match(self::REGEX_USERNAME, $username));
+        return mb_ereg_match(self::REGEX_USERNAME, $username);
     }
 
     /**

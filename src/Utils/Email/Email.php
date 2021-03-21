@@ -154,7 +154,7 @@ class Email
     {
         $this->subject = $subject;
 
-        return ($subject != '');
+        return $subject != '';
     }
 
     public function addSubjectPrefix($newPrefix)

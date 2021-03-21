@@ -11,7 +11,7 @@ use src\Utils\Database\XDb;
 
 set_time_limit(1800);
 
-require_once(__DIR__ . '/../lib/calculation.inc.php');
+require_once __DIR__ . '/../lib/calculation.inc.php';
 
 global $content, $bUseZip, $hide_coords, $dbcSearch;
 
@@ -151,7 +151,7 @@ if ($loggedUser || ! $hide_coords) {
     if ($bUseZip == true) {
         $content = '';
 
-        require_once(__DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php');
+        require_once __DIR__ . '/../src/Libs/PhpZip/ss_zip.class.php';
         $phpzip = new ss_zip('', 6);
     }
 
@@ -264,5 +264,5 @@ function wgs2u1992($lat, $lon)
     $X = $mo * $Xgk + $FN;
     $Y = $mo * $Ygk + $FE;
 
-    return ([$X, $Y]);
+    return [$X, $Y];
 }

@@ -30,7 +30,7 @@ use src\Utils\Database\XDb;
 use src\Utils\View\View;
 
 //prepare the templates and include all neccessary
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $loggedUser = ApplicationContainer::GetAuthorizedUser();
 

@@ -115,7 +115,7 @@ class View
 
     public static function getChunkFunc($chunkName)
     {
-        return require(self::CHUNK_DIR . $chunkName . '.tpl.php');
+        return require self::CHUNK_DIR . $chunkName . '.tpl.php';
     }
 
     /**
@@ -475,7 +475,7 @@ class View
             return tr($arg);
         };
 
-        require_once(self::TPL_DIR . '/' . $template . '.tpl.php');
+        require_once self::TPL_DIR . '/' . $template . '.tpl.php';
     }
 
     public static function showPlainText($text)

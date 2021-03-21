@@ -679,8 +679,8 @@ class User extends UserCommons
      */
     public function canCreateNewCache()
     {
-        return ($this->getFoundPhysicalGeocachesCount() >= OcConfig::getNeedFindLimit()
-            || $this->getNewCachesNoLimit());
+        return $this->getFoundPhysicalGeocachesCount() >= OcConfig::getNeedFindLimit()
+            || $this->getNewCachesNoLimit();
     }
 
     /**
@@ -849,14 +849,14 @@ class User extends UserCommons
         $this->homeCoordinates = $coords;
         $this->notifyRadius = $radius;
 
-        return (null !== $this->db->multiVariableQuery('
+        return null !== $this->db->multiVariableQuery('
             UPDATE `user` SET
               `latitude` = :1,
               `longitude` = :2,
               `notify_radius` = :3
             WHERE `user_id` = :4
             LIMIT 1
-            ', $coords->getLatitude(), $coords->getLongitude(), (int) $radius, $this->userId));
+            ', $coords->getLatitude(), $coords->getLongitude(), (int) $radius, $this->userId);
     }
 
     public static function updateLastLogin($userId)
@@ -878,7 +878,7 @@ class User extends UserCommons
     {
         $config = OcConfig::instance();
 
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             INSERT INTO `user`
                 (`username`, `password`, `email`, `role`, `last_modified`,
                 `is_active_flag`, `date_created`, `uuid`, `activation_code`,
@@ -888,7 +888,7 @@ class User extends UserCommons
             ', $username, hash('sha512', md5($password)),
             $email, Uuid::create(), TextGen::randomText(13),
             OcConfig::getSiteNodeId(), boolval($rulesConfirmed),
-            $config->getUserConfig()['defaultStatpicText']));
+            $config->getUserConfig()['defaultStatpicText']);
     }
 
     /**
@@ -899,11 +899,11 @@ class User extends UserCommons
      */
     public static function activateUser($userId)
     {
-        return (null !== self::db()->multiVariableQuery('
+        return null !== self::db()->multiVariableQuery('
             UPDATE `user`
             SET `is_active_flag` = 1, `activation_code`=\'\', `last_modified` = NOW()
             WHERE `user_id`= :1
-            ', $userId));
+            ', $userId);
     }
 
     /**
@@ -913,7 +913,7 @@ class User extends UserCommons
      */
     public function isUserActivated()
     {
-        return (empty($this->activationCode) || ($this->isActive));
+        return empty($this->activationCode) || ($this->isActive);
     }
 
     /**
@@ -925,12 +925,12 @@ class User extends UserCommons
     {
         $this->rulesConfirmed = true;
 
-        return (null !== $this->db->multiVariableQuery('
+        return null !== $this->db->multiVariableQuery('
             UPDATE `user`
             SET `rules_confirmed` = 1
             WHERE `user_id` = :1
             LIMIT 1
-            ', $this->getUserId()));
+            ', $this->getUserId());
     }
 
     /**

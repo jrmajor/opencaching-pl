@@ -7,7 +7,7 @@ use src\Utils\Text\Formatter;
 use src\Utils\Text\Validator;
 use src\Utils\Uri\Uri;
 
-require_once(__DIR__ . '/lib/common.inc.php');
+require_once __DIR__ . '/lib/common.inc.php';
 
 $db = XDb::instance();
 $description = '';
