@@ -82,17 +82,13 @@ class CacheNotesController extends BaseController
                 }));
             $model->addColumn(new Column_CacheLog(tr('myNotes_lastLogEntry'),
                 function ($row) {
-                    if (isset($row['llog_id'])) {
-                        return [
-                            'logId' => $row['llog_id'],
-                            'logType' => $row['llog_type'],
-                            'logText' => $row['llog_text'],
-                            'logUserName' => $row['llog_userName'],
-                            'logDate' => $row['llog_date'],
-                        ];
-                    } else {
-                        return [];
-                    }
+                    return isset($row['llog_id']) ? [
+                        'logId' => $row['llog_id'],
+                        'logType' => $row['llog_type'],
+                        'logText' => $row['llog_text'],
+                        'logUserName' => $row['llog_userName'],
+                        'logDate' => $row['llog_date'],
+                    ] : [];
                 }
             ));
 
@@ -120,9 +116,9 @@ class CacheNotesController extends BaseController
                 function ($row) {
                     if (isset($row['coords']) && $row['coords']) {
                         return $row['coords']->getAsText();
-                    } else {
-                        return '-';
                     }
+
+                    return '-';
                 }
             ));
 

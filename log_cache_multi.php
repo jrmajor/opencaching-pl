@@ -95,9 +95,9 @@ if (isset($_POST['submitDownloadGpx'])) {
         echo $fd;
 
         exit();
-    } else {
-        exit('No data');
     }
+  
+    exit('No data');
 }
 
 require_once __DIR__ . '/lib/common.inc.php';

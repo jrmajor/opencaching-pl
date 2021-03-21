@@ -885,9 +885,9 @@ function generateNextWaypoint($currentWP, $ocWP)
             if ($pos < strlen($wpCharSequence) - 1) {
                 $wpCode[$i] = $wpCharSequence[$pos + 1];
                 break;
-            } else {
-                $wpCode[$i] = $wpCharSequence[0];
             }
+
+            $wpCode[$i] = $wpCharSequence[0];
         }
     }
 

@@ -117,7 +117,7 @@ if (! $loggedUser) {
 
             $errnotitle = false;
 
-            if (($title == '') && (isset($_REQUEST['submit']))) {
+            if ($title == '' && isset($_REQUEST['submit'])) {
                 $allok = false;
                 $errnotitle = true;
             }
@@ -136,68 +136,68 @@ if (! $loggedUser) {
                         tpl_BuildTemplate();
 
                         exit;
-                    } else {
-                        // correct file extension?
-                        $fna = mb_split('\\.', $_FILES['file']['name']);
-                        $extension = mb_strtolower($fna[count($fna) - 1]);
+                    }
 
-                        if (mb_strpos($mp3extensions, ';' . $extension . ';') === false) {
-                            $tplname = 'message';
-                            tpl_set_var('messagetitle', $message_title_wrongext);
-                            tpl_set_var('message_start', '');
-                            tpl_set_var('message_end', '');
-                            tpl_set_var('message', $message_wrongext);
-                            tpl_BuildTemplate();
+                    // correct file extension?
+                    $fna = mb_split('\\.', $_FILES['file']['name']);
+                    $extension = mb_strtolower($fna[count($fna) - 1]);
 
-                            exit;
-                        }
-
-                        // file too big?
-                        if ($_FILES['file']['size'] > $maxmp3size) {
-                            $tplname = 'message';
-                            tpl_set_var('messagetitle', $message_title_toobig);
-                            tpl_set_var('message_start', '');
-                            tpl_set_var('message_end', '');
-                            tpl_set_var('message', $message_toobig);
-                            tpl_BuildTemplate();
-
-                            exit;
-                        }
-
-                        $uuid = Uuid::create();
-
-                        // move the file and insert entry to DB
-                        move_uploaded_file($_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension);
-                        XDb::xSql(
-                            'INSERT INTO mp3 (`uuid`, `url`, `last_modified`, `title`, `date_created`, `last_url_check`,
-                                              `object_id`, `object_type`, `user_id`, `local`, `display`, `node`, `seq`)
-                            VALUES (? , ?, NOW(), ?, NOW(), NOW(), ?, ?, ?, 1, ?, ?, ?)',
-                            $uuid, $mp3url . '/' . $uuid . '.' . $extension, $title, $objectid,
-                            $type, $loggedUser->getUserId(), ($bNoDisplay == 1) ? '0' : '1', OcConfig::getSiteNodeId(), $def_seq_m);
-
-                        switch ($type) {
-                            // log
-                            case 1:
-                                XDb::xSql(
-                                    'UPDATE `cache_logs` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
-                                    WHERE `id`= ? LIMIT 1', $objectid);
-
-                                tpl_redirect('viewcache.php?cacheid=' . urlencode($cacheid));
-                                break;
-                            // cache
-                            case 2:
-                                XDb::xSql(
-                                    'UPDATE `caches` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
-                                    WHERE `cache_id`= ? LIMIT 1', $objectid);
-
-                                tpl_redirect('editcache.php?cacheid=' . urlencode($objectid));
-                                break;
-                        }
-
-                        tpl_redirect_absolute($mp3url . '/' . $uuid . '.' . $extension);
+                    if (mb_strpos($mp3extensions, ';' . $extension . ';') === false) {
+                        $tplname = 'message';
+                        tpl_set_var('messagetitle', $message_title_wrongext);
+                        tpl_set_var('message_start', '');
+                        tpl_set_var('message_end', '');
+                        tpl_set_var('message', $message_wrongext);
+                        tpl_BuildTemplate();
 
                         exit;
                     }
+
+                    // file too big?
+                    if ($_FILES['file']['size'] > $maxmp3size) {
+                        $tplname = 'message';
+                        tpl_set_var('messagetitle', $message_title_toobig);
+                        tpl_set_var('message_start', '');
+                        tpl_set_var('message_end', '');
+                        tpl_set_var('message', $message_toobig);
+                        tpl_BuildTemplate();
+
+                        exit;
+                    }
+
+                    $uuid = Uuid::create();
+
+                    // move the file and insert entry to DB
+                    move_uploaded_file($_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension);
+                    XDb::xSql(
+                        'INSERT INTO mp3 (`uuid`, `url`, `last_modified`, `title`, `date_created`, `last_url_check`,
+                                          `object_id`, `object_type`, `user_id`, `local`, `display`, `node`, `seq`)
+                        VALUES (? , ?, NOW(), ?, NOW(), NOW(), ?, ?, ?, 1, ?, ?, ?)',
+                        $uuid, $mp3url . '/' . $uuid . '.' . $extension, $title, $objectid,
+                        $type, $loggedUser->getUserId(), ($bNoDisplay == 1) ? '0' : '1', OcConfig::getSiteNodeId(), $def_seq_m);
+
+                    switch ($type) {
+                        // log
+                        case 1:
+                            XDb::xSql(
+                                'UPDATE `cache_logs` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
+                                WHERE `id`= ? LIMIT 1', $objectid);
+
+                            tpl_redirect('viewcache.php?cacheid=' . urlencode($cacheid));
+                            break;
+                        // cache
+                        case 2:
+                            XDb::xSql(
+                                'UPDATE `caches` SET `mp3count`=`mp3count`+1, `last_modified`=NOW()
+                                WHERE `cache_id`= ? LIMIT 1', $objectid);
+
+                            tpl_redirect('editcache.php?cacheid=' . urlencode($objectid));
+                            break;
+                    }
+
+                    tpl_redirect_absolute($mp3url . '/' . $uuid . '.' . $extension);
+
+                    exit;
                 }
 
                 tpl_set_var('notdisplaychecked', ($bNoDisplay == 1) ? ' checked="checked"' : '');

@@ -41,9 +41,9 @@ function get_max_caches_per_call()
 {
     if (isset($_REQUEST['okapidebug'])) {
         return 500;
-    } else {
-        return 50;
     }
+  
+    return 50;
 }
 
 function get_pagination_template()

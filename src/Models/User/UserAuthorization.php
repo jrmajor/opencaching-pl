@@ -238,11 +238,7 @@ class UserAuthorization extends BaseObject
 
     private static function getLoggedUserSessionId()
     {
-        if (isset($_SESSION[self::SESSION_ID_KEY])) {
-            return $_SESSION[self::SESSION_ID_KEY];
-        } else {
-            return null;
-        }
+        return $_SESSION[self::SESSION_ID_KEY] ?? null;
     }
 
     private static function setLoggedUserSessionId($sessionId)

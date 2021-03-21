@@ -356,9 +356,9 @@ class GeoCacheCommons extends BaseObject
 
         if ($fileNameOnly) {
             return $typePart . $statusPart . $logStatusPart . '.png';
-        } else {
-            return self::ICON_PATH . $typePart . $statusPart . $logStatusPart . '.png';
         }
+  
+        return self::ICON_PATH . $typePart . $statusPart . $logStatusPart . '.png';
     }
 
     /**

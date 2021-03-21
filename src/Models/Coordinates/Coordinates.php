@@ -346,20 +346,12 @@ class Coordinates
 
     private function getLatitudeHemisphereSymbol()
     {
-        if ($this->latitude < 0) {
-            return 'S';
-        } else {
-            return 'N';
-        }
+        return $this->latitude < 0 ? 'S' : 'N';
     }
 
     private function getLongitudeHemisphereSymbol()
     {
-        if ($this->longitude < 0) {
-            return 'W';
-        } else {
-            return 'E';
-        }
+        return $this->longitude < 0 ? 'W' : 'E';
     }
 
     /**

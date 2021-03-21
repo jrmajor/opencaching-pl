@@ -595,11 +595,7 @@ class PowerTrail extends BaseObject
         $s = $this->db->multiVariableQuery($mySqlRequest, $user->getUserId(), $this->getId());
         $mySqlResult = $this->db->dbResultFetch($s);
 
-        if ($mySqlResult['ptConquestCount'] > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return $mySqlResult['ptConquestCount'] > 0;
     }
 
     public function setAndStoreStatus($status)
@@ -649,11 +645,7 @@ class PowerTrail extends BaseObject
             return false;
         }
 
-        if ($this->status === self::STATUS_CLOSED && ! $this->getCurrentUser()->hasOcTeamRole()) {
-            return false;
-        }
-
-        return true;
+        return ! ($this->status === self::STATUS_CLOSED && ! $this->getCurrentUser()->hasOcTeamRole());
     }
 
     public function getStatusTranslation()

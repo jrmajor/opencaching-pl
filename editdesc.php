@@ -102,7 +102,9 @@ if ($desc_record = XDb::xFetchArray($desc_rs)) {
             tpl_redirect('editcache.php?cacheid=' . urlencode($desc_record['cache_id']));
 
             exit;
-        } elseif (isset($_POST['show_all_langs'])) {
+        }
+
+        if (isset($_POST['show_all_langs'])) {
             $show_all_langs = true;
         }
     } else {

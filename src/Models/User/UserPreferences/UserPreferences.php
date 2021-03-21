@@ -129,11 +129,11 @@ class UserPreferences extends BaseObject
             $className = self::ALLOWED_KEYS[$key];
 
             return new $className($key);
-        } else {
-            Debug::errorLog(__METHOD__ . ": Unknown class for key: {$key}");
-
-            return null;
         }
+
+        Debug::errorLog(__METHOD__ . ": Unknown class for key: {$key}");
+
+        return null;
     }
 
     public function __construct()

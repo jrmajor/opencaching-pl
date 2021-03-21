@@ -153,11 +153,7 @@ class ReportPoll extends BaseObject
             return null;
         }
 
-        if ($this->dateEnd > new DateTime('now')) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->dateEnd > new DateTime('now');
     }
 
     /**
@@ -195,7 +191,9 @@ class ReportPoll extends BaseObject
     {
         if (! $this->isDataLoaded()) {
             return false;
-        } elseif ($this->isPollActive() && ! $this->userVoted() && $vote >= 1 && ($vote <= ($this->ans3 === null) ? 2 : 3)) {
+        }
+
+        if ($this->isPollActive() && ! $this->userVoted() && $vote >= 1 && ($vote <= ($this->ans3 === null) ? 2 : 3)) {
             $this->saveVote($vote);
 
             return true;
@@ -242,7 +240,9 @@ class ReportPoll extends BaseObject
     {
         if (! ($period >= self::POLL_INTERVAL_MIN && $period <= self::POLL_INTERVAL_MAX)) {
             return null;
-        } elseif (! ReportCommons::isValidReportId($reportId)) {
+        }
+
+        if (! ReportCommons::isValidReportId($reportId)) {
             return null;
         }
         $poll = new ReportPoll();
@@ -456,11 +456,7 @@ class ReportPoll extends BaseObject
         $params['pollid']['value'] = $pollId;
         $params['pollid']['data_type'] = 'integer';
 
-        if (self::db()->paramQueryValue($query, 0, $params) == '1') {
-            return true;
-        }
-
-        return false;
+        return self::db()->paramQueryValue($query, 0, $params) == '1';
     }
 
     /**

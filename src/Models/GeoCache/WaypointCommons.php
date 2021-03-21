@@ -45,16 +45,16 @@ class WaypointCommons extends BaseObject
                 self::TYPE_PARKING,
                 self::TYPE_TRAILHEAD,
             ];
-        } else {
-            return [
-                self::TYPE_PHYSICAL,
-                self::TYPE_VIRTUAL,
-                self::TYPE_FINAL,
-                self::TYPE_INTERESTING,
-                self::TYPE_PARKING,
-                self::TYPE_TRAILHEAD,
-            ];
         }
+  
+        return [
+            self::TYPE_PHYSICAL,
+            self::TYPE_VIRTUAL,
+            self::TYPE_FINAL,
+            self::TYPE_INTERESTING,
+            self::TYPE_PARKING,
+            self::TYPE_TRAILHEAD,
+        ];
     }
 
     public static function getIcon($type)

@@ -47,21 +47,17 @@ class OcCookie
         if (isset($data->{$key})) {
             if (! $skipPurifying) {
                 return UserInputFilter::purifyHtmlString($data->{$key});
-            } else {
-                return $data->{$key};
             }
-        } else {
-            return null;
+
+            return $data->{$key};
         }
+
+        return null;
     }
 
     public static function getOrDefault($key, $default)
     {
-        if (is_null($val = self::get($key))) {
-            return $default;
-        } else {
-            return $val;
-        }
+        return self::get($key) ?? $default;
     }
 
     /**

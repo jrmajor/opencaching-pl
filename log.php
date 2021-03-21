@@ -624,128 +624,150 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
     tpl_redirect('viewcache.php?cacheid=' . $geoCache->getCacheId() . $badgetParam);
 
     exit;
-} else {
-    // prepare empty log form view
+}
 
-    $logtypeoptions = '';
+// prepare empty log form view
 
-    // setting selector neutral
-    if ($log_type < 0) { // neutral-default value is set above
-        //-2 = Chose log type
+$logtypeoptions = '';
 
-        if ($geoCache->getStatus() != GeoCache::STATUS_WAITAPPROVERS) {
-            $logtypeoptions .= '<option value="-2" selected="selected" disabled="disabled">' . tr('choose_log') . '</option>';
-        }
+// setting selector neutral
+if ($log_type < 0) { // neutral-default value is set above
+    //-2 = Chose log type
 
-        tpl_set_var('display', 'none');
+    if ($geoCache->getStatus() != GeoCache::STATUS_WAITAPPROVERS) {
+        $logtypeoptions .= '<option value="-2" selected="selected" disabled="disabled">' . tr('choose_log') . '</option>';
     }
 
-    foreach (GeoCacheLogCommons::logTypesArray() as $type) {
-        // do not allow 'finding' or 'not finding' own or archived cache
-        // (events can be logged) $geoCache->getStatus() == 2 || $geoCache->getStatus() == 3
+    tpl_set_var('display', 'none');
+}
 
-        if ($geoCache->getCacheType() != GeoCache::TYPE_EVENT &&
-            ($user->getUserId() == $geoCache->getOwnerId() ||
-                $geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_FOUNDIT) ||
-                $geoCache->getStatus() == GeoCache::STATUS_WAITAPPROVERS ||
-                $geoCache->getStatus() == GeoCache::STATUS_BLOCKED)) {
-            //3 = Write a note;
-            if ($user->hasOcTeamRole() && $geoCache->getStatus() == GeoCache::STATUS_WAITAPPROVERS) {
-                $logtypeoptions .= '<option selected="selected" value="' . GeoCacheLog::LOGTYPE_COMMENT . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_COMMENT)) . '</option>' . "\n";
-            } else {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_COMMENT . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_COMMENT)) . '</option>' . "\n";
-            }
+foreach (GeoCacheLogCommons::logTypesArray() as $type) {
+    // do not allow 'finding' or 'not finding' own or archived cache
+    // (events can be logged) $geoCache->getStatus() == 2 || $geoCache->getStatus() == 3
 
-            //4 = Moved
-            if ($geoCache->getCacheType() == GeoCache::TYPE_MOVING ||
-                $geoCache->getCacheType() == GeoCache::TYPE_OWNCACHE) {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_MOVED . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_MOVED)) . '</option>' . "\n";
-            }
-
-            //5 = Needs maintenace
-            if ($user->getUserId() != $geoCache->getOwnerId()) {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_NEEDMAINTENANCE . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_NEEDMAINTENANCE)) . '</option>' . "\n";
-            }
-
-            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_MADEMAINTENANCE . '">' .
-                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_MADEMAINTENANCE)) . '</option>' . "\n";
-
-            //12 = OC Team Comment
-            if ($user->hasOcTeamRole()) {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_ADMINNOTE . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_ADMINNOTE)) . '</option>' . "\n";
-            }
-
-            // service log by Łza
-            // if curently logged user is a cache owner and cache status is "avilable"
-            // then add log type option "temp. unavailable";
-            //11 = Temporarily unavailable
-            if ($user->getUserId() == $geoCache->getOwnerId() && $geoCache->getStatus() == GeoCache::STATUS_READY) {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE)) . '</option>' . "\n";
-            }
-
-            // if curently logged user is a cache owner and cache status is "temp. unavailable"
-            // then add log type option "avilable"
-            // 10 = Ready to find
-            if ($user->getUserId() == $geoCache->getOwnerId() &&
-                $geoCache->getStatus() == GeoCache::STATUS_UNAVAILABLE) {
-                $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_READYTOSEARCH . '">' .
-                    tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_READYTOSEARCH)) . '</option>' . "\n";
-            }
-            break;
+    if ($geoCache->getCacheType() != GeoCache::TYPE_EVENT &&
+        ($user->getUserId() == $geoCache->getOwnerId() ||
+            $geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_FOUNDIT) ||
+            $geoCache->getStatus() == GeoCache::STATUS_WAITAPPROVERS ||
+            $geoCache->getStatus() == GeoCache::STATUS_BLOCKED)) {
+        //3 = Write a note;
+        if ($user->hasOcTeamRole() && $geoCache->getStatus() == GeoCache::STATUS_WAITAPPROVERS) {
+            $logtypeoptions .= '<option selected="selected" value="' . GeoCacheLog::LOGTYPE_COMMENT . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_COMMENT)) . '</option>' . "\n";
+        } else {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_COMMENT . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_COMMENT)) . '</option>' . "\n";
         }
 
-        // if virtual, webcam = archived -> allow only comment log type
-        if (($geoCache->getCacheType() == GeoCache::TYPE_VIRTUAL ||
-                $geoCache->getCacheType() == GeoCache::TYPE_WEBCAM)
-            && $geoCache->getStatus() == GeoCache::STATUS_ARCHIVED) {
-            if ($type != GeoCacheLog::LOGTYPE_COMMENT) {
+        //4 = Moved
+        if ($geoCache->getCacheType() == GeoCache::TYPE_MOVING ||
+            $geoCache->getCacheType() == GeoCache::TYPE_OWNCACHE) {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_MOVED . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_MOVED)) . '</option>' . "\n";
+        }
+
+        //5 = Needs maintenace
+        if ($user->getUserId() != $geoCache->getOwnerId()) {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_NEEDMAINTENANCE . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_NEEDMAINTENANCE)) . '</option>' . "\n";
+        }
+
+        $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_MADEMAINTENANCE . '">' .
+            tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_MADEMAINTENANCE)) . '</option>' . "\n";
+
+        //12 = OC Team Comment
+        if ($user->hasOcTeamRole()) {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_ADMINNOTE . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_ADMINNOTE)) . '</option>' . "\n";
+        }
+
+        // service log by Łza
+        // if curently logged user is a cache owner and cache status is "avilable"
+        // then add log type option "temp. unavailable";
+        //11 = Temporarily unavailable
+        if ($user->getUserId() == $geoCache->getOwnerId() && $geoCache->getStatus() == GeoCache::STATUS_READY) {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE)) . '</option>' . "\n";
+        }
+
+        // if curently logged user is a cache owner and cache status is "temp. unavailable"
+        // then add log type option "avilable"
+        // 10 = Ready to find
+        if ($user->getUserId() == $geoCache->getOwnerId() &&
+            $geoCache->getStatus() == GeoCache::STATUS_UNAVAILABLE) {
+            $logtypeoptions .= '<option value="' . GeoCacheLog::LOGTYPE_READYTOSEARCH . '">' .
+                tr(GeoCacheLogCommons::typeTranslationKey(GeoCacheLog::LOGTYPE_READYTOSEARCH)) . '</option>' . "\n";
+        }
+        break;
+    }
+
+    // if virtual, webcam = archived -> allow only comment log type
+    if (($geoCache->getCacheType() == GeoCache::TYPE_VIRTUAL ||
+            $geoCache->getCacheType() == GeoCache::TYPE_WEBCAM)
+        && $geoCache->getStatus() == GeoCache::STATUS_ARCHIVED) {
+        if ($type != GeoCacheLog::LOGTYPE_COMMENT) {
+            continue;
+        }
+    }
+
+    if ($geoCache->getCacheType() == GeoCache::TYPE_EVENT) {
+        // $datePlaced = ($geoCache->getDatePlaced()->format("Y-m-d H:i:s"));
+        $now = new DateTime('now');
+        $now->setTime(0, 0, 0); //there is no time in $geoCache->getDatePlaced(),
+        //so zero time here to allow logging WILLATTENDED or ATTENDED in the day of event
+
+        // if user logged event as willattended before or event it's over, do not display logtype 'attended'
+        if ($type == GeoCacheLog::LOGTYPE_WILLATTENDED) {
+            if ($geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_WILLATTENDED) ||
+                $now > $geoCache->getDatePlaced()) {
+                continue;
+            }
+        }
+        // if user logged event as attended before or event has not happened yet,
+        //do not display logtype 'attended'
+        if ($type == GeoCacheLog::LOGTYPE_ATTENDED) {
+            if ($geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_ATTENDED) ||
+                $now < $geoCache->getDatePlaced()) {
                 continue;
             }
         }
 
-        if ($geoCache->getCacheType() == GeoCache::TYPE_EVENT) {
-            // $datePlaced = ($geoCache->getDatePlaced()->format("Y-m-d H:i:s"));
-            $now = new DateTime('now');
-            $now->setTime(0, 0, 0); //there is no time in $geoCache->getDatePlaced(),
-            //so zero time here to allow logging WILLATTENDED or ATTENDED in the day of event
-
-            // if user logged event as willattended before or event it's over, do not display logtype 'attended'
-            if ($type == GeoCacheLog::LOGTYPE_WILLATTENDED) {
-                if ($geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_WILLATTENDED) ||
-                    $now > $geoCache->getDatePlaced()) {
-                    continue;
-                }
+        if ($user->hasOcTeamRole()) {
+            if ($type == GeoCacheLog::LOGTYPE_FOUNDIT ||
+                $type == GeoCacheLog::LOGTYPE_DIDNOTFIND ||
+                $type == GeoCacheLog::LOGTYPE_MOVED ||
+                $type == GeoCacheLog::LOGTYPE_NEEDMAINTENANCE ||
+                $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
+                $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
+                $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE) {
+                continue;
             }
-            // if user logged event as attended before or event has not happened yet,
-            //do not display logtype 'attended'
-            if ($type == GeoCacheLog::LOGTYPE_ATTENDED) {
-                if ($geoCache->hasUserLogByType($user, GeoCacheLog::LOGTYPE_ATTENDED) ||
-                    $now < $geoCache->getDatePlaced()) {
-                    continue;
-                }
+        } else {
+            if ($type == GeoCacheLog::LOGTYPE_FOUNDIT ||
+                $type == GeoCacheLog::LOGTYPE_DIDNOTFIND ||
+                $type == GeoCacheLog::LOGTYPE_MOVED ||
+                $type == GeoCacheLog::LOGTYPE_NEEDMAINTENANCE ||
+                $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
+                $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
+                $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE ||
+                $type == GeoCacheLog::LOGTYPE_ADMINNOTE) {
+                continue;
             }
-
+        }
+    } else { // NOT-EVENT
+        if ($geoCache->getCacheType() == GeoCache::TYPE_MOVING) {
             if ($user->hasOcTeamRole()) {
-                if ($type == GeoCacheLog::LOGTYPE_FOUNDIT ||
-                    $type == GeoCacheLog::LOGTYPE_DIDNOTFIND ||
-                    $type == GeoCacheLog::LOGTYPE_MOVED ||
-                    $type == GeoCacheLog::LOGTYPE_NEEDMAINTENANCE ||
+                // skip will attend/attended if the cache no event
+                if ($type == GeoCacheLog::LOGTYPE_ATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
                     $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
                     $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
                     $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE) {
                     continue;
                 }
             } else {
-                if ($type == GeoCacheLog::LOGTYPE_FOUNDIT ||
-                    $type == GeoCacheLog::LOGTYPE_DIDNOTFIND ||
-                    $type == GeoCacheLog::LOGTYPE_MOVED ||
-                    $type == GeoCacheLog::LOGTYPE_NEEDMAINTENANCE ||
+                if ($type == GeoCacheLog::LOGTYPE_ATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
                     $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
                     $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
                     $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE ||
@@ -753,129 +775,107 @@ if (isset($_POST['submitform']) && ($all_ok == true)) {
                     continue;
                 }
             }
-        } else { // NOT-EVENT
-            if ($geoCache->getCacheType() == GeoCache::TYPE_MOVING) {
-                if ($user->hasOcTeamRole()) {
-                    // skip will attend/attended if the cache no event
-                    if ($type == GeoCacheLog::LOGTYPE_ATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
-                        $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
-                        $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE) {
-                        continue;
-                    }
-                } else {
-                    if ($type == GeoCacheLog::LOGTYPE_ATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
-                        $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
-                        $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE ||
-                        $type == GeoCacheLog::LOGTYPE_ADMINNOTE) {
-                        continue;
-                    }
+        } else {
+            // skip will attend/attended/Moved  if the cache no event and Mobile
+            if ($user->hasOcTeamRole()) {
+                if ($type == GeoCacheLog::LOGTYPE_MOVED ||
+                    $type == GeoCacheLog::LOGTYPE_ATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
+                    $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
+                    $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE) {
+                    continue;
                 }
             } else {
-                // skip will attend/attended/Moved  if the cache no event and Mobile
-                if ($user->hasOcTeamRole()) {
-                    if ($type == GeoCacheLog::LOGTYPE_MOVED ||
-                        $type == GeoCacheLog::LOGTYPE_ATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
-                        $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
-                        $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE) {
-                        continue;
-                    }
-                } else {
-                    if ($type == GeoCacheLog::LOGTYPE_MOVED ||
-                        $type == GeoCacheLog::LOGTYPE_ATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
-                        $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
-                        $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
-                        $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE ||
-                        $type == GeoCacheLog::LOGTYPE_ADMINNOTE) {
-                        continue;
-                    }
+                if ($type == GeoCacheLog::LOGTYPE_MOVED ||
+                    $type == GeoCacheLog::LOGTYPE_ATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_WILLATTENDED ||
+                    $type == GeoCacheLog::LOGTYPE_ARCHIVED ||
+                    $type == GeoCacheLog::LOGTYPE_READYTOSEARCH ||
+                    $type == GeoCacheLog::LOGTYPE_TEMPORARYUNAVAILABLE ||
+                    $type == GeoCacheLog::LOGTYPE_ADMINNOTE) {
+                    continue;
                 }
             }
         }
-
-        if ($type == $log_type) {
-            $logtypeoptions .= '<option value="' . $type . '" selected="selected">' .
-                htmlspecialchars(tr(GeoCacheLogCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
-        } else {
-            $logtypeoptions .= '<option value="' . $type . '">' .
-                htmlspecialchars(tr(GeoCacheLogCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
-        }
     }
 
-    //set tpl vars
-    tpl_set_var('cachename', htmlspecialchars($geoCache->getCacheName(), ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('cacheid', htmlspecialchars($geoCache->getCacheId(), ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('logmin', htmlspecialchars($log_date_min, ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('loghour', htmlspecialchars($log_date_hour, ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('logday', htmlspecialchars($log_date_day, ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('logmonth', htmlspecialchars($log_date_month, ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('logyear', htmlspecialchars($log_date_year, ENT_COMPAT, 'UTF-8'));
-    tpl_set_var('logtypeoptions', $logtypeoptions);
-    tpl_set_var('reset', tr('reset'));
-    tpl_set_var('submit', tr('lxg05'));
-    tpl_set_var('date_message', '');
-    tpl_set_var('top_cache', $top_cache);
-    tpl_set_var('bodyMod', ' onload="chkMoved()"');
-
-    tpl_set_var('wsp_NS_st', $wsp_NS_st);
-    tpl_set_var('wsp_NS_min', $wsp_NS_min);
-    tpl_set_var('wsp_WE_st', $wsp_WE_st);
-    tpl_set_var('wsp_WE_min', $wsp_WE_min);
-    tpl_set_var('$wybor_WE', $wybor_WE);
-    tpl_set_var('$wybor_NS', $wybor_NS);
-
-    tpl_set_var('logtext', htmlspecialchars($log_text, ENT_COMPAT, 'UTF-8'), true);
-
-    if ($geoCache->hasLogPassword()) {
-        if ($pw_not_ok == true) {
-            tpl_set_var('log_pw_field', '<tr><td colspan="2">' .
-                '<img src="images/free_icons/key_go.png" class="icon16" alt="" title="" align="middle" />&nbsp;<b>' .
-                tr('password_to_log') .
-                ': <input type="text" name="log_pw" maxlength="20" size="20" value=""/><span class="errormsg"> ' .
-                tr('incorrect_password_to_log') .
-                '!</span></b></td></tr><tr><td class="spacer" colspan="2"></td></tr>');
-        } else {
-            tpl_set_var('log_pw_field',
-                '<tr><td colspan="2">' .
-                '<img src="images/free_icons/key_go.png" class="icon16" alt="" title="" align="middle" />' .
-                '&nbsp;<b>' . tr('password_to_log') .
-                ': <input class="input100" type="text" name="log_pw" maxlength="20" value="" /> (' .
-                tr('only_for_found_it') .
-                ')</b></td></tr><tr><td class="spacer" colspan="2"></td></tr>');
-        }
+    if ($type == $log_type) {
+        $logtypeoptions .= '<option value="' . $type . '" selected="selected">' .
+            htmlspecialchars(tr(GeoCacheLogCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
     } else {
-        tpl_set_var('log_pw_field', '');
+        $logtypeoptions .= '<option value="' . $type . '">' .
+            htmlspecialchars(tr(GeoCacheLogCommons::typeTranslationKey($type)), ENT_COMPAT, 'UTF-8') . '</option>' . "\n";
     }
+}
 
-    if ($date_not_ok == true) {
-        tpl_set_var('date_message', '<span class="errormsg">' . tr('lxg01') . '</span>');
-    }
+//set tpl vars
+tpl_set_var('cachename', htmlspecialchars($geoCache->getCacheName(), ENT_COMPAT, 'UTF-8'));
+tpl_set_var('cacheid', htmlspecialchars($geoCache->getCacheId(), ENT_COMPAT, 'UTF-8'));
+tpl_set_var('logmin', htmlspecialchars($log_date_min, ENT_COMPAT, 'UTF-8'));
+tpl_set_var('loghour', htmlspecialchars($log_date_hour, ENT_COMPAT, 'UTF-8'));
+tpl_set_var('logday', htmlspecialchars($log_date_day, ENT_COMPAT, 'UTF-8'));
+tpl_set_var('logmonth', htmlspecialchars($log_date_month, ENT_COMPAT, 'UTF-8'));
+tpl_set_var('logyear', htmlspecialchars($log_date_year, ENT_COMPAT, 'UTF-8'));
+tpl_set_var('logtypeoptions', $logtypeoptions);
+tpl_set_var('reset', tr('reset'));
+tpl_set_var('submit', tr('lxg05'));
+tpl_set_var('date_message', '');
+tpl_set_var('top_cache', $top_cache);
+tpl_set_var('bodyMod', ' onload="chkMoved()"');
 
-    tpl_set_var('coords_not_ok', ' ');
+tpl_set_var('wsp_NS_st', $wsp_NS_st);
+tpl_set_var('wsp_NS_min', $wsp_NS_min);
+tpl_set_var('wsp_WE_st', $wsp_WE_st);
+tpl_set_var('wsp_WE_min', $wsp_WE_min);
+tpl_set_var('$wybor_WE', $wybor_WE);
+tpl_set_var('$wybor_NS', $wybor_NS);
 
-    if (isset($coords_not_ok)) {
-        if ($coords_not_ok == true) {
-            tpl_set_var('coords_not_ok', tr('error_coords_not_ok'));
-        }
-    }
+tpl_set_var('logtext', htmlspecialchars($log_text, ENT_COMPAT, 'UTF-8'), true);
 
-    if ($score_not_ok == true) {
-        tpl_set_var('score_message', '<span class="errormsg">' . tr('lxg02') . '</span>');
+if ($geoCache->hasLogPassword()) {
+    if ($pw_not_ok == true) {
+        tpl_set_var('log_pw_field', '<tr><td colspan="2">' .
+            '<img src="images/free_icons/key_go.png" class="icon16" alt="" title="" align="middle" />&nbsp;<b>' .
+            tr('password_to_log') .
+            ': <input type="text" name="log_pw" maxlength="20" size="20" value=""/><span class="errormsg"> ' .
+            tr('incorrect_password_to_log') .
+            '!</span></b></td></tr><tr><td class="spacer" colspan="2"></td></tr>');
     } else {
-        tpl_set_var('score_message', '');
+        tpl_set_var('log_pw_field',
+            '<tr><td colspan="2">' .
+            '<img src="images/free_icons/key_go.png" class="icon16" alt="" title="" align="middle" />' .
+            '&nbsp;<b>' . tr('password_to_log') .
+            ': <input class="input100" type="text" name="log_pw" maxlength="20" value="" /> (' .
+            tr('only_for_found_it') .
+            ')</b></td></tr><tr><td class="spacer" colspan="2"></td></tr>');
     }
+} else {
+    tpl_set_var('log_pw_field', '');
+}
 
-    if ($log_type < 0 && isset($_POST['logtype'])) {
-        tpl_set_var('log_message', '&nbsp;<span class="errormsg">' . tr('no_logtype_choosen') . '</span>');
-    } else {
-        tpl_set_var('log_message', '');
+if ($date_not_ok == true) {
+    tpl_set_var('date_message', '<span class="errormsg">' . tr('lxg01') . '</span>');
+}
+
+tpl_set_var('coords_not_ok', ' ');
+
+if (isset($coords_not_ok)) {
+    if ($coords_not_ok == true) {
+        tpl_set_var('coords_not_ok', tr('error_coords_not_ok'));
     }
+}
+
+if ($score_not_ok == true) {
+    tpl_set_var('score_message', '<span class="errormsg">' . tr('lxg02') . '</span>');
+} else {
+    tpl_set_var('score_message', '');
+}
+
+if ($log_type < 0 && isset($_POST['logtype'])) {
+    tpl_set_var('log_message', '&nbsp;<span class="errormsg">' . tr('no_logtype_choosen') . '</span>');
+} else {
+    tpl_set_var('log_message', '');
 }
 
 //make the template and send it out
@@ -1140,9 +1140,5 @@ function isGeokretInCache($cacheid)
             AND stateid<>1 AND stateid<>4
             AND stateid <>5 AND typeid<>2', 0, $cache_wp);
 
-    if ($gkNum == 0) {
-        return 0;
-    } else {
-        return 1;
-    }
+    return $gkNum == 0 ? 0 : 1;
 }

@@ -92,9 +92,9 @@ class NutsLocation extends BaseObject
         // try to translate country name
         if (I18n::isTranslationAvailable($this->codes[self::LEVEL_COUNTRY])) {
             return tr($this->codes[self::LEVEL_COUNTRY]);
-        } else {
-            return $this->names[self::LEVEL_COUNTRY];
         }
+
+        return $this->names[self::LEVEL_COUNTRY];
     }
 
     /**
@@ -137,20 +137,12 @@ class NutsLocation extends BaseObject
 
     public function getCode($level)
     {
-        if (isset($this->codes[$level])) {
-            return $this->codes[$level];
-        } else {
-            return null;
-        }
+        return $this->codes[$level] ?? null;
     }
 
     public function getName($level)
     {
-        if (isset($this->names[$level])) {
-            return $this->names[$level];
-        } else {
-            return null;
-        }
+        return $this->names[$level] ?? null;
     }
 
     public function setLevel($level, $code, $name)

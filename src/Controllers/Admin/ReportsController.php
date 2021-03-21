@@ -44,7 +44,9 @@ class ReportsController extends BaseController
             }
 
             exit();
-        } elseif (! $this->loggedUser->hasOcTeamRole()) {
+        }
+
+        if (! $this->loggedUser->hasOcTeamRole()) {
             if (isset($_REQUEST['ajax'])) {
                 $this->ajaxErrorResponse('User is not admin', 401);
             } else {
@@ -523,10 +525,10 @@ class ReportsController extends BaseController
                 $this->ajaxErrorResponse('No hacking please!', 403);
 
                 exit();
-            } else {
-                $this->errorMsg = 'No hacking please!';
-                $this->redirectToReportList();
             }
+
+            $this->errorMsg = 'No hacking please!';
+            $this->redirectToReportList();
         }
     }
 

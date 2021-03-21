@@ -75,11 +75,7 @@ class Validator
             $diff++;
         }
 
-        if (mb_strlen($password) >= self::MIN_PASSWORD_LENGTH && $diff > 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return mb_strlen($password) >= self::MIN_PASSWORD_LENGTH && $diff > 1;
     }
 
     /**
@@ -101,9 +97,9 @@ class Validator
         // verify
         if (preg_match('/^GC[0-9A-HJKMNPQRTV-Z]{2,5}$/', $code)) {
             return $code;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -127,9 +123,9 @@ class Validator
         // verify
         if (preg_match('/^[TLC]C[0-9A-Z]{1,4}$/', $code)) {
             return $code;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
@@ -148,9 +144,9 @@ class Validator
         // verify
         if (preg_match('/^GE[0-9A-F]{4}$/', $code)) {
             return $code;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**

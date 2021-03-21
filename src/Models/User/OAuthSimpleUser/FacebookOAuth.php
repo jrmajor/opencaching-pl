@@ -65,9 +65,9 @@ class FacebookOAuth extends OAuthSimpleUserBase
 
         if ($urlForHtml) {
             return htmlspecialchars($url);
-        } else {
-            return $url;
         }
+  
+        return $url;
     }
 
     /**

@@ -165,9 +165,9 @@ class DynamicMapModel
             $ne = $this->neCorner->getAsOpenLayersFormat();
 
             return "{ sw:{$sw}, ne:{$ne} }";
-        } else {
-            return 'null';
         }
+  
+        return 'null';
     }
 
     public function setInfoMessage($msg)

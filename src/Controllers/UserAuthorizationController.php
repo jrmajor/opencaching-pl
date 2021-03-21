@@ -111,9 +111,9 @@ class UserAuthorizationController extends BaseController
             UserAuthorization::sendPwCode($user);
 
             return null;
-        } else {
-            return tr('newpw_err_notusr');
         }
+
+        return tr('newpw_err_notusr');
     }
 
     /**
@@ -263,16 +263,10 @@ class UserAuthorizationController extends BaseController
     private function getCredentialsData()
     {
         if (isset($_POST['email'], $_POST['password'])) {
-            return [
-                $_POST['email'],
-                $_POST['password'],
-            ];
-        } else {
-            return [
-                null,
-                null,
-            ];
+            return [$_POST['email'], $_POST['password']];
         }
+
+        return [null, null];
     }
 
     public function verifyAuthCookie()
@@ -282,10 +276,10 @@ class UserAuthorizationController extends BaseController
             $this->view->redirect(urldecode($this->getRedirectTarget()));
 
             exit();
-        } else {
-            // display message if cookie can't be set in browser
-            $this->displayLoginPage(tr('loginForm_cantSetCookie'));
         }
+
+        // display message if cookie can't be set in browser
+        $this->displayLoginPage(tr('loginForm_cantSetCookie'));
     }
 
     public function logout()
@@ -300,11 +294,7 @@ class UserAuthorizationController extends BaseController
 
     private function getRedirectTarget()
     {
-        if (isset($_REQUEST['target'])) {
-            return $_REQUEST['target'];
-        } else {
-            return urlencode(self::DEFAULT_TARGET);
-        }
+        return $_REQUEST['target'] ?? urlencode(self::DEFAULT_TARGET);
     }
 
     private function redirectToAuthCookieVerify()

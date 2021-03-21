@@ -16,9 +16,9 @@ class UserCacheCoords extends BaseObject
 
         if ($row = self::db()->dbResultFetchOneRowOnly($rs)) {
             return Coordinates::FromCoordsFactory($row['lat'], $row['lon']);
-        } else {
-            return null;
         }
+  
+        return null;
     }
 
     public static function storeCoords($userId, $cacheId, Coordinates $coords)

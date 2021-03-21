@@ -239,26 +239,30 @@ class MeritBadgeController
         foreach ($meritBadges as $oneMeritBadge) {
             if (! $this->isToUpdate($cache_id, $oneMeritBadge)) {
                 continue;
-                $currValue = $this->calcCurrValForUserBadge($user_id, $oneMeritBadge);
+            }
 
-                if (! $currValue)
-                    continue;
-                    $newUserBadge = ! $this->isExistUserBadge($user_id, $oneMeritBadge->getId());
+            $currValue = $this->calcCurrValForUserBadge($user_id, $oneMeritBadge);
 
-                    if ($newUserBadge) {
-                        $this->insertUserBadge($currValue, $user_id, $oneMeritBadge->getId());
-                    } else {
-                        $this->updateCurrValInUserBadge($currValue, $user_id, $oneMeritBadge->getId());
-                    }
+            if (! $currValue) {
+                continue;
+            }
 
-                    if ($this->setProperValueUserBadge($user_id, $oneMeritBadge->getId(), $newUserBadge)){
-                        if (! $first) {
-                            $changedLevelBadgesIds .= ',';
-                        }
+            $newUserBadge = ! $this->isExistUserBadge($user_id, $oneMeritBadge->getId());
 
-                            $changedLevelBadgesIds .= $oneMeritBadge->getId(); //the level was changed
-                            $first = false;
-                    }
+            if ($newUserBadge) {
+                $this->insertUserBadge($currValue, $user_id, $oneMeritBadge->getId());
+            } else {
+                $this->updateCurrValInUserBadge($currValue, $user_id, $oneMeritBadge->getId());
+            }
+
+            if ($this->setProperValueUserBadge($user_id, $oneMeritBadge->getId(), $newUserBadge)) {
+                if (! $first) {
+                    $changedLevelBadgesIds .= ',';
+                }
+
+                $changedLevelBadgesIds .= $oneMeritBadge->getId(); //the level was changed
+                $first = false;
+            }
         }
 
         return $changedLevelBadgesIds;
@@ -276,9 +280,9 @@ class MeritBadgeController
     {
         $header = "<p style='font-size:12px; font-weight:bold; color:green; text-decoration: underline;'>"
             . tr('merit_badge_gain_next_level') . '</p><br>';
-            $htmlNewElement = '<hr><br>';
+        $htmlNewElement = '<hr><br>';
 
-            $pattern = "<div style ='width:500px;'><img src='{picture}' style= 'float: left;margin-right:20px;' />
+        $pattern = "<div style ='width:500px;'><img src='{picture}' style= 'float: left;margin-right:20px;' />
             <p style='font-size:20px; font-weight:bold;'> {name} <br>
             <span style='font-size:13px; font-weight:normal; font-style:italic;'> {short_desc} </span></p>
             <p style='font-size:13px;font-weight:normal;'>"
@@ -287,11 +291,11 @@ class MeritBadgeController
                         . tr('merit_badge_next_level_threshold') . ': <b>{next_val}</b><br>
             </p></div><br>';
 
-                        if (! $firstEl) {
-                            return $htmlNewElement . $pattern;
-                        }
+        if (! $firstEl) {
+            return $htmlNewElement . $pattern;
+        }
 
-                            return $pattern;
+        return $pattern;
     }
 
     private function buildArray($class, $stm)
@@ -324,7 +328,8 @@ class MeritBadgeController
         return $userBadge;
     }
 
-    private function getProperBadgeLevel($badge_id, $curr_val){
+    private function getProperBadgeLevel($badge_id, $curr_val)
+    {
         $query = 'SELECT level
                 FROM badge_levels
                 WHERE badge_id = :1 AND threshold > :2
@@ -338,7 +343,8 @@ class MeritBadgeController
         return $this->buildBadgeLevel($badge_id, $level);
     }
 
-    private function insertCache($badge_id, $cache_id){
+    private function insertCache($badge_id, $cache_id)
+    {
         $query = 'INSERT INTO badge_cache
                 (badge_id, cache_id)
                 VALUES (:1, :2)';
@@ -349,7 +355,8 @@ class MeritBadgeController
             );
     }
 
-    private function insertUserBadge($curr_val, $user_id, $badge_id){
+    private function insertUserBadge($curr_val, $user_id, $badge_id)
+    {
         $query = 'INSERT INTO badge_user
                 (user_id, badge_id, level_id, level_date, curr_val, next_val, description)
                 VALUES (:1, :2, :3, :4, :5, :6, :7)';
@@ -375,11 +382,7 @@ class MeritBadgeController
     {
         $userMeritBadge = $this->buildUserBadge($user_id, $badge_id);
 
-        if (! $userMeritBadge->getCurrVal()) {
-            return false;
-        }
-
-        return true;
+        return (bool) $userMeritBadge->getCurrVal();
     }
 
     //@return = true - new level; set new value for badge_user
@@ -391,21 +394,22 @@ class MeritBadgeController
             return false;
         }
 
-            //the badge has a wrong level
-            if ($newUserBadge) {
-                $badgeLevel = $this->getProperBadgeLevel($badge_id, $userMeritBadge->getCurrVal());
-            } else {
-                $badgeLevel = $this->buildBadgeLevel($badge_id, $userMeritBadge->getLevelId() + 1);
-            } //next level
+        //the badge has a wrong level
+        if ($newUserBadge) {
+            $badgeLevel = $this->getProperBadgeLevel($badge_id, $userMeritBadge->getCurrVal());
+        } else {
+            $badgeLevel = $this->buildBadgeLevel($badge_id, $userMeritBadge->getLevelId() + 1);
+        } //next level
 
-                    $query = 'UPDATE badge_user
-                SET level_id = :1, level_date= :2, prev_val = next_val, next_val = :3
-                WHERE user_id = :4 and badge_id= :5';
-                    $this->db->multiVariableQuery($query,
-                        $badgeLevel->getLevel(), date('Y-m-d'), $badgeLevel->getThreshold(),
-                        $user_id, $badge_id);
+        $query = 'UPDATE badge_user
+            SET level_id = :1, level_date= :2, prev_val = next_val, next_val = :3
+            WHERE user_id = :4 and badge_id= :5';
 
-                    return true;
+        $this->db->multiVariableQuery($query,
+            $badgeLevel->getLevel(), date('Y-m-d'), $badgeLevel->getThreshold(),
+            $user_id, $badge_id);
+
+        return true;
     }
 
     private function isToUpdate($id, $oneMeritBadge)
@@ -429,11 +433,7 @@ class MeritBadgeController
             $stm = $this->db->multiVariableQuery($query);
         }
 
-        if (! $this->db->rowCount($stm)) {
-            return false;
-        }
-
-        return true;
+        return (bool) $this->db->rowCount($stm);
     }
 
     private function preapareGainedPositions($user_id, $oneMeritBadge)
@@ -472,7 +472,8 @@ class MeritBadgeController
     // private functions - query
     //////////////////////////////////////////////////////////////////////
 
-    private function getMeritBadgeQuery($condition){
+    private function getMeritBadgeQuery($condition)
+    {
         $query = 'SELECT
                 badges.id badges_id,
                 badges.trigger_type badges_trigger_type,
@@ -528,10 +529,11 @@ class MeritBadgeController
             . $condition .
             ' ORDER BY badges.sequence';
 
-            return $query;
+        return $query;
     }
 
-    private function getLevelsQuery($condition){
+    private function getLevelsQuery($condition)
+    {
         $query = 'SELECT
                 badge_levels.level badge_levels_level,
                 badge_levels.name badge_levels_name,
@@ -552,10 +554,11 @@ class MeritBadgeController
             . $condition .
             ' ORDER BY badge_levels.level';
 
-            return $query;
+        return $query;
     }
 
-    private function getArrayUserQuery(){
+    private function getArrayUserQuery()
+    {
         $query = ' SELECT
                 badge_user.level_id badge_user_level_id,
                 badge_user.user_id badge_user_user_id,
@@ -572,7 +575,8 @@ class MeritBadgeController
         return $query;
     }
 
-    private function getArrayUserCategoriesQuery(){
+    private function getArrayUserCategoriesQuery()
+    {
         $query = 'SELECT distinct
                 badge_categories.id badge_categories_id,
                 badge_categories.name badge_categories_name

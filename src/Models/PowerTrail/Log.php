@@ -126,20 +126,22 @@ class Log
 
         if ($this->id) {
             exit('TODO');
-        } else {
-            if ($this->type === self::TYPE_ADD_WARNING && $this->user->hasOcTeamRole() === false) {
-                return false; /* regular user is not allowed to add entry of this type */
-            }
-            $query = 'INSERT INTO `PowerTrail_comments`
-                      (`userId`, `PowerTrailId`, `commentType`, `commentText`,
-                       `logDateTime`, `dbInsertDateTime`, `deleted`, uuid)
-                      VALUES (:1, :2, :3, :4, :5, NOW(),0, ' . Uuid::getSqlForUpperCaseUuid() . ')';
-            $db->multiVariableQuery($query, $this->user->getUserId(), $this->powerTrail->getId(), $this->type, $this->text, $this->dateTime->format('Y-m-d H:i:s'));
-
-            if ($this->type == self::TYPE_CONQUESTED) {
-                $this->powerTrail->increaseConquestedCount();
-            }
         }
+
+        if ($this->type === self::TYPE_ADD_WARNING && $this->user->hasOcTeamRole() === false) {
+            return false; /* regular user is not allowed to add entry of this type */
+        }
+
+        $query = 'INSERT INTO `PowerTrail_comments`
+                  (`userId`, `PowerTrailId`, `commentType`, `commentText`,
+                   `logDateTime`, `dbInsertDateTime`, `deleted`, uuid)
+                  VALUES (:1, :2, :3, :4, :5, NOW(),0, ' . Uuid::getSqlForUpperCaseUuid() . ')';
+        $db->multiVariableQuery($query, $this->user->getUserId(), $this->powerTrail->getId(), $this->type, $this->text, $this->dateTime->format('Y-m-d H:i:s'));
+
+        if ($this->type == self::TYPE_CONQUESTED) {
+            $this->powerTrail->increaseConquestedCount();
+        }
+
         $this->changePowerTrailStatusAfterLog();
 
         return true;

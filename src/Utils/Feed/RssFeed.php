@@ -186,11 +186,12 @@ class RssFeed
     {
         if ($xml = $this->getCacheXML()) {
             return $xml;
-        } elseif ($xml = $this->getURLXML()) {
-            return $xml;
-        } else {
-            return new SimpleXMLElement('<empty>ThereIsNoData</empty>');
         }
+        if ($xml = $this->getURLXML()) {
+            return $xml;
+        }
+
+        return new SimpleXMLElement('<empty>ThereIsNoData</empty>');
     }
 
     /**

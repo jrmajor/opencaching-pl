@@ -72,11 +72,7 @@ function activateCache($cacheid)
 {
     // activate the cache by changing its status to yet unavailable
     if (actionRequired($cacheid)) {
-        if (XDb::xSql('UPDATE caches SET status = 5 WHERE cache_id= ? ', $cacheid)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool) XDb::xSql('UPDATE caches SET status = 5 WHERE cache_id= ? ', $cacheid);
     }
 
     return false;
@@ -86,11 +82,7 @@ function declineCache($cacheid)
 {
     // activate the cache by changing its status to yet unavailable
     if (actionRequired($cacheid)) {
-        if (XDb::xSql('UPDATE caches SET status = 6 WHERE cache_id= ? ', $cacheid)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool) XDb::xSql('UPDATE caches SET status = 6 WHERE cache_id= ? ', $cacheid);
     }
 
     return false;

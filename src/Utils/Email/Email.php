@@ -123,9 +123,9 @@ class Email
             $this->ccAddr[] = $addr;
 
             return true;
-        } else {
-            return false;
         }
+  
+        return false;
     }
 
     public function addBccAddr($addr)
@@ -134,9 +134,9 @@ class Email
             $this->bccAddr[] = $addr;
 
             return true;
-        } else {
-            return false;
         }
+  
+        return false;
     }
 
     public function setReplyToAddr($addr)
@@ -145,9 +145,9 @@ class Email
             $this->replyToAddr = $addr;
 
             return true;
-        } else {
-            return false;
         }
+  
+        return false;
     }
 
     public function setSubject($subject)

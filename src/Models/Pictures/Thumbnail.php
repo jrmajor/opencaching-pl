@@ -79,9 +79,9 @@ class Thumbnail extends BaseObject
             if ($showSpoiler) {
                 // spoiler thumb found and should be display
                 return $spoilerUrl;
-            } else {
-                return self::placeholderUri(self::PHD_SPOILER);
             }
+  
+            return self::placeholderUri(self::PHD_SPOILER);
         }
 
         // both spoiler and non-spoiler not found

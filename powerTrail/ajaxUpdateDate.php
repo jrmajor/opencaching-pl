@@ -25,6 +25,6 @@ if ($ptAPI::checkIfUserIsPowerTrailOwner($_SESSION['user_id'], $powerTrailId) ==
     $db->multiVariableQuery($query, $newDate->format('Y-m-d H:i:s'), $powerTrailId);
 
     exit(json_encode(['resultSuccess' => true, 'error' => null]));
-} else {
-    exit(json_encode(['resultSuccess' => false, 'error' => 'User is not powerTrail owner']));
 }
+
+exit(json_encode(['resultSuccess' => false, 'error' => 'User is not powerTrail owner']));

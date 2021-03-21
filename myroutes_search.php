@@ -1466,16 +1466,17 @@ function cache_distances($lat1, $lon1, $lat2, $lon2)
 {
     if (($lon1 == $lon2) and ($lat1 == $lat2)) {
         return 0;
-    } else {
-        $earth_radius = 6378;
+    }
 
-        foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate) {
-            ${$ordinate} = ${$ordinate} * (pi() / 180);
-        }
-        $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
+    $earth_radius = 6378;
+
+    foreach (['lat1', 'lon1', 'lat2', 'lon2'] as $ordinate) {
+        ${$ordinate} = ${$ordinate} * (pi() / 180);
+    }
+
+    $dist = acos(cos($lat1) * cos($lon1) * cos($lat2) * cos($lon2) +
                 cos($lat1) * sin($lon1) * cos($lat2) * sin($lon2) +
                 sin($lat1) * sin($lat2)) * $earth_radius;
 
-        return $dist;
-    }
+    return $dist;
 }

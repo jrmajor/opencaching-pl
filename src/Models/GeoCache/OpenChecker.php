@@ -63,10 +63,6 @@ class OpenChecker
     {
         global $config;
 
-        if ($config['module']['openchecker']['enabled']) {
-            return true;
-        } else {
-            return false;
-        }
+        return (bool) $config['module']['openchecker']['enabled'];
     }
 }

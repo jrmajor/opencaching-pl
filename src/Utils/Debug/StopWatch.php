@@ -99,9 +99,9 @@ class StopWatch
                 $instance = new static();
 
                 return $instance;
-            } else {
-                return null;
             }
+
+            return null;
         }
 
         return $instance;

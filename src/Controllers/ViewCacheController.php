@@ -302,9 +302,13 @@ class ViewCacheController extends BaseController
     {
         if (isset($_REQUEST['cacheid'])) {
             return GeoCache::fromCacheIdFactory($_REQUEST['cacheid']);
-        } elseif (isset($_REQUEST['uuid'])) {
+        }
+
+        if (isset($_REQUEST['uuid'])) {
             return GeoCache::fromUUIDFactory($_REQUEST['uuid']);
-        } elseif (isset($_REQUEST['wp'])) {
+        }
+
+        if (isset($_REQUEST['wp'])) {
             return GeoCache::fromWayPointFactory($_REQUEST['wp']);
         }
 

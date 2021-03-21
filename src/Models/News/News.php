@@ -56,9 +56,9 @@ class News extends BaseObject
 
         if ($this->id == 0) {
             return $this->insertIntoDb();
-        } else {
-            return $this->saveToDb();
         }
+
+        return $this->saveToDb();
     }
 
     private function saveToDb()
@@ -164,9 +164,9 @@ class News extends BaseObject
 
             if ($obj->isDataLoaded()) {
                 return $obj;
-            } else {
-                return null;
             }
+
+            return null;
         } catch (Exception $e) {
             return null;
         }
@@ -449,12 +449,8 @@ class News extends BaseObject
 
         $isUserLogged = boolval($isUserLogged);
 
-        if (! $this->getShowNotLogged() && ! $isUserLogged) {
-            // news only for logged user, but user is not logged in
-            return false;
-        }
-
-        return true;
+        // news only for logged user, but user is not logged in
+        return $this->getShowNotLogged() || $isUserLogged;
     }
 
     public function dataReady()
@@ -470,9 +466,10 @@ class News extends BaseObject
 
         if ($asString) { // Date should be formated as human readable string
             return Formatter::date($obj);
-        } else { // Date should be returned as an object
-            return $obj;
         }
+
+        // Date should be returned as an object
+        return $obj;
     }
 
     private static function truncateTime(DateTime $date)
@@ -486,13 +483,17 @@ class News extends BaseObject
 
         if ($this->date_publication > $currentTime) {
             return self::STATUS_FUTURE;
-        } elseif (! is_null($this->date_expiration) && $this->date_expiration < $currentTime) {
-            return self::STATUS_ARCHIVED;
-        } elseif ($this->show_onmainpage && (is_null($this->date_mainpageexp) || $this->date_mainpageexp > $currentTime)) {
-            return self::STATUS_ON_MAINPAGE;
-        } else {
-            return self::STATUS_ONLY_NEWSPAGE;
         }
+
+        if (! is_null($this->date_expiration) && $this->date_expiration < $currentTime) {
+            return self::STATUS_ARCHIVED;
+        }
+
+        if ($this->show_onmainpage && (is_null($this->date_mainpageexp) || $this->date_mainpageexp > $currentTime)) {
+            return self::STATUS_ON_MAINPAGE;
+        }
+
+        return self::STATUS_ONLY_NEWSPAGE;
     }
 
     public function getStatusBootstrapName()

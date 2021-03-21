@@ -124,11 +124,7 @@ class DbUpdate
             return true;
         }
 
-        if ($this->getRuntype() == 'always') {
-            return true;
-        }
-
-        return false;
+        return $this->getRuntype() == 'always';
     }
 
     public function getScriptContents()

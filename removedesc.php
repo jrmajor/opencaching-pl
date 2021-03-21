@@ -64,17 +64,17 @@ if (! $loggedUser) {
                         tpl_redirect('editcache.php?cacheid=' . urlencode($cache_id));
 
                         exit;
-                    } else {
-                        //commit the removement
-                        $tplname = 'removedesc';
-
-                        tpl_set_var('desclang_name', Languages::languageNameFromCode($desclang, I18n::getCurrentLang()));
-                        tpl_set_var('cachename', htmlspecialchars($cache_record['name'], ENT_COMPAT, 'UTF-8'));
-                        tpl_set_var('cacheid', htmlspecialchars($cache_id, ENT_COMPAT, 'UTF-8'));
-                        tpl_set_var('cacheid_urlencode', htmlspecialchars(urlencode($cache_id), ENT_COMPAT, 'UTF-8'));
-                        tpl_set_var('desclang', htmlspecialchars($desclang, ENT_COMPAT, 'UTF-8'));
-                        tpl_set_var('desclang_urlencode', htmlspecialchars(urlencode($desclang), ENT_COMPAT, 'UTF-8'));
                     }
+
+                    //commit the removement
+                    $tplname = 'removedesc';
+
+                    tpl_set_var('desclang_name', Languages::languageNameFromCode($desclang, I18n::getCurrentLang()));
+                    tpl_set_var('cachename', htmlspecialchars($cache_record['name'], ENT_COMPAT, 'UTF-8'));
+                    tpl_set_var('cacheid', htmlspecialchars($cache_id, ENT_COMPAT, 'UTF-8'));
+                    tpl_set_var('cacheid_urlencode', htmlspecialchars(urlencode($cache_id), ENT_COMPAT, 'UTF-8'));
+                    tpl_set_var('desclang', htmlspecialchars($desclang, ENT_COMPAT, 'UTF-8'));
+                    tpl_set_var('desclang_urlencode', htmlspecialchars(urlencode($desclang), ENT_COMPAT, 'UTF-8'));
                 } else {
                     //TODO: desc not exist
                 }

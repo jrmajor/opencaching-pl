@@ -64,9 +64,9 @@ class CacheSetAdminController extends BaseController
             $this->view->buildView();
 
             exit;
-        } else {
-            $this->view->setVar('noCsToArchive', false);
         }
+
+        $this->view->setVar('noCsToArchive', false);
 
         // prepare model for list of watched caches
         $listModel = new ListOfCachesModel();

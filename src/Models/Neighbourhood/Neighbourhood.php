@@ -204,11 +204,12 @@ class Neighbourhood extends BaseObject
 
             if (empty($nbh)) {
                 return $result;
-            } else {
-                $result['coords'] = $nbh->getCoords();
-                $result['radius'] = $nbh->getRadius();
-                unset($nbh);
             }
+
+            $result['coords'] = $nbh->getCoords();
+            $result['radius'] = $nbh->getRadius();
+
+            unset($nbh);
         }
 
         return $result;

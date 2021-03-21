@@ -218,9 +218,9 @@ class powerTrailController
             header("location: powerTrail.php?ptAction=showSerie&ptrail={$newProjectId}");
 
             return true;
-        } else {
-            return false;
         }
+  
+        return false;
     }
 
     private function getUserCachesToChose()

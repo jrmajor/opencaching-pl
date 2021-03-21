@@ -108,11 +108,9 @@ class GeoCacheDesc extends BaseObject
             // unsafe HTML, needs purifying
             $desc = htmlspecialchars_decode($desc);
             $desc = UserInputFilter::purifyHtmlString($desc);
-        } else {
-            // safe HTML - pass as is
         }
 
-        //replace { and } to prevent replacing
+        // replace { and } to prevent replacing
         $desc = mb_ereg_replace('{', '&#0123;', $desc);
         $desc = mb_ereg_replace('}', '&#0125;', $desc);
 

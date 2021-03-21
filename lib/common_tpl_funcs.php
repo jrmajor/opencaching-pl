@@ -27,11 +27,7 @@ function tpl_get_var($name)
 {
     global $vars;
 
-    if (isset($vars[$name])) {
-        return $vars[$name];
-    } else {
-        return false;
-    }
+    return $vars[$name] ?? false;
 }
 
 //redirect to another site to display, i.e. to view a cache after logging

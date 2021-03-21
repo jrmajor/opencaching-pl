@@ -232,9 +232,9 @@ class MainMapAjaxController extends BaseController
         if (isset($_GET['searchdata']) &&
             preg_match(self::SEARCHDATA_REGEX, $_GET['searchdata'])) {
             return $_GET['searchdata'];
-        } else {
-            return null;
         }
+  
+        return null;
     }
 
     /**

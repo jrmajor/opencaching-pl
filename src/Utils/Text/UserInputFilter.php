@@ -136,9 +136,9 @@ class UserInputFilter
         if ($htmlMode < 2) {
             // see https://github.com/opencaching/opencaching-pl/issues/1218
             return htmlspecialchars_decode($dirtyHtml);
-        } else {
-            return $dirtyHtml;
         }
+  
+        return $dirtyHtml;
     }
 }
 

@@ -124,10 +124,6 @@ class AtomFeedAuthor
      */
     public function isValid()
     {
-        if (empty($this->getName())) {
-            return false;
-        }
-
-        return true;
+        return ! empty($this->getName());
     }
 }

@@ -665,11 +665,7 @@ class User extends UserCommons
              WHERE `user_id` = :1 AND status = 1',
              0, $this->getUserId());
 
-        if ($activeCachesNum < OcConfig::getNeedApproveLimit()) {
-            return true;
-        }
-
-        return false;
+        return $activeCachesNum < OcConfig::getNeedApproveLimit();
     }
 
     /**
@@ -713,11 +709,7 @@ class User extends UserCommons
      */
     public function isAdoptionApplicable()
     {
-        if ($this->canCreateNewCache() && ! $this->isUnderCacheVerification()) {
-            return true;
-        }
-
-        return false;
+        return $this->canCreateNewCache() && ! $this->isUnderCacheVerification();
     }
 
     /**
@@ -952,13 +944,17 @@ class User extends UserCommons
 
         if ($monthsDiff > 12) {
             return 'more_12_month';
-        } elseif ($monthsDiff > 6) {
-            return 'more_six_month';
-        } elseif ($monthsDiff > 1) {
-            return 'more_one_month';
-        } else {
-            return 'this_month';
         }
+
+        if ($monthsDiff > 6) {
+            return 'more_six_month';
+        }
+
+        if ($monthsDiff > 1) {
+            return 'more_one_month';
+        }
+
+        return 'this_month';
     }
 
     /**
@@ -979,13 +975,17 @@ class User extends UserCommons
 
         if ($monthsDiff > 12) {
             return 'text-color-danger';
-        } elseif ($monthsDiff > 6) {
-            return 'text-color-warning';
-        } elseif ($monthsDiff > 1) {
-            return 'text-color-secondary';
-        } else {
-            return 'text-color-success';
         }
+
+        if ($monthsDiff > 6) {
+            return 'text-color-warning';
+        }
+
+        if ($monthsDiff > 1) {
+            return 'text-color-secondary';
+        }
+
+        return 'text-color-success';
     }
 
     /**

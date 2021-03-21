@@ -163,60 +163,60 @@ if (! $loggedUser) {
                 tpl_BuildTemplate();
 
                 exit;
+            }
+
+            $record = $dbc->dbResultFetch($s);
+
+            $options = unserialize($record['options']);
+
+            if ($record['user_id'] != 0) {
+                $options['userid'] = $record['user_id'];
+            }
+
+            $options['queryid'] = $queryid;
+
+            $sqlstr = 'UPDATE `queries` SET `last_queried`=NOW() WHERE `id`= :1';
+            $s = $dbc->multiVariableQuery($sqlstr, $queryid);
+
+            // overwrite changeable values
+            if (isset($_REQUEST['output'])) {
+                $options['output'] = $_REQUEST['output'];
+            }
+
+            if (isset($_REQUEST['showresult'])) {
+                $options['showresult'] = $_REQUEST['showresult'];
             } else {
-                $record = $dbc->dbResultFetch($s);
-
-                $options = unserialize($record['options']);
-
-                if ($record['user_id'] != 0) {
-                    $options['userid'] = $record['user_id'];
+                if ($bCookieQueryid == true) {
+                    $options['showresult'] = 0;
                 }
+            }
 
-                $options['queryid'] = $queryid;
+            // get finder from finderid
+            $options['finderid'] = isset($options['finderid']) ? $options['finderid'] + 0 : 0;
 
-                $sqlstr = 'UPDATE `queries` SET `last_queried`=NOW() WHERE `id`= :1';
-                $s = $dbc->multiVariableQuery($sqlstr, $queryid);
+            if (isset($options['finder']) && $options['finderid'] > 0) {
+                $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
+                $s = $dbc->multiVariableQuery($sqlstr, $options['finderid']);
 
-                // overwrite changeable values
-                if (isset($_REQUEST['output'])) {
-                    $options['output'] = $_REQUEST['output'];
+                if ($dbc->rowCount($s) == 1) {
+                    $record_name = $dbc->dbResultFetchOneRowOnly($s);
+                    $options['finder'] = $record_name['username'];
                 }
+                unset($record_name);
+            }
 
-                if (isset($_REQUEST['showresult'])) {
-                    $options['showresult'] = $_REQUEST['showresult'];
-                } else {
-                    if ($bCookieQueryid == true) {
-                        $options['showresult'] = 0;
-                    }
+            // get owner from ownerid
+            $options['ownerid'] = isset($options['ownerid']) ? $options['ownerid'] + 0 : 0;
+
+            if (isset($options['owner']) && $options['ownerid'] > 0) {
+                $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
+                $s = $dbc->multiVariableQuery($sqlstr, $options['ownerid']);
+
+                if ($dbc->rowCount($s) == 1) {
+                    $record_name = $dbc->dbResultFetchOneRowOnly($s);
+                    $options['owner'] = $record_name['username'];
                 }
-
-                // get finder from finderid
-                $options['finderid'] = isset($options['finderid']) ? $options['finderid'] + 0 : 0;
-
-                if (isset($options['finder']) && $options['finderid'] > 0) {
-                    $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
-                    $s = $dbc->multiVariableQuery($sqlstr, $options['finderid']);
-
-                    if ($dbc->rowCount($s) == 1) {
-                        $record_name = $dbc->dbResultFetchOneRowOnly($s);
-                        $options['finder'] = $record_name['username'];
-                    }
-                    unset($record_name);
-                }
-
-                // get owner from ownerid
-                $options['ownerid'] = isset($options['ownerid']) ? $options['ownerid'] + 0 : 0;
-
-                if (isset($options['owner']) && $options['ownerid'] > 0) {
-                    $sqlstr = 'SELECT `username` FROM `user` WHERE `user_id`= :1 LIMIT 1';
-                    $s = $dbc->multiVariableQuery($sqlstr, $options['ownerid']);
-
-                    if ($dbc->rowCount($s) == 1) {
-                        $record_name = $dbc->dbResultFetchOneRowOnly($s);
-                        $options['owner'] = $record_name['username'];
-                    }
-                    unset($record_name);
-                }
+                unset($record_name);
             }
         } else {
             // hack
@@ -503,7 +503,9 @@ if (! $loggedUser) {
                                 outputSearchForm($options, $loggedUser);
 
                                 exit;
-                            } elseif ($dbc->rowCount($s) == 1) {
+                            }
+
+                            if ($dbc->rowCount($s) == 1) {
                                 $r = $dbc->dbResultFetchOneRowOnly($s);
                                 $locid = $r['loc_id'];
                             } else {
@@ -638,7 +640,9 @@ if (! $loggedUser) {
                                 outputSearchForm($options, $loggedUser);
 
                                 exit;
-                            } elseif (XDb::xNumRows($rs) == 1) {
+                            }
+
+                            if (XDb::xNumRows($rs) == 1) {
                                 $r = XDb::xFetchArray($rs);
                                 XDb::xFreeResults($rs);
 
@@ -1150,7 +1154,6 @@ if (! $loggedUser) {
                         ' WHERE ' . implode(' AND ', $sql_where) .
                         $group .
                         $having;
-            } else {
             }
 
             //go to final output preparation

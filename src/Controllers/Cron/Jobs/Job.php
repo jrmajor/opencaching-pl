@@ -80,25 +80,28 @@ abstract class Job
             // we enforce an interval of at least 2 minutes since the last run.
 
             return (time() - strtotime($lastRun)) >= 60 * ($matches[1] - 3);
+        }
 
         // run once per hour
-        } elseif (preg_match('/^hourly at :(\d{2})$/', $schedule, $matches)) {
+        if (preg_match('/^hourly at :(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[1]);
 
             return
                 date('Y-m-d H') != substr($lastRun, 0, 13) &&
                 date('i') >= $matches[1];
+        }
 
         // run once per day
-        } elseif (preg_match('/^daily at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
+        if (preg_match('/^daily at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[2]);
 
             return
                 date('Y-m-d') != substr($lastRun, 0, 10) &&
                 date('H:i') >= sprintf('%02d:%02d', $matches[1], $matches[2]);
+        }
 
         // run once per week
-        } elseif (preg_match('/^weekly on ([A-Za-z]+)day at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
+        if (preg_match('/^weekly on ([A-Za-z]+)day at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[3]);
             $dow = array_search(
                 strtolower($matches[1]),
@@ -113,9 +116,10 @@ abstract class Job
                 date('N') == $dow + 1 &&
                 date('Y-m-d') != substr($lastRun, 0, 10) &&
                 date('H:i') >= sprintf('%02d:%02d', $matches[2], $matches[3]);
+        }
 
         // run once a month
-        } elseif (preg_match('/^monthly on day (\d+) at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
+        if (preg_match('/^monthly on day (\d+) at (\d{1,2}):(\d{2})$/', $schedule, $matches)) {
             $this->validateMinutes($matches[3]);
 
             if ($matches[1] > 28) {
@@ -129,9 +133,9 @@ abstract class Job
                 date('d') == $matches[1] &&
                 date('Y-m') != substr($lastRun, 0, 7) &&
                 date('H:i') >= sprintf('%02d:%02d', $matches[2], $matches[3]);
-        } else {
-            exit("Invalid schedule '" . $schedule . "' for " . $jobName);
         }
+
+        exit("Invalid schedule '" . $schedule . "' for " . $jobName);
     }
 
     private function validateMinutes($minutes)

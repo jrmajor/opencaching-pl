@@ -152,23 +152,23 @@ class StaticMap
 
                 if (file_exists($this->mapCacheIDToFilename())) {
                     return file_get_contents($this->mapCacheIDToFilename());
-                } else {
-                    return imagepng($this->image);
                 }
-            } else {
-                // map is in cache
-                $this->sendHeader();
 
-                return file_get_contents($this->mapCacheIDToFilename());
+                return imagepng($this->image);
             }
-        } else {
-            // no cache, make map, send headers and deliver png
-            $this->makeMap();
 
+            // map is in cache
             $this->sendHeader();
 
-            return imagepng($this->image);
+            return file_get_contents($this->mapCacheIDToFilename());
         }
+
+        // no cache, make map, send headers and deliver png
+        $this->makeMap();
+
+        $this->sendHeader();
+
+        return imagepng($this->image);
     }
 
     private function addMarker(Coordinates $coords, $type = null)
@@ -354,11 +354,7 @@ class StaticMap
         $this->mapCacheID = md5($this->serializeParams());
         $filename = $this->mapCacheIDToFilename();
 
-        if (file_exists($filename)) {
-            return true;
-        }
-
-        return false;
+        return file_exists($filename);
     }
 
     private function serializeParams()

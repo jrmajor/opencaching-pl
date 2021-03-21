@@ -249,9 +249,9 @@ class CacheSet extends CacheSetCommon
     {
         if ($formatted) {
             return Formatter::date($this->dateCreated);
-        } else {
-            return $this->dateCreated;
         }
+  
+        return $this->dateCreated;
     }
 
     public function getCacheCount()

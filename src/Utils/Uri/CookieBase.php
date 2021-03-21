@@ -147,16 +147,16 @@ class CookieBase
     {
         if ($expiryTime === 0) {
             return 0;
-        } else {
-            $maxAge = $expiryTime - time();
-
-            // The value of the `Max-Age` property must not be negative
-            if ($maxAge < 0) {
-                $maxAge = 0;
-            }
-
-            return $maxAge;
         }
+
+        $maxAge = $expiryTime - time();
+
+        // The value of the `Max-Age` property must not be negative
+        if ($maxAge < 0) {
+            $maxAge = 0;
+        }
+
+        return $maxAge;
     }
 
     private static function formatExpiryTime($expiryTime, $forceShow = false)
@@ -167,18 +167,18 @@ class CookieBase
             }
 
             return gmdate('D, d-M-Y H:i:s T', $expiryTime);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     private static function formatMaxAge($expiryTime, $forceShow = false)
     {
         if ($expiryTime > 0 || $forceShow) {
             return (string) self::calculateMaxAge($expiryTime);
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     public static function normalizeDomain($domain, $keepWww = false)

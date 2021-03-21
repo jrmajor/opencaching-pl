@@ -95,16 +95,15 @@ class InputFilter
             }
 
             return $source;
+        }
 
         // clean this string
-        } elseif (is_string($source)) {
+        if (is_string($source)) {
             // filter source for XSS and other 'bad' code etc.
             return $this->remove($this->decode($source));
-
-        // return parameter as given
-        } else {
-            return $source;
         }
+
+        return $source;
     }
 
     /**

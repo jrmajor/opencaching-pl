@@ -92,10 +92,10 @@ class CacheTitled extends BaseObject
             $obj->loadFromRow($row);
 
             return $obj;
-        } else {
-            // strange - titledCaches table is empty ?!
-            return null;
         }
+
+        // strange - titledCaches table is empty ?!
+        return null;
     }
 
     private function loadByCacheId($cacheId)

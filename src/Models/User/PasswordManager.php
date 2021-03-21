@@ -121,11 +121,7 @@ class PasswordManager
             return true;
         }
 
-        if (strlen($this->salt) != $this->wantedSaltLength) {
-            return true;
-        }
-
-        return false;
+        return strlen($this->salt) != $this->wantedSaltLength;
     }
 
     /**
@@ -205,11 +201,10 @@ class PasswordManager
              * passwords.) */
 
             return hash('sha512', md5($input));
-        } else {
-            /* All the other rounds are salted. */
-
-            return hash('sha512', $input . $this->salt);
         }
+
+        /* All the other rounds are salted. */
+        return hash('sha512', $input . $this->salt);
     }
 
     /**

@@ -138,10 +138,10 @@ stripslashes($value);
                 if ($ref->nextSibling) {
                     // $ref has an immediate brother : insert newnode before this one
                     return $ref->parentNode->insertBefore($newnode, $ref->nextSibling);
-                } else {
-                    // $ref has no brother next to him : insert newnode as last child of his parent
-                    return $ref->parentNode->appendChild($newnode);
                 }
+
+                // $ref has no brother next to him : insert newnode as last child of his parent
+                return $ref->parentNode->appendChild($newnode);
             }
 
             function remove_node($domElement)

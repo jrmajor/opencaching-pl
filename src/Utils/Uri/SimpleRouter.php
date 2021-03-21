@@ -258,9 +258,9 @@ class SimpleRouter
 
         if (count($parts) == 1) {
             return $parts[0]; // there is only ctrl name
-        } else {
-            return implode('.',$parts);
         }
+
+        return implode('.',$parts);
     }
 
     private static function displayErrorAndExit($message, $httpCode)

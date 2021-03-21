@@ -238,9 +238,9 @@ function cs2cs_core2($lat, $lon, $to)
         proc_close($process);
 
         return mb_split("\t|\n| ", TextConverter::mb_trim($stdout));
-    } else {
-        exit("proc_open() failed, command={$command}\n");
     }
+  
+    exit("proc_open() failed, command={$command}\n");
 }
 
 function cs2cs_1992($lat, $lon)

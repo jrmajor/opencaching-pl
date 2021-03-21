@@ -371,7 +371,9 @@ class Report extends BaseObject
 
         if ($interval >= 7) {
             return 'report-status-error';
-        } elseif ($interval >= 5) {
+        }
+
+        if ($interval >= 5) {
             return 'report-status-warning';
         }
 
@@ -755,16 +757,18 @@ class Report extends BaseObject
 
         if (ReportCommons::isValidReportId($this->id)) {
             return $this->saveToDb();
-        } else {
-            return $this->insertToDb();
         }
+  
+        return $this->insertToDb();
     }
 
     private function isDataComplete($checkId = false)
     {
         if ($checkId && $this->id === null) {
             return false;
-        } elseif ($this->userIdSubmit === null
+        }
+
+        if ($this->userIdSubmit === null
             || ($this->cacheId === null && $this->powerTrailId === null)
             || $this->type === null) {
             return false;
@@ -965,9 +969,9 @@ class Report extends BaseObject
 
             if ($obj->isDataLoaded()) {
                 return $obj;
-            } else {
-                return null;
             }
+  
+            return null;
         } catch (Exception $e) {
             return null;
         }

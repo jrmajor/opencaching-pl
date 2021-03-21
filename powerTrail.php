@@ -578,11 +578,7 @@ function displayPtCommentsSelector($htmlid, PowerTrail $powerTrail, $selectedId 
 
 function displayPowerTrailLogo($ptId, $img)
 {
-    if (empty($img)) {
-        return '/images/blue/powerTrailGenericLogo.png';
-    } else {
-        return $img;
-    }
+    return empty($img) ? '/images/blue/powerTrailGenericLogo.png' : $img;
 }
 
 function getSortBySelector($sel)

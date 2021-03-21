@@ -139,11 +139,7 @@ class ReportCommons extends BaseObject
         $params['reportid']['value'] = $reportId;
         $params['reportid']['data_type'] = 'integer';
 
-        if (self::db()->paramQueryValue($query, 0, $params) == '1') {
-            return true;
-        }
-
-        return false;
+        return self::db()->paramQueryValue($query, 0, $params) == '1';
     }
 
     /**

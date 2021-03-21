@@ -81,13 +81,9 @@ class Gis
             $poly1 = $poly2;
         } // end of While each polygon
 
-        if ($counter % 2 == 0) {
-            return false; // outside
-        } else {
-            return true; // inside
-        }
-
-        return true;
+        // false - outside
+        // true - inside
+        return $counter % 2 != 0;
     }
 
     /**
@@ -171,9 +167,9 @@ class Gis
 
         if ($bearing <= 348.75) {
             return tr($form . '_nnw');
-        } else {
-            return 'N/A';
         }
+
+        return 'N/A';
     }
 
     /**

@@ -282,32 +282,34 @@ class StartPageController extends BaseController
 
                 if (is_null($lastTitledCache)) {
                     return null;
-                } else {
-                    $lastTitledCache->prepareForSerialization();
-
-                    /** @var GeoCache */
-                    $geocache = GeoCache::fromCacheIdFactory($lastTitledCache->getCacheId());
-
-                    if (! $geocache) {
-                        return null;
-                    }
-                    $geocache->prepareForSerialization();
-
-                    $log = GeoCacheLog::fromLogIdFactory($lastTitledCache->getLogId());
-
-                    if (! $log) {
-                        return null;
-                    }
-                    $log->prepareForSerialization();
-
-                    $titleCacheDataObj = new stdClass();
-                    $titleCacheDataObj->geocache = $geocache;
-                    $titleCacheDataObj->log = $log;
-                    $titleCacheDataObj->cacheTitled = $lastTitledCache;
-                    $titleCacheDataObj->createdAt = time();
-
-                    return $titleCacheDataObj;
                 }
+
+                $lastTitledCache->prepareForSerialization();
+
+                /** @var GeoCache */
+                $geocache = GeoCache::fromCacheIdFactory($lastTitledCache->getCacheId());
+
+                if (! $geocache) {
+                    return null;
+                }
+
+                $geocache->prepareForSerialization();
+
+                $log = GeoCacheLog::fromLogIdFactory($lastTitledCache->getLogId());
+
+                if (! $log) {
+                    return null;
+                }
+
+                $log->prepareForSerialization();
+
+                $titleCacheDataObj = new stdClass();
+                $titleCacheDataObj->geocache = $geocache;
+                $titleCacheDataObj->log = $log;
+                $titleCacheDataObj->cacheTitled = $lastTitledCache;
+                $titleCacheDataObj->createdAt = time();
+
+                return $titleCacheDataObj;
             });
 
         if (! $titledCacheDataObj) {
@@ -399,37 +401,38 @@ class StartPageController extends BaseController
 
         if ($onlyIfReady) {
             return OcMemCache::get($feedsKey);
-        } else {
-            return OcMemCache::getOrCreate(
-                $feedsKey,
-                60 * 60, // 1 hour
-                function () {
-                    global $config; //TODO
-
-                    $result = new stdClass();
-                    $result->feeds = [];
-
-                    foreach ($config['feed']['enabled'] as $feedName) {
-                        $feed = new RssFeed($config['feed'][$feedName]['url']);
-                        $postsCount = min($config['feed'][$feedName]['posts'], $feed->count());
-                        $result->feeds[$feedName] = [];
-
-                        for ($i = 0; $i < $postsCount; $i++) {
-                            $post = new stdClass();
-                            $post->author = (! empty($feed->next()->author) &&
-                                $config['feed'][$feedName]['showAuthor']) ? $feed->current()->author : '';
-
-                            $post->link = $feed->current()->link;
-                            $post->title = $feed->current()->title;
-                            $post->date = Formatter::date($feed->current()->date);
-                            $result->feeds[$feedName][] = $post;
-                        }
-                    }//foreach
-
-                    $result->createdAt = time();
-
-                    return $result;
-                });
         }
+
+        return OcMemCache::getOrCreate(
+            $feedsKey,
+            60 * 60, // 1 hour
+            function () {
+                global $config; //TODO
+
+                $result = new stdClass();
+                $result->feeds = [];
+
+                foreach ($config['feed']['enabled'] as $feedName) {
+                    $feed = new RssFeed($config['feed'][$feedName]['url']);
+                    $postsCount = min($config['feed'][$feedName]['posts'], $feed->count());
+                    $result->feeds[$feedName] = [];
+
+                    for ($i = 0; $i < $postsCount; $i++) {
+                        $post = new stdClass();
+                        $post->author = (! empty($feed->next()->author) &&
+                            $config['feed'][$feedName]['showAuthor']) ? $feed->current()->author : '';
+
+                        $post->link = $feed->current()->link;
+                        $post->title = $feed->current()->title;
+                        $post->date = Formatter::date($feed->current()->date);
+                        $result->feeds[$feedName][] = $post;
+                    }
+                }//foreach
+
+                $result->createdAt = time();
+
+                return $result;
+            }
+        );
     }
 }

@@ -144,9 +144,9 @@ class Uri
 
         if (preg_match($domainRegex, $domain)) {
             return $domain;
-        } else {
-            return null;
         }
+  
+        return null;
     }
 
     /**
@@ -186,9 +186,9 @@ class Uri
 
         if ($withProtoAndDomain) {
             return self::getCurrentUriBase() . $parts[0];
-        } else {
-            return $parts[0];
         }
+  
+        return $parts[0];
     }
 
     /**

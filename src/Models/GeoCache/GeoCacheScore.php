@@ -17,9 +17,9 @@ class GeoCacheScore extends BaseObject
 
         if ($row['votes'] == 0) {
             return [0, 0];
-        } else {
-            return [$row['votes'], $row['avgScore']];
         }
+  
+        return [$row['votes'], $row['avgScore']];
     }
 
     public static function updateScoreOnLogRemove(GeoCacheLog $log)

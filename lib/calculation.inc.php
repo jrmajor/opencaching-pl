@@ -12,10 +12,10 @@ function getCalcDistanceSqlFormula($modEnabled, $lonFrom, $latFrom, $maxDistance
         return getSqlDistanceFormulaForModCoords(
             $lonFrom, $latFrom, $maxDistance, $distanceMultiplier, $lonField,
             $latField, $tableName, $modLonField, $modLatField, $modTableName);
-    } else {
-        return getSqlDistanceFormula($lonFrom, $latFrom, $maxDistance, $distanceMultiplier,
-                $lonField, $latField, $tableName);
     }
+
+    return getSqlDistanceFormula($lonFrom, $latFrom, $maxDistance, $distanceMultiplier,
+            $lonField, $latField, $tableName);
 }
 
 //private - not used outside

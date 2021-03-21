@@ -77,38 +77,38 @@ if (empty($user)) {
                     $view->buildView();
 
                     exit;
-                } else {
-                    // file extension ok?
-                    $fna = mb_split('\\.', $_FILES['file']['name']);
-                    $extension = mb_strtolower($fna[count($fna) - 1]);
-
-                    if (mb_strpos($mp3extensions, ';' . $extension . ';') === false) {
-                        $view->setTemplate('message');
-                        tpl_set_var('messagetitle', $message_title_wrongext);
-                        tpl_set_var('message_start', '');
-                        tpl_set_var('message_end', '');
-                        tpl_set_var('message', $message_wrongext);
-                        $view->buildView();
-
-                        exit;
-                    }
-
-                    // file too big?
-                    if ($_FILES['file']['size'] > $maxmp3size) {
-                        $view->setTemplate('message');
-                        tpl_set_var('messagetitle', $message_title_toobig);
-                        tpl_set_var('message_start', '');
-                        tpl_set_var('message_end', '');
-                        tpl_set_var('message', $message_toobig);
-                        $view->buildView();
-
-                        exit;
-                    }
-
-                    // move file
-                    //echo $_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension;
-                    move_uploaded_file($_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension);
                 }
+
+                // file extension ok?
+                $fna = mb_split('\\.', $_FILES['file']['name']);
+                $extension = mb_strtolower($fna[count($fna) - 1]);
+
+                if (mb_strpos($mp3extensions, ';' . $extension . ';') === false) {
+                    $view->setTemplate('message');
+                    tpl_set_var('messagetitle', $message_title_wrongext);
+                    tpl_set_var('message_start', '');
+                    tpl_set_var('message_end', '');
+                    tpl_set_var('message', $message_wrongext);
+                    $view->buildView();
+
+                    exit;
+                }
+
+                // file too big?
+                if ($_FILES['file']['size'] > $maxmp3size) {
+                    $view->setTemplate('message');
+                    tpl_set_var('messagetitle', $message_title_toobig);
+                    tpl_set_var('message_start', '');
+                    tpl_set_var('message_end', '');
+                    tpl_set_var('message', $message_toobig);
+                    $view->buildView();
+
+                    exit;
+                }
+
+                // move file
+                //echo $_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension;
+                move_uploaded_file($_FILES['file']['tmp_name'], $mp3dir . '/' . $uuid . '.' . $extension);
             }
 
             // store

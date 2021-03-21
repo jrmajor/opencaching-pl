@@ -43,11 +43,11 @@ class OcDb extends OcPdo
             Debug::errorLog('DB transation already started - check the code!');
 
             return false;
-        } else {
-            $this->hasActiveTransaction = parent::beginTransaction();
-
-            return $this->hasActiveTransaction;
         }
+
+        $this->hasActiveTransaction = parent::beginTransaction();
+
+        return $this->hasActiveTransaction;
     }
 
     /**
@@ -87,9 +87,9 @@ class OcDb extends OcPdo
         if (! is_null($stmt)) {
             if (is_null($fetchStyle)) {
                 return $stmt->fetch();
-            } else {
-                return $stmt->fetch($fetchStyle);
             }
+
+            return $stmt->fetch($fetchStyle);
         }
 
         $this->error('Call PDOstatement issue!');
@@ -269,12 +269,12 @@ class OcDb extends OcPdo
 
             if ($value == null) {
                 return $default;
-            } else {
-                return $value;
             }
-        } else {
-            return $default;
+
+            return $value;
         }
+
+        return $default;
     }
 
     /**

@@ -522,9 +522,9 @@ class GeoCache extends GeoCacheCommons
     {
         if ($this->isPowerTrailPart()) {
             return $this->powerTrail;
-        } else {
-            return null;
         }
+
+        return null;
     }
 
     public function getCacheType()
@@ -1040,11 +1040,7 @@ class GeoCache extends GeoCacheCommons
      */
     public function hasPassword()
     {
-        if ($this->logPassword === false) {
-            return false;
-        } else {
-            return true;
-        }
+        return $this->logPassword !== false;
     }
 
     public function getWatchingUsersCount()

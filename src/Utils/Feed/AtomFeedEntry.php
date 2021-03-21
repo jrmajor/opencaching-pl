@@ -284,10 +284,6 @@ class AtomFeedEntry
             return false;
         }
 
-        if (empty($this->getAuthor()) || ! $this->getAuthor()->isValid()) {
-            return false;
-        }
-
-        return true;
+        return ! (empty($this->getAuthor()) || ! $this->getAuthor()->isValid());
     }
 }
